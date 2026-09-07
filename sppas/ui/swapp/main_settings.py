@@ -205,6 +205,13 @@ class sppasWebAppSettings:
         return "light"
 
     # -----------------------------------------------------------------------
+
+    @staticmethod
+    def default_page():
+        """The page the server answers with when the address names none."""
+        return "dashboard.html"
+
+    # -----------------------------------------------------------------------
     # Get access directly to the defined relative paths.
 
     @property

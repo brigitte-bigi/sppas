@@ -43,7 +43,6 @@ from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
 
 from sppas.core.config import sg
-from sppas.core.config import cfg
 from sppas.core.config import get_language
 
 from sppas.ui import _
@@ -75,7 +74,7 @@ MSG_INFORMATION = _("Information")
 # Must be appended to the HTMLTree before sppas.js
 JS_INIT = (
     f"window.WEXA_JS_PATH = '/{wapp_settings.wexa_statics}js';"
-    f"window.WEXA_LOG_LEVEL = {cfg.log_level};"
+    f"window.SPPAS_DEFAULT_PAGE = '{wapp_settings.default_page()}';"
 )
 
 # What the page starts once the loader has everything ready: the loader
@@ -442,7 +441,7 @@ class swappBaseView:
                            value="<span>" + MSG_DASHBOARD + "</span>")
         _button.add_attribute("data-icon", "dashboard")
         _button.add_attribute("id", "link-home_button")
-        _button.add_attribute("href", "index.html")
+        _button.add_attribute("href", wapp_settings.default_page())
         _button.add_attribute("role", "button")
         _button.add_attribute("aria-label", MSG_DASHBOARD)
         _button.add_attribute("aria-keyshortcuts", "q")

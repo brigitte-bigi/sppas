@@ -83,7 +83,7 @@ BODY_SCRIPT = f"""
 
 
 class DashboardView(swappBaseView):
-    """View class responsible for populating the *index.html* page.
+    """View class responsible for populating the *dashboard.html* page.
 
     This class represents the **View** component of the MVC pattern for the
     SPPAS Dashboard web application. It receives an existing :class:`HTMLTree`

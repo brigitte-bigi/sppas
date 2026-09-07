@@ -195,8 +195,8 @@ class TraceView(swappBaseView):
         :return: (HTMLNode) the close button node
 
         """
-        go_home = ("window.open(window.Wexa.accessibility.setUrlWithParameters('index.html'), "
-                   f"'{home_target}');")
+        go_home = ("window.open(window.Wexa.accessibility.setUrlWithParameters("
+                   f"'{wapp_settings.default_page()}'), '{home_target}');")
         _button = HTMLNode(parent.identifier, None, "button",
                            value="<span>" + MSG_CLOSE + "</span>")
         _button.add_attribute("data-icon", "cancel")

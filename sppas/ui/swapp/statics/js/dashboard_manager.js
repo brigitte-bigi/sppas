@@ -1,7 +1,5 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
-const wexa_log_level = window.WEXA_LOG_LEVEL;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
-WexaLogger.setLogLevel(wexa_log_level);
 const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
 const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
 
@@ -47,11 +45,11 @@ const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
 'use strict';
 
 // --------------------------------------------------------------------------
-// Class: DashboardManager. Controls the page index.html
+// Class: DashboardManager. Controls the page dashboard.html
 // --------------------------------------------------------------------------
 
 /**
- * This class orchestrates user interactions within *index.html*. It attaches event
+ * This class orchestrates user interactions within *dashboard.html*. It attaches event
  * listeners to the buttons of the main container, sends corresponding asynchronous
  * requests to the server, and updates the DOM in response. It relies on BaseManager
  * for communication logic and form submission, and on WexaLogger for debug output.
@@ -175,7 +173,7 @@ export default class DashboardManager extends BaseManager {
         // RequestManager catches its own network errors and resolves with
         // the Error object instead of rejecting: the guard below already
         // discards it, since it never has a workspace_name string.
-        const pageUri = window.location.pathname.substring(1) || 'index.html';
+        const pageUri = window.location.pathname.substring(1) || window.SPPAS_DEFAULT_PAGE;
         const response = await this._requestManager.send_post_request(
             {workspace_name: true}, "application/json", pageUri);
 

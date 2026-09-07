@@ -48,6 +48,7 @@ from sppas.core.config import sg
 
 from ..wappbase.wappresponse import swappBaseResponse
 from ..wappcore.wappinfo import WebApplicationInfo
+from ..wappcore.wappsg import wapp_settings
 from ..wappcore.wappsg import wapp_wkps
 from ..wappcore.wappsg import wapp_wxstate
 from ..wappcore.wappsg import wapp_trace
@@ -141,7 +142,7 @@ class DashboardResponseRecipe(swappBaseResponse):
     @classmethod
     def page(cls) -> str:
         """Override. Return the HTML page name."""
-        return "index.html"
+        return wapp_settings.default_page()
 
     # -----------------------------------------------------------------------
 

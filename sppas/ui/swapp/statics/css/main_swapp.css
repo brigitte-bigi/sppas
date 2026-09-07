@@ -649,9 +649,9 @@ section.actions-panel {
    what belongs to SPPAS: the ground, and the fact that a list of choices
    wants neither the square wexa.css writes before an item nor its indent. */
 .apps-panel {
-    padding: 1rem;
+    padding: calc(1 * var(--font-size));
     place-items: center;
-    border-radius: 1rem;
+    border-radius: var(--border-radius);
     background: var(--apps-panel-bg-image);
 }
 
@@ -688,8 +688,8 @@ section.actions-panel {
     background-color: var(--img-bg-color);
     object-fit: cover;
     border-radius: var(--card-border-radius);
-    max-width: calc(14 * var(--font-size));
-    max-height: calc(14 * var(--font-size));
+    max-width: calc(13 * var(--font-size));
+    max-height: calc(13 * var(--font-size));
     margin: 0;
     margin-bottom: calc(5 * var(--font-size));
 }
@@ -740,30 +740,30 @@ section.actions-panel {
 .app-title::after {
     content: "";
     position: absolute;
-    height: 0.3125rem;
-    width: calc(100% + 2rem);
-    bottom: -1rem;
-    left: -1.25rem;
+    height: calc(var(--font-size) / 3);
+    width: calc(100% + (var(--font-size) * 2));
+    bottom: calc(var(--font-size) * -1);
+    left: calc(var(--font-size) * -1.25);
 }
 
 .app-description {
-    padding-top: 1.25rem;
+    padding-top: calc(var(--font-size) * 1.25);
     overflow: hidden;
 }
 
 .app-description:not(.contrast) {
-    max-height: calc(6.5 * var(--font-size));
+    max-height: calc(7 * var(--font-size));
 }
 
 .contrast .app-description {
-    padding-top: 0.75rem;
+    padding-top: calc(var(--font-size) * 0.75);
     max-height: calc(9 * var(--font-size));
 }
 
 /* Its look comes from .action-button: only its place is written here. */
 .app-button {
     margin: 0 auto;
-    height: 2.5rem;
+    height: calc(var(--font-size) * 2.5);;
 }
 
 /* Hover/focus animation — only for pointer devices */
@@ -808,7 +808,7 @@ section.actions-panel {
 
     .contrast .app:hover .app-content,
     .contrast .app:focus-within .app-content {
-        transform: translateY(-10%);
+        /*transform: translateY(-5%);*/
         transition: transform 300ms ease-in;
     }
 

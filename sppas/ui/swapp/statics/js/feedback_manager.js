@@ -1,7 +1,5 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
-const wexa_log_level = window.WEXA_LOG_LEVEL;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
-WexaLogger.setLogLevel(wexa_log_level);
 
 /**
  * :filename: sppas.ui.swapp.statics.js.feedback_manager.js

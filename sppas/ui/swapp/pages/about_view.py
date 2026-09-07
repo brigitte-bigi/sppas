@@ -76,6 +76,7 @@ MSG_CREATING_RESOURCES = _("creating resources.")
 MSG_LINK_LICENSE = _("License information")
 MSG_LINK_LANG = _("List of languages")
 MSG_LINK_SCRIPT = _("Write scripts")
+MSG_LINK_DOC = _("Documentation of the source code")
 
 # Site web
 # Téléchargement
@@ -239,14 +240,26 @@ class AboutView(swappBaseView):
         AboutView._append_link(_p_links, "https://sppas.org/book_introduction.html#license", MSG_LINK_LICENSE)
         AboutView._append_link(_p_links, "https://sppas.org/resources.html", MSG_LINK_LANG)
         AboutView._append_link(_p_links, "https://sppas.org/scripting.html", MSG_LINK_SCRIPT)
+        # The document of the package, served by this server: it opens in a
+        # tab of its own, the page of SPPAS staying where it is.
+        AboutView._append_link(_p_links, "/index.html", MSG_LINK_DOC, external=False)
         _article3.append_child(_p_links)
 
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def _append_link(parent: TagNode, href: str, value: str):
+    def _append_link(parent: TagNode, href: str, value: str, external: bool = True):
+        """Append a link, opened in a tab of its own.
+
+        :param parent: (TagNode) the parent HTML node to append the link in
+        :param href: (str) the address the link points to
+        :param value: (str) the text of the link
+        :param external: (bool) True for an address outside of this server
+
+        """
         _a = HTMLNode(parent.identifier, None, "a", value=value)
         _a.set_attribute("target", "_blank")
-        _a.set_attribute("class", "external-link")
+        if external is True:
+            _a.set_attribute("class", "external-link")
         _a.set_attribute("href", href)
         parent.append_child(_a)

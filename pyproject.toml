@@ -17,7 +17,7 @@
 [project]
     name = "sppas"
     # The version must be PEP 440 compliant
-    version = "5.0.4"
+    version = "5.0.5"
     authors = [
         {name="Brigitte Bigi", email="contact@sppas.org"},
     ]
@@ -47,8 +47,9 @@
 
 [project.urls]
     Homepage = "https://sppas.org/"
-    Documentation = "https://brigittebigi.github.io/sppas/"
-    Repository = "https://sppas.sourceforge.net/"
+    Documentation = "https://brigitte-bigi.github.io/sppas/"
+    Repository = "https://github.com/brigitte-bigi/sppas"
+    Package = "https://sppas.sourceforge.net/"
 
 [project.scripts]
     # See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#console-scripts

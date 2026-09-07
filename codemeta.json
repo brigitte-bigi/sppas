@@ -5,10 +5,10 @@
     "contIntegration": "",
     "dateCreated": "2011-03-09",
     "datePublished": "2012-06-14",
-    "dateModified": "2026-08-28",
+    "dateModified": "2026-09-07",
     "downloadUrl": "https://sourceforge.net/projects/sppas/files/latest/download",
     "name": "sppas",
-    "version": "5.0.4",
+    "version": "5.0.5",
     "description": "Automatic annotation and analysis of audio/video speech recordings.",
     "applicationCategory": "Computer Science",
     "releaseNotes": "https://sppas.org/book_changes.html#latest\n",
@@ -37,7 +37,7 @@
             "email": "contact@sppas.org",
             "affiliation": {
                 "@type": "Organization",
-                "name": "CNRS, UMR7309, Laboratoire Parole et Langage"
+                "name": "CNRS, Laboratoire Parole et Langage, Aix-en-Provence - France"
             }
         }
     ]
