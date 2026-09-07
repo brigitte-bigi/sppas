@@ -45,6 +45,7 @@ from sppas.core.config import sppasLogSetup
 from sppas.core.config import paths
 
 from sppas.core.coreutils import sppasInstallationError
+from sppas.core.preinstall.feature import DepsFeature
 from sppas.core.preinstall.features import Features
 from sppas.core.preinstall.installer import Installer
 
@@ -60,6 +61,83 @@ class InstallerTest(Installer):
     def __init__(self):
         super(InstallerTest, self).__init__()
         self._features = Features(req="", cmdos="")
+
+# ---------------------------------------------------------------------------
+
+
+class InstallerNoPypi(Installer):
+    """An installer which is not installing anything.
+
+    The pip commands are stored instead of being executed, so that the
+    installation process can be tested without modifying the computer.
+
+    """
+
+    def __init__(self):
+        super(InstallerNoPypi, self).__init__()
+        self._features = Features(req="", cmdos="")
+        self.commands = list()
+
+    def update_pip(self):
+        """Override. Do not update pip."""
+        pass
+
+    def _show_pypi(self, package):
+        """Override. No pip package is already installed."""
+        return False
+
+    def _install_pypi(self, package, version, options=""):
+        """Override. Store the command instead of executing it."""
+        self.commands.append(self._pip_command(package, version, options))
+        return ""
+
+# ---------------------------------------------------------------------------
+
+
+class TestInstallAlternative(unittest.TestCase):
+
+    def setUp(self):
+        self.__installer = InstallerNoPypi()
+
+    # ---------------------------------------------------------------------------
+
+    @staticmethod
+    def __add_feature(installer, pip_test):
+        """Add a feature with a regular and an alternative pip package."""
+        feature = DepsFeature("dummyfeature")
+        feature.add_pypi("regularpackage", "")
+        feature.add_pypi_alt("alternativepackage", "")
+        feature.set_pip_options({"alternativepackage": "--index-url https://example.org/whl/cpu"})
+        feature.set_pip_test(pip_test)
+        feature.set_available(True)
+        installer._features._Features__features.append(feature)
+
+    # ---------------------------------------------------------------------------
+
+    def test_install_alt_if_deps_failed(self):
+        # The alternative packages are installed if the dependencies of the
+        # feature are not satisfied after the installation of its packages.
+        self.__add_feature(self.__installer, "idonotexist987654")
+        self.__installer._Installer__install_feature("dummyfeature")
+
+        self.assertEqual(len(self.__installer.commands), 2)
+        self.assertIn(" 'regularpackage'", self.__installer.commands[0])
+        self.assertNotIn("--index-url", self.__installer.commands[0])
+        # The alternative package is installed with its own options
+        self.assertIn(" 'alternativepackage'", self.__installer.commands[1])
+        self.assertIn("--index-url https://example.org/whl/cpu",
+                      self.__installer.commands[1])
+
+    # ---------------------------------------------------------------------------
+
+    def test_no_install_alt_if_deps_ok(self):
+        # No alternative package is installed if the dependencies of the
+        # feature are satisfied.
+        self.__add_feature(self.__installer, "sys")
+        self.__installer._Installer__install_feature("dummyfeature")
+
+        self.assertEqual(len(self.__installer.commands), 1)
+        self.assertIn(" 'regularpackage'", self.__installer.commands[0])
 
 # ---------------------------------------------------------------------------
 

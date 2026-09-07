@@ -141,9 +141,11 @@ class TestFeatures(unittest.TestCase):
         y = self.__features.pypi("wxpython")
         self.assertEqual(y, {'wxpython': '>=4.1'})
 
-        # The packages are installed in the order they are declared
+        # torch is installed only if openai-whisper can't be imported
         y = self.__features.pypi("stt")
-        self.assertEqual(list(y.keys()), ['torch', 'openai-whisper'])
+        self.assertEqual(y, {'openai-whisper': ''})
+        y = self.__features.pypi_alt("stt")
+        self.assertEqual(y, {'torch': ''})
 
         y = self.__features.pypi("wintools")
         self.assertEqual(y, {})
@@ -309,6 +311,52 @@ class TestFeatures(unittest.TestCase):
 
         y = self.__features.__contains__("toto")
         self.assertFalse(y)
+
+    # -----------------------------------------------------------------------
+
+    def test_check_feature_deps(self):
+        """Check the dependencies of one single feature."""
+        from sppas.core.preinstall.feature import DepsFeature
+        features = Features("req_win", "cmd_win")
+
+        # An importable module and an executable command
+        feat = DepsFeature("sys_and_cmd")
+        feat.set_pip_test("sys")
+        feat.set_cmd_test("python")
+        features._Features__features.append(feat)
+        self.assertTrue(features.check_feature_deps("sys_and_cmd"))
+        self.assertTrue(features.available("sys_and_cmd"))
+        self.assertTrue(features.enable("sys_and_cmd"))
+
+        # A module which can't be imported
+        feat = DepsFeature("bogus_module")
+        feat.set_pip_test("idonotexist987654")
+        feat.set_available(True)
+        feat.set_enable(True)
+        features._Features__features.append(feat)
+        self.assertFalse(features.check_feature_deps("bogus_module"))
+        self.assertFalse(features.available("bogus_module"))
+        self.assertFalse(features.enable("bogus_module"))
+
+        # A command which can't be executed
+        feat = DepsFeature("bogus_command")
+        feat.set_cmd_test("idonotexist987654")
+        feat.set_available(True)
+        feat.set_enable(True)
+        features._Features__features.append(feat)
+        self.assertFalse(features.check_feature_deps("bogus_command"))
+        self.assertFalse(features.available("bogus_command"))
+
+        # Nothing to be tested: the state of the feature is unchanged
+        feat = DepsFeature("nothing_to_test")
+        feat.set_available(True)
+        features._Features__features.append(feat)
+        self.assertTrue(features.check_feature_deps("nothing_to_test"))
+        self.assertTrue(features.available("nothing_to_test"))
+
+        # Not a deps feature, and an unknown feature
+        self.assertFalse(features.check_feature_deps("fra"))
+        self.assertFalse(features.check_feature_deps("toto"))
 
     # -----------------------------------------------------------------------
 

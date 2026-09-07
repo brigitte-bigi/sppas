@@ -391,6 +391,58 @@ class Features:
 
     # ------------------------------------------------------------------------
 
+    def check_feature_deps(self, fid):
+        """Check the dependencies of the given 'deps' feature.
+
+        The feature is made available and enabled if both its modules can be
+        imported and its commands can be executed. It is made unavailable and
+        disabled if not. Its state is unchanged if it has nothing to be tested.
+
+        :param fid: (str) Identifier of a feature
+        :return: (bool) True if the dependencies of the feature are satisfied
+
+        """
+        for feat in self.__features:
+            if feat.get_id() == fid:
+                if isinstance(feat, DepsFeature) is False:
+                    logging.error("Feature {} is not a DepsFeature:"
+                                  "No dependency is defined.".format(fid))
+                    return False
+
+                logging.debug("Checking dependencies for feature '{}'".format(fid))
+
+                # Get tests of the feature
+                test_modules = self._parse_pip_test(feat.get_pip_test())
+                test_commands = self._parse_cmd_test(feat.get_cmd_test())
+
+                # Nothing has to be tested for this feature.
+                if test_commands is None and test_modules is None:
+                    return True
+
+                # Test commands and modules:
+                # - all commands must be successfully executed
+                # - all pip packages must be successfully imported but some of
+                #   them can have alternative solutions
+                try:
+                    DepsFeatureChecker((test_modules, test_commands)).check()
+                except (ImportError, RuntimeError) as e:
+                    feat.set_available(False)
+                    feat.set_enable(False)
+                    logging.info(
+                        f"Feature '{fid}' disabled: {str(e)}"
+                    )
+                    # Do not raise! Just log and disable
+                    return False
+
+                feat.set_available(True)
+                feat.set_enable(True)
+                return True
+
+        logging.error("Unknown feature {}".format(fid))
+        return False
+
+    # ------------------------------------------------------------------------
+
     def check_deps(self, test_all=False):
         """Check all dependencies for all enabled 'deps' features.
 
@@ -409,31 +461,7 @@ class Features:
             if test_all is False and feat.get_enable() is False:
                 continue
 
-            logging.debug("Checking dependencies for feature '{}'".format(feat.get_id()))
-
-            # Get tests of the feature
-            test_modules = self._parse_pip_test(feat.get_pip_test())
-            test_commands = self._parse_cmd_test(feat.get_cmd_test())
-
-            # Nothing has to be tested for this feature.
-            if test_commands is None and test_modules is None:
-                continue
-
-            # Test commands and modules:
-            # - all commands must be successfully executed
-            # - all pip packages must be successfully imported but some of
-            #   them can have alternative solutions
-            try:
-                DepsFeatureChecker((test_modules, test_commands)).check()
-                feat.set_available(True)
-                feat.set_enable(True)
-            except (ImportError, RuntimeError) as e:
-                feat.set_available(False)
-                feat.set_enable(False)
-                logging.info(
-                    f"Feature '{feat.get_id()}' disabled: {str(e)}"
-                )
-                # Do not raise! Just log and disable
+            self.check_feature_deps(feat.get_id())
 
     # ------------------------------------------------------------------------
 

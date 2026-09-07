@@ -455,6 +455,16 @@ class Installer:
                     except sppasInstallationError as e_alt:
                         logging.error(str(e_alt))
                         raise sppasInstallationError(str(e))
+                else:
+                    # The packages were installed but the feature can still be
+                    # unusable -- like, for example, torch installed from the
+                    # official python package repository on a computer without
+                    # any GPU card.
+                    if self._features.check_feature_deps(fid) is False:
+                        if len(self._features.pypi_alt(fid)) > 0:
+                            out_install = self.__install_pypis(fid, alt=True)
+                            if len(out_install) > 0:
+                                out_msg.append(out_install)
 
             if len(self._features.cmd(fid)) > 0:
                 out_install = self.__install_cmd(fid)
