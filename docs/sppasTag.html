@@ -81,16 +81,16 @@ content with get</em>typed_content().</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span>                      <span class="c1"># &quot;2&quot; (str)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>                        <span class="c1"># &quot;2&quot; (str)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">t3</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>        <span class="c1"># 2 (int)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">t4</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>      <span class="c1"># 2 (int)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">t5</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>    <span class="c1"># 2. (float)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">t6</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;bool&quot;</span><span class="p">)</span>  <span class="c1"># True (bool)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">t7</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;bool&quot;</span><span class="p">)</span>       <span class="c1"># False (bool)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">t8</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">((</span><span class="mi">27</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;point&quot;</span><span class="p">)</span>  <span class="c1"># x=27, y=32 (point)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">t9</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">((</span><span class="mi">27</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;point&quot;</span><span class="p">)</span>  <span class="c1"># x=27, y=32 (point), radius=3</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">t10</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">((</span><span class="mi">27</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">&quot;rect&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="s2">"2"</span><span class="p">)</span>                      <span class="c1"># "2" (str)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>                        <span class="c1"># "2" (str)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">t3</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">"int"</span><span class="p">)</span>        <span class="c1"># 2 (int)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">t4</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="s2">"2"</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">"int"</span><span class="p">)</span>      <span class="c1"># 2 (int)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">t5</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="s2">"2"</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">"float"</span><span class="p">)</span>    <span class="c1"># 2. (float)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">t6</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="s2">"true"</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">"bool"</span><span class="p">)</span>  <span class="c1"># True (bool)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">t7</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">"bool"</span><span class="p">)</span>       <span class="c1"># False (bool)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">t8</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">((</span><span class="mi">27</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">"point"</span><span class="p">)</span>  <span class="c1"># x=27, y=32 (point)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">t9</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">((</span><span class="mi">27</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">"point"</span><span class="p">)</span>  <span class="c1"># x=27, y=32 (point), radius=3</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">t10</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">((</span><span class="mi">27</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">tag_type</span><span class="o">=</span><span class="s2">"rect"</span><span class="p">)</span>
 </code></pre></div>
 
     </article>
@@ -119,15 +119,15 @@ content with get</em>typed_content().</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag_content</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize a new sppasTag instance.</span>
+<span class="w">    </span><span class="sd">"""Initialize a new sppasTag instance.</span>
 
 <span class="sd">    :param tag_content: (any) Data content</span>
-<span class="sd">    :param tag_type: (str): The type of this content.    One of: (&#39;str&#39;, &#39;int&#39;, &#39;float&#39;, &#39;bool&#39;, &#39;point&#39;, &#39;rect&#39;).</span>
+<span class="sd">    :param tag_type: (str): The type of this content.    One of: ('str', 'int', 'float', 'bool', 'point', 'rect').</span>
 
-<span class="sd">    &#39;str&#39; is the default tag_type.</span>
+<span class="sd">    'str' is the default tag_type.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_content</span><span class="p">(</span><span class="n">tag_content</span><span class="p">,</span> <span class="n">tag_type</span><span class="p">)</span>
 </code></pre></div>
@@ -157,13 +157,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set self members from another sppasTag instance.</span>
+<span class="w">    </span><span class="sd">"""Set self members from another sppasTag instance.</span>
 
 <span class="sd">        :param other: (sppasTag)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_content</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">get_content</span><span class="p">())</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span>
 </code></pre></div>
@@ -193,14 +193,14 @@ separated by a whitespace).</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return an unicode string corresponding to the content.</span>
+<span class="w">    </span><span class="sd">"""Return an unicode string corresponding to the content.</span>
 
 <span class="sd">        Also returns a unicode string in case of a list (elements are</span>
 <span class="sd">        separated by a whitespace).</span>
 
 <span class="sd">        :returns: (unicode)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span>
 </code></pre></div>
 
@@ -222,25 +222,25 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_typed_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the content value, in its appropriate type.</span>
+<span class="w">    </span><span class="sd">"""Return the content value, in its appropriate type.</span>
 
 <span class="sd">        Excepted for strings which are systematically returned as unicode.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">&#39;int&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">'int'</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">'float'</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">'bool'</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'true'</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">&#39;point&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">'point'</span><span class="p">:</span>
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">sppasFuzzyPoint</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">sppasFuzzyPoint</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">r</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">&#39;rect&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">'rect'</span><span class="p">:</span>
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">sppasFuzzyRect</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">sppasFuzzyRect</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="n">r</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span>
@@ -273,60 +273,60 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag_content</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Change content of this sppasTag.</span>
+<span class="w">    </span><span class="sd">"""Change content of this sppasTag.</span>
 
 <span class="sd">        :param tag_content: (any) New text content for this sppasTag</span>
-<span class="sd">        :param tag_type: The type of this tag.        Default is &#39;str&#39; to represent an unicode string.</span>
+<span class="sd">        :param tag_type: The type of this tag.        Default is 'str' to represent an unicode string.</span>
 <span class="sd">        :raise: AnnUnkTypeError, AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">tag_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">tag_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sppasTag</span><span class="o">.</span><span class="n">TAG_TYPES</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">AnnUnkTypeError</span><span class="p">(</span><span class="n">tag_type</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">&#39;str&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">'str'</span><span class="p">:</span>
         <span class="n">tag_type</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">tag_content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">tag_content</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="k">if</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
+        <span class="n">tag_content</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="k">if</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">'float'</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">tag_content</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tag_content</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag_content</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">&#39;int&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag_content</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">'int'</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">tag_content</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tag_content</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag_content</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">tag_content</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;False&#39;</span><span class="p">,</span> <span class="s1">&#39;True&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag_content</span><span class="p">,</span> <span class="s1">'int'</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">'bool'</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tag_content</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'False'</span><span class="p">,</span> <span class="s1">'True'</span><span class="p">):</span>
             <span class="n">tag_content</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">tag_content</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">&#39;point&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">'point'</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag_content</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">sppasFuzzyPoint</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag_content</span><span class="p">)</span>
             <span class="n">tag_content</span> <span class="o">=</span> <span class="n">sppasFuzzyPoint</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">r</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag_content</span><span class="p">,</span> <span class="n">sppasFuzzyPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag_content</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tag_content</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
-                    <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="s1">&#39;sppasTag&#39;</span><span class="p">,</span> <span class="s1">&#39;tuple(int,int)&#39;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="s1">'sppasTag'</span><span class="p">,</span> <span class="s1">'tuple(int,int)'</span><span class="p">)</span>
                 <span class="n">p</span> <span class="o">=</span> <span class="n">sppasFuzzyPoint</span><span class="p">((</span><span class="n">tag_content</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tag_content</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tag_content</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
                     <span class="n">p</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">tag_content</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
                 <span class="n">tag_content</span> <span class="o">=</span> <span class="n">p</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="s1">&#39;sppasTag&#39;</span><span class="p">,</span> <span class="s1">&#39;tuple(int,int)&#39;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">&#39;rect&#39;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="s1">'sppasTag'</span><span class="p">,</span> <span class="s1">'tuple(int,int)'</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">'rect'</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag_content</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">sppasFuzzyRect</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag_content</span><span class="p">)</span>
             <span class="n">tag_content</span> <span class="o">=</span> <span class="n">sppasFuzzyRect</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="n">r</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag_content</span><span class="p">,</span> <span class="n">sppasFuzzyRect</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag_content</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tag_content</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
-                    <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="s1">&#39;sppasTag&#39;</span><span class="p">,</span> <span class="s1">&#39;tuple(int,int,int,int)&#39;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="s1">'sppasTag'</span><span class="p">,</span> <span class="s1">'tuple(int,int,int,int)'</span><span class="p">)</span>
                 <span class="n">p</span> <span class="o">=</span> <span class="n">sppasFuzzyRect</span><span class="p">((</span><span class="n">tag_content</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tag_content</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tag_content</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">tag_content</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tag_content</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
                     <span class="n">p</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">tag_content</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
                 <span class="n">tag_content</span> <span class="o">=</span> <span class="n">p</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="s1">&#39;sppasTag&#39;</span><span class="p">,</span> <span class="s1">&#39;tuple(int,int,int,int)&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="s1">'sppasTag'</span><span class="p">,</span> <span class="s1">'tuple(int,int,int,int)'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">=</span> <span class="n">tag_type</span>
     <span class="n">tag_content</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tag_content</span><span class="p">)</span>
     <span class="n">su</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">tag_content</span><span class="p">)</span>
@@ -349,7 +349,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of self.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a deep copy of self."""</span>
     <span class="k">return</span> <span class="n">sppasTag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span><span class="p">)</span>
 </code></pre></div>
 
@@ -369,9 +369,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the type of the tag content.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the type of the tag content."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;str&#39;</span>
+        <span class="k">return</span> <span class="s1">'str'</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span>
 </code></pre></div>
 
@@ -391,8 +391,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tag is an empty string.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span>
+<span class="w">    </span><span class="sd">"""Return True if the tag is an empty string."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span> <span class="o">==</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -411,7 +411,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_speech</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tag is not a silence.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the tag is not a silence."""</span>
     <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_silence</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_pause</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_laugh</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_noise</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_dummy</span><span class="p">())</span>
 </code></pre></div>
 
@@ -431,15 +431,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_silence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tag is a silence.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">&#39;str&#39;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Return True if the tag is a silence."""</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_type</span> <span class="o">==</span> <span class="s1">'str'</span><span class="p">:</span>
         <span class="n">silences</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;silence&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'silence'</span><span class="p">:</span>
                 <span class="n">silences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span> <span class="ow">in</span> <span class="n">silences</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;gpf_&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'gpf_'</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
     <span class="k">return</span> <span class="kc">False</span>
 </code></pre></div>
@@ -460,10 +460,10 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_pause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tag is a short pause.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the tag is a short pause."""</span>
     <span class="n">pauses</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;pause&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'pause'</span><span class="p">:</span>
             <span class="n">pauses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span> <span class="ow">in</span> <span class="n">pauses</span>
 </code></pre></div>
@@ -484,10 +484,10 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_laugh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tag is a laughing.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the tag is a laughing."""</span>
     <span class="n">laugh</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;laugh&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'laugh'</span><span class="p">:</span>
             <span class="n">laugh</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span> <span class="ow">in</span> <span class="n">laugh</span>
 </code></pre></div>
@@ -508,10 +508,10 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_noise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tag is a noise.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the tag is a noise."""</span>
     <span class="n">noises</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;noise&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">symbols</span><span class="o">.</span><span class="n">all</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'noise'</span><span class="p">:</span>
             <span class="n">noises</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span> <span class="ow">in</span> <span class="n">noises</span>
 </code></pre></div>
@@ -532,8 +532,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_dummy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tag is a dummy label.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span> <span class="o">==</span> <span class="s1">&#39;dummy&#39;</span>
+<span class="w">    </span><span class="sd">"""Return True if the tag is a dummy label."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tag_content</span> <span class="o">==</span> <span class="s1">'dummy'</span>
 </code></pre></div>
 
     </details>
@@ -562,7 +562,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;Tag: </span><span class="si">{!s:s}</span><span class="s1">,</span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_content</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">())</span>
+    <span class="k">return</span> <span class="s1">'Tag: </span><span class="si">{!s:s}</span><span class="s1">,</span><span class="si">{!s:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_content</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">())</span>
 </code></pre></div>
 
     </details>
@@ -575,7 +575,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{!s:s}</span><span class="s1"> (</span><span class="si">{!s:s}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_content</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">())</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="si">{!s:s}</span><span class="s1"> (</span><span class="si">{!s:s}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_content</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">())</span>
 </code></pre></div>
 
     </details>
@@ -599,7 +599,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compare 2 tags.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Compare 2 tags."""</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_typed_content</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">get_typed_content</span><span class="p">()</span>
     <span class="k">return</span> <span class="kc">False</span>
@@ -641,7 +641,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

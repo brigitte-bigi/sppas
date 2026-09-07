@@ -88,24 +88,24 @@ not specified, the default one will be used.</p>
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">cmdos</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new Features instance.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">cmdos</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Create a new Features instance.</span>
 
 <span class="sd">    A Features instance is a container for a list of features.</span>
-<span class="sd">    It parses a &#39;.ini&#39; file to get each feature config. If a filename is</span>
+<span class="sd">    It parses a '.ini' file to get each feature config. If a filename is</span>
 <span class="sd">    not specified, the default one will be used.</span>
 
 <span class="sd">    :param req: (str)</span>
 <span class="sd">    :param cmdos: (str)</span>
 <span class="sd">    :param filename: (str) A custom configuration filename.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__req</span> <span class="o">=</span> <span class="n">req</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__cmdos</span> <span class="o">=</span> <span class="n">cmdos</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">and</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.ini&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">and</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'.ini'</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span> <span class="o">=</span> <span class="n">filename</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_features</span><span class="p">()</span>
 </code></pre></div>
@@ -129,10 +129,10 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_features_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the file with the features descriptions.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of the file with the features descriptions."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span>
-    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">etc</span><span class="p">,</span> <span class="s1">&#39;features.ini&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">etc</span><span class="p">,</span> <span class="s1">'features.ini'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -163,12 +163,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of feature identifiers of the given type.</span>
+<span class="w">    </span><span class="sd">"""Return the list of feature identifiers of the given type.</span>
 
 <span class="sd">        :param feat_type: (str) Feature type, or None to get all ids</span>
 <span class="sd">        :return: (list) Feature identifiers</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">feat_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">feat_type</span><span class="p">]</span>
@@ -196,15 +196,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">feature_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the feature type: deps, lang, annot.</span>
+<span class="w">    </span><span class="sd">"""Return the feature type: deps, lang, annot.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
 
@@ -231,18 +231,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the feature is enabled and/or set it.</span>
+<span class="w">    </span><span class="sd">"""Return True if the feature is enabled and/or set it.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :param value: (bool or None) Enable of disable the feature.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_enable</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">set_enable</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="kc">False</span>
 </code></pre></div>
 
@@ -269,18 +269,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">available</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the feature is available and/or set it.</span>
+<span class="w">    </span><span class="sd">"""Return True if the feature is available and/or set it.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :param value: (bool or None) Make the feature available or not.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_available</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">set_available</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="kc">False</span>
 </code></pre></div>
 
@@ -306,15 +306,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">brief</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the brief description of the feature.</span>
+<span class="w">    </span><span class="sd">"""Return the brief description of the feature.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_brief</span><span class="p">()</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
 
@@ -340,15 +340,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the description of the feature</span>
+<span class="w">    </span><span class="sd">"""Return the description of the feature</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_desc</span><span class="p">()</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
 
@@ -380,19 +380,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">packages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the dictionary of system dependencies of the feature.</span>
+<span class="w">    </span><span class="sd">"""Return the dictionary of system dependencies of the feature.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (dict) key=package; value=version</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">DepsFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_packages</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Feature </span><span class="si">{}</span><span class="s1"> is not a DepsFeature:No packages are defined.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Feature </span><span class="si">{}</span><span class="s1"> is not a DepsFeature:No packages are defined.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">dict</span><span class="p">()</span>
 </code></pre></div>
 
@@ -424,12 +424,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pypi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the dictionary of pip dependencies of the feature.</span>
+<span class="w">    </span><span class="sd">"""Return the dictionary of pip dependencies of the feature.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (dict) key=package; value=version</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">DepsFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -438,8 +438,8 @@ View Source
                     <span class="n">pips</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_pypi_package_version</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">pips</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Feature </span><span class="si">{}</span><span class="s1"> is not a DepsFeature:No pypi is defined.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Feature </span><span class="si">{}</span><span class="s1"> is not a DepsFeature:No pypi is defined.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">dict</span><span class="p">()</span>
 </code></pre></div>
 
@@ -471,12 +471,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pypi_alt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the dictionary of alternative pip dependencies of the feature.</span>
+<span class="w">    </span><span class="sd">"""Return the dictionary of alternative pip dependencies of the feature.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (dict) key=package; value=version</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">DepsFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -485,8 +485,8 @@ View Source
                     <span class="n">pips</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_pypi_alt_package_version</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">pips</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Feature </span><span class="si">{}</span><span class="s1"> is not a DepsFeature:No alt pypi is defined.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Feature </span><span class="si">{}</span><span class="s1"> is not a DepsFeature:No alt pypi is defined.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">dict</span><span class="p">()</span>
 </code></pre></div>
 
@@ -518,19 +518,19 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pypi_opt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">package_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the options of a pip dependency of the feature.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pypi_opt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">package_name</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the options of a pip dependency of the feature.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :param package_name: (str) Name of a pip package of the feature</span>
 <span class="sd">        :return: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">DepsFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_pip_options</span><span class="p">(</span><span class="n">package_name</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -548,7 +548,7 @@ If no module is importable, the feature is set as unavailable and disabled.</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">features</span> <span class="o">=</span> <span class="n">Features</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;/path/to/features.ini&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">features</span> <span class="o">=</span> <span class="n">Features</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">"/path/to/features.ini"</span><span class="p">)</span>
  <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">features</span><span class="o">.</span><span class="n">check_pip_deps</span><span class="p">()</span>
 </code></pre></div>
 
@@ -560,18 +560,18 @@ If no module is importable, the feature is set as unavailable and disabled.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_pip_deps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check Python (pip) dependencies for all enabled &#39;deps&#39; features.</span>
+<span class="w">    </span><span class="sd">"""Check Python (pip) dependencies for all enabled 'deps' features.</span>
 
 <span class="sd">        This method checks each DepsFeature for the presence of required Python modules,</span>
-<span class="sd">        as specified in the &#39;pip_test&#39; field (supporting alternatives via &#39;|&#39;).</span>
+<span class="sd">        as specified in the 'pip_test' field (supporting alternatives via '|').</span>
 <span class="sd">        The feature is set as available if at least one required module (per group) is importable.</span>
 <span class="sd">        If no module is importable, the feature is set as unavailable and disabled.</span>
 
 <span class="sd">        :example:</span>
-<span class="sd">            &gt; features = Features(filename=&quot;/path/to/features.ini&quot;)</span>
+<span class="sd">            &gt; features = Features(filename="/path/to/features.ini")</span>
 <span class="sd">            &gt; features.check_pip_deps()</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pip_test_deps</span><span class="p">():</span>
         <span class="n">feat</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_enable</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -586,7 +586,7 @@ View Source
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
             <span class="n">feat</span><span class="o">.</span><span class="n">set_available</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">feat</span><span class="o">.</span><span class="n">set_enable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature &#39;</span><span class="si">{</span><span class="n">fid</span><span class="si">}</span><span class="s2">&#39; disabled: missing Python dependency (see pip_test: &#39;</span><span class="si">{</span><span class="n">pip_test</span><span class="si">}</span><span class="s2">&#39;).&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Feature '</span><span class="si">{</span><span class="n">fid</span><span class="si">}</span><span class="s2">' disabled: missing Python dependency (see pip_test: '</span><span class="si">{</span><span class="n">pip_test</span><span class="si">}</span><span class="s2">')."</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -611,16 +611,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_pip_test_deps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of deps feature IDs with a non-empty pip_test field.</span>
+<span class="w">    </span><span class="sd">"""Return the list of deps feature IDs with a non-empty pip_test field.</span>
 
 <span class="sd">        :return: (list) List of feature identifiers</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">ids</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">DepsFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">pip_test</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_pip_test</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">pip_test</span> <span class="ow">and</span> <span class="n">pip_test</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pip_test</span> <span class="ow">and</span> <span class="n">pip_test</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">''</span><span class="p">:</span>
                 <span class="n">ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">ids</span>
 </code></pre></div>
@@ -653,19 +653,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the command to execute for the feature.</span>
+<span class="w">    </span><span class="sd">"""Return the command to execute for the feature.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">DepsFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_cmd</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Feature </span><span class="si">{}</span><span class="s1"> is not a DepsFeature:No cmd is defined.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Feature </span><span class="si">{}</span><span class="s1"> is not a DepsFeature:No cmd is defined.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">()</span>
 </code></pre></div>
 
@@ -689,13 +689,13 @@ the feature is marked as unavailable and disabled.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_cmd_deps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check system command availability for all enabled &#39;deps&#39; features.</span>
+<span class="w">    </span><span class="sd">"""Check system command availability for all enabled 'deps' features.</span>
 
-<span class="sd">        This method uses the &#39;cmd_test&#39; field to verify whether the required</span>
+<span class="sd">        This method uses the 'cmd_test' field to verify whether the required</span>
 <span class="sd">        system command is available in the environment. If not found,</span>
 <span class="sd">        the feature is marked as unavailable and disabled.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">DepsFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">continue</span>
@@ -715,7 +715,7 @@ View Source
         <span class="n">feat</span><span class="o">.</span><span class="n">set_available</span><span class="p">(</span><span class="n">available</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">available</span><span class="p">:</span>
             <span class="n">feat</span><span class="o">.</span><span class="n">set_enable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature &#39;</span><span class="si">{</span><span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39; disabled: missing system command (see cmd_test: &#39;</span><span class="si">{</span><span class="n">test_command</span><span class="si">}</span><span class="s2">&#39;).&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Feature '</span><span class="si">{</span><span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span><span class="si">}</span><span class="s2">' disabled: missing system command (see cmd_test: '</span><span class="si">{</span><span class="n">test_command</span><span class="si">}</span><span class="s2">')."</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -750,7 +750,7 @@ disabled if not. Its state is unchanged if it has nothing to be tested.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_feature_deps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check the dependencies of the given &#39;deps&#39; feature.</span>
+<span class="w">    </span><span class="sd">"""Check the dependencies of the given 'deps' feature.</span>
 
 <span class="sd">        The feature is made available and enabled if both its modules can be</span>
 <span class="sd">        imported and its commands can be executed. It is made unavailable and</span>
@@ -759,13 +759,13 @@ View Source
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (bool) True if the dependencies of the feature are satisfied</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">DepsFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Feature </span><span class="si">{}</span><span class="s1"> is not a DepsFeature:No dependency is defined.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Feature </span><span class="si">{}</span><span class="s1"> is not a DepsFeature:No dependency is defined.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
                 <span class="k">return</span> <span class="kc">False</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Checking dependencies for feature &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Checking dependencies for feature '</span><span class="si">{}</span><span class="s2">'"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
             <span class="n">test_modules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_pip_test</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">get_pip_test</span><span class="p">())</span>
             <span class="n">test_commands</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_cmd_test</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">get_cmd_test</span><span class="p">())</span>
             <span class="k">if</span> <span class="n">test_commands</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">test_modules</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -775,12 +775,12 @@ View Source
             <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">feat</span><span class="o">.</span><span class="n">set_available</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
                 <span class="n">feat</span><span class="o">.</span><span class="n">set_enable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature &#39;</span><span class="si">{</span><span class="n">fid</span><span class="si">}</span><span class="s2">&#39; disabled: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Feature '</span><span class="si">{</span><span class="n">fid</span><span class="si">}</span><span class="s2">' disabled: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
             <span class="n">feat</span><span class="o">.</span><span class="n">set_available</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">feat</span><span class="o">.</span><span class="n">set_enable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="kc">False</span>
 </code></pre></div>
 
@@ -809,14 +809,14 @@ be enabled for all features, or only the enabled ones.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_deps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_all</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check all dependencies for all enabled &#39;deps&#39; features.</span>
+<span class="w">    </span><span class="sd">"""Check all dependencies for all enabled 'deps' features.</span>
 
 <span class="sd">        Check if both the imports and the commands are available and can</span>
 <span class="sd">        be enabled for all features, or only the enabled ones.</span>
 
 <span class="sd">        :param test_all: (bool) If True, all dependencies are checked, not only the enabled ones</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">DepsFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">continue</span>
@@ -853,19 +853,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lang</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the lang code of the linguistic resource to download.</span>
+<span class="w">    </span><span class="sd">"""Return the lang code of the linguistic resource to download.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">LangFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_lang</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Feature </span><span class="si">{}</span><span class="s1"> is not a LangFeature:No lang is defined.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Feature </span><span class="si">{}</span><span class="s1"> is not a LangFeature:No lang is defined.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">()</span>
 </code></pre></div>
 
@@ -897,19 +897,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">annot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name the annotation resource to download.</span>
+<span class="w">    </span><span class="sd">"""Return the name the annotation resource to download.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">AnnotFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_annot</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Feature </span><span class="si">{}</span><span class="s1"> is not an AnnotFeature:No annot is defined.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Feature </span><span class="si">{}</span><span class="s1"> is not an AnnotFeature:No annot is defined.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">()</span>
 </code></pre></div>
 
@@ -941,19 +941,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">spin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the spin-off resource to download.</span>
+<span class="w">    </span><span class="sd">"""Return the name of the spin-off resource to download.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">SpinOffFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_spin</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Feature </span><span class="si">{}</span><span class="s1"> is not a SpinOffFeature:No spin is defined.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Feature </span><span class="si">{}</span><span class="s1"> is not a SpinOffFeature:No spin is defined.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">()</span>
 </code></pre></div>
 
@@ -985,19 +985,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">spin_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the url of the spin-off resource.</span>
+<span class="w">    </span><span class="sd">"""Return the url of the spin-off resource.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">SpinOffFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_spin_url</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Feature </span><span class="si">{}</span><span class="s1"> is not a SpinOffFeature:No spin is defined.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Feature </span><span class="si">{}</span><span class="s1"> is not a SpinOffFeature:No spin is defined.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">()</span>
 </code></pre></div>
 
@@ -1029,19 +1029,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">spin_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the version of the spin-off resource.</span>
+<span class="w">    </span><span class="sd">"""Return the version of the spin-off resource.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">fid</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">SpinOffFeature</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">feat</span><span class="o">.</span><span class="n">get_spin_version</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Feature </span><span class="si">{}</span><span class="s1"> is not a SpinOffFeature:No spin is defined.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Feature </span><span class="si">{}</span><span class="s1"> is not a SpinOffFeature:No spin is defined.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Unknown feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">()</span>
 </code></pre></div>
 
@@ -1067,35 +1067,35 @@ and "req_" and the "pip" attributes are defined.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Browses the features.ini file and instantiate a Feature().</span>
+<span class="w">    </span><span class="sd">"""Browses the features.ini file and instantiate a Feature().</span>
 
-<span class="sd">        Only unix-based systems can have package requirements. If they don&#39;t,</span>
-<span class="sd">        the corresponding req_ attribute is missing or empty or with &quot;nil&quot;.</span>
+<span class="sd">        Only unix-based systems can have package requirements. If they don't,</span>
+<span class="sd">        the corresponding req_ attribute is missing or empty or with "nil".</span>
 
-<span class="sd">        A feature is not available for a system, if none of the corresponding &quot;cmd_&quot;</span>
-<span class="sd">        and &quot;req_&quot; and the &quot;pip&quot; attributes are defined.</span>
+<span class="sd">        A feature is not available for a system, if none of the corresponding "cmd_"</span>
+<span class="sd">        and "req_" and the "pip" attributes are defined.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">features_parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__init_features</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="n">features_parser</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__set_feature</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">features_parser</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Missing or wrong feature type for feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Missing or wrong feature type for feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
             <span class="k">continue</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">desc</span> <span class="o">=</span> <span class="n">features_parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;brief&#39;</span><span class="p">)</span>
+            <span class="n">desc</span> <span class="o">=</span> <span class="n">features_parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">'brief'</span><span class="p">)</span>
             <span class="n">feature</span><span class="o">.</span><span class="n">set_brief</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">desc</span> <span class="o">=</span> <span class="n">features_parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;desc&#39;</span><span class="p">)</span>
+            <span class="n">desc</span> <span class="o">=</span> <span class="n">features_parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">'desc'</span><span class="p">)</span>
             <span class="n">feature</span><span class="o">.</span><span class="n">set_desc</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">e</span> <span class="o">=</span> <span class="n">features_parser</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;enable&#39;</span><span class="p">)</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="n">features_parser</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">'enable'</span><span class="p">)</span>
             <span class="n">feature</span><span class="o">.</span><span class="n">set_enable</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
             <span class="k">pass</span>
@@ -1145,35 +1145,35 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_parse_pip_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pip_test_str</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a pip_test string into a tuple of tuples (AND/OR structure).</span>
+<span class="w">    </span><span class="sd">"""Parse a pip_test string into a tuple of tuples (AND/OR structure).</span>
 
 <span class="sd">        - If the string contains spaces, each space separates AND groups.</span>
-<span class="sd">        - Within each group, &#39;|&#39; separates OR alternatives.</span>
-<span class="sd">        - If there are no spaces but a &#39;|&#39;, treat the whole string as one OR group.</span>
+<span class="sd">        - Within each group, '|' separates OR alternatives.</span>
+<span class="sd">        - If there are no spaces but a '|', treat the whole string as one OR group.</span>
 <span class="sd">        - If there is only one module name, return a single group with one element.</span>
 
 <span class="sd">        Examples:</span>
-<span class="sd">            &#39;a|b c&#39;      -&gt; ((&#39;a&#39;, &#39;b&#39;), (&#39;c&#39;,))</span>
-<span class="sd">            &#39;a|b&#39;        -&gt; ((&#39;a&#39;, &#39;b&#39;),)</span>
-<span class="sd">            &#39;a&#39;          -&gt; ((&#39;a&#39;,),)</span>
+<span class="sd">            'a|b c'      -&gt; (('a', 'b'), ('c',))</span>
+<span class="sd">            'a|b'        -&gt; (('a', 'b'),)</span>
+<span class="sd">            'a'          -&gt; (('a',),)</span>
 
 <span class="sd">        :param pip_test_str: (str|None) The pip_test string from the feature.</span>
 <span class="sd">        :return: (tuple of tuple of str) or None if input is empty.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">pip_test_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">pip_test_str</span> <span class="o">=</span> <span class="n">pip_test_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">pip_test_str</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">pip_test_str</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="s1">&#39; &#39;</span> <span class="ow">in</span> <span class="n">pip_test_str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s1">' '</span> <span class="ow">in</span> <span class="n">pip_test_str</span><span class="p">:</span>
         <span class="n">and_groups</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">pip_test_str</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
-            <span class="n">or_group</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">m</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+            <span class="n">or_group</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">m</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'|'</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
             <span class="n">and_groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">or_group</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">and_groups</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39;|&#39;</span> <span class="ow">in</span> <span class="n">pip_test_str</span><span class="p">:</span>
-        <span class="n">or_group</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">m</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">pip_test_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+    <span class="k">if</span> <span class="s1">'|'</span> <span class="ow">in</span> <span class="n">pip_test_str</span><span class="p">:</span>
+        <span class="n">or_group</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">m</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">pip_test_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'|'</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">or_group</span><span class="p">,)</span>
     <span class="k">return</span> <span class="p">((</span><span class="n">pip_test_str</span><span class="p">,),)</span>
 </code></pre></div>
@@ -1212,24 +1212,24 @@ Commands are separated by a semicolon. Each command is stripped of spaces.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_parse_cmd_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd_test_str</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a cmd_test string into a tuple of commands.</span>
+<span class="w">    </span><span class="sd">"""Parse a cmd_test string into a tuple of commands.</span>
 
 <span class="sd">        Parse the cmd_test field and return a tuple of command strings.</span>
 <span class="sd">        Commands are separated by a semicolon. Each command is stripped of spaces.</span>
 
 <span class="sd">        Example:</span>
-<span class="sd">            &quot;ffmpeg -h;ls&quot; -&gt; (&#39;ffmpeg -h&#39;, &#39;ls&#39;)</span>
+<span class="sd">            "ffmpeg -h;ls" -&gt; ('ffmpeg -h', 'ls')</span>
 
 <span class="sd">        :param cmd_test_str: (str|None) The cmd_test string from the feature.</span>
 <span class="sd">        :return: (tuple of str) or None if input is empty.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">cmd_test_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">cmd_test_str</span> <span class="o">=</span> <span class="n">cmd_test_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">cmd_test_str</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">cmd_test_str</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
-    <span class="k">return</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">cmd</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">cmd_test_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">cmd</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">cmd</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">cmd_test_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">';'</span><span class="p">)</span> <span class="k">if</span> <span class="n">cmd</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">''</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -1247,17 +1247,17 @@ View Source
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__set_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
     <span class="n">feature</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">ft</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">&#39;deps&#39;</span><span class="p">:</span>
+        <span class="n">ft</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">'type'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">'deps'</span><span class="p">:</span>
             <span class="n">feature</span> <span class="o">=</span> <span class="n">DepsFeature</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__fill_deps_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">parser</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">&#39;lang&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">'lang'</span><span class="p">:</span>
             <span class="n">feature</span> <span class="o">=</span> <span class="n">LangFeature</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__fill_lang_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">&#39;annot&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">'annot'</span><span class="p">:</span>
             <span class="n">feature</span> <span class="o">=</span> <span class="n">AnnotFeature</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__fill_annot_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">&#39;spin&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">'spin'</span><span class="p">:</span>
             <span class="n">feature</span> <span class="o">=</span> <span class="n">SpinOffFeature</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__fill_spin_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">parser</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
@@ -1280,55 +1280,55 @@ View Source
     <span class="n">fid</span> <span class="o">=</span> <span class="n">feature</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__req</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;nil&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">'nil'</span><span class="p">:</span>
             <span class="n">depend_packages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parse_depend</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
             <span class="n">feature</span><span class="o">.</span><span class="n">set_packages</span><span class="p">(</span><span class="n">depend_packages</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;pip&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;nil&#39;</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">'pip'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">'nil'</span><span class="p">:</span>
             <span class="n">depend_pypi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parse_depend</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">depend_pypi</span><span class="p">:</span>
                 <span class="n">feature</span><span class="o">.</span><span class="n">add_pypi</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">depend_pypi</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
     <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;pip_alt&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;nil&#39;</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">'pip_alt'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">'nil'</span><span class="p">:</span>
             <span class="n">depend_pypi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parse_depend</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">depend_pypi</span><span class="p">:</span>
                 <span class="n">feature</span><span class="o">.</span><span class="n">add_pypi_alt</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">depend_pypi</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
     <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">opt</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;pip_opt&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">opt</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;nil&#39;</span><span class="p">:</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">'pip_opt'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">opt</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">'nil'</span><span class="p">:</span>
             <span class="n">feature</span><span class="o">.</span><span class="n">set_pip_options</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__parse_pip_options</span><span class="p">(</span><span class="n">opt</span><span class="p">))</span>
     <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">pip_test</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;pip_test&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pip_test</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">pip_test</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;nil&#39;</span><span class="p">:</span>
+        <span class="n">pip_test</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">'pip_test'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pip_test</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">pip_test</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">'nil'</span><span class="p">:</span>
             <span class="n">feature</span><span class="o">.</span><span class="n">set_pip_test</span><span class="p">(</span><span class="n">pip_test</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cmdos</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">cmd</span> <span class="o">!=</span> <span class="s1">&#39;none&#39;</span> <span class="ow">and</span> <span class="p">(</span><span class="n">cmd</span> <span class="o">!=</span> <span class="s1">&#39;nil&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">cmd</span> <span class="o">!=</span> <span class="s1">'none'</span> <span class="ow">and</span> <span class="p">(</span><span class="n">cmd</span> <span class="o">!=</span> <span class="s1">'nil'</span><span class="p">):</span>
             <span class="n">feature</span><span class="o">.</span><span class="n">set_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">cmd_test</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;cmd_test&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd_test</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">cmd_test</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;nil&#39;</span><span class="p">):</span>
+        <span class="n">cmd_test</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">'cmd_test'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd_test</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">cmd_test</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'none'</span><span class="p">,</span> <span class="s1">'nil'</span><span class="p">):</span>
             <span class="n">feature</span><span class="o">.</span><span class="n">set_cmd_test</span><span class="p">(</span><span class="n">cmd_test</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">get_cmd</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">get_pypi_packages</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">get_packages</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">feature</span><span class="o">.</span><span class="n">set_available</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">fid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get_feature_ids</span><span class="p">():</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39; --&gt;&gt; newly available feature: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">' --&gt;&gt; newly available feature: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -1361,7 +1361,7 @@ View Source
     <span class="n">feature</span><span class="o">.</span><span class="n">set_available</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">fid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get_feature_ids</span><span class="p">():</span>
         <span class="n">cfg</span><span class="o">.</span><span class="n">set_feature</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39; -----&gt;&gt;&gt; new available feature: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">' -----&gt;&gt;&gt; new available feature: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -1377,12 +1377,12 @@ View Source
     <span class="n">fid</span> <span class="o">=</span> <span class="n">feature</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
     <span class="n">feature</span><span class="o">.</span><span class="n">set_spin</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">)</span>
-        <span class="n">version</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">'url'</span><span class="p">)</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">'version'</span><span class="p">)</span>
         <span class="n">feature</span><span class="o">.</span><span class="n">set_spin_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="n">feature</span><span class="o">.</span><span class="n">set_spin_version</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Missing or invalid url or version for spin-off feature </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Missing or invalid url or version for spin-off feature </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
         <span class="n">feature</span><span class="o">.</span><span class="n">set_available</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">feature</span><span class="o">.</span><span class="n">set_available</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -1404,17 +1404,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__init_features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a parsed version of the features.ini file.</span>
+<span class="w">    </span><span class="sd">"""Return a parsed version of the features.ini file.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">cfg_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_features_filename</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">cfg_filename</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cfg_filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Installation error: the file </span><span class="si">{filename}</span><span class="s1"> to configure the software is missing.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">cfg_filename</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">'Installation error: the file </span><span class="si">{filename}</span><span class="s1"> to configure the software is missing.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">cfg_filename</span><span class="p">))</span>
     <span class="n">features_parser</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">features_parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_features_filename</span><span class="p">())</span>
     <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">MissingSectionHeaderError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Malformed features configuration file </span><span class="si">{}</span><span class="s1">: missing section header.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg_filename</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">'Malformed features configuration file </span><span class="si">{}</span><span class="s1">: missing section header.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg_filename</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">features_parser</span>
 </code></pre></div>
 
@@ -1447,19 +1447,19 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">__parse_depend</span><span class="p">(</span><span class="n">string_require</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a dictionary from the string given as an argument.</span>
+<span class="w">    </span><span class="sd">"""Create a dictionary from the string given as an argument.</span>
 
 <span class="sd">        :param string_require: (string) The value of one of the req_*** key in one of the section of feature.ini.</span>
 <span class="sd">        :return: (dict)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">string_require</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">string_require</span><span class="p">)</span>
-    <span class="n">dependencies</span> <span class="o">=</span> <span class="n">string_require</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="n">string_require</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span>
     <span class="n">depend</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">dependencies</span><span class="p">:</span>
-        <span class="n">tab</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+        <span class="n">tab</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">depend</span><span class="p">[</span><span class="n">line</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">depend</span><span class="p">[</span><span class="n">line</span><span class="p">]</span> <span class="o">=</span> <span class="s1">''</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">depend</span><span class="p">[</span><span class="n">tab</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">tab</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">depend</span>
@@ -1498,27 +1498,27 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">__parse_pip_options</span><span class="p">(</span><span class="n">string_options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a dictionary from the pip_opt value given as an argument.</span>
+<span class="w">    </span><span class="sd">"""Create a dictionary from the pip_opt value given as an argument.</span>
 
 <span class="sd">        Each line is either the options of a given pip package, in the form</span>
-<span class="sd">        &quot;package:options&quot;, or the options of all the packages of the feature.</span>
+<span class="sd">        "package:options", or the options of all the packages of the feature.</span>
 <span class="sd">        The latter are stored with an empty string as key.</span>
 
 <span class="sd">        :param string_options: (string) The value of the pip_opt key in one of the section of features.ini.</span>
 <span class="sd">        :return: (dict) key=package name or an empty string; value=options</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">string_options</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">string_options</span><span class="p">)</span>
     <span class="n">options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">string_options</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">string_options</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">):</span>
         <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="n">tab</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">maxsplit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39; &#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tab</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">tab</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">,</span> <span class="n">maxsplit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">' '</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tab</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="n">options</span><span class="p">[</span><span class="n">tab</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">tab</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">options</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span>
+            <span class="n">options</span><span class="p">[</span><span class="s1">''</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span>
     <span class="k">return</span> <span class="n">options</span>
 </code></pre></div>
 
@@ -1541,7 +1541,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print each Feature of the list. &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Print each Feature of the list. """</span>
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="fm">__str__</span><span class="p">())</span>
 </code></pre></div>
@@ -1575,7 +1575,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of features.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of features."""</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__features</span><span class="p">)</span>
 </code></pre></div>
 
@@ -1600,7 +1600,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Value can be either a Feature or its identifier.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Value can be either a Feature or its identifier."""</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Feature</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__features</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1618,7 +1618,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

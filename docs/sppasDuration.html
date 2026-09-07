@@ -91,12 +91,12 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">vagueness</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasDuration instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasDuration instance.</span>
 
 <span class="sd">    :param value: (float) value of the duration.</span>
 <span class="sd">    :param vagueness: (float) represents the vagueness of the value.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -122,7 +122,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return myself.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return myself."""</span>
     <span class="k">return</span> <span class="bp">self</span>
 </code></pre></div>
 
@@ -148,13 +148,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the value/vagueness of another sppasDuration instance.</span>
+<span class="w">    </span><span class="sd">"""Set the value/vagueness of another sppasDuration instance.</span>
 
 <span class="sd">        :param other: (sppasDuration)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasDuration'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_margin</span><span class="p">()</span>
 </code></pre></div>
@@ -175,7 +175,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the duration value (float).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the duration value (float)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
 </code></pre></div>
 
@@ -201,18 +201,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the duration to a new value.</span>
+<span class="w">    </span><span class="sd">"""Set the duration to a new value.</span>
 
 <span class="sd">        :param value: (float) the new duration value.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="mf">0.0</span>
             <span class="k">raise</span> <span class="n">AnnDataNegValueError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -231,7 +231,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the vagueness of the duration (float).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the vagueness of the duration (float)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span>
 </code></pre></div>
 
@@ -257,18 +257,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vagueness</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the vagueness margin of the duration.</span>
+<span class="w">    </span><span class="sd">"""Fix the vagueness margin of the duration.</span>
 
 <span class="sd">        :param vagueness: (float) the duration margin.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vagueness</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span> <span class="o">=</span> <span class="mf">0.0</span>
             <span class="k">raise</span> <span class="n">AnnDataNegValueError</span><span class="p">(</span><span class="n">vagueness</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">vagueness</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">vagueness</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -287,7 +287,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of self.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a deep copy of self."""</span>
     <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
     <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span>
     <span class="k">return</span> <span class="n">sppasDuration</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
@@ -319,7 +319,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;Duration: </span><span class="si">{:f}</span><span class="s1">, </span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_margin</span><span class="p">())</span>
+    <span class="k">return</span> <span class="s1">'Duration: </span><span class="si">{:f}</span><span class="s1">, </span><span class="si">{:f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_margin</span><span class="p">())</span>
 </code></pre></div>
 
     </details>
@@ -332,7 +332,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;(</span><span class="si">{:f}</span><span class="s1">, </span><span class="si">{:f}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_margin</span><span class="p">())</span>
+    <span class="k">return</span> <span class="s1">'(</span><span class="si">{:f}</span><span class="s1">, </span><span class="si">{:f}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_margin</span><span class="p">())</span>
 </code></pre></div>
 
     </details>
@@ -372,13 +372,13 @@ This relationship takes into account the vagueness.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Equal is required to use &#39;==&#39; between 2 sppasDuration instances or</span>
+<span class="w">    </span><span class="sd">"""Equal is required to use '==' between 2 sppasDuration instances or</span>
 <span class="sd">        between a sppasDuration and an other object representing time.</span>
 <span class="sd">        This relationship takes into account the vagueness.</span>
 
 <span class="sd">        :param other: (Duration, float, int) is the other duration to compare with.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -414,12 +414,12 @@ or between a sppasDuration and an other time object.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;LowerThan is required to use &#39;&lt;&#39; between 2 sppasDuration instances</span>
+<span class="w">    </span><span class="sd">"""LowerThan is required to use '&lt;' between 2 sppasDuration instances</span>
 <span class="sd">        or between a sppasDuration and an other time object.</span>
 
 <span class="sd">        :param other: (Duration, float, int) is the other duration to compare with.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">&lt;</span> <span class="n">other</span>
@@ -448,12 +448,12 @@ or between a Duration and an other time object.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;GreaterThan is required to use &#39;&gt;&#39; between 2 Duration instances</span>
+<span class="w">    </span><span class="sd">"""GreaterThan is required to use '&gt;' between 2 Duration instances</span>
 <span class="sd">        or between a Duration and an other time object.</span>
 
 <span class="sd">        :param other: (Duration, float, int) is the other duration to compare with.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">&gt;</span> <span class="n">other</span>
@@ -480,7 +480,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Not equals.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Not equals."""</span>
     <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
 </code></pre></div>
 
@@ -505,7 +505,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lesser or equal.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Lesser or equal."""</span>
     <span class="k">return</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="n">other</span> <span class="ow">or</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
 </code></pre></div>
 
@@ -530,7 +530,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Greater or equal.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Greater or equal."""</span>
     <span class="k">return</span> <span class="bp">self</span> <span class="o">&gt;</span> <span class="n">other</span> <span class="ow">or</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
 </code></pre></div>
 
@@ -542,7 +542,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

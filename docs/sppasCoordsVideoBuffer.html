@@ -84,12 +84,12 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new instance.</span>
 
 <span class="sd">    :param video: (str) The video filename to browse</span>
 <span class="sd">    :param size: (int) Number of images of the buffer or -1 for auto</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasCoordsVideoBuffer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">()]</span> <span class="o">*</span> <span class="n">size</span>
 </code></pre></div>
@@ -113,7 +113,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override. Reset all the info related to the buffer content.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Override. Reset all the info related to the buffer content."""</span>
     <span class="n">sppasVideoReaderBuffer</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">()]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">()</span>
 </code></pre></div>
@@ -134,9 +134,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override. Fill in the buffer with the next images &amp; reset coords.</span>
+<span class="w">    </span><span class="sd">"""Override. Fill in the buffer with the next images &amp; reset coords.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="n">sppasVideoReaderBuffer</span><span class="o">.</span><span class="n">next</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">()]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">ret</span>
@@ -170,18 +170,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the coordinates of a given image.</span>
+<span class="w">    </span><span class="sd">"""Return the coordinates of a given image.</span>
 
 <span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
 <span class="sd">        :return: (list of sppasCoords) Coordinates</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">buffer_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__len__</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Coordinates were not properly associated to images of the buffer&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Coordinates were not properly associated to images of the buffer'</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span>
 </code></pre></div>
 
@@ -208,20 +208,20 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the coordinates to a given image index.</span>
+<span class="w">    </span><span class="sd">"""Set the coordinates to a given image index.</span>
 
 <span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
 <span class="sd">        :param coords: (list of sppasCoords) Set the list of coords</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">)),</span> <span class="s1">&#39;sppasCoords&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">)),</span> <span class="s1">'sppasCoords'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">coords</span><span class="p">)),</span> <span class="s1">&#39;list/tuple&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">coords</span><span class="p">)),</span> <span class="s1">'list/tuple'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -246,7 +246,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">index_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Index of the given coordinate.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Index of the given coordinate."""</span>
     <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
 </code></pre></div>
@@ -280,19 +280,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord_index</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a coordinate of a given image.</span>
+<span class="w">    </span><span class="sd">"""Return a coordinate of a given image.</span>
 
 <span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
 <span class="sd">        :param coord_index: (int) Index of the coord</span>
 <span class="sd">        :return: (sppasCoords) Coordinates</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No coordinate at buffer index </span><span class="si">{:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'No coordinate at buffer index </span><span class="si">{:d}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">))</span>
     <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
     <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">coord_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">][</span><span class="n">coord_index</span><span class="p">]</span>
-    <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;Invalid coordinate index value </span><span class="si">{:d}</span><span class="s1">. Should range [0; </span><span class="si">{:d}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coord_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">])))</span>
+    <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">'Invalid coordinate index value </span><span class="si">{:d}</span><span class="s1">. Should range [0; </span><span class="si">{:d}</span><span class="s1">]'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coord_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">])))</span>
 </code></pre></div>
 
     </details>
@@ -319,21 +319,21 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord_index</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Assign the coordinate to a given image index.</span>
+<span class="w">    </span><span class="sd">"""Assign the coordinate to a given image index.</span>
 
 <span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
 <span class="sd">        :param coord_index: (int) Index of the coord</span>
 <span class="sd">        :param coord: (sppasCoords) Append the given coord</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
     <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">coord_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">][</span><span class="n">coord_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">coord</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid coordinate index value.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Invalid coordinate index value.'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -359,17 +359,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">append_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append the coordinates to a given image index.</span>
+<span class="w">    </span><span class="sd">"""Append the coordinates to a given image index.</span>
 
 <span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
 <span class="sd">        :param coord: (sppasCoords) Append the given coord</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -395,12 +395,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove the coordinates to a given image index.</span>
+<span class="w">    </span><span class="sd">"""Remove the coordinates to a given image index.</span>
 
 <span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
 <span class="sd">        :param coord: (sppasCoords) Remove the given coord</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">coord</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
@@ -429,12 +429,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pop_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord_index</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove the coordinates to a given image index.</span>
+<span class="w">    </span><span class="sd">"""Remove the coordinates to a given image index.</span>
 
 <span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
 <span class="sd">        :param coord_index: (int) Pop the given coord</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">coord_index</span><span class="p">)</span>
 </code></pre></div>
@@ -447,7 +447,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

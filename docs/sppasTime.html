@@ -84,11 +84,11 @@
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">sppasTime</span><span class="p">(</span><span class="s1">&#39;2018-04-09T15:00:37+02:00&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">sppasTime</span><span class="p">(</span><span class="s1">'2018-04-09T15:00:37+02:00'</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">now</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;2018-04-09T15:00:37+02:00&#39;</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="s1">'2018-04-09T15:00:37+02:00'</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">gmt</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;+02:00&#39;</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="s1">'+02:00'</span>
 </code></pre></div>
 
     </article>
@@ -99,39 +99,39 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">now</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasTime() instance.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasTime() instance.</span>
 
 <span class="sd">    Given time must be formatted exactly like:</span>
-<span class="sd">    &#39;%Y-%m-%dT%H:%M:%S{:0=+3d}:{:0=2d}&#39;</span>
+<span class="sd">    '%Y-%m-%dT%H:%M:%S{:0=+3d}:{:0=2d}'</span>
 
 <span class="sd">    :param now: (str) String representing the current time</span>
 
 <span class="sd">    :Example:</span>
 
-<span class="sd">    &gt;&gt;&gt; p = sppasTime(&#39;2018-04-09T15:00:37+02:00&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; p = sppasTime('2018-04-09T15:00:37+02:00')</span>
 <span class="sd">    &gt;&gt;&gt; p.now</span>
-<span class="sd">    &gt;&gt;&gt; &#39;2018-04-09T15:00:37+02:00&#39;</span>
+<span class="sd">    &gt;&gt;&gt; '2018-04-09T15:00:37+02:00'</span>
 <span class="sd">    &gt;&gt;&gt; p.gmt</span>
-<span class="sd">    &gt;&gt;&gt; &#39;+02:00&#39;</span>
+<span class="sd">    &gt;&gt;&gt; '+02:00'</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">now</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">ctz</span> <span class="o">=</span> <span class="o">-</span><span class="n">time</span><span class="o">.</span><span class="n">altzone</span> <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span><span class="o">.</span><span class="n">tm_isdst</span> <span class="ow">and</span> <span class="n">time</span><span class="o">.</span><span class="n">daylight</span> <span class="k">else</span> <span class="o">-</span><span class="n">time</span><span class="o">.</span><span class="n">timezone</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S</span><span class="si">{:0=+3d}</span><span class="s1">:</span><span class="si">{:0=2d}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ctz</span> <span class="o">//</span> <span class="mi">3600</span><span class="p">,</span> <span class="n">ctz</span> <span class="o">%</span> <span class="mi">3600</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S</span><span class="si">{:0=+3d}</span><span class="s1">:</span><span class="si">{:0=2d}</span><span class="s1">'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ctz</span> <span class="o">//</span> <span class="mi">3600</span><span class="p">,</span> <span class="n">ctz</span> <span class="o">%</span> <span class="mi">3600</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">now</span> <span class="o">=</span> <span class="n">now</span>
-    <span class="k">if</span> <span class="s1">&#39;T&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span> <span class="ow">or</span> <span class="s1">&#39;-&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span> <span class="ow">or</span> <span class="s1">&#39;:&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">UtilsDataTypeError</span><span class="p">(</span><span class="s1">&#39;sppasTime(now)&#39;</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S</span><span class="si">{:0=+3d}</span><span class="s1">:</span><span class="si">{:0=2d}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">'T'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span> <span class="ow">or</span> <span class="s1">'-'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span> <span class="ow">or</span> <span class="s1">':'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UtilsDataTypeError</span><span class="p">(</span><span class="s1">'sppasTime(now)'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S</span><span class="si">{:0=+3d}</span><span class="s1">:</span><span class="si">{:0=2d}</span><span class="s1">'</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">month</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">day</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hours</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'-'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">month</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'-'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">day</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'-'</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hours</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">:</span><span class="o">-</span><span class="mi">6</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">:]</span>
     <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">UtilsDataTypeError</span><span class="p">(</span><span class="s1">&#39;sppasTime(now)&#39;</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S</span><span class="si">{:0=+3d}</span><span class="s1">:</span><span class="si">{:0=2d}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">UtilsDataTypeError</span><span class="p">(</span><span class="s1">'sppasTime(now)'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S</span><span class="si">{:0=+3d}</span><span class="s1">:</span><span class="si">{:0=2d}</span><span class="s1">'</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -142,7 +142,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

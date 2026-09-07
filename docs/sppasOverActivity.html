@@ -83,12 +83,12 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new instance.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasOverActivity</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;overlaps.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasOverActivity</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'overlaps.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_default_out_items</span><span class="p">()</span>
 </code></pre></div>
@@ -118,18 +118,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+<span class="w">    </span><span class="sd">"""Fix all options.</span>
 
 <span class="sd">        :param options: (sppasOption)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;tiername&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'tiername'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_tiername</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;ignore&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'ignore'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_out_items</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'pattern'</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -157,12 +157,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_tiername</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the tiername option.</span>
+<span class="w">    </span><span class="sd">"""Fix the tiername option.</span>
 
 <span class="sd">        :param tier_name: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">tier_name</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">tier_name</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
 </code></pre></div>
 
     </details>
@@ -187,13 +187,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_out_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">str_entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the list of tags to be ignored from the given string.</span>
+<span class="w">    </span><span class="sd">"""Fix the list of tags to be ignored from the given string.</span>
 
 <span class="sd">        :param str_entry: (str) Entries separated by commas</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-    <span class="n">items</span> <span class="o">=</span> <span class="n">str_entry</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">str_entry</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
             <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
@@ -217,11 +217,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_default_out_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the list of tags to be ignored.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Set the list of tags to be ignored."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;noise&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;pause&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'dummy'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'noise'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'pause'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -247,31 +247,31 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">detection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier_spk1</span><span class="p">,</span> <span class="n">tier_spk2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for the overlaps of annotations.</span>
+<span class="w">    </span><span class="sd">"""Search for the overlaps of annotations.</span>
 
 <span class="sd">        :param tier_spk1: (sppasTier)</span>
 <span class="sd">        :param tier_spk2: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">out_tags</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">tier_spk1</span><span class="o">.</span><span class="n">is_bool</span><span class="p">()</span> <span class="ow">and</span> <span class="n">tier_spk2</span><span class="o">.</span><span class="n">is_bool</span><span class="p">():</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span><span class="p">:</span>
-            <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">'bool'</span><span class="p">)</span>
             <span class="n">out_tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">tier_spk1</span><span class="o">.</span><span class="n">is_float</span><span class="p">()</span> <span class="ow">and</span> <span class="n">tier_spk2</span><span class="o">.</span><span class="n">is_float</span><span class="p">():</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span><span class="p">:</span>
-            <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">'float'</span><span class="p">)</span>
             <span class="n">out_tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">tier_spk1</span><span class="o">.</span><span class="n">is_int</span><span class="p">()</span> <span class="ow">and</span> <span class="n">tier_spk2</span><span class="o">.</span><span class="n">is_int</span><span class="p">():</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span><span class="p">:</span>
-            <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">'int'</span><span class="p">)</span>
             <span class="n">out_tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">tier_spk1</span><span class="o">.</span><span class="n">is_string</span><span class="p">()</span> <span class="ow">and</span> <span class="n">tier_spk2</span><span class="o">.</span><span class="n">is_string</span><span class="p">():</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__out_items</span><span class="p">:</span>
-            <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">'str'</span><span class="p">)</span>
             <span class="n">out_tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Two non-empty tiers of the same type were expected.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Two non-empty tiers of the same type were expected.'</span><span class="p">)</span>
     <span class="n">over</span> <span class="o">=</span> <span class="n">OverActivity</span><span class="p">(</span><span class="n">out_tags</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">over</span><span class="o">.</span><span class="n">overlaps</span><span class="p">(</span><span class="n">tier_spk1</span><span class="p">,</span> <span class="n">tier_spk2</span><span class="p">)</span>
 </code></pre></div>
@@ -308,32 +308,32 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return 2 tiers with name given in options.</span>
+<span class="w">    </span><span class="sd">"""Return 2 tiers with name given in options.</span>
 
 <span class="sd">        :param input_files: (list)</span>
 <span class="sd">        :raise: NoTierInputError</span>
 <span class="sd">        :return: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid format of input files.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid format of input files.'</span><span class="p">)</span>
     <span class="n">tier_src</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">tier_src</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">tier_src</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">tier_src</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tier_src</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;A tier with name </span><span class="si">{:s}</span><span class="s1"> was expected but not found.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">]))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'A tier with name </span><span class="si">{:s}</span><span class="s1"> was expected but not found.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">]))</span>
         <span class="k">raise</span> <span class="n">NoTierInputError</span>
     <span class="n">tier_echo</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">tier_echo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">tier_echo</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">tier_echo</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tier_echo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;A tier with name </span><span class="si">{:s}</span><span class="s1"> was expected but not found.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">]))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'A tier with name </span><span class="si">{:s}</span><span class="s1"> was expected but not found.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">]))</span>
         <span class="k">raise</span> <span class="n">NoTierInputError</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">tier_src</span><span class="p">,</span> <span class="n">tier_echo</span><span class="p">)</span>
 </code></pre></div>
@@ -370,7 +370,7 @@ the activity of speaker 1 and the activity of the speaker 2.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on an input.</span>
 
 <span class="sd">        Input files is a list with 2 files:</span>
 <span class="sd">        the activity of speaker 1 and the activity of the speaker 2.</span>
@@ -379,11 +379,11 @@ View Source
 <span class="sd">        :param output: (str) the output name</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier_spk1</span><span class="p">,</span> <span class="n">tier_spk2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
     <span class="n">new_tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detection</span><span class="p">(</span><span class="n">tier_spk1</span><span class="p">,</span> <span class="n">tier_spk2</span><span class="p">)</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'annotation_result_of'</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_tier</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -412,8 +412,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-overlaps&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation uses in an output filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="s1">'-overlaps'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -432,8 +432,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation expects for its input filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-activity&#39;</span><span class="p">)]</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation expects for its input filename."""</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'inputpattern'</span><span class="p">,</span> <span class="s1">'-activity'</span><span class="p">)]</span>
 </code></pre></div>
 
     </details>
@@ -444,7 +444,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

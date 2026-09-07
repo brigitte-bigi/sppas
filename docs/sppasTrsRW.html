@@ -85,11 +85,11 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Transcription reader-writer.</span>
+<span class="w">    </span><span class="sd">"""Create a Transcription reader-writer.</span>
 
 <span class="sd">    :param filename: (str)</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__preserve_unsupported</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">interoperability</span>
 </code></pre></div>
@@ -114,7 +114,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">extensions</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the whole list of supported extensions (case-sensitive).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the whole list of supported extensions (case-sensitive)."""</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">TRANSCRIPTION_TYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </code></pre></div>
 
@@ -135,7 +135,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">extensions_in</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of supported extensions if the reader exists.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of supported extensions if the reader exists."""</span>
     <span class="n">e</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">TRANSCRIPTION_TYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
         <span class="n">fp</span> <span class="o">=</span> <span class="n">FileFormatProperty</span><span class="p">(</span><span class="n">extension</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
@@ -161,7 +161,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">extensions_out</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of supported extensions if the writer exists.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of supported extensions if the writer exists."""</span>
     <span class="n">e</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">TRANSCRIPTION_TYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
         <span class="n">fp</span> <span class="o">=</span> <span class="n">FileFormatProperty</span><span class="p">(</span><span class="n">extension</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
@@ -187,11 +187,11 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">annot_extensions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of ANNOT extensions (case-sensitive).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of ANNOT extensions (case-sensitive)."""</span>
     <span class="n">e</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">TRANSCRIPTION_TYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
         <span class="n">fp</span> <span class="o">=</span> <span class="n">FileFormatProperty</span><span class="p">(</span><span class="n">extension</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">get_trs_type</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;ANNOT&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">get_trs_type</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'ANNOT'</span><span class="p">:</span>
             <span class="n">e</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">e</span>
 </code></pre></div>
@@ -213,11 +213,11 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">measure_extensions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of MEASURE extensions (case-sensitive).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of MEASURE extensions (case-sensitive)."""</span>
     <span class="n">e</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">TRANSCRIPTION_TYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
         <span class="n">fp</span> <span class="o">=</span> <span class="n">FileFormatProperty</span><span class="p">(</span><span class="n">extension</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">get_trs_type</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;MEASURE&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">get_trs_type</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'MEASURE'</span><span class="p">:</span>
             <span class="n">e</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">e</span>
 </code></pre></div>
@@ -239,11 +239,11 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">table_extensions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of TABLE extensions (case-sensitive).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of TABLE extensions (case-sensitive)."""</span>
     <span class="n">e</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">TRANSCRIPTION_TYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
         <span class="n">fp</span> <span class="o">=</span> <span class="n">FileFormatProperty</span><span class="p">(</span><span class="n">extension</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">get_trs_type</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;TABLE&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">get_trs_type</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'TABLE'</span><span class="p">:</span>
             <span class="n">e</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">e</span>
 </code></pre></div>
@@ -264,7 +264,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_preserve_unsupported</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if what the format can&#39;t hold is preserved.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if what the format can't hold is preserved."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__preserve_unsupported</span>
 </code></pre></div>
 
@@ -294,7 +294,7 @@ conversion the user is asking for, for example.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_preserve_unsupported</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set whether what the format can&#39;t hold is preserved.</span>
+<span class="w">    </span><span class="sd">"""Set whether what the format can't hold is preserved.</span>
 
 <span class="sd">        The default is the interoperability setting of the application. It</span>
 <span class="sd">        is the way for an application to decide for one file only -- the</span>
@@ -302,7 +302,7 @@ View Source
 
 <span class="sd">        :param value: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__preserve_unsupported</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
@@ -322,7 +322,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the filename.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the filename."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span>
 </code></pre></div>
 
@@ -348,11 +348,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new filename. </span>
+<span class="w">    </span><span class="sd">"""Set a new filename. </span>
 
 <span class="sd">        :param filename: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </code></pre></div>
 
@@ -384,13 +384,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heuristic</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read a transcription from a file.</span>
+<span class="w">    </span><span class="sd">"""Read a transcription from a file.</span>
 
 <span class="sd">        :param heuristic: (bool) if the extension of the file is unknown, use</span>
 <span class="sd">        a heuristic to detect the format, then to choose the reader-writer.</span>
 <span class="sd">        :return: sppasTranscription reader-writer</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">trs</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">create_trs_from_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">IOExtensionError</span><span class="p">:</span>
@@ -402,11 +402,11 @@ View Source
         <span class="k">raise</span> <span class="n">AioError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">fn</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
-        <span class="n">trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_reader&#39;</span><span class="p">,</span> <span class="n">trs</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
-        <span class="n">trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
-        <span class="n">trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_path&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
-        <span class="n">trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_ext&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fn</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_read_date&#39;</span><span class="p">,</span> <span class="n">sppasTime</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+        <span class="n">trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_reader'</span><span class="p">,</span> <span class="n">trs</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="n">trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_name'</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
+        <span class="n">trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_path'</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
+        <span class="n">trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_ext'</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fn</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_read_date'</span><span class="p">,</span> <span class="n">sppasTime</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
         <span class="n">trs</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">UnicodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">AioEncodingError</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
@@ -454,7 +454,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_trs_from_extension</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a transcription according to a given filename.</span>
+<span class="w">    </span><span class="sd">"""Return a transcription according to a given filename.</span>
 
 <span class="sd">        Only the extension of the filename is used.</span>
 
@@ -462,9 +462,9 @@ View Source
 <span class="sd">        :raises: IOExtensionError: un-supported extension</span>
 <span class="sd">        :return: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Parse an annotated file: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'Parse an annotated file: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">TRANSCRIPTION_TYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">extension</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">TRANSCRIPTION_TYPES</span><span class="p">[</span><span class="n">ext</span><span class="p">]()</span>
@@ -502,14 +502,14 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_trs_from_heuristic</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a transcription according to a given filename.</span>
+<span class="w">    </span><span class="sd">"""Return a transcription according to a given filename.</span>
 
 <span class="sd">        The given file is opened and a heuristic allows to fix the format.</span>
 
 <span class="sd">        :param filename: (str)</span>
 <span class="sd">        :return: (Transcription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">file_reader</span> <span class="ow">in</span> <span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">TRANSCRIPTION_TYPES</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">file_reader</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -541,22 +541,22 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transcription</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write a transcription into a file.</span>
+<span class="w">    </span><span class="sd">"""Write a transcription into a file.</span>
 
 <span class="sd">        :param transcription: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">trs_rw</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">create_trs_from_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
     <span class="n">trs_rw</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">transcription</span><span class="p">)</span>
     <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_preserve_unsupported</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__preserve_unsupported</span><span class="p">)</span>
-    <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_writer&#39;</span><span class="p">,</span> <span class="n">trs_rw</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
-    <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">trs_rw</span><span class="o">.</span><span class="n">is_meta_key</span><span class="p">(</span><span class="s1">&#39;file_path&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_path&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">))</span>
-    <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_ext&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_write_date&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sppasTime</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">))</span>
-    <span class="n">file_version</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">trs_rw</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;file_version&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_version&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">file_version</span><span class="p">))</span>
+    <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_writer'</span><span class="p">,</span> <span class="n">trs_rw</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_name'</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">trs_rw</span><span class="o">.</span><span class="n">is_meta_key</span><span class="p">(</span><span class="s1">'file_path'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_path'</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">))</span>
+    <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_ext'</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_write_date'</span><span class="p">,</span> <span class="s1">'</span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sppasTime</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">))</span>
+    <span class="n">file_version</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">trs_rw</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'file_version'</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">trs_rw</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_version'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">file_version</span><span class="p">))</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">trs_rw</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">UnicodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -573,7 +573,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

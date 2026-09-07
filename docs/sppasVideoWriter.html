@@ -82,11 +82,11 @@ getters and setters to manage such video easily.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasVideoWriter. &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create a sppasVideoWriter. """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__video</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoWriter</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span> <span class="o">=</span> <span class="mf">25.0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">704</span><span class="p">,</span> <span class="mi">528</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span> <span class="o">=</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="s1">&#39;extend&#39;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span> <span class="o">=</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="s1">'extend'</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__nframes</span> <span class="o">=</span> <span class="mi">0</span>
 </code></pre></div>
@@ -111,7 +111,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_extensions</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of supported file extensions.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of supported file extensions."""</span>
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">FOURCC</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </code></pre></div>
 
@@ -144,16 +144,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_fourcc</span><span class="p">(</span><span class="n">ext</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the FOURCC string corresponding to an extension.</span>
+<span class="w">    </span><span class="sd">"""Return the FOURCC string corresponding to an extension.</span>
 
 <span class="sd">        :param ext: (str) Extension of a filename</span>
 <span class="sd">        :return: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">ext</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">FOURCC</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ext</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">FOURCC</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ext</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -185,22 +185,22 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_ext</span><span class="p">(</span><span class="n">fourcc</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the extension string corresponding to the fourcc.</span>
+<span class="w">    </span><span class="sd">"""Return the extension string corresponding to the fourcc.</span>
 
 <span class="sd">        :param fourcc: (str) FOURCC name</span>
 <span class="sd">        :return: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fourcc</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
-        <span class="n">fourcc</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fourcc</span><span class="p">)</span>
+        <span class="n">fourcc</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fourcc</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fourcc</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">fourcc</span><span class="p">)</span>
-        <span class="n">fourcc</span> <span class="o">=</span> <span class="n">fourcc</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">fourcc</span> <span class="o">=</span> <span class="n">fourcc</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
     <span class="n">fourcc</span> <span class="o">=</span> <span class="n">fourcc</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">FOURCC</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">FOURCC</span><span class="p">[</span><span class="n">ext</span><span class="p">]</span> <span class="o">==</span> <span class="n">fourcc</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ext</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -240,8 +240,8 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_resolution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;SD&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the video resolution: images size and frame rate.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_resolution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'SD'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Set the video resolution: images size and frame rate.</span>
 
 <span class="sd">        Some of the possible values for the name of the resolution are:</span>
 
@@ -256,12 +256,12 @@ View Source
 <span class="sd">        :param name: (str) Name of the resolution</span>
 <span class="sd">        :raise: VideoLockError, sppasKeyError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The video resolution can only be changed if the video stream is not already opened.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'The video resolution can only be changed if the video stream is not already opened.'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">VideoLockError</span>
     <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">RESOLUTIONS</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="n">sppasKeyError</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;RESOLUTIONS&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasKeyError</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">'RESOLUTIONS'</span><span class="p">)</span>
     <span class="n">resolution</span> <span class="o">=</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">RESOLUTIONS</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span> <span class="o">=</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -283,7 +283,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the (width, height) of the video.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the (width, height) of the video."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
 </code></pre></div>
 
@@ -310,14 +310,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix a personalized size for the video to write.</span>
+<span class="w">    </span><span class="sd">"""Fix a personalized size for the video to write.</span>
 
 <span class="sd">        :param width: (int) number of columns in range (20, 12000)</span>
 <span class="sd">        :param height: (int) number of rows in range (20, 5000)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The video size can only be changed if the video stream is not already opened.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'The video size can only be changed if the video stream is not already opened.'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">VideoLockError</span>
     <span class="n">width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
     <span class="n">height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">height</span><span class="p">)</span>
@@ -344,7 +344,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_fps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the defined fps value (float) to write video files.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the defined fps value (float) to write video files."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span>
 </code></pre></div>
 
@@ -374,14 +374,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_fps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the framerate of the output video.</span>
+<span class="w">    </span><span class="sd">"""Fix the framerate of the output video.</span>
 
 <span class="sd">        :param value: (float) frame per seconds</span>
 <span class="sd">        :raise: NegativeValueError, IntervalRangeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The video fps can only be changed if the video stream is not already opened.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'The video fps can only be changed if the video stream is not already opened.'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">VideoLockError</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
@@ -413,23 +413,23 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Open a file stream to write images into.</span>
+<span class="w">    </span><span class="sd">"""Open a file stream to write images into.</span>
 
 <span class="sd">        :param video: (str) Filename</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The video can&#39;t be opened because another video stream is not already opened.&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">"The video can't be opened because another video stream is not already opened."</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">VideoLockError</span>
-    <span class="n">fourcc</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoWriter_fourcc</span><span class="p">(</span><span class="o">*</span><span class="s1">&#39;mp4v&#39;</span><span class="p">)</span>
+    <span class="n">fourcc</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoWriter_fourcc</span><span class="p">(</span><span class="o">*</span><span class="s1">'mp4v'</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">fourcc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">isOpened</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;The video was not opened by OpenCV Library for an unknown reason.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">'The video was not opened by OpenCV Library for an unknown reason.'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__nframes</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Video </span><span class="si">{}</span><span class="s2"> can&#39;t be created: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">"Video </span><span class="si">{}</span><span class="s2"> can't be created: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
         <span class="k">raise</span> <span class="n">VideoWriteError</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
 </code></pre></div>
 
@@ -449,7 +449,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if a video is already opened and ready to write.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if a video is already opened and ready to write."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span>
 </code></pre></div>
 
@@ -469,7 +469,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Release the flow taken by the reading of the video.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Release the flow taken by the reading of the video."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__nframes</span> <span class="o">=</span> <span class="mi">0</span>
@@ -491,7 +491,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_framerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the FPS of the current video (float).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the FPS of the current video (float)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span>
 </code></pre></div>
 
@@ -511,7 +511,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the width of the frames in the video.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the width of the frames in the video."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </code></pre></div>
 
@@ -531,7 +531,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the height of the frames in the video.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the height of the frames in the video."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </code></pre></div>
 
@@ -551,7 +551,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_nframes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of frames written in the video.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of frames written in the video."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nframes</span>
 </code></pre></div>
 
@@ -571,7 +571,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the duration of the written video in seconds (float).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the duration of the written video in seconds (float)."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">0.0</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">())</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_framerate</span><span class="p">())</span>
@@ -598,7 +598,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_aspect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">as_int</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a string defining the aspect strategy to write images.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a string defining the aspect strategy to write images."""</span>
     <span class="k">if</span> <span class="n">as_int</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span>
     <span class="k">return</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span><span class="p">]</span>
@@ -626,13 +626,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_aspect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aspect</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the aspect strategy to write the image.</span>
+<span class="w">    </span><span class="sd">"""Set the aspect strategy to write the image.</span>
 
 <span class="sd">        :param aspect: (int or str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">aspect</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;Unknown image aspect </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">'Unknown image aspect </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span><span class="p">))</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">aspect</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
         <span class="n">aspect</span> <span class="o">=</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="n">aspect</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span> <span class="o">=</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="n">aspect</span><span class="p">]</span>
@@ -660,25 +660,25 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append an image to the video stream.</span>
+<span class="w">    </span><span class="sd">"""Append an image to the video stream.</span>
 
 <span class="sd">        :param image: (sppasImage or None) If the given image is None, a blank image is written.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Actually there&#39;s no video stream defined.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"Actually there's no video stream defined."</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'center'</span><span class="p">,</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="s1">'center'</span><span class="p">]):</span>
             <span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">icenter</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;stretch&#39;</span><span class="p">,</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="s1">&#39;stretch&#39;</span><span class="p">]):</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'stretch'</span><span class="p">,</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="s1">'stretch'</span><span class="p">]):</span>
             <span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;extend&#39;</span><span class="p">,</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="s1">&#39;extend&#39;</span><span class="p">]):</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'extend'</span><span class="p">,</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="s1">'extend'</span><span class="p">]):</span>
             <span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">iextend</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;zoom&#39;</span><span class="p">,</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="s1">&#39;zoom&#39;</span><span class="p">]):</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'zoom'</span><span class="p">,</span> <span class="n">sppasVideoWriter</span><span class="o">.</span><span class="n">ASPECT</span><span class="p">[</span><span class="s1">'zoom'</span><span class="p">]):</span>
             <span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">izoom</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Can&#39;t write image: unknown image aspect </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"Can't write image: unknown image aspect </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_aspect</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">width</span> <span class="o">!=</span> <span class="n">w</span> <span class="ow">or</span> <span class="n">img</span><span class="o">.</span><span class="n">height</span> <span class="o">!=</span> <span class="n">h</span><span class="p">:</span>
             <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -695,7 +695,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

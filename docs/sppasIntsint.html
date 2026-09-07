@@ -83,12 +83,12 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new instance.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasIntsint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;intsint.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasIntsint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'intsint.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__intsint</span> <span class="o">=</span> <span class="n">Intsint</span><span class="p">()</span>
 </code></pre></div>
 
@@ -124,27 +124,27 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">tier_to_anchors</span><span class="p">(</span><span class="n">momel_tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize INTSINT attributes from a Tier with anchors.</span>
+<span class="w">    </span><span class="sd">"""Initialize INTSINT attributes from a Tier with anchors.</span>
 
 <span class="sd">        :param momel_tier: (sppasTier) A PointTier with float values.</span>
 <span class="sd">        :returns: List of tuples (time, f0 value)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">targets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">momel_tier</span><span class="p">:</span>
         <span class="n">tag</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_best_tag</span><span class="p">(</span><span class="n">label_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">f0</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">())</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">()</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">(),</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">(),</span> <span class="s1">'float'</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">(),</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">(),</span> <span class="s1">'float'</span><span class="p">)</span>
         <span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="p">,</span> <span class="n">f0</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">targets</span>
 </code></pre></div>
@@ -173,15 +173,15 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">tones_to_tier</span><span class="p">(</span><span class="n">tones</span><span class="p">,</span> <span class="n">anchors_tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the INTSINT result into a tier.</span>
+<span class="w">    </span><span class="sd">"""Convert the INTSINT result into a tier.</span>
 
 <span class="sd">        :param tones: (list)</span>
 <span class="sd">        :param anchors_tier: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tones</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">anchors_tier</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">AnnDataEqError</span><span class="p">(</span><span class="s1">&#39;tones:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tones</span><span class="p">)),</span> <span class="s1">&#39;anchors:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">anchors_tier</span><span class="p">)))</span>
-    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;INTSINT&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataEqError</span><span class="p">(</span><span class="s1">'tones:'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tones</span><span class="p">)),</span> <span class="s1">'anchors:'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">anchors_tier</span><span class="p">)))</span>
+    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">'INTSINT'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">tone</span><span class="p">,</span> <span class="n">anchor_ann</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tones</span><span class="p">,</span> <span class="n">anchors_tier</span><span class="p">):</span>
         <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="n">tone</span><span class="p">)</span>
         <span class="n">location</span> <span class="o">=</span> <span class="n">anchor_ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -221,13 +221,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with Momel anchors.</span>
+<span class="w">    </span><span class="sd">"""Return the tier with Momel anchors.</span>
 
 <span class="sd">        :param input_files: (list)</span>
 <span class="sd">        :raise: NoTierInputError</span>
 <span class="sd">        :return: (sppasTier) Tier of type Point</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -242,11 +242,11 @@ View Source
         <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">break</span>
     <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Tier with Momel anchors not found.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Tier with Momel anchors not found.'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">NoTierInputError</span>
     <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The tier with Momel anchors should be of type: Point.&#39;</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">&#39;PointTier&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'The tier with Momel anchors should be of type: Point.'</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">'PointTier'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tier</span>
 </code></pre></div>
 
@@ -279,19 +279,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on an input.</span>
 
 <span class="sd">        :param input_files: (list of str) Momel anchors</span>
 <span class="sd">        :param output: (str) the output file name</span>
 <span class="sd">        :return: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_tier</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
     <span class="n">targets</span> <span class="o">=</span> <span class="n">sppasIntsint</span><span class="o">.</span><span class="n">tier_to_anchors</span><span class="p">(</span><span class="n">tier_input</span><span class="p">)</span>
     <span class="n">tones</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__intsint</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
     <span class="n">tier_intsint</span> <span class="o">=</span> <span class="n">sppasIntsint</span><span class="o">.</span><span class="n">tones_to_tier</span><span class="p">(</span><span class="n">tones</span><span class="p">,</span> <span class="n">tier_input</span><span class="p">)</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'annotation_result_of'</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_intsint</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_out_file_ext</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
@@ -317,8 +317,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-intsint&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation uses in an output filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="s1">'-intsint'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -347,15 +347,15 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_input_extensions</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its input filename.</span>
+<span class="w">    </span><span class="sd">"""Extensions that the annotation expects for its input filename.</span>
 
 <span class="sd">        INTSINT requires momel anchors which can either be stored in</span>
 <span class="sd">        a TextGrid file or in a PitchTier file.</span>
 
 <span class="sd">        :return: (list of list)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;ANNOT&#39;</span><span class="p">)]</span>
+<span class="sd">        """</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">'ANNOT'</span><span class="p">)]</span>
 </code></pre></div>
 
     </details>
@@ -366,7 +366,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

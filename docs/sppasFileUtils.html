@@ -62,7 +62,7 @@
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">sf</span> <span class="o">=</span> <span class="n">sppasFileUtils</span><span class="p">(</span><span class="s2">&quot;path/myfile.txt&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">sf</span> <span class="o">=</span> <span class="n">sppasFileUtils</span><span class="p">(</span><span class="s2">"path/myfile.txt"</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">exists</span><span class="p">())</span>
 </code></pre></div>
 
@@ -70,7 +70,7 @@
 
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">sf</span> <span class="o">=</span> <span class="n">sppasFileUtils</span><span class="p">()</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">sf</span><span class="o">.</span><span class="n">set_random</span><span class="p">()</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">get_filename</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">get_filename</span><span class="p">()</span> <span class="o">+</span> <span class="s2">".txt"</span>
 </code></pre></div>
 
     </article>
@@ -96,11 +96,11 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasFileUtils instance.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasFileUtils instance.</span>
 
 <span class="sd">    :param filename: (str) Name of the current file</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">filename</span>
 </code></pre></div>
 
@@ -123,7 +123,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the current filename.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the current filename."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
 </code></pre></div>
 
@@ -156,26 +156,26 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_random</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s1">&#39;sppas_tmp&#39;</span><span class="p">,</span> <span class="n">add_today</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">add_pid</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set randomly a basename, i.e. a filename without extension.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_random</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s1">'sppas_tmp'</span><span class="p">,</span> <span class="n">add_today</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">add_pid</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Set randomly a basename, i.e. a filename without extension.</span>
 
 <span class="sd">        :param root: (str) String to start the filename</span>
-<span class="sd">        :param add_today: (bool) Add today&#39;s information to the filename</span>
+<span class="sd">        :param add_today: (bool) Add today's information to the filename</span>
 <span class="sd">        :param add_pid: (bool) Add the process PID to the filename</span>
 <span class="sd">        :returns: a random name of a non-existing file or directory</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tempdir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">()</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'/'</span>
     <span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="s1">'_'</span>
         <span class="k">if</span> <span class="n">add_today</span><span class="p">:</span>
             <span class="n">today</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">())</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">+</span> <span class="n">today</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">+</span> <span class="n">today</span> <span class="o">+</span> <span class="s1">'_'</span>
         <span class="k">if</span> <span class="n">add_pid</span><span class="p">:</span>
             <span class="n">pid</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">+</span> <span class="n">pid</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">{:06d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">999999</span><span class="p">))</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">+</span> <span class="n">pid</span> <span class="o">+</span> <span class="s1">'_'</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">'</span><span class="si">{:06d}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">999999</span><span class="p">))</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempdir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">name</span>
     <span class="k">return</span> <span class="n">name</span>
@@ -211,14 +211,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the file exists, or exists in a given directory.</span>
+<span class="w">    </span><span class="sd">"""Check if the file exists, or exists in a given directory.</span>
 
 <span class="sd">        Case-insensitive test on all platforms.</span>
 
 <span class="sd">        :param directory: (str) Optional directory to test if a file exists.</span>
 <span class="sd">        :returns: the filename (including directory) or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">directory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
@@ -249,11 +249,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">clear_whitespace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set filename without whitespace.</span>
+<span class="w">    </span><span class="sd">"""Set filename without whitespace.</span>
 
 <span class="sd">        :returns: new filename with spaces replaced by underscores.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">clear_whitespace</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
@@ -281,11 +281,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_ascii</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set filename with only US-ASCII characters.</span>
+<span class="w">    </span><span class="sd">"""Set filename with only US-ASCII characters.</span>
 
 <span class="sd">        :returns: new filename with non-ASCII chars replaced by underscores.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_ascii</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
@@ -313,11 +313,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set filename without whitespace and with only US-ASCII characters.</span>
+<span class="w">    </span><span class="sd">"""Set filename without whitespace and with only US-ASCII characters.</span>
 
 <span class="sd">        :returns: new filename with non-ASCII characters and spaces        replaced by underscores.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">clear_whitespace</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">to_ascii</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
@@ -331,7 +331,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

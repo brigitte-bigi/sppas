@@ -77,9 +77,9 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new ImageFaceLandmark instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new ImageFaceLandmark instance.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">ImageFaceLandmark</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__basic</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__mediapipe</span> <span class="o">=</span> <span class="kc">None</span>
@@ -105,7 +105,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_nb_recognizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of initialized landmark recognizers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of initialized landmark recognizers."""</span>
     <span class="n">nb</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__basic</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">nb</span> <span class="o">=</span> <span class="n">nb</span> <span class="o">+</span> <span class="mi">1</span>
@@ -144,21 +144,21 @@ MediaPipe face landmarker (".task").</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append a recognizer into the list and load the model.</span>
+<span class="w">    </span><span class="sd">"""Append a recognizer into the list and load the model.</span>
 
 <span class="sd">        The recognizer is instantiated from the extension of the given</span>
 <span class="sd">        model filename: either an OpenCV one (Kazemi, LBF, AAM) or the</span>
-<span class="sd">        MediaPipe face landmarker (&quot;.task&quot;).</span>
+<span class="sd">        MediaPipe face landmarker (".task").</span>
 
 <span class="sd">        :param filename: (str) A recognizer model.</span>
 <span class="sd">        :raise: IOError, IOExtensionError, Exception</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">extension</span> <span class="o">=</span> <span class="n">extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;.task&#39;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">feature_installed</span><span class="p">(</span><span class="s1">&#39;mediapipe&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Model </span><span class="si">{:s}</span><span class="s1"> is ignored: it requires the mediapipe feature to be installed.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">'.task'</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">feature_installed</span><span class="p">(</span><span class="s1">'mediapipe'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Model </span><span class="si">{:s}</span><span class="s1"> is ignored: it requires the mediapipe feature to be installed.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__mediapipe</span> <span class="o">=</span> <span class="n">MediaPipeFaceMesh</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -188,11 +188,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">enable_empirical_predictor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enable the basic predictor with empirically fixed sights.</span>
+<span class="w">    </span><span class="sd">"""Enable the basic predictor with empirically fixed sights.</span>
 
 <span class="sd">        :param value: (bool) True to enable</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__basic</span> <span class="o">=</span> <span class="n">BasicFaceMark</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
@@ -225,12 +225,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect sights on an image with the coords of the face.</span>
+<span class="w">    </span><span class="sd">"""Detect sights on an image with the coords of the face.</span>
 
 <span class="sd">        :param image: (sppasImage or numpy.ndarray) The image to be processed.</span>
 <span class="sd">        :param coords: (sppasCoords) Coordinates of the face in the image or None for the full image</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">success</span><span class="p">,</span> <span class="n">all_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__detect_with_markers</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sights</span><span class="p">)):</span>
@@ -275,7 +275,7 @@ points. The image and the coords are used only to estimate the score.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__points_to_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a list of estimated points into coordinates of a sight.</span>
+<span class="w">    </span><span class="sd">"""Convert a list of estimated points into coordinates of a sight.</span>
 
 <span class="sd">        The confidence score of each sight depends on the area covered by the</span>
 <span class="sd">        points. The image and the coords are used only to estimate the score.</span>
@@ -285,7 +285,7 @@ View Source
 <span class="sd">        :param points: (list of (x,y) values) A sight detected by each method</span>
 <span class="sd">        :return: Estimated (x,y,c) values</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">coords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">icrop</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -339,13 +339,13 @@ the method 'fit()' of each recognizer.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__detect_with_markers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate all the 68 points by each instantiated face-marker.</span>
+<span class="w">    </span><span class="sd">"""Estimate all the 68 points by each instantiated face-marker.</span>
 
 <span class="sd">        The returned result is a list of 68 lists of tuples with (x,y) values</span>
-<span class="sd">        because it&#39;s the data structure OpenCV is returning when invoking</span>
-<span class="sd">        the method &#39;fit()&#39; of each recognizer.</span>
+<span class="sd">        because it's the data structure OpenCV is returning when invoking</span>
+<span class="sd">        the method 'fit()' of each recognizer.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">all_points</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">list</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sights</span><span class="p">))}</span>
     <span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mediapipe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -382,7 +382,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

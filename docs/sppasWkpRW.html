@@ -83,11 +83,11 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a workspace reader/writer.</span>
+<span class="w">    </span><span class="sd">"""Create a workspace reader/writer.</span>
 
 <span class="sd">    :param filename: (str)</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </code></pre></div>
 
@@ -111,7 +111,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">default_extension</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the default extension to read/write workspaces.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the default extension to read/write workspaces."""</span>
     <span class="k">return</span> <span class="n">sppasWJSON</span><span class="p">()</span><span class="o">.</span><span class="n">default_extension</span>
 </code></pre></div>
 
@@ -132,7 +132,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">extensions</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of supported extensions in lower case.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of supported extensions in lower case."""</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">sppasWkpRW</span><span class="o">.</span><span class="n">WORKSPACE_TYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </code></pre></div>
 
@@ -158,11 +158,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read a workspace from a file.</span>
+<span class="w">    </span><span class="sd">"""Read a workspace from a file.</span>
 
 <span class="sd">        :returns: (sppasWkpRW)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">wkp</span> <span class="o">=</span> <span class="n">sppasWkpRW</span><span class="o">.</span><span class="n">create_wkp_from_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
         <span class="n">wkp</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
@@ -200,12 +200,12 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_wkp_from_extension</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a workspace according to a filename.</span>
+<span class="w">    </span><span class="sd">"""Return a workspace according to a filename.</span>
 
 <span class="sd">        :param filename: (str)</span>
 <span class="sd">        :returns: sppasBaseWkpIO()</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
     <span class="n">extension</span> <span class="o">=</span> <span class="n">extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">sppasWkpRW</span><span class="o">.</span><span class="n">extensions</span><span class="p">():</span>
@@ -235,11 +235,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wkp</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write a workspace into a file.</span>
+<span class="w">    </span><span class="sd">"""Write a workspace into a file.</span>
 
 <span class="sd">        :param wkp: (sppasWorkspace) Data to be saved</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">wkp_rw</span> <span class="o">=</span> <span class="n">sppasWkpRW</span><span class="o">.</span><span class="n">create_wkp_from_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
     <span class="n">wkp_rw</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">wkp</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
@@ -259,7 +259,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

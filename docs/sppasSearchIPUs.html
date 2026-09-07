@@ -83,12 +83,12 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasSearchIPUs instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasSearchIPUs instance.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasSearchIPUs</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;searchipus.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasSearchIPUs</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'searchipus.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -127,7 +127,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+<span class="w">    </span><span class="sd">"""Fix all options.</span>
 
 <span class="sd">        Available options are:</span>
 
@@ -140,22 +140,22 @@ View Source
 
 <span class="sd">        :param options: (sppasOption)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;threshold&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'threshold'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;win_length&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'win_length'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_win_length</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;min_sil&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'min_sil'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_min_sil</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;min_ipu&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'min_ipu'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_min_ipu</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;shift_start&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'shift_start'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_shift_start</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;shift_end&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'shift_end'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_shift_end</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'pattern'</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -171,7 +171,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;threshold&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'threshold'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -184,7 +184,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_win_length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;win_length&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'win_length'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -197,7 +197,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_min_sil</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_sil&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_sil'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -210,7 +210,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_min_ipu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_ipu&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_ipu'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -223,7 +223,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_shift_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_start&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_start'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -236,7 +236,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_shift_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_end&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_end'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -261,12 +261,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the threshold volume.</span>
+<span class="w">    </span><span class="sd">"""Fix the threshold volume.</span>
 
 <span class="sd">        :param value: (int) RMS value used as volume threshold</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;threshold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'threshold'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -294,15 +294,15 @@ it cancels any previous estimation of volume and silence search.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_win_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new length of window for a estimation or volume values.</span>
+<span class="w">    </span><span class="sd">"""Set a new length of window for a estimation or volume values.</span>
 
 <span class="sd">        TAKE CARE:</span>
 <span class="sd">        it cancels any previous estimation of volume and silence search.</span>
 
 <span class="sd">        :param value: (float) generally between 0.01 and 0.04 seconds.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;win_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'win_length'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -327,12 +327,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_min_sil</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the default minimum duration of a silence.</span>
+<span class="w">    </span><span class="sd">"""Fix the default minimum duration of a silence.</span>
 
 <span class="sd">        :param value: (float) Duration in seconds.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_sil&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_sil'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -357,12 +357,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_min_ipu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the default minimum duration of an IPU.</span>
+<span class="w">    </span><span class="sd">"""Fix the default minimum duration of an IPU.</span>
 
 <span class="sd">        :param value: (float) Duration in seconds.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_ipu&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_ipu'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -387,12 +387,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_shift_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the start boundary shift value.</span>
+<span class="w">    </span><span class="sd">"""Fix the start boundary shift value.</span>
 
 <span class="sd">        :param value: (float) Duration in seconds.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_start'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -417,12 +417,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_shift_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the end boundary shift value.</span>
+<span class="w">    </span><span class="sd">"""Fix the end boundary shift value.</span>
 
 <span class="sd">        :param value: (float) Duration in seconds.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_end'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -450,17 +450,17 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">tracks_to_tier</span><span class="p">(</span><span class="n">tracks</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">vagueness</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasTier object from tracks.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasTier object from tracks.</span>
 
 <span class="sd">        :param tracks: (List of tuple) with (from, to) values in seconds</span>
 <span class="sd">        :param end_time: (float) End-time of the tier</span>
 <span class="sd">        :param vagueness: (float) vagueness used for silence search</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tracks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;No IPUs to write.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;IPUs&#39;</span><span class="p">)</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;number_of_ipus&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tracks</span><span class="p">)))</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">'No IPUs to write.</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">'IPUs'</span><span class="p">)</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'number_of_ipus'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tracks</span><span class="p">)))</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">to_prec</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">from_time</span><span class="p">,</span> <span class="n">to_time</span> <span class="ow">in</span> <span class="n">tracks</span><span class="p">:</span>
@@ -470,7 +470,7 @@ View Source
             <span class="n">radius</span> <span class="o">=</span> <span class="n">vagueness</span> <span class="o">/</span> <span class="mf">2.0</span>
         <span class="k">if</span> <span class="n">to_prec</span> <span class="o">&lt;</span> <span class="n">from_time</span><span class="p">:</span>
             <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">sppasInterval</span><span class="p">(</span><span class="n">sppasPoint</span><span class="p">(</span><span class="n">to_prec</span><span class="p">,</span> <span class="n">radius</span><span class="p">),</span> <span class="n">sppasPoint</span><span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="n">radius</span><span class="p">))),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">SIL_ORTHO</span><span class="p">)))</span>
-        <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">sppasInterval</span><span class="p">(</span><span class="n">sppasPoint</span><span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="n">radius</span><span class="p">),</span> <span class="n">sppasPoint</span><span class="p">(</span><span class="n">to_time</span><span class="p">,</span> <span class="n">radius</span><span class="p">))),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="s1">&#39;ipu_</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))))</span>
+        <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">sppasInterval</span><span class="p">(</span><span class="n">sppasPoint</span><span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="n">radius</span><span class="p">),</span> <span class="n">sppasPoint</span><span class="p">(</span><span class="n">to_time</span><span class="p">,</span> <span class="n">radius</span><span class="p">))),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="s1">'ipu_</span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))))</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">to_prec</span> <span class="o">=</span> <span class="n">to_time</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">sppasPoint</span><span class="p">(</span><span class="n">to_prec</span><span class="p">,</span> <span class="n">vagueness</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
@@ -507,19 +507,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for IPUs in the given channel.</span>
+<span class="w">    </span><span class="sd">"""Search for IPUs in the given channel.</span>
 
 <span class="sd">        :param channel: (Channel) Input channel</span>
 <span class="sd">        :return: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">searcher</span> <span class="o">=</span> <span class="n">SearchForIPUs</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">)</span>
-    <span class="n">searcher</span><span class="o">.</span><span class="n">set_vol_threshold</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;threshold&#39;</span><span class="p">])</span>
-    <span class="n">searcher</span><span class="o">.</span><span class="n">set_win_length</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;win_length&#39;</span><span class="p">])</span>
-    <span class="n">searcher</span><span class="o">.</span><span class="n">set_min_sil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_sil&#39;</span><span class="p">])</span>
-    <span class="n">searcher</span><span class="o">.</span><span class="n">set_min_ipu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_ipu&#39;</span><span class="p">])</span>
-    <span class="n">searcher</span><span class="o">.</span><span class="n">set_shift_start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_start&#39;</span><span class="p">])</span>
-    <span class="n">searcher</span><span class="o">.</span><span class="n">set_shift_end</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_end&#39;</span><span class="p">])</span>
+    <span class="n">searcher</span><span class="o">.</span><span class="n">set_vol_threshold</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'threshold'</span><span class="p">])</span>
+    <span class="n">searcher</span><span class="o">.</span><span class="n">set_win_length</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'win_length'</span><span class="p">])</span>
+    <span class="n">searcher</span><span class="o">.</span><span class="n">set_min_sil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_sil'</span><span class="p">])</span>
+    <span class="n">searcher</span><span class="o">.</span><span class="n">set_min_ipu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_ipu'</span><span class="p">])</span>
+    <span class="n">searcher</span><span class="o">.</span><span class="n">set_shift_start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_start'</span><span class="p">])</span>
+    <span class="n">searcher</span><span class="o">.</span><span class="n">set_shift_end</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_end'</span><span class="p">])</span>
     <span class="n">tracks</span> <span class="o">=</span> <span class="n">searcher</span><span class="o">.</span><span class="n">get_tracks</span><span class="p">(</span><span class="n">time_domain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracks_to_tier</span><span class="p">(</span><span class="n">tracks</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">get_duration</span><span class="p">(),</span> <span class="n">searcher</span><span class="o">.</span><span class="n">get_vagueness</span><span class="p">())</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_set_meta</span><span class="p">(</span><span class="n">searcher</span><span class="p">,</span> <span class="n">tier</span><span class="p">)</span>
@@ -555,27 +555,27 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on an input.</span>
 
 <span class="sd">        :param input_files: (list of str) Audio</span>
 <span class="sd">        :param output: (str) the output file name</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">audio_speech</span> <span class="o">=</span> <span class="n">audioopy</span><span class="o">.</span><span class="n">aio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">framerate</span> <span class="o">=</span> <span class="n">audio_speech</span><span class="o">.</span><span class="n">get_framerate</span><span class="p">()</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">audio_speech</span><span class="o">.</span><span class="n">get_nchannels</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;An audio file with only one channel is expected. Got </span><span class="si">{:d}</span><span class="s1"> channels.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">'An audio file with only one channel is expected. Got </span><span class="si">{:d}</span><span class="s1"> channels.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="n">audio_speech</span><span class="o">.</span><span class="n">extract_channel</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">channel</span> <span class="o">=</span> <span class="n">audio_speech</span><span class="o">.</span><span class="n">get_channel</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;media_sample_rate&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">framerate</span><span class="p">))</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'media_sample_rate'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">framerate</span><span class="p">))</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'annotation_result_of'</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="n">extm</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
-    <span class="n">media</span> <span class="o">=</span> <span class="n">sppasMedia</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">mime_type</span><span class="o">=</span><span class="s1">&#39;audio/&#39;</span> <span class="o">+</span> <span class="n">extm</span><span class="p">)</span>
+    <span class="n">media</span> <span class="o">=</span> <span class="n">sppasMedia</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">mime_type</span><span class="o">=</span><span class="s1">'audio/'</span> <span class="o">+</span> <span class="n">extm</span><span class="p">)</span>
     <span class="n">tier</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_out_file_ext</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
@@ -618,21 +618,21 @@ method.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run_for_batch_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform the annotation on a file.</span>
+<span class="w">    </span><span class="sd">"""Perform the annotation on a file.</span>
 
-<span class="sd">        This method is called by &#39;batch_processing&#39;. It fixes the name of the</span>
+<span class="sd">        This method is called by 'batch_processing'. It fixes the name of the</span>
 <span class="sd">        output file. If the output file is already existing, the annotation</span>
-<span class="sd">        is cancelled (the file won&#39;t be overridden). If not, it calls the run</span>
+<span class="sd">        is cancelled (the file won't be overridden). If not, it calls the run</span>
 <span class="sd">        method.</span>
 
 <span class="sd">        :param input_files: (list of str) the inputs to perform a run</span>
 <span class="sd">        :returns: output file name or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">root_pattern</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_out_name</span><span class="p">(</span><span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">ext</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">annot_extensions</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">e</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;.txt&#39;</span><span class="p">,):</span>
+        <span class="k">if</span> <span class="n">e</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'.txt'</span><span class="p">,):</span>
             <span class="n">ext</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
     <span class="n">exist_out_name</span> <span class="o">=</span> <span class="n">sppasBaseAnnotation</span><span class="o">.</span><span class="n">_get_filename</span><span class="p">(</span><span class="n">root_pattern</span><span class="p">,</span> <span class="n">ext</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">exist_out_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -653,7 +653,7 @@ View Source
         <span class="n">new_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_files</span><span class="p">,</span> <span class="n">root_pattern</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">'</span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">new_files</span>
 </code></pre></div>
 
@@ -674,8 +674,8 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_input_extensions</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its input filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;AUDIO&#39;</span><span class="p">)]</span>
+<span class="w">    </span><span class="sd">"""Extensions that the annotation expects for its input filename."""</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">'AUDIO'</span><span class="p">)]</span>
 </code></pre></div>
 
     </details>
@@ -703,20 +703,20 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_set_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">searcher</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set meta values to the tier.&quot;&quot;&quot;</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;required_threshold_volume&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_vol_threshold</span><span class="p">()))</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;estimated_threshold_volume&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_effective_threshold</span><span class="p">()))</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;minimum_silence_duration&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_min_sil_dur</span><span class="p">()))</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;minimum_ipus_duration&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_min_ipu_dur</span><span class="p">()))</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;shift_ipus_start&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_shift_start</span><span class="p">()))</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;shift_ipus_end&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_shift_end</span><span class="p">()))</span>
-    <span class="n">meta</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;rms_min&#39;</span><span class="p">,</span> <span class="s1">&#39;rms_max&#39;</span><span class="p">,</span> <span class="s1">&#39;rms_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;rms_median&#39;</span><span class="p">,</span> <span class="s1">&#39;rms_coefvar&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Set meta values to the tier."""</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'required_threshold_volume'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_vol_threshold</span><span class="p">()))</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'estimated_threshold_volume'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_effective_threshold</span><span class="p">()))</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'minimum_silence_duration'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_min_sil_dur</span><span class="p">()))</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'minimum_ipus_duration'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_min_ipu_dur</span><span class="p">()))</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'shift_ipus_start'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_shift_start</span><span class="p">()))</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'shift_ipus_end'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_shift_end</span><span class="p">()))</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'rms_min'</span><span class="p">,</span> <span class="s1">'rms_max'</span><span class="p">,</span> <span class="s1">'rms_mean'</span><span class="p">,</span> <span class="s1">'rms_median'</span><span class="p">,</span> <span class="s1">'rms_coefvar'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">searcher</span><span class="o">.</span><span class="n">get_rms_stats</span><span class="p">()):</span>
         <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Information: &#39;</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">'Information: '</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">searcher</span><span class="o">.</span><span class="n">get_vol_threshold</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Automatically estimated threshold volume value: </span><span class="si">{:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_effective_threshold</span><span class="p">()),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Number of IPUs found: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;number_of_ipus&#39;</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">'Automatically estimated threshold volume value: </span><span class="si">{:d}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_effective_threshold</span><span class="p">()),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">'Number of IPUs found: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'number_of_ipus'</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -727,7 +727,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

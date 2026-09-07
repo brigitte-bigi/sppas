@@ -93,7 +93,7 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constructor of a FileName.</span>
+<span class="w">    </span><span class="sd">"""Constructor of a FileName.</span>
 
 <span class="sd">    From the identifier, the following properties are extracted:</span>
 
@@ -105,7 +105,7 @@ View Source
 
 <span class="sd">    :param identifier: (str) Full name of a file</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">FileName</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
     <span class="n">fn</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
@@ -135,7 +135,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the directory of this file (str).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of the directory of this file (str)."""</span>
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 </code></pre></div>
 
@@ -157,11 +157,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the short name of the file (str).</span>
+<span class="w">    </span><span class="sd">"""Return the short name of the file (str).</span>
 
 <span class="sd">        The name is the filename without path nor extension.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__name</span>
 </code></pre></div>
 
@@ -181,7 +181,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the extension of the file in upper-cases (str).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the extension of the file in upper-cases (str)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__extension</span>
 </code></pre></div>
 
@@ -201,11 +201,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_mime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the mime type of the file (str).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the mime type of the file (str)."""</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="s1">&#39;unknown&#39;</span>
+    <span class="k">return</span> <span class="s1">'unknown'</span>
 </code></pre></div>
 
     </details>
@@ -224,10 +224,10 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a string representing the date of the last modification.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a string representing the date of the last modification."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39; -- &#39;</span>
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{:d}</span><span class="s1">-</span><span class="si">{:d}</span><span class="s1">-</span><span class="si">{:d}</span><span class="s1"> </span><span class="si">{:02d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">' -- '</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="si">{:d}</span><span class="s1">-</span><span class="si">{:d}</span><span class="s1">-</span><span class="si">{:d}</span><span class="s1"> </span><span class="si">{:02d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -246,12 +246,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a string representing the size of the file.&quot;&quot;&quot;</span>
-    <span class="n">unit</span> <span class="o">=</span> <span class="s1">&#39; Ko&#39;</span>
+<span class="w">    </span><span class="sd">"""Return a string representing the size of the file."""</span>
+    <span class="n">unit</span> <span class="o">=</span> <span class="s1">' Ko'</span>
     <span class="n">file_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filesize</span> <span class="o">/</span> <span class="mi">1024</span>
     <span class="k">if</span> <span class="n">file_size</span> <span class="o">&gt;</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">:</span>
         <span class="n">file_size</span> <span class="o">/=</span> <span class="mi">1024</span>
-        <span class="n">unit</span> <span class="o">=</span> <span class="s1">&#39; Mo&#39;</span>
+        <span class="n">unit</span> <span class="o">=</span> <span class="s1">' Mo'</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">file_size</span><span class="p">))</span> <span class="o">+</span> <span class="n">unit</span>
 </code></pre></div>
 
@@ -286,7 +286,7 @@ No other state than MISSING can be assigned if the file does not exists.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override. Set a state value to this filename.</span>
+<span class="w">    </span><span class="sd">"""Override. Set a state value to this filename.</span>
 
 <span class="sd">        A LOCKED file can only be unlocked by assigning the CHECKED state.</span>
 <span class="sd">        No other state than MISSING can be assigned if the file does not exists.</span>
@@ -294,7 +294,7 @@ View Source
 <span class="sd">        :param value: (States)</span>
 <span class="sd">        :returns: (bool) this filename state has changed or not</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__file_exists</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_properties</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">FileName</span><span class="o">.</span><span class="n">FILENAME_STATES</span><span class="p">:</span>
@@ -333,11 +333,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update properties of the file (modified date and file size).</span>
+<span class="w">    </span><span class="sd">"""Update properties of the file (modified date and file size).</span>
 
 <span class="sd">        :returns: (bool) true if properties were changed</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">cur_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span>
     <span class="n">cur_date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__date</span>
     <span class="n">cur_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filesize</span>
@@ -396,7 +396,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

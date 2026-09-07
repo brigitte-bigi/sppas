@@ -91,12 +91,12 @@ corresponding FileName and this FilePath object.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constructor of a FilePath.</span>
+<span class="w">    </span><span class="sd">"""Constructor of a FilePath.</span>
 
 <span class="sd">    :param filepath: (str) Absolute or relative name of a folder</span>
 <span class="sd">    :raises: PathTypeError</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">rel_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">rel_path</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -143,16 +143,16 @@ They are automatically fixed here depending on the roots states.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_object_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a state value to a filename of this filepath.</span>
+<span class="w">    </span><span class="sd">"""Set a state value to a filename of this filepath.</span>
 
-<span class="sd">        It is not allowed to manually assign one of the &quot;AT_LEAST&quot; states.</span>
+<span class="sd">        It is not allowed to manually assign one of the "AT_LEAST" states.</span>
 <span class="sd">        They are automatically fixed here depending on the roots states.</span>
 
 <span class="sd">        :param value: (int) A state.</span>
 <span class="sd">        :param entry: (FileName, FileRoot) The instance to change state</span>
 <span class="sd">        :raises: sppasTypeError, sppasOSError, sppasValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">modified</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="p">(</span><span class="n">FileName</span><span class="p">,</span> <span class="n">FileRoot</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">entry</span> <span class="o">=</span> <span class="n">FileName</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
@@ -199,9 +199,9 @@ with set</em>object_state method).</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a value to represent the state of the path.</span>
+<span class="w">    </span><span class="sd">"""Set a value to represent the state of the path.</span>
 
-<span class="sd">        It is not allowed to manually assign one of the &quot;AT_LEAST&quot; states</span>
+<span class="sd">        It is not allowed to manually assign one of the "AT_LEAST" states</span>
 <span class="sd">        (they are automatically fixed by setting the state of a FileName</span>
 <span class="sd">        with set_object_state method).</span>
 
@@ -209,7 +209,7 @@ View Source
 
 <span class="sd">        :param value: (State) A state of FileName.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">FileName</span><span class="o">.</span><span class="n">FILENAME_STATES</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">FileName</span><span class="o">.</span><span class="n">FILENAME_STATES</span><span class="p">))</span>
     <span class="n">modified</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -248,14 +248,14 @@ self.id.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the instance matching the given entry.</span>
+<span class="w">    </span><span class="sd">"""Return the instance matching the given entry.</span>
 
 <span class="sd">        :param filename: Name of a file or a root (absolute of relative)</span>
 
-<span class="sd">        Notice that it returns &#39;self&#39; if filename is a directory matching</span>
+<span class="sd">        Notice that it returns 'self' if filename is a directory matching</span>
 <span class="sd">        self.id.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">abs_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">abs_name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span>
@@ -300,13 +300,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the identifier, i.e. the full name of an existing file.</span>
+<span class="w">    </span><span class="sd">"""Return the identifier, i.e. the full name of an existing file.</span>
 
 <span class="sd">        :param filename: (str) Absolute or relative name of a file</span>
 <span class="sd">        :returns: (str) Identifier for this filename</span>
 <span class="sd">        :raise: FileOSError if filename does not match a regular file</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
@@ -343,12 +343,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the FileRoot matching the given id (root or file).</span>
+<span class="w">    </span><span class="sd">"""Return the FileRoot matching the given id (root or file).</span>
 
 <span class="sd">        :param name: (str) Identifier name of a root or a file.</span>
 <span class="sd">        :returns: FileRoot or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">fr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__roots</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">fr</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">fr</span>
@@ -400,7 +400,7 @@ But any FileName() instance can be added, even if the file does not exists
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">all_root</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ctime</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append a filename in the list of files.</span>
+<span class="w">    </span><span class="sd">"""Append a filename in the list of files.</span>
 
 <span class="sd">        Given filename can be either an absolute or relative name of a file</span>
 <span class="sd">        or an instance of FileName. It can also be an instance of FileRoot.</span>
@@ -415,13 +415,13 @@ View Source
 <span class="sd">        :returns: (FileName, FileRoot) the list of appended objects or None</span>
 <span class="sd">        :raises: FileOSError if entry is a non-existing filename. Exception if given entry does not math the path.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">new_objs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">FileRoot</span><span class="p">):</span>
         <span class="n">abs_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">abs_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The root </span><span class="si">{:s}</span><span class="s2"> can&#39;t be appended: it is not matching the FilePath </span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"The root </span><span class="si">{:s}</span><span class="s2"> can't be appended: it is not matching the FilePath </span><span class="si">{:s}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
             <span class="k">raise</span> <span class="n">FilesMatchingValueError</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_root</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -437,7 +437,7 @@ View Source
             <span class="n">entry</span> <span class="o">=</span> <span class="n">FileName</span><span class="p">(</span><span class="n">file_id</span><span class="p">)</span>
         <span class="n">abs_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">abs_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The file </span><span class="si">{:s}</span><span class="s2"> can&#39;t be appended: its path is not matching the FilePath </span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"The file </span><span class="si">{:s}</span><span class="s2"> can't be appended: its path is not matching the FilePath </span><span class="si">{:s}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
             <span class="k">raise</span> <span class="n">FilesMatchingValueError</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="n">root_id</span> <span class="o">=</span> <span class="n">FileRoot</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">file_id</span><span class="p">)</span>
         <span class="n">fr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_root</span><span class="p">(</span><span class="n">root_id</span><span class="p">)</span>
@@ -487,7 +487,7 @@ of FileRoot.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove a root entry of the list of roots.</span>
+<span class="w">    </span><span class="sd">"""Remove a root entry of the list of roots.</span>
 
 <span class="sd">        Given entry can be either the identifier of a root or an instance</span>
 <span class="sd">        of FileRoot.</span>
@@ -497,7 +497,7 @@ View Source
 <span class="sd">        :param entry:</span>
 <span class="sd">        :returns: (identifier) Identifier of the removed entry or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">FileRoot</span><span class="p">):</span>
         <span class="n">root</span> <span class="o">=</span> <span class="n">entry</span>
     <span class="k">else</span><span class="p">:</span>
@@ -534,11 +534,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unlock all.</span>
+<span class="w">    </span><span class="sd">"""Unlock all.</span>
 
 <span class="sd">        :returns: number of unlocked filenames</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">fr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__roots</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">fr</span><span class="p">:</span>
@@ -582,7 +582,7 @@ Else, the state of a path is assigned as it:
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Modify state depending on the checked root names.</span>
+<span class="w">    </span><span class="sd">"""Modify state depending on the checked root names.</span>
 
 <span class="sd">        The state is missing if the path is not existing on disk.</span>
 <span class="sd">        Else, the state of a path is assigned as it:</span>
@@ -594,7 +594,7 @@ View Source
 
 <span class="sd">        :return: (bool) State was changed or not.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">States</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">==</span> <span class="n">state</span><span class="o">.</span><span class="n">MISSING</span><span class="p">:</span>
@@ -647,7 +647,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;Path: &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39; contains &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__roots</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39; file roots</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="s1">'Path: '</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">+</span> <span class="s1">' contains '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__roots</span><span class="p">))</span> <span class="o">+</span> <span class="s1">' file roots</span><span class="se">\n</span><span class="s1">'</span>
 </code></pre></div>
 
     </details>
@@ -721,7 +721,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

@@ -93,7 +93,7 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">with_radius</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">with_alt</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new TierStats instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new TierStats instance.</span>
 
 <span class="sd">    :param tier: (either sppasTier or list of them)</span>
 <span class="sd">    :param n: (int) n-gram value</span>
@@ -101,7 +101,7 @@ View Source
 <span class="sd">    to use R-, positive value to use R+</span>
 <span class="sd">    :param with_alt: (bool) Use or not use of alternative labels</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">tier</span> <span class="o">=</span> <span class="n">tier</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_with_radius</span> <span class="o">=</span> <span class="n">with_radius</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_with_alt</span> <span class="o">=</span> <span class="n">with_alt</span>
@@ -128,7 +128,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ngram</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the n-gram value.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Returns the n-gram value."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span>
 </code></pre></div>
 
@@ -151,12 +151,12 @@ positive value means to use R+.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_with_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns how to use the radius in duration estimations.</span>
+<span class="w">    </span><span class="sd">"""Returns how to use the radius in duration estimations.</span>
 
 <span class="sd">        0 means to use Midpoint, negative value means to use R-, and </span>
 <span class="sd">        positive value means to use R+.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_radius</span>
 </code></pre></div>
 
@@ -176,7 +176,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_with_alt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return if alternative labels will be used or not.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return if alternative labels will be used or not."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_alt</span>
 </code></pre></div>
 
@@ -196,7 +196,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier to estimate stats.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the tier to estimate stats."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tier</span>
 </code></pre></div>
 
@@ -230,7 +230,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_with_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">with_radius</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the with_radius option, used to estimate the duration.</span>
+<span class="w">    </span><span class="sd">"""Set the with_radius option, used to estimate the duration.</span>
 
 <span class="sd">        :param with_radius: (int) Fix the with_radius option</span>
 
@@ -240,7 +240,7 @@ View Source
 <span class="sd">            - negative value means to use (midpoint-radius);</span>
 <span class="sd">            - positive radius means to use (midpoint+radius).</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_with_radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">with_radius</span><span class="p">)</span>
 </code></pre></div>
 
@@ -271,14 +271,14 @@ of each annotation</li>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_withalt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">withalt</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the withalt option, used to select the labels.</span>
+<span class="w">    </span><span class="sd">"""Set the withalt option, used to select the labels.</span>
 
 
 <span class="sd">            - False means to use only the label with the higher score</span>
 <span class="sd">            of each annotation</span>
 <span class="sd">            - True means to use all labels of each annotation</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_with_alt</span> <span class="o">=</span> <span class="n">withalt</span>
 </code></pre></div>
 
@@ -305,11 +305,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_ngram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the n value of the n-grams.</span>
+<span class="w">    </span><span class="sd">"""Set the n value of the n-grams.</span>
 
 <span class="sd">        It is used to fix the history size (at least =1).</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
     <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="n">MAX_NGRAM</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span> <span class="o">=</span> <span class="n">n</span>
@@ -339,11 +339,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a DescriptiveStatistic object for the given tier. </span>
+<span class="w">    </span><span class="sd">"""Create a DescriptiveStatistic object for the given tier. </span>
 
 <span class="sd">        :returns: (DescriptiveStatistic)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">ltup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tiers_to_tuple</span><span class="p">()</span>
     <span class="n">ngrams</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ltup</span><span class="p">:</span>
@@ -381,16 +381,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">tuple_to_dict</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert into a dictionary.</span>
+<span class="w">    </span><span class="sd">"""Convert into a dictionary.</span>
 
 <span class="sd">        :param items: (tuple) the ngram items</span>
 <span class="sd">        :returns: dictionary key=text, value=list of durations.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
         <span class="n">dur</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">item</span><span class="p">])</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">item</span><span class="p">])</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">item</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">text</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
             <span class="n">d</span><span class="p">[</span><span class="n">text</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">d</span><span class="p">[</span><span class="n">text</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dur</span><span class="p">)</span>
@@ -416,7 +416,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__tiers_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of tuples of label/duration pairs.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a list of tuples of label/duration pairs."""</span>
     <span class="n">tiers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tier</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tier</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">tiers</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tier</span><span class="p">]</span>
@@ -451,12 +451,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__tier_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a tuple of label/duration pairs for a given tier.</span>
+<span class="w">    </span><span class="sd">"""Return a tuple of label/duration pairs for a given tier.</span>
 
 <span class="sd">        :param tier: (Tier)</span>
 <span class="sd">        :returns: tuple</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">tier</span><span class="p">:</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">()</span>
@@ -507,11 +507,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__ngrams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Yield a sequences of ngrams. </span>
+<span class="w">    </span><span class="sd">"""Yield a sequences of ngrams. </span>
 
 <span class="sd">        :param items: (tuple) the ngram items</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">size</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -529,7 +529,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

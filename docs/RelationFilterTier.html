@@ -64,7 +64,7 @@
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">ft</span> <span class="o">=</span> <span class="n">RelationFilterTier</span><span class="p">(([</span><span class="s2">&quot;overlaps&quot;</span><span class="p">,</span> <span class="s2">&quot;overlappedby&quot;</span><span class="p">],</span> <span class="p">[(</span><span class="s2">&quot;overlap_min&quot;</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">)]),</span> <span class="n">fit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">ft</span> <span class="o">=</span> <span class="n">RelationFilterTier</span><span class="p">(([</span><span class="s2">"overlaps"</span><span class="p">,</span> <span class="s2">"overlappedby"</span><span class="p">],</span> <span class="p">[(</span><span class="s2">"overlap_min"</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">)]),</span> <span class="n">fit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">res_tier</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">filter_tier</span><span class="p">(</span><span class="n">tier_x</span><span class="p">,</span> <span class="n">tier_y</span><span class="p">)</span>
 </code></pre></div>
 
@@ -96,10 +96,10 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">annot_format</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter process of a tier.</span>
+<span class="w">    </span><span class="sd">"""Filter process of a tier.</span>
 
-<span class="sd">    &quot;annot_format&quot; has an impact on the labels of the ann results but</span>
-<span class="sd">    &quot;fit&quot; has an impact on their localizations.</span>
+<span class="sd">    "annot_format" has an impact on the labels of the ann results but</span>
+<span class="sd">    "fit" has an impact on their localizations.</span>
 
 <span class="sd">    :param filters: (tuple) ([list of functions], [list of options])</span>
 <span class="sd">    each option is a tuple with (name, value)</span>
@@ -107,7 +107,7 @@ View Source
 <span class="sd">    name of the filter (if True) or the original label (if False)</span>
 <span class="sd">    :param fit: (bool) The annotation result fits the other tier.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span> <span class="o">=</span> <span class="n">filters</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__annot_format</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">annot_format</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__fit</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span>
@@ -139,15 +139,15 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">tier_y</span><span class="p">,</span> <span class="n">out_tiername</span><span class="o">=</span><span class="s1">&#39;Filtered&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply the filters on the given tier.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">tier_y</span><span class="p">,</span> <span class="n">out_tiername</span><span class="o">=</span><span class="s1">'Filtered'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Apply the filters on the given tier.</span>
 
 <span class="sd">        :param tier: (sppasTier) The tier to filter annotations</span>
 <span class="sd">        :param tier_y: (sppasTier) The tier to be in relation with</span>
 <span class="sd">        :param out_tiername: (str) Name or the filtered tier</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply sppasTiersFilter() on tier: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()))</span>
+<span class="sd">        """</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Apply sppasTiersFilter() on tier: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()))</span>
     <span class="n">sfilter</span> <span class="o">=</span> <span class="n">sppasTierFilters</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="n">ann_set</span> <span class="o">=</span> <span class="n">sfilter</span><span class="o">.</span><span class="n">rel</span><span class="p">(</span><span class="n">tier_y</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">**</span><span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">[</span><span class="mi">1</span><span class="p">]))})</span>
     <span class="n">ft</span> <span class="o">=</span> <span class="n">ann_set</span><span class="o">.</span><span class="n">to_tier</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">out_tiername</span><span class="p">,</span> <span class="n">annot_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__annot_format</span><span class="p">)</span>
@@ -166,7 +166,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

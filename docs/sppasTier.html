@@ -100,14 +100,14 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ctrl_vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">media</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasTier instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasTier instance.</span>
 
 <span class="sd">    :param name: (str) Name of the tier. It is used as identifier.</span>
 <span class="sd">    :param ctrl_vocab: (sppasCtrlVocab)</span>
 <span class="sd">    :param media: (sppasMedia)</span>
 <span class="sd">    :param parent: (sppasTranscription)</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasTier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -139,7 +139,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the identifier name of the tier.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the identifier name of the tier."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__name</span>
 </code></pre></div>
 
@@ -159,7 +159,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ctrl_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the controlled vocabulary of the tier.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the controlled vocabulary of the tier."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ctrl_vocab</span>
 </code></pre></div>
 
@@ -179,7 +179,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_media</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the media of the tier.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the media of the tier."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__media</span>
 </code></pre></div>
 
@@ -199,7 +199,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the parent of the tier.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the parent of the tier."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parent</span>
 </code></pre></div>
 
@@ -234,7 +234,7 @@ Important: An empty string is accepted.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the name of the tier.</span>
+<span class="w">    </span><span class="sd">"""Set the name of the tier.</span>
 
 <span class="sd">        If no name is given, an GUID is randomly assigned.</span>
 <span class="sd">        Important: An empty string is accepted.</span>
@@ -242,9 +242,9 @@ View Source
 <span class="sd">        :param name: (str) The identifier name or None.</span>
 <span class="sd">        :returns: the formatted name</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">gen_id</span><span class="p">()</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
     <span class="n">su</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
@@ -278,15 +278,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_ctrl_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctrl_vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a controlled vocabulary to this tier.</span>
+<span class="w">    </span><span class="sd">"""Set a controlled vocabulary to this tier.</span>
 
 <span class="sd">        :param ctrl_vocab: (sppasCtrlVocab or None)</span>
 <span class="sd">        :raises: AnnDataTypeError, CtrlVocabContainsError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">ctrl_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ctrl_vocab</span><span class="p">,</span> <span class="n">sppasCtrlVocab</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">ctrl_vocab</span><span class="p">,</span> <span class="s1">&#39;sppasCtrlVocab&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">ctrl_vocab</span><span class="p">,</span> <span class="s1">'sppasCtrlVocab'</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">annotation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">annotation</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
                 <span class="n">annotation</span><span class="o">.</span><span class="n">validate_label</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
@@ -324,15 +324,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_media</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">media</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a media to the tier.</span>
+<span class="w">    </span><span class="sd">"""Set a media to the tier.</span>
 
 <span class="sd">        :param media: (sppasMedia)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">media</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">media</span><span class="p">,</span> <span class="n">sppasMedia</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">media</span><span class="p">,</span> <span class="s1">&#39;sppasMedia&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">media</span><span class="p">,</span> <span class="s1">'sppasMedia'</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__parent</span><span class="o">.</span><span class="n">add_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
@@ -363,11 +363,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the parent of the tier.</span>
+<span class="w">    </span><span class="sd">"""Set the parent of the tier.</span>
 
 <span class="sd">        :param parent: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__parent</span> <span class="o">=</span> <span class="n">parent</span>
     <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__media</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -404,11 +404,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of the tier.</span>
+<span class="w">    </span><span class="sd">"""Return a deep copy of the tier.</span>
 
-<span class="sd">        :return: (sppasTier) including the &#39;id&#39;.</span>
+<span class="sd">        :return: (sppasTier) including the 'id'.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">new_tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="p">)</span>
     <span class="n">my_parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_parent</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_parent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
@@ -454,13 +454,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and add a new annotation into the tier.</span>
+<span class="w">    </span><span class="sd">"""Create and add a new annotation into the tier.</span>
 
 <span class="sd">        :param location: (sppasLocation) the location(s) where                the annotation happens</span>
 <span class="sd">        :param labels: (sppasLabel, list) the label(s) to stamp this annot.</span>
 <span class="sd">        :returns: sppasAnnotation</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">ann</span> <span class="o">=</span> <span class="n">sppasAnnotation</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ann</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ann</span>
@@ -498,15 +498,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create_annotation_before</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and add a new annotation in the hole before idx.</span>
+<span class="w">    </span><span class="sd">"""Create and add a new annotation in the hole before idx.</span>
 
 <span class="sd">        :param idx: (int) Index of an existing annotation</span>
 <span class="sd">        :returns: sppasAnnotation</span>
 <span class="sd">        :raises AnnDataTypeError, AnnDataIndexError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">&#39;Interval, Disjoint&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">'Interval, Disjoint'</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">ann</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
@@ -556,15 +556,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create_annotation_after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and add a new annotation in the hole after idx.</span>
+<span class="w">    </span><span class="sd">"""Create and add a new annotation in the hole after idx.</span>
 
 <span class="sd">        :param idx: (int) Index of an existing annotation</span>
 <span class="sd">        :returns: sppasAnnotation</span>
 <span class="sd">        :raises AnnDataTypeError, AnnDataIndexError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">&#39;Interval, Disjoint&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">'Interval, Disjoint'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">AnnDataIndexError</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
@@ -594,7 +594,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tier does not contain annotations.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the tier does not contain annotations."""</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
 </code></pre></div>
 
@@ -626,14 +626,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotation</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append the given annotation at the end of the tier.</span>
+<span class="w">    </span><span class="sd">"""Append the given annotation at the end of the tier.</span>
 
 <span class="sd">        Assign this tier as parent to the annotation.</span>
 
 <span class="sd">        :param annotation: (sppasAnnotation)</span>
 <span class="sd">        :raises: AnnDataTypeError, CtrlVocabContainsError,         HierarchyContainsError, HierarchyTypeError, TierAppendError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">validate_annotation</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">()</span>
@@ -679,7 +679,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotation</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add an annotation to the tier in sorted order.</span>
+<span class="w">    </span><span class="sd">"""Add an annotation to the tier in sorted order.</span>
 
 <span class="sd">        Assign this tier as parent to the annotation.</span>
 
@@ -687,7 +687,7 @@ View Source
 <span class="sd">        :raises: AnnDataTypeError, CtrlVocabContainsError,         HierarchyContainsError, HierarchyTypeError</span>
 <span class="sd">        :returns: the index of the annotation in the tier</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">validate_annotation</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span>
@@ -753,7 +753,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">overlaps</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove annotation intervals between begin and end.</span>
+<span class="w">    </span><span class="sd">"""Remove annotation intervals between begin and end.</span>
 
 <span class="sd">        :param begin: (sppasPoint)</span>
 <span class="sd">        :param end: (sppasPoint)</span>
@@ -761,7 +761,7 @@ View Source
 <span class="sd">        :returns: the number of removed annotations</span>
 <span class="sd">        :raises: HierarchyContainsError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">end</span> <span class="o">&lt;</span> <span class="n">begin</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IntervalBoundsError</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
     <span class="n">annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">overlaps</span><span class="p">)</span>
@@ -807,7 +807,7 @@ and returns the last annotation in the tier.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove the annotation at the given position in the tier.</span>
+<span class="w">    </span><span class="sd">"""Remove the annotation at the given position in the tier.</span>
 
 <span class="sd">        If no index is specified, pop() removes</span>
 <span class="sd">        and returns the last annotation in the tier.</span>
@@ -815,7 +815,7 @@ View Source
 <span class="sd">        :param index: (int) Index of the annotation to remove.</span>
 <span class="sd">        :raises: HierarchyContainsError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">ann</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
         <span class="n">copied_ann</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -854,13 +854,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_unlabelled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove annotations without labels.</span>
+<span class="w">    </span><span class="sd">"""Remove annotations without labels.</span>
 
 <span class="sd">        Do not remove an annotation if it invalidates the hierarchy.</span>
 
 <span class="sd">        :returns: the number of removed annotations</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">nb</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">is_labelled</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -907,7 +907,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">from_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">to_time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Split annotation at the given index into 2 annotations.</span>
+<span class="w">    </span><span class="sd">"""Split annotation at the given index into 2 annotations.</span>
 
 <span class="sd">        Example with ann=[1.0;2.0] at index 1:</span>
 <span class="sd">            - tier.split(1): creates ann1=[1.0;1.5] and ann2=[1.5;2.0]</span>
@@ -919,9 +919,9 @@ View Source
 <span class="sd">        :param to_time: (int) Time value to end the cut part</span>
 <span class="sd">        :return: newly created annotation at index idx+1</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">&#39;Interval, Disjoint&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">'Interval, Disjoint'</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">ann</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
@@ -997,7 +997,7 @@ result:   [begin<em>p, end</em>idx, labels<em>p + labels</em>idx]</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">direction</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Merge the annotation at given index with next or previous one.</span>
+<span class="w">    </span><span class="sd">"""Merge the annotation at given index with next or previous one.</span>
 
 <span class="sd">        if direction &gt; 0:</span>
 <span class="sd">            ann_idx:  [begin_idx, end_idx, labels_idx]</span>
@@ -1012,11 +1012,11 @@ View Source
 <span class="sd">        :param idx: (int) Index of the annotation in the list</span>
 <span class="sd">        :param direction: (int) Positive for next, Negative for previous</span>
 <span class="sd">        :return: (bool) False if direction does not match with index</span>
-<span class="sd">        :raise: Exception if merged annotation can&#39;t be deleted of the tier</span>
+<span class="sd">        :raise: Exception if merged annotation can't be deleted of the tier</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">&#39;Interval, Disjoint&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">'Interval, Disjoint'</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">ann</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
@@ -1068,7 +1068,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_all_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of all points of the tier.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of all points of the tier."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[]</span>
     <span class="n">points</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -1093,7 +1093,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_first_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the first point of the first annotation.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the first point of the first annotation."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_lowest_localization</span><span class="p">()</span>
@@ -1115,7 +1115,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_last_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the last point of the last location.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the last point of the last location."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">()</span>
@@ -1149,14 +1149,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">has_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tier contains a given point.</span>
+<span class="w">    </span><span class="sd">"""Return True if the tier contains a given point.</span>
 
 <span class="sd">        :param point: (sppasPoint) The point to find in the tier.</span>
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="s1">'sppasPoint'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">point</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_points</span><span class="p">()</span>
 </code></pre></div>
 
@@ -1183,11 +1183,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">has_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tier has the given location.</span>
+<span class="w">    </span><span class="sd">"""Return True if the tier has the given location.</span>
 
 <span class="sd">        to be tested.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">get_lowest_localization</span><span class="p">()</span>
     <span class="n">end</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">()</span>
     <span class="n">anns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">overlaps</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1213,7 +1213,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_disjoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tier is made of disjoint localizations.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the tier is made of disjoint localizations."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">is_disjoint</span><span class="p">()</span>
@@ -1235,7 +1235,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tier is made of interval localizations.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the tier is made of interval localizations."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">is_interval</span><span class="p">()</span>
@@ -1257,7 +1257,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the tier is made of point localizations.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the tier is made of point localizations."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span>
@@ -1279,7 +1279,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_midpoint_intervals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return midpoint values of all the intervals.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return midpoint values of all the intervals."""</span>
     <span class="n">units</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
@@ -1305,7 +1305,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_midpoint_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return midpoint values of all the points.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return midpoint values of all the points."""</span>
     <span class="n">units</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
@@ -1340,12 +1340,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix a radius value to all points of the tier.</span>
+<span class="w">    </span><span class="sd">"""Fix a radius value to all points of the tier.</span>
 
 <span class="sd">        :param radius: (int, float) New radius value</span>
 <span class="sd">        :raise: AnnDataTypeError, AnnDataNegValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">:</span>
         <span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
 </code></pre></div>
@@ -1382,7 +1382,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">overlaps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indexes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">radius_overlaps</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of annotations between begin and end.</span>
+<span class="w">    </span><span class="sd">"""Return a list of annotations between begin and end.</span>
 
 <span class="sd">        :param begin: sppasPoint or None to start from the beginning of the tier</span>
 <span class="sd">        :param end: sppasPoint or None to end at the end of the tier</span>
@@ -1391,7 +1391,7 @@ View Source
 <span class="sd">        :param radius_overlaps: (bool) Return also overlapped annotations,                   using midpoints and radius.                   Not relevant for tiers with points. overlaps must be true.</span>
 <span class="sd">        :returns: List of sppasAnnotation or list of indexes</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">begin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1447,7 +1447,7 @@ View Source
                     <span class="k">if</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="n">end</span><span class="p">:</span>
                         <span class="k">break</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;No annotation is matching begin=</span><span class="si">{}</span><span class="s1">, end=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'No annotation is matching begin=</span><span class="si">{}</span><span class="s1">, end=</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">annotations</span>
 </code></pre></div>
 
@@ -1475,13 +1475,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">moment</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the index of the moment (int), or -1.</span>
+<span class="w">    </span><span class="sd">"""Return the index of the moment (int), or -1.</span>
 
 <span class="sd">        Only for tier with points.</span>
 
 <span class="sd">        :param moment: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
     <span class="n">lo</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1529,7 +1529,7 @@ moment, the method returns the first one.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">moment</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the index of the interval starting at a given moment, or -1.</span>
+<span class="w">    </span><span class="sd">"""Return the index of the interval starting at a given moment, or -1.</span>
 
 <span class="sd">        Only for tier with intervals or disjoint.</span>
 <span class="sd">        If the tier contains more than one annotation starting at the same</span>
@@ -1537,7 +1537,7 @@ View Source
 
 <span class="sd">        :param moment: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
     <span class="n">lo</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1597,7 +1597,7 @@ the method returns the first one (i.e. the one which started at first).</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">mindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">moment</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return index of the interval containing the given moment.</span>
+<span class="w">    </span><span class="sd">"""Return index of the interval containing the given moment.</span>
 
 <span class="sd">        Only for tier with intervals or disjoint.</span>
 
@@ -1613,7 +1613,7 @@ View Source
 <span class="sd">            - others: the midpoint of moment is strictly inside</span>
 <span class="sd">        :returns: (int) Index of the 1st annotation containing moment or -1</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">):</span>
@@ -1662,7 +1662,7 @@ the method returns the last one.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">moment</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the index of the interval ending at the given moment.</span>
+<span class="w">    </span><span class="sd">"""Return the index of the interval ending at the given moment.</span>
 
 <span class="sd">        Only for tier with intervals or disjoint.</span>
 <span class="sd">        If the tier contains more than one annotation ending at the same moment,</span>
@@ -1670,7 +1670,7 @@ View Source
 
 <span class="sd">        :param moment: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
     <span class="n">lo</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1724,12 +1724,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_superset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if this tier contains all points of the other tier.</span>
+<span class="w">    </span><span class="sd">"""Return True if this tier contains all points of the other tier.</span>
 
 <span class="sd">        :param other: (sppasTier)</span>
 <span class="sd">        :returns: Boolean</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="n">tier_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_points</span><span class="p">()</span>
@@ -1766,7 +1766,7 @@ given direction.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">near</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">moment</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for the annotation whose localization is closest.</span>
+<span class="w">    </span><span class="sd">"""Search for the annotation whose localization is closest.</span>
 
 <span class="sd">        Search for the nearest localization to the given moment into a</span>
 <span class="sd">        given direction.</span>
@@ -1777,9 +1777,9 @@ View Source
 <span class="sd">                - nereast forward 1</span>
 <span class="sd">                - nereast backward -1</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">moment</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">&#39;moment&#39;</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">'moment'</span><span class="p">,</span> <span class="s1">'sppasPoint'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -1830,7 +1830,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;All label tags are string or unicode or None.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""All label tags are string or unicode or None."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">:</span>
@@ -1855,7 +1855,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_float</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;All label tags are float values or None.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""All label tags are float values or None."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">:</span>
@@ -1880,7 +1880,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;All label tags are integer values or None.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""All label tags are integer values or None."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">:</span>
@@ -1905,7 +1905,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_bool</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;All label tags are boolean values or None.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""All label tags are boolean values or None."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">:</span>
@@ -1930,7 +1930,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_fuzzypoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;All label tags are fuzzy point values or None.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""All label tags are fuzzy point values or None."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">:</span>
@@ -1955,7 +1955,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_fuzzyrect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;All label tags are fuzzy rectangle values or None.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""All label tags are fuzzy rectangle values or None."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">:</span>
@@ -1980,13 +1980,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_labels_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the current type of labels, or an empty string.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the current type of labels, or an empty string."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">return</span> <span class="s1">''</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">ann</span><span class="o">.</span><span class="n">is_labelled</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_label_type</span><span class="p">()</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -2005,7 +2005,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_nb_filled_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number annotation with a filled label.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number annotation with a filled label."""</span>
     <span class="n">nb</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">ann</span><span class="o">.</span><span class="n">is_labelled</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -2053,21 +2053,21 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotation</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate the annotation and set its parent to this tier.</span>
+<span class="w">    </span><span class="sd">"""Validate the annotation and set its parent to this tier.</span>
 
 <span class="sd">        :param annotation: (sppasAnnotation)</span>
 <span class="sd">        :raises: AnnDataTypeError, CtrlVocabContainsError,         HierarchyContainsError, HierarchyTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="n">sppasAnnotation</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="s1">&#39;sppasAnnotation&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="s1">'sppasAnnotation'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">annotation</span><span class="o">.</span><span class="n">location_is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; (sppasPoint)&#39;</span><span class="p">,</span> <span class="s1">&#39;sppasInterval&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' (sppasPoint)'</span><span class="p">,</span> <span class="s1">'sppasInterval'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">annotation</span><span class="o">.</span><span class="n">location_is_interval</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_interval</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; (sppasInterval)&#39;</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' (sppasInterval)'</span><span class="p">,</span> <span class="s1">'sppasPoint'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">annotation</span><span class="o">.</span><span class="n">location_is_disjoint</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_disjoint</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="s1">&#39;sppasDisjoint&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="s1">'sppasDisjoint'</span><span class="p">)</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">set_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div>
 
@@ -2097,12 +2097,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate_annotation_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate a label.</span>
+<span class="w">    </span><span class="sd">"""Validate a label.</span>
 
 <span class="sd">        :param label: (sppasLabel)</span>
 <span class="sd">        :raises: CtrlVocabContainsError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ctrl_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ctrl_vocab</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -2140,12 +2140,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate_annotation_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ask the parent to validate a location.</span>
+<span class="w">    </span><span class="sd">"""Ask the parent to validate a location.</span>
 
 <span class="sd">        :param location: (sppasLocation)</span>
 <span class="sd">        :raises: AnnDataTypeError, HierarchyContainsError, HierarchyTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parent</span><span class="o">.</span><span class="n">validate_annotation_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
 </code></pre></div>
@@ -2178,14 +2178,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find an annotation from its metadata &#39;id&#39;.</span>
+<span class="w">    </span><span class="sd">"""Find an annotation from its metadata 'id'.</span>
 
-<span class="sd">        :param identifier: (str) Metadata &#39;id&#39; of an annotation.</span>
+<span class="sd">        :param identifier: (str) Metadata 'id' of an annotation.</span>
 <span class="sd">        :returns: sppasAnnotation or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">identifier</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">)</span> <span class="o">==</span> <span class="n">identifier</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">a</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -2218,12 +2218,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_annotation_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ann</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find an annotation.</span>
+<span class="w">    </span><span class="sd">"""Find an annotation.</span>
 
 <span class="sd">        :param ann: (sppasAnnotation)</span>
 <span class="sd">        :returns: (int) -1 if not found</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">():</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">())</span>
     <span class="k">else</span><span class="p">:</span>
@@ -2264,7 +2264,7 @@ The current controlled vocabulary is deleted.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create_ctrl_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the controlled vocabulary from annotation labels.</span>
+<span class="w">    </span><span class="sd">"""Create the controlled vocabulary from annotation labels.</span>
 
 <span class="sd">        Create (or re-create) the controlled vocabulary from the list of</span>
 <span class="sd">        already existing annotation labels.</span>
@@ -2272,7 +2272,7 @@ View Source
 
 <span class="sd">        :param name: (str) Name of the controlled vocabulary.         The name of the tier is used by default.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__name</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__ctrl_vocab</span> <span class="o">=</span> <span class="n">sppasCtrlVocab</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
@@ -2314,16 +2314,16 @@ The created intervals are not filled.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">export_to_intervals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">separators</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a tier with the consecutive filled intervals.</span>
+<span class="w">    </span><span class="sd">"""Create a tier with the consecutive filled intervals.</span>
 
-<span class="sd">        Return an empty tier if &#39;self&#39; is not of type &quot;interval&quot;.</span>
+<span class="sd">        Return an empty tier if 'self' is not of type "interval".</span>
 <span class="sd">        The created intervals are not filled.</span>
 
 <span class="sd">        :param separators: (list)</span>
 <span class="sd">        :returns: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">intervals</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;intervals&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">'intervals'</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_interval</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">intervals</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_first_point</span><span class="p">()</span>
@@ -2380,23 +2380,23 @@ actually not tested at all (but used in the plugin StatGroups).</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">export_unfilled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a tier with the unlabelled/unfilled intervals.</span>
+<span class="w">    </span><span class="sd">"""Create a tier with the unlabelled/unfilled intervals.</span>
 
 <span class="sd">        Only for tiers of type Interval.</span>
-<span class="sd">        It represents the &quot;NOT tier&quot;, ie where this tier is not annotated.</span>
+<span class="sd">        It represents the "NOT tier", ie where this tier is not annotated.</span>
 
 <span class="sd">        IMPORTANT: Never tested with overlapped annotations,</span>
 <span class="sd">        actually not tested at all (but used in the plugin StatGroups).</span>
 
 <span class="sd">        :return: (sppasTier) or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_interval</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">intervals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_to_intervals</span><span class="p">([])</span>
-    <span class="n">not_intervals</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;NotIntervals&#39;</span><span class="p">)</span>
+    <span class="n">not_intervals</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">'NotIntervals'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">intervals</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
         <span class="n">not_intervals</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">sppasInterval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_first_point</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_last_point</span><span class="p">())))</span>
         <span class="k">return</span> <span class="n">not_intervals</span>
@@ -2463,7 +2463,7 @@ tier2:           |<em>w</em>|       |<em><strong><strong><strong>x</strong></str
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Select then slice or extend annotations to fit in other tier.</span>
+<span class="w">    </span><span class="sd">"""Select then slice or extend annotations to fit in other tier.</span>
 
 <span class="sd">        Keep only the annotations of self that have some overlapping time</span>
 <span class="sd">        with the given other tier and slice the localization of</span>
@@ -2484,8 +2484,8 @@ View Source
 <span class="sd">        :param other: (sppasTier)</span>
 <span class="sd">        :return: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">ft</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">+</span> <span class="s1">&#39;-inter-&#39;</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+<span class="sd">        """</span>
+    <span class="n">ft</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">+</span> <span class="s1">'-inter-'</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">other</span><span class="p">:</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_lowest_localization</span><span class="p">()</span>
         <span class="n">e</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">()</span>
@@ -2547,14 +2547,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">radius_overlaps</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">closest</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find index of the 1st annotation whose moment value contains x.</span>
+<span class="w">    </span><span class="sd">"""Find index of the 1st annotation whose moment value contains x.</span>
 
 <span class="sd">        :param x: (sppasPoint)</span>
 <span class="sd">        :param radius_overlaps: (bool)</span>
-<span class="sd">        :param closest: (bool) return the closest if there&#39;s no annotation on x</span>
+<span class="sd">        :param closest: (bool) return the closest if there's no annotation on x</span>
 <span class="sd">        :return: (int) -1 if not found and closest is False.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">():</span>
@@ -2685,7 +2685,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Value can be either an annotation or an annotation identifier.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Value can be either an annotation or an annotation identifier."""</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">sppasAnnotation</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ann</span>
     <span class="k">else</span><span class="p">:</span>
@@ -2716,7 +2716,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compare annotations ONLY.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Compare annotations ONLY."""</span>
     <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasTier</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -2750,7 +2750,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

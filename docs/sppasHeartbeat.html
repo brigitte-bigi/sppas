@@ -97,12 +97,12 @@ to announce a death nobody is left alive to announce.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_age</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">40.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasHeartbeat instance.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasHeartbeat instance.</span>
 
 <span class="sd">    :param max_age: (float) Age of the last sign of life, in seconds,</span>
 <span class="sd">    above which the interlocutor is considered gone.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__max_age</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_age</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__seen</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
@@ -127,7 +127,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_max_age</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the age above which the interlocutor is considered gone.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the age above which the interlocutor is considered gone."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__max_age</span>
 </code></pre></div>
 
@@ -147,7 +147,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Store the time of a sign of life.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Store the time of a sign of life."""</span>
     <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__seen</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 </code></pre></div>
@@ -168,7 +168,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">forget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Drop the last sign of life: the interlocutor announced its end.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Drop the last sign of life: the interlocutor announced its end."""</span>
     <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__seen</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
@@ -201,12 +201,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">alive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_age</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the last sign of life is recent enough.</span>
+<span class="w">    </span><span class="sd">"""Return True if the last sign of life is recent enough.</span>
 
 <span class="sd">        :param max_age: (float) Override the age given at creation</span>
 <span class="sd">        :return: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">max_age</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">max_age</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__max_age</span>
     <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span><span class="p">:</span>
@@ -231,7 +231,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the age of the last sign of life, or None.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the age of the last sign of life, or None."""</span>
     <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__seen</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
@@ -246,7 +246,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

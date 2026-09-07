@@ -84,13 +84,13 @@ values = ((("whakerpy",), ("audioopy",)), None)</p>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">core_checker</span> <span class="o">=</span> <span class="n">DepsFeatureChecker</span><span class="p">()</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">core_checker</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">do_report</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># The features needs a pip package but no command</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">wxpython_checker</span> <span class="o">=</span> <span class="n">DepsFeatureChecker</span><span class="p">((((</span><span class="s2">&quot;wx&quot;</span><span class="p">,</span> <span class="p">),),</span> <span class="kc">None</span><span class="p">))</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">wxpython_checker</span> <span class="o">=</span> <span class="n">DepsFeatureChecker</span><span class="p">((((</span><span class="s2">"wx"</span><span class="p">,</span> <span class="p">),),</span> <span class="kc">None</span><span class="p">))</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">wxpython_checker</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># The feature does not need a pip package but a command</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">julius_checker</span> <span class="o">=</span> <span class="n">DepsFeatureChecker</span><span class="p">((</span><span class="kc">None</span><span class="p">,</span> <span class="p">((</span><span class="s2">&quot;julius&quot;</span><span class="p">,</span> <span class="p">),)))</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">julius_checker</span> <span class="o">=</span> <span class="n">DepsFeatureChecker</span><span class="p">((</span><span class="kc">None</span><span class="p">,</span> <span class="p">((</span><span class="s2">"julius"</span><span class="p">,</span> <span class="p">),)))</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">julius_checker</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># The features needs both pip packages and a command</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">stt_checker</span> <span class="o">=</span> <span class="n">DepsFeatureChecker</span><span class="p">((((</span><span class="s2">&quot;torch&quot;</span><span class="p">,),</span> <span class="p">(</span><span class="s2">&quot;whisper&quot;</span><span class="p">,),</span> <span class="p">(</span><span class="s2">&quot;transformers&quot;</span><span class="p">,)),</span> <span class="p">(</span><span class="s2">&quot;ffmpeg -h&quot;</span><span class="p">,)))</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">stt_checker</span> <span class="o">=</span> <span class="n">DepsFeatureChecker</span><span class="p">((((</span><span class="s2">"torch"</span><span class="p">,),</span> <span class="p">(</span><span class="s2">"whisper"</span><span class="p">,),</span> <span class="p">(</span><span class="s2">"transformers"</span><span class="p">,)),</span> <span class="p">(</span><span class="s2">"ffmpeg -h"</span><span class="p">,)))</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">stt_checker</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
 </code></pre></div>
 
@@ -102,14 +102,14 @@ values = ((("whakerpy",), ("audioopy",)), None)</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a module import checker.</span>
+<span class="w">    </span><span class="sd">"""Create a module import checker.</span>
 
 <span class="sd">    By default, the tested values are the required one, for core, i.e.:</span>
-<span class="sd">    values = (((&quot;whakerpy&quot;,), (&quot;audioopy&quot;,)), None)</span>
+<span class="sd">    values = ((("whakerpy",), ("audioopy",)), None)</span>
 
 <span class="sd">    :param values: tuple (modules, commands) to check, where:</span>
 <span class="sd">           - modules: tuple of tuples, each inner tuple is an OR group, AND between groups.</span>
-<span class="sd">             E.g. ((&#39;a&#39;, &#39;b&#39;), (&#39;c&#39;,)) means (a OR b) AND c</span>
+<span class="sd">             E.g. (('a', 'b'), ('c',)) means (a OR b) AND c</span>
 <span class="sd">           - commands: tuple of commands to check (all must succeed).</span>
 
 <span class="sd">    :example:</span>
@@ -117,18 +117,18 @@ View Source
 <span class="sd">    &gt;&gt;&gt; core_checker = DepsFeatureChecker()</span>
 <span class="sd">    &gt;&gt;&gt; core_checker.check(do_report=True)</span>
 <span class="sd">    &gt;&gt;&gt; # The features needs a pip package but no command</span>
-<span class="sd">    &gt;&gt;&gt; wxpython_checker = DepsFeatureChecker((((&quot;wx&quot;, ),), None))</span>
+<span class="sd">    &gt;&gt;&gt; wxpython_checker = DepsFeatureChecker(((("wx", ),), None))</span>
 <span class="sd">    &gt;&gt;&gt; wxpython_checker.check()</span>
 <span class="sd">    &gt;&gt;&gt; # The feature does not need a pip package but a command</span>
-<span class="sd">    &gt;&gt;&gt; julius_checker = DepsFeatureChecker((None, ((&quot;julius&quot;, ),)))</span>
+<span class="sd">    &gt;&gt;&gt; julius_checker = DepsFeatureChecker((None, (("julius", ),)))</span>
 <span class="sd">    &gt;&gt;&gt; julius_checker.check()</span>
 <span class="sd">    &gt;&gt;&gt; # The features needs both pip packages and a command</span>
-<span class="sd">    &gt;&gt;&gt; stt_checker = DepsFeatureChecker((((&quot;torch&quot;,), (&quot;whisper&quot;,), (&quot;transformers&quot;,)), (&quot;ffmpeg -h&quot;,)))</span>
+<span class="sd">    &gt;&gt;&gt; stt_checker = DepsFeatureChecker(((("torch",), ("whisper",), ("transformers",)), ("ffmpeg -h",)))</span>
 <span class="sd">    &gt;&gt;&gt; stt_checker.check()</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">values</span> <span class="o">=</span> <span class="p">(((</span><span class="s1">&#39;whakerpy&#39;</span><span class="p">,),</span> <span class="p">(</span><span class="s1">&#39;audioopy&#39;</span><span class="p">,)),</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">(((</span><span class="s1">'whakerpy'</span><span class="p">,),</span> <span class="p">(</span><span class="s1">'audioopy'</span><span class="p">,)),</span> <span class="kc">None</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__values</span> <span class="o">=</span> <span class="n">values</span>
 </code></pre></div>
 
@@ -170,32 +170,32 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">do_report</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the defined dependencies can be imported or executed.</span>
+<span class="w">    </span><span class="sd">"""Check if the defined dependencies can be imported or executed.</span>
 
 <span class="sd">        :param do_report: whether to report errors or not in a file and in web browser</span>
 <span class="sd">        :return: (list) List of messages</span>
 <span class="sd">        :raises: ImportError: a module failed to be imported</span>
 <span class="sd">        :raises: RuntimeError: a command failed to be executed</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">test_modules</span><span class="p">,</span> <span class="n">test_commands</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__values</span>
         <span class="k">if</span> <span class="n">test_commands</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">DepsFeatureChecker</span><span class="o">.</span><span class="n">check_commands</span><span class="p">(</span><span class="n">test_commands</span><span class="p">)</span>
-            <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; - Successfully executed: &#39;</span><span class="si">{</span><span class="n">test_commands</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+            <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">" - Successfully executed: '</span><span class="si">{</span><span class="n">test_commands</span><span class="si">}</span><span class="s2">'."</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">test_modules</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">DepsFeatureChecker</span><span class="o">.</span><span class="n">check_modules</span><span class="p">(</span><span class="n">test_modules</span><span class="p">)</span>
-            <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; - Successfully imported: &#39;</span><span class="si">{</span><span class="n">test_modules</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+            <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">" - Successfully imported: '</span><span class="si">{</span><span class="n">test_modules</span><span class="si">}</span><span class="s2">'."</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">do_report</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">report_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">report_message</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
         <span class="k">raise</span>
     <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">do_report</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">report_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">report_message</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
         <span class="k">raise</span>
     <span class="k">return</span> <span class="n">msg</span>
 </code></pre></div>
@@ -229,12 +229,12 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_modules</span><span class="p">(</span><span class="n">test_modules</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the defined module dependencies can be imported.</span>
+<span class="w">    </span><span class="sd">"""Check if the defined module dependencies can be imported.</span>
 
-<span class="sd">        :param test_modules: tuple of tuples (OR-groups in AND-chain), e.g. ((&#39;a&#39;, &#39;b&#39;), (&#39;c&#39;,))</span>
+<span class="sd">        :param test_modules: tuple of tuples (OR-groups in AND-chain), e.g. (('a', 'b'), ('c',))</span>
 <span class="sd">        :raises: ImportError: if any AND-group fails (i.e., no module in OR-group can be imported)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">test_modules</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">test_modules</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -251,9 +251,9 @@ View Source
             <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error while importing &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error while importing '</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">': </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;None of the modules in </span><span class="si">{</span><span class="n">or_group</span><span class="si">}</span><span class="s1"> could be imported.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="sa">f</span><span class="s1">'None of the modules in </span><span class="si">{</span><span class="n">or_group</span><span class="si">}</span><span class="s1"> could be imported.'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -285,18 +285,18 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_commands</span><span class="p">(</span><span class="n">test_commands</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the defined command dependencies can be executed.</span>
+<span class="w">    </span><span class="sd">"""Check if the defined command dependencies can be executed.</span>
 
 <span class="sd">        :param test_commands: (list) the commands to check</span>
 <span class="sd">        :raises: RuntimeError: a command failed to be executed</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">test_commands</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">test_commands</span><span class="p">:</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
             <span class="n">success</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">test_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Failed to execute the required command: </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Failed to execute the required command: </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s1">.'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -322,15 +322,15 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">report_message</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a report of the error and open it in the web browser.</span>
+<span class="w">    </span><span class="sd">"""Create a report of the error and open it in the web browser.</span>
 
 <span class="sd">        :param message: the error message to be displayed</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">report</span> <span class="o">=</span> <span class="n">sppasLogFile</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;setup&#39;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">report</span><span class="o">.</span><span class="n">get_filename</span><span class="p">(),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="sd">        """</span>
+    <span class="n">report</span> <span class="o">=</span> <span class="n">sppasLogFile</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s1">'setup'</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">report</span><span class="o">.</span><span class="n">get_filename</span><span class="p">(),</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">report</span><span class="o">.</span><span class="n">get_header</span><span class="p">())</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
     <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">report</span><span class="o">.</span><span class="n">get_filename</span><span class="p">())</span>
 </code></pre></div>
 
@@ -342,7 +342,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

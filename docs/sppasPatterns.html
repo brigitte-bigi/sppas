@@ -84,7 +84,7 @@ They allow to find an hypothesis pattern in a reference.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new Pattern instance.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create a new Pattern instance."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span> <span class="o">=</span> <span class="mi">3</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_score</span> <span class="o">=</span> <span class="mf">1.0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_gap</span> <span class="o">=</span> <span class="mi">2</span>
@@ -110,7 +110,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the score value (float).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the score value (float)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_score</span>
 </code></pre></div>
 
@@ -130,7 +130,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ngram</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the n value for n-grams (int).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the n value for n-grams (int)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span>
 </code></pre></div>
 
@@ -150,7 +150,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_gap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the gap value (int).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the gap value (int)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gap</span>
 </code></pre></div>
 
@@ -180,12 +180,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_ngram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the value of n of the n-grams.</span>
+<span class="w">    </span><span class="sd">"""Fix the value of n of the n-grams.</span>
 
 <span class="sd">        :param n: (int) Value of n (1&lt;n&lt;MAX_NGRAM)</span>
 <span class="sd">        :raises: NgramRangeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
     <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">sppasPatterns</span><span class="o">.</span><span class="n">MAX_NGRAM</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span> <span class="o">=</span> <span class="n">n</span>
@@ -219,12 +219,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_gap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the value of the gap.</span>
+<span class="w">    </span><span class="sd">"""Fix the value of the gap.</span>
 
 <span class="sd">        :param g: (int) Value of the gap (0&lt;g&lt;MAX_GAP)</span>
 <span class="sd">        :raises: GapRangeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
     <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">g</span> <span class="o">&lt;</span> <span class="n">sppasPatterns</span><span class="o">.</span><span class="n">MAX_GAP</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gap</span> <span class="o">=</span> <span class="n">g</span>
@@ -259,12 +259,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the value of the score.</span>
+<span class="w">    </span><span class="sd">"""Fix the value of the score.</span>
 
 <span class="sd">        :param s: (float) Value of the score (0&lt;s&lt;1)</span>
 <span class="sd">        :raises: ScoreRangeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">s</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
     <span class="k">if</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">s</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_score</span> <span class="o">=</span> <span class="n">s</span>
@@ -304,7 +304,7 @@ The scores are supposed to range in [0;1] values.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ngram_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">hyp</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;n-gram matches between ref and hyp.</span>
+<span class="w">    </span><span class="sd">"""n-gram matches between ref and hyp.</span>
 
 <span class="sd">        Search for common n-gram sequences of hyp in ref.</span>
 <span class="sd">        The scores are supposed to range in [0;1] values.</span>
@@ -314,7 +314,7 @@ View Source
 
 <span class="sd">        :returns: List of matching indexes as tuples (i_ref, i_hyp)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">_matches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">nman</span><span class="p">,</span> <span class="n">nasr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_ngrams</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">hyp</span><span class="p">)</span>
     <span class="n">prev_idxm</span> <span class="o">=</span> <span class="mi">0</span>
@@ -381,13 +381,13 @@ hyp:  w0  w1  w2  wX  w3  w5  w6  wX  w9</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ngram_alignments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">hyp</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;n-gram alignment of ref and hyp.</span>
+<span class="w">    </span><span class="sd">"""n-gram alignment of ref and hyp.</span>
 
 <span class="sd">        The algorithm is based on the finding of matching n-grams, in the</span>
 <span class="sd">        range of a given gap. If 1-gram, keep only hypothesis items with a</span>
 <span class="sd">        high confidence score. A gap of search has to be fixed.</span>
 <span class="sd">        An interstice value ensure the gap between an item in the ref and</span>
-<span class="sd">        in the hyp won&#39;t be too far.</span>
+<span class="sd">        in the hyp won't be too far.</span>
 
 <span class="sd">        :param ref: (list of tokens) List of references</span>
 <span class="sd">        :param hyp: (list of tuples) List of hypothesis with their scores</span>
@@ -408,7 +408,7 @@ View Source
 <span class="sd">            - if n=2: [(0, 0), (1, 1), (2, 2), (5, 5), (6, 6)]</span>
 <span class="sd">            - if n=1, it depends on the scores in hyp and the value of the gap.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">alignment</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">nman</span><span class="p">,</span> <span class="n">nasr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_ngrams</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">hyp</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">nman</span><span class="p">)</span>
@@ -481,7 +481,7 @@ insertions, deletions and substitutions as 0, 3, 3 and 4 respectively.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">dp_matching</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">hyp</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dynamic Programming alignment of ref and hyp.</span>
+<span class="w">    </span><span class="sd">"""Dynamic Programming alignment of ref and hyp.</span>
 
 <span class="sd">        The DP alignment algorithm performs a global minimization of a</span>
 <span class="sd">        Levenshtein distance function which weights the cost of correct words,</span>
@@ -492,7 +492,7 @@ View Source
 <span class="sd">            | THE THEORY AND PRACTICE OF SEQUENCE COMPARISON,</span>
 <span class="sd">            | by Sankoff and Kruskal, ISBN 0-201-07809-0</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div>
 
@@ -522,12 +522,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_create_ngrams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">hyp</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create ngrams of the reference and the hypothesis.</span>
+<span class="w">    </span><span class="sd">"""Create ngrams of the reference and the hypothesis.</span>
 
 <span class="sd">        :param ref: (list of tokens) List of references</span>
 <span class="sd">        :param hyp: (list of tuples) List of hypothesis with their scores</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">nman</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">ref</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span><span class="p">)]))</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">tab</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">hyp</span><span class="p">]</span>
@@ -538,7 +538,7 @@ View Source
             <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">:</span>
                 <span class="n">nasr</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">token</span><span class="p">,))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">nasr</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">,))</span>
+                <span class="n">nasr</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'&lt;&gt;'</span><span class="p">,))</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">nman</span><span class="p">,</span> <span class="n">nasr</span><span class="p">)</span>
 </code></pre></div>
 
@@ -550,7 +550,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

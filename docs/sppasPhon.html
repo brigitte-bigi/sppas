@@ -86,19 +86,19 @@ results. If None, logs are redirected to the default logging system.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasPhon instance without any linguistic resources.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasPhon instance without any linguistic resources.</span>
 
 <span class="sd">    Log is used for a better communication of the annotation process and its</span>
 <span class="sd">    results. If None, logs are redirected to the default logging system.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasPhon</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;phonetize.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasPhon</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'phonetize.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__phonetizer</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">maptable</span> <span class="o">=</span> <span class="n">sppasMapping</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">load_resources</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__lang</span> <span class="o">=</span> <span class="s1">&#39;und&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__lang</span> <span class="o">=</span> <span class="s1">'und'</span>
 </code></pre></div>
 
     </details>
@@ -133,7 +133,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+<span class="w">    </span><span class="sd">"""Fix all options.</span>
 
 <span class="sd">        Available options are:</span>
 
@@ -142,14 +142,14 @@ View Source
 
 <span class="sd">        :param options: (sppasOption)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;phonunk&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'phonunk'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_unk</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;usestdtokens&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'usestdtokens'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_usestdtokens</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'pattern'</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -177,15 +177,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_unk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unk</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the unk option value.</span>
+<span class="w">    </span><span class="sd">"""Fix the unk option value.</span>
 
 <span class="sd">        :param unk: (bool) If unk is set to True, the system attempts</span>
 <span class="sd">        to phonetize unknown entries (i.e. tokens missing in the dictionary).</span>
 <span class="sd">        Otherwise, the phonetization of an unknown entry unit is set to the</span>
 <span class="sd">        default stamp.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;phonunk&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unk</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'phonunk'</span><span class="p">]</span> <span class="o">=</span> <span class="n">unk</span>
 </code></pre></div>
 
     </details>
@@ -210,15 +210,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_usestdtokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stdtokens</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the stdtokens option.</span>
+<span class="w">    </span><span class="sd">"""Fix the stdtokens option.</span>
 
 <span class="sd">        :param stdtokens: (bool) If it is set to True, the phonetization</span>
 <span class="sd">        uses the standard transcription as input, instead of the faked</span>
 <span class="sd">        transcription. This option does make sense only for an Enriched</span>
 <span class="sd">        Orthographic Transcription.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;usestdtokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stdtokens</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'usestdtokens'</span><span class="p">]</span> <span class="o">=</span> <span class="n">stdtokens</span>
 </code></pre></div>
 
     </details>
@@ -254,27 +254,27 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">map_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;und&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the pronunciation dictionary and the mapping table.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">map_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s1">'und'</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Set the pronunciation dictionary and the mapping table.</span>
 
 <span class="sd">        :param dict_filename: (str) The pronunciation dictionary in HTK-ASCII</span>
 <span class="sd">        format with UTF-8 encoding.</span>
 
 <span class="sd">        :param map_filename: (str) is the filename of a mapping table. It is         used to generate new pronunciations by mapping phonemes of the dict.</span>
 
-<span class="sd">        :param lang: (str) Iso639-3 of the language or &quot;und&quot; if unknown.</span>
+<span class="sd">        :param lang: (str) Iso639-3 of the language or "und" if unknown.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__lang</span> <span class="o">=</span> <span class="n">lang</span>
     <span class="k">if</span> <span class="n">map_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">maptable</span> <span class="o">=</span> <span class="n">sppasMapping</span><span class="p">(</span><span class="n">map_filename</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1160</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maptable</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1160</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maptable</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">maptable</span> <span class="o">=</span> <span class="n">sppasMapping</span><span class="p">()</span>
     <span class="n">pdict</span> <span class="o">=</span> <span class="n">sppasDictPron</span><span class="p">(</span><span class="n">dict_filename</span><span class="p">,</span> <span class="n">nodump</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">dict_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__phonetizer</span> <span class="o">=</span> <span class="n">sppasDictPhonetizer</span><span class="p">(</span><span class="n">pdict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maptable</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1162</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pdict</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1162</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pdict</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__phonetizer</span> <span class="o">=</span> <span class="n">sppasDictPhonetizer</span><span class="p">(</span><span class="n">pdict</span><span class="p">)</span>
 </code></pre></div>
@@ -307,26 +307,26 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Phonetize annotations of a tokenized tier.</span>
+<span class="w">    </span><span class="sd">"""Phonetize annotations of a tokenized tier.</span>
 
 <span class="sd">        :param tier: (Tier) the ortho transcription previously tokenized.</span>
-<span class="sd">        :returns: (Tier) phonetized tier with name &quot;Phones&quot;</span>
+<span class="sd">        :returns: (Tier) phonetized tier with name "Phones"</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;No given tier.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">'No given tier.'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">EmptyInputError</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
-    <span class="n">phones_tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;Phones&#39;</span><span class="p">)</span>
-    <span class="n">phones_tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;linguistic_resource_dict&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__phonetizer</span><span class="o">.</span><span class="n">get_dict_filename</span><span class="p">())</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
+    <span class="n">phones_tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">'Phones'</span><span class="p">)</span>
+    <span class="n">phones_tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'linguistic_resource_dict'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__phonetizer</span><span class="o">.</span><span class="n">get_dict_filename</span><span class="p">())</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'language'</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ann</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tier</span><span class="p">):</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1220</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1220</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
         <span class="n">location</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="n">normalized</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
-            <span class="k">if</span> <span class="s1">&#39; &#39;</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">' '</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
                 <span class="n">normalized</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">normalized</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
@@ -377,18 +377,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with aligned tokens.</span>
+<span class="w">    </span><span class="sd">"""Return the tier with aligned tokens.</span>
 
 <span class="sd">        :param input_files: (list)</span>
 <span class="sd">        :raise: NoTierInputError</span>
 <span class="sd">        :return: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">annot_ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_extensions</span><span class="p">()</span>
-    <span class="n">tier_pattern</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;usestdtokens&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">tier_pattern</span> <span class="o">=</span> <span class="s1">&#39;std&#39;</span>
+    <span class="n">tier_pattern</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'usestdtokens'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">tier_pattern</span> <span class="o">=</span> <span class="s1">'std'</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">continue</span>
@@ -399,9 +399,9 @@ View Source
             <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">tokenization</span><span class="p">(</span><span class="n">trs_input</span><span class="p">,</span> <span class="n">tier_pattern</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Input tier to be phonetized: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">'Input tier to be phonetized: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">tier</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;A tier with a normalized text was not found.&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'A tier with a normalized text was not found.'</span><span class="p">)</span>
     <span class="k">raise</span> <span class="n">NoTierInputError</span>
 </code></pre></div>
 
@@ -434,25 +434,25 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on an input.</span>
 
 <span class="sd">        :param input_files: (list of str) Normalized text</span>
 <span class="sd">        :param output: (str) the output name</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
     <span class="n">tier_phon</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">tier_input</span><span class="p">)</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_iso&#39;</span><span class="p">,</span> <span class="s1">&#39;iso639-3&#39;</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_name_0&#39;</span><span class="p">,</span> <span class="s1">&#39;Undetermined&#39;</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'annotation_result_of'</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'language_iso'</span><span class="p">,</span> <span class="s1">'iso639-3'</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'language_name_0'</span><span class="p">,</span> <span class="s1">'Undetermined'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__lang</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_code_0&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lang</span><span class="p">)</span>
-        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_url_0&#39;</span><span class="p">,</span> <span class="s1">&#39;https://iso639-3.sil.org/code/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lang</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'language_code_0'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lang</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'language_url_0'</span><span class="p">,</span> <span class="s1">'https://iso639-3.sil.org/code/'</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lang</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_code_0&#39;</span><span class="p">,</span> <span class="s1">&#39;und&#39;</span><span class="p">)</span>
-        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_url_0&#39;</span><span class="p">,</span> <span class="s1">&#39;https://iso639-3.sil.org/code/und&#39;</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'language_code_0'</span><span class="p">,</span> <span class="s1">'und'</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'language_url_0'</span><span class="p">,</span> <span class="s1">'https://iso639-3.sil.org/code/und'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tier_phon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_phon</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -482,8 +482,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-phon&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation uses in an output filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="s1">'-phon'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -502,8 +502,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation expects for its input filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-token&#39;</span><span class="p">)]</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation expects for its input filename."""</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'inputpattern'</span><span class="p">,</span> <span class="s1">'-token'</span><span class="p">)]</span>
 </code></pre></div>
 
     </details>
@@ -541,7 +541,7 @@ method will always return a string: either the automatic phonetization
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_phonetize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">track_nb</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Phonetize a text.</span>
+<span class="w">    </span><span class="sd">"""Phonetize a text.</span>
 
 <span class="sd">        Because we absolutely need to match with the number of tokens, this</span>
 <span class="sd">        method will always return a string: either the automatic phonetization</span>
@@ -550,23 +550,23 @@ View Source
 <span class="sd">        :param entry: (str) The string to be phonetized.</span>
 <span class="sd">        :returns: phonetization of the given entry</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">unk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__phonetizer</span><span class="o">.</span><span class="n">get_unkstamp</span><span class="p">()</span>
-    <span class="n">tab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__phonetizer</span><span class="o">.</span><span class="n">get_phon_tokens</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">phonunk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;phonunk&#39;</span><span class="p">])</span>
+    <span class="n">tab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__phonetizer</span><span class="o">.</span><span class="n">get_phon_tokens</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">phonunk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'phonunk'</span><span class="p">])</span>
     <span class="n">tab_phones</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">tex</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">tab</span><span class="p">:</span>
         <span class="n">message</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1110</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tex</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1114</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1110</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tex</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1114</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">s</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">unk</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">:</span>
-                <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1110</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tex</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1110</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tex</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">message</span> <span class="o">=</span> <span class="n">message</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1112</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="n">message</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1112</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">message</span> <span class="o">=</span> <span class="n">message</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1114</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="n">message</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1114</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
                     <span class="n">p</span> <span class="o">=</span> <span class="n">unk</span>
             <span class="n">tab_phones</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">message</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -576,7 +576,7 @@ View Source
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tab_phones</span><span class="p">):</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mismatch token/phones for the following entry: </span><span class="si">{</span><span class="n">entry</span><span class="si">}</span><span class="s1">, got </span><span class="si">{</span><span class="n">tab_phones</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Mismatch token/phones for the following entry: </span><span class="si">{</span><span class="n">entry</span><span class="si">}</span><span class="s1">, got </span><span class="si">{</span><span class="n">tab_phones</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tab_phones</span>
 </code></pre></div>
 
@@ -588,7 +588,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

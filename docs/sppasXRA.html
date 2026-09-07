@@ -85,16 +85,16 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize a new XRA instance.</span>
+<span class="w">    </span><span class="sd">"""Initialize a new XRA instance.</span>
 
 <span class="sd">    :param name: (str) This transcription name.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasXRA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">default_extension</span> <span class="o">=</span> <span class="s1">&#39;xra&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">software</span> <span class="o">=</span> <span class="s1">&#39;SPPAS4&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">default_extension</span> <span class="o">=</span> <span class="s1">'xra'</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">software</span> <span class="o">=</span> <span class="s1">'SPPAS4'</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_accept_multi_tiers</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_accept_no_tiers</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_accept_empty_tier</span> <span class="o">=</span> <span class="kc">True</span>
@@ -113,7 +113,7 @@ View Source
     <span class="bp">self</span><span class="o">.</span><span class="n">_accept_radius</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_accept_gaps</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_accept_overlaps</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__format</span> <span class="o">=</span> <span class="s1">&#39;1.5&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__format</span> <span class="o">=</span> <span class="s1">'1.5'</span>
 </code></pre></div>
 
     </details>
@@ -148,17 +148,17 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">detect</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check whether a file is of XRA format or not.</span>
+<span class="w">    </span><span class="sd">"""Check whether a file is of XRA format or not.</span>
 
 <span class="sd">        :param filename: (str) Name of the file to check.</span>
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-                <span class="k">if</span> <span class="s1">&#39;&lt;Document&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">'&lt;Document'</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
                     <span class="k">return</span> <span class="kc">True</span>
             <span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
@@ -188,35 +188,35 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read an XRA file and fill the Transcription.</span>
+<span class="w">    </span><span class="sd">"""Read an XRA file and fill the Transcription.</span>
 
 <span class="sd">        :param filename: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">ET</span><span class="o">.</span><span class="n">ParseError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">sppasReadError</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-    <span class="k">if</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="s1">&#39;version&#39;</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_created_format_version&#39;</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="s1">&#39;date&#39;</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_created_date&#39;</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="s1">&#39;author&#39;</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_created_author&#39;</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;author&#39;</span><span class="p">])</span>
-    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Metadata&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">'name'</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s1">'version'</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_created_format_version'</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'version'</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s1">'date'</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_created_date'</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'date'</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s1">'author'</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_created_author'</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'author'</span><span class="p">])</span>
+    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'Metadata'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">metadata_root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata_root</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">tier_root</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Tier&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">tier_root</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Tier'</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parse_tier</span><span class="p">(</span><span class="n">tier_root</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">media_root</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Media&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">media_root</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Media'</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parse_media</span><span class="p">(</span><span class="n">media_root</span><span class="p">)</span>
-    <span class="n">hierarchy_root</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Hierarchy&#39;</span><span class="p">)</span>
+    <span class="n">hierarchy_root</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'Hierarchy'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">hierarchy_root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parse_hierarchy</span><span class="p">(</span><span class="n">hierarchy_root</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">vocabulary_root</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Vocabulary&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">vocabulary_root</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Vocabulary'</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parse_vocabulary</span><span class="p">(</span><span class="n">vocabulary_root</span><span class="p">)</span>
 </code></pre></div>
 
@@ -249,21 +249,21 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_label</span><span class="p">(</span><span class="n">label_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a &#39;Label&#39; element and return it.</span>
+<span class="w">    </span><span class="sd">"""Parse a 'Label' element and return it.</span>
 
 <span class="sd">        :param label_root: (ET) XML Element tree root.</span>
 <span class="sd">        :returns: (sppasLabel)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">label</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">for</span> <span class="n">tag_root</span> <span class="ow">in</span> <span class="n">label_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Tag&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">tag_root</span> <span class="ow">in</span> <span class="n">label_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Tag'</span><span class="p">):</span>
         <span class="n">tag</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_tag</span><span class="p">(</span><span class="n">tag_root</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">label</span> <span class="o">=</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">tag_root</span> <span class="ow">in</span> <span class="n">label_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">tag_root</span> <span class="ow">in</span> <span class="n">label_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Text'</span><span class="p">):</span>
             <span class="n">tag</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_tag</span><span class="p">(</span><span class="n">tag_root</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">label</span> <span class="o">=</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
@@ -294,35 +294,35 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write an XRA file.</span>
+<span class="w">    </span><span class="sd">"""Write an XRA file.</span>
 
 <span class="sd">        :param filename: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;Document&#39;</span><span class="p">)</span>
-    <span class="n">author</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__version__</span> <span class="o">+</span> <span class="s1">&#39; (C) &#39;</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__author__</span>
-    <span class="n">root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="n">author</span><span class="p">)</span>
-    <span class="n">root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">sppasTime</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
-    <span class="n">root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;format&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__format</span><span class="p">)</span>
-    <span class="n">root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
-    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;Metadata&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">'Document'</span><span class="p">)</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">' '</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__version__</span> <span class="o">+</span> <span class="s1">' (C) '</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__author__</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'author'</span><span class="p">,</span> <span class="n">author</span><span class="p">)</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'date'</span><span class="p">,</span> <span class="n">sppasTime</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'format'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__format</span><span class="p">)</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'name'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">'Metadata'</span><span class="p">)</span>
     <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_metadata</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Entry&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Entry'</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-        <span class="n">tier_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;Tier&#39;</span><span class="p">)</span>
+        <span class="n">tier_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">'Tier'</span><span class="p">)</span>
         <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_tier</span><span class="p">(</span><span class="n">tier_root</span><span class="p">,</span> <span class="n">tier</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">media</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_media_list</span><span class="p">():</span>
-        <span class="n">media_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;Media&#39;</span><span class="p">)</span>
+        <span class="n">media_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">'Media'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_format_media</span><span class="p">(</span><span class="n">media_root</span><span class="p">,</span> <span class="n">media</span><span class="p">)</span>
-    <span class="n">hierarchy_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;Hierarchy&#39;</span><span class="p">)</span>
+    <span class="n">hierarchy_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">'Hierarchy'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_format_hierarchy</span><span class="p">(</span><span class="n">hierarchy_root</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">vocabulary</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ctrl_vocab_list</span><span class="p">():</span>
-        <span class="n">vocabulary_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;Vocabulary&#39;</span><span class="p">)</span>
+        <span class="n">vocabulary_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">'Vocabulary'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_format_vocabulary</span><span class="p">(</span><span class="n">vocabulary_root</span><span class="p">,</span> <span class="n">vocabulary</span><span class="p">)</span>
     <span class="n">sppasXRA</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
     <span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">ElementTree</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-    <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span> <span class="n">xml_declaration</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'xml'</span><span class="p">,</span> <span class="n">xml_declaration</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -350,18 +350,18 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">format_metadata</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">,</span> <span class="n">meta_object</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[]):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add &#39;Metadata&#39; element in the tree from a sppasMetaData().</span>
+<span class="w">    </span><span class="sd">"""Add 'Metadata' element in the tree from a sppasMetaData().</span>
 
 <span class="sd">        :param metadata_root: (ET) XML Element tree root.</span>
 <span class="sd">        :param meta_object: (sppasMetadata)</span>
 <span class="sd">        :param exclude: (list) List of keys to exclude</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">meta_object</span><span class="o">.</span><span class="n">get_meta_keys</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">meta_object</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-            <span class="n">entry</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">,</span> <span class="s1">&#39;Entry&#39;</span><span class="p">)</span>
-            <span class="n">entry</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+            <span class="n">entry</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">,</span> <span class="s1">'Entry'</span><span class="p">)</span>
+            <span class="n">entry</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'key'</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
             <span class="n">entry</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
@@ -389,21 +389,21 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">format_tier</span><span class="p">(</span><span class="n">tier_root</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a &#39;Tier&#39; object in the tree from a sppasTier().</span>
+<span class="w">    </span><span class="sd">"""Add a 'Tier' object in the tree from a sppasTier().</span>
 
 <span class="sd">        :param tier_root: (ET) XML Element tree root.</span>
 <span class="sd">        :param tier: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">tier_id</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
-    <span class="n">tier_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">tier_id</span><span class="p">)</span>
-    <span class="n">tier_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;tiername&#39;</span><span class="p">,</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
-    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">tier_root</span><span class="p">,</span> <span class="s1">&#39;Metadata&#39;</span><span class="p">)</span>
-    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_metadata</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Entry&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="sd">        """</span>
+    <span class="n">tier_id</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">)</span>
+    <span class="n">tier_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="n">tier_id</span><span class="p">)</span>
+    <span class="n">tier_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'tiername'</span><span class="p">,</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">tier_root</span><span class="p">,</span> <span class="s1">'Metadata'</span><span class="p">)</span>
+    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_metadata</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Entry'</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">tier_root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">annotation</span> <span class="ow">in</span> <span class="n">tier</span><span class="p">:</span>
-        <span class="n">annotation_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">tier_root</span><span class="p">,</span> <span class="s1">&#39;Annotation&#39;</span><span class="p">)</span>
+        <span class="n">annotation_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">tier_root</span><span class="p">,</span> <span class="s1">'Annotation'</span><span class="p">)</span>
         <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_annotation</span><span class="p">(</span><span class="n">annotation_root</span><span class="p">,</span> <span class="n">annotation</span><span class="p">)</span>
 </code></pre></div>
 
@@ -431,24 +431,24 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">format_annotation</span><span class="p">(</span><span class="n">annotation_root</span><span class="p">,</span> <span class="n">annotation</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add an &#39;Annotation&#39; element in the tree from a sppasAnnotation().</span>
+<span class="w">    </span><span class="sd">"""Add an 'Annotation' element in the tree from a sppasAnnotation().</span>
 
 <span class="sd">        :param annotation_root: (ET) XML Element tree root.</span>
 <span class="sd">        :param annotation: (sppasAnnotation)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">ann_id</span> <span class="o">=</span> <span class="n">annotation</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
-    <span class="n">annotation_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">ann_id</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">ann_id</span> <span class="o">=</span> <span class="n">annotation</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">)</span>
+    <span class="n">annotation_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="n">ann_id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">annotation</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">annotation_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">annotation</span><span class="o">.</span><span class="n">get_score</span><span class="p">()))</span>
-    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">annotation_root</span><span class="p">,</span> <span class="s1">&#39;Metadata&#39;</span><span class="p">)</span>
-    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_metadata</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">,</span> <span class="n">annotation</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Entry&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">annotation_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'score'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">annotation</span><span class="o">.</span><span class="n">get_score</span><span class="p">()))</span>
+    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">annotation_root</span><span class="p">,</span> <span class="s1">'Metadata'</span><span class="p">)</span>
+    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_metadata</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">,</span> <span class="n">annotation</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Entry'</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">annotation_root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">)</span>
-    <span class="n">location_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">annotation_root</span><span class="p">,</span> <span class="s1">&#39;Location&#39;</span><span class="p">)</span>
+    <span class="n">location_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">annotation_root</span><span class="p">,</span> <span class="s1">'Location'</span><span class="p">)</span>
     <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_location</span><span class="p">(</span><span class="n">location_root</span><span class="p">,</span> <span class="n">annotation</span><span class="o">.</span><span class="n">get_location</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">annotation</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
-        <span class="n">label_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">annotation_root</span><span class="p">,</span> <span class="s1">&#39;Label&#39;</span><span class="p">)</span>
+        <span class="n">label_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">annotation_root</span><span class="p">,</span> <span class="s1">'Label'</span><span class="p">)</span>
         <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_label</span><span class="p">(</span><span class="n">label_root</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
 </code></pre></div>
 
@@ -476,28 +476,28 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">format_location</span><span class="p">(</span><span class="n">location_root</span><span class="p">,</span> <span class="n">location</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a &#39;Location&#39; element in the tree from a sppasLocation().</span>
+<span class="w">    </span><span class="sd">"""Add a 'Location' element in the tree from a sppasLocation().</span>
 
 <span class="sd">        :param location_root: (ET) XML Element tree root.</span>
 <span class="sd">        :param location: (sppasLocation)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">localization</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">location</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">localization</span><span class="o">.</span><span class="n">is_point</span><span class="p">():</span>
-            <span class="n">point_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">location_root</span><span class="p">,</span> <span class="s1">&#39;Point&#39;</span><span class="p">)</span>
+            <span class="n">point_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">location_root</span><span class="p">,</span> <span class="s1">'Point'</span><span class="p">)</span>
             <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_format_point</span><span class="p">(</span><span class="n">point_node</span><span class="p">,</span> <span class="n">localization</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">score</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">point_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">)))</span>
+                <span class="n">point_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'score'</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">)))</span>
         <span class="k">elif</span> <span class="n">localization</span><span class="o">.</span><span class="n">is_interval</span><span class="p">():</span>
-            <span class="n">interval_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">location_root</span><span class="p">,</span> <span class="s1">&#39;Interval&#39;</span><span class="p">)</span>
+            <span class="n">interval_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">location_root</span><span class="p">,</span> <span class="s1">'Interval'</span><span class="p">)</span>
             <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_format_interval</span><span class="p">(</span><span class="n">interval_root</span><span class="p">,</span> <span class="n">localization</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">score</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">interval_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">)))</span>
+                <span class="n">interval_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'score'</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">)))</span>
         <span class="k">elif</span> <span class="n">localization</span><span class="o">.</span><span class="n">IsTimeDisjoint</span><span class="p">():</span>
-            <span class="n">disjoint_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">location_root</span><span class="p">,</span> <span class="s1">&#39;Disjoint&#39;</span><span class="p">)</span>
+            <span class="n">disjoint_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">location_root</span><span class="p">,</span> <span class="s1">'Disjoint'</span><span class="p">)</span>
             <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_format_disjoint</span><span class="p">(</span><span class="n">disjoint_root</span><span class="p">,</span> <span class="n">localization</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">score</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">disjoint_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">)))</span>
+                <span class="n">disjoint_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'score'</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">)))</span>
 </code></pre></div>
 
     </details>
@@ -524,18 +524,18 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">format_label</span><span class="p">(</span><span class="n">label_root</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a &#39;Label&#39; element in the tree from a sppasLabel().</span>
+<span class="w">    </span><span class="sd">"""Add a 'Label' element in the tree from a sppasLabel().</span>
 
 <span class="sd">        :param label_root: (ET) XML Element tree root.</span>
 <span class="sd">        :param label: (sppasLabel)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">label</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">label_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">get_key</span><span class="p">())</span>
+        <span class="n">label_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'key'</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">get_key</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
-        <span class="n">tag_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">label_root</span><span class="p">,</span> <span class="s1">&#39;Tag&#39;</span><span class="p">)</span>
+        <span class="n">tag_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">label_root</span><span class="p">,</span> <span class="s1">'Tag'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">score</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">tag_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">))</span>
+            <span class="n">tag_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'score'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">))</span>
         <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_format_tag</span><span class="p">(</span><span class="n">tag_node</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
 </code></pre></div>
 
@@ -564,18 +564,18 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">indent</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pretty indent.</span>
+<span class="w">    </span><span class="sd">"""Pretty indent.</span>
 
 <span class="sd">        http://effbot.org/zone/element-lib.htm#prettyprint</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">level</span> <span class="o">*</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>
+<span class="sd">        """</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span> <span class="o">+</span> <span class="n">level</span> <span class="o">*</span> <span class="s1">'</span><span class="se">\t</span><span class="s1">'</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">elem</span><span class="o">.</span><span class="n">text</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">elem</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
-            <span class="n">elem</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>
+            <span class="n">elem</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\t</span><span class="s1">'</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">elem</span><span class="o">.</span><span class="n">tail</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">elem</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">level</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">elem</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">i</span>
+                <span class="n">elem</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span> <span class="o">+</span> <span class="n">i</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">elem</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">i</span>
         <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">elem</span><span class="p">:</span>
@@ -613,18 +613,18 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_parse_metadata</span><span class="p">(</span><span class="n">meta_object</span><span class="p">,</span> <span class="n">metadata_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read any kind of metadata.</span>
+<span class="w">    </span><span class="sd">"""Read any kind of metadata.</span>
 
 <span class="sd">        :param meta_object: (sppasMetadata)</span>
 <span class="sd">        :param metadata_root: (ET) XML Element tree root.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">metadata_root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">entry_node</span> <span class="ow">in</span> <span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Entry&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">entry_node</span> <span class="ow">in</span> <span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Entry'</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">key</span> <span class="o">=</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'key'</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="n">key</span> <span class="o">=</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;Key&#39;</span><span class="p">]</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'Key'</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">meta_object</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </code></pre></div>
@@ -651,25 +651,25 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_parse_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a &#39;Tier&#39; element to create a sppasTier().</span>
+<span class="w">    </span><span class="sd">"""Parse a 'Tier' element to create a sppasTier().</span>
 
 <span class="sd">        :param tier_root: (ET) XML Element tree root.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="s1">&#39;tiername&#39;</span> <span class="ow">in</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">'tiername'</span> <span class="ow">in</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">]</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">tid</span> <span class="o">=</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+        <span class="n">tid</span> <span class="o">=</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="n">tid</span> <span class="o">=</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]</span>
+        <span class="n">tid</span> <span class="o">=</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'ID'</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span>
-    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_metadata</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Metadata&#39;</span><span class="p">))</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">tid</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">annotation_root</span> <span class="ow">in</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Annotation&#39;</span><span class="p">):</span>
+    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_metadata</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'Metadata'</span><span class="p">))</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="n">tid</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">annotation_root</span> <span class="ow">in</span> <span class="n">tier_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Annotation'</span><span class="p">):</span>
         <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_annotation</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">annotation_root</span><span class="p">)</span>
 </code></pre></div>
 
@@ -697,26 +697,26 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_parse_annotation</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">annotation_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse an &#39;Annotation&#39; element and create a sppasAnnotation().</span>
+<span class="w">    </span><span class="sd">"""Parse an 'Annotation' element and create a sppasAnnotation().</span>
 
 <span class="sd">        :param tier: (sppasTier) Tier to add the newly created annotation.</span>
 <span class="sd">        :param annotation_root: (ET) XML Element tree root.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">location_root</span> <span class="o">=</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Location&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">location_root</span> <span class="o">=</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'Location'</span><span class="p">)</span>
     <span class="n">location</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_location</span><span class="p">(</span><span class="n">location_root</span><span class="p">)</span>
     <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">label_root</span> <span class="ow">in</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Label&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">label_root</span> <span class="ow">in</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Label'</span><span class="p">):</span>
         <span class="n">label</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">parse_label</span><span class="p">(</span><span class="n">label_root</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;key&#39;</span> <span class="ow">in</span> <span class="n">label_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-            <span class="n">label</span><span class="o">.</span><span class="n">set_key</span><span class="p">(</span><span class="n">label_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s1">'key'</span> <span class="ow">in</span> <span class="n">label_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+            <span class="n">label</span><span class="o">.</span><span class="n">set_key</span><span class="p">(</span><span class="n">label_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'key'</span><span class="p">])</span>
         <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
     <span class="n">ann</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_metadata</span><span class="p">(</span><span class="n">ann</span><span class="p">,</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Metadata&#39;</span><span class="p">))</span>
-    <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="n">ann</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="s1">&#39;score&#39;</span> <span class="ow">in</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="n">ann</span><span class="o">.</span><span class="n">set_score</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">annotation_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]))</span>
+    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_metadata</span><span class="p">(</span><span class="n">ann</span><span class="p">,</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'Metadata'</span><span class="p">))</span>
+    <span class="k">if</span> <span class="s1">'id'</span> <span class="ow">in</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="n">ann</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s1">'score'</span> <span class="ow">in</span> <span class="n">annotation_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="n">ann</span><span class="o">.</span><span class="n">set_score</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">annotation_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'score'</span><span class="p">]))</span>
 </code></pre></div>
 
     </details>
@@ -748,22 +748,22 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_parse_location</span><span class="p">(</span><span class="n">location_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a &#39;Location&#39; element an create a sppasLocation().</span>
+<span class="w">    </span><span class="sd">"""Parse a 'Location' element an create a sppasLocation().</span>
 
 <span class="sd">        :param location_root: (ET) XML Element tree root.</span>
 <span class="sd">        :returns: (sppasLocation)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">location</span> <span class="o">=</span> <span class="n">sppasLocation</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">localization_root</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">location_root</span><span class="p">):</span>
         <span class="n">localization</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_localization</span><span class="p">(</span><span class="n">localization_root</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">localization</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">location</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">location</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">localization_root</span> <span class="ow">in</span> <span class="n">location_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Localization&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">localization_root</span> <span class="ow">in</span> <span class="n">location_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Localization'</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">loc_root</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">localization_root</span><span class="p">):</span>
                 <span class="n">localization</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_localization</span><span class="p">(</span><span class="n">loc_root</span><span class="p">)</span>
-                <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">localization_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">])</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">localization_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'score'</span><span class="p">])</span>
                 <span class="n">location</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">location</span>
 </code></pre></div>
@@ -797,20 +797,20 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_parse_localization</span><span class="p">(</span><span class="n">localization_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a &#39;Localization&#39; element and create a sppasLocalization().</span>
+<span class="w">    </span><span class="sd">"""Parse a 'Localization' element and create a sppasLocalization().</span>
 
 <span class="sd">        :param localization_root: (ET) XML Element tree root.</span>
 <span class="sd">        :returns: (sppasLocalization)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">localization</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">score</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">loc_str</span> <span class="o">=</span> <span class="n">localization_root</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">if</span> <span class="s1">&#39;point&#39;</span> <span class="ow">in</span> <span class="n">loc_str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s1">'point'</span> <span class="ow">in</span> <span class="n">loc_str</span><span class="p">:</span>
         <span class="n">localization</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_point</span><span class="p">(</span><span class="n">localization_root</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="s1">&#39;interval&#39;</span> <span class="ow">in</span> <span class="n">loc_str</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="s1">'interval'</span> <span class="ow">in</span> <span class="n">loc_str</span><span class="p">:</span>
         <span class="n">localization</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_interval</span><span class="p">(</span><span class="n">localization_root</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="s1">&#39;disjoint&#39;</span> <span class="ow">in</span> <span class="n">loc_str</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="s1">'disjoint'</span> <span class="ow">in</span> <span class="n">loc_str</span><span class="p">:</span>
         <span class="n">localization</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_disjoint</span><span class="p">(</span><span class="n">localization_root</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
 </code></pre></div>
@@ -844,19 +844,19 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_parse_point</span><span class="p">(</span><span class="n">point_node</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a &#39;Point&#39; element and create a sppasPoint().</span>
+<span class="w">    </span><span class="sd">"""Parse a 'Point' element and create a sppasPoint().</span>
 
 <span class="sd">        :param point_node: (ET) XML Element node.</span>
 <span class="sd">        :returns: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s1">&#39;score&#39;</span> <span class="ow">in</span> <span class="n">point_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">point_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">])</span>
+<span class="sd">        """</span>
+    <span class="k">if</span> <span class="s1">'score'</span> <span class="ow">in</span> <span class="n">point_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">point_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'score'</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">score</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">midpoint_str</span> <span class="o">=</span> <span class="n">point_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;midpoint&#39;</span><span class="p">]</span>
+    <span class="n">midpoint_str</span> <span class="o">=</span> <span class="n">point_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'midpoint'</span><span class="p">]</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">radius_str</span> <span class="o">=</span> <span class="n">point_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;radius&#39;</span><span class="p">]</span>
+        <span class="n">radius_str</span> <span class="o">=</span> <span class="n">point_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'radius'</span><span class="p">]</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="n">radius_str</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">midpoint_str</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
@@ -907,18 +907,18 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_parse_interval</span><span class="p">(</span><span class="n">interval_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse an &#39;Interval&#39; element and create a sppasInterval().</span>
+<span class="w">    </span><span class="sd">"""Parse an 'Interval' element and create a sppasInterval().</span>
 
 <span class="sd">        :param interval_root: (ET) XML Element tree root.</span>
 <span class="sd">        :returns: (sppasInterval)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s1">&#39;score&#39;</span> <span class="ow">in</span> <span class="n">interval_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">interval_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">])</span>
+<span class="sd">        """</span>
+    <span class="k">if</span> <span class="s1">'score'</span> <span class="ow">in</span> <span class="n">interval_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">interval_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'score'</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">score</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">begin_node</span> <span class="o">=</span> <span class="n">interval_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Begin&#39;</span><span class="p">)</span>
-    <span class="n">end_node</span> <span class="o">=</span> <span class="n">interval_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;End&#39;</span><span class="p">)</span>
+    <span class="n">begin_node</span> <span class="o">=</span> <span class="n">interval_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'Begin'</span><span class="p">)</span>
+    <span class="n">end_node</span> <span class="o">=</span> <span class="n">interval_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'End'</span><span class="p">)</span>
     <span class="n">begin</span><span class="p">,</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_point</span><span class="p">(</span><span class="n">begin_node</span><span class="p">)</span>
     <span class="n">end</span><span class="p">,</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_point</span><span class="p">(</span><span class="n">end_node</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">sppasInterval</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">),</span> <span class="n">score</span><span class="p">)</span>
@@ -953,25 +953,25 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_parse_disjoint</span><span class="p">(</span><span class="n">disjoint_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a &#39;Disjoint&#39; element and create a sppasDisjoint().</span>
+<span class="w">    </span><span class="sd">"""Parse a 'Disjoint' element and create a sppasDisjoint().</span>
 
 <span class="sd">        :param disjoint_root: (ET) XML Element tree root.</span>
 <span class="sd">        :returns: (sppasDisjoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s1">&#39;score&#39;</span> <span class="ow">in</span> <span class="n">disjoint_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">disjoint_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">])</span>
+<span class="sd">        """</span>
+    <span class="k">if</span> <span class="s1">'score'</span> <span class="ow">in</span> <span class="n">disjoint_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">disjoint_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'score'</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">score</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">disjoint</span> <span class="o">=</span> <span class="n">sppasDisjoint</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">interval_root</span> <span class="ow">in</span> <span class="n">disjoint_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Interval&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">interval_root</span> <span class="ow">in</span> <span class="n">disjoint_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Interval'</span><span class="p">):</span>
         <span class="n">interval</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_interval</span><span class="p">(</span><span class="n">interval_root</span><span class="p">)</span>
         <span class="n">disjoint</span><span class="o">.</span><span class="n">append_interval</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">disjoint</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">interval_root</span> <span class="ow">in</span> <span class="n">disjoint_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;TimeInterval&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">interval_root</span> <span class="ow">in</span> <span class="n">disjoint_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'TimeInterval'</span><span class="p">):</span>
             <span class="n">interval</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_interval</span><span class="p">(</span><span class="n">interval_root</span><span class="p">)</span>
             <span class="n">disjoint</span><span class="o">.</span><span class="n">append_interval</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">interval_root</span> <span class="ow">in</span> <span class="n">disjoint_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;FrameInterval&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">interval_root</span> <span class="ow">in</span> <span class="n">disjoint_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'FrameInterval'</span><span class="p">):</span>
             <span class="n">interval</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_interval</span><span class="p">(</span><span class="n">interval_root</span><span class="p">)</span>
             <span class="n">disjoint</span><span class="o">.</span><span class="n">append_interval</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">disjoint</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
@@ -1006,21 +1006,21 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_parse_tag</span><span class="p">(</span><span class="n">tag_node</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a &#39;Tag&#39; element and create a sppasTag().</span>
+<span class="w">    </span><span class="sd">"""Parse a 'Tag' element and create a sppasTag().</span>
 
 <span class="sd">        :param tag_node: (ET) XML Element node.</span>
 <span class="sd">        :returns: (sppasTag)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s1">&#39;score&#39;</span> <span class="ow">in</span> <span class="n">tag_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tag_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">])</span>
+<span class="sd">        """</span>
+    <span class="k">if</span> <span class="s1">'score'</span> <span class="ow">in</span> <span class="n">tag_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tag_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'score'</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">score</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">in</span> <span class="n">tag_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="n">data_type</span> <span class="o">=</span> <span class="n">tag_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">'type'</span> <span class="ow">in</span> <span class="n">tag_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="n">data_type</span> <span class="o">=</span> <span class="n">tag_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">data_type</span> <span class="o">=</span> <span class="s1">&#39;str&#39;</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">tag_node</span><span class="o">.</span><span class="n">text</span> <span class="k">if</span> <span class="n">tag_node</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">data_type</span> <span class="o">=</span> <span class="s1">'str'</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">tag_node</span><span class="o">.</span><span class="n">text</span> <span class="k">if</span> <span class="n">tag_node</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">''</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">data_type</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
 </code></pre></div>
@@ -1047,24 +1047,24 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_parse_media</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">media_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a &#39;Media&#39; element and add create a sppasMedia().</span>
+<span class="w">    </span><span class="sd">"""Parse a 'Media' element and add create a sppasMedia().</span>
 
 <span class="sd">        :param media_root: (ET) XML Element tree root.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">media_url</span> <span class="o">=</span> <span class="n">media_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span>
-    <span class="n">media_id</span> <span class="o">=</span> <span class="n">media_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+<span class="sd">        """</span>
+    <span class="n">media_url</span> <span class="o">=</span> <span class="n">media_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'url'</span><span class="p">]</span>
+    <span class="n">media_id</span> <span class="o">=</span> <span class="n">media_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
     <span class="n">media_mime</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="s1">&#39;mimetype&#39;</span> <span class="ow">in</span> <span class="n">media_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="n">media_mime</span> <span class="o">=</span> <span class="n">media_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;mimetype&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">'mimetype'</span> <span class="ow">in</span> <span class="n">media_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="n">media_mime</span> <span class="o">=</span> <span class="n">media_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'mimetype'</span><span class="p">]</span>
     <span class="n">media</span> <span class="o">=</span> <span class="n">sppasMedia</span><span class="p">(</span><span class="n">media_url</span><span class="p">,</span> <span class="n">media_id</span><span class="p">,</span> <span class="n">media_mime</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">add_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
-    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_metadata</span><span class="p">(</span><span class="n">media</span><span class="p">,</span> <span class="n">media_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Metadata&#39;</span><span class="p">))</span>
-    <span class="n">content_root</span> <span class="o">=</span> <span class="n">media_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Content&#39;</span><span class="p">)</span>
+    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_metadata</span><span class="p">(</span><span class="n">media</span><span class="p">,</span> <span class="n">media_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'Metadata'</span><span class="p">))</span>
+    <span class="n">content_root</span> <span class="o">=</span> <span class="n">media_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'Content'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">content_root</span><span class="p">:</span>
         <span class="n">media</span><span class="o">.</span><span class="n">set_content</span><span class="p">(</span><span class="n">content_root</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">tier_node</span> <span class="ow">in</span> <span class="n">media_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Tier&#39;</span><span class="p">):</span>
-        <span class="n">tier_id</span> <span class="o">=</span> <span class="n">tier_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">tier_node</span> <span class="ow">in</span> <span class="n">media_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Tier'</span><span class="p">):</span>
+        <span class="n">tier_id</span> <span class="o">=</span> <span class="n">tier_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">tier_id</span><span class="p">:</span>
                 <span class="n">tier</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
@@ -1092,20 +1092,20 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_parse_hierarchy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hierarchy_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a &#39;Hierarchy&#39; element and set it.</span>
+<span class="w">    </span><span class="sd">"""Parse a 'Hierarchy' element and set it.</span>
 
 <span class="sd">        :param hierarchy_root: (ET) XML Element tree root.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">link_node</span> <span class="ow">in</span> <span class="n">hierarchy_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Link&#39;</span><span class="p">):</span>
+<span class="sd">        """</span>
+    <span class="k">for</span> <span class="n">link_node</span> <span class="ow">in</span> <span class="n">hierarchy_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Link'</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">hierarchy_type</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
-            <span class="n">parent_tier_id</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;from&#39;</span><span class="p">]</span>
-            <span class="n">child_tier_id</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span>
+            <span class="n">hierarchy_type</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span>
+            <span class="n">parent_tier_id</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'from'</span><span class="p">]</span>
+            <span class="n">child_tier_id</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'to'</span><span class="p">]</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="n">hierarchy_type</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;Type&#39;</span><span class="p">]</span>
-            <span class="n">parent_tier_id</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;From&#39;</span><span class="p">]</span>
-            <span class="n">child_tier_id</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;To&#39;</span><span class="p">]</span>
+            <span class="n">hierarchy_type</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'Type'</span><span class="p">]</span>
+            <span class="n">parent_tier_id</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'From'</span><span class="p">]</span>
+            <span class="n">child_tier_id</span> <span class="o">=</span> <span class="n">link_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'To'</span><span class="p">]</span>
         <span class="n">parent_tier</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">child_tier</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
@@ -1116,7 +1116,7 @@ View Source
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_hierarchy_link</span><span class="p">(</span><span class="n">hierarchy_type</span><span class="p">,</span> <span class="n">parent_tier</span><span class="p">,</span> <span class="n">child_tier</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Corrupted hierarchy link: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Corrupted hierarchy link: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
             <span class="k">pass</span>
 </code></pre></div>
 
@@ -1142,37 +1142,37 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_parse_vocabulary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a &#39;Vocabulary&#39; element and set it.</span>
+<span class="w">    </span><span class="sd">"""Parse a 'Vocabulary' element and set it.</span>
 
 <span class="sd">        :param hierarchy_root: (ET) XML Element tree root.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="n">id_vocab</span> <span class="o">=</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+<span class="sd">        """</span>
+    <span class="k">if</span> <span class="s1">'id'</span> <span class="ow">in</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="n">id_vocab</span> <span class="o">=</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">id_vocab</span> <span class="o">=</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]</span>
+        <span class="n">id_vocab</span> <span class="o">=</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'ID'</span><span class="p">]</span>
     <span class="n">ctrl_vocab</span> <span class="o">=</span> <span class="n">sppasCtrlVocab</span><span class="p">(</span><span class="n">id_vocab</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">add_ctrl_vocab</span><span class="p">(</span><span class="n">ctrl_vocab</span><span class="p">)</span>
-    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_metadata</span><span class="p">(</span><span class="n">ctrl_vocab</span><span class="p">,</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Metadata&#39;</span><span class="p">))</span>
-    <span class="k">if</span> <span class="s1">&#39;description&#39;</span> <span class="ow">in</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-        <span class="n">ctrl_vocab</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="n">vocabulary_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">])</span>
-    <span class="k">for</span> <span class="n">entry_node</span> <span class="ow">in</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Entry&#39;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">in</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-            <span class="n">tag_type</span> <span class="o">=</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+    <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_parse_metadata</span><span class="p">(</span><span class="n">ctrl_vocab</span><span class="p">,</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'Metadata'</span><span class="p">))</span>
+    <span class="k">if</span> <span class="s1">'description'</span> <span class="ow">in</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+        <span class="n">ctrl_vocab</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="n">vocabulary_root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'description'</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">entry_node</span> <span class="ow">in</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Entry'</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">'type'</span> <span class="ow">in</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+            <span class="n">tag_type</span> <span class="o">=</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">tag_type</span> <span class="o">=</span> <span class="s1">&#39;str&#39;</span>
+            <span class="n">tag_type</span> <span class="o">=</span> <span class="s1">'str'</span>
         <span class="n">entry_text</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="n">entry_node</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">tag_type</span><span class="p">)</span>
-        <span class="n">entry_desc</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="k">if</span> <span class="s1">&#39;description&#39;</span> <span class="ow">in</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-            <span class="n">entry_desc</span> <span class="o">=</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span>
+        <span class="n">entry_desc</span> <span class="o">=</span> <span class="s1">''</span>
+        <span class="k">if</span> <span class="s1">'description'</span> <span class="ow">in</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+            <span class="n">entry_desc</span> <span class="o">=</span> <span class="n">entry_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span>
         <span class="n">ctrl_vocab</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry_text</span><span class="p">,</span> <span class="n">entry_desc</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">tier_node</span> <span class="ow">in</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Tier&#39;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">tier_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
-            <span class="n">tier_id</span> <span class="o">=</span> <span class="n">tier_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">tier_node</span> <span class="ow">in</span> <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Tier'</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">'id'</span> <span class="ow">in</span> <span class="n">tier_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+            <span class="n">tier_id</span> <span class="o">=</span> <span class="n">tier_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">tier_id</span> <span class="o">=</span> <span class="n">tier_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]</span>
+            <span class="n">tier_id</span> <span class="o">=</span> <span class="n">tier_node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'ID'</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">tier_id</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">)</span> <span class="o">==</span> <span class="n">tier_id</span><span class="p">:</span>
                 <span class="n">tier</span><span class="o">.</span><span class="n">set_ctrl_vocab</span><span class="p">(</span><span class="n">ctrl_vocab</span><span class="p">)</span>
 </code></pre></div>
 
@@ -1200,15 +1200,15 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_format_point</span><span class="p">(</span><span class="n">point_node</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a &#39;Point&#39; element in the tree from a sppasPoint().</span>
+<span class="w">    </span><span class="sd">"""Add a 'Point' element in the tree from a sppasPoint().</span>
 
 <span class="sd">        :param point_node: (ET) XML Element node.</span>
 <span class="sd">        :param point: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">point_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;midpoint&#39;</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())))</span>
+<span class="sd">        """</span>
+    <span class="n">point_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'midpoint'</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())))</span>
     <span class="k">if</span> <span class="n">point</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">point_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;radius&#39;</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">get_radius</span><span class="p">())))</span>
+        <span class="n">point_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'radius'</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">get_radius</span><span class="p">())))</span>
 </code></pre></div>
 
     </details>
@@ -1235,15 +1235,15 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_format_interval</span><span class="p">(</span><span class="n">interval_root</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add an &#39;Interval&#39; element in the tree from a sppasInterval().</span>
+<span class="w">    </span><span class="sd">"""Add an 'Interval' element in the tree from a sppasInterval().</span>
 
 <span class="sd">        :param interval_root: (ET) XML Element node.</span>
 <span class="sd">        :param interval: (sppasInterval)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">begin</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">interval_root</span><span class="p">,</span> <span class="s1">&#39;Begin&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">begin</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">interval_root</span><span class="p">,</span> <span class="s1">'Begin'</span><span class="p">)</span>
     <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_format_point</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_begin</span><span class="p">())</span>
-    <span class="n">end</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">interval_root</span><span class="p">,</span> <span class="s1">&#39;End&#39;</span><span class="p">)</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">interval_root</span><span class="p">,</span> <span class="s1">'End'</span><span class="p">)</span>
     <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_format_point</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_end</span><span class="p">())</span>
 </code></pre></div>
 
@@ -1271,14 +1271,14 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_format_disjoint</span><span class="p">(</span><span class="n">disjoint_root</span><span class="p">,</span> <span class="n">disjoint</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a &#39;Disjoint&#39; element in the tree from a sppasDisjoint().</span>
+<span class="w">    </span><span class="sd">"""Add a 'Disjoint' element in the tree from a sppasDisjoint().</span>
 
 <span class="sd">        :param disjoint_root: (ET) XML Element node.</span>
 <span class="sd">        :param disjoint: (sppasDisjoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">disjoint</span><span class="p">:</span>
-        <span class="n">interval_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">disjoint_root</span><span class="p">,</span> <span class="s1">&#39;Interval&#39;</span><span class="p">)</span>
+        <span class="n">interval_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">disjoint_root</span><span class="p">,</span> <span class="s1">'Interval'</span><span class="p">)</span>
         <span class="n">sppasXRA</span><span class="o">.</span><span class="n">_format_interval</span><span class="p">(</span><span class="n">interval_root</span><span class="p">,</span> <span class="n">interval</span><span class="p">)</span>
 </code></pre></div>
 
@@ -1306,14 +1306,14 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_format_tag</span><span class="p">(</span><span class="n">tag_node</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a &#39;Tag&#39; element in the tree from a sppasTag().</span>
+<span class="w">    </span><span class="sd">"""Add a 'Tag' element in the tree from a sppasTag().</span>
 
 <span class="sd">        :param tag_node: (ET) XML Element node.</span>
 <span class="sd">        :param tag: (sppasTag)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;str&#39;</span><span class="p">:</span>
-        <span class="n">tag_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">())</span>
+<span class="sd">        """</span>
+    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">'str'</span><span class="p">:</span>
+        <span class="n">tag_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'type'</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">())</span>
     <span class="n">tag_node</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span>
 </code></pre></div>
 
@@ -1340,28 +1340,28 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_format_media</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">media_root</span><span class="p">,</span> <span class="n">media</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a &#39;Media&#39; element in the tree from a sppasMedia.</span>
+<span class="w">    </span><span class="sd">"""Add a 'Media' element in the tree from a sppasMedia.</span>
 
 <span class="sd">        :param media_root: (ET) XML Element tree root.</span>
 <span class="sd">        :param media: (sppasMedia)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">media_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">media</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span>
-    <span class="n">media_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="n">media</span><span class="o">.</span><span class="n">get_filename</span><span class="p">())</span>
-    <span class="n">media_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;mimetype&#39;</span><span class="p">,</span> <span class="n">media</span><span class="o">.</span><span class="n">get_mime_type</span><span class="p">())</span>
+<span class="sd">        """</span>
+    <span class="n">media_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="n">media</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">))</span>
+    <span class="n">media_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'url'</span><span class="p">,</span> <span class="n">media</span><span class="o">.</span><span class="n">get_filename</span><span class="p">())</span>
+    <span class="n">media_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'mimetype'</span><span class="p">,</span> <span class="n">media</span><span class="o">.</span><span class="n">get_mime_type</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_media</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_media</span><span class="p">()</span> <span class="o">==</span> <span class="n">media</span><span class="p">:</span>
-            <span class="n">tier_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">media_root</span><span class="p">,</span> <span class="s1">&#39;Tier&#39;</span><span class="p">)</span>
-            <span class="n">tier_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span>
-    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">media_root</span><span class="p">,</span> <span class="s1">&#39;Metadata&#39;</span><span class="p">)</span>
+            <span class="n">tier_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">media_root</span><span class="p">,</span> <span class="s1">'Tier'</span><span class="p">)</span>
+            <span class="n">tier_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">))</span>
+    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">media_root</span><span class="p">,</span> <span class="s1">'Metadata'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">get_meta_keys</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_metadata</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">,</span> <span class="n">media</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Entry&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_metadata</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">,</span> <span class="n">media</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Entry'</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">media_root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">media</span><span class="o">.</span><span class="n">get_content</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">content_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">media_root</span><span class="p">,</span> <span class="s1">&#39;Content&#39;</span><span class="p">)</span>
+        <span class="n">content_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">media_root</span><span class="p">,</span> <span class="s1">'Content'</span><span class="p">)</span>
         <span class="n">content_node</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">media</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span>
 </code></pre></div>
 
@@ -1387,19 +1387,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_format_hierarchy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hierarchy_root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a &#39;Hierarchy&#39; element in the tree from a sppasHierarchy().</span>
+<span class="w">    </span><span class="sd">"""Add a 'Hierarchy' element in the tree from a sppasHierarchy().</span>
 
 <span class="sd">        :param hierarchy_root: (ET) XML Element tree root.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">child_tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
         <span class="n">parent_tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span><span class="o">.</span><span class="n">get_parent</span><span class="p">(</span><span class="n">child_tier</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parent_tier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">link_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span><span class="o">.</span><span class="n">get_hierarchy_type</span><span class="p">(</span><span class="n">child_tier</span><span class="p">)</span>
-            <span class="n">link</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">hierarchy_root</span><span class="p">,</span> <span class="s1">&#39;Link&#39;</span><span class="p">)</span>
-            <span class="n">link</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="n">link_type</span><span class="p">)</span>
-            <span class="n">link</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="n">parent_tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span>
-            <span class="n">link</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="n">child_tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">hierarchy_root</span><span class="p">,</span> <span class="s1">'Link'</span><span class="p">)</span>
+            <span class="n">link</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'type'</span><span class="p">,</span> <span class="n">link_type</span><span class="p">)</span>
+            <span class="n">link</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'from'</span><span class="p">,</span> <span class="n">parent_tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">))</span>
+            <span class="n">link</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'to'</span><span class="p">,</span> <span class="n">child_tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -1425,29 +1425,29 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_format_vocabulary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_root</span><span class="p">,</span> <span class="n">vocabulary</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a &#39;Vocabulary&#39; element in the tree from a sppasVocabulary().</span>
+<span class="w">    </span><span class="sd">"""Add a 'Vocabulary' element in the tree from a sppasVocabulary().</span>
 
 <span class="sd">         :param vocabulary_root: (ET) XML Element tree root.</span>
 <span class="sd">         :param vocabulary: (sppasCtrlVocab)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+<span class="sd">        """</span>
+    <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="o">.</span><span class="n">get_description</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">get_description</span><span class="p">())</span>
+        <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'description'</span><span class="p">,</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">get_description</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">vocabulary</span><span class="p">:</span>
-        <span class="n">entry_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">vocabulary_root</span><span class="p">,</span> <span class="s1">&#39;Entry&#39;</span><span class="p">)</span>
+        <span class="n">entry_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">vocabulary_root</span><span class="p">,</span> <span class="s1">'Entry'</span><span class="p">)</span>
         <span class="n">entry_node</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;str&#39;</span><span class="p">:</span>
-            <span class="n">entry_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="n">entry</span><span class="o">.</span><span class="n">get_type</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">'str'</span><span class="p">:</span>
+            <span class="n">entry_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'type'</span><span class="p">,</span> <span class="n">entry</span><span class="o">.</span><span class="n">get_type</span><span class="p">())</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="o">.</span><span class="n">get_tag_description</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">entry_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">get_tag_description</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
+            <span class="n">entry_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'description'</span><span class="p">,</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">get_tag_description</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_ctrl_vocab</span><span class="p">()</span> <span class="o">==</span> <span class="n">vocabulary</span><span class="p">:</span>
-            <span class="n">tier_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">vocabulary_root</span><span class="p">,</span> <span class="s1">&#39;Tier&#39;</span><span class="p">)</span>
-            <span class="n">tier_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span>
-    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">vocabulary_root</span><span class="p">,</span> <span class="s1">&#39;Metadata&#39;</span><span class="p">)</span>
+            <span class="n">tier_node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">vocabulary_root</span><span class="p">,</span> <span class="s1">'Tier'</span><span class="p">)</span>
+            <span class="n">tier_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">))</span>
+    <span class="n">metadata_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">vocabulary_root</span><span class="p">,</span> <span class="s1">'Metadata'</span><span class="p">)</span>
     <span class="n">sppasXRA</span><span class="o">.</span><span class="n">format_metadata</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">,</span> <span class="n">vocabulary</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Entry&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'Entry'</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">vocabulary_root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">metadata_root</span><span class="p">)</span>
 </code></pre></div>
 
@@ -1459,7 +1459,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

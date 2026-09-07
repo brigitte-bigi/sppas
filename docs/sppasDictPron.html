@@ -75,16 +75,16 @@ brackets.</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">sppasDictPron</span><span class="p">(</span><span class="s1">&#39;eng.dict&#39;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="o">.</span><span class="n">add_pron</span><span class="p">(</span><span class="s1">&#39;acted&#39;</span><span class="p">,</span> <span class="s1">&#39;{ k t e&#39;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="o">.</span><span class="n">add_pron</span><span class="p">(</span><span class="s1">&#39;acted&#39;</span><span class="p">,</span> <span class="s1">&#39;{ k t i&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">sppasDictPron</span><span class="p">(</span><span class="s1">'eng.dict'</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="o">.</span><span class="n">add_pron</span><span class="p">(</span><span class="s1">'acted'</span><span class="p">,</span> <span class="s1">'{ k t e'</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="o">.</span><span class="n">add_pron</span><span class="p">(</span><span class="s1">'acted'</span><span class="p">,</span> <span class="s1">'{ k t i'</span><span class="p">)</span>
 </code></pre></div>
 
 <p>Then, the phonetization of a token can be accessed with get_pron() method:</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get_pron</span><span class="p">(</span><span class="s1">&#39;acted&#39;</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get_pron</span><span class="p">(</span><span class="s1">'acted'</span><span class="p">))</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="p">{</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="n">t</span><span class="o">-</span><span class="n">e</span><span class="o">-</span><span class="n">d</span><span class="o">|</span><span class="p">{</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="n">t</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="n">d</span><span class="o">|</span><span class="p">{</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="n">t</span><span class="o">-</span><span class="n">e</span><span class="o">|</span><span class="p">{</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="n">t</span><span class="o">-</span><span class="n">i</span>
 </code></pre></div>
 
@@ -126,7 +126,7 @@ by two or three.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nodump</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasDictPron instance.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasDictPron instance.</span>
 
 <span class="sd">    A dump file is a binary version of the dictionary. Its size is greater</span>
 <span class="sd">    than the original ASCII dictionary but the time to load is divided</span>
@@ -135,8 +135,8 @@ View Source
 <span class="sd">    :param dict_filename: (str) Name of the file of the pronunciation dict</span>
 <span class="sd">    :param nodump: (bool) Create or not a dump file.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">dict_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">dict_filename</span>
@@ -171,7 +171,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the file from which the dict comes from.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of the file from which the dict comes from."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
 </code></pre></div>
 
@@ -194,14 +194,14 @@ method returns "sil".</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_unkstamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the unknown words stamp.</span>
+<span class="w">    </span><span class="sd">"""Return the unknown words stamp.</span>
 
 <span class="sd">        If the default symbol is not in the pronunciation dictionary, this</span>
-<span class="sd">        method returns &quot;sil&quot;.</span>
+<span class="sd">        method returns "sil".</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">symbols</span><span class="o">.</span><span class="n">unk</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;sil&#39;</span>
+        <span class="k">return</span> <span class="s1">'sil'</span>
     <span class="k">return</span> <span class="n">symbols</span><span class="o">.</span><span class="n">unk</span>
 </code></pre></div>
 
@@ -234,13 +234,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">substitution</span><span class="o">=</span><span class="n">symbols</span><span class="o">.</span><span class="n">unk</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the pronunciations of an entry in the dictionary.</span>
+<span class="w">    </span><span class="sd">"""Return the pronunciations of an entry in the dictionary.</span>
 
 <span class="sd">        :param entry: (str) A token to find in the dictionary</span>
 <span class="sd">        :param substitution: (str) String to return if token is missing of dict</span>
 <span class="sd">        :return: Unicode of the pronunciations or the substitution.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">sppasDictPron</span><span class="o">.</span><span class="n">format_token</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">substitution</span><span class="p">)</span>
 </code></pre></div>
@@ -273,12 +273,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_pron</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the pronunciations of an entry in the dictionary.</span>
+<span class="w">    </span><span class="sd">"""Return the pronunciations of an entry in the dictionary.</span>
 
 <span class="sd">        :param entry: (str) A token to find in the dictionary</span>
 <span class="sd">        :return: Unicode of the pronunciations or the unknown stamp.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">sppasDictPron</span><span class="o">.</span><span class="n">format_token</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
     <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -314,12 +314,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_unk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if an entry is unknown (not in the dictionary).</span>
+<span class="w">    </span><span class="sd">"""Return True if an entry is unknown (not in the dictionary).</span>
 
 <span class="sd">        :param entry: (str) A token to find in the dictionary</span>
 <span class="sd">        :return: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="n">sppasDictPron</span><span class="o">.</span><span class="n">format_token</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span>
 </code></pre></div>
 
@@ -354,15 +354,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_pron_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">pron</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if pron is a pronunciation of entry.</span>
+<span class="w">    </span><span class="sd">"""Return True if pron is a pronunciation of entry.</span>
 
-<span class="sd">        Phonemes of pron are separated by &quot;-&quot;.</span>
+<span class="sd">        Phonemes of pron are separated by "-".</span>
 
 <span class="sd">        :param entry: (str) An Unicode token to find in the dictionary</span>
 <span class="sd">        :param pron: (str) An Unicode pronunciation</span>
 <span class="sd">        :return: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">sppasDictPron</span><span class="o">.</span><span class="n">format_token</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">:</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">pron</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
@@ -399,12 +399,12 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">format_token</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove the CR/LF, tabs, multiple spaces and others... and lowerise.</span>
+<span class="w">    </span><span class="sd">"""Remove the CR/LF, tabs, multiple spaces and others... and lowerise.</span>
 
 <span class="sd">        :param entry: (str) a token</span>
 <span class="sd">        :return: formatted token</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">to_lower</span><span class="p">()</span>
 </code></pre></div>
@@ -432,22 +432,22 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_pron</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">pron</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a token/pron to the dict.</span>
+<span class="w">    </span><span class="sd">"""Add a token/pron to the dict.</span>
 
 <span class="sd">        :param token: (str) Unicode string of the token to add</span>
 <span class="sd">        :param pron: (str) A pronunciation in which the phonemes are separated by whitespace</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">entry</span> <span class="o">=</span> <span class="n">sppasDictPron</span><span class="o">.</span><span class="n">format_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
     <span class="n">new_pron</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">pron</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
-    <span class="n">new_pron</span> <span class="o">=</span> <span class="n">new_pron</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">separators</span><span class="o">.</span><span class="n">phonemes</span><span class="p">)</span>
-    <span class="n">cur_pron</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">new_pron</span> <span class="o">=</span> <span class="n">new_pron</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="n">separators</span><span class="o">.</span><span class="n">phonemes</span><span class="p">)</span>
+    <span class="n">cur_pron</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="k">if</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_pron_of</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">new_pron</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">cur_pron</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pron</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="o">+</span> <span class="n">separators</span><span class="o">.</span><span class="n">variants</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cur_pron</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pron</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
-            <span class="n">new_pron</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">new_pron</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="n">new_pron</span> <span class="o">=</span> <span class="n">cur_pron</span> <span class="o">+</span> <span class="n">new_pron</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">[</span><span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_pron</span>
 </code></pre></div>
@@ -482,14 +482,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">map_phones</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">map_table</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new dictionary by changing the phoneme strings.</span>
+<span class="w">    </span><span class="sd">"""Create a new dictionary by changing the phoneme strings.</span>
 
 <span class="sd">        Perform changes depending on a mapping table.</span>
 
 <span class="sd">        :param map_table: (Mapping) A mapping table</span>
 <span class="sd">        :return: a sppasDictPron instance with mapped phones</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">map_table</span><span class="o">.</span><span class="n">set_reverse</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">delimiters</span> <span class="o">=</span> <span class="p">[</span><span class="n">separators</span><span class="o">.</span><span class="n">variants</span><span class="p">,</span> <span class="n">separators</span><span class="o">.</span><span class="n">phonemes</span><span class="p">]</span>
     <span class="n">new_dict</span> <span class="o">=</span> <span class="n">sppasDictPron</span><span class="p">()</span>
@@ -520,13 +520,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a pronunciation dictionary.</span>
+<span class="w">    </span><span class="sd">"""Load a pronunciation dictionary.</span>
 
 <span class="sd">        :param filename: (str) Pronunciation dictionary file name</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">filename</span>
             <span class="n">first_line</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
             <span class="n">fd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -534,7 +534,7 @@ View Source
         <span class="k">raise</span> <span class="n">FileIOError</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">FileUnicodeError</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">first_line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&lt;?xml&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">first_line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'&lt;?xml'</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">load_from_pls</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">load_from_ascii</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -562,13 +562,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_from_ascii</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a pronunciation dictionary from an HTK-ASCII file.</span>
+<span class="w">    </span><span class="sd">"""Load a pronunciation dictionary from an HTK-ASCII file.</span>
 
 <span class="sd">        :param filename: (str) Pronunciation dictionary file name</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
             <span class="n">lines</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
             <span class="n">fd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -579,18 +579,18 @@ View Source
             <span class="k">continue</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">uline</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">FileFormatError</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">uline</span><span class="p">)</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="n">uline</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">uline</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'['</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">i</span> <span class="o">=</span> <span class="n">uline</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">uline</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span>
         <span class="n">entry</span> <span class="o">=</span> <span class="n">uline</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span>
         <span class="n">endline</span> <span class="o">=</span> <span class="n">uline</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
-        <span class="n">j</span> <span class="o">=</span> <span class="n">endline</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;]&#39;</span><span class="p">)</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">endline</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">']'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">j</span> <span class="o">=</span> <span class="n">endline</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">endline</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span>
         <span class="n">new_pron</span> <span class="o">=</span> <span class="n">endline</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'('</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s1">&#39;)&#39;</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">[</span><span class="n">i</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="s1">')'</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">[</span><span class="n">i</span><span class="p">:]:</span>
                 <span class="n">entry</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_pron</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">new_pron</span><span class="p">)</span>
 </code></pre></div>
@@ -619,29 +619,29 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">save_as_ascii</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">with_variant_nb</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">with_filled_brackets</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the pronunciation dictionary in HTK-ASCII format.</span>
+<span class="w">    </span><span class="sd">"""Save the pronunciation dictionary in HTK-ASCII format.</span>
 
 <span class="sd">        :param filename: (str) Dictionary file name</span>
 <span class="sd">        :param with_variant_nb: (bool) Write the variant number or not</span>
 <span class="sd">        :param with_filled_brackets: (bool) Fill the bracket with the token</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">entry</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
                 <span class="n">variants</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separators</span><span class="o">.</span><span class="n">variants</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">variant</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">variants</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-                    <span class="n">variant</span> <span class="o">=</span> <span class="n">variant</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">separators</span><span class="o">.</span><span class="n">phonemes</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+                    <span class="n">variant</span> <span class="o">=</span> <span class="n">variant</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">separators</span><span class="o">.</span><span class="n">phonemes</span><span class="p">,</span> <span class="s1">' '</span><span class="p">)</span>
                     <span class="n">brackets</span> <span class="o">=</span> <span class="n">entry</span>
                     <span class="k">if</span> <span class="n">with_filled_brackets</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-                        <span class="n">brackets</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                        <span class="n">brackets</span> <span class="o">=</span> <span class="s1">''</span>
                     <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">with_variant_nb</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                        <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">(</span><span class="si">{:d}</span><span class="s1">) [</span><span class="si">{:s}</span><span class="s1">] </span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">brackets</span><span class="p">,</span> <span class="n">variant</span><span class="p">)</span>
+                        <span class="n">line</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{:s}</span><span class="s1">(</span><span class="si">{:d}</span><span class="s1">) [</span><span class="si">{:s}</span><span class="s1">] </span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">brackets</span><span class="p">,</span> <span class="n">variant</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1"> [</span><span class="si">{:s}</span><span class="s1">] </span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">brackets</span><span class="p">,</span> <span class="n">variant</span><span class="p">)</span>
+                        <span class="n">line</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{:s}</span><span class="s1"> [</span><span class="si">{:s}</span><span class="s1">] </span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">brackets</span><span class="p">,</span> <span class="n">variant</span><span class="p">)</span>
                     <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Saving the dictionary in ASCII failed: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Saving the dictionary in ASCII failed: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="kc">True</span>
 </code></pre></div>
@@ -670,39 +670,39 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_from_pls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a pronunciation dictionary from a pls file (xml).</span>
+<span class="w">    </span><span class="sd">"""Load a pronunciation dictionary from a pls file (xml).</span>
 
-<span class="sd">        xmlns=&quot;http://www.w3.org/2005/01/pronunciation-lexicon</span>
+<span class="sd">        xmlns="http://www.w3.org/2005/01/pronunciation-lexicon</span>
 
 <span class="sd">        :param filename: (str) Pronunciation dictionary file name</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">uri</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">tag</span><span class="p">[:</span><span class="n">root</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">tag</span><span class="p">[:</span><span class="n">root</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'}'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="n">uri</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">FileIOError</span><span class="p">(</span><span class="n">filename</span><span class="p">)),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'</span><span class="si">{:s}</span><span class="s1">: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">FileIOError</span><span class="p">(</span><span class="n">filename</span><span class="p">)),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
         <span class="k">raise</span> <span class="n">FileIOError</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">conversion</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="n">alphabet</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;alphabet&#39;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">alphabet</span> <span class="o">==</span> <span class="s1">&#39;ipa&#39;</span><span class="p">:</span>
+    <span class="n">alphabet</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'alphabet'</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">alphabet</span> <span class="o">==</span> <span class="s1">'ipa'</span><span class="p">:</span>
         <span class="n">conversion</span> <span class="o">=</span> <span class="n">sppasDictPron</span><span class="o">.</span><span class="n">load_sampa_ipa</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">lexeme_root</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="n">uri</span> <span class="o">+</span> <span class="s1">&#39;lexeme&#39;</span><span class="p">):</span>
-        <span class="n">grapheme_root</span> <span class="o">=</span> <span class="n">lexeme_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">uri</span> <span class="o">+</span> <span class="s1">&#39;grapheme&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">lexeme_root</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="n">uri</span> <span class="o">+</span> <span class="s1">'lexeme'</span><span class="p">):</span>
+        <span class="n">grapheme_root</span> <span class="o">=</span> <span class="n">lexeme_root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">uri</span> <span class="o">+</span> <span class="s1">'grapheme'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">grapheme_root</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="n">grapheme</span> <span class="o">=</span> <span class="n">grapheme_root</span><span class="o">.</span><span class="n">text</span>
-        <span class="k">for</span> <span class="n">phoneme_root</span> <span class="ow">in</span> <span class="n">lexeme_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">uri</span> <span class="o">+</span> <span class="s1">&#39;phoneme&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">phoneme_root</span> <span class="ow">in</span> <span class="n">lexeme_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">uri</span> <span class="o">+</span> <span class="s1">'phoneme'</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">phoneme_root</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">phoneme</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">phoneme_root</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">phoneme</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">alphabet</span> <span class="o">==</span> <span class="s1">&#39;ipa&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">alphabet</span> <span class="o">==</span> <span class="s1">'ipa'</span><span class="p">:</span>
                 <span class="n">phoneme</span> <span class="o">=</span> <span class="n">sppasDictPron</span><span class="o">.</span><span class="n">ipa_to_sampa</span><span class="p">(</span><span class="n">conversion</span><span class="p">,</span> <span class="n">phoneme</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_pron</span><span class="p">(</span><span class="n">grapheme</span><span class="p">,</span> <span class="n">phoneme</span><span class="p">)</span>
 </code></pre></div>
@@ -726,14 +726,14 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_sampa_ipa</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the sampa-ipa conversion file.</span>
+<span class="w">    </span><span class="sd">"""Load the sampa-ipa conversion file.</span>
 
 <span class="sd">        Return it as a dict().</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">conversion</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="n">ipa_sampa_mapfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;dict&#39;</span><span class="p">,</span> <span class="s1">&#39;sampa-ipa.txt&#39;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">ipa_sampa_mapfile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">ipa_sampa_mapfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">'dict'</span><span class="p">,</span> <span class="s1">'sampa-ipa.txt'</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">ipa_sampa_mapfile</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">,</span> <span class="s1">'utf-8'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
             <span class="n">tab_line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tab_line</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -766,17 +766,17 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">ipa_to_sampa</span><span class="p">(</span><span class="n">conversion</span><span class="p">,</span> <span class="n">ipa_entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a string in IPA to SAMPA.</span>
+<span class="w">    </span><span class="sd">"""Convert a string in IPA to SAMPA.</span>
 
 <span class="sd">        :param conversion: (dict)</span>
 <span class="sd">        :param ipa_entry: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">sampa</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ipa_entry</span><span class="p">:</span>
-        <span class="n">sampa_p</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">sampa_p</span> <span class="o">!=</span> <span class="s1">&#39;_&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sampa</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sampa_p</span> <span class="o">==</span> <span class="s1">&#39;:&#39;</span> <span class="ow">or</span> <span class="n">sampa_p</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">):</span>
+        <span class="n">sampa_p</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sampa_p</span> <span class="o">!=</span> <span class="s1">'_'</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sampa</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sampa_p</span> <span class="o">==</span> <span class="s1">':'</span> <span class="ow">or</span> <span class="n">sampa_p</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'_'</span><span class="p">):</span>
                 <span class="n">sampa</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampa</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">sampa_p</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">sampa</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sampa_p</span><span class="p">)</span>
@@ -835,7 +835,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

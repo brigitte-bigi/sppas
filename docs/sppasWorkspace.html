@@ -89,11 +89,11 @@ each of which is a list of key/att-value.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constructor of a sppasWorkspace.</span>
+<span class="w">    </span><span class="sd">"""Constructor of a sppasWorkspace.</span>
 
 <span class="sd">    :param identifier: (str)</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">identifier</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__paths</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__refs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -118,7 +118,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the identifier of the workspace (str).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the identifier of the workspace (str)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
 </code></pre></div>
 
@@ -150,16 +150,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add an object into the data.</span>
+<span class="w">    </span><span class="sd">"""Add an object into the data.</span>
 
 <span class="sd">        IMPLEMENTED ONLY FOR paths and references.</span>
 
 <span class="sd">        :param file_object: (FileBase)</span>
 <span class="sd">        :raises: sppasTypeError, FileAddValueError, NotImplementedError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_object</span><span class="p">,</span> <span class="p">(</span><span class="n">FileName</span><span class="p">,</span> <span class="n">FileRoot</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">,</span> <span class="n">sppasCatReference</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">file_object</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;FileBase-subclass&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">file_object</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">'FileBase-subclass'</span><span class="p">)</span>
     <span class="n">test_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">file_object</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">test_obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">FileAddValueError</span><span class="p">(</span><span class="n">file_object</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
@@ -168,7 +168,7 @@ View Source
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_object</span><span class="p">,</span> <span class="n">sppasCatReference</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_ref</span><span class="p">(</span><span class="n">file_object</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Adding a </span><span class="si">{}</span><span class="s1"> in a workspace is not implemented yet.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">file_object</span><span class="p">)))</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">'Adding a </span><span class="si">{}</span><span class="s1"> in a workspace is not implemented yet.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">file_object</span><span class="p">)))</span>
 </code></pre></div>
 
     </details>
@@ -205,7 +205,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">brothers</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ctime</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add file(s) in the list from a file name.</span>
+<span class="w">    </span><span class="sd">"""Add file(s) in the list from a file name.</span>
 
 <span class="sd">        :param filename: (str) Absolute or relative name of a file</span>
 <span class="sd">        :param brothers: (bool) Add also all files sharing the same root as the given file</span>
@@ -213,7 +213,7 @@ View Source
 <span class="sd">        :returns: (list of FileBase or None) List of added objects</span>
 <span class="sd">        :raises: OSError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">new_fp</span> <span class="o">=</span> <span class="n">FilePath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">fp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paths</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">new_fp</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
@@ -261,7 +261,7 @@ updated.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove a file in the list from its file name.</span>
+<span class="w">    </span><span class="sd">"""Remove a file in the list from its file name.</span>
 
 <span class="sd">        Its root and path are also removed if empties, or their state is</span>
 <span class="sd">        updated.</span>
@@ -270,7 +270,7 @@ View Source
 <span class="sd">        :returns: (list) Identifiers of removed objects</span>
 <span class="sd">        :raises: OSError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">FileName</span><span class="p">):</span>
         <span class="n">fn_id</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
@@ -328,14 +328,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a reference in the list from its file name.</span>
+<span class="w">    </span><span class="sd">"""Add a reference in the list from its file name.</span>
 
 <span class="sd">        :param ref: (sppasCatReference) Reference to add</span>
 <span class="sd">        :raises: sppasTypeError, FileAddValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">sppasCatReference</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="s1">&#39;sppasCatReference&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="s1">'sppasCatReference'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">refe</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__refs</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">refe</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">ref</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">FileAddValueError</span><span class="p">(</span><span class="n">refe</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
@@ -370,12 +370,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_refs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">States</span><span class="p">()</span><span class="o">.</span><span class="n">CHECKED</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove all references of the given state.</span>
+<span class="w">    </span><span class="sd">"""Remove all references of the given state.</span>
 
 <span class="sd">        :param state: (States)</span>
 <span class="sd">        :returns: (int) Number of removed refs</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">removes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__refs</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">ref</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">state</span><span class="p">:</span>
@@ -406,7 +406,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_refs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of references.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of references."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__refs</span>
 </code></pre></div>
 
@@ -428,11 +428,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the data: missing files, properties changed.</span>
+<span class="w">    </span><span class="sd">"""Update the data: missing files, properties changed.</span>
 
 <span class="sd">        Empty FileRoot and FilePath are removed.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">fp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paths</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">fr</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">fp</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">fr</span><span class="p">):</span>
@@ -471,14 +471,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">States</span><span class="p">()</span><span class="o">.</span><span class="n">CHECKED</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove all files of the given state.</span>
+<span class="w">    </span><span class="sd">"""Remove all files of the given state.</span>
 
 <span class="sd">        Do not remove empty roots or paths.</span>
 
 <span class="sd">        :param state: (States)</span>
 <span class="sd">        :returns: (int)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">nb</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">fp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paths</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">fr</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">fp</span><span class="p">):</span>
@@ -507,7 +507,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_empties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove paths and roots without files.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Remove paths and roots without files."""</span>
     <span class="k">for</span> <span class="n">fp</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__paths</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">fr</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">fp</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fr</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -538,11 +538,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return all the stored paths.</span>
+<span class="w">    </span><span class="sd">"""Return all the stored paths.</span>
 
 <span class="sd">        :returns: (list of FilePath)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paths</span>
 </code></pre></div>
 
@@ -574,12 +574,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the file object matching the given identifier.</span>
+<span class="w">    </span><span class="sd">"""Return the file object matching the given identifier.</span>
 
 <span class="sd">        :param identifier: (str)</span>
 <span class="sd">        :returns: (sppasWorkspace, FilePath, FileRoot, FileName, sppasCatReference)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">identifier</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span>
     <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_refs</span><span class="p">():</span>
@@ -630,11 +630,11 @@ They are automatically fixed depending on the paths states.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_object_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">file_obj</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the state of any or all FileBase within sppasWorkspace.</span>
+<span class="w">    </span><span class="sd">"""Set the state of any or all FileBase within sppasWorkspace.</span>
 
 <span class="sd">        The default case is to set the state to all FilePath and FileRefence.</span>
 
-<span class="sd">        It is not allowed to manually assign one of the &quot;AT_LEAST&quot; states.</span>
+<span class="sd">        It is not allowed to manually assign one of the "AT_LEAST" states.</span>
 <span class="sd">        They are automatically fixed depending on the paths states.</span>
 
 <span class="sd">        :param state: (States) state to set the file to</span>
@@ -642,7 +642,7 @@ View Source
 <span class="sd">        :raises: sppasTypeError, sppasValueError</span>
 <span class="sd">        :return: list of modified objects</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">modified</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">file_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">fp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paths</span><span class="p">:</span>
@@ -667,8 +667,8 @@ View Source
                     <span class="n">modified</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
                 <span class="k">break</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Wrong type of the object: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">file_obj</span><span class="p">))))</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">file_obj</span><span class="p">,</span> <span class="s1">&#39;FileBase&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Wrong type of the object: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">file_obj</span><span class="p">))))</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">file_obj</span><span class="p">,</span> <span class="s1">'FileBase'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">modified</span>
 </code></pre></div>
 
@@ -694,12 +694,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the state of this sppasWorkspace instance.</span>
+<span class="w">    </span><span class="sd">"""Set the state of this sppasWorkspace instance.</span>
 
 <span class="sd">        :param value: (States)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Do not set a state: A workspace has no state anymore.&#39;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">'Do not set a state: A workspace has no state anymore.'</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -766,7 +766,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return if the instance contains information.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return if the instance contains information."""</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__paths</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__refs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
 </code></pre></div>
 
@@ -791,9 +791,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_filepath_from_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return every FilePath of the given state.</span>
+<span class="w">    </span><span class="sd">"""Return every FilePath of the given state.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">paths</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">fp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paths</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="n">state</span><span class="p">:</span>
@@ -822,9 +822,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_fileroot_from_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return every FileRoot in the given state.</span>
+<span class="w">    </span><span class="sd">"""Return every FileRoot in the given state.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">roots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">fp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paths</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">fr</span> <span class="ow">in</span> <span class="n">fp</span><span class="p">:</span>
@@ -854,7 +854,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_fileroot_with_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return every FileRoot with the given reference.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return every FileRoot with the given reference."""</span>
     <span class="n">roots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">fp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paths</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">fr</span> <span class="ow">in</span> <span class="n">fp</span><span class="p">:</span>
@@ -884,9 +884,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_filename_from_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return every FileName in the given state.</span>
+<span class="w">    </span><span class="sd">"""Return every FileName in the given state.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__paths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -919,9 +919,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_reference_from_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return every Reference in the given state.</span>
+<span class="w">    </span><span class="sd">"""Return every Reference in the given state.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__refs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">refs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -979,13 +979,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filebase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the parent of an object.</span>
+<span class="w">    </span><span class="sd">"""Return the parent of an object.</span>
 
 <span class="sd">        :param filebase: (FileName or FileRoot).</span>
 <span class="sd">        :returns: (FileRoot or FilePath)</span>
 <span class="sd">        :raises: sppasTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filebase</span><span class="p">,</span> <span class="n">FileName</span><span class="p">):</span>
         <span class="n">fr</span> <span class="o">=</span> <span class="n">FileRoot</span><span class="p">(</span><span class="n">filebase</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">fr</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
@@ -993,7 +993,7 @@ View Source
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filebase</span><span class="p">,</span> <span class="n">FileRoot</span><span class="p">):</span>
         <span class="n">fp</span> <span class="o">=</span> <span class="n">FilePath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filebase</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-    <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">filebase</span><span class="p">,</span> <span class="s1">&#39;FileName, FileRoot&#39;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">filebase</span><span class="p">,</span> <span class="s1">'FileName, FileRoot'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -1024,12 +1024,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unlock the given list of files.</span>
+<span class="w">    </span><span class="sd">"""Unlock the given list of files.</span>
 
 <span class="sd">        :param entries: (list, None) List of FileName to unlock</span>
 <span class="sd">        :returns: number of unlocked entries</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="n">entries</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">fp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paths</span><span class="p">:</span>
@@ -1091,7 +1091,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

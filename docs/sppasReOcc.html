@@ -83,12 +83,12 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasReOcc instance with only the general rules.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasReOcc instance with only the general rules.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasReOcc</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;reoccurrences.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasReOcc</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'reoccurrences.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__reocc</span> <span class="o">=</span> <span class="n">ReOccurences</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">max_span</span> <span class="o">=</span> <span class="mi">20</span>
 </code></pre></div>
@@ -120,20 +120,20 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+<span class="w">    </span><span class="sd">"""Fix all options.</span>
 
 <span class="sd">        Available options are:</span>
 
 <span class="sd">        :param options: (sppasOption)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;tiername&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'tiername'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_tiername</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;span&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'span'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_span</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'pattern'</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -161,12 +161,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_tiername</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the tiername option.</span>
+<span class="w">    </span><span class="sd">"""Fix the tiername option.</span>
 
 <span class="sd">        :param tier_name: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">tier_name</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">tier_name</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
 </code></pre></div>
 
     </details>
@@ -194,17 +194,17 @@ A value of 1 means to search only in the next annotation.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_span</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">span</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the span option.</span>
+<span class="w">    </span><span class="sd">"""Fix the span option.</span>
 
 <span class="sd">        Span is the maximum number of annotations to search for re-occ.</span>
 <span class="sd">        A value of 1 means to search only in the next annotation.</span>
 
 <span class="sd">        :param span: (int) Value between 1 and 20</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">span</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">span</span><span class="p">)</span>
     <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">span</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_span</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;span&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">span</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'span'</span><span class="p">]</span> <span class="o">=</span> <span class="n">span</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IndexRangeException</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_span</span><span class="p">)</span>
 </code></pre></div>
@@ -232,12 +232,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">detection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier_spk1</span><span class="p">,</span> <span class="n">tier_spk2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for the re-occurrences of annotations.</span>
+<span class="w">    </span><span class="sd">"""Search for the re-occurrences of annotations.</span>
 
 <span class="sd">        :param tier_spk1: (sppasTier)</span>
 <span class="sd">        :param tier_spk2: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">annset</span> <span class="o">=</span> <span class="n">sppasAnnReOccSet</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">tier_spk1</span><span class="o">.</span><span class="n">is_float</span><span class="p">():</span>
         <span class="n">tier_spk1</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="mf">0.04</span><span class="p">)</span>
@@ -247,7 +247,7 @@ View Source
     <span class="k">for</span> <span class="n">ann1</span> <span class="ow">in</span> <span class="n">tier_spk1</span><span class="p">:</span>
         <span class="n">cur_loc</span> <span class="o">=</span> <span class="n">ann1</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">()</span>
         <span class="n">all_anns2</span> <span class="o">=</span> <span class="n">tier_spk2</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">cur_loc</span><span class="p">,</span> <span class="n">end_loc</span><span class="p">,</span> <span class="n">overlaps</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">window_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_anns2</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;span&#39;</span><span class="p">])</span>
+        <span class="n">window_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_anns2</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'span'</span><span class="p">])</span>
         <span class="n">anns2</span> <span class="o">=</span> <span class="n">all_anns2</span><span class="p">[:</span><span class="n">window_size</span><span class="p">]</span>
         <span class="n">reoccs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__reocc</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">ann1</span><span class="p">,</span> <span class="n">anns2</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">reoccs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -287,32 +287,32 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return 2 tiers with name given in options.</span>
+<span class="w">    </span><span class="sd">"""Return 2 tiers with name given in options.</span>
 
 <span class="sd">        :param input_files: (list)</span>
 <span class="sd">        :raise: NoTierInputError</span>
 <span class="sd">        :return: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid format of input files.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid format of input files.'</span><span class="p">)</span>
     <span class="n">tier_src</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">tier_src</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">tier_src</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">tier_src</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tier_src</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;A source tier with time-aligned items was expected but not found.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'A source tier with time-aligned items was expected but not found.'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">NoTierInputError</span>
     <span class="n">tier_echo</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">tier_echo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">tier_echo</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">tier_echo</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tier_echo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;An echo tier with time-aligned items was expected but not found.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'An echo tier with time-aligned items was expected but not found.'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">NoTierInputError</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">tier_src</span><span class="p">,</span> <span class="n">tier_echo</span><span class="p">)</span>
 </code></pre></div>
@@ -349,7 +349,7 @@ the main speaker and the echoing speaker.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on an input.</span>
 
 <span class="sd">        Input file is a tuple with 2 files:</span>
 <span class="sd">        the main speaker and the echoing speaker.</span>
@@ -358,11 +358,11 @@ View Source
 <span class="sd">        :param output: (str) the output name</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier_spk1</span><span class="p">,</span> <span class="n">tier_spk2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
     <span class="n">new_tiers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detection</span><span class="p">(</span><span class="n">tier_spk1</span><span class="p">,</span> <span class="n">tier_spk2</span><span class="p">)</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'annotation_result_of'</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">new_tiers</span><span class="p">:</span>
         <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -392,8 +392,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-reocc&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation uses in an output filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="s1">'-reocc'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -404,7 +404,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

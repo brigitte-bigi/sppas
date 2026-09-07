@@ -77,14 +77,14 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasDurationCompare instance.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create a sppasDurationCompare instance."""</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasDurationCompare</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;eq&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">eq</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;ne&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">ne</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;gt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">gt</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;lt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">lt</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;le&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">le</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;ge&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">ge</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'eq'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">eq</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'ne'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">ne</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'gt'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">gt</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'lt'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">lt</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'le'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">le</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'ge'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="o">.</span><span class="n">ge</span>
 </code></pre></div>
 
     </details>
@@ -120,17 +120,17 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">eq</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if duration is equal to x.</span>
+<span class="w">    </span><span class="sd">"""Return True if duration is equal to x.</span>
 
 <span class="sd">        :param duration: (sppasDuration)</span>
 <span class="sd">        :param x: (int, float)</span>
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">&#39;sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">'sppasDuration'</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">sppasType</span><span class="p">()</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;int/float/sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">'int/float/sppasDuration'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">duration</span> <span class="o">==</span> <span class="n">x</span>
 </code></pre></div>
 
@@ -164,17 +164,17 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">ne</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if duration is different to x.</span>
+<span class="w">    </span><span class="sd">"""Return True if duration is different to x.</span>
 
 <span class="sd">        :param duration: (sppasDuration)</span>
 <span class="sd">        :param x: (int, float)</span>
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">&#39;sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">'sppasDuration'</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">sppasType</span><span class="p">()</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;int/float/sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">'int/float/sppasDuration'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">duration</span> <span class="o">!=</span> <span class="n">x</span>
 </code></pre></div>
 
@@ -208,17 +208,17 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">gt</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if duration is greater than x.</span>
+<span class="w">    </span><span class="sd">"""Return True if duration is greater than x.</span>
 
 <span class="sd">        :param duration: (sppasDuration)</span>
 <span class="sd">        :param x: (int, float)</span>
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">&#39;sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">'sppasDuration'</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">sppasType</span><span class="p">()</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;int/float/sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">'int/float/sppasDuration'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">duration</span> <span class="o">&gt;</span> <span class="n">x</span>
 </code></pre></div>
 
@@ -252,17 +252,17 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">lt</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if duration is lower than x.</span>
+<span class="w">    </span><span class="sd">"""Return True if duration is lower than x.</span>
 
 <span class="sd">        :param duration: (sppasDuration)</span>
 <span class="sd">        :param x: (int, float)</span>
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">&#39;sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">'sppasDuration'</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">sppasType</span><span class="p">()</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;int/float/sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">'int/float/sppasDuration'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">duration</span> <span class="o">&lt;</span> <span class="n">x</span>
 </code></pre></div>
 
@@ -296,17 +296,17 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">ge</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if duration is greater or equal than x.</span>
+<span class="w">    </span><span class="sd">"""Return True if duration is greater or equal than x.</span>
 
 <span class="sd">        :param duration: (sppasDuration)</span>
 <span class="sd">        :param x: (int, float)</span>
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">&#39;sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">'sppasDuration'</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">sppasType</span><span class="p">()</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;int/float/sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">'int/float/sppasDuration'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">duration</span> <span class="o">&gt;=</span> <span class="n">x</span>
 </code></pre></div>
 
@@ -340,17 +340,17 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">le</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if duration is lower or equal than x.</span>
+<span class="w">    </span><span class="sd">"""Return True if duration is lower or equal than x.</span>
 
 <span class="sd">        :param duration: (sppasDuration)</span>
 <span class="sd">        :param x: (int, float)</span>
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">&#39;sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s1">'sppasDuration'</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">sppasType</span><span class="p">()</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;int/float/sppasDuration&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">'int/float/sppasDuration'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">duration</span> <span class="o">&lt;=</span> <span class="n">x</span>
 </code></pre></div>
 
@@ -362,7 +362,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

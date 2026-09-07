@@ -93,22 +93,22 @@ results. If None, logs are redirected to the default logging system.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasTGA instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasTGA instance.</span>
 
 <span class="sd">    Log is used for a better communication of the annotation process and its</span>
 <span class="sd">    results. If None, logs are redirected to the default logging system.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasTGA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;tga.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasTGA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'tga.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">symbols</span><span class="o">.</span><span class="n">phone</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;@@&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;gb&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lg&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'#'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'@@'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'+'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'gb'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'lg'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'_'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -145,7 +145,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+<span class="w">    </span><span class="sd">"""Fix all options.</span>
 
 <span class="sd">        Available options are:</span>
 
@@ -156,18 +156,18 @@ View Source
 
 <span class="sd">        :param options: (sppasOption)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;with_radius&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'with_radius'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_with_radius</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;original&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'original'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_intercept_slope_original</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;annotationpro&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'annotationpro'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_intercept_slope_annotationpro</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;tg_prefix_label&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'tg_prefix_label'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_tg_prefix_label</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'pattern'</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -195,15 +195,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_tg_prefix_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the prefix to add to each TG.</span>
+<span class="w">    </span><span class="sd">"""Fix the prefix to add to each TG.</span>
 
-<span class="sd">        :param prefix: (str) Default is &#39;tg_&#39;</span>
+<span class="sd">        :param prefix: (str) Default is 'tg_'</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
     <span class="n">tg</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tg_prefix_label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tg_prefix_label'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tg</span>
 </code></pre></div>
 
     </details>
@@ -231,7 +231,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_with_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">with_radius</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the with_radius option, used to estimate the duration.</span>
+<span class="w">    </span><span class="sd">"""Set the with_radius option, used to estimate the duration.</span>
 
 <span class="sd">        :param with_radius: (int)</span>
 
@@ -239,10 +239,10 @@ View Source
 <span class="sd">        - negative value means to use R-;</span>
 <span class="sd">        - positive radius means to use R+.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">with_radius</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;with_radius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'with_radius'</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
         <span class="k">raise</span>
 </code></pre></div>
@@ -271,14 +271,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_intercept_slope_original</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate intercepts and slopes with the original method.</span>
+<span class="w">    </span><span class="sd">"""Estimate intercepts and slopes with the original method.</span>
 
 <span class="sd">        Default is False.</span>
 
 <span class="sd">        :param value: (boolean)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'original'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -305,14 +305,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_intercept_slope_annotationpro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate intercepts and slopes with the method of annotationpro.</span>
+<span class="w">    </span><span class="sd">"""Estimate intercepts and slopes with the method of annotationpro.</span>
 
 <span class="sd">        Default is True.</span>
 
 <span class="sd">        :param value: (boolean)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;annotationpro&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'annotationpro'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -343,16 +343,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">syllables_to_timegroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">syllables</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the time group intervals.</span>
+<span class="w">    </span><span class="sd">"""Create the time group intervals.</span>
 
 <span class="sd">        :param syllables: (sppasTier)</span>
 <span class="sd">        :returns: (sppasTier) Time groups</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">intervals</span> <span class="o">=</span> <span class="n">syllables</span><span class="o">.</span><span class="n">export_to_intervals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="p">)</span>
-    <span class="n">intervals</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;TGA-TimeGroups&#39;</span><span class="p">)</span>
+    <span class="n">intervals</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">'TGA-TimeGroups'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">intervals</span><span class="p">):</span>
-        <span class="n">tag_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tg_prefix_label&#39;</span><span class="p">]</span>
+        <span class="n">tag_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tg_prefix_label'</span><span class="p">]</span>
         <span class="n">tag_str</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">tg</span><span class="o">.</span><span class="n">append_label</span><span class="p">(</span><span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">tag_str</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">intervals</span>
@@ -388,22 +388,22 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">syllables_to_timesegments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">syllables</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the time segments intervals.</span>
+<span class="w">    </span><span class="sd">"""Create the time segments intervals.</span>
 
 <span class="sd">        Time segments are time groups with serialized syllables.</span>
 
 <span class="sd">        :param syllables:</span>
 <span class="sd">        :returns: (sppasTier) Time segments</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">intervals</span> <span class="o">=</span> <span class="n">syllables</span><span class="o">.</span><span class="n">export_to_intervals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tg_separators</span><span class="p">)</span>
-    <span class="n">intervals</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;TGA-Segments&#39;</span><span class="p">)</span>
+    <span class="n">intervals</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">'TGA-Segments'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">intervals</span><span class="p">):</span>
         <span class="n">syll_anns</span> <span class="o">=</span> <span class="n">syllables</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tg</span><span class="o">.</span><span class="n">get_lowest_localization</span><span class="p">(),</span> <span class="n">tg</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">())</span>
-        <span class="n">tag_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">tag_str</span> <span class="o">=</span> <span class="s1">''</span>
         <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">syll_anns</span><span class="p">:</span>
-            <span class="n">tag_str</span> <span class="o">+=</span> <span class="n">serialize_labels</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(),</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
-            <span class="n">tag_str</span> <span class="o">+=</span> <span class="s1">&#39; &#39;</span>
+            <span class="n">tag_str</span> <span class="o">+=</span> <span class="n">serialize_labels</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(),</span> <span class="n">separator</span><span class="o">=</span><span class="s1">' '</span><span class="p">)</span>
+            <span class="n">tag_str</span> <span class="o">+=</span> <span class="s1">' '</span>
         <span class="n">tg</span><span class="o">.</span><span class="n">append_label</span><span class="p">(</span><span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">tag_str</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">intervals</span>
 </code></pre></div>
@@ -437,13 +437,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">timegroups_to_durations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">syllables</span><span class="p">,</span> <span class="n">timegroups</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a dict with timegroups and the syllable durations.</span>
+<span class="w">    </span><span class="sd">"""Return a dict with timegroups and the syllable durations.</span>
 
 <span class="sd">        :param syllables: (sppasTier) Syllables</span>
 <span class="sd">        :param timegroups: (sppasTier) Time groups</span>
 <span class="sd">        :returns: (dict)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tg_dur</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">tg_ann</span> <span class="ow">in</span> <span class="n">timegroups</span><span class="p">:</span>
         <span class="n">tg_label</span> <span class="o">=</span> <span class="n">serialize_labels</span><span class="p">(</span><span class="n">tg_ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">())</span>
@@ -453,9 +453,9 @@ View Source
             <span class="n">loc</span> <span class="o">=</span> <span class="n">syll_ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">get_best</span><span class="p">()</span>
             <span class="n">dur</span> <span class="o">=</span> <span class="n">loc</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">dur</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;with_radius&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'with_radius'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">value</span> <span class="o">-=</span> <span class="n">dur</span><span class="o">.</span><span class="n">get_margin</span><span class="p">()</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;with_radius&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'with_radius'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">value</span> <span class="o">+=</span> <span class="n">dur</span><span class="o">.</span><span class="n">get_margin</span><span class="p">()</span>
             <span class="n">tg_dur</span><span class="p">[</span><span class="n">tg_label</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tg_dur</span>
@@ -492,8 +492,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">tga_to_tier</span><span class="p">(</span><span class="n">tga_result</span><span class="p">,</span> <span class="n">timegroups</span><span class="p">,</span> <span class="n">tier_name</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a tier from one of the TGA result.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tga_to_tier</span><span class="p">(</span><span class="n">tga_result</span><span class="p">,</span> <span class="n">timegroups</span><span class="p">,</span> <span class="n">tier_name</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">'float'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Create a tier from one of the TGA result.</span>
 
 <span class="sd">        :param tga_result: One of the results of TGA</span>
 <span class="sd">        :param timegroups: (sppasTier) Time groups</span>
@@ -502,12 +502,12 @@ View Source
 
 <span class="sd">        :returns: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="n">tier_name</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">tg_ann</span> <span class="ow">in</span> <span class="n">timegroups</span><span class="p">:</span>
         <span class="n">tg_label</span> <span class="o">=</span> <span class="n">serialize_labels</span><span class="p">(</span><span class="n">tg_ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">())</span>
         <span class="n">tag_value</span> <span class="o">=</span> <span class="n">tga_result</span><span class="p">[</span><span class="n">tg_label</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">'float'</span><span class="p">:</span>
             <span class="n">tag_value</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">tag_value</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
         <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">tg_ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">tag_value</span><span class="p">,</span> <span class="n">tag_type</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">tier</span>
@@ -544,7 +544,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">tga_to_tier_reglin</span><span class="p">(</span><span class="n">tga_result</span><span class="p">,</span> <span class="n">timegroups</span><span class="p">,</span> <span class="n">intercept</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create tiers of intercept,slope from one of the TGA result.</span>
+<span class="w">    </span><span class="sd">"""Create tiers of intercept,slope from one of the TGA result.</span>
 
 <span class="sd">        :param tga_result: One of the results of TGA</span>
 <span class="sd">        :param timegroups: (sppasTier) Time groups</span>
@@ -553,11 +553,11 @@ View Source
 
 <span class="sd">        :returns: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">intercept</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;TGA-Intercept&#39;</span><span class="p">)</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">'TGA-Intercept'</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;TGA-Slope&#39;</span><span class="p">)</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">'TGA-Slope'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">tg_ann</span> <span class="ow">in</span> <span class="n">timegroups</span><span class="p">:</span>
         <span class="n">tg_label</span> <span class="o">=</span> <span class="n">serialize_labels</span><span class="p">(</span><span class="n">tg_ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">())</span>
         <span class="n">loc</span> <span class="o">=</span> <span class="n">tg_ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -566,7 +566,7 @@ View Source
         <span class="k">else</span><span class="p">:</span>
             <span class="n">tag_value</span> <span class="o">=</span> <span class="n">tga_result</span><span class="p">[</span><span class="n">tg_label</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">tag_value</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">tag_value</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">tag_value</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)))</span>
+        <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">tag_value</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">tier</span>
 </code></pre></div>
 
@@ -598,45 +598,45 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">syllables</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate TGA on the given syllables.</span>
+<span class="w">    </span><span class="sd">"""Estimate TGA on the given syllables.</span>
 
 <span class="sd">        :param syllables: (sppasTier)</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">trs_out</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="s1">&#39;TimeGroupAnalyser&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">trs_out</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="s1">'TimeGroupAnalyser'</span><span class="p">)</span>
     <span class="n">timegroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">syllables_to_timegroups</span><span class="p">(</span><span class="n">syllables</span><span class="p">)</span>
-    <span class="n">timegroups</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;timegroups_of_tier&#39;</span><span class="p">,</span> <span class="n">syllables</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+    <span class="n">timegroups</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'timegroups_of_tier'</span><span class="p">,</span> <span class="n">syllables</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
     <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timegroups</span><span class="p">)</span>
     <span class="n">timesegs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">syllables_to_timesegments</span><span class="p">(</span><span class="n">syllables</span><span class="p">)</span>
     <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timesegs</span><span class="p">)</span>
     <span class="n">tg_dur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timegroups_to_durations</span><span class="p">(</span><span class="n">syllables</span><span class="p">,</span> <span class="n">timegroups</span><span class="p">)</span>
     <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeGroupAnalysis</span><span class="p">(</span><span class="n">tg_dur</span><span class="p">)</span>
-    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">len</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">&#39;TGA-Occurrences&#39;</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">)</span>
+    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">len</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">'TGA-Occurrences'</span><span class="p">,</span> <span class="s1">'int'</span><span class="p">)</span>
     <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">total</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">&#39;TGA-Total&#39;</span><span class="p">)</span>
+    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">total</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">'TGA-Total'</span><span class="p">)</span>
     <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">&#39;TGA-Mean&#39;</span><span class="p">)</span>
+    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">'TGA-Mean'</span><span class="p">)</span>
     <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">&#39;TGA-Median&#39;</span><span class="p">)</span>
+    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">'TGA-Median'</span><span class="p">)</span>
     <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">stdev</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">&#39;TGA-StdDev&#39;</span><span class="p">)</span>
+    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">stdev</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">'TGA-StdDev'</span><span class="p">)</span>
     <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">nPVI</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">&#39;TGA-nPVI&#39;</span><span class="p">)</span>
+    <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">nPVI</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="s1">'TGA-nPVI'</span><span class="p">)</span>
     <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'original'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier_reglin</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">intercept_slope_original</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="n">tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;TGA-Intercept-original&#39;</span><span class="p">)</span>
+        <span class="n">tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">'TGA-Intercept-original'</span><span class="p">)</span>
         <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier_reglin</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">intercept_slope_original</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="n">tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;TGA-Slope-original&#39;</span><span class="p">)</span>
+        <span class="n">tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">'TGA-Slope-original'</span><span class="p">)</span>
         <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;annotationpro&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'annotationpro'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier_reglin</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">intercept_slope</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="n">tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;TGA-Intercept-timestamps&#39;</span><span class="p">)</span>
+        <span class="n">tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">'TGA-Intercept-timestamps'</span><span class="p">)</span>
         <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTGA</span><span class="o">.</span><span class="n">tga_to_tier_reglin</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">intercept_slope</span><span class="p">(),</span> <span class="n">timegroups</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="n">tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;TGA-Slope-timestamps&#39;</span><span class="p">)</span>
+        <span class="n">tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">'TGA-Slope-timestamps'</span><span class="p">)</span>
         <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">trs_out</span>
 </code></pre></div>
@@ -673,13 +673,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the the tier with aligned tokens.</span>
+<span class="w">    </span><span class="sd">"""Return the the tier with aligned tokens.</span>
 
 <span class="sd">        :param input_files: (list)</span>
 <span class="sd">        :raise: NoTierInputError</span>
 <span class="sd">        :return: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">annot_ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_extensions</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
@@ -690,7 +690,7 @@ View Source
             <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">aligned_syllables</span><span class="p">(</span><span class="n">trs_input</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">tier</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;A tier with time-aligned syllables was not found.&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'A tier with time-aligned syllables was not found.'</span><span class="p">)</span>
     <span class="k">raise</span> <span class="n">NoTierInputError</span>
 </code></pre></div>
 
@@ -723,16 +723,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on an input.</span>
 
 <span class="sd">        :param input_files: (list of str) Syllabification</span>
 <span class="sd">        :param output: (str) the output file name</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'annotation_result_of'</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">tier_input</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -761,8 +761,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-tga&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation uses in an output filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="s1">'-tga'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -781,8 +781,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation expects for its input filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-syll&#39;</span><span class="p">)]</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation expects for its input filename."""</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'inputpattern'</span><span class="p">,</span> <span class="s1">'-syll'</span><span class="p">)]</span>
 </code></pre></div>
 
     </details>
@@ -793,7 +793,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

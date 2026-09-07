@@ -90,13 +90,13 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasIVA instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasIVA instance.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasIVA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;iva.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_separators</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;@&#39;</span><span class="p">,</span> <span class="s1">&#39;dummy&#39;</span><span class="p">]</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasIVA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'iva.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_separators</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'#'</span><span class="p">,</span> <span class="s1">'+'</span><span class="p">,</span> <span class="s1">'*'</span><span class="p">,</span> <span class="s1">'@'</span><span class="p">,</span> <span class="s1">'dummy'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -124,34 +124,34 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+<span class="w">    </span><span class="sd">"""Fix all options.</span>
 
 <span class="sd">        :param options: (sppasOption)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;iva_prefix_label&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'iva_prefix_label'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_sgmt_prefix_label</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;values&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'values'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_input_tiername_values</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;segments&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'segments'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_input_tiername_segments</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;separators&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'separators'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_segments_separators</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;occ&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'occ'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_eval</span><span class="p">(</span><span class="n">occ</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;total&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'total'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_eval</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;mean&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'mean'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_eval</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;median&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'median'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_eval</span><span class="p">(</span><span class="n">median</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;stdev&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'stdev'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_eval</span><span class="p">(</span><span class="n">stdev</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;linreg&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'linreg'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_eval</span><span class="p">(</span><span class="n">linreg</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'pattern'</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -179,15 +179,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_sgmt_prefix_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the prefix to add to each segment.</span>
+<span class="w">    </span><span class="sd">"""Fix the prefix to add to each segment.</span>
 
-<span class="sd">        :param prefix: (str) Default is &#39;sgmt_&#39;</span>
+<span class="sd">        :param prefix: (str) Default is 'sgmt_'</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
     <span class="n">tg</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;iva_prefix_label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'iva_prefix_label'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tg</span>
 </code></pre></div>
 
     </details>
@@ -212,15 +212,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_input_tiername_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tiername</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the name of the tier with values.</span>
+<span class="w">    </span><span class="sd">"""Fix the name of the tier with values.</span>
 
-<span class="sd">        :param tiername: (str) Default is &#39;PitchTier&#39;</span>
+<span class="sd">        :param tiername: (str) Default is 'PitchTier'</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">tiername</span><span class="p">)</span>
     <span class="n">tg</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'values'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tg</span>
 </code></pre></div>
 
     </details>
@@ -245,15 +245,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_input_tiername_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tiername</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the name of the tier with segments.</span>
+<span class="w">    </span><span class="sd">"""Fix the name of the tier with segments.</span>
 
-<span class="sd">        :param tiername: (str) Default is &#39;TokensAlign&#39;</span>
+<span class="sd">        :param tiername: (str) Default is 'TokensAlign'</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">tiername</span><span class="p">)</span>
     <span class="n">tg</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;segments&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'segments'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tg</span>
 </code></pre></div>
 
     </details>
@@ -278,11 +278,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_segments_separators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the separators to create segments.</span>
+<span class="w">    </span><span class="sd">"""Fix the separators to create segments.</span>
 
 <span class="sd">        :param entry: (str) Entries separated by whitespace.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
     <span class="n">tg</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -317,7 +317,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">occ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">median</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stdev</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">linreg</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set IVA evaluations to perform.</span>
+<span class="w">    </span><span class="sd">"""Set IVA evaluations to perform.</span>
 
 <span class="sd">        :param total: (bool) Estimates total of values in segments.</span>
 <span class="sd">        :param mean: (bool) Estimates mean of values in segments.</span>
@@ -325,19 +325,19 @@ View Source
 <span class="sd">        :param stdev: (bool) Estimates standard deviation of values in segments.</span>
 <span class="sd">        :param linreg: (bool) Estimates linear regression of values in segments.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">occ</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;occ&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">occ</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'occ'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">occ</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">total</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'total'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">mean</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">mean</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'mean'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">mean</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">median</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;median&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">median</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'median'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">median</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">stdev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">stdev</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'stdev'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">stdev</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">linreg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;linreg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">linreg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'linreg'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">linreg</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -368,19 +368,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">tier_to_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create segment intervals.</span>
+<span class="w">    </span><span class="sd">"""Create segment intervals.</span>
 
 <span class="sd">        :param input_tier: (sppasTier)</span>
 <span class="sd">        :returns: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_separators</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">intervals</span> <span class="o">=</span> <span class="n">input_tier</span><span class="o">.</span><span class="n">export_to_intervals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_separators</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">intervals</span> <span class="o">=</span> <span class="n">input_tier</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">intervals</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;IVA-Segments&#39;</span><span class="p">)</span>
+    <span class="n">intervals</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">'IVA-Segments'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">intervals</span><span class="p">):</span>
-        <span class="n">tag_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;iva_prefix_label&#39;</span><span class="p">]</span>
+        <span class="n">tag_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'iva_prefix_label'</span><span class="p">]</span>
         <span class="n">tag_str</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">tg</span><span class="o">.</span><span class="n">set_labels</span><span class="p">([</span><span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">tag_str</span><span class="p">))])</span>
     <span class="k">return</span> <span class="n">intervals</span>
@@ -415,16 +415,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">tier_to_labelled_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segments</span><span class="p">,</span> <span class="n">input_tier_values</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the segment intervals within the values.</span>
+<span class="w">    </span><span class="sd">"""Create the segment intervals within the values.</span>
 
 <span class="sd">        :param segments: (sppasTier) segment intervals to get values</span>
 <span class="sd">        :param input_tier_values: (sppasTier) tags are float/int values</span>
 <span class="sd">        :returns: (dict, sppasTier) dict of segment/values, labelled segments</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">intervals_tier</span> <span class="o">=</span> <span class="n">segments</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">intervals_tier</span><span class="o">.</span><span class="n">gen_id</span><span class="p">()</span>
-    <span class="n">intervals_tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;IVA-Values&#39;</span><span class="p">)</span>
+    <span class="n">intervals_tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">'IVA-Values'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">intervals_tier</span><span class="p">):</span>
         <span class="n">tg</span><span class="o">.</span><span class="n">set_labels</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">iva_items</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
@@ -476,8 +476,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">iva_to_tier</span><span class="p">(</span><span class="n">iva_result</span><span class="p">,</span> <span class="n">sgmts_tier</span><span class="p">,</span> <span class="n">tier_name</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a tier from one of the IVA result (mean, sd, ...).</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">iva_to_tier</span><span class="p">(</span><span class="n">iva_result</span><span class="p">,</span> <span class="n">sgmts_tier</span><span class="p">,</span> <span class="n">tier_name</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">'float'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Create a tier from one of the IVA result (mean, sd, ...).</span>
 
 <span class="sd">        :param iva_result: One of the results of TGA</span>
 <span class="sd">        :param sgmts_tier: (sppasTier) Tier with the segments</span>
@@ -486,12 +486,12 @@ View Source
 
 <span class="sd">        :returns: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="n">tier_name</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">iva_ann</span> <span class="ow">in</span> <span class="n">sgmts_tier</span><span class="p">:</span>
         <span class="n">iva_label</span> <span class="o">=</span> <span class="n">serialize_labels</span><span class="p">(</span><span class="n">iva_ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">())</span>
         <span class="n">tag_value</span> <span class="o">=</span> <span class="n">iva_result</span><span class="p">[</span><span class="n">iva_label</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tag_type</span> <span class="o">==</span> <span class="s1">'float'</span><span class="p">:</span>
             <span class="n">tag_value</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">tag_value</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
         <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">iva_ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">tag_value</span><span class="p">,</span> <span class="n">tag_type</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">tier</span>
@@ -528,7 +528,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">iva_to_tier_reglin</span><span class="p">(</span><span class="n">iva_result</span><span class="p">,</span> <span class="n">sgmts_tier</span><span class="p">,</span> <span class="n">intercept</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create tiers of intercept,slope from the IVA result.</span>
+<span class="w">    </span><span class="sd">"""Create tiers of intercept,slope from the IVA result.</span>
 
 <span class="sd">        :param iva_result: intercept,slope result of IVA</span>
 <span class="sd">        :param sgmts_tier: (sppasTier) Tier with the segments</span>
@@ -537,11 +537,11 @@ View Source
 
 <span class="sd">        :returns: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">intercept</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;IVA-Intercept&#39;</span><span class="p">)</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">'IVA-Intercept'</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;IVA-Slope&#39;</span><span class="p">)</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">'IVA-Slope'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">iva_ann</span> <span class="ow">in</span> <span class="n">sgmts_tier</span><span class="p">:</span>
         <span class="n">iva_label</span> <span class="o">=</span> <span class="n">serialize_labels</span><span class="p">(</span><span class="n">iva_ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">())</span>
         <span class="n">loc</span> <span class="o">=</span> <span class="n">iva_ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -550,7 +550,7 @@ View Source
         <span class="k">else</span><span class="p">:</span>
             <span class="n">tag_value</span> <span class="o">=</span> <span class="n">iva_result</span><span class="p">[</span><span class="n">iva_label</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">tag_value</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">tag_value</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">tag_value</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)))</span>
+        <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">tag_value</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">tier</span>
 </code></pre></div>
 
@@ -583,36 +583,36 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tier_values</span><span class="p">,</span> <span class="n">input_tier_segments</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate IVA on the given input tier with values.</span>
+<span class="w">    </span><span class="sd">"""Estimate IVA on the given input tier with values.</span>
 
 <span class="sd">        :param input_tier_values: (sppasTier) Tier with numerical values.</span>
 <span class="sd">        :param input_tier_segments: (sppasTier) Tier with intervals.</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">trs_out</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="s1">&#39;IntervalValuesAnalysis&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">trs_out</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="s1">'IntervalValuesAnalysis'</span><span class="p">)</span>
     <span class="n">segments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tier_to_segments</span><span class="p">(</span><span class="n">input_tier_segments</span><span class="p">)</span>
-    <span class="n">segments</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;segments_of_tier&#39;</span><span class="p">,</span> <span class="n">input_tier_segments</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+    <span class="n">segments</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'segments_of_tier'</span><span class="p">,</span> <span class="n">input_tier_segments</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
     <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
     <span class="n">iva_items</span><span class="p">,</span> <span class="n">val_segs_tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tier_to_labelled_segments</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="n">input_tier_values</span><span class="p">)</span>
     <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val_segs_tier</span><span class="p">)</span>
     <span class="n">ts</span> <span class="o">=</span> <span class="n">IntervalValuesAnalysis</span><span class="p">(</span><span class="n">iva_items</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;occ&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">len</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">&#39;IVA-Occurrences&#39;</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'occ'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">len</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">'IVA-Occurrences'</span><span class="p">,</span> <span class="s1">'int'</span><span class="p">)</span>
         <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">total</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">&#39;IVA-Total&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'total'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">total</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">'IVA-Total'</span><span class="p">)</span>
         <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">&#39;IVA-Mean&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'mean'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">'IVA-Mean'</span><span class="p">)</span>
         <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;median&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">&#39;IVA-Median&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'median'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">'IVA-Median'</span><span class="p">)</span>
         <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;stdev&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">stdev</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">&#39;IVA-StdDev&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'stdev'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">stdev</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">'IVA-StdDev'</span><span class="p">)</span>
         <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;linreg&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'linreg'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier_reglin</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">intercept_slope</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">trs_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasIVA</span><span class="o">.</span><span class="n">iva_to_tier_reglin</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">intercept_slope</span><span class="p">(),</span> <span class="n">segments</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
@@ -642,28 +642,28 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_tiers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return tiers with values and segments.</span>
+<span class="w">    </span><span class="sd">"""Return tiers with values and segments.</span>
 
 <span class="sd">        :param input_files: (list)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier_values_input</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">tier_segments_input</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">tier_values_input</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">tier_values_input</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">])</span>
+            <span class="n">tier_values_input</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'values'</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">tier_segments_input</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">tier_segments_input</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;segments&#39;</span><span class="p">])</span>
+            <span class="n">tier_segments_input</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'segments'</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">tier_values_input</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Tier with values not found: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">]))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Tier with values not found: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'values'</span><span class="p">]))</span>
         <span class="k">raise</span> <span class="n">NoTierInputError</span>
     <span class="k">if</span> <span class="n">tier_segments_input</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Tier with segments not found: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;segments&#39;</span><span class="p">]))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Tier with segments not found: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'segments'</span><span class="p">]))</span>
         <span class="k">raise</span> <span class="n">NoTierInputError</span>
     <span class="k">if</span> <span class="n">tier_segments_input</span><span class="o">.</span><span class="n">is_interval</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The tier with segments should be of type: Interval&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'The tier with segments should be of type: Interval'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">BadInputError</span>
     <span class="k">if</span> <span class="nb">any</span><span class="p">((</span><span class="n">tier_values_input</span><span class="o">.</span><span class="n">is_float</span><span class="p">(),</span> <span class="n">tier_values_input</span><span class="o">.</span><span class="n">is_int</span><span class="p">()))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">BadInputError</span>
@@ -699,16 +699,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on an input.</span>
 
 <span class="sd">        :param input_files: (list of str) Values and Segments in a single file or in different ones</span>
 <span class="sd">        :param output: (str) the output file name</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier_values</span><span class="p">,</span> <span class="n">tier_segments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_tiers</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">tier_values</span><span class="p">,</span> <span class="n">tier_segments</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;iva_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'iva_result_of'</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_out_file_ext</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
@@ -736,8 +736,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-iva&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation uses in an output filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="s1">'-iva'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -756,8 +756,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation expects for its input filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern1&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern2&#39;</span><span class="p">,</span> <span class="s1">&#39;-palign&#39;</span><span class="p">)]</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation expects for its input filename."""</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'inputpattern1'</span><span class="p">,</span> <span class="s1">''</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'inputpattern2'</span><span class="p">,</span> <span class="s1">'-palign'</span><span class="p">)]</span>
 </code></pre></div>
 
     </details>
@@ -780,13 +780,13 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_input_extensions</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its input filename.</span>
+<span class="w">    </span><span class="sd">"""Extensions that the annotation expects for its input filename.</span>
 
 <span class="sd">        An annotated file with measure values (pitch, intensity...), and</span>
-<span class="sd">        An annotated file with a sppasTier of type &#39;interval&#39;.</span>
+<span class="sd">        An annotated file with a sppasTier of type 'interval'.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;ANNOT_MEASURE&#39;</span><span class="p">),</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;ANNOT_ANNOT&#39;</span><span class="p">)]</span>
+<span class="sd">        """</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">'ANNOT_MEASURE'</span><span class="p">),</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">'ANNOT_ANNOT'</span><span class="p">)]</span>
 </code></pre></div>
 
     </details>
@@ -797,7 +797,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

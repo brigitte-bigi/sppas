@@ -94,7 +94,7 @@ and when this class is deleted.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasAppConfig instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasAppConfig instance.</span>
 
 <span class="sd">    The configuration is set to its default values and updated</span>
 <span class="sd">    with the content of a configuration file (if existing).</span>
@@ -102,7 +102,7 @@ View Source
 <span class="sd">    The configuration is saved the 1st time this class is instantiated</span>
 <span class="sd">    and when this class is deleted.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasAppConfig</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__update_info</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__log_level</span> <span class="o">=</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">DEFAULT_LOG_LEVEL</span>
@@ -130,7 +130,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_log_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the level for logging messages, ranging 0-50.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the level for logging messages, ranging 0-50."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__log_level</span>
 </code></pre></div>
 
@@ -156,11 +156,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_log_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the log level for the application.</span>
+<span class="w">    </span><span class="sd">"""Set the log level for the application.</span>
 
 <span class="sd">        :param value: (int) Logging ranges from 0 (any) to 50 (critical only).</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
@@ -185,7 +185,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_interoperability</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if a file is written without loss of information.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if a file is written without loss of information."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interoperability</span>
 </code></pre></div>
 
@@ -214,14 +214,14 @@ of the user, the default is to preserve it.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_interoperability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set whether a file is written without loss of information.</span>
+<span class="w">    </span><span class="sd">"""Set whether a file is written without loss of information.</span>
 
-<span class="sd">        When it is False, what a format can&#39;t hold is lost: it&#39;s the choice</span>
+<span class="sd">        When it is False, what a format can't hold is lost: it's the choice</span>
 <span class="sd">        of the user, the default is to preserve it.</span>
 
-<span class="sd">        :param value: (bool) Preserve what the destination format can&#39;t hold.</span>
+<span class="sd">        :param value: (bool) Preserve what the destination format can't hold.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__interoperability</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
@@ -246,7 +246,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_update_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Store update check result.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Store update check result."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__update_info</span> <span class="o">=</span> <span class="n">info</span>
 </code></pre></div>
 
@@ -266,7 +266,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_update_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return update check result.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return update check result."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__update_info</span>
 </code></pre></div>
 
@@ -287,7 +287,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">cfg_filename</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the config file.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of the config file."""</span>
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">basedir</span><span class="p">,</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">APP_CONFIG_FILENAME</span><span class="p">)</span>
 </code></pre></div>
 
@@ -307,7 +307,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the configuration from a file.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Load the configuration from a file."""</span>
     <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_filename</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -318,9 +318,9 @@ View Source
             <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__log_level</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;log_level&#39;</span><span class="p">,</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">DEFAULT_LOG_LEVEL</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__interoperability</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;interoperability&#39;</span><span class="p">,</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">DEFAULT_INTEROPERABILITY</span><span class="p">)</span>
-                <span class="n">deps</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;features&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__log_level</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'log_level'</span><span class="p">,</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">DEFAULT_LOG_LEVEL</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__interoperability</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'interoperability'</span><span class="p">,</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">DEFAULT_INTEROPERABILITY</span><span class="p">)</span>
+                <span class="n">deps</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'features'</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
                 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">deps</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">__feat_ids</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">deps</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 </code></pre></div>
@@ -341,13 +341,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save into a JSON file.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Save into a JSON file."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__hide</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg_filename</span><span class="p">(),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg_filename</span><span class="p">(),</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;log_level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__log_level</span>
-        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;interoperability&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interoperability</span>
-        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__feat_ids</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">'log_level'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__log_level</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">'interoperability'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interoperability</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">'features'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__feat_ids</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__hide</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
@@ -368,7 +368,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_feature_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of feature identifiers currently known.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of feature identifiers currently known."""</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__feat_ids</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </code></pre></div>
 
@@ -394,11 +394,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">feature_installed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if a feature was successfully installed by SPPAS.</span>
+<span class="w">    </span><span class="sd">"""Return True if a feature was successfully installed by SPPAS.</span>
 
 <span class="sd">        :param key: (str) Identifier of a feature.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__feat_ids</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__feat_ids</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
@@ -430,7 +430,7 @@ configuration file.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add or update a feature.</span>
+<span class="w">    </span><span class="sd">"""Add or update a feature.</span>
 
 <span class="sd">        This change is set to the current dict but is not saved in the</span>
 <span class="sd">        configuration file.</span>
@@ -438,7 +438,7 @@ View Source
 <span class="sd">        :param key: (str) Identifier of a feature</span>
 <span class="sd">        :param value: (bool) Installed or disabled</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__feat_ids</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
@@ -467,18 +467,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__hide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Hide or un-hide a file.</span>
+<span class="w">    </span><span class="sd">"""Hide or un-hide a file.</span>
 
 <span class="sd">        :param value: (bool) Hide the config filename</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_filename</span><span class="p">()</span>
     <span class="n">system</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span>
-    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s1">&#39;win32&#39;</span><span class="p">:</span>
-        <span class="n">oper</span> <span class="o">=</span> <span class="s1">&#39;+&#39;</span>
+    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s1">'win32'</span><span class="p">:</span>
+        <span class="n">oper</span> <span class="o">=</span> <span class="s1">'+'</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">oper</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s1">&#39;attrib &#39;</span> <span class="o">+</span> <span class="n">oper</span> <span class="o">+</span> <span class="s1">&#39;h &#39;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="n">oper</span> <span class="o">=</span> <span class="s1">'-'</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s1">'attrib '</span> <span class="o">+</span> <span class="n">oper</span> <span class="o">+</span> <span class="s1">'h '</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div>
 
@@ -519,7 +519,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

@@ -93,15 +93,15 @@ portrait is enabled.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new automatic annotation instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new automatic annotation instance.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 <span class="sd">    :raises: sppasEnableFeatureError</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">feature_installed</span><span class="p">(</span><span class="s1">&#39;facedetect&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasEnableFeatureError</span><span class="p">(</span><span class="s1">&#39;facedetect&#39;</span><span class="p">)</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasFaceDetection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;facedetect.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">feature_installed</span><span class="p">(</span><span class="s1">'facedetect'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasEnableFeatureError</span><span class="p">(</span><span class="s1">'facedetect'</span><span class="p">)</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasFaceDetection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'facedetect.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span> <span class="o">=</span> <span class="n">ImageFaceDetection</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__img_writer</span> <span class="o">=</span> <span class="n">sppasCoordsImageWriter</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__fdv</span> <span class="o">=</span> <span class="n">VideoFaceDetection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="p">)</span>
@@ -139,24 +139,24 @@ i.e. one starting by "model:".</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model1</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the model files.</span>
+<span class="w">    </span><span class="sd">"""Fix the model files.</span>
 
 <span class="sd">        Currently, both HaarCascade classifiers and DNN are supported. Add</span>
 <span class="sd">        as many models as wished; their results are combined.</span>
-<span class="sd">        The given model(s) is/are enabled if there&#39;s an option to indicate it,</span>
-<span class="sd">        i.e. one starting by &quot;model:&quot;.</span>
+<span class="sd">        The given model(s) is/are enabled if there's an option to indicate it,</span>
+<span class="sd">        i.e. one starting by "model:".</span>
 
 <span class="sd">        :param model1: (str) Filename of a model</span>
 <span class="sd">        :param args: other models for face detection</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model1</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
     <span class="n">all_models</span> <span class="o">=</span> <span class="p">[</span><span class="n">model1</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
         <span class="n">all_models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;model:&#39;</span><span class="p">):</span>
-            <span class="n">model_name</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'model:'</span><span class="p">):</span>
+            <span class="n">model_name</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">model_name</span> <span class="ow">in</span> <span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">all_models</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">set_enable_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
 </code></pre></div>
@@ -183,35 +183,35 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+<span class="w">    </span><span class="sd">"""Fix all options.</span>
 
 <span class="sd">        :param options: (sppasOption)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;nbest&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'nbest'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_max_faces</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'score'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_min_score</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'csv'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_out_csv</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;tag&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'tag'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_img_tag</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;crop&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'crop'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_img_crop</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;portrait&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'portrait'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_img_portrait</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;folder&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'folder'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_out_folder</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;width&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'width'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_img_width</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;height&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'height'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_img_height</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;model:&#39;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'model:'</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">set_enable_model</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_enable_model</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">'pattern'</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -239,15 +239,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_max_faces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the maximum number of expected faces in an image.</span>
+<span class="w">    </span><span class="sd">"""Fix the maximum number of expected faces in an image.</span>
 
 <span class="sd">        :param value: (int) Number of faces</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__fdv</span><span class="o">.</span><span class="n">set_filter_best</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">filter_best</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;nbest&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'nbest'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -272,15 +272,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_min_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the minimum score to accept a face in an image.</span>
+<span class="w">    </span><span class="sd">"""Fix the minimum score to accept a face in an image.</span>
 
 <span class="sd">        :param value: (float) Min confidence score of face detection result</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__fdv</span><span class="o">.</span><span class="n">set_filter_confidence</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">filter_confidence</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'score'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -305,17 +305,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_out_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_csv</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The result includes a CSV file.</span>
+<span class="w">    </span><span class="sd">"""The result includes a CSV file.</span>
 
 <span class="sd">        :param out_csv: (bool) Create a CSV file when detecting</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__img_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">csv</span><span class="o">=</span><span class="n">out_csv</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">csv</span><span class="o">=</span><span class="n">out_csv</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;csv&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_csv</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'csv'</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_csv</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__img_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">xra</span><span class="o">=</span><span class="ow">not</span> <span class="n">out_csv</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">xra</span><span class="o">=</span><span class="ow">not</span> <span class="n">out_csv</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;xra&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">out_csv</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'xra'</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">out_csv</span>
 </code></pre></div>
 
     </details>
@@ -340,14 +340,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_img_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Surround the faces with a square.</span>
+<span class="w">    </span><span class="sd">"""Surround the faces with a square.</span>
 
 <span class="sd">        :param value: (bool) Tag the images</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tag'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -372,14 +372,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_img_crop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an image/video for each detected person.</span>
+<span class="w">    </span><span class="sd">"""Create an image/video for each detected person.</span>
 
 <span class="sd">        :param value: (bool) Crop the images</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">crop</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;crop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'crop'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -404,13 +404,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_img_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Width of the resulting images/video.</span>
+<span class="w">    </span><span class="sd">"""Width of the resulting images/video.</span>
 
 <span class="sd">        :param value: (int) Number of pixels</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'width'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -435,13 +435,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_img_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Height of the resulting images/video.</span>
+<span class="w">    </span><span class="sd">"""Height of the resulting images/video.</span>
 
 <span class="sd">        :param value: (int) Number of pixel</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'height'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -466,13 +466,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_img_portrait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Result is the portrait instead of the face.</span>
+<span class="w">    </span><span class="sd">"""Result is the portrait instead of the face.</span>
 
 <span class="sd">        :param value: (bool) True</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;portrait&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'portrait'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__fdv</span><span class="o">.</span><span class="n">set_portrait</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
@@ -498,13 +498,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_out_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_folder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The result includes a folder with image files -- if video input.</span>
+<span class="w">    </span><span class="sd">"""The result includes a folder with image files -- if video input.</span>
 
 <span class="sd">        :param out_folder: (bool) Create a folder with image files when detecting</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="n">out_folder</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;folder&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_folder</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'folder'</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_folder</span>
 </code></pre></div>
 
     </details>
@@ -536,22 +536,22 @@ only if some models were already loaded.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_enable_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enable or disable the use of a detection model.</span>
+<span class="w">    </span><span class="sd">"""Enable or disable the use of a detection model.</span>
 
 <span class="sd">        The options are fixed before the models are loaded, so this method</span>
-<span class="sd">        is invoked a first time when no model is loaded yet: enabling can&#39;t</span>
-<span class="sd">        be done and it&#39;s not an error. The models are then enabled from the</span>
-<span class="sd">        options by &#39;load_resources()&#39;. The warning is consequently reported</span>
+<span class="sd">        is invoked a first time when no model is loaded yet: enabling can't</span>
+<span class="sd">        be done and it's not an error. The models are then enabled from the</span>
+<span class="sd">        options by 'load_resources()'. The warning is consequently reported</span>
 <span class="sd">        only if some models were already loaded.</span>
 
 <span class="sd">        :param model_name: (str) model filename without path (model basename).</span>
 <span class="sd">        :param value: (bool) True to enable.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">enable_recognizer</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">get_nb_recognizers</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s2">&quot;Model </span><span class="si">{:s}</span><span class="s2"> can&#39;t be enabled.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model_name</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s2">"Model </span><span class="si">{:s}</span><span class="s2"> can't be enabled."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model_name</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -570,7 +570,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_nb_recognizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of initialized object recognizers for video.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of initialized object recognizers for video."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">get_nb_recognizers</span><span class="p">()</span>
 </code></pre></div>
 
@@ -590,7 +590,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_nb_enabled_recognizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of enabled object recognizers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of enabled object recognizers."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">get_nb_enabled_recognizers</span><span class="p">()</span>
 </code></pre></div>
 
@@ -610,7 +610,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_recognizer_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of all the initialized recognizers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of all the initialized recognizers."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">get_recognizer_names</span><span class="p">()</span>
 </code></pre></div>
 
@@ -630,7 +630,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_enabled_recognizer_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of all the initialized recognizers. &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of all the initialized recognizers. """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">get_enabled_recognizer_names</span><span class="p">()</span>
 </code></pre></div>
 
@@ -663,25 +663,25 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">image_face_detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the image, detect faces and write results.</span>
+<span class="w">    </span><span class="sd">"""Get the image, detect faces and write results.</span>
 
 <span class="sd">        :param image: (str or sppasImage) Image filename</span>
 <span class="sd">        :param output: (str) The output name for the image</span>
 
 <span class="sd">        :return: (list) the coordinates of all detected faces or created filenames</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sppasImage</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">image</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;portrait&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'portrait'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">to_portrait</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s2">&quot;Faces can&#39;t be scaled to portrait: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s2">"Faces can't be scaled to portrait: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
     <span class="n">coords</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_out_file_ext</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">out_format</span><span class="o">=</span><span class="s1">&#39;IMAGE&#39;</span><span class="p">)</span>
+        <span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_out_file_ext</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">out_format</span><span class="o">=</span><span class="s1">'IMAGE'</span><span class="p">)</span>
         <span class="n">new_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img_writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_output_pattern</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">new_files</span>
     <span class="k">return</span> <span class="n">coords</span>
@@ -719,20 +719,20 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the media filenames.</span>
+<span class="w">    </span><span class="sd">"""Return the media filenames.</span>
 
 <span class="sd">        :param input_files: (list)</span>
 <span class="sd">        :raise: NoInputError</span>
 <span class="sd">        :return: (str) Name of the media file</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">media_ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_extensions</span><span class="p">()</span>
     <span class="n">media</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
         <span class="n">fn</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">media</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fe</span> <span class="ow">in</span> <span class="n">media_ext</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">filename</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Neither a video nor an image was found.&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Neither a video nor an image was found.'</span><span class="p">)</span>
     <span class="k">raise</span> <span class="n">NoInputError</span>
 </code></pre></div>
 
@@ -765,16 +765,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on a single input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on a single input.</span>
 
 <span class="sd">        :param input_files: (list of str) Video or image file</span>
 <span class="sd">        :param output: (str) the output name</span>
 <span class="sd">        :returns: (list of sppasCoords) Coordinates of detected faces or filenames</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">media_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_image_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="s1">&#39;IMAGE&#39;</span><span class="p">])</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_video_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="s1">&#39;VIDEO&#39;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_image_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="s1">'IMAGE'</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_video_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="s1">'VIDEO'</span><span class="p">])</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="n">fn</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">media_file</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -806,11 +806,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
-    <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;-face&#39;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;portrait&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;-portrait&#39;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation uses in an output filename."""</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="s1">'-face'</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'portrait'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s1">'-portrait'</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -832,13 +832,13 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_input_extensions</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its input filename.</span>
+<span class="w">    </span><span class="sd">"""Extensions that the annotation expects for its input filename.</span>
 
 <span class="sd">        Priority is given to video files, then image files.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">out_ext</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;VIDEO&#39;</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">img_ext</span> <span class="ow">in</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;IMAGE&#39;</span><span class="p">):</span>
+<span class="sd">        """</span>
+    <span class="n">out_ext</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">'VIDEO'</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">img_ext</span> <span class="ow">in</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">'IMAGE'</span><span class="p">):</span>
         <span class="n">out_ext</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_ext</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">out_ext</span><span class="p">]</span>
 </code></pre></div>
@@ -851,7 +851,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

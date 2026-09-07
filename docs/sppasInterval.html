@@ -93,25 +93,25 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasInterval instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasInterval instance.</span>
 
 <span class="sd">    :param begin: (sppasPoint)</span>
 <span class="sd">    :param end: (sppasPoint)</span>
 
 <span class="sd">    Degenerated interval is forbidden, i.e. begin &gt; end.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasInterval</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="s1">'sppasPoint'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="s1">'sppasPoint'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_types</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">AnnDataEqTypeError</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_interval_bounds</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IntervalBoundsError</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">begin</span> <span class="o">&gt;=</span> <span class="n">end</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;begin (</span><span class="si">{!s:s}</span><span class="s1"> &gt;= end </span><span class="si">{!s:s}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'begin (</span><span class="si">{!s:s}</span><span class="s1"> &gt;= end </span><span class="si">{!s:s}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">=</span> <span class="n">begin</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">=</span> <span class="n">end</span>
 </code></pre></div>
@@ -141,13 +141,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set self members from another sppasInterval instance.</span>
+<span class="w">    </span><span class="sd">"""Set self members from another sppasInterval instance.</span>
 
 <span class="sd">        :param other: (sppasInterval)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasInterval&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasInterval'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span>
 </code></pre></div>
@@ -168,7 +168,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Overrides. Return True, because self represents an interval.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Overrides. Return True, because self represents an interval."""</span>
     <span class="k">return</span> <span class="kc">True</span>
 </code></pre></div>
 
@@ -188,7 +188,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of self.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a deep copy of self."""</span>
     <span class="k">return</span> <span class="n">sppasInterval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
 </code></pre></div>
 
@@ -208,7 +208,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the begin sppasPoint instance.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the begin sppasPoint instance."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span>
 </code></pre></div>
 
@@ -236,15 +236,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tp</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the begin of the interval to a new sppasPoint.</span>
+<span class="w">    </span><span class="sd">"""Set the begin of the interval to a new sppasPoint.</span>
 
 <span class="sd">        Attention: it is a reference assignment.</span>
 
 <span class="sd">        :param tp: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="s1">'sppasPoint'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_types</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">AnnDataEqTypeError</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_interval_bounds</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -268,7 +268,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the end sppasPoint instance.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the end sppasPoint instance."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span>
 </code></pre></div>
 
@@ -296,15 +296,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tp</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the end of the interval to a new sppasPoint.</span>
+<span class="w">    </span><span class="sd">"""Set the end of the interval to a new sppasPoint.</span>
 
 <span class="sd">        Attention: it is a reference assignment.</span>
 
 <span class="sd">        :param tp: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="s1">'sppasPoint'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="p">,</span> <span class="n">tp</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">AnnDataEqTypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="p">,</span> <span class="n">tp</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_interval_bounds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="p">,</span> <span class="n">tp</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -333,7 +333,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if point is the begin or the end of the interval.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if point is the begin or the end of the interval."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">==</span> <span class="n">point</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">==</span> <span class="n">point</span>
 </code></pre></div>
 
@@ -359,13 +359,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">combine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasInterval, the combination of two intervals.</span>
+<span class="w">    </span><span class="sd">"""Return a sppasInterval, the combination of two intervals.</span>
 
 <span class="sd">        :param other: (sppasInterval) the other interval to combine with.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasInterval&#39;</span><span class="p">)</span>
+        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasInterval'</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span> <span class="o">&gt;</span> <span class="n">other</span><span class="p">:</span>
         <span class="n">other</span><span class="p">,</span> <span class="bp">self</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">&lt;=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_begin</span><span class="p">():</span>
@@ -395,13 +395,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasInterval representing the union of two intervals.</span>
+<span class="w">    </span><span class="sd">"""Return a sppasInterval representing the union of two intervals.</span>
 
 <span class="sd">        :param other: (sppasInterval) the other interval to merge with.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasInterval&#39;</span><span class="p">)</span>
+        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasInterval'</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span> <span class="o">&gt;</span> <span class="n">other</span><span class="p">:</span>
         <span class="n">other</span><span class="p">,</span> <span class="bp">self</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">sppasInterval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">get_end</span><span class="p">())</span>
@@ -429,11 +429,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Overridden. Return the duration of the time interval.</span>
+<span class="w">    </span><span class="sd">"""Overridden. Return the duration of the time interval.</span>
 
 <span class="sd">        :returns: (sppasDuration) Duration and its vagueness.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
     <span class="n">vagueness</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -467,13 +467,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">middle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasPoint() at the middle of the time interval.</span>
+<span class="w">    </span><span class="sd">"""Return a sppasPoint() at the middle of the time interval.</span>
 
 <span class="sd">        To be tested.</span>
 
 <span class="sd">        :returns: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
     <span class="n">m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">duration</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span> <span class="o">/</span> <span class="mf">2.0</span>
     <span class="n">r</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">duration</span><span class="o">.</span><span class="n">get_margin</span><span class="p">())</span> <span class="o">/</span> <span class="mf">2.0</span>
@@ -506,13 +506,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">middle_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the middle value of the time interval.</span>
+<span class="w">    </span><span class="sd">"""Return the middle value of the time interval.</span>
 
 <span class="sd">        Return a float value even if points are integers.</span>
 
 <span class="sd">        :returns: (float) value.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
 </code></pre></div>
@@ -543,15 +543,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a radius value to begin and end points.</span>
+<span class="w">    </span><span class="sd">"""Set a radius value to begin and end points.</span>
 
 <span class="sd">        :param radius: (int or float)</span>
 <span class="sd">        :raise: ValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">&gt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">duration</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The radius value </span><span class="si">{r}</span><span class="s2"> can&#39;t be more than half-duration of the interval [</span><span class="si">{b}</span><span class="s2">;</span><span class="si">{e}</span><span class="s2">].&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">(),</span> <span class="n">e</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The radius value </span><span class="si">{r}</span><span class="s2"> can't be more than half-duration of the interval [</span><span class="si">{b}</span><span class="s2">;</span><span class="si">{e}</span><span class="s2">]."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">(),</span> <span class="n">e</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
 </code></pre></div>
@@ -582,12 +582,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shift the interval to a given delay.</span>
+<span class="w">    </span><span class="sd">"""Shift the interval to a given delay.</span>
 
 <span class="sd">        :param delay: (int, float) delay to shift bounds</span>
 <span class="sd">        :raise: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
 </code></pre></div>
@@ -642,12 +642,12 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_interval_bounds</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check bounds of a virtual interval.</span>
+<span class="w">    </span><span class="sd">"""Check bounds of a virtual interval.</span>
 
 <span class="sd">        :param begin: (sppasPoint)</span>
 <span class="sd">        :param end: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">():</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">begin</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -686,13 +686,13 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_types</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;True only if begin and end are both the same types of sppasPoint.</span>
+<span class="w">    </span><span class="sd">"""True only if begin and end are both the same types of sppasPoint.</span>
 
 <span class="sd">        :param begin: any kind of data</span>
 <span class="sd">        :param end: any kind of data</span>
 <span class="sd">        :returns: Boolean</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
         <span class="n">end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
@@ -727,7 +727,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;sppasInterval: [</span><span class="si">{!s:s}</span><span class="s1">,</span><span class="si">{!s:s}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_begin</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end</span><span class="p">())</span>
+    <span class="k">return</span> <span class="s1">'sppasInterval: [</span><span class="si">{!s:s}</span><span class="s1">,</span><span class="si">{!s:s}</span><span class="s1">]'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_begin</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end</span><span class="p">())</span>
 </code></pre></div>
 
     </details>
@@ -740,7 +740,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;[</span><span class="si">{!s:s}</span><span class="s1">,</span><span class="si">{!s:s}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_begin</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end</span><span class="p">())</span>
+    <span class="k">return</span> <span class="s1">'[</span><span class="si">{!s:s}</span><span class="s1">,</span><span class="si">{!s:s}</span><span class="s1">]'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_begin</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end</span><span class="p">())</span>
 </code></pre></div>
 
     </details>
@@ -765,13 +765,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the given data is contained in the interval.</span>
+<span class="w">    </span><span class="sd">"""Return True if the given data is contained in the interval.</span>
 
 <span class="sd">        :param other: (sppasInterval, sppasPoint, int, float)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="n">sppasInterval</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasInterval, sppasPoint, float, int&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasInterval, sppasPoint, float, int'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">&lt;=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">&lt;=</span> <span class="n">other</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span>
@@ -799,11 +799,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Equal.</span>
+<span class="w">    </span><span class="sd">"""Equal.</span>
 
 <span class="sd">        :param other: (sppasInterval) the other interval to compare with.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span>
@@ -831,11 +831,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;LowerThan.</span>
+<span class="w">    </span><span class="sd">"""LowerThan.</span>
 
 <span class="sd">        :param other: (sppasInterval, sppasPoint, float, int)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="n">sppasPoint</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">&lt;</span> <span class="n">other</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -865,11 +865,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;GreaterThan.</span>
+<span class="w">    </span><span class="sd">"""GreaterThan.</span>
 
 <span class="sd">        :param other: (sppasInterval, sppasPoint, float, int)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">&gt;</span> <span class="n">other</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -885,7 +885,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

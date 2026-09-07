@@ -90,15 +90,15 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">ipus</span><span class="p">(</span><span class="n">trs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with Inter-Pausal Units.</span>
+<span class="w">    </span><span class="sd">"""Return the tier with Inter-Pausal Units.</span>
 
 <span class="sd">        :param trs: (sppasTranscription)</span>
 <span class="sd">        :return: (sppasTier or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
         <span class="n">tier_name</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;ipu&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'ipu'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -132,14 +132,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">transcription</span><span class="p">(</span><span class="n">trs</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;transcription&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with orthographic transcription.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">transcription</span><span class="p">(</span><span class="n">trs</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">'transcription'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the tier with orthographic transcription.</span>
 
 <span class="sd">        :param trs: (sppasTranscription)</span>
 <span class="sd">        :param default: (str) default tier name for the orthographic transcription</span>
 <span class="sd">        :return: (sppasTier or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="n">trs</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">tier</span>
@@ -149,13 +149,13 @@ View Source
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
         <span class="n">tier_name</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;trans&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'trans'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">tier</span>
-        <span class="k">elif</span> <span class="s1">&#39;trs&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'trs'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">tier</span>
-        <span class="k">elif</span> <span class="s1">&#39;toe&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'toe'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">tier</span>
-        <span class="k">elif</span> <span class="s1">&#39;ortho&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'ortho'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -192,8 +192,8 @@ Priority is given to faked (i.e. without pattern).</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">tokenization</span><span class="p">(</span><span class="n">trs</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with tokenization.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tokenization</span><span class="p">(</span><span class="n">trs</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the tier with tokenization.</span>
 
 <span class="sd">        In case of EOT, several tiers with tokens are available.</span>
 <span class="sd">        Priority is given to faked (i.e. without pattern).</span>
@@ -202,28 +202,28 @@ View Source
 <span class="sd">        :param pattern: (str) Priority pattern</span>
 <span class="sd">        :return: (sppasTier or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">pattern</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
             <span class="n">tier_name</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">tier_name</span> <span class="ow">and</span> <span class="s1">&#39;token&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">tier_name</span> <span class="ow">and</span> <span class="s1">'token'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">tier</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;token&#39;</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'token'</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">trs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">tok_tier</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">std_tier</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
             <span class="n">tier_name</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            <span class="k">if</span> <span class="s1">&#39;align&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">'align'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">tier_name</span> <span class="o">==</span> <span class="s1">&#39;tokens&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">tier_name</span> <span class="o">==</span> <span class="s1">'tokens'</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">tier</span>
-            <span class="k">elif</span> <span class="s1">&#39;std&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span> <span class="ow">and</span> <span class="s1">&#39;token&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="s1">'std'</span> <span class="ow">in</span> <span class="n">tier_name</span> <span class="ow">and</span> <span class="s1">'token'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
                 <span class="n">std_tier</span> <span class="o">=</span> <span class="n">tier</span>
-            <span class="k">elif</span> <span class="s1">&#39;token&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="s1">'token'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
                 <span class="n">tok_tier</span> <span class="o">=</span> <span class="n">tier</span>
         <span class="k">if</span> <span class="n">std_tier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">std_tier</span>
@@ -261,26 +261,26 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">phonetization</span><span class="p">(</span><span class="n">trs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with phonetization.</span>
+<span class="w">    </span><span class="sd">"""Return the tier with phonetization.</span>
 
 <span class="sd">        :param trs: (sppasTranscription)</span>
 <span class="sd">        :return: (sppasTier or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">tier</span> <span class="o">=</span> <span class="n">trs</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;phones&#39;</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">tier</span> <span class="o">=</span> <span class="n">trs</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'phones'</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">tier</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
         <span class="n">tier_name</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;align&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'align'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="k">if</span> <span class="n">tier_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;phon&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tier_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'phon'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
         <span class="n">tier_name</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;align&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'align'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="k">if</span> <span class="s1">&#39;phon&#39;</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'phon'</span> <span class="ow">in</span> <span class="n">tier_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -308,13 +308,13 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">aligned_phones</span><span class="p">(</span><span class="n">trs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with time-aligned phonemes.</span>
+<span class="w">    </span><span class="sd">"""Return the tier with time-aligned phonemes.</span>
 
 <span class="sd">        :param trs: (sppasTier or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;align&#39;</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;phon&#39;</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'align'</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">'phon'</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -342,13 +342,13 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">aligned_tokens</span><span class="p">(</span><span class="n">trs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with time-aligned tokens.</span>
+<span class="w">    </span><span class="sd">"""Return the tier with time-aligned tokens.</span>
 
 <span class="sd">        :param trs: (sppasTier or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;align&#39;</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;token&#39;</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'align'</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">'token'</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -376,19 +376,19 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">aligned_syllables</span><span class="p">(</span><span class="n">trs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with time-aligned syllables.</span>
+<span class="w">    </span><span class="sd">"""Return the tier with time-aligned syllables.</span>
 
 <span class="sd">        :param trs: (sppasTier or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;align&#39;</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;syll&#39;</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'align'</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">'syll'</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Syllables&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'Syllables'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;Syll&#39;</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'Syll'</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -416,13 +416,13 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">aligned_lemmas</span><span class="p">(</span><span class="n">trs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with time-aligned lemmas.</span>
+<span class="w">    </span><span class="sd">"""Return the tier with time-aligned lemmas.</span>
 
 <span class="sd">        :param trs: (sppasTier or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;lemma&#39;</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'lemma'</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -456,20 +456,20 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pitch</span><span class="p">(</span><span class="n">trs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with pitch values.</span>
+<span class="w">    </span><span class="sd">"""Return the tier with pitch values.</span>
 
 <span class="sd">        :param trs: (sppasTranscription)</span>
 <span class="sd">        :return: (sppasTier or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;PitchHz&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'PitchHz'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;PitchTier&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'PitchTier'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;pitch&#39;</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'pitch'</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -503,14 +503,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">formants</span><span class="p">(</span><span class="n">trs</span><span class="p">,</span> <span class="n">formant_name</span><span class="o">=</span><span class="s1">&#39;F1&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with the values of the given formant.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">formants</span><span class="p">(</span><span class="n">trs</span><span class="p">,</span> <span class="n">formant_name</span><span class="o">=</span><span class="s1">'F1'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the tier with the values of the given formant.</span>
 
 <span class="sd">        :param trs: (sppasTranscription)</span>
-<span class="sd">        :param formant_name: (str) Name of the formant, i.e. &quot;F1&quot; or &quot;F2&quot;</span>
+<span class="sd">        :param formant_name: (str) Name of the formant, i.e. "F1" or "F2"</span>
 <span class="sd">        :return: (sppasTier or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">_tier</span> <span class="o">=</span> <span class="n">trs</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">formant_name</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">_tier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_tier</span>
@@ -549,17 +549,17 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pitch_anchors</span><span class="p">(</span><span class="n">trs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with pitch anchors, like momel result.</span>
+<span class="w">    </span><span class="sd">"""Return the tier with pitch anchors, like momel result.</span>
 
 <span class="sd">        :param trs: (sppasTranscription)</span>
 <span class="sd">        :return: (sppasTier or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;momel&#39;</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'momel'</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;anchors&#39;</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'anchors'</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">tier</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -572,7 +572,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

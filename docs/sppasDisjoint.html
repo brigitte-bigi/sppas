@@ -83,11 +83,11 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasDisjoint instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasDisjoint instance.</span>
 
 <span class="sd">    :param intervals: (list of sppasInterval)</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasDisjoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">intervals</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -119,17 +119,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set self members from another sppasDisjoint instance.</span>
+<span class="w">    </span><span class="sd">"""Set self members from another sppasDisjoint instance.</span>
 
 <span class="sd">        :param other: (sppasDisjoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasDisjoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_intervals</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">get_intervals</span><span class="p">())</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_intervals</span><span class="p">([</span><span class="n">other</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasDisjoint or sppasInterval&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasDisjoint or sppasInterval'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -148,7 +148,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_disjoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True because self is representing a disjoint intervals.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True because self is representing a disjoint intervals."""</span>
     <span class="k">return</span> <span class="kc">True</span>
 </code></pre></div>
 
@@ -168,7 +168,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of self.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a deep copy of self."""</span>
     <span class="n">intervals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_intervals</span><span class="p">():</span>
         <span class="n">intervals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
@@ -191,7 +191,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the first sppasPoint instance.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the first sppasPoint instance."""</span>
     <span class="k">return</span> <span class="nb">min</span><span class="p">((</span><span class="n">interval</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span><span class="p">))</span>
 </code></pre></div>
 
@@ -217,11 +217,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tp</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the begin sppasPoint instance to new sppasPoint.</span>
+<span class="w">    </span><span class="sd">"""Set the begin sppasPoint instance to new sppasPoint.</span>
 
 <span class="sd">        :param tp: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span> <span class="o">==</span> <span class="n">_min</span><span class="p">:</span>
@@ -244,7 +244,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the last sppasPoint instance.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the last sppasPoint instance."""</span>
     <span class="k">return</span> <span class="nb">max</span><span class="p">((</span><span class="n">interval</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span><span class="p">))</span>
 </code></pre></div>
 
@@ -270,11 +270,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tp</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the end sppasPoint instance to new sppasPoint.</span>
+<span class="w">    </span><span class="sd">"""Set the end sppasPoint instance to new sppasPoint.</span>
 
 <span class="sd">        :param tp: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span> <span class="o">==</span> <span class="n">_max</span><span class="p">:</span>
@@ -303,13 +303,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">append_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the sppasInterval at the given index.</span>
+<span class="w">    </span><span class="sd">"""Return the sppasInterval at the given index.</span>
 
 <span class="sd">        :param interval: (sppasInterval)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="s1">&#39;sppasInterval&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="s1">'sppasInterval'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
 </code></pre></div>
 
@@ -335,11 +335,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the sppasInterval at the given index.</span>
+<span class="w">    </span><span class="sd">"""Return the sppasInterval at the given index.</span>
 
 <span class="sd">        :param index: (int)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 </code></pre></div>
 
@@ -359,7 +359,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_intervals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of intervals.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of intervals."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span>
 </code></pre></div>
 
@@ -385,14 +385,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_intervals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new list of intervals.</span>
+<span class="w">    </span><span class="sd">"""Set a new list of intervals.</span>
 
 <span class="sd">        :param intervals: list of sppasInterval.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="s1">&#39;list&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="s1">'list'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append_interval</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
 </code></pre></div>
@@ -415,11 +415,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the sppasDuration.</span>
+<span class="w">    </span><span class="sd">"""Return the sppasDuration.</span>
 
-<span class="sd">        Make the sum of all interval&#39; durations.</span>
+<span class="sd">        Make the sum of all interval' durations.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">interval</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_intervals</span><span class="p">()))</span>
     <span class="n">vagueness</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">interval</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span><span class="o">.</span><span class="n">get_margin</span><span class="p">()</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_intervals</span><span class="p">()))</span>
     <span class="k">return</span> <span class="n">sppasDuration</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">vagueness</span><span class="p">)</span>
@@ -449,13 +449,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">middle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasPoint() at the middle of the time interval.</span>
+<span class="w">    </span><span class="sd">"""Return a sppasPoint() at the middle of the time interval.</span>
 
 <span class="sd">        To be tested.</span>
 
 <span class="sd">        :returns: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())</span> <span class="o">/</span> <span class="mf">2.0</span>
@@ -486,7 +486,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if point is a bound of an interval.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if point is a bound of an interval."""</span>
     <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">is_bound</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span><span class="p">])</span>
 </code></pre></div>
 
@@ -511,7 +511,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set radius value to all points.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Set radius value to all points."""</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span><span class="p">:</span>
         <span class="n">i</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
 </code></pre></div>
@@ -542,12 +542,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shift all the intervals to a given delay.</span>
+<span class="w">    </span><span class="sd">"""Shift all the intervals to a given delay.</span>
 
 <span class="sd">        :param delay: (int, float) delay to shift bounds</span>
 <span class="sd">        :raise: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__intervals</span><span class="p">:</span>
         <span class="n">i</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
 </code></pre></div>
@@ -578,7 +578,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;sppasDisjoint: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_intervals</span><span class="p">()]))</span>
+    <span class="k">return</span> <span class="s1">'sppasDisjoint: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_intervals</span><span class="p">()]))</span>
 </code></pre></div>
 
     </details>
@@ -604,12 +604,12 @@ Two disjoint instances are equals iff all its intervals are equals.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Equal is required to use &#39;==&#39; between 2 sppasDisjoint instances.</span>
+<span class="w">    </span><span class="sd">"""Equal is required to use '==' between 2 sppasDisjoint instances.</span>
 <span class="sd">        Two disjoint instances are equals iff all its intervals are equals.</span>
 
 <span class="sd">        :param other: (sppasDisjoint) is the other disjoint to compare with.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasDisjoint</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
@@ -639,11 +639,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;LowerThan is required to use &#39;&lt;&#39; between 2 sppasDisjoint instances.</span>
+<span class="w">    </span><span class="sd">"""LowerThan is required to use '&lt;' between 2 sppasDisjoint instances.</span>
 
 <span class="sd">        :param other: (sppasDisjoint) is the other disjoint to compare with.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="n">sppasPoint</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">other</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="n">sppasInterval</span><span class="p">,</span> <span class="n">sppasDisjoint</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -673,12 +673,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        GreaterThan is required to use &#39;&gt;&#39; between 2 TimeDisjoint instances.</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        GreaterThan is required to use '&gt;' between 2 TimeDisjoint instances.</span>
 
 <span class="sd">        :param other: (sppasDisjoint) is the other disjoint to compare with.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">other</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="n">sppasInterval</span><span class="p">,</span> <span class="n">sppasDisjoint</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -734,7 +734,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

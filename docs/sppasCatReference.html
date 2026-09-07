@@ -87,11 +87,11 @@ objects.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constructor of the sppasCatReference class.</span>
+<span class="w">    </span><span class="sd">"""Constructor of the sppasCatReference class.</span>
 
 <span class="sd">    :param identifier: (str) identifier for the object, the name of the reference</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasCatReference</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__attributs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__type</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -129,13 +129,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">att</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the attribute matching the given identifier or None.</span>
+<span class="w">    </span><span class="sd">"""Return the attribute matching the given identifier or None.</span>
 
 <span class="sd">        :param identifier: (str) Id of a sppasRefAttribute</span>
 <span class="sd">        :return: sppasRefAttribute or None if the identifier does not match</span>
 <span class="sd">        any attribute of this reference.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">su</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
     <span class="n">identifier</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">unicode</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attributs</span><span class="p">:</span>
@@ -173,15 +173,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">att_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">descr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append an attribute into the reference.</span>
+<span class="w">    </span><span class="sd">"""Append an attribute into the reference.</span>
 
 <span class="sd">        :param identifier: (str) Id of a sppasRefAttribute</span>
 <span class="sd">        :param value: (any type)</span>
-<span class="sd">        :param att_type: (str) One of &#39;str&#39;, &#39;bool&#39;, &#39;int&#39;, &#39;float&#39;. Default is &#39;str&#39;.</span>
+<span class="sd">        :param att_type: (str) One of 'str', 'bool', 'int', 'float'. Default is 'str'.</span>
 <span class="sd">        :param descr: (str) A text to describe the attribute</span>
 <span class="sd">        :raise: AttributeIdValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sppasRefAttribute</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">att_type</span><span class="p">,</span> <span class="n">descr</span><span class="p">))</span>
 </code></pre></div>
 
@@ -207,13 +207,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">att</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append an attribute into a reference.</span>
+<span class="w">    </span><span class="sd">"""Append an attribute into a reference.</span>
 
 <span class="sd">        :param att: (sppasRefAttribute)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">att</span><span class="p">,</span> <span class="n">sppasRefAttribute</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">att</span><span class="p">,</span> <span class="s1">&#39;sppasRefAttribute&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">att</span><span class="p">,</span> <span class="s1">'sppasRefAttribute'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">att</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">FileAddValueError</span><span class="p">(</span><span class="n">att</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__attributs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">att</span><span class="p">)</span>
@@ -241,11 +241,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete an attribute of this reference.</span>
+<span class="w">    </span><span class="sd">"""Delete an attribute of this reference.</span>
 
 <span class="sd">        :param identifier: (str, sppasRefAttribute) the attribute or its id to delete</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">sppasRefAttribute</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">identifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">att</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
@@ -280,16 +280,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the current state to a new one.</span>
+<span class="w">    </span><span class="sd">"""Set the current state to a new one.</span>
 
 <span class="sd">        :param state: (State)</span>
 <span class="sd">        :raises (sppasTypeError)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="s1">&#39;States&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="s1">'States'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -308,7 +308,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the type of the Reference.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Returns the type of the Reference."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__type</span>
 </code></pre></div>
 
@@ -338,12 +338,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ann_type</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the type of the Reference within the authorized ones.</span>
+<span class="w">    </span><span class="sd">"""Set the type of the Reference within the authorized ones.</span>
 
 <span class="sd">        :param ann_type: (int) One of the annots.types</span>
 <span class="sd">        :raise: sppasIndexError, sppasTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">ann_type</span> <span class="ow">in</span> <span class="n">annots</span><span class="o">.</span><span class="n">types</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__type</span> <span class="o">=</span> <span class="n">ann_type</span>
     <span class="k">else</span><span class="p">:</span>
@@ -383,7 +383,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">: </span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attributs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="si">{:s}</span><span class="s1">: </span><span class="si">{!s:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attributs</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -396,7 +396,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">: </span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attributs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="si">{:s}</span><span class="s1">: </span><span class="si">{!s:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attributs</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -448,11 +448,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">att</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return true if self contains the given attribute/identifier.</span>
+<span class="w">    </span><span class="sd">"""Return true if self contains the given attribute/identifier.</span>
 
 <span class="sd">        :param att: (str or sppasRefAttribute)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">att</span><span class="p">,</span> <span class="n">sppasRefAttribute</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">att</span> <span class="o">=</span> <span class="n">sppasRefAttribute</span><span class="p">(</span><span class="n">att</span><span class="p">)</span>
@@ -472,7 +472,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

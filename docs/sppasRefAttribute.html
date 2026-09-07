@@ -90,7 +90,7 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">att_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">descr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constructor of sppasRefAttribute.</span>
+<span class="w">    </span><span class="sd">"""Constructor of sppasRefAttribute.</span>
 
 <span class="sd">    :param identifier: (str) The identifier of the attribute</span>
 <span class="sd">    :param value: (str) String representing the value of the attribute</span>
@@ -98,12 +98,12 @@ View Source
 <span class="sd">    :param descr: (str) A string to describe what the attribute is</span>
 <span class="sd">    :raises: AttributeIdValueError</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__id</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__id</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__set_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">=</span> <span class="s1">&#39;str&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">=</span> <span class="s1">'str'</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_value_type</span><span class="p">(</span><span class="n">att_type</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__descr</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="n">descr</span><span class="p">)</span>
@@ -144,7 +144,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="n">identifier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the given identifier matches the requirements.</span>
+<span class="w">    </span><span class="sd">"""Return True if the given identifier matches the requirements.</span>
 
 <span class="sd">        An id should contain between 2 and 20 ASCII-characters only, i.e.</span>
 <span class="sd">        letters a-z, letters A-Z and numbers 0-9.</span>
@@ -152,7 +152,7 @@ View Source
 <span class="sd">        :param identifier: (str) Key to be validated</span>
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">21</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">return</span> <span class="kc">False</span>
@@ -174,7 +174,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the identifier of the attribute.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the identifier of the attribute."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id</span>
 </code></pre></div>
 
@@ -200,13 +200,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the current non-typed value.</span>
+<span class="w">    </span><span class="sd">"""Return the current non-typed value.</span>
 
 <span class="sd">        :returns: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">return</span> <span class="s1">''</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
 </code></pre></div>
 
@@ -232,11 +232,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new value.</span>
+<span class="w">    </span><span class="sd">"""Set a new value.</span>
 
 <span class="sd">        :param value: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">else</span><span class="p">:</span>
@@ -266,12 +266,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_value_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the current type of the value.</span>
+<span class="w">    </span><span class="sd">"""Return the current type of the value.</span>
 
-<span class="sd">        :returns: (str) Either: &quot;str&quot;, &quot;int&quot;, &quot;float&quot;, &quot;bool&quot;.</span>
+<span class="sd">        :returns: (str) Either: "str", "int", "float", "bool".</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;str&#39;</span>
+<span class="sd">        """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">'str'</span>
 </code></pre></div>
 
     </details>
@@ -300,23 +300,23 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_value_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">type_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new type for the current value.</span>
+<span class="w">    </span><span class="sd">"""Set a new type for the current value.</span>
 
 <span class="sd">        :param type_name: (str) the new type name</span>
 <span class="sd">        :raises: sppasTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">type_name</span> <span class="ow">in</span> <span class="n">sppasRefAttribute</span><span class="o">.</span><span class="n">VALUE_TYPES</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">=</span> <span class="n">type_name</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get_typed_value</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">AttributeTypeValueError</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">=</span> <span class="s1">&#39;str&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">=</span> <span class="s1">'str'</span>
             <span class="k">raise</span>
     <span class="k">elif</span> <span class="n">type_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">=</span> <span class="s1">&#39;str&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">=</span> <span class="s1">'str'</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">type_name</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sppasRefAttribute</span><span class="o">.</span><span class="n">VALUE_TYPES</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">type_name</span><span class="p">,</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sppasRefAttribute</span><span class="o">.</span><span class="n">VALUE_TYPES</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -341,19 +341,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_typed_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the current typed value.</span>
+<span class="w">    </span><span class="sd">"""Return the current typed value.</span>
 
 <span class="sd">        :returns: (any type) the current typed value.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">!=</span> <span class="s1">&#39;str&#39;</span><span class="p">:</span>
+<span class="sd">        """</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">!=</span> <span class="s1">'str'</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">==</span> <span class="s1">&#39;int&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">==</span> <span class="s1">'int'</span><span class="p">:</span>
                 <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__value</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">==</span> <span class="s1">'float'</span><span class="p">:</span>
                 <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__value</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span> <span class="o">==</span> <span class="s1">'bool'</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'true'</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AttributeTypeValueError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valuetype</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
@@ -383,13 +383,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return current description of the attribute.</span>
+<span class="w">    </span><span class="sd">"""Return current description of the attribute.</span>
 
 <span class="sd">        :returns: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__descr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">return</span> <span class="s1">''</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__descr</span>
 </code></pre></div>
 
@@ -415,11 +415,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new description of the attribute.</span>
+<span class="w">    </span><span class="sd">"""Set a new description of the attribute.</span>
 
 <span class="sd">        :param description: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__descr</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">else</span><span class="p">:</span>
@@ -460,7 +460,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">, </span><span class="si">{:s}</span><span class="s1">, </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_description</span><span class="p">())</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="si">{:s}</span><span class="s1">, </span><span class="si">{:s}</span><span class="s1">, </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_description</span><span class="p">())</span>
 </code></pre></div>
 
     </details>
@@ -473,7 +473,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">, </span><span class="si">{:s}</span><span class="s1">, </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_description</span><span class="p">())</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="si">{:s}</span><span class="s1">, </span><span class="si">{:s}</span><span class="s1">, </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_description</span><span class="p">())</span>
 </code></pre></div>
 
     </details>
@@ -533,7 +533,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

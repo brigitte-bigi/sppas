@@ -85,23 +85,23 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">media_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mime_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasMedia instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasMedia instance.</span>
 
 <span class="sd">    :param filename: (str) File name of the media</span>
 <span class="sd">    :param media_id: (str) Identifier of the media</span>
 <span class="sd">    :param mime_type: (str) Mime type of the media</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasMedia</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__url</span> <span class="o">=</span> <span class="n">filename</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__mime</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__content</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__mime</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__content</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="k">if</span> <span class="n">media_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">media_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="n">media_id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">mime_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__url</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">mime_type</span> <span class="o">=</span> <span class="s1">&#39;audio/basic&#39;</span>
+            <span class="n">mime_type</span> <span class="o">=</span> <span class="s1">'audio/basic'</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">mime_type</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__mime</span> <span class="o">=</span> <span class="n">mime_type</span>
@@ -126,7 +126,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the URL of the media.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the URL of the media."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__url</span>
 </code></pre></div>
 
@@ -146,7 +146,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_mime_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the mime type of the media.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the mime type of the media."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mime</span>
 </code></pre></div>
 
@@ -166,7 +166,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the content of the media.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the content of the media."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__content</span>
 </code></pre></div>
 
@@ -192,11 +192,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the content of the media.</span>
+<span class="w">    </span><span class="sd">"""Set the content of the media.</span>
 
 <span class="sd">        :param content: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__content</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 </code></pre></div>
 
@@ -226,7 +226,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;Media: id=</span><span class="si">{:s}</span><span class="s1"> url=</span><span class="si">{:s}</span><span class="s1"> mime=</span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mime</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'Media: id=</span><span class="si">{:s}</span><span class="s1"> url=</span><span class="si">{:s}</span><span class="s1"> mime=</span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mime</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -250,7 +250,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if other is strictly identical to self (even id).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if other is strictly identical to self (even id)."""</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasMedia</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__url</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_filename</span><span class="p">():</span>
@@ -287,7 +287,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

@@ -100,16 +100,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compare_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a score on how image coordinates are similar.</span>
+<span class="w">    </span><span class="sd">"""Return a score on how image coordinates are similar.</span>
 
 <span class="sd">        :return: (float) value between 0. and 1. The highest the closer.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Cant compare coordinates: coords1 is None&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Cant compare coordinates: coords1 is None'</span><span class="p">)</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Cant compare coordinates: coords2 is None&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Cant compare coordinates: coords2 is None'</span><span class="p">)</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
     <span class="n">area1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords1</span><span class="o">.</span><span class="n">area</span><span class="p">()</span>
     <span class="n">area2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords2</span><span class="o">.</span><span class="n">area</span><span class="p">()</span>
@@ -139,11 +139,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compare_areas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a score on how image areas are similar.</span>
+<span class="w">    </span><span class="sd">"""Return a score on how image areas are similar.</span>
 
 <span class="sd">        :return: (float) value between 0. and 1.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">area1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords1</span><span class="o">.</span><span class="n">area</span><span class="p">()</span>
     <span class="n">area2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords2</span><span class="o">.</span><span class="n">area</span><span class="p">()</span>
     <span class="n">min_area</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">area1</span><span class="p">,</span> <span class="n">area2</span><span class="p">)</span>
@@ -175,11 +175,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compare_sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a score on how image sizes are similar.</span>
+<span class="w">    </span><span class="sd">"""Return a score on how image sizes are similar.</span>
 
 <span class="sd">        :return: (float) value between 0. and 1.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">w_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords1</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords2</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
     <span class="n">w_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords1</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords2</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
     <span class="n">h_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords1</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords2</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
@@ -201,7 +201,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

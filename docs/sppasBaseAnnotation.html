@@ -90,7 +90,7 @@ results. If None, logs are redirected to the default logging system.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for any SPPAS automatic annotation.</span>
+<span class="w">    </span><span class="sd">"""Base class for any SPPAS automatic annotation.</span>
 
 <span class="sd">    Load default options/member values from a configuration file.</span>
 <span class="sd">    This file must be in paths.etc</span>
@@ -101,7 +101,7 @@ View Source
 <span class="sd">    :param config: (str) Name of the configuration file (json) with or without its path.</span>
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">log</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span> <span class="o">=</span> <span class="n">sppasAnnReport</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
@@ -136,11 +136,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_default_out_extensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the default output extension of each format.</span>
+<span class="w">    </span><span class="sd">"""Return the default output extension of each format.</span>
 
 <span class="sd">        The default extension of each format is defined in the config.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">filetype</span> <span class="ow">in</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">OUT_FORMATS</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="n">filetype</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">DEFAULT_EXTENSIONS</span><span class="p">[</span><span class="n">filetype</span><span class="p">]</span>
@@ -168,18 +168,18 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_out_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">out_format</span><span class="o">=</span><span class="s1">&#39;ANNOT&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the extension for a specific out format.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_out_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">out_format</span><span class="o">=</span><span class="s1">'ANNOT'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Set the extension for a specific out format.</span>
 
 <span class="sd">        :param extension: (str) File extension for created files</span>
 <span class="sd">        :param out_format: (str) One of ANNOT, IMAGE, VIDEO</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">all_ext</span> <span class="o">=</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_outformat_extensions</span><span class="p">(</span><span class="n">out_format</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">extension</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">extension</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">extension</span>
+    <span class="k">if</span> <span class="n">extension</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">extension</span> <span class="o">=</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">extension</span>
     <span class="k">if</span> <span class="n">extension</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_ext</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_ext</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Extension </span><span class="si">{}</span><span class="s1"> is not in the </span><span class="si">{}</span><span class="s1"> list.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">out_format</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Extension </span><span class="si">{}</span><span class="s1"> is not in the </span><span class="si">{}</span><span class="s1"> list.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">out_format</span><span class="p">))</span>
         <span class="k">raise</span> <span class="n">sppasExtensionWriteError</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="n">out_format</span><span class="p">]</span> <span class="o">=</span> <span class="n">extension</span>
 </code></pre></div>
@@ -214,8 +214,8 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_out_file_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">out_format</span><span class="o">=</span><span class="s1">&#39;ANNOT&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the output with an appropriate file extension.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_out_file_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">out_format</span><span class="o">=</span><span class="s1">'ANNOT'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the output with an appropriate file extension.</span>
 
 <span class="sd">        If the output has already an extension, it is not changed.</span>
 
@@ -223,12 +223,12 @@ View Source
 <span class="sd">        :param out_format: (str) One of ANNOT, IMAGE, VIDEO</span>
 <span class="sd">        :return: (str) filename</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fe</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="n">out_format</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1300</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1300</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output</span>
 </code></pre></div>
 
@@ -248,8 +248,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern that the annotation uses for its output filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern that the annotation uses for its output filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -274,17 +274,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;List of patterns that the annotation expects for the input filenames.</span>
+<span class="w">    </span><span class="sd">"""List of patterns that the annotation expects for the input filenames.</span>
 
 <span class="sd">        :return: (list of str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">p</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;inputpattern&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'inputpattern'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">opt</span><span class="p">])</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">''</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">p</span>
 </code></pre></div>
 
@@ -314,15 +314,15 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_input_extensions</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its input filename.</span>
+<span class="w">    </span><span class="sd">"""Extensions that the annotation expects for its input filename.</span>
 
 <span class="sd">        By default, the extensions are the annotated files. Can be overridden</span>
 <span class="sd">        to change the list of supported extensions: they must contain the dot.</span>
 
 <span class="sd">        :return: (list of list)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;ANNOT_ANNOT&#39;</span><span class="p">)]</span>
+<span class="sd">        """</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">'ANNOT_ANNOT'</span><span class="p">)]</span>
 </code></pre></div>
 
     </details>
@@ -342,7 +342,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_opt_input_extensions</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its optional input filename.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Extensions that the annotation expects for its optional input filename."""</span>
     <span class="k">return</span> <span class="p">()</span>
 </code></pre></div>
 
@@ -377,8 +377,8 @@ output pattern and the given output format (if any).</p>
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_out_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the output filename from the input one.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_out_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the output filename from the input one.</span>
 
 <span class="sd">        Output filename is created from the given filename, the annotation</span>
 <span class="sd">        output pattern and the given output format (if any).</span>
@@ -387,7 +387,7 @@ View Source
 <span class="sd">        :param output_format: (str) Extension of the output file with the dot</span>
 <span class="sd">        :returns: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">fn</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_patterns</span><span class="p">():</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">fn</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
@@ -426,8 +426,8 @@ output pattern and the given output format (if any).</p>
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_out_name_old</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the output filename from the input one.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_out_name_old</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the output filename from the input one.</span>
 
 <span class="sd">        Output filename is created from the given filename, the annotation</span>
 <span class="sd">        output pattern and the given output format (if any).</span>
@@ -436,7 +436,7 @@ View Source
 <span class="sd">        :param output_format: (str) Extension of the output file with the dot</span>
 <span class="sd">        :returns: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">fn</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">patterns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_patterns</span><span class="p">()</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -461,7 +461,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_config_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the JSON configuration file.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of the JSON configuration file."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span>
 </code></pre></div>
 
@@ -491,15 +491,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the option value of a given key or raise KeyError.</span>
+<span class="w">    </span><span class="sd">"""Return the option value of a given key or raise KeyError.</span>
 
 <span class="sd">        :param key: (str) Return the value of an option, or None.</span>
 <span class="sd">        :raises: KeyError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1"> is not a valid option for the automatic annotation.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">'</span><span class="si">{:s}</span><span class="s1"> is not a valid option for the automatic annotation.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -524,14 +524,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options of the annotation from a list of sppasOption().</span>
+<span class="w">    </span><span class="sd">"""Fix all options of the annotation from a list of sppasOption().</span>
 
 <span class="sd">        :param options: (list of sppasOption)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'pattern'</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -556,12 +556,12 @@ find it by using the references of the workspace (if any).</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of types this annotation can perform.</span>
+<span class="w">    </span><span class="sd">"""Return the list of types this annotation can perform.</span>
 
 <span class="sd">        If this annotation is expecting another file, the type allow to</span>
 <span class="sd">        find it by using the references of the workspace (if any).</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__types</span>
 </code></pre></div>
 
@@ -581,7 +581,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the linguistic resources.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Load the linguistic resources."""</span>
     <span class="k">pass</span>
 </code></pre></div>
 
@@ -622,7 +622,7 @@ output was given.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on a given input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on a given input.</span>
 
 <span class="sd">        The input is a list of files the annotation needs: audio, video,</span>
 <span class="sd">        transcription, pitch, etc.</span>
@@ -636,7 +636,7 @@ View Source
 <span class="sd">        :param kwargs: The results an annotation estimated on all its inputs</span>
 <span class="sd">        :returns: (sppasTranscription OR list of created file names)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div>
 
@@ -672,16 +672,16 @@ output file, and call the run method.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run_for_batch_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform the annotation on a file.</span>
+<span class="w">    </span><span class="sd">"""Perform the annotation on a file.</span>
 
-<span class="sd">        This method is called by &#39;batch_processing&#39;. It fixes the name of the</span>
+<span class="sd">        This method is called by 'batch_processing'. It fixes the name of the</span>
 <span class="sd">        output file, and call the run method.</span>
 
 <span class="sd">        :param input_files: (list of str) the required input(s) for a run</span>
 <span class="sd">        :param kwargs: The results an annotation estimated on all its inputs</span>
 <span class="sd">        :returns: created output file name or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">opt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -693,7 +693,7 @@ View Source
         <span class="n">new_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_files</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">'</span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_options</span> <span class="o">=</span> <span class="n">opt</span>
     <span class="k">return</span> <span class="n">new_files</span>
 </code></pre></div>
@@ -736,7 +736,7 @@ all checked files of a workspace in a single process.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">batch_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_names</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform the annotation on a bunch of files.</span>
+<span class="w">    </span><span class="sd">"""Perform the annotation on a bunch of files.</span>
 
 <span class="sd">        Can be used by an annotation manager to launch all the annotations on</span>
 <span class="sd">        all checked files of a workspace in a single process.</span>
@@ -751,7 +751,7 @@ View Source
 <span class="sd">        :param kwargs: The results an annotation estimated on all its inputs</span>
 <span class="sd">        :return: (list of str) List of created files</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_options</span><span class="p">()</span>
     <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_names</span><span class="p">)</span>
@@ -759,7 +759,7 @@ View Source
         <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">files_processed_success</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
-        <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">input_files</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">file_names</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fix_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
@@ -769,16 +769,16 @@ View Source
             <span class="bp">self</span><span class="o">.</span><span class="n">print_diagnosis</span><span class="p">(</span><span class="o">*</span><span class="n">inputs</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
                 <span class="n">progress</span><span class="o">.</span><span class="n">set_fraction</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">total</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
-                <span class="n">progress</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">inputs</span><span class="p">))</span>
+                <span class="n">progress</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">'</span><span class="si">{!s:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">inputs</span><span class="p">))</span>
             <span class="n">out_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_for_batch_processing</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">out_names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">out_names</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1306</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1306</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">files_processed_success</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">out_names</span> <span class="k">if</span> <span class="n">f</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">])</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">out_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">ok</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
-        <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">info</span><span class="p">(</span><span class="mi">9000</span><span class="p">,</span> <span class="s1">&#39;ui&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">files_processed_success</span><span class="p">),</span> <span class="n">total</span><span class="p">))</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">info</span><span class="p">(</span><span class="mi">9000</span><span class="p">,</span> <span class="s1">'ui'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">files_processed_success</span><span class="p">),</span> <span class="n">total</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">files_processed_success</span>
 </code></pre></div>
 
@@ -808,12 +808,12 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">transfer_metadata</span><span class="p">(</span><span class="n">from_trs</span><span class="p">,</span> <span class="n">to_trs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transfer the metadata from a sppasTranscription to another one.</span>
+<span class="w">    </span><span class="sd">"""Transfer the metadata from a sppasTranscription to another one.</span>
 
 <span class="sd">        The identifier is not copied and any already existing metadata is</span>
 <span class="sd">        not copied.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">from_trs</span><span class="o">.</span><span class="n">get_meta_keys</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">to_trs</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">to_trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">from_trs</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
@@ -841,16 +841,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the annotation name applied on a filename in the user log.</span>
+<span class="w">    </span><span class="sd">"""Print the annotation name applied on a filename in the user log.</span>
 
 <span class="sd">        :param filename: (str) Name of the file to annotate.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="p">:</span>
         <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1056</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1056</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1056</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1056</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -869,12 +869,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the list of options in the user log.</span>
+<span class="w">    </span><span class="sd">"""Print the list of options in the user log.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">': '</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39; ... </span><span class="si">{!s:s}</span><span class="s1">: </span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">' ... </span><span class="si">{!s:s}</span><span class="s1">: </span><span class="si">{!s:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
 </code></pre></div>
@@ -901,11 +901,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_diagnosis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">filenames</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the diagnosis of a list of files in the user report.</span>
+<span class="w">    </span><span class="sd">"""Print the diagnosis of a list of files in the user report.</span>
 
 <span class="sd">        :param filenames: (list) List of files.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -913,7 +913,7 @@ View Source
             <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
                 <span class="n">s</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">sppasDiagnosis</span><span class="o">.</span><span class="n">check_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1056</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: </span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1056</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="o">+</span> <span class="s1">': </span><span class="si">{!s:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 
@@ -955,7 +955,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_fix_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of input files.</span>
+<span class="w">    </span><span class="sd">"""Return a list of input files.</span>
 
 <span class="sd">        The given input files can be:</span>
 
@@ -965,9 +965,9 @@ View Source
 <span class="sd">        :param input_files: (str, list of str)</span>
 <span class="sd">        :returns: a list of files</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39; ******* A non-empty list of input files was expected.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">' ******* A non-empty list of input files was expected.'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_files</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">input_files</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">input_files</span>
@@ -1003,13 +1003,13 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">extensions</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a filename corresponding to one of the extensions.</span>
+<span class="w">    </span><span class="sd">"""Return a filename corresponding to one of the extensions.</span>
 
 <span class="sd">        :param filename: input file name</span>
 <span class="sd">        :param extensions: the list of expected extension</span>
 <span class="sd">        :returns: a file name of the first existing file with an expected extension or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">base_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">extensions</span><span class="p">:</span>
         <span class="n">ext_filename</span> <span class="o">=</span> <span class="n">base_name</span> <span class="o">+</span> <span class="n">ext</span>
@@ -1038,22 +1038,22 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix members from a configuration file.</span>
+<span class="w">    </span><span class="sd">"""Fix members from a configuration file.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">etc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Installation error: the file </span><span class="si">{:s}</span><span class="s1"> to configure the automatic annotations does not exist.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">'Installation error: the file </span><span class="si">{:s}</span><span class="s1"> to configure the automatic annotations does not exist.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">))</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg</span><span class="p">:</span>
         <span class="n">dict_cfg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">new_option</span> <span class="ow">in</span> <span class="n">dict_cfg</span><span class="p">[</span><span class="s1">&#39;options&#39;</span><span class="p">]:</span>
-        <span class="n">opt</span> <span class="o">=</span> <span class="n">sppasOption</span><span class="p">(</span><span class="n">new_option</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
-        <span class="n">opt</span><span class="o">.</span><span class="n">set_type</span><span class="p">(</span><span class="n">new_option</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
-        <span class="n">opt</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_option</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">new_option</span> <span class="ow">in</span> <span class="n">dict_cfg</span><span class="p">[</span><span class="s1">'options'</span><span class="p">]:</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="n">sppasOption</span><span class="p">(</span><span class="n">new_option</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">set_type</span><span class="p">(</span><span class="n">new_option</span><span class="p">[</span><span class="s1">'type'</span><span class="p">])</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_option</span><span class="p">[</span><span class="s1">'value'</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">dict_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__types</span> <span class="o">=</span> <span class="n">dict_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;anntype&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">annots</span><span class="o">.</span><span class="n">types</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">dict_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'name'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__types</span> <span class="o">=</span> <span class="n">dict_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'anntype'</span><span class="p">,</span> <span class="p">[</span><span class="n">annots</span><span class="o">.</span><span class="n">types</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
 </code></pre></div>
 
     </details>
@@ -1064,7 +1064,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

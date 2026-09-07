@@ -83,13 +83,13 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasLexMetric instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasLexMetric instance.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasLexMetric</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;lexmetric.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_separators</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;dummy&#39;</span><span class="p">]</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasLexMetric</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'lexmetric.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_separators</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'#'</span><span class="p">,</span> <span class="s1">'+'</span><span class="p">,</span> <span class="s1">'dummy'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -117,20 +117,20 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+<span class="w">    </span><span class="sd">"""Fix all options.</span>
 
 <span class="sd">        :param options: list of sppasOption instances</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;alt&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'alt'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_alt</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;tiername&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'tiername'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_tiername</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;separators&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'separators'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_segments_separators</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'pattern'</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -158,12 +158,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_alt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alt</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the alt option, used to estimate occ and rank.</span>
+<span class="w">    </span><span class="sd">"""Fix the alt option, used to estimate occ and rank.</span>
 
 <span class="sd">        :param alt: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;alt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">alt</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'alt'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">alt</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -188,12 +188,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_tiername</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the tiername option.</span>
+<span class="w">    </span><span class="sd">"""Fix the tiername option.</span>
 
 <span class="sd">        :param tier_name: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">tier_name</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">tier_name</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
 </code></pre></div>
 
     </details>
@@ -218,11 +218,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_segments_separators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the separators to create segments.</span>
+<span class="w">    </span><span class="sd">"""Fix the separators to create segments.</span>
 
 <span class="sd">        :param entry: (str) Entries separated by whitespace.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
     <span class="n">tg</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -259,28 +259,28 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">tier_to_segment_occ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create segment intervals and eval the number of occurrences.</span>
+<span class="w">    </span><span class="sd">"""Create segment intervals and eval the number of occurrences.</span>
 
 <span class="sd">        :param input_tier: (sppasTier)</span>
 <span class="sd">        :returns: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_separators</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">occ_ann</span> <span class="o">=</span> <span class="n">input_tier</span><span class="o">.</span><span class="n">export_to_intervals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_separators</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">occ_ann</span> <span class="o">=</span> <span class="n">input_tier</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">occ_ann</span><span class="o">.</span><span class="n">gen_id</span><span class="p">()</span>
-    <span class="n">occ_ann</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;LM-OccAnnInSegments&#39;</span><span class="p">)</span>
+    <span class="n">occ_ann</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">'LM-OccAnnInSegments'</span><span class="p">)</span>
     <span class="n">occ_lab</span> <span class="o">=</span> <span class="n">occ_ann</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">occ_lab</span><span class="o">.</span><span class="n">gen_id</span><span class="p">()</span>
-    <span class="n">occ_lab</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;LM-OccLabInSegments&#39;</span><span class="p">)</span>
+    <span class="n">occ_lab</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">'LM-OccLabInSegments'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">tg1</span><span class="p">,</span> <span class="n">tg2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">occ_ann</span><span class="p">,</span> <span class="n">occ_lab</span><span class="p">):</span>
         <span class="n">values_anns</span> <span class="o">=</span> <span class="n">input_tier</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tg1</span><span class="o">.</span><span class="n">get_lowest_localization</span><span class="p">(),</span> <span class="n">tg1</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">())</span>
-        <span class="n">tg1</span><span class="o">.</span><span class="n">set_labels</span><span class="p">([</span><span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values_anns</span><span class="p">)),</span> <span class="s1">&#39;int&#39;</span><span class="p">))])</span>
+        <span class="n">tg1</span><span class="o">.</span><span class="n">set_labels</span><span class="p">([</span><span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values_anns</span><span class="p">)),</span> <span class="s1">'int'</span><span class="p">))])</span>
         <span class="n">nbl</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">values_anns</span><span class="p">:</span>
             <span class="n">nbl</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">get_labels</span><span class="p">())</span>
-        <span class="n">tg2</span><span class="o">.</span><span class="n">set_labels</span><span class="p">([</span><span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">nbl</span><span class="p">),</span> <span class="s1">&#39;int&#39;</span><span class="p">))])</span>
+        <span class="n">tg2</span><span class="o">.</span><span class="n">set_labels</span><span class="p">([</span><span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">nbl</span><span class="p">),</span> <span class="s1">'int'</span><span class="p">))])</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">occ_ann</span><span class="p">,</span> <span class="n">occ_lab</span><span class="p">)</span>
 </code></pre></div>
 
@@ -306,18 +306,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the input tier from the inputs.</span>
+<span class="w">    </span><span class="sd">"""Return the input tier from the inputs.</span>
 
 <span class="sd">        :param input_files: (list)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="n">tier_spk</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">tier_spk</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">tier_spk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">tier_spk</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Tier with name &#39;</span><span class="si">{:s}</span><span class="s2">&#39; not found in input file.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">]))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">"Tier with name '</span><span class="si">{:s}</span><span class="s2">' not found in input file."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'tiername'</span><span class="p">]))</span>
     <span class="k">raise</span> <span class="n">NoTierInputError</span>
 </code></pre></div>
 
@@ -350,20 +350,20 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on an input.</span>
 
 <span class="sd">        :param input_files: (list of str) Time-aligned tokens, or other</span>
 <span class="sd">        :param output: (str) the output file name</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_tier</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
     <span class="n">ocrk</span> <span class="o">=</span> <span class="n">OccRank</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="n">occ_tier</span> <span class="o">=</span> <span class="n">ocrk</span><span class="o">.</span><span class="n">occ</span><span class="p">()</span>
     <span class="n">rank_tier</span> <span class="o">=</span> <span class="n">ocrk</span><span class="o">.</span><span class="n">rank</span><span class="p">()</span>
     <span class="n">sgmt_occ_ann_tier</span><span class="p">,</span> <span class="n">sgmt_occ_lab_tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tier_to_segment_occ</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;token_lexmetric_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'token_lexmetric_result_of'</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">occ_tier</span><span class="p">)</span>
     <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rank_tier</span><span class="p">)</span>
     <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sgmt_occ_ann_tier</span><span class="p">)</span>
@@ -395,8 +395,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-lexm&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation uses in an output filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="s1">'-lexm'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -407,7 +407,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

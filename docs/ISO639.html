@@ -66,15 +66,15 @@ corresponding ISO 639-1 codes and human-readable language names.</p>
 <h5>Example</h5>
 
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">iso</span> <span class="o">=</span> <span class="n">ISO639</span><span class="p">()</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">language_info</span> <span class="o">=</span> <span class="n">iso</span><span class="o">.</span><span class="n">get_language_info</span><span class="p">(</span><span class="s1">&#39;eng&#39;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">language_info</span> <span class="o">=</span> <span class="n">iso</span><span class="o">.</span><span class="n">get_language_info</span><span class="p">(</span><span class="s1">'eng'</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">language_info</span><span class="o">.</span><span class="n">iso639_1_code</span>
- <span class="o">&gt;</span> <span class="s1">&#39;en&#39;</span>
+ <span class="o">&gt;</span> <span class="s1">'en'</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">language_info</span><span class="o">.</span><span class="n">language_name</span>
- <span class="o">&gt;</span> <span class="s1">&#39;English&#39;</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">iso</span><span class="o">.</span><span class="n">get_language_info</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">)</span>
+ <span class="o">&gt;</span> <span class="s1">'English'</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">iso</span><span class="o">.</span><span class="n">get_language_info</span><span class="p">(</span><span class="s1">'xyz'</span><span class="p">)</span>
  <span class="o">&gt;</span> <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
  <span class="o">&gt;</span> <span class="o">...</span>
- <span class="o">&gt;</span> <span class="n">LanguageNotFoundError</span><span class="p">:</span> <span class="n">Language</span> <span class="n">code</span> <span class="s1">&#39;xyz&#39;</span> <span class="ow">not</span> <span class="n">found</span><span class="o">.</span>
+ <span class="o">&gt;</span> <span class="n">LanguageNotFoundError</span><span class="p">:</span> <span class="n">Language</span> <span class="n">code</span> <span class="s1">'xyz'</span> <span class="ow">not</span> <span class="n">found</span><span class="o">.</span>
 </code></pre></div>
 
     </article>
@@ -113,13 +113,13 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_language_info</span><span class="p">(</span><span class="n">iso639_3_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LanguageInfo</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the corresponding LanguageInfo object for a given ISO 639-3 code.</span>
+<span class="w">    </span><span class="sd">"""Return the corresponding LanguageInfo object for a given ISO 639-3 code.</span>
 
 <span class="sd">        :param iso639_3_code: (str) The 3-letter ISO 639-3 code for the language.</span>
 <span class="sd">        :return: (LanguageInfo) The corresponding LanguageInfo object.</span>
 <span class="sd">        :raises: ValueError: If the provided ISO 639-3 code is not found in the lookup table.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">iso639_3_code</span> <span class="o">=</span> <span class="n">iso639_3_code</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="n">language_info</span> <span class="o">=</span> <span class="n">ISO639</span><span class="o">.</span><span class="n">LANGUAGES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">iso639_3_code</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">language_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -135,7 +135,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

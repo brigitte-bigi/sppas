@@ -80,7 +80,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">HaarCascadeDetector</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="o">=</span> <span class="s1">&#39;.xml&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="o">=</span> <span class="s1">'.xml'</span>
 </code></pre></div>
 
     </details>
@@ -116,14 +116,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">normalize_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the normalized list of values.</span>
+<span class="w">    </span><span class="sd">"""Return the normalized list of values.</span>
 
 <span class="sd">        Use the Unity-based normalization, slightly adapted.</span>
 
 <span class="sd">        :param dataset: (list) List of float weight values</span>
 <span class="sd">        :returns: list of confidence scores</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_min_score</span><span class="p">()</span>
     <span class="n">b</span> <span class="o">=</span> <span class="mf">0.998</span>
     <span class="n">coeff</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
@@ -166,16 +166,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_set_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the detector with the given file.</span>
+<span class="w">    </span><span class="sd">"""Initialize the detector with the given file.</span>
 
 <span class="sd">        :param model: (str) Filename of the XML Haar Cascade file</span>
 <span class="sd">        :raises: Exception</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CascadeClassifier</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">cv2</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Loading the XML Haar Cascade model failed.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Loading the XML Haar Cascade model failed.'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">sppasError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
 </code></pre></div>
 
@@ -201,11 +201,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_detection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Determine the coordinates of the detected objects.</span>
+<span class="w">    </span><span class="sd">"""Determine the coordinates of the detected objects.</span>
 
 <span class="sd">        :param image: (sppasImage or numpy.ndarray)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">detections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__haar_detections</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">detections</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span>
@@ -264,7 +264,7 @@ detected objects. Returned detections are a tuple with 3 values:
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__haar_detections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">scale_factor</span><span class="o">=</span><span class="mf">1.06</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect objects using the Haar Cascade classifier.</span>
+<span class="w">    </span><span class="sd">"""Detect objects using the Haar Cascade classifier.</span>
 
 <span class="sd">        This classifier already delete overlapped detections and too small</span>
 <span class="sd">        detected objects. Returned detections are a tuple with 3 values:</span>
@@ -280,7 +280,7 @@ View Source
 <span class="sd">        :param scale_factor: (float) how much the image size is reduced at each image scale</span>
 <span class="sd">        :return: (numpy arrays)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">min_w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_min_ratio</span><span class="p">())</span>
     <span class="n">min_h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_min_ratio</span><span class="p">())</span>
@@ -288,7 +288,7 @@ View Source
         <span class="n">detections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="o">.</span><span class="n">detectMultiScale3</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">scaleFactor</span><span class="o">=</span><span class="n">scale_factor</span><span class="p">,</span> <span class="n">minNeighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">minSize</span><span class="o">=</span><span class="p">(</span><span class="n">min_w</span><span class="p">,</span> <span class="n">min_h</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">outputRejectLevels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">cv2</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-        <span class="k">raise</span> <span class="n">sppasError</span><span class="p">(</span><span class="s1">&#39;HaarCascadeClassifier detection failed: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="k">raise</span> <span class="n">sppasError</span><span class="p">(</span><span class="s1">'HaarCascadeClassifier detection failed: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">detections</span>
 </code></pre></div>
 
@@ -300,7 +300,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

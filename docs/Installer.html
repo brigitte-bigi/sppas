@@ -69,7 +69,7 @@ Then, the installation is launched with:</p>
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="k">class</span><span class="w"> </span><span class="nc">SubInstaller</span><span class="p">(</span><span class="n">Installer</span><span class="p">):</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="nb">super</span><span class="p">(</span><span class="n">SubInstaller</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span> <span class="o">=</span> <span class="n">Features</span><span class="p">(</span><span class="n">req</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">cmdos</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span> <span class="o">=</span> <span class="n">Features</span><span class="p">(</span><span class="n">req</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">cmdos</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">SubInstaller</span><span class="p">()</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
 </code></pre></div>
 
@@ -102,13 +102,13 @@ Then, the installation is launched with:</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new Installer instance. &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create a new Installer instance. """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__nb_steps</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_features</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__search_python_cmd</span><span class="p">()</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot; ... the &#39;installer&#39; is using the Python command: </span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_python</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">" ... the 'installer' is using the Python command: </span><span class="si">{:s}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_python</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">update_pip</span><span class="p">()</span>
 </code></pre></div>
 
@@ -137,11 +137,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the progress bar.</span>
+<span class="w">    </span><span class="sd">"""Set the progress bar.</span>
 
 <span class="sd">        :param progress: (BaseProcessProgress) The installation progress.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span> <span class="o">=</span> <span class="n">progress</span>
 </code></pre></div>
 
@@ -173,12 +173,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_fids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of feature identifiers.</span>
+<span class="w">    </span><span class="sd">"""Return the list of feature identifiers.</span>
 
 <span class="sd">        :param feat_type: (str) Only return features of the given type.</span>
 <span class="sd">        :returns: (list)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">feat_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">get_ids</span><span class="p">()</span>
     <span class="n">f</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -210,11 +210,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">feature_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the feature type: deps, lang, annot.</span>
+<span class="w">    </span><span class="sd">"""Return the feature type: deps, lang, annot.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">ft</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">feature_type</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ft</span>
 </code></pre></div>
@@ -242,12 +242,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the feature is enabled and/or set it.</span>
+<span class="w">    </span><span class="sd">"""Return True if the feature is enabled and/or set it.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :param value: (bool or None) Enable of disable the feature.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
@@ -274,12 +274,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">available</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the feature is available and/or set it.</span>
+<span class="w">    </span><span class="sd">"""Return True if the feature is available and/or set it.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :param value: (bool or None) Make the feature available or not.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
@@ -311,12 +311,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the long description of the feature.</span>
+<span class="w">    </span><span class="sd">"""Return the long description of the feature.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">description</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
 </code></pre></div>
 
@@ -348,12 +348,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">brief</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the brief description of the feature.</span>
+<span class="w">    </span><span class="sd">"""Return the brief description of the feature.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">brief</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
 </code></pre></div>
 
@@ -373,19 +373,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update_pip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the version of pip.</span>
+<span class="w">    </span><span class="sd">"""Update the version of pip.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Update pip, the package installer for Python:&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Update pip, the package installer for Python:'</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
-        <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">&#39; -m pip install --upgrade pip --break-system-packages&#39;</span><span class="p">)</span>
-        <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">&#39; -m pip install --upgrade pip&#39;</span><span class="p">)</span>
+        <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">' -m pip install --upgrade pip --break-system-packages'</span><span class="p">)</span>
+        <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">' -m pip install --upgrade pip'</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
-            <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">&#39; -m pip install --upgrade pip&#39;</span><span class="p">)</span>
-            <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">&#39; -m pip install --upgrade pip --break-system-packages&#39;</span><span class="p">)</span>
+            <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">' -m pip install --upgrade pip'</span><span class="p">)</span>
+            <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">' -m pip install --upgrade pip --break-system-packages'</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">sppasInstallationError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
 </code></pre></div>
@@ -419,7 +419,7 @@ feature can be enabled. It is currently True but it could be false...</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ckeck_pypis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the app config file for features depending on pip packages.</span>
+<span class="w">    </span><span class="sd">"""Update the app config file for features depending on pip packages.</span>
 
 <span class="sd">        CAUTION: it is supposed that if the PIP dependency is satisfied, the</span>
 <span class="sd">        feature can be enabled. It is currently True but it could be false...</span>
@@ -427,8 +427,8 @@ View Source
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :raises: sppasInstallationError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">get_ids</span><span class="p">(</span><span class="s1">&#39;deps&#39;</span><span class="p">):</span>
+<span class="sd">        """</span>
+    <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">get_ids</span><span class="p">(</span><span class="s1">'deps'</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">package</span><span class="p">,</span> <span class="n">version</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">pypi</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">cfg</span><span class="o">.</span><span class="n">set_feature</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_pypi</span><span class="p">(</span><span class="n">package</span><span class="p">))</span>
     <span class="n">cfg</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -464,14 +464,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">install</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Launch the installation process.</span>
+<span class="w">    </span><span class="sd">"""Launch the installation process.</span>
 
 <span class="sd">        None is used to install all feature types.</span>
 
 <span class="sd">        :param feat_type: (str or None) Install features of the given type.</span>
 <span class="sd">        :return: (list) Error messages.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__install</span><span class="p">(</span><span class="n">feat_type</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -503,21 +503,21 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">install_resource</span><span class="p">(</span><span class="n">web_url</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Install the given tar/zip file in the destination path of SPPAS.</span>
+<span class="w">    </span><span class="sd">"""Install the given tar/zip file in the destination path of SPPAS.</span>
 
 <span class="sd">        :param web_url: (str) URL of the repo directory</span>
 <span class="sd">        :param file_path: (str) Tar/Zip filename to download and install</span>
 <span class="sd">        :param destination: (str) Destination path</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">err</span><span class="p">,</span> <span class="n">tmp_file</span> <span class="o">=</span> <span class="n">Installer</span><span class="o">.</span><span class="n">download_resource</span><span class="p">(</span><span class="n">web_url</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">tmp_file</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tmp_file</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'zip'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">err</span> <span class="o">=</span> <span class="n">Installer</span><span class="o">.</span><span class="n">__unzip</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">tmp_file</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;tar&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">tmp_file</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'tar'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">err</span> <span class="o">=</span> <span class="n">Installer</span><span class="o">.</span><span class="n">__untar</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;Unsupported file extension for file </span><span class="si">{:s}</span><span class="s1">. Expected zip or tar.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">)</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="s1">'Unsupported file extension for file </span><span class="si">{:s}</span><span class="s1">. Expected zip or tar.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -549,17 +549,17 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">download_resource</span><span class="p">(</span><span class="n">web_url</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Install the given tar/zip file in the destination path of SPPAS.</span>
+<span class="w">    </span><span class="sd">"""Install the given tar/zip file in the destination path of SPPAS.</span>
 
 <span class="sd">        :param web_url: (str) URL of the repo directory</span>
 <span class="sd">        :param file_path: (str) Tar/Zip filename to download and install</span>
 <span class="sd">        :param destination: (str) Destination path</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">url</span> <span class="o">=</span> <span class="n">web_url</span> <span class="o">+</span> <span class="n">file_path</span>
-    <span class="n">url</span> <span class="o">+=</span> <span class="s1">&#39;/download&#39;</span> <span class="k">if</span> <span class="s1">&#39;sourceforge&#39;</span> <span class="ow">in</span> <span class="n">web_url</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Downloading resource from: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Installing it to: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">destination</span><span class="p">))</span>
+    <span class="n">url</span> <span class="o">+=</span> <span class="s1">'/download'</span> <span class="k">if</span> <span class="s1">'sourceforge'</span> <span class="ow">in</span> <span class="n">web_url</span> <span class="k">else</span> <span class="s1">''</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'Downloading resource from: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'Installing it to: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">destination</span><span class="p">))</span>
     <span class="n">tmp_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
     <span class="n">err</span> <span class="o">=</span> <span class="n">Installer</span><span class="o">.</span><span class="n">__download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">tmp_file</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">tmp_file</span><span class="p">)</span>
@@ -590,11 +590,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_search_package</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;To be overridden. Return True if package is already installed.</span>
+<span class="w">    </span><span class="sd">"""To be overridden. Return True if package is already installed.</span>
 
 <span class="sd">        :param package: (str) The system package to search.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div>
 
@@ -626,12 +626,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_install_package</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;To be overridden. Install package.</span>
+<span class="w">    </span><span class="sd">"""To be overridden. Install package.</span>
 
 <span class="sd">        :param package: (str) The system package to install.</span>
 <span class="sd">        :returns: False or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div>
 
@@ -658,12 +658,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_version_package</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">req_version</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;To be overridden. Return True if the package is up to date.</span>
+<span class="w">    </span><span class="sd">"""To be overridden. Return True if the package is up to date.</span>
 
 <span class="sd">        :param package: (str) The system package to search.</span>
 <span class="sd">        :param req_version: (str) The minimum version required.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div>
 
@@ -691,12 +691,12 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_need_update_package</span><span class="p">(</span><span class="n">stdout_show</span><span class="p">,</span> <span class="n">req_version</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;To be overridden. Return True if the package need to be updated.</span>
+<span class="w">    </span><span class="sd">"""To be overridden. Return True if the package need to be updated.</span>
 
 <span class="sd">        :param stdout_show: (str) The stdout of the command.</span>
 <span class="sd">        :param req_version: (str) The minimum version required.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div>
 
@@ -728,12 +728,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_update_package</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">req_version</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;To be overridden. Update package.</span>
+<span class="w">    </span><span class="sd">"""To be overridden. Update package.</span>
 
 <span class="sd">        :param package: (str) The system package to update.</span>
 <span class="sd">        :returns: False or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div>
 
@@ -759,19 +759,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_show_pypi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if given Pypi package is already installed.</span>
+<span class="w">    </span><span class="sd">"""Return True if given Pypi package is already installed.</span>
 
 <span class="sd">        :param package: (str) The pip package to search.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">&#39; -m pip show &#39;</span> <span class="o">+</span> <span class="n">package</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">' -m pip show '</span> <span class="o">+</span> <span class="n">package</span>
         <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
         <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Search pypi return status: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'Search pypi return status: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
         <span class="n">err</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">error</span><span class="p">()</span>
         <span class="n">stdout</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">out</span><span class="p">()</span>
-        <span class="n">stdout</span> <span class="o">=</span> <span class="n">stdout</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;b&#39;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">stdout</span> <span class="o">=</span> <span class="n">stdout</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"b''"</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -809,8 +809,8 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_pip_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the pip command line to install or update a package.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_pip_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the pip command line to install or update a package.</span>
 
 <span class="sd">        :param package: (str) The pip package to install or update</span>
 <span class="sd">        :param version: (str) The version constraint</span>
@@ -818,16 +818,16 @@ View Source
 <span class="sd">        :param args: (str) The arguments of the pip install command</span>
 <span class="sd">        :return: (str) The command to be executed</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">&#39; -m pip install&#39;</span>
+<span class="sd">        """</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">' -m pip install'</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">command</span> <span class="o">+=</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">args</span>
+        <span class="n">command</span> <span class="o">+=</span> <span class="s1">' '</span> <span class="o">+</span> <span class="n">args</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">options</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">command</span> <span class="o">+=</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">options</span>
-    <span class="n">command</span> <span class="o">+=</span> <span class="s2">&quot; &#39;&quot;</span> <span class="o">+</span> <span class="n">package</span> <span class="o">+</span> <span class="n">version</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span>
-    <span class="k">if</span> <span class="s1">&#39;env&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span><span class="p">:</span>
-        <span class="n">command</span> <span class="o">+=</span> <span class="s1">&#39; --user&#39;</span>
-    <span class="n">command</span> <span class="o">+=</span> <span class="s1">&#39; --no-warn-script-location&#39;</span>
+        <span class="n">command</span> <span class="o">+=</span> <span class="s1">' '</span> <span class="o">+</span> <span class="n">options</span>
+    <span class="n">command</span> <span class="o">+=</span> <span class="s2">" '"</span> <span class="o">+</span> <span class="n">package</span> <span class="o">+</span> <span class="n">version</span> <span class="o">+</span> <span class="s2">"'"</span>
+    <span class="k">if</span> <span class="s1">'env'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">+=</span> <span class="s1">' --user'</span>
+    <span class="n">command</span> <span class="o">+=</span> <span class="s1">' --no-warn-script-location'</span>
     <span class="k">return</span> <span class="n">command</span>
 </code></pre></div>
 
@@ -863,21 +863,21 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_install_pypi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Install a Python Pypi package.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_install_pypi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Install a Python Pypi package.</span>
 
 <span class="sd">        :param package: (str) The pip package to install</span>
 <span class="sd">        :param version: (str) The version constraint</span>
 <span class="sd">        :raises: sppasInstallationError</span>
 <span class="sd">        :return: (str) Error message or empty string</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">&#39; -m pip cache purge&#39;</span>
+<span class="sd">        """</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">' -m pip cache purge'</span>
     <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
     <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;python pip cache purge return status: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Try to install the stable version of </span><span class="si">{:s}</span><span class="s1"> python package.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package</span><span class="p">))</span>
-    <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pip_command</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="s1">&#39;--only-binary=:all:&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'python pip cache purge return status: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Try to install the stable version of </span><span class="si">{:s}</span><span class="s1"> python package.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package</span><span class="p">))</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pip_command</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="s1">'--only-binary=:all:'</span><span class="p">)</span>
     <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
     <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
     <span class="n">err</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">error</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
@@ -886,21 +886,21 @@ View Source
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">options</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;An error occurred when installing: </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> (stable)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">))</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The stable package can&#39;t be installed from the official python package repository: </span><span class="si">{:s}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">)))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'An error occurred when installing: </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> (stable)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"The stable package can't be installed from the official python package repository: </span><span class="si">{:s}</span><span class="s2">."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">)))</span>
             <span class="n">err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_install_prerelease_pypi</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The following error occurred: &#39;</span> <span class="o">+</span> <span class="n">err</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot; ... but we&#39;ll attempt another way to install the package:&quot;</span><span class="p">)</span>
-            <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">&#39; -m pip cache purge&#39;</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'The following error occurred: '</span> <span class="o">+</span> <span class="n">err</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">" ... but we'll attempt another way to install the package:"</span><span class="p">)</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">' -m pip cache purge'</span>
             <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
             <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39; ... ... python pip cache purge return status: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">' ... ... python pip cache purge return status: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The following error occurred: &#39;</span> <span class="o">+</span> <span class="n">err</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot; ... but we&#39;ll attempt a last way to install the package:&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'The following error occurred: '</span> <span class="o">+</span> <span class="n">err</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">" ... but we'll attempt a last way to install the package:"</span><span class="p">)</span>
                 <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pip_command</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
                 <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
                 <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
@@ -909,12 +909,12 @@ View Source
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The following error occurred: &#39;</span> <span class="o">+</span> <span class="n">err</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'The following error occurred: '</span> <span class="o">+</span> <span class="n">err</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_version_pypi</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">sppasInstallationError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">err</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -946,8 +946,8 @@ stable package.</p>
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_install_prerelease_pypi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Install a pre-release version of a Python Pypi package.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_install_prerelease_pypi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Install a pre-release version of a Python Pypi package.</span>
 
 <span class="sd">        A pre-release is an alpha or beta version, not already released in a</span>
 <span class="sd">        stable package.</span>
@@ -956,13 +956,13 @@ View Source
 <span class="sd">        :param version: (str) The version constraint</span>
 <span class="sd">        :raises: sppasInstallationError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">&#39; -m pip cache purge&#39;</span>
+<span class="sd">        """</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">' -m pip cache purge'</span>
     <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
     <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;python pip cache purge return status: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Try to install a pre-build version of </span><span class="si">{:s}</span><span class="s1"> python package.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package</span><span class="p">))</span>
-    <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pip_command</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="s1">&#39;--pre&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'python pip cache purge return status: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Try to install a pre-build version of </span><span class="si">{:s}</span><span class="s1"> python package.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package</span><span class="p">))</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pip_command</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="s1">'--pre'</span><span class="p">)</span>
     <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
     <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
     <span class="n">err</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">error</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
@@ -974,7 +974,7 @@ View Source
             <span class="k">raise</span> <span class="n">sppasInstallationError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">err</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -1000,17 +1000,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_version_pypi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">req_version</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns True if package is up-to-date.</span>
+<span class="w">    </span><span class="sd">"""Returns True if package is up-to-date.</span>
 
 <span class="sd">        :param package: (str) The pip package to search.</span>
 <span class="sd">        :param req_version: (str) The minimum version required.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">&#39; -m pip show &#39;</span> <span class="o">+</span> <span class="n">package</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">' -m pip show '</span> <span class="o">+</span> <span class="n">package</span>
         <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
         <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Version pypi return status: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'Version pypi return status: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
         <span class="n">err</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">error</span><span class="p">()</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">out</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
@@ -1044,35 +1044,35 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_need_update_pypi</span><span class="p">(</span><span class="n">stdout_show</span><span class="p">,</span> <span class="n">req_version</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the package needs to be updated.</span>
+<span class="w">    </span><span class="sd">"""Return True if the package needs to be updated.</span>
 
 <span class="sd">        :param stdout_show: (str) The stdout of the command.</span>
 <span class="sd">        :param req_version: (str) The minimum version required.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">stdout_show</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">stdout_show</span><span class="p">)</span>
     <span class="n">req_version</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">req_version</span><span class="p">)</span>
-    <span class="n">version</span> <span class="o">=</span> <span class="n">stdout_show</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">r</span><span class="se">\\</span><span class="s1">n&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">v</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">stdout_show</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\\</span><span class="s1">r</span><span class="se">\\</span><span class="s1">n'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">version</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">letter</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">'.'</span><span class="p">:</span>
                 <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">' '</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="n">v</span> <span class="o">+=</span> <span class="n">letter</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">break</span>
-    <span class="n">req_version</span> <span class="o">=</span> <span class="n">req_version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">maxsplit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">req_version</span> <span class="o">=</span> <span class="n">req_version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">';'</span><span class="p">,</span> <span class="n">maxsplit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">comparator</span> <span class="o">=</span> <span class="n">req_version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">comparator</span> <span class="o">+=</span> <span class="s1">&#39;=&#39;</span>
+    <span class="n">comparator</span> <span class="o">+=</span> <span class="s1">'='</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="n">v</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
     <span class="n">version</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">req_version</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">comparator</span> <span class="o">==</span> <span class="s1">&#39;&gt;=&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">comparator</span> <span class="o">==</span> <span class="s1">'&gt;='</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">version</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The comparator: &#39;</span> <span class="o">+</span> <span class="n">comparator</span> <span class="o">+</span> <span class="s1">&#39; does not refer to a valid comparator&#39;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'The comparator: '</span> <span class="o">+</span> <span class="n">comparator</span> <span class="o">+</span> <span class="s1">' does not refer to a valid comparator'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -1102,24 +1102,24 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_update_pypi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update package.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_update_pypi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Update package.</span>
 
 <span class="sd">        :param package: (str) The pip package to update.</span>
 <span class="sd">        :param version: (str) The version constraint</span>
 <span class="sd">        :param options: (str) The options of the package, like an index url</span>
 <span class="sd">        :raises: sppasInstallationError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">&#39; -m pip cache purge&#39;</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_python</span> <span class="o">+</span> <span class="s1">' -m pip cache purge'</span>
         <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
         <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;python pip cache purge return status: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pip_command</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="s1">&#39;-U&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'python pip cache purge return status: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pip_command</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="s1">'-U'</span><span class="p">)</span>
         <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
         <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Update pypi return status: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'Update pypi return status: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">sppasInstallationError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
     <span class="n">err</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">error</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
@@ -1131,7 +1131,7 @@ View Source
             <span class="k">raise</span> <span class="n">sppasInstallationError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">err</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -1153,52 +1153,52 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__search_python_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for a valid python command. Raise SystemError if not found.&quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Search for a &#39;python&#39; command that this installer can launch...&quot;</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ... Try: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">"""Search for a valid python command. Raise SystemError if not found."""</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Search for a 'python' command that this installer can launch..."</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ... Try: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">))</span>
     <span class="n">command</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">)</span>
-    <span class="n">command</span> <span class="o">+=</span> <span class="s2">&quot; -c &#39;import sys; print(sys.version_info.major)&#39; &quot;</span>
+    <span class="n">command</span> <span class="o">+=</span> <span class="s2">" -c 'import sys; print(sys.version_info.major)' "</span>
     <span class="n">pyprocess</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">pyprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">pyprocess</span><span class="o">.</span><span class="n">out</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;b&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">pyprocess</span><span class="o">.</span><span class="n">out</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"b'"</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Command returned: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Command returned: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">quote</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-    <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;python3 -c &#39;import sys; print(sys.version_info.major)&#39; &quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ... Try: python3&#39;</span><span class="p">)</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="s2">"python3 -c 'import sys; print(sys.version_info.major)' "</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ... Try: python3'</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">pyprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">pyprocess</span><span class="o">.</span><span class="n">out</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;b&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"b'"</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Command returned: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Command returned: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">pyversion</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">pyversion</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="k">return</span> <span class="s1">&#39;python3&#39;</span>
+                <span class="k">return</span> <span class="s1">'python3'</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-    <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;python -c &#39;import sys; print(sys.version_info.major)&#39; &quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ... Try: python&#39;</span><span class="p">)</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="s2">"python -c 'import sys; print(sys.version_info.major)' "</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ... Try: python'</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">pyprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">pyprocess</span><span class="o">.</span><span class="n">out</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;b&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">pyprocess</span><span class="o">.</span><span class="n">out</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"b'"</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Command returned: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Command returned: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">pyversion</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">pyversion</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="k">return</span> <span class="s1">&#39;python&#39;</span>
+                <span class="k">return</span> <span class="s1">'python'</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-    <span class="k">raise</span> <span class="ne">SystemError</span><span class="p">(</span><span class="s1">&#39;No valid python command can be invoked by the installer system.&#39;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">SystemError</span><span class="p">(</span><span class="s1">'No valid python command can be invoked by the installer system.'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -1231,58 +1231,58 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__install</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Really process the installation.</span>
+<span class="w">    </span><span class="sd">"""Really process the installation.</span>
 
 <span class="sd">        None is used to install all feature types.</span>
 
 <span class="sd">        :param feat_type: (str or None) Install features of the given type.</span>
 <span class="sd">        :return: (list) Error messages.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">errors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__nb_steps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">get_ids</span><span class="p">(</span><span class="n">feat_type</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="n">fid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">get_ids</span><span class="p">(</span><span class="n">feat_type</span><span class="p">)):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__pheader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__message</span><span class="p">(</span><span class="s1">&#39;beginning_feature&#39;</span><span class="p">,</span> <span class="n">fid</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__pheader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__message</span><span class="p">(</span><span class="s1">'beginning_feature'</span><span class="p">,</span> <span class="n">fid</span><span class="p">))</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">&#39;available_false&#39;</span>
+            <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">'available_false'</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">feature_type</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;deps&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">feature_type</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'deps'</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">feature_installed</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
                     <span class="n">cfg</span><span class="o">.</span><span class="n">set_feature</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-            <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">&#39;enable_false&#39;</span>
+            <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">'enable_false'</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">fid_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__install_feature</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fid_output</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Installation of feature </span><span class="si">{}</span><span class="s1"> returned information message(s): &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s1">'Installation of feature </span><span class="si">{}</span><span class="s1"> returned information message(s): '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
                     <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fid_output</span><span class="p">)</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span> <span class="o">+</span> <span class="n">fid_output</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">sppasInstallationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-                <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">&#39;install_failed&#39;</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">feature_type</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;deps&#39;</span><span class="p">:</span>
+                <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">'install_failed'</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">feature_type</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'deps'</span><span class="p">:</span>
                     <span class="n">cfg</span><span class="o">.</span><span class="n">set_feature</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
                 <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-                <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">&#39;install_failed&#39;</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Installation of feature </span><span class="si">{}</span><span class="s1"> is not implemented yet for this os.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
+                <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">'install_failed'</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s1">'Installation of feature </span><span class="si">{}</span><span class="s1"> is not implemented yet for this os.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
                 <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-                <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">&#39;install_failed&#39;</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;An un-expected error occurred: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">'install_failed'</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s1">'An un-expected error occurred: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
                 <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
                 <span class="n">cfg</span><span class="o">.</span><span class="n">set_feature</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-                <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">&#39;install_success&#39;</span>
+                <span class="n">pmesg</span> <span class="o">=</span> <span class="s1">'install_success'</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nb_steps</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pupdate</span><span class="p">(</span><span class="n">pmesg</span><span class="p">,</span> <span class="n">fid</span><span class="p">)</span>
     <span class="n">cfg</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -1310,12 +1310,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__install_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Install the given feature depending on its type.</span>
+<span class="w">    </span><span class="sd">"""Install the given feature depending on its type.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">ft</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">feature_type</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
     <span class="n">out_msg</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">&#39;deps&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">'deps'</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">out_install</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__install_packages</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_install</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -1343,16 +1343,16 @@ View Source
             <span class="n">out_install</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__install_cmd</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_install</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">out_msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_install</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">&#39;lang&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">'lang'</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__install_lang</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">&#39;annot&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">'annot'</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__install_annot</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">&#39;spin&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">'spin'</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__install_spin</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="n">sppasInstallationError</span><span class="p">(</span><span class="s1">&#39;Unknown feature type </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_msg</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasInstallationError</span><span class="p">(</span><span class="s1">'Unknown feature type </span><span class="si">{}</span><span class="s1">.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="se">\n\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_msg</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -1381,17 +1381,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__install_lang</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Download, unzip and install resources for a given language.</span>
+<span class="w">    </span><span class="sd">"""Download, unzip and install resources for a given language.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :raises: sppasInstallationError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__pmessage</span><span class="p">(</span><span class="s1">&#39;Download, unzip and install linguistic resources for </span><span class="si">{}</span><span class="s1"> language&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__pmessage</span><span class="p">(</span><span class="s1">'Download, unzip and install linguistic resources for </span><span class="si">{}</span><span class="s1"> language'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="n">url</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">url_lang_resources</span>
-    <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">url</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span>
-    <span class="n">Installer</span><span class="o">.</span><span class="n">install_resource</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">lang</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.zip&#39;</span><span class="p">,</span> <span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">+=</span> <span class="s1">'/'</span>
+    <span class="n">Installer</span><span class="o">.</span><span class="n">install_resource</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">lang</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'.zip'</span><span class="p">,</span> <span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -1420,17 +1420,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__install_annot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Download, unzip and install resources for a given annotation.</span>
+<span class="w">    </span><span class="sd">"""Download, unzip and install resources for a given annotation.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :raises: sppasInstallationError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__pmessage</span><span class="p">(</span><span class="s1">&#39;Download, unzip and install resources for </span><span class="si">{}</span><span class="s1"> annotation&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__pmessage</span><span class="p">(</span><span class="s1">'Download, unzip and install resources for </span><span class="si">{}</span><span class="s1"> annotation'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="n">url</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">url_annot_resources</span>
-    <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">url</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span>
-    <span class="n">Installer</span><span class="o">.</span><span class="n">install_resource</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">annot</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.tar&#39;</span><span class="p">,</span> <span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">+=</span> <span class="s1">'/'</span>
+    <span class="n">Installer</span><span class="o">.</span><span class="n">install_resource</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">annot</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'.tar'</span><span class="p">,</span> <span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -1472,7 +1472,7 @@ resources directory defined by paths.resources.
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__install_spin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Install a spin-off from its zip archive with targeted folders.</span>
+<span class="w">    </span><span class="sd">"""Install a spin-off from its zip archive with targeted folders.</span>
 
 <span class="sd">        Expected archive structure:</span>
 <span class="sd">            - sppas/...     [expected]</span>
@@ -1480,45 +1480,45 @@ View Source
 <span class="sd">        Any other entry (file or folder) is ignored.</span>
 
 <span class="sd">        Behavior:</span>
-<span class="sd">            - All entries under &quot;sppas/&quot; are extracted into the spin-off</span>
+<span class="sd">            - All entries under "sppas/" are extracted into the spin-off</span>
 <span class="sd">              installation directory (paths.basedir or equivalent).</span>
-<span class="sd">            - All entries under &quot;resources/&quot; are extracted into the global</span>
+<span class="sd">            - All entries under "resources/" are extracted into the global</span>
 <span class="sd">              resources directory defined by paths.resources.</span>
-<span class="sd">            - If the archive contains only &quot;sppas/&quot;, it is installed normally.</span>
+<span class="sd">            - If the archive contains only "sppas/", it is installed normally.</span>
 <span class="sd">            - No other top-level directories are supported.</span>
 
 <span class="sd">        :param fid: (str) Identifier of the spin-off archive to install.</span>
 <span class="sd">        :raises: sppasInstallationError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__pmessage</span><span class="p">(</span><span class="s1">&#39;Download, unzip and install spin-off </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__pmessage</span><span class="p">(</span><span class="s1">'Download, unzip and install spin-off </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
     <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">spin_url</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">url</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span>
-    <span class="n">_file_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">fid</span><span class="p">),</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">spin_version</span><span class="p">(</span><span class="n">fid</span><span class="p">),</span> <span class="s1">&#39;.zip&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">+=</span> <span class="s1">'/'</span>
+    <span class="n">_file_path</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">fid</span><span class="p">),</span> <span class="s1">'-'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">spin_version</span><span class="p">(</span><span class="n">fid</span><span class="p">),</span> <span class="s1">'.zip'</span><span class="p">])</span>
     <span class="n">err</span><span class="p">,</span> <span class="n">tmp_file</span> <span class="o">=</span> <span class="n">Installer</span><span class="o">.</span><span class="n">download_resource</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">_file_path</span><span class="p">,</span> <span class="n">paths</span><span class="o">.</span><span class="n">basedir</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">sppasInstallationError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zf</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">zf</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">zf</span><span class="o">.</span><span class="n">infolist</span><span class="p">():</span>
                 <span class="n">name</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">filename</span>
-                <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'/'</span><span class="p">):</span>
                     <span class="k">continue</span>
-                <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;resources/&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'resources/'</span><span class="p">):</span>
                     <span class="n">target_root</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">resources</span>
-                    <span class="n">relative_path</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s1">&#39;resources/&#39;</span><span class="p">):]</span>
-                <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;sppas/&#39;</span><span class="p">):</span>
+                    <span class="n">relative_path</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s1">'resources/'</span><span class="p">):]</span>
+                <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'sppas/'</span><span class="p">):</span>
                     <span class="n">target_root</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">sppas</span>
-                    <span class="n">relative_path</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s1">&#39;sppas/&#39;</span><span class="p">):]</span>
+                    <span class="n">relative_path</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s1">'sppas/'</span><span class="p">):]</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Spin-off </span><span class="si">{</span><span class="n">fid</span><span class="si">}</span><span class="s2">. Ignored entry because outside &#39;sppas/&#39; or &#39;resources/&#39;: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Spin-off </span><span class="si">{</span><span class="n">fid</span><span class="si">}</span><span class="s2">. Ignored entry because outside 'sppas/' or 'resources/': </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                     <span class="k">continue</span>
-                <span class="k">if</span> <span class="n">relative_path</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">relative_path</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
                     <span class="k">continue</span>
                 <span class="n">target_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">target_root</span><span class="p">,</span> <span class="n">relative_path</span><span class="p">)</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">target_path</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="k">with</span> <span class="n">zf</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">target_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">zf</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">target_path</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
                     <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
     <span class="k">except</span> <span class="n">sppasInstallationError</span><span class="p">:</span>
         <span class="k">raise</span>
@@ -1559,42 +1559,42 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">__download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">tmp_file</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Download the resource at given url and save into the tmp_file.</span>
+<span class="w">    </span><span class="sd">"""Download the resource at given url and save into the tmp_file.</span>
 
 <span class="sd">        :param url: (str) URL of the resource</span>
 <span class="sd">        :param tmp_file: (str) Filename of the temporary file to download into</span>
 <span class="sd">        :return: (str) Error message (if any)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="sd">        """</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">req</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">URLError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;reason&#39;</span><span class="p">):</span>
-            <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;Failed to establish a connection to the url </span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;code&#39;</span><span class="p">):</span>
-            <span class="n">err</span> <span class="o">=</span> <span class="s2">&quot;The web server couldn&#39;t fulfill the request for url </span><span class="si">{}</span><span class="s2">. Error code: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">'reason'</span><span class="p">):</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="s1">'Failed to establish a connection to the url </span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">'code'</span><span class="p">):</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="s2">"The web server couldn't fulfill the request for url </span><span class="si">{}</span><span class="s2">. Error code: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;Unknown connection error.&#39;</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="s1">'Unknown connection error.'</span>
     <span class="k">except</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">IncompleteRead</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
-        <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;The server closed the connection before sending the complete file. The file can be downloaded at the following URL: </span><span class="si">{}</span><span class="s1"> and uncompressed in </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">)</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="s1">'The server closed the connection before sending the complete file. The file can be downloaded at the following URL: </span><span class="si">{}</span><span class="s1"> and uncompressed in </span><span class="si">{}</span><span class="s1">.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
         <span class="n">err</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="s1">''</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out_file</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">out_file</span><span class="p">:</span>
                 <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">zipped</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">zipped</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
@@ -1605,11 +1605,11 @@ View Source
         <span class="k">try</span><span class="p">:</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out_file</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">out_file</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">):</span>
                     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">err</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Failed to download file using requests: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'Failed to download file using requests: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">'</span>
     <span class="k">return</span> <span class="n">err</span>
 </code></pre></div>
 
@@ -1631,7 +1631,7 @@ View Source
     <span class="k">except</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -1646,12 +1646,12 @@ View Source
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">__untar</span><span class="p">(</span><span class="n">tar_filename</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">tar_filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tf</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">tar_filename</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">tf</span><span class="p">:</span>
             <span class="n">tf</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">dest</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -1680,20 +1680,20 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__install_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute a system command for a feature.</span>
+<span class="w">    </span><span class="sd">"""Execute a system command for a feature.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :raises: sppasInstallationError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The installer is testing the command &#39;</span><span class="si">{}</span><span class="s2">&#39; for feature </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">fid</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"The installer is testing the command '</span><span class="si">{}</span><span class="s2">' for feature </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">fid</span><span class="p">))</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">process</span> <span class="o">=</span> <span class="n">sppasExecProcess</span><span class="p">()</span>
         <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
         <span class="n">err</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">error</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
         <span class="n">stdout</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">out</span><span class="p">()</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Command return code is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Command return code is </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">status</span><span class="p">()))</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -1729,34 +1729,34 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__install_packages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Manage installation of system packages.</span>
+<span class="w">    </span><span class="sd">"""Manage installation of system packages.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :raises: sppasInstallationError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">out_cmd</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">package</span><span class="p">,</span> <span class="n">version</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ... package: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ... package: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package</span><span class="p">))</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_package</span><span class="p">(</span><span class="n">package</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ... ... is going to be installed.&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ... ... is going to be installed.'</span><span class="p">)</span>
             <span class="n">out_install</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_install_package</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_install</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">out_cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_install</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_version_package</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ... ... is going to be updated.&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ... ... is going to be updated.'</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">out_install</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_package</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_install</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">out_cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_install</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39; ... ... Update failed with the error: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">' ... ... Update failed with the error: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
                 <span class="n">out_cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ... ... is already installed and up-to-date.&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ... ... is already installed and up-to-date.'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__eval_step</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nb_steps</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__pupdate</span><span class="p">(</span><span class="s1">&#39;install_success&#39;</span><span class="p">,</span> <span class="n">package</span> <span class="o">+</span> <span class="n">version</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_cmd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__pupdate</span><span class="p">(</span><span class="s1">'install_success'</span><span class="p">,</span> <span class="n">package</span> <span class="o">+</span> <span class="n">version</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_cmd</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -1786,51 +1786,51 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__install_pypis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Manage the installation of pip packages.</span>
+<span class="w">    </span><span class="sd">"""Manage the installation of pip packages.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :param alt: (bool) Install alternative pipys instead of the regular ones.</span>
 <span class="sd">        :raises: sppasInstallationError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">out_pip</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">alt</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">pip_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">pypi</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">pip_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">pypi_alt</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pip_items</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">sppasInstallationError</span><span class="p">(</span><span class="s1">&#39;No alternative pip packages found.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">sppasInstallationError</span><span class="p">(</span><span class="s1">'No alternative pip packages found.'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">package</span><span class="p">,</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">pip_items</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ... python library: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ... python library: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package</span><span class="p">))</span>
         <span class="n">pip_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">pypi_opt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">package</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_pypi</span><span class="p">(</span><span class="n">package</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ... is going to be installed.&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ... is going to be installed.'</span><span class="p">)</span>
                 <span class="n">err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_install_pypi</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">pip_options</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">out_pip</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">sppasInstallationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s1">&#39;DEPRECATION: &#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39; ... but returned a warning message. </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+                <span class="k">if</span> <span class="s1">'DEPRECATION: '</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">' ... but returned a warning message. </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39; ... install_pypis re-raise the installation error&#39;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">' ... install_pypis re-raise the installation error'</span><span class="p">)</span>
                     <span class="k">raise</span> <span class="n">sppasInstallationError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_version_pypi</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ... is going to be updated.&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ... is going to be updated.'</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_update_pypi</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">pip_options</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">sppasInstallationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39; ... but the update failed with the error: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">' ... but the update failed with the error: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
                 <span class="n">out_pip</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ... is already installed and up-to-date.&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ... is already installed and up-to-date.'</span><span class="p">)</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__eval_step</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nb_steps</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_pypi</span><span class="p">(</span><span class="n">package</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__pupdate</span><span class="p">(</span><span class="s1">&#39;install_success&#39;</span><span class="p">,</span> <span class="n">package</span> <span class="o">+</span> <span class="n">version</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__pupdate</span><span class="p">(</span><span class="s1">'install_success'</span><span class="p">,</span> <span class="n">package</span> <span class="o">+</span> <span class="n">version</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__pupdate</span><span class="p">(</span><span class="s1">&#39;install_failed&#39;</span><span class="p">,</span> <span class="n">package</span> <span class="o">+</span> <span class="n">version</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_pip</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__pupdate</span><span class="p">(</span><span class="s1">'install_failed'</span><span class="p">,</span> <span class="n">package</span> <span class="o">+</span> <span class="n">version</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_pip</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -1846,9 +1846,9 @@ View Source
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span><span class="o">.</span><span class="n">set_header</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span><span class="o">.</span><span class="n">set_fraction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ==&gt; </span><span class="si">{:d}</span><span class="s1"> percents&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;    * * * * *   </span><span class="si">{}</span><span class="s1">   * * * * * &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ==&gt; </span><span class="si">{:d}</span><span class="s1"> percents'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'    * * * * *   </span><span class="si">{}</span><span class="s1">   * * * * * '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -1863,7 +1863,7 @@ View Source
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__pmessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;  ==&gt; </span><span class="si">{text}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'  ==&gt; </span><span class="si">{text}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -1878,7 +1878,7 @@ View Source
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__pfraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span><span class="o">.</span><span class="n">set_fraction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;  ==&gt; </span><span class="si">{:d}</span><span class="s1"> percents&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'  ==&gt; </span><span class="si">{:d}</span><span class="s1"> percents'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -1903,13 +1903,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__pupdate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;text is either a text or a mid.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""text is either a text or a mid."""</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__message</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">fid</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span> <span class="o">&gt;</span> <span class="mi">95</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span> <span class="o">=</span> <span class="mi">100</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; ==&gt; </span><span class="si">{:s}</span><span class="s1"> (</span><span class="si">{:d}</span><span class="s1"> percents)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' ==&gt; </span><span class="si">{:s}</span><span class="s1"> (</span><span class="si">{:d}</span><span class="s1"> percents)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pvalue</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -1956,25 +1956,25 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__eval_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the percentage of 1 step in progression for a given feature.</span>
+<span class="w">    </span><span class="sd">"""Return the percentage of 1 step in progression for a given feature.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :return: (float)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">nb_total</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">ft</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">feature_type</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">&#39;deps&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">'deps'</span><span class="p">:</span>
         <span class="n">nb_cmd</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">nb_cmd</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">nb_packages</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
         <span class="n">nb_pypi</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">pypi</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span>
         <span class="n">nb_total</span> <span class="o">=</span> <span class="n">nb_cmd</span> <span class="o">+</span> <span class="n">nb_packages</span> <span class="o">+</span> <span class="n">nb_pypi</span>
-    <span class="k">elif</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">&#39;annot&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">'annot'</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">annot</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">nb_total</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">elif</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">&#39;lang&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">ft</span> <span class="o">==</span> <span class="s1">'lang'</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">lang</span><span class="p">(</span><span class="n">fid</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">nb_total</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">if</span> <span class="n">nb_total</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -1990,7 +1990,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

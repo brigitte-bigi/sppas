@@ -79,7 +79,7 @@
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">installer</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="s2">&quot;feature_id&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">installer</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="s2">"feature_id"</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="kc">True</span>
 </code></pre></div>
 
@@ -87,9 +87,9 @@
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">installer</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;feature_id&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">installer</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">"feature_id"</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="kc">False</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">installer</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;feature_id&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">installer</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">"feature_id"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="kc">True</span>
 </code></pre></div>
 
@@ -97,9 +97,9 @@
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">installer</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s2">&quot;feature_id&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">installer</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s2">"feature_id"</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="k">assert</span> <span class="n">installer</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="s2">&quot;feature_id&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="k">assert</span> <span class="n">installer</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="s2">"feature_id"</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
 </code></pre></div>
 
     </article>
@@ -131,19 +131,19 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Instantiate the appropriate installer depending on the OS.</span>
+<span class="w">    </span><span class="sd">"""Instantiate the appropriate installer depending on the OS.</span>
 
 <span class="sd">    :param progress: (ProcessProgressTerminal|None) The installation progress</span>
 <span class="sd">    :raises: OSError: Not supported OS for the automatic installer</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">system</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Operating system: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">system</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Operating system: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">system</span><span class="p">))</span>
     <span class="n">system_installer</span> <span class="o">=</span> <span class="n">sppasGuessInstaller</span><span class="o">.</span><span class="n">guess</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">system_installer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasSystemOSError</span><span class="p">(</span><span class="s1">&#39;system&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasSystemOSError</span><span class="p">(</span><span class="s1">'system'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span> <span class="o">=</span> <span class="n">system_installer</span><span class="p">()</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;System installer: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'System installer: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">progress</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">set_progress</span><span class="p">(</span><span class="n">progress</span><span class="p">)</span>
 </code></pre></div>
@@ -192,12 +192,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">features_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of feature identifiers.</span>
+<span class="w">    </span><span class="sd">"""Return the list of feature identifiers.</span>
 
 <span class="sd">        :param feat_type: (str) Only return features of the given type.</span>
 <span class="sd">        :return: (list)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">get_fids</span><span class="p">(</span><span class="n">feat_type</span><span class="p">)</span>
 </code></pre></div>
 
@@ -229,12 +229,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">feature_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the feature type: deps, lang, annot.</span>
+<span class="w">    </span><span class="sd">"""Return the feature type: deps, lang, annot.</span>
 
 <span class="sd">        :param feat_id: (str) Identifier of a feature</span>
 <span class="sd">        :return: (str) or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">feature_type</span><span class="p">(</span><span class="n">feat_id</span><span class="p">)</span>
 </code></pre></div>
 
@@ -260,11 +260,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">brief</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the brief description of the feature.</span>
+<span class="w">    </span><span class="sd">"""Return the brief description of the feature.</span>
 
 <span class="sd">        :param feat_id: (str) Identifier of a feature</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">brief</span><span class="p">(</span><span class="n">feat_id</span><span class="p">)</span>
 </code></pre></div>
 
@@ -290,11 +290,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the description of the feature.</span>
+<span class="w">    </span><span class="sd">"""Return the description of the feature.</span>
 
 <span class="sd">        :param feat_id: (str) Identifier of a feature</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">description</span><span class="p">(</span><span class="n">feat_id</span><span class="p">)</span>
 </code></pre></div>
 
@@ -320,11 +320,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">available</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the feature is available.</span>
+<span class="w">    </span><span class="sd">"""Return True if the feature is available.</span>
 
 <span class="sd">        :param feat_id: (str) Identifier of a feature</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="n">feat_id</span><span class="p">)</span>
 </code></pre></div>
 
@@ -351,12 +351,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the feature is enabled and/or set it.</span>
+<span class="w">    </span><span class="sd">"""Return True if the feature is enabled and/or set it.</span>
 
 <span class="sd">        :param fid: (str) Identifier of a feature</span>
 <span class="sd">        :param value: (bool | None) Enable of disable the feature.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -389,11 +389,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">install</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Launch the installation process.</span>
+<span class="w">    </span><span class="sd">"""Launch the installation process.</span>
 
 <span class="sd">        :return: errors: (str) errors happening during installation.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">errors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">feat_type</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">errors</span>
 </code></pre></div>
@@ -406,7 +406,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

@@ -96,16 +96,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check file of any type: audio or image or annotated file.</span>
+<span class="w">    </span><span class="sd">"""Check file of any type: audio or image or annotated file.</span>
 
 <span class="sd">        The extension of the filename is used to know the type of the file.</span>
 
 <span class="sd">        :param filename: (str) name of the input file to diagnose.</span>
 <span class="sd">        :return: tuple(status identifier, message)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">info</span><span class="p">(</span><span class="mi">1008</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">info</span><span class="p">(</span><span class="mi">1008</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">))</span>
     <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">audioopy_ext</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">sppasDiagnosis</span><span class="o">.</span><span class="n">check_audio_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -115,7 +115,7 @@ View Source
         <span class="k">return</span> <span class="n">sppasDiagnosis</span><span class="o">.</span><span class="n">check_img_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">videodata_ext</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">sppasDiagnosis</span><span class="o">.</span><span class="n">check_video_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1006</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1020</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">extension</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1006</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1020</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">extension</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
 </code></pre></div>
 
@@ -158,7 +158,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_audio_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check an audio file.</span>
+<span class="w">    </span><span class="sd">"""Check an audio file.</span>
 
 <span class="sd">        Are verified:</span>
 
@@ -171,9 +171,9 @@ View Source
 <span class="sd">        :param filename: (str) name of the input file</span>
 <span class="sd">        :return: tuple with (status identifier, message)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">ok</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">audio</span> <span class="o">=</span> <span class="n">audioopy</span><span class="o">.</span><span class="n">aio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">fm</span> <span class="o">=</span> <span class="n">audio</span><span class="o">.</span><span class="n">get_framerate</span><span class="p">()</span>
@@ -181,39 +181,39 @@ View Source
         <span class="n">nc</span> <span class="o">=</span> <span class="n">audio</span><span class="o">.</span><span class="n">get_nchannels</span><span class="p">()</span>
         <span class="n">audio</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1026</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1026</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">nc</span> <span class="o">&gt;</span> <span class="n">sppasDiagnosis</span><span class="o">.</span><span class="n">EXPECTED_CHANNELS</span><span class="p">:</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">error</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1010</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">nc</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1010</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">nc</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sp</span> <span class="o">&lt;</span> <span class="n">sppasDiagnosis</span><span class="o">.</span><span class="n">EXPECTED_SAMPLE_WIDTH</span> <span class="o">*</span> <span class="mi">8</span><span class="p">:</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">error</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1012</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sampwidth</span><span class="o">=</span><span class="n">sp</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1012</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sampwidth</span><span class="o">=</span><span class="n">sp</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">fm</span> <span class="o">&lt;</span> <span class="n">sppasDiagnosis</span><span class="o">.</span><span class="n">EXPECTED_FRAME_RATE</span><span class="p">:</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">error</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1014</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">framerate</span><span class="o">=</span><span class="n">fm</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1014</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">framerate</span><span class="o">=</span><span class="n">fm</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">status</span> <span class="o">!=</span> <span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">sp</span> <span class="o">&gt;</span> <span class="n">sppasDiagnosis</span><span class="o">.</span><span class="n">EXPECTED_SAMPLE_WIDTH</span> <span class="o">*</span> <span class="mi">8</span><span class="p">:</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">warning</span>
-            <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1016</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sampwidth</span><span class="o">=</span><span class="n">sp</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1016</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sampwidth</span><span class="o">=</span><span class="n">sp</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">fm</span> <span class="o">&gt;</span> <span class="n">sppasDiagnosis</span><span class="o">.</span><span class="n">EXPECTED_FRAME_RATE</span><span class="p">:</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">warning</span>
-            <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1018</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">framerate</span><span class="o">=</span><span class="n">fm</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1018</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">framerate</span><span class="o">=</span><span class="n">fm</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">all</span><span class="p">((</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">128</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">warning</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1022</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39; &#39;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1022</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">' '</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">warning</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">message</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="n">message</span>
     <span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1002</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">message</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1002</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="n">message</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
 </code></pre></div>
 
@@ -254,7 +254,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_trs_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check an annotated file.</span>
+<span class="w">    </span><span class="sd">"""Check an annotated file.</span>
 
 <span class="sd">        Are verified:</span>
 
@@ -265,23 +265,23 @@ View Source
 <span class="sd">        :param filename: (string) name of the input file</span>
 <span class="sd">        :returns: tuple with (status identifier, message)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">ok</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1026</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1026</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">all</span><span class="p">((</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">128</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1002</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1022</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1002</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1022</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39; &#39;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1002</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">' '</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1002</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
 </code></pre></div>
@@ -319,7 +319,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_img_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check an image file.</span>
+<span class="w">    </span><span class="sd">"""Check an image file.</span>
 
 <span class="sd">        Are verified:</span>
 
@@ -328,9 +328,9 @@ View Source
 <span class="sd">        :param filename: (string) name of the input file</span>
 <span class="sd">        :returns: tuple with (status identifier, message)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">ok</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
 </code></pre></div>
 
@@ -367,7 +367,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_video_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check a video file.</span>
+<span class="w">    </span><span class="sd">"""Check a video file.</span>
 
 <span class="sd">        Are verified:</span>
 
@@ -376,9 +376,9 @@ View Source
 <span class="sd">        :param filename: (string) name of the input file</span>
 <span class="sd">        :returns: tuple with (status identifier, message)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">ok</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
 </code></pre></div>
 
@@ -390,7 +390,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

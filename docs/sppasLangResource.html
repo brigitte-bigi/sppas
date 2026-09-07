@@ -81,17 +81,17 @@ the path to get them, etc.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasLangResource instance.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasLangResource instance.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_rtype</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_rpath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_rname</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_rext</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rtype</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rpath</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rname</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rext</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_rlang</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">langlist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">langresource</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">langresource</span> <span class="o">=</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -113,15 +113,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set all members to their default value.&quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_rtype</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_rpath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_rname</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_rext</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="w">    </span><span class="sd">"""Set all members to their default value."""</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rtype</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rpath</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rname</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rext</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_rlang</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">langlist</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">langresource</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">langresource</span> <span class="o">=</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -140,7 +140,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_lang_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return False if the given resource is not representing a language.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return False if the given resource is not representing a language."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rlang</span>
 </code></pre></div>
 
@@ -171,16 +171,16 @@ See <a href="http://www-01.sil.org/iso639-3/">http://www-01.sil.org/iso639-3/</a
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_lang</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the language name.</span>
+<span class="w">    </span><span class="sd">"""Return the language name.</span>
 
 <span class="sd">        Language names in SPPAS are commonly represented in iso-639-3.</span>
 <span class="sd">        It is a code that aims to define three-letter identifiers for all</span>
-<span class="sd">        known human languages. &quot;und&quot; is representing an undetermined language.</span>
+<span class="sd">        known human languages. "und" is representing an undetermined language.</span>
 <span class="sd">        See &lt;http://www-01.sil.org/iso639-3/&gt; for details...</span>
 
 <span class="sd">        :returns: (str) Language code or an empty string if no lang was set.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span>
 </code></pre></div>
 
@@ -206,11 +206,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_langlist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of available languages.</span>
+<span class="w">    </span><span class="sd">"""Return the list of available languages.</span>
 
 <span class="sd">        :returns: List of str</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">langlist</span>
 </code></pre></div>
 
@@ -230,7 +230,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_langresource</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the resource name defined for the given language.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the resource name defined for the given language."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rlang</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">langlist</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rname</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -256,7 +256,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_resourcetype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the language type.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the language type."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rtype</span>
 </code></pre></div>
 
@@ -276,7 +276,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_resourceext</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the language extension.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the language extension."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rext</span>
 </code></pre></div>
 
@@ -302,11 +302,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the type of the resource.</span>
+<span class="w">    </span><span class="sd">"""Set the type of the resource.</span>
 
-<span class="sd">        :param resource_type: (str) One of &quot;file&quot; or &quot;directory&quot;.</span>
+<span class="sd">        :param resource_type: (str) One of "file" or "directory".</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">resource_type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">resource_type</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">resource_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sppasLangResource</span><span class="o">.</span><span class="n">RESOURCES_TYPES</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
@@ -336,11 +336,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_path</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the language resource path.</span>
+<span class="w">    </span><span class="sd">"""Fix the language resource path.</span>
 
 <span class="sd">        :param resource_path: (str) Relative path to find the resource.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">resource_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">resource_path</span><span class="p">)</span>
     <span class="n">folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="n">resource_path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -371,11 +371,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the language resource filename.</span>
+<span class="w">    </span><span class="sd">"""Fix the language resource filename.</span>
 
 <span class="sd">        :param resource_filename: (str) Resource filename.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_rname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">resource_filename</span><span class="p">)</span>
 </code></pre></div>
 
@@ -401,11 +401,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_extension</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the language resource file extension.</span>
+<span class="w">    </span><span class="sd">"""Fix the language resource file extension.</span>
 
 <span class="sd">        :param resource_extension: (str) Resource filename extension.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_rext</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">resource_extension</span><span class="p">)</span>
 </code></pre></div>
 
@@ -440,10 +440,10 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rtype</span><span class="p">,</span> <span class="n">rpath</span><span class="p">,</span> <span class="n">rname</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">rext</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">rlang</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set resources then fix the list of available languages.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rtype</span><span class="p">,</span> <span class="n">rpath</span><span class="p">,</span> <span class="n">rname</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">rext</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">rlang</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Set resources then fix the list of available languages.</span>
 
-<span class="sd">        :param rtype: (str) Resource type. One of: &quot;file&quot; or &quot;directory&quot;</span>
+<span class="sd">        :param rtype: (str) Resource type. One of: "file" or "directory"</span>
 <span class="sd">        :param rpath: (str) Resource path</span>
 <span class="sd">        :param rname: (str) Resource file name</span>
 <span class="sd">        :param rext: (str)  Resource extension</span>
@@ -451,13 +451,13 @@ View Source
 
 <span class="sd">        :raise: LangPathError: Invalid given rpath</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_type</span><span class="p">(</span><span class="n">rtype</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_path</span><span class="p">(</span><span class="n">rpath</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Invalid resource path: </span><span class="si">{</span><span class="n">rpath</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Invalid resource path: </span><span class="si">{</span><span class="n">rpath</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
         <span class="k">raise</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_filename</span><span class="p">(</span><span class="n">rname</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_extension</span><span class="p">(</span><span class="n">rext</span><span class="p">)</span>
@@ -468,20 +468,20 @@ View Source
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">langresource</span> <span class="o">=</span> <span class="n">directory</span>
     <span class="k">if</span> <span class="n">rlang</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">rtype</span> <span class="o">==</span> <span class="s1">&#39;file&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rtype</span> <span class="o">==</span> <span class="s1">'file'</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rext</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">sd</span> <span class="o">=</span> <span class="n">sppasDirUtils</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">selectedfile</span> <span class="ow">in</span> <span class="n">sd</span><span class="o">.</span><span class="n">get_files</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rext</span><span class="p">):</span>
                     <span class="n">filename</span><span class="p">,</span> <span class="n">fext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">selectedfile</span><span class="p">)</span>
                     <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rname</span><span class="p">):</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">langlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rname</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">langlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rname</span><span class="p">,</span> <span class="s1">''</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_rext</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rext</span> <span class="o">=</span> <span class="s1">''</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rname</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">dirname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">rname</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">langlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dirname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rname</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">langlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dirname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rname</span><span class="p">,</span> <span class="s1">''</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -515,7 +515,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_lang</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">forced</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the language if valid.</span>
+<span class="w">    </span><span class="sd">"""Set the language if valid.</span>
 
 <span class="sd">        To reset the language, fix lang to None.</span>
 
@@ -523,9 +523,9 @@ View Source
 <span class="sd">        :param forced: (bool) Force the language to be assigned even if it is not validated.</span>
 <span class="sd">        :raises: LangNameError: Invalid given lang</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">lang</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="s1">''</span>
         <span class="k">return</span>
     <span class="k">if</span> <span class="n">forced</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">lang</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="n">annots</span><span class="o">.</span><span class="n">UNDETERMINED</span> <span class="ow">and</span> <span class="p">(</span><span class="n">lang</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">langlist</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">LangNameError</span><span class="p">(</span><span class="n">lang</span><span class="p">)</span>
@@ -540,7 +540,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

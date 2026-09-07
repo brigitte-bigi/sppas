@@ -70,7 +70,7 @@ stores a list of sppasCoords() for each detected object.</p>
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">sppasImageObjectDetection</span><span class="p">()</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">filename1</span><span class="p">,</span> <span class="n">filename2</span><span class="o">...</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Detect all the objects in an image</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">sppasImage</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;image path&quot;</span><span class="p">))</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">sppasImage</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">"image path"</span><span class="p">))</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Get number of detected objects</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Browse through the detected object coordinates:</span>
@@ -104,9 +104,9 @@ in order to launch multiple detections and to combine their results.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new ImageObjectDetection instance.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create a new ImageObjectDetection instance."""</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasImageObjectDetection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
 
@@ -129,7 +129,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_nb_recognizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of initialized object recognizers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of initialized object recognizers."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">0</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="p">)</span>
@@ -151,7 +151,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_nb_enabled_recognizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of enabled object recognizers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of enabled object recognizers."""</span>
     <span class="n">nb</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">detector</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="p">:</span>
@@ -176,7 +176,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_recognizer_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of all the initialized recognizers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of all the initialized recognizers."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="p">]</span>
@@ -198,7 +198,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_enabled_recognizer_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of all the initialized recognizers. &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of all the initialized recognizers. """</span>
     <span class="n">r</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="p">:</span>
@@ -235,12 +235,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_recognizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the recognizer of the given name or None.</span>
+<span class="w">    </span><span class="sd">"""Return the recognizer of the given name or None.</span>
 
 <span class="sd">        :param name: (str) Name of a recognizer.</span>
 <span class="sd">        :return: (BaseObjectsDetector or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">detector</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="p">[</span><span class="n">detector</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
@@ -271,12 +271,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">enable_recognizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enable or disable a recognizer.</span>
+<span class="w">    </span><span class="sd">"""Enable or disable a recognizer.</span>
 
 <span class="sd">        :param name: (str) Name of a recognizer.</span>
 <span class="sd">        :param value: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">detector</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="p">:</span>
@@ -311,12 +311,12 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">extensions</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the whole list of supported extensions in lower case.</span>
+<span class="w">    </span><span class="sd">"""Return the whole list of supported extensions in lower case.</span>
 
 <span class="sd">        The registry of detectors is inheritable: a subclass can declare</span>
 <span class="sd">        its own DETECTORS dict to extend the supported extensions.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">DETECTORS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </code></pre></div>
 
@@ -351,7 +351,7 @@ The min ratio is divided by the number of detectors.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Instantiate detector(s) from the given models.</span>
+<span class="w">    </span><span class="sd">"""Instantiate detector(s) from the given models.</span>
 
 <span class="sd">        Calling this method invalidates the existing detectors.</span>
 <span class="sd">        All instantiated detectors are enabled by default.</span>
@@ -361,7 +361,7 @@ View Source
 <span class="sd">        :param args: Other models to load in order to create object detectors</span>
 <span class="sd">        :raise: IOError, Exception</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="n">detector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_recognizer_from_extension</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
     <span class="n">detector</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -416,7 +416,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_recognizer_from_extension</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return an object detector according to a given filename.</span>
+<span class="w">    </span><span class="sd">"""Return an object detector according to a given filename.</span>
 
 <span class="sd">        Only the extension of the filename is used. The detector is</span>
 <span class="sd">        searched in the DETECTORS registry of the class, so a subclass</span>
@@ -426,7 +426,7 @@ View Source
 <span class="sd">        :return: BaseObjectsDetector</span>
 <span class="sd">        :raise: IOError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">extension</span> <span class="o">=</span> <span class="n">extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">extension</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">extensions</span><span class="p">():</span>
@@ -459,14 +459,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_overlapped</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">norm_score</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove overlapping detected objects and too small scores.</span>
+<span class="w">    </span><span class="sd">"""Remove overlapping detected objects and too small scores.</span>
 
 <span class="sd">        It is supposed that the scores are already sorted by scores.</span>
 
 <span class="sd">        :param overlap: (float) Minimum percentage of overlapped area to invalidate an object</span>
 <span class="sd">        :param norm_score: (bool) Normalize the score of the detected objects by the number of detectors</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">overlap</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">overlap</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">overlap</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">overlap</span> <span class="o">&gt;</span> <span class="mf">100.0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">overlap</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">)</span>
@@ -488,7 +488,7 @@ View Source
                     <span class="n">c</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">()</span> <span class="o">+</span> <span class="n">coord</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">())</span>
                     <span class="n">coord</span><span class="o">.</span><span class="n">set_confidence</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
                     <span class="n">other</span><span class="o">.</span><span class="n">set_confidence</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
-                <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">                    # reject &quot;i&quot; object if more than 50</span><span class="si">% o</span><span class="s1">f its area is</span><span class="se">\n</span><span class="s1">                    # overlapping &quot;j&quot; and &quot;j&quot; has a significant bigger </span><span class="se">\n</span><span class="s1">                    # dimension, either w or h or both</span><span class="se">\n</span><span class="s1">                    if area_s &gt; overlap and (coord.w &lt; other.w or coord.h &lt; other.h):</span><span class="se">\n</span><span class="s1">                        c = min(1., other.get_confidence() + coord.get_confidence())</span><span class="se">\n</span><span class="s1">                        coord.set_confidence(0.)</span><span class="se">\n</span><span class="s1">                        other.set_confidence(c)</span><span class="se">\n</span><span class="s1">                    &#39;</span>
+                <span class="s1">'</span><span class="se">\n</span><span class="s1">                    # reject "i" object if more than 50</span><span class="si">% o</span><span class="s1">f its area is</span><span class="se">\n</span><span class="s1">                    # overlapping "j" and "j" has a significant bigger </span><span class="se">\n</span><span class="s1">                    # dimension, either w or h or both</span><span class="se">\n</span><span class="s1">                    if area_s &gt; overlap and (coord.w &lt; other.w or coord.h &lt; other.h):</span><span class="se">\n</span><span class="s1">                        c = min(1., other.get_confidence() + coord.get_confidence())</span><span class="se">\n</span><span class="s1">                        coord.set_confidence(0.)</span><span class="se">\n</span><span class="s1">                        other.set_confidence(c)</span><span class="se">\n</span><span class="s1">                    '</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">detected</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">()</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_min_score</span><span class="p">()]</span>
 </code></pre></div>
 
@@ -519,15 +519,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_detection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Determine the coordinates of all the detected objects.</span>
+<span class="w">    </span><span class="sd">"""Determine the coordinates of all the detected objects.</span>
 
-<span class="sd">        No filter nor sort is applied. Results are &quot;as it&quot;.</span>
+<span class="sd">        No filter nor sort is applied. Results are "as it".</span>
 
 <span class="sd">        :param image: (sppasImage or numpy.ndarray)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nb_enabled_recognizers</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasError</span><span class="p">(</span><span class="s1">&#39;None of the recognizers is enabled. At least one is required...&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasError</span><span class="p">(</span><span class="s1">'None of the recognizers is enabled. At least one is required...'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">detector</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="p">[</span><span class="n">detector</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">detector</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
@@ -543,7 +543,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

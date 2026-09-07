@@ -103,11 +103,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compare_with_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a score based on the Euclidian distance.</span>
+<span class="w">    </span><span class="sd">"""Return a score based on the Euclidian distance.</span>
 
-<span class="sd">        DOES NOT WORK: can&#39;t get the max distance !!!!</span>
+<span class="sd">        DOES NOT WORK: can't get the max distance !!!!</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">w1</span><span class="p">,</span> <span class="n">h1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img1</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">w2</span><span class="p">,</span> <span class="n">h2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img2</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">img1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img1</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">),</span> <span class="n">height</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">))</span>
@@ -137,11 +137,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mix all comparison scores to return a single one.</span>
+<span class="w">    </span><span class="sd">"""Mix all comparison scores to return a single one.</span>
 
 <span class="sd">        Linear interpolation with empirically fixed weights.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">s1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compare_areas</span><span class="p">()</span>
     <span class="n">s2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compare_sizes</span><span class="p">()</span>
     <span class="n">s3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compare_with_mse</span><span class="p">()</span>
@@ -171,11 +171,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compare_areas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a score on how image areas are similar.</span>
+<span class="w">    </span><span class="sd">"""Return a score on how image areas are similar.</span>
 
 <span class="sd">        :return: (float) value between 0. and 1.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">w1</span><span class="p">,</span> <span class="n">h1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img1</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">w2</span><span class="p">,</span> <span class="n">h2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img2</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">area1</span> <span class="o">=</span> <span class="n">w1</span> <span class="o">*</span> <span class="n">h1</span>
@@ -209,11 +209,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compare_sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a score on how image sizes are similar.</span>
+<span class="w">    </span><span class="sd">"""Return a score on how image sizes are similar.</span>
 
 <span class="sd">        :return: (float) value between 0. and 1.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">w1</span><span class="p">,</span> <span class="n">h1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img1</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">w2</span><span class="p">,</span> <span class="n">h2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img2</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">w_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">)</span>
@@ -251,11 +251,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compare_with_mse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a score to compare images with the Mean Squared Error.</span>
+<span class="w">    </span><span class="sd">"""Return a score to compare images with the Mean Squared Error.</span>
 
 <span class="sd">        :return: (float) value between 0. and 1.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">r1</span> <span class="o">=</span> <span class="n">sppasImageCompare</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__img1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img2</span><span class="o">.</span><span class="n">ired</span><span class="p">())</span><span class="o">.</span><span class="n">mse</span><span class="p">()</span>
     <span class="n">r2</span> <span class="o">=</span> <span class="n">sppasImageCompare</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__img1</span><span class="o">.</span><span class="n">ired</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img2</span><span class="p">)</span><span class="o">.</span><span class="n">mse</span><span class="p">()</span>
     <span class="n">b1</span> <span class="o">=</span> <span class="n">sppasImageCompare</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__img1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img2</span><span class="o">.</span><span class="n">iblue</span><span class="p">())</span><span class="o">.</span><span class="n">mse</span><span class="p">()</span>
@@ -291,18 +291,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">mse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the Mean Squared Error between the two images.</span>
+<span class="w">    </span><span class="sd">"""Return the Mean Squared Error between the two images.</span>
 
 <span class="sd">        :return: (float) The lower the error, the more similar the images are</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">img1_gray</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img1</span><span class="o">.</span><span class="n">igray</span><span class="p">()</span>
     <span class="n">img2_gray</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img2</span><span class="o">.</span><span class="n">igray</span><span class="p">()</span>
     <span class="n">w1</span><span class="p">,</span> <span class="n">h1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img1</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">w2</span><span class="p">,</span> <span class="n">h2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img2</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">img1</span> <span class="o">=</span> <span class="n">img1_gray</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">),</span> <span class="n">height</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">))</span>
     <span class="n">img2</span> <span class="o">=</span> <span class="n">img2_gray</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">),</span> <span class="n">height</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">))</span>
-    <span class="n">err</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">img1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">img2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">img1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'float'</span><span class="p">)</span> <span class="o">-</span> <span class="n">img2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'float'</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
     <span class="n">err</span> <span class="o">/=</span> <span class="nb">float</span><span class="p">(</span><span class="n">img1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">img2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
 </code></pre></div>
@@ -329,11 +329,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compare_with_kld</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a score to compare images with the Kullback-Leibler Dist.</span>
+<span class="w">    </span><span class="sd">"""Return a score to compare images with the Kullback-Leibler Dist.</span>
 
 <span class="sd">        :return: (float) value between 0. and 1.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">w1</span><span class="p">,</span> <span class="n">h1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img1</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">w2</span><span class="p">,</span> <span class="n">h2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img2</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">w</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">)</span>
@@ -390,11 +390,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">kld</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the Kullback-Leibler Distance between the two images.</span>
+<span class="w">    </span><span class="sd">"""Return the Kullback-Leibler Distance between the two images.</span>
 
 <span class="sd">        :return: (float) The lower the distance, the more similar the images are</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">img1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img1</span> <span class="o">//</span> <span class="mi">16</span>
     <span class="n">img2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img2</span> <span class="o">//</span> <span class="mi">16</span>
     <span class="n">w1</span><span class="p">,</span> <span class="n">h1</span> <span class="o">=</span> <span class="n">img1</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
@@ -454,11 +454,11 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">img_to_rgb_values</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a numpy.array representing a unique value of the colors.</span>
+<span class="w">    </span><span class="sd">"""Return a numpy.array representing a unique value of the colors.</span>
 
 <span class="sd">        :param img: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">g</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">g</span> <span class="o">=</span> <span class="n">g</span> <span class="o">*</span> <span class="mi">255</span>
@@ -475,7 +475,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

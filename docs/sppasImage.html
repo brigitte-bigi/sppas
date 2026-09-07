@@ -65,7 +65,7 @@
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="c1"># explicit constructor to create an image</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">img1</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># read the image from a file</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">img2</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;some image file&quot;</span><span class="p">))</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">img2</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"some image file"</span><span class="p">))</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># construct from an existing ndarray</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">img3</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">img1</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># construct a blank image</span>
@@ -100,7 +100,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the width (int) of the image.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the width (int) of the image."""</span>
     <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">w</span>
 </code></pre></div>
@@ -122,7 +122,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the height (int) of the image.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the height (int) of the image."""</span>
     <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">h</span>
 </code></pre></div>
@@ -144,7 +144,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">channel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of channels (int) of the image.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of channels (int) of the image."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span>
     <span class="k">else</span><span class="p">:</span>
@@ -169,7 +169,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">center</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the position tuple(x, y) of the center of the image.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the position tuple(x, y) of the center of the image."""</span>
     <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">w</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">h</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
 </code></pre></div>
@@ -190,7 +190,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the size of the image as tuple(width, height).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the size of the image as tuple(width, height)."""</span>
     <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
 </code></pre></div>
@@ -217,11 +217,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">euclidian_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the euclidian distance with the image.</span>
+<span class="w">    </span><span class="sd">"""Return the euclidian distance with the image.</span>
 
 <span class="sd">        :param other: (sppasImage) an image with the same shape</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span> <span class="o">-</span> <span class="n">other</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">d</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">h</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
@@ -256,13 +256,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_proportional_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the size of the image or a proportional size.</span>
+<span class="w">    </span><span class="sd">"""Return the size of the image or a proportional size.</span>
 
 <span class="sd">        :param width: (int) Force the image to the width</span>
 <span class="sd">        :param height: (int) Force the image to the height</span>
 <span class="sd">        :return: tuple(int, int) Width and height</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">width</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
@@ -313,8 +313,8 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">surround_coord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a square surrounding the given coordinates.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">surround_coord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Add a square surrounding the given coordinates.</span>
 
 <span class="sd">        :param coord: (sppasCoords) Area to surround</span>
 <span class="sd">        :param color: (int, int, int) Rectangle color or brightness (if grayscale image).</span>
@@ -323,7 +323,7 @@ View Source
 <span class="sd">            draw a filled rectangle.</span>
 <span class="sd">        :param text: (str) Add text</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">coord</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_coords</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
     <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">coord</span><span class="o">.</span><span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">coord</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">coord</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">coord</span><span class="o">.</span><span class="n">h</span><span class="p">),</span> <span class="n">color</span><span class="p">,</span> <span class="n">thickness</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -365,7 +365,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">put_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Put a text at the given coords.</span>
+<span class="w">    </span><span class="sd">"""Put a text at the given coords.</span>
 
 <span class="sd">        :param coord: (sppasCoords) Area to put the text</span>
 <span class="sd">        :param color: (int, int, int) Rectangle color or brightness (if grayscale image).</span>
@@ -374,7 +374,7 @@ View Source
 <span class="sd">            draw a filled rectangle.</span>
 <span class="sd">        :param text: (str) Add text</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">w</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">coord</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_coords</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
     <span class="n">font_scale</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1024.0</span><span class="p">)</span>
@@ -412,7 +412,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">surround_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a circle surrounding the given point.</span>
+<span class="w">    </span><span class="sd">"""Add a circle surrounding the given point.</span>
 
 <span class="sd">        :param point: (sppasCoords, list, tuple) (x,y) values to surround</span>
 <span class="sd">        :param color: (int, int, int) Rectangle color or brightness (if grayscale image).</span>
@@ -421,7 +421,7 @@ View Source
 <span class="sd">            draw a filled rectangle.</span>
 <span class="sd">        :param radius: (int) Radius of the circle</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -429,7 +429,7 @@ View Source
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">pass</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="s1">&#39;sppasCoords, tuple, list&#39;</span><span class="p">)</span>
+        <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="s1">'sppasCoords, tuple, list'</span><span class="p">)</span>
     <span class="n">thickness</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">thickness</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">radius</span> <span class="o">=</span> <span class="n">thickness</span> <span class="o">//</span> <span class="mi">2</span>
@@ -468,7 +468,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">blank_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">white</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint8</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and return an image with black pixels only.</span>
+<span class="w">    </span><span class="sd">"""Create and return an image with black pixels only.</span>
 
 <span class="sd">        :param w: (int) Image width. 0 means to use the current image width.</span>
 <span class="sd">        :param h: (int) Image height. 0 means to use the current height.</span>
@@ -477,7 +477,7 @@ View Source
 <span class="sd">        :param dtype: (numpy.dtype) Image data type</span>
 <span class="sd">        :return: (sppasImage) Fully black BGR image</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">NegativeValueError</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -524,12 +524,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ired</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image in red-color.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image in red-color.</span>
 
 <span class="sd">        :param value: (int) Fixed red value ranging (0, 255)</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">%</span> <span class="mi">255</span>
     <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -565,12 +565,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">igreen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image in green-color.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image in green-color.</span>
 
 <span class="sd">        :param value: (int) Fixed green value ranging (0, 255)</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">%</span> <span class="mi">255</span>
     <span class="n">img_green</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -606,12 +606,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iblue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image in blue-color.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image in blue-color.</span>
 
 <span class="sd">        :param value: (int) Fixed blue value ranging (0, 255)</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">%</span> <span class="mi">255</span>
     <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -650,7 +650,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ialpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image in RGBA colors.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image in RGBA colors.</span>
 
 <span class="sd">        Do nothing if no channel defined.</span>
 
@@ -661,7 +661,7 @@ View Source
 <span class="sd">        alpha value if the existing one is lower (higher values are unchanged).</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
         <span class="n">imga</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2RGBA</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
@@ -706,14 +706,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ibgr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bgr</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image with given in BGR/BGRA color values.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image with given in BGR/BGRA color values.</span>
 
 <span class="sd">        :param bgr: (tuple) A tuple(b, g, r) or tuple(b, g, r, a) color.</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bgr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Expected a (b, g, r) or (b, g, r, a) color. Got </span><span class="si">{}</span><span class="s1"> instead.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bgr</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Expected a (b, g, r) or (b, g, r, a) color. Got </span><span class="si">{}</span><span class="s1"> instead.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bgr</span><span class="p">))</span>
     <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bgr</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">%</span> <span class="mi">255</span>
@@ -751,11 +751,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ibgra_to_bgr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image without the alpha channel.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image without the alpha channel.</span>
 
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGRA2BGR</span><span class="p">))</span>
 </code></pre></div>
 
@@ -781,11 +781,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">igray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image in grayscale.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image in grayscale.</span>
 
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
         <span class="n">avg</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.114</span><span class="p">,</span> <span class="mf">0.587</span><span class="p">,</span> <span class="mf">0.2989</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
@@ -821,11 +821,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">inegative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image in negative/positive colors.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image in negative/positive colors.</span>
 
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">img</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">-</span> <span class="bp">self</span>
     <span class="k">return</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">img</span><span class="p">)</span>
 </code></pre></div>
@@ -858,12 +858,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ireduction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image with a color-reduction applied.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image with a color-reduction applied.</span>
 
 <span class="sd">        :param value: (int) Reduction value in range(0, 255)</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -900,13 +900,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">igamma</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image with lightness changed.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image with lightness changed.</span>
 
 <span class="sd">        :param coeff: (float) Set a value in range (0, 1) to increase</span>
 <span class="sd">            lightness, or a value &gt; 1 to increase darkness.</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">coeff</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
         <span class="n">coeff</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="n">img</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">)</span> <span class="o">**</span> <span class="n">coeff</span>
@@ -941,18 +941,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ito_rgb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image representing RGB colors.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image representing RGB colors.</span>
 
 <span class="sd">        Remove alpha channel if any.</span>
 
 <span class="sd">        :raises: TypeError</span>
 <span class="sd">        :return: (sppasImage) an RGB image</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
-    <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;BGR/BGRA sppasImage&#39;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'BGR/BGRA sppasImage'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -984,13 +984,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ishadow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of image with a shadow added.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of image with a shadow added.</span>
 
 <span class="sd">        :param x: (int) Shadow width</span>
 <span class="sd">        :param y: (int) Shadow height</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">igray</span><span class="p">()</span>
     <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">ishift</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tmp</span><span class="o">.</span><span class="n">ioverlay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
@@ -1024,12 +1024,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">icrop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a trimmed part of the image at given coordinates.</span>
+<span class="w">    </span><span class="sd">"""Return a trimmed part of the image at given coordinates.</span>
 
 <span class="sd">        :param coord: (sppasCoords) crop to these x, y, w, h values.</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">coord</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_coords</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
     <span class="n">x1</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">x</span>
     <span class="n">x2</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">coord</span><span class="o">.</span><span class="n">w</span>
@@ -1067,12 +1067,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">itrim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a cropped part of the image.</span>
+<span class="w">    </span><span class="sd">"""Return a cropped part of the image.</span>
 
 <span class="sd">        :param coord: (tuple or sppasCoords)</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">icrop</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
 </code></pre></div>
 
@@ -1105,13 +1105,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iresize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image with the specified width and height.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image with the specified width and height.</span>
 
 <span class="sd">        :param width: (int) The width to resize to (0=proportional to height)</span>
 <span class="sd">        :param height: (int) The height to resize to (0=proportional to width)</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">width</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">height</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">prop_width</span><span class="p">,</span> <span class="n">prop_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_proportional_size</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
@@ -1155,7 +1155,7 @@ Keep the original aspect ratio of the image, but crop if necessary.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">izoom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a zoomed copy of the image.</span>
+<span class="w">    </span><span class="sd">"""Return a zoomed copy of the image.</span>
 
 <span class="sd">        Resize and crop the image to zoom it to the given size.</span>
 <span class="sd">        Keep the original aspect ratio of the image, but crop if necessary.</span>
@@ -1164,7 +1164,7 @@ View Source
 <span class="sd">        :param height: (int) The height to resize to</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">))</span> <span class="o">/</span> <span class="mf">100.0</span>
     <span class="n">res_aspect_ratio</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">height</span><span class="p">))</span> <span class="o">/</span> <span class="mf">100.0</span>
     <span class="k">if</span> <span class="n">aspect_ratio</span> <span class="o">&gt;</span> <span class="n">res_aspect_ratio</span><span class="p">:</span>
@@ -1219,7 +1219,7 @@ add a black border all around.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">icenter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image centered in an image of given size.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image centered in an image of given size.</span>
 
 <span class="sd">        Center the image into a blank image of the given size.</span>
 <span class="sd">        Keep the original aspect ratio of the image, crop if necessary or</span>
@@ -1229,7 +1229,7 @@ View Source
 <span class="sd">        :param height: (int) The height to resize to</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">coord</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">&gt;</span> <span class="n">width</span><span class="p">:</span>
         <span class="n">coord</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
@@ -1278,7 +1278,7 @@ Keep the original aspect ratio of the image, add a black border.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iextend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return an extended copy of the image of given size.</span>
+<span class="w">    </span><span class="sd">"""Return an extended copy of the image of given size.</span>
 
 <span class="sd">        Scale the image to match the given size, keeping aspect ratio.</span>
 <span class="sd">        Keep the original aspect ratio of the image, add a black border.</span>
@@ -1287,7 +1287,7 @@ View Source
 <span class="sd">        :param height: (int) The height to resize to</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">))</span> <span class="o">/</span> <span class="mf">100.0</span>
     <span class="n">res_aspect_ratio</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">height</span><span class="p">))</span> <span class="o">/</span> <span class="mf">100.0</span>
     <span class="k">if</span> <span class="n">aspect_ratio</span> <span class="o">==</span> <span class="n">res_aspect_ratio</span><span class="p">:</span>
@@ -1337,7 +1337,7 @@ https://www.pyimagesearch.com/2017/01/02/rotate-images-correctly-with-opencv-and
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">irotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">redimension</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a rotated copy of the image with the given angle.</span>
+<span class="w">    </span><span class="sd">"""Return a rotated copy of the image with the given angle.</span>
 
 <span class="sd">        This method is part of imutils under the terms of the MIT License (MIT)</span>
 <span class="sd">        Copyright (c) 2015-2016 Adrian Rosebrock, http://www.pyimagesearch.com</span>
@@ -1350,7 +1350,7 @@ View Source
 <span class="sd">        :param redimension: (bool) Scale the image to fit in the previous square</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">center</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">h</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
@@ -1400,7 +1400,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ishift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a shifted copy of the image at given coordinates.</span>
+<span class="w">    </span><span class="sd">"""Return a shifted copy of the image at given coordinates.</span>
 
 <span class="sd">        Shift the content at left/right and/or top/bottom.</span>
 
@@ -1408,7 +1408,7 @@ View Source
 <span class="sd">        :param y: (int)</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">matrix</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">]])</span>
     <span class="n">shifted</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">warpAffine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
@@ -1447,7 +1447,7 @@ flip_code &lt; 0: flip vertically and horizontally</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iflip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flip_code</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a flipped copy of the image.</span>
+<span class="w">    </span><span class="sd">"""Return a flipped copy of the image.</span>
 
 <span class="sd">        flip_code = 0: flip vertically</span>
 <span class="sd">        flip_code &gt; 0: flip horizontally</span>
@@ -1456,7 +1456,7 @@ View Source
 <span class="sd">        :param flip_code: (int) Indicate the way to flip the image</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">flip_code</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">img</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">flip_code</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -1494,12 +1494,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">imask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image masked with the other given image.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image masked with the other given image.</span>
 
 <span class="sd">        :param other: (sppasImage) Image to mask (black areas)</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
     <span class="n">dst</span> <span class="o">=</span> <span class="bp">self</span> <span class="o">*</span> <span class="n">other</span> <span class="o">/</span> <span class="mi">255</span>
@@ -1535,17 +1535,17 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iblur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">51</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image with smoothed borders.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iblur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">51</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'gaussian'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image with smoothed borders.</span>
 
 <span class="sd">        :param value: (int) Kernel value, from 0 to 51.</span>
-<span class="sd">        :param method: (str) One of: None, &quot;gaussian&quot; or &quot;median&quot;</span>
+<span class="sd">        :param method: (str) One of: None, "gaussian" or "median"</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">mask_blur</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;median&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'median'</span><span class="p">:</span>
         <span class="n">mask_blur</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">medianBlur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">mask_blur</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">BORDER_DEFAULT</span><span class="p">)</span>
@@ -1581,15 +1581,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">icontours</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a blank image with the contours of the image in color.</span>
+<span class="w">    </span><span class="sd">"""Return a blank image with the contours of the image in color.</span>
 
 <span class="sd">        :param threshold: (int) value which is used to classify the pixel values (0-255)</span>
 <span class="sd">        :param color: (tuple) BGR values of the color to draw the contours</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Invalid image to draw a contour.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Invalid image to draw a contour.'</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
     <span class="n">img_grey</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">thresh_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">img_grey</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="p">)</span>
@@ -1630,7 +1630,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ipaste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image with other paste on it at given coords.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image with other paste on it at given coords.</span>
 
 <span class="sd">        Replace the current image with the given one at given coords.</span>
 
@@ -1638,7 +1638,7 @@ View Source
 <span class="sd">        :param coord: (sppasCoords) Position and optionally size to paste</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">other</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">other</span><span class="p">)</span>
     <span class="n">coord</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_coords</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
@@ -1705,7 +1705,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iblend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">weight1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">weight2</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image with the other image added or blended.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image with the other image added or blended.</span>
 
 <span class="sd">        :param other: (sppasImage) Image to blend with</span>
 <span class="sd">        :param coord: (sppasCoord) Blend only the given area of self with other</span>
@@ -1713,7 +1713,7 @@ View Source
 <span class="sd">        :param weight2: (float) coeff on the other image</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">coord</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1758,13 +1758,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ioverlay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image with the other image added.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image with the other image added.</span>
 
 <span class="sd">        :param other: (sppasImage) Image to blend with</span>
 <span class="sd">        :param coord: (sppasCoord) Overlay in the given area of self with other</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">back_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">over_image</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">other</span><span class="p">)</span>
@@ -1828,7 +1828,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isurround</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a new image with a square surrounding all the given coords.</span>
+<span class="w">    </span><span class="sd">"""Return a new image with a square surrounding all the given coords.</span>
 
 <span class="sd">        :param coords: (List of sppasCoords) Areas to surround</span>
 <span class="sd">        :param color: (int, int, int) Rectangle color</span>
@@ -1838,14 +1838,14 @@ View Source
 <span class="sd">        :param score: (bool) Add the confidence score of the coords</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_coords</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">w</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">c</span><span class="o">.</span><span class="n">h</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s1">''</span>
             <span class="k">if</span> <span class="n">score</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">c</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-                <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">())</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{:.3f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">())</span>
             <span class="n">img</span><span class="o">.</span><span class="n">surround_coord</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">img</span><span class="o">.</span><span class="n">surround_point</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">thickness</span><span class="p">)</span>
@@ -1880,13 +1880,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">icartoon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colorize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Applied a filter on the image to create a cartoon effect.</span>
+<span class="w">    </span><span class="sd">"""Applied a filter on the image to create a cartoon effect.</span>
 
 <span class="sd">        :param colorize: (bool) If we want our image in only black and</span>
 <span class="sd">            white (False) or with colors (True).</span>
 <span class="sd">        :return: (sppasImage) The image with the filter applied on it</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">alpha_image</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
         <span class="n">alpha_image</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mf">255.0</span>
@@ -1943,13 +1943,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iquantization_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_down_samp</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Smooth colors, down-sample and Up-sample the original image colors.</span>
+<span class="w">    </span><span class="sd">"""Smooth colors, down-sample and Up-sample the original image colors.</span>
 
 <span class="sd">        :param nb_down_samp: (int) number of downscaling steps</span>
 
 <span class="sd">        :return: (sppasImage) The image with the filter applied on it</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">img_color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_down_samp</span><span class="p">):</span>
         <span class="n">img_color</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">pyrDown</span><span class="p">(</span><span class="n">img_color</span><span class="p">)</span>
@@ -1982,12 +1982,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iinvert</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Applied an invert filter on the image.</span>
+<span class="w">    </span><span class="sd">"""Applied an invert filter on the image.</span>
 
 <span class="sd">        :return: (sppasImage) The image with the filter applied on it</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">        alpha_image = None</span><span class="se">\n\n</span><span class="s2">        # image doesn&#39;t have an alpha channel</span><span class="se">\n</span><span class="s2">        if self.channel == 3:</span><span class="se">\n</span><span class="s2">            img = self.copy()</span><span class="se">\n</span><span class="s2">        else:</span><span class="se">\n</span><span class="s2">            # normalize alpha channels from 0-255 to 0-1</span><span class="se">\n</span><span class="s2">            alpha_image = self[:, :, 3] / 255.0</span><span class="se">\n</span><span class="s2">            # get the image without the alpha channel</span><span class="se">\n</span><span class="s2">            img = self.ibgra_to_bgr()</span><span class="se">\n\n</span><span class="s2">        # apply the invert filter</span><span class="se">\n</span><span class="s2">        invert_array = cv2.bitwise_not(img)</span><span class="se">\n\n</span><span class="s2">        if alpha_image is not None:</span><span class="se">\n</span><span class="s2">            # create alpha channel and restore original image alpha</span><span class="se">\n</span><span class="s2">            img = sppasImage(input_array=invert_array).ialpha(254)</span><span class="se">\n</span><span class="s2">            img[:, :, 3] = alpha_image * 255</span><span class="se">\n\n</span><span class="s2">        return img</span><span class="se">\n</span><span class="s2">        &quot;</span>
+<span class="sd">        """</span>
+    <span class="s2">"</span><span class="se">\n</span><span class="s2">        alpha_image = None</span><span class="se">\n\n</span><span class="s2">        # image doesn't have an alpha channel</span><span class="se">\n</span><span class="s2">        if self.channel == 3:</span><span class="se">\n</span><span class="s2">            img = self.copy()</span><span class="se">\n</span><span class="s2">        else:</span><span class="se">\n</span><span class="s2">            # normalize alpha channels from 0-255 to 0-1</span><span class="se">\n</span><span class="s2">            alpha_image = self[:, :, 3] / 255.0</span><span class="se">\n</span><span class="s2">            # get the image without the alpha channel</span><span class="se">\n</span><span class="s2">            img = self.ibgra_to_bgr()</span><span class="se">\n\n</span><span class="s2">        # apply the invert filter</span><span class="se">\n</span><span class="s2">        invert_array = cv2.bitwise_not(img)</span><span class="se">\n\n</span><span class="s2">        if alpha_image is not None:</span><span class="se">\n</span><span class="s2">            # create alpha channel and restore original image alpha</span><span class="se">\n</span><span class="s2">            img = sppasImage(input_array=invert_array).ialpha(254)</span><span class="se">\n</span><span class="s2">            img[:, :, 3] = alpha_image * 255</span><span class="se">\n\n</span><span class="s2">        return img</span><span class="se">\n</span><span class="s2">        "</span>
     <span class="n">invert_array</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bitwise_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">invert_array</span><span class="p">)</span>
 </code></pre></div>
@@ -2021,18 +2021,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ioverlay_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color_overlay</span><span class="p">,</span> <span class="n">intensity</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Applied an overlay with a specified color on the image.</span>
+<span class="w">    </span><span class="sd">"""Applied an overlay with a specified color on the image.</span>
 
 <span class="sd">        :param color_overlay: (tuple[int, int, int]) The color of the overlay on the rgb format</span>
 <span class="sd">        :param intensity: (float) The intensity</span>
 
 <span class="sd">        :return: (sppasImage) The image with the filter applied on it</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2BGRA</span><span class="p">)</span>
     <span class="n">image_height</span><span class="p">,</span> <span class="n">image_width</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">color_bgra</span> <span class="o">=</span> <span class="n">color_overlay</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
-    <span class="n">overlay</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">image_height</span><span class="p">,</span> <span class="n">image_width</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">color_bgra</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+    <span class="n">overlay</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">image_height</span><span class="p">,</span> <span class="n">image_width</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">color_bgra</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'uint8'</span><span class="p">)</span>
     <span class="n">cv2</span><span class="o">.</span><span class="n">addWeighted</span><span class="p">(</span><span class="n">overlay</span><span class="p">,</span> <span class="n">intensity</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGRA2BGR</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
@@ -2054,7 +2054,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iuint8</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the image with dtype=numpy.uint8.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the image with dtype=numpy.uint8."""</span>
     <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
     <span class="n">img</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">*</span> <span class="n">img</span>
     <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
@@ -2086,16 +2086,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write the image on disk.</span>
+<span class="w">    </span><span class="sd">"""Write the image on disk.</span>
 
 <span class="sd">        :param filename: (str) Name of the image file</span>
 <span class="sd">        :raises: (ImageWriteError)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">cv2</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Error when writing file </span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Error when writing file </span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
         <span class="k">raise</span> <span class="n">ImageWriteError</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </code></pre></div>
 
@@ -2131,12 +2131,12 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_to_image</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasImage from the given entry.</span>
+<span class="w">    </span><span class="sd">"""Return a sppasImage from the given entry.</span>
 
 <span class="sd">        :param entry: (numpy.ndarray or filename)</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">sppasImage</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">entry</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
@@ -2168,7 +2168,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Allows to write img1 == img2.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Allows to write img1 == img2."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
@@ -2205,7 +2205,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Allows to write img1 != img2.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Allows to write img1 != img2."""</span>
     <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
 </code></pre></div>
 
@@ -2217,7 +2217,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

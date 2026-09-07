@@ -119,7 +119,7 @@ When unsigned is True, the (x,y) coordinates are positive values only.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unsigned</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasCoords instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasCoords instance.</span>
 
 <span class="sd">    Allows to represent a point (x,y), or a size(w,h) or both, with an</span>
 <span class="sd">    optional confidence score ranging [0.0,1.0].</span>
@@ -132,7 +132,7 @@ View Source
 <span class="sd">    :param confidence: (float) An optional confidence score ranging [0,1]</span>
 <span class="sd">    :param unsigned: (bool) Whether the coordinates are unsigned or not.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__unsigned</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">unsigned</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__set_x</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -173,9 +173,9 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">to_dtype</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">unsigned</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a value to int or raise the appropriate exception.</span>
+<span class="w">    </span><span class="sd">"""Convert a value to int or raise the appropriate exception.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">v</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span>
@@ -188,7 +188,7 @@ View Source
         <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">unsigned</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;unsigned &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">'unsigned '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">value</span>
 </code></pre></div>
 
@@ -221,12 +221,12 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">to_coords</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sppasCoords</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check the given coord and return it as a sppasCoords instance.</span>
+<span class="w">    </span><span class="sd">"""Check the given coord and return it as a sppasCoords instance.</span>
 
 <span class="sd">        :param coord: (list or tuple) The coordinates to convert.</span>
 <span class="sd">        :return: (sppasCoords) The converted coordinates.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -250,7 +250,7 @@ View Source
                 <span class="k">except</span><span class="p">:</span>
                     <span class="k">pass</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="s1">&#39;sppasCoords&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="s1">'sppasCoords'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">coord</span>
 </code></pre></div>
 
@@ -270,7 +270,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_confidence</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the confidence value (float).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the confidence value (float)."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">0.0</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span>
@@ -305,13 +305,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_confidence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set confidence value.</span>
+<span class="w">    </span><span class="sd">"""Set confidence value.</span>
 
 <span class="sd">        :param value: (float) The new confidence value ranging [0, 1].</span>
 <span class="sd">        :raises: TypeError:</span>
 <span class="sd">        :raises: ValueError:</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">else</span><span class="p">:</span>
@@ -337,7 +337,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_unsigned</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return whether the coordinates are unsigned or not.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return whether the coordinates are unsigned or not."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__unsigned</span>
 </code></pre></div>
 
@@ -357,7 +357,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_x</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return x-axis value (int).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return x-axis value (int)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span>
 </code></pre></div>
 
@@ -377,7 +377,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_y</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return y-axis value (int).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return y-axis value (int)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span>
 </code></pre></div>
 
@@ -397,7 +397,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_w</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return width value (int).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return width value (int)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span>
 </code></pre></div>
 
@@ -417,7 +417,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_h</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return height value (int).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return height value (int)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span>
 </code></pre></div>
 
@@ -437,7 +437,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the area of the rectangle.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the area of the rectangle."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span>
 </code></pre></div>
 
@@ -457,7 +457,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sppasCoords</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of the current sppasCoords.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a deep copy of the current sppasCoords."""</span>
     <span class="k">return</span> <span class="n">sppasCoords</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span><span class="p">)</span>
 </code></pre></div>
 
@@ -504,7 +504,7 @@ proprtionnal to width=4 and height=5, set xy_ratio to 0.8.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">portrait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mf">2.6</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">),</span> <span class="n">xy_ratio</span><span class="o">=</span><span class="mf">0.875</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the coordinates converted to the portrait scale.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the coordinates converted to the portrait scale.</span>
 
 <span class="sd">        A xy ratio can be forced, for example, to force a 4:5 image, ie</span>
 <span class="sd">        proprtionnal to width=4 and height=5, set xy_ratio to 0.8.</span>
@@ -521,7 +521,7 @@ View Source
 <span class="sd">        &gt;&gt;&gt; # Scale coords to a custom portrait size</span>
 <span class="sd">        &gt;&gt;&gt; coordinates.portrait(image, scale=(2.6, 3.4))</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">coord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
         <span class="n">shift_x</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">scale_x</span><span class="p">(</span><span class="n">scale</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -529,7 +529,7 @@ View Source
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
         <span class="n">shift_x</span><span class="p">,</span> <span class="n">shift_y</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">scale</span><span class="p">),</span> <span class="s1">&#39;int, float, tuple, list&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">scale</span><span class="p">),</span> <span class="s1">'int, float, tuple, list'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">xy_ratio</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">coord</span><span class="o">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">coord</span><span class="o">.</span><span class="n">h</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">current_ratio</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">current_ratio</span> <span class="o">&gt;</span> <span class="n">xy_ratio</span><span class="p">:</span>
@@ -593,7 +593,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Multiply width and height values with given coefficient value.</span>
+<span class="w">    </span><span class="sd">"""Multiply width and height values with given coefficient value.</span>
 
 <span class="sd">        :param coeff: (int) The value to multiply with.</span>
 <span class="sd">        :param image: (numpy.ndarray or sppasImage) An image to check w, h.</span>
@@ -601,13 +601,13 @@ View Source
 <span class="sd">        according to the value of the scale in order to keep the same center.</span>
 <span class="sd">        :raises: TypeError, IntervalRangeException, ImageWidthError, ImageHeightError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">coeff</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">coeff</span><span class="p">),</span> <span class="s1">&#39;int, float&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">coeff</span><span class="p">),</span> <span class="s1">'int, float'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">coeff</span> <span class="o">&lt;</span> <span class="mf">0.25</span> <span class="ow">or</span> <span class="n">coeff</span> <span class="o">&gt;</span> <span class="mf">20.0</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Invalid scale value for coordinates.Accepted range is [0.25; 20]. Got </span><span class="si">{:.3f}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coeff</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Invalid scale value for coordinates.Accepted range is [0.25; 20]. Got </span><span class="si">{:.3f}</span><span class="s1">.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coeff</span><span class="p">))</span>
         <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">)</span>
     <span class="n">coeff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">unsigned</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">new_w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">)</span> <span class="o">*</span> <span class="n">coeff</span><span class="p">)</span>
@@ -658,7 +658,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">scale_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Multiply width value with given coefficient value.</span>
+<span class="w">    </span><span class="sd">"""Multiply width value with given coefficient value.</span>
 
 <span class="sd">        :param coeff: (int) The value to multiply with.</span>
 <span class="sd">        :param image: (numpy.ndarray or sppasImage) An image to check w, h.</span>
@@ -666,9 +666,9 @@ View Source
 <span class="sd">        according to the value of the scale in order to keep the same center.</span>
 <span class="sd">        :raise: TypeError, ScaleWidthError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">coeff</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid X-scale value </span><span class="si">{:f}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coeff</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Invalid X-scale value </span><span class="si">{:f}</span><span class="s1">.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coeff</span><span class="p">))</span>
     <span class="n">coeff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">unsigned</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">new_w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">)</span> <span class="o">*</span> <span class="n">coeff</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -713,7 +713,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">scale_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Multiply height value with given coefficient value.</span>
+<span class="w">    </span><span class="sd">"""Multiply height value with given coefficient value.</span>
 
 <span class="sd">        :param coeff: (int) The value to multiply with.</span>
 <span class="sd">        :param image: (numpy.ndarray or sppasImage) An image to check w, h.</span>
@@ -721,9 +721,9 @@ View Source
 <span class="sd">        according to the value of the scale in order to keep the same center.</span>
 <span class="sd">        :raise: TypeError, ScaleHeightError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">coeff</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid Y-scale value </span><span class="si">{:f}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coeff</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Invalid Y-scale value </span><span class="si">{:f}</span><span class="s1">.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coeff</span><span class="p">))</span>
     <span class="n">coeff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">unsigned</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">new_h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">)</span> <span class="o">*</span> <span class="n">coeff</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -763,14 +763,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shift position of (x,y) values.</span>
+<span class="w">    </span><span class="sd">"""Shift position of (x,y) values.</span>
 
 <span class="sd">        :param x_value: (int) The value to add to x-axis value.</span>
 <span class="sd">        :param y_value: (int) The value to add to y-axis value.</span>
 <span class="sd">        :param image: (numpy.ndarray or sppasImage) An image to check coords.</span>
 <span class="sd">        :raise: TypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">x_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">x_value</span><span class="p">,</span> <span class="n">unsigned</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">y_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">y_value</span><span class="p">,</span> <span class="n">unsigned</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">new_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">+</span> <span class="n">x_value</span>
@@ -819,13 +819,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">intersection_area</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the intersection area of two rectangles.</span>
+<span class="w">    </span><span class="sd">"""Return the intersection area of two rectangles.</span>
 
 <span class="sd">        :param other: (sppasCoords)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasCoords&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasCoords'</span><span class="p">)</span>
     <span class="n">self_xmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span>
     <span class="n">other_xmax</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">w</span>
     <span class="n">dx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">self_xmax</span><span class="p">,</span> <span class="n">other_xmax</span><span class="p">)</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
@@ -870,7 +870,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the 2 percentage of overlaps.</span>
+<span class="w">    </span><span class="sd">"""Return the 2 percentage of overlaps.</span>
 
 <span class="sd">        1. the overlapped area is overlapping other of XX percent of its area.</span>
 <span class="sd">        2. the overlapped area is overlapping self of XX percent of my area.</span>
@@ -878,7 +878,7 @@ View Source
 <span class="sd">        :param other: (sppasCoords)</span>
 <span class="sd">        :returns: percentage of overlap of self in other and of other in self.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">in_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intersection_area</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">in_area</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
@@ -915,14 +915,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">intermediate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the coordinates with the intermediate position and size.</span>
+<span class="w">    </span><span class="sd">"""Return the coordinates with the intermediate position and size.</span>
 
 <span class="sd">        :param other: (sppasCoords)</span>
 <span class="sd">        :return: (sppasCoords)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasCoords&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasCoords'</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">+</span> <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
     <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span> <span class="o">+</span> <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
     <span class="n">w</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__w</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
@@ -959,14 +959,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">euclidian_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the euclidian distance between self and other.</span>
+<span class="w">    </span><span class="sd">"""Return the euclidian distance between self and other.</span>
 
 <span class="sd">        :param other: (sppasCoords)</span>
 <span class="sd">        :return: (int)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasCoords&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasCoords'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">0</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">euclidian</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">),</span> <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">get_x</span><span class="p">(),</span> <span class="n">other</span><span class="o">.</span><span class="n">get_y</span><span class="p">()))</span>
@@ -1005,13 +1005,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__set_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set x-axis value.</span>
+<span class="w">    </span><span class="sd">"""Set x-axis value.</span>
 
 <span class="sd">        :param value: (int) The new x-axis value.</span>
 <span class="sd">        :raises: TypeError:</span>
 <span class="sd">        :raises: ValueError:</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">unsigned</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__unsigned</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">MAX_W</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">MAX_W</span><span class="p">)</span>
@@ -1047,13 +1047,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__set_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set y-axis value.</span>
+<span class="w">    </span><span class="sd">"""Set y-axis value.</span>
 
 <span class="sd">        :param value: (int) The new y-axis value.</span>
 <span class="sd">        :raises: TypeError:</span>
 <span class="sd">        :raises: ValueError:</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">unsigned</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__unsigned</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">MAX_H</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">MAX_H</span><span class="p">)</span>
@@ -1089,13 +1089,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__set_w</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set width value.</span>
+<span class="w">    </span><span class="sd">"""Set width value.</span>
 
 <span class="sd">        :param value: (int) The new width value.</span>
 <span class="sd">        :raises: TypeError:</span>
 <span class="sd">        :raises: ValueError:</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">MAX_W</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">MAX_W</span><span class="p">)</span>
@@ -1131,13 +1131,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__set_h</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set height value.</span>
+<span class="w">    </span><span class="sd">"""Set height value.</span>
 
 <span class="sd">        :param value: (int) The new height value.</span>
 <span class="sd">        :raises: TypeError:</span>
 <span class="sd">        :raises: ValueError:</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">MAX_H</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">MAX_H</span><span class="p">)</span>
@@ -1157,11 +1157,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;(</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s1">'(</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39; (</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s1">' (</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;: </span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s1">': </span><span class="si">{:f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">s</span>
 </code></pre></div>
 
@@ -1212,7 +1212,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return true if self equal other (except for confidence score).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return true if self equal other (except for confidence score)."""</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
             <span class="n">other</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="p">(</span><span class="n">other</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">other</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">other</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">other</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
@@ -1282,14 +1282,14 @@ If item overlaps, False is returned.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the coords fully contains the given item.</span>
+<span class="w">    </span><span class="sd">"""Return True if the coords fully contains the given item.</span>
 
 <span class="sd">        Notice that __contains__ does not mean overlaps...</span>
 <span class="sd">        If item overlaps, False is returned.</span>
 
 <span class="sd">        :param item: (sppasCoords, tuple, list)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">cc</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_coords</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cc</span><span class="o">.</span><span class="n">w</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
@@ -1314,7 +1314,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

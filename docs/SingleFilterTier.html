@@ -90,7 +90,7 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">annot_format</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">match_all</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter process of a tier.</span>
+<span class="w">    </span><span class="sd">"""Filter process of a tier.</span>
 
 <span class="sd">    :param filters: (list) List of tuples (filter, function, [typed values])</span>
 <span class="sd">    :param annot_format: (bool) The annotation result contains the</span>
@@ -98,7 +98,7 @@ View Source
 <span class="sd">    :param match_all: (bool) The annotations must match all the filters</span>
 <span class="sd">    (il set to True) or any of them (if set to False)</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span> <span class="o">=</span> <span class="n">filters</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__match_all</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">match_all</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__annot_format</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">annot_format</span><span class="p">)</span>
@@ -143,30 +143,30 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">out_tiername</span><span class="o">=</span><span class="s1">&#39;Filtered&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply the filters on the given tier.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">out_tiername</span><span class="o">=</span><span class="s1">'Filtered'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Apply the filters on the given tier.</span>
 
-<span class="sd">        Applicable functions are &quot;tag&quot;, &quot;loc&quot; and &quot;dur&quot;.</span>
+<span class="sd">        Applicable functions are "tag", "loc" and "dur".</span>
 
 <span class="sd">        :param tier: (sppasTier)</span>
 <span class="sd">        :param out_tiername: (str) Name or the filtered tier</span>
 <span class="sd">        :raises: ValueError: Invalid filter or invalid value for a filter</span>
 <span class="sd">        :return: sppasTier or None if no annotation is matching</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__check_filers</span><span class="p">()</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply sppasTiersFilter() on tier: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Apply sppasTiersFilter() on tier: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()))</span>
     <span class="n">ann_sets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">sfilter</span> <span class="o">=</span> <span class="n">sppasTierFilters</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No value defined for filter </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'No value defined for filter </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">sppasTierFilters</span><span class="o">.</span><span class="n">cast_data</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; &gt;&gt;&gt; filter.</span><span class="si">{:s}</span><span class="s1">(</span><span class="si">{:s}</span><span class="s1">=</span><span class="si">{!s:s}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">value</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' &gt;&gt;&gt; filter.</span><span class="si">{:s}</span><span class="s1">(</span><span class="si">{:s}</span><span class="s1">=</span><span class="si">{!s:s}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">value</span><span class="p">))</span>
         <span class="n">ann_set</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sfilter</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">])(</span><span class="o">**</span><span class="p">{</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">value</span><span class="p">})</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">2</span><span class="p">])):</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">sppasTierFilters</span><span class="o">.</span><span class="n">cast_data</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; &gt;&gt;&gt;    | filter.</span><span class="si">{:s}</span><span class="s1">(</span><span class="si">{:s}</span><span class="s1">=</span><span class="si">{!s:s}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">value</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' &gt;&gt;&gt;    | filter.</span><span class="si">{:s}</span><span class="s1">(</span><span class="si">{:s}</span><span class="s1">=</span><span class="si">{!s:s}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">value</span><span class="p">))</span>
             <span class="n">ann_set</span> <span class="o">=</span> <span class="n">ann_set</span> <span class="o">|</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sfilter</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">])(</span><span class="o">**</span><span class="p">{</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">value</span><span class="p">})</span>
         <span class="n">ann_sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ann_set</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ann_sets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -203,10 +203,10 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__check_filers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check the actual filters.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Check the actual filters."""</span>
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SingleFilterTier</span><span class="o">.</span><span class="n">functions</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:s}</span><span class="s2"> is not a Single Filter and can&#39;t be applied&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"</span><span class="si">{:s}</span><span class="s2"> is not a Single Filter and can't be applied"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 </code></pre></div>
 
     </details>
@@ -217,7 +217,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

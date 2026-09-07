@@ -66,9 +66,9 @@
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Search for all checked TextGrid files in a path containing &#39;corpus&#39;</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Search for all checked TextGrid files in a path containing 'corpus'</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">sppasFileDataFilters</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">contains</span><span class="o">=</span><span class="s1">&#39;corpus&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">iexact</span><span class="o">=</span><span class="s1">&#39;textgrid&#39;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">contains</span><span class="o">=</span><span class="s1">'corpus'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">iexact</span><span class="o">=</span><span class="s1">'textgrid'</span><span class="p">)</span>
 </code></pre></div>
 
     </article>
@@ -94,11 +94,11 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasFileDataFilters instance.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasFileDataFilters instance.</span>
 
 <span class="sd">    :param obj: (sppasWorkspace) The object to be filtered.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasFileDataFilters</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 </code></pre></div>
 
@@ -120,9 +120,9 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;c:\users\myname&quot;</span><span class="p">,</span> <span class="n">not_endswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;c:\users\myname&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">not_endswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;c:\users\myname&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;ta&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"c:\users\myname"</span><span class="p">,</span> <span class="n">not_endswith</span><span class="o">=</span><span class="s1">'a'</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">"and"</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"c:\users\myname"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">not_endswith</span><span class="o">=</span><span class="s1">'a'</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"c:\users\myname"</span><span class="p">)</span> <span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"ta"</span><span class="p">)</span>
 </code></pre></div>
 
 <h5>Parameters</h5>
@@ -145,21 +145,21 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on all paths of the object.</span>
+<span class="w">    </span><span class="sd">"""Apply functions on all paths of the object.</span>
 
 <span class="sd">        Each argument is made of a function name and its expected value.</span>
-<span class="sd">        Each function can be prefixed with &#39;not_&#39;, like in the next example.</span>
+<span class="sd">        Each function can be prefixed with 'not_', like in the next example.</span>
 
 <span class="sd">        :Example:</span>
 
-<span class="sd">            &gt;&gt;&gt; f.path(startswith=&quot;c:\\users\\myname&quot;, not_endswith=&#39;a&#39;, logic_bool=&quot;and&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; f.path(startswith=&quot;c:\\users\\myname&quot;) &amp; f.path(not_endswith=&#39;a&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; f.path(startswith=&quot;c:\\users\\myname&quot;) | f.path(startswith=&quot;ta&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; f.path(startswith="c:\\users\\myname", not_endswith='a', logic_bool="and")</span>
+<span class="sd">            &gt;&gt;&gt; f.path(startswith="c:\\users\\myname") &amp; f.path(not_endswith='a')</span>
+<span class="sd">            &gt;&gt;&gt; f.path(startswith="c:\\users\\myname") | f.path(startswith="ta")</span>
 
 <span class="sd">        :param kwargs: logic_bool/any sppasPathCompare() method.</span>
 <span class="sd">        :returns: (sppasDataSet) Set of FileName() instances</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasFileBaseCompare</span><span class="p">()</span>
     <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">test_args</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">logic_bool</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_logic_bool</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -190,9 +190,9 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;myfile&quot;</span><span class="p">,</span> <span class="n">not_endswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;myfile&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">not_endswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;myfile&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;ta&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"myfile"</span><span class="p">,</span> <span class="n">not_endswith</span><span class="o">=</span><span class="s1">'a'</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">"and"</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"myfile"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">not_endswith</span><span class="o">=</span><span class="s1">'a'</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"myfile"</span><span class="p">)</span> <span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"ta"</span><span class="p">)</span>
 </code></pre></div>
 
 <h5>Parameters</h5>
@@ -215,21 +215,21 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on all roots of the object.</span>
+<span class="w">    </span><span class="sd">"""Apply functions on all roots of the object.</span>
 
 <span class="sd">        Each argument is made of a function name and its expected value.</span>
-<span class="sd">        Each function can be prefixed with &#39;not_&#39;, like in the next example.</span>
+<span class="sd">        Each function can be prefixed with 'not_', like in the next example.</span>
 
 <span class="sd">        :Example:</span>
 
-<span class="sd">            &gt;&gt;&gt; f.root(startswith=&quot;myfile&quot;, not_endswith=&#39;a&#39;, logic_bool=&quot;and&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; f.root(startswith=&quot;myfile&quot;) &amp; f.root(not_endswith=&#39;a&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; f.root(startswith=&quot;myfile&quot;) | f.root(startswith=&quot;ta&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; f.root(startswith="myfile", not_endswith='a', logic_bool="and")</span>
+<span class="sd">            &gt;&gt;&gt; f.root(startswith="myfile") &amp; f.root(not_endswith='a')</span>
+<span class="sd">            &gt;&gt;&gt; f.root(startswith="myfile") | f.root(startswith="ta")</span>
 
 <span class="sd">        :param kwargs: logic_bool/any sppasRootCompare() method.</span>
 <span class="sd">        :returns: (sppasDataSet) Set of FileName() instances</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasFileBaseCompare</span><span class="p">()</span>
     <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">test_args</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">logic_bool</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_logic_bool</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -263,7 +263,7 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 <h5>Example</h5>
 
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">State</span><span class="p">()</span><span class="o">.</span><span class="n">UNUSED</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="n">contains</span><span class="o">=</span><span class="s2">&quot;dlg&quot;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="n">contains</span><span class="o">=</span><span class="s2">"dlg"</span><span class="p">)</span>
 </code></pre></div>
 
 <h5>Parameters</h5>
@@ -286,20 +286,20 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on all files of the object.</span>
+<span class="w">    </span><span class="sd">"""Apply functions on all files of the object.</span>
 
 <span class="sd">        Each argument is made of a function name and its expected value.</span>
-<span class="sd">        Each function can be prefixed with &#39;not_&#39;, like in the next example.</span>
+<span class="sd">        Each function can be prefixed with 'not_', like in the next example.</span>
 
 <span class="sd">        :Examples:</span>
 
 <span class="sd">            &gt;&gt;&gt; f.file(state=State().UNUSED)</span>
-<span class="sd">            &gt;&gt;&gt; f.file(contains=&quot;dlg&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; f.file(contains="dlg")</span>
 
 <span class="sd">        :param kwargs: logic_bool/any sppasFileStateCompare() method.</span>
 <span class="sd">        :returns: (sppasDataSet)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasFileBaseCompare</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__search_fn</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div>
@@ -319,9 +319,9 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">iexact</span><span class="o">=</span><span class="s2">&quot;myfile-phon&quot;</span><span class="p">,</span> <span class="n">not_startswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">iexact</span><span class="o">=</span><span class="s2">&quot;myfile-phon&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">not_startswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">iexact</span><span class="o">=</span><span class="s2">&quot;myfile-phon&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;ta&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">iexact</span><span class="o">=</span><span class="s2">"myfile-phon"</span><span class="p">,</span> <span class="n">not_startswith</span><span class="o">=</span><span class="s1">'a'</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">"and"</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">iexact</span><span class="o">=</span><span class="s2">"myfile-phon"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">not_startswith</span><span class="o">=</span><span class="s1">'a'</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">iexact</span><span class="o">=</span><span class="s2">"myfile-phon"</span><span class="p">)</span> <span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"ta"</span><span class="p">)</span>
 </code></pre></div>
 
 <h5>Parameters</h5>
@@ -344,21 +344,21 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on all names of the files of the object.</span>
+<span class="w">    </span><span class="sd">"""Apply functions on all names of the files of the object.</span>
 
 <span class="sd">        Each argument is made of a function name and its expected value.</span>
-<span class="sd">        Each function can be prefixed with &#39;not_&#39;, like in the next example.</span>
+<span class="sd">        Each function can be prefixed with 'not_', like in the next example.</span>
 
 <span class="sd">        :Example:</span>
 
-<span class="sd">            &gt;&gt;&gt; f.name(iexact=&quot;myfile-phon&quot;, not_startswith=&#39;a&#39;, logic_bool=&quot;and&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; f.name(iexact=&quot;myfile-phon&quot;) &amp; f.name(not_startswith=&#39;a&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; f.name(iexact=&quot;myfile-phon&quot;) | f.name(startswith=&quot;ta&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; f.name(iexact="myfile-phon", not_startswith='a', logic_bool="and")</span>
+<span class="sd">            &gt;&gt;&gt; f.name(iexact="myfile-phon") &amp; f.name(not_startswith='a')</span>
+<span class="sd">            &gt;&gt;&gt; f.name(iexact="myfile-phon") | f.name(startswith="ta")</span>
 
 <span class="sd">        :param kwargs: logic_bool/any sppasFileNameCompare() method.</span>
 <span class="sd">        :returns: (sppasDataSet) Set of FileName() instances</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasFileNameCompare</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__search_fn</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div>
@@ -378,9 +378,9 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;.TEXT&quot;</span><span class="p">,</span> <span class="n">not_endswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;.TEXT&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">not_endswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;.TEXT&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;ta&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">".TEXT"</span><span class="p">,</span> <span class="n">not_endswith</span><span class="o">=</span><span class="s1">'a'</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">"and"</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">".TEXT"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">not_endswith</span><span class="o">=</span><span class="s1">'a'</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">".TEXT"</span><span class="p">)</span> <span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"ta"</span><span class="p">)</span>
 </code></pre></div>
 
 <h5>Parameters</h5>
@@ -403,21 +403,21 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on all extensions of the files of the object.</span>
+<span class="w">    </span><span class="sd">"""Apply functions on all extensions of the files of the object.</span>
 
 <span class="sd">        Each argument is made of a function name and its expected value.</span>
-<span class="sd">        Each function can be prefixed with &#39;not_&#39;, like in the next example.</span>
+<span class="sd">        Each function can be prefixed with 'not_', like in the next example.</span>
 
 <span class="sd">        :Example:</span>
 
-<span class="sd">            &gt;&gt;&gt; f.extension(startswith=&quot;.TEXT&quot;, not_endswith=&#39;a&#39;, logic_bool=&quot;and&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; f.extension(startswith=&quot;.TEXT&quot;) &amp; f.extension(not_endswith=&#39;a&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; f.extension(startswith=&quot;.TEXT&quot;) | f.extension(startswith=&quot;ta&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; f.extension(startswith=".TEXT", not_endswith='a', logic_bool="and")</span>
+<span class="sd">            &gt;&gt;&gt; f.extension(startswith=".TEXT") &amp; f.extension(not_endswith='a')</span>
+<span class="sd">            &gt;&gt;&gt; f.extension(startswith=".TEXT") | f.extension(startswith="ta")</span>
 
 <span class="sd">        :param kwargs: logic_bool/any sppasFileExtCompare() method.</span>
 <span class="sd">        :returns: (sppasDataSet)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasFileExtCompare</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__search_fn</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div>
@@ -437,9 +437,9 @@ matching the filter.</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;toto&quot;</span><span class="p">,</span> <span class="n">endswith</span><span class="o">=</span><span class="s2">&quot;tutu&quot;</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;toto&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">endswith</span><span class="o">=</span><span class="s2">&quot;tutu&quot;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;toto&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">contains</span><span class="o">=</span><span class="s2">&quot;tutu&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"toto"</span><span class="p">,</span> <span class="n">endswith</span><span class="o">=</span><span class="s2">"tutu"</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">"and"</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"toto"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">endswith</span><span class="o">=</span><span class="s2">"tutu"</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">"toto"</span><span class="p">)</span> <span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">contains</span><span class="o">=</span><span class="s2">"tutu"</span><span class="p">)</span>
 </code></pre></div>
 
 <h5>Parameters</h5>
@@ -462,21 +462,21 @@ matching the filter.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on all file properties of the object.</span>
+<span class="w">    </span><span class="sd">"""Apply functions on all file properties of the object.</span>
 
 <span class="sd">        Return any fileroot for which at least one of its references is</span>
 <span class="sd">        matching the filter.</span>
 
 <span class="sd">        :Example:</span>
 
-<span class="sd">            &gt;&gt;&gt; f.ref(startswith=&quot;toto&quot;, endswith=&quot;tutu&quot;, logic_bool=&quot;and&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; f.ref(startswith=&quot;toto&quot;) &amp; f.ref(endswith=&quot;tutu&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; f.ref(startswith=&quot;toto&quot;) | f.ref(contains=&quot;tutu&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; f.ref(startswith="toto", endswith="tutu", logic_bool="and")</span>
+<span class="sd">            &gt;&gt;&gt; f.ref(startswith="toto") &amp; f.ref(endswith="tutu")</span>
+<span class="sd">            &gt;&gt;&gt; f.ref(startswith="toto") | f.ref(contains="tutu")</span>
 
 <span class="sd">        :param kwargs: logic_bool/any sppasFileStateCompare() method.</span>
 <span class="sd">        :returns: (sppasDataSet) Set of FileName() instances</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasFileRefCompare</span><span class="p">()</span>
     <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">test_args</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">logic_bool</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_logic_bool</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -510,7 +510,7 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">att</span><span class="p">(</span><span class="n">equals</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;14&quot;</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">att</span><span class="p">(</span><span class="n">equals</span><span class="o">=</span><span class="p">(</span><span class="s2">"age"</span><span class="p">,</span> <span class="s2">"14"</span><span class="p">))</span>
 </code></pre></div>
 
 <h5>Parameters</h5>
@@ -533,21 +533,21 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">att</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on attributes of references of files of the object.</span>
+<span class="w">    </span><span class="sd">"""Apply functions on attributes of references of files of the object.</span>
 
 <span class="sd">        Each argument is made of a function name and its expected value.</span>
-<span class="sd">        Each function can be prefixed with &#39;not_&#39;, like in the next example.</span>
+<span class="sd">        Each function can be prefixed with 'not_', like in the next example.</span>
 
 <span class="sd">        The given value is a tuple with (identifier, value) of the attribute.</span>
 
 <span class="sd">        :Example:</span>
 
-<span class="sd">        &gt;&gt;&gt; f.att(equals=(&quot;age&quot;, &quot;14&quot;))</span>
+<span class="sd">        &gt;&gt;&gt; f.att(equals=("age", "14"))</span>
 
 <span class="sd">        :param kwargs: logic_bool/any sppasAttCompare() method.</span>
 <span class="sd">        :returns: (sppasDataSet) Set of FileName() instances</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasRefAttributeCompare</span><span class="p">()</span>
     <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">test_args</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">logic_bool</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_logic_bool</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -574,7 +574,7 @@ View Source
                                 <span class="k">break</span>
                         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                             <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">logic_bool</span> <span class="o">==</span> <span class="s1">&#39;and&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">logic_bool</span> <span class="o">==</span> <span class="s1">'and'</span><span class="p">:</span>
                 <span class="n">is_matching</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">is_matching</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
@@ -619,16 +619,16 @@ Each function can be prefixed with 'not_', like in the next example.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__search_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on files.</span>
+<span class="w">    </span><span class="sd">"""Apply functions on files.</span>
 
 <span class="sd">        Each argument is made of a function name and its expected value.</span>
-<span class="sd">        Each function can be prefixed with &#39;not_&#39;, like in the next example.</span>
+<span class="sd">        Each function can be prefixed with 'not_', like in the next example.</span>
 
 <span class="sd">        :param comparator: (sppasBaseCompare)</span>
 <span class="sd">        :param kwargs: logic_bool/any sppasFileNameCompare() method.</span>
 <span class="sd">        :returns: (sppasDataSet) Set of FileName() instances</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">test_args</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">logic_bool</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_logic_bool</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">path_fct_values</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_function_values</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -651,7 +651,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

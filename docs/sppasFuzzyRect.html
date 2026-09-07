@@ -91,7 +91,7 @@ or a string representing it.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasFuzzyRect instance.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasFuzzyRect instance.</span>
 
 <span class="sd">    The given coordinates of the midpoint can be a tuple of int values</span>
 <span class="sd">    or a string representing it.</span>
@@ -99,7 +99,7 @@ View Source
 <span class="sd">    :param coord: (int,int,int,int) x,y,w,h coords of the midpoint value.</span>
 <span class="sd">    :param radius: (int) the radius around the midpoint.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasFuzzyRect</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__y</span> <span class="o">=</span> <span class="mi">0</span>
@@ -135,13 +135,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set self members from another sppasFuzzyRect instance.</span>
+<span class="w">    </span><span class="sd">"""Set self members from another sppasFuzzyRect instance.</span>
 
 <span class="sd">        :param other: (sppasFuzzyRect)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasFuzzyRect</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasFuzzyRect&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasFuzzyRect'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_midpoint</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">get_radius</span><span class="p">())</span>
@@ -163,7 +163,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of self.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a deep copy of self."""</span>
     <span class="k">return</span> <span class="n">sppasFuzzyRect</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span><span class="p">)</span>
 </code></pre></div>
 
@@ -183,7 +183,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_midpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the midpoint coords (x,y,w,h).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the midpoint coords (x,y,w,h)."""</span>
     <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">)</span>
 </code></pre></div>
 
@@ -210,13 +210,13 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="n">str_rect</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a tuple (x,y,w,h) or (x,y,w,h,r).</span>
+<span class="w">    </span><span class="sd">"""Return a tuple (x,y,w,h) or (x,y,w,h,r).</span>
 
 <span class="sd">        :param str_rect: (str) A string representing a fuzzy rect.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tc</span> <span class="o">=</span> <span class="n">str_rect</span><span class="o">.</span><span class="n">lower</span><span class="p">()[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">tab</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">tab</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
@@ -252,12 +252,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_midpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midpoint</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the midpoint value.</span>
+<span class="w">    </span><span class="sd">"""Set the midpoint value.</span>
 
 <span class="sd">        :param midpoint: (tuple(int,int,int,int), str) the new midpoint coords.</span>
 <span class="sd">        :raise: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">sppasFuzzyRect</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">midpoint</span><span class="p">)</span>
         <span class="n">midpoint</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
@@ -284,7 +284,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the radius value (float or None).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the radius value (float or None)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span>
 </code></pre></div>
 
@@ -316,22 +316,22 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the radius value, ie. the vagueness of the point.</span>
+<span class="w">    </span><span class="sd">"""Fix the radius value, ie. the vagueness of the point.</span>
 
 <span class="sd">        The midpoint value must be set first.</span>
 
 <span class="sd">        :param radius: (int, str, None) the radius value</span>
 <span class="sd">        :raise: AnnDataTypeError, AnnDataNegValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="s1">'int'</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="s1">'int'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span> <span class="o">=</span> <span class="n">radius</span>
 </code></pre></div>
 
@@ -357,11 +357,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the given point is inside the vagueness of self.</span>
+<span class="w">    </span><span class="sd">"""Check if the given point is inside the vagueness of self.</span>
 
 <span class="sd">        :param coord: (tuple) An (x, y) coordinates</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">sppasFuzzyPoint</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
     <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
     <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span>
@@ -392,12 +392,12 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__check_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midpoint</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="s1">&#39;tuple&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="s1">'tuple'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">midpoint</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="s1">&#39;tuple(int, int, int, int)&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="s1">'tuple(int, int, int, int)'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">midpoint</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="s1">&#39;tuple(int, int, int, int)&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="s1">'tuple(int, int, int, int)'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">midpoint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnDataNegValueError</span><span class="p">(</span><span class="n">midpoint</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </code></pre></div>
@@ -429,8 +429,8 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;sppasFuzzyRect: (</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;sppasFuzzyRect: (</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)) &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">'sppasFuzzyRect: (</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'sppasFuzzyRect: (</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)) '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -444,8 +444,8 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;(</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;(</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">'(</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'(</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">,</span><span class="si">{:d}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -472,12 +472,12 @@ area of the other.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test equality of self with other.</span>
+<span class="w">    </span><span class="sd">"""Test equality of self with other.</span>
 
 <span class="sd">        Two fuzzy points are equals if the midpoint of one of them is in the</span>
 <span class="sd">        area of the other.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">rect</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">rect</span> <span class="o">=</span> <span class="n">sppasFuzzyRect</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
@@ -489,7 +489,7 @@ View Source
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasFuzzyRect</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">rect</span> <span class="o">=</span> <span class="n">other</span>
     <span class="k">if</span> <span class="n">rect</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="s1">&#39;sppasFuzzyRect&#39;</span><span class="p">,</span> <span class="s1">&#39;tuple(int,int,int,int)&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="s1">'sppasFuzzyRect'</span><span class="p">,</span> <span class="s1">'tuple(int,int,int,int)'</span><span class="p">)</span>
     <span class="n">other_x</span><span class="p">,</span> <span class="n">other_y</span><span class="p">,</span> <span class="n">other_w</span><span class="p">,</span> <span class="n">other_h</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
     <span class="n">other_r</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">other_r</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -513,7 +513,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

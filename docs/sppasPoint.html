@@ -130,13 +130,13 @@ these relations are defined as:</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midpoint</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasPoint instance.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasPoint instance.</span>
 
 <span class="sd">    :param midpoint: (float, int) midpoint value.</span>
 <span class="sd">    :param radius: (float, int) represents the vagueness of the point.</span>
 <span class="sd">    Radius must be of the same type as midpoint.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasPoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span> <span class="o">=</span> <span class="kc">None</span>
@@ -169,13 +169,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set self members from another sppasPoint instance.</span>
+<span class="w">    </span><span class="sd">"""Set self members from another sppasPoint instance.</span>
 
 <span class="sd">        :param other: (sppasPoint)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasPoint'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_midpoint</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">get_radius</span><span class="p">())</span>
 </code></pre></div>
@@ -196,7 +196,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override. Return True, because self represents a point.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Override. Return True, because self represents a point."""</span>
     <span class="k">return</span> <span class="kc">True</span>
 </code></pre></div>
 
@@ -216,7 +216,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of self.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a deep copy of self."""</span>
     <span class="k">return</span> <span class="n">sppasPoint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span><span class="p">)</span>
 </code></pre></div>
 
@@ -236,7 +236,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_midpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the midpoint value.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the midpoint value."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span>
 </code></pre></div>
 
@@ -270,7 +270,7 @@ properly synchronized and then some of them can be negative.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_midpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midpoint</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the midpoint value.</span>
+<span class="w">    </span><span class="sd">"""Set the midpoint value.</span>
 
 <span class="sd">        In versions &lt; 1.9.8, it was required that midpoint &gt;= 0.</span>
 <span class="sd">        Negative values are now accepted because some annotations are not</span>
@@ -279,23 +279,23 @@ View Source
 <span class="sd">        :param midpoint: (float, int) is the new midpoint value.</span>
 <span class="sd">        :raise: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">text_type</span><span class="p">,</span> <span class="n">binary_type</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="s1">&#39;float, int&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="s1">'float, int'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">text_type</span><span class="p">,</span> <span class="n">binary_type</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">midpoint</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Midpoint is negative: </span><span class="si">{:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">midpoint</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Midpoint is negative: </span><span class="si">{:d}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">midpoint</span><span class="p">))</span>
             <span class="k">return</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">pass</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">midpoint</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="s1">&#39;float, int&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">midpoint</span><span class="p">,</span> <span class="s1">'float, int'</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Midpoint is negative: </span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">midpoint</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Midpoint is negative: </span><span class="si">{:f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">midpoint</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -314,7 +314,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the radius value (float or None).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the radius value (float or None)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span>
 </code></pre></div>
 
@@ -346,14 +346,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the radius value, ie. the vagueness of the point.</span>
+<span class="w">    </span><span class="sd">"""Fix the radius value, ie. the vagueness of the point.</span>
 
 <span class="sd">        The midpoint value must be set first.</span>
 
 <span class="sd">        :param radius: (float, int, None) the radius value</span>
 <span class="sd">        :raise: AnnDataTypeError, AnnDataNegValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">sppasPoint</span><span class="o">.</span><span class="n">check_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">,</span> <span class="n">radius</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">)))</span>
@@ -363,14 +363,14 @@ View Source
                 <span class="k">if</span> <span class="n">radius</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">AnnDataNegValueError</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">radius</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">AnnDataNegValueError</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="s1">'int'</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="p">:</span>
             <span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span> <span class="o">=</span> <span class="n">radius</span>
@@ -402,12 +402,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shift the point to a given delay.</span>
+<span class="w">    </span><span class="sd">"""Shift the point to a given delay.</span>
 
 <span class="sd">        :param delay: (int, float) delay to shift midpoint</span>
 <span class="sd">        :raise: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">sppasPoint</span><span class="o">.</span><span class="n">check_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">,</span> <span class="n">delay</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">)))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">+=</span> <span class="n">delay</span>
@@ -435,11 +435,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Overrides. Return the duration of the point.</span>
+<span class="w">    </span><span class="sd">"""Overrides. Return the duration of the point.</span>
 
 <span class="sd">        :returns: (sppasDuration) Duration and its vagueness.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">sppasDuration</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">sppasDuration</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_radius</span><span class="p">())</span>
@@ -461,7 +461,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the value of the point is an integer.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the value of the point is an integer."""</span>
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
 </code></pre></div>
 
@@ -481,7 +481,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_float</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the value of the point is a float.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the value of the point is a float."""</span>
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
 </code></pre></div>
 
@@ -515,13 +515,13 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_types</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;True only if midpoint and radius are both of the same types.</span>
+<span class="w">    </span><span class="sd">"""True only if midpoint and radius are both of the same types.</span>
 
 <span class="sd">        :param x: any kind of data</span>
 <span class="sd">        :param y: any kind of data</span>
 <span class="sd">        :returns: Boolean</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
 </code></pre></div>
 
@@ -552,8 +552,8 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;sppasPoint: </span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;sppasPoint: </span><span class="si">{!s:s}</span><span class="s1">, </span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">'sppasPoint: </span><span class="si">{!s:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'sppasPoint: </span><span class="si">{!s:s}</span><span class="s1">, </span><span class="si">{!s:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -567,8 +567,8 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;(</span><span class="si">{!s:s}</span><span class="s1">, </span><span class="si">{!s:s}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">'</span><span class="si">{!s:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'(</span><span class="si">{!s:s}</span><span class="s1">, </span><span class="si">{!s:s}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radius</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -597,7 +597,7 @@ This relationship takes into account the radius.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Equal is required to use &#39;==&#39;.</span>
+<span class="w">    </span><span class="sd">"""Equal is required to use '=='.</span>
 
 <span class="sd">        Used between 2 sppasPoint instances or</span>
 <span class="sd">        between a sppasPoint and an other object representing time.</span>
@@ -605,7 +605,7 @@ View Source
 
 <span class="sd">        :param other: (sppasPoint, float, int) the other point to compare</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())</span>
         <span class="n">radius</span> <span class="o">=</span> <span class="mi">0</span>
@@ -648,14 +648,14 @@ or between a sppasPoint and an other time object.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;LowerThan is required to use &#39;&lt;&#39;.</span>
+<span class="w">    </span><span class="sd">"""LowerThan is required to use '&lt;'.</span>
 
 <span class="sd">        Used between 2 sppasPoint instances</span>
 <span class="sd">        or between a sppasPoint and an other time object.</span>
 
 <span class="sd">        :param other: (sppasPoint, float, int) the other point to compare</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">&lt;</span> <span class="n">other</span>
@@ -686,14 +686,14 @@ or between a sppasPoint and an other time object.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;GreaterThan is required to use &#39;&gt;&#39;.</span>
+<span class="w">    </span><span class="sd">"""GreaterThan is required to use '&gt;'.</span>
 
 <span class="sd">        Used between 2 sppasPoint instances</span>
 <span class="sd">        or between a sppasPoint and an other time object.</span>
 
 <span class="sd">        :param other: (sppasPoint, float, int) the other point to compare</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__midpoint</span> <span class="o">&gt;</span> <span class="n">other</span>
@@ -707,7 +707,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

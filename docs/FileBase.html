@@ -89,14 +89,14 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constructor of a FileBase.</span>
+<span class="w">    </span><span class="sd">"""Constructor of a FileBase.</span>
 
 <span class="sd">    Data structure to store an identifier (str) and a state (States).</span>
 
 <span class="sd">    :param identifier: (str) Any un-modifiable string.</span>
 <span class="sd">    :raises: ValueError if the identifier is not valid.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__id</span> <span class="o">=</span> <span class="n">FileBase</span><span class="o">.</span><span class="n">validate_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">States</span><span class="p">()</span><span class="o">.</span><span class="n">UNUSED</span>
 </code></pre></div>
@@ -139,7 +139,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">validate_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the given identifier if it matches the requirements.</span>
+<span class="w">    </span><span class="sd">"""Return the given identifier if it matches the requirements.</span>
 
 <span class="sd">        An identifier should contain at least 2 characters.</span>
 
@@ -147,7 +147,7 @@ View Source
 <span class="sd">        :raises: ValueError</span>
 <span class="sd">        :returns: (unicode)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">su</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
     <span class="n">ide</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">unicode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ide</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -171,7 +171,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the identifier (str).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the identifier (str)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id</span>
 </code></pre></div>
 
@@ -191,7 +191,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the state (States).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the state (States)."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span>
 </code></pre></div>
 
@@ -223,12 +223,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a state (to be overridden).</span>
+<span class="w">    </span><span class="sd">"""Set a state (to be overridden).</span>
 
 <span class="sd">        :param value: (States) The state value to assign</span>
 <span class="sd">        :returns: (bool or list)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div>
 
@@ -264,25 +264,25 @@ The logical not is used to reverse the result of the function.</p>
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">functions</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s1">&#39;and&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if this instance matches all or any of the functions.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">functions</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s1">'and'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return True if this instance matches all or any of the functions.</span>
 
 <span class="sd">        Functions are defined in a comparator. They return a boolean.</span>
 <span class="sd">        The type of the value depends on the function.</span>
 <span class="sd">        The logical not is used to reverse the result of the function.</span>
 
 <span class="sd">        :param functions: list of (function, value, logical_not)</span>
-<span class="sd">        :param logic_bool: (str) Apply a logical &quot;and&quot; or a logical &quot;or&quot; between the functions.</span>
+<span class="sd">        :param logic_bool: (str) Apply a logical "and" or a logical "or" between the functions.</span>
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">matches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">func</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">logical_not</span> <span class="ow">in</span> <span class="n">functions</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">logical_not</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="ow">not</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">logic_bool</span> <span class="o">==</span> <span class="s1">&#39;and&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">logic_bool</span> <span class="o">==</span> <span class="s1">'and'</span><span class="p">:</span>
         <span class="n">is_matching</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">is_matching</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
@@ -320,12 +320,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Allow to show the class at a given format.</span>
+<span class="w">    </span><span class="sd">"""Allow to show the class at a given format.</span>
 
 <span class="sd">        :param fmt: (str) the wanted format of string</span>
 <span class="sd">        :returns: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__format__</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
 </code></pre></div>
 
@@ -351,12 +351,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The string conversion of the object.</span>
+<span class="w">    </span><span class="sd">"""The string conversion of the object.</span>
 
 <span class="sd">        :returns: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__id</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="si">{!s:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__id</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -381,12 +381,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;String conversion when called by print.</span>
+<span class="w">    </span><span class="sd">"""String conversion when called by print.</span>
 
 <span class="sd">        :returns: (str) Printed representation of the object.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="s1">&#39;File: </span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__id</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="k">return</span> <span class="s1">'File: </span><span class="si">{!s:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__id</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -413,13 +413,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Allows to compare self with other by using &quot;==&quot;.</span>
+<span class="w">    </span><span class="sd">"""Allows to compare self with other by using "==".</span>
 
 <span class="sd">        Compare the identifier, but not the state.</span>
 
 <span class="sd">        :param other: (FileName, str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">FileBase</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span>
@@ -452,13 +452,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Allows to compare self with other by using &quot;!=&quot;.</span>
+<span class="w">    </span><span class="sd">"""Allows to compare self with other by using "!=".</span>
 
 <span class="sd">        Compare the identifier, but not the state.</span>
 
 <span class="sd">        :param other: (FileName, str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
     <span class="k">return</span> <span class="kc">False</span>
@@ -488,13 +488,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Allows to compare self with other by using &quot;&gt;&quot;.</span>
+<span class="w">    </span><span class="sd">"""Allows to compare self with other by using "&gt;".</span>
 
 <span class="sd">        Can be used, for example, to sort a list of instances alphabetically.</span>
 
 <span class="sd">        :param other: (FileName, str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span>
     <span class="k">return</span> <span class="kc">False</span>
@@ -524,13 +524,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Allows to compare self with other by using &quot;&lt;&quot;.</span>
+<span class="w">    </span><span class="sd">"""Allows to compare self with other by using "&lt;".</span>
 
 <span class="sd">        Can be used, for example, to sort a list of instances alphabetically.</span>
 
 <span class="sd">        :param other: (FileName, str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span>
     <span class="k">return</span> <span class="kc">False</span>
@@ -557,7 +557,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

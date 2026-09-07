@@ -111,14 +111,14 @@ sequentially, and to have a better control on it.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="n">DEFAULT_BUFFER_OVERLAP</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasVideoReaderBuffer instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasVideoReaderBuffer instance.</span>
 
 <span class="sd">    :param video: (mp4, etc...) The video filename to browse</span>
 <span class="sd">    :param size: (int) Number of images of the buffer or -1 for auto</span>
 <span class="sd">    :param overlap: (overlap) The number of images to keep</span>
 <span class="sd">    from the previous buffer</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasVideoReaderBuffer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__nb_img</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__overlap</span> <span class="o">=</span> <span class="mi">0</span>
@@ -157,12 +157,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override. Create an opencv video capture from the given video.</span>
+<span class="w">    </span><span class="sd">"""Override. Create an opencv video capture from the given video.</span>
 
 <span class="sd">        :param video: (name of video file, image sequence, url or video</span>
 <span class="sd">        stream, GStreamer pipeline, IP camera) The video to browse.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
     <span class="n">sppasVideoReader</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="p">)</span>
 </code></pre></div>
@@ -183,7 +183,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override. Release the flow taken by the reading of the video.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Override. Release the flow taken by the reading of the video."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
     <span class="n">sppasVideoReader</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div>
@@ -204,7 +204,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reset the buffer but does not change anything to the video.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Reset the buffer but does not change anything to the video."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__buffer_idx</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div>
@@ -236,11 +236,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reset_with_start_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reset AND set the index of the 1st frame of the current buffer.</span>
+<span class="w">    </span><span class="sd">"""Reset AND set the index of the 1st frame of the current buffer.</span>
 
 <span class="sd">        :return: (tuple) start index of the frames in the buffer</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__buffer_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
@@ -262,7 +262,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_buffer_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the defined size of the buffer.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the defined size of the buffer."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nb_img</span>
 </code></pre></div>
 
@@ -297,15 +297,15 @@ A value of -1 will fix automatically the buffer to use a MAX<em>MEMORY</em>SIZE 
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_buffer_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the size of the buffer.</span>
+<span class="w">    </span><span class="sd">"""Set the size of the buffer.</span>
 
-<span class="sd">        The new value is applied to the next buffer, it won&#39;t affect the currently in-use data.</span>
+<span class="sd">        The new value is applied to the next buffer, it won't affect the currently in-use data.</span>
 <span class="sd">        A value of -1 will fix automatically the buffer to use a MAX_MEMORY_SIZE Gb of RAM.</span>
 
 <span class="sd">        :param value: (int) New size of the buffer.</span>
 <span class="sd">        :raises: ValueError: invalid given value</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_opened</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -321,9 +321,9 @@ View Source
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_opened</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">():</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">()</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__overlap</span> <span class="o">&gt;=</span> <span class="n">value</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The already defined overlap value </span><span class="si">{:d}</span><span class="s2"> can&#39;t be greater than the buffer size.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The already defined overlap value </span><span class="si">{:d}</span><span class="s2"> can't be greater than the buffer size."</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__nb_img</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;The video buffer is set to </span><span class="si">{:d}</span><span class="s1"> images&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__nb_img</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'The video buffer is set to </span><span class="si">{:d}</span><span class="s1"> images'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__nb_img</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -342,7 +342,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_buffer_overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the overlap value of the buffer.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the overlap value of the buffer."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__overlap</span>
 </code></pre></div>
 
@@ -377,18 +377,18 @@ currently in-use data.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_buffer_overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the number of images to keep from the previous buffer.</span>
+<span class="w">    </span><span class="sd">"""Set the number of images to keep from the previous buffer.</span>
 
-<span class="sd">        The new value is applied to the next buffer, it won&#39;t affect the</span>
+<span class="sd">        The new value is applied to the next buffer, it won't affect the</span>
 <span class="sd">        currently in-use data.</span>
 
 <span class="sd">        :param value: (int) Nb of image</span>
 <span class="sd">        :raises: ValueError: Invalid given value</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">overlap</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">overlap</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nb_img</span> <span class="ow">or</span> <span class="n">overlap</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid buffer overlap&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Invalid buffer overlap'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__overlap</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
@@ -417,14 +417,14 @@ invoked. It invalidates the current buffer.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">seek_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the position of the frame for the next buffer to be read.</span>
+<span class="w">    </span><span class="sd">"""Set the position of the frame for the next buffer to be read.</span>
 
-<span class="sd">        It won&#39;t change the current position in the video until &quot;next&quot; is</span>
+<span class="sd">        It won't change the current position in the video until "next" is</span>
 <span class="sd">        invoked. It invalidates the current buffer.</span>
 
 <span class="sd">        :param value: (int) Frame position</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_frame</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__buffer_idx</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -449,12 +449,12 @@ video.read() was invoked for example.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">tell_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the frame position for the next buffer to be read.</span>
+<span class="w">    </span><span class="sd">"""Return the frame position for the next buffer to be read.</span>
 
-<span class="sd">        Possibly, it can&#39;t match the current position in the stream, if</span>
+<span class="sd">        Possibly, it can't match the current position in the stream, if</span>
 <span class="sd">        video.read() was invoked for example.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__buffer_idx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
 </code></pre></div>
 
@@ -480,11 +480,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_buffer_range</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the indexes of the frames of the current buffer.</span>
+<span class="w">    </span><span class="sd">"""Return the indexes of the frames of the current buffer.</span>
 
 <span class="sd">        :return: (tuple) start index, end index of the frames in the buffer</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__buffer_idx</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__buffer_idx</span>
@@ -512,11 +512,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fill in the buffer with the next sequence of images of the video.</span>
+<span class="w">    </span><span class="sd">"""Fill in the buffer with the next sequence of images of the video.</span>
 
 <span class="sd">        :return: False if we reached the end of the video</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_opened</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -563,13 +563,13 @@ IndexRangeException</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_buffer_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raise an exception if the given image index is not valid.</span>
+<span class="w">    </span><span class="sd">"""Raise an exception if the given image index is not valid.</span>
 
 <span class="sd">        :param value: (int)</span>
 <span class="sd">        :raises: NegativeValueError</span>
 <span class="sd">        :raises: IndexRangeException</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">NegativeValueError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -601,13 +601,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append an image into the buffer and pop the first if full queue.</span>
+<span class="w">    </span><span class="sd">"""Append an image into the buffer and pop the first if full queue.</span>
 
 <span class="sd">        :param image: (sppasImage) A new image to append to the list</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sppasImage</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="s1">&#39;sppasImage&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="s1">'sppasImage'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__images</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nb_img</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__images</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -639,12 +639,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_idx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pop an image of the buffer.</span>
+<span class="w">    </span><span class="sd">"""Pop an image of the buffer.</span>
 
 <span class="sd">        :param img_idx: (int) Index of the image in the buffer</span>
 <span class="sd">        :raise: IndexRangeException</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">img_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">img_idx</span><span class="p">)</span>
     <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">img_idx</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__images</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">img_idx</span><span class="p">)</span>
@@ -683,7 +683,7 @@ Use this method with caution!</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">img_idx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set an image of the buffer.</span>
+<span class="w">    </span><span class="sd">"""Set an image of the buffer.</span>
 
 <span class="sd">        No verification is performed on the image. It should be the</span>
 <span class="sd">        same format (size, nb channels, etc) than the other ones.</span>
@@ -693,7 +693,7 @@ View Source
 <span class="sd">        :param img_idx: (int) Index of the image in the buffer</span>
 <span class="sd">        :raises: IndexRangeException</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">img_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">img_idx</span><span class="p">)</span>
     <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">img_idx</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__images</span><span class="p">[</span><span class="n">img_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">img</span>
@@ -732,20 +732,20 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__load_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_frame</span><span class="p">,</span> <span class="n">nb_frames</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Browse a sequence of a video.</span>
+<span class="w">    </span><span class="sd">"""Browse a sequence of a video.</span>
 
 <span class="sd">        :return: (list) List of either sppasImage or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">start_frame</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">start_frame</span> <span class="o">+</span> <span class="n">nb_frames</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">():</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Not enough remaining </span><span class="si">{:d}</span><span class="s1"> frames. Will read </span><span class="si">{:d}</span><span class="s1"> instead.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nb_frames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_frame</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Not enough remaining </span><span class="si">{:d}</span><span class="s1"> frames. Will read </span><span class="si">{:d}</span><span class="s1"> instead.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nb_frames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_frame</span><span class="p">))</span>
         <span class="n">nb_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_frame</span>
     <span class="n">images</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">nb_frames</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_frames</span><span class="p">):</span>
         <span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_frame</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;A problem occurred when reading image at index </span><span class="si">{:d}</span><span class="s2">. The image is set to &#39;None&#39; instead.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"A problem occurred when reading image at index </span><span class="si">{:d}</span><span class="s2">. The image is set to 'None' instead."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">images</span>
 </code></pre></div>
 
@@ -768,7 +768,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of images in the current data buffer.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of images in the current data buffer."""</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__images</span><span class="p">)</span>
 </code></pre></div>
 
@@ -788,7 +788,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Browse the current data buffer.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Browse the current data buffer."""</span>
     <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__images</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">img</span>
 </code></pre></div>
@@ -816,10 +816,10 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="n">liste</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__images</span><span class="p">)</span>
+    <span class="n">liste</span> <span class="o">=</span> <span class="p">[</span><span class="s1">''</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__images</span><span class="p">)</span>
     <span class="n">iterator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__images</span><span class="p">)):</span>
-        <span class="n">liste</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">liste</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">))</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span>
     <span class="k">return</span> <span class="n">liste</span>
 </code></pre></div>
 
@@ -857,7 +857,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

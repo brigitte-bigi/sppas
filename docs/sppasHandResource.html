@@ -84,9 +84,9 @@ The files are to be in the resources/cuedspeech folder with this specific files 
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The constructor of the sppasHandResource class.</span>
+<span class="w">    </span><span class="sd">"""The constructor of the sppasHandResource class.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__hands</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 </code></pre></div>
 
@@ -117,13 +117,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_hand_sets_identifiers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get all hands sets identifiers loaded.</span>
+<span class="w">    </span><span class="sd">"""Get all hands sets identifiers loaded.</span>
 
 <span class="sd">        The identifiers are the prefix of the hands sets when they are loaded.</span>
 
 <span class="sd">        :return: (list[str]) All identifiers</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__hands</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </code></pre></div>
 
@@ -155,14 +155,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_hand_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get all hands shapes images path of a hands set linked with the given prefix.</span>
+<span class="w">    </span><span class="sd">"""Get all hands shapes images path of a hands set linked with the given prefix.</span>
 
 <span class="sd">        :param identifier: (str) The identifier (prefix) of the hands set</span>
 
 <span class="sd">        :return: (list[str] or None) The path of the hands shapes images</span>
 <span class="sd">                                     None if no hands set is associated with the given prefix</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hands</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hands</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">identifier</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -204,7 +204,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sppasImage</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get hand image path associated with the given prefix and index.</span>
+<span class="w">    </span><span class="sd">"""Get hand image path associated with the given prefix and index.</span>
 
 <span class="sd">        :param identifier: (str) The identifier (prefix) of the hands set</span>
 <span class="sd">        :param index: (int) The index of the shape</span>
@@ -215,7 +215,7 @@ View Source
 <span class="sd">        :return: (sppasImage or None) The path of the hand shape</span>
 <span class="sd">                                      None if no hands set is associated with the given prefix</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">NegativeValueError</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="n">NB_SHAPES</span><span class="p">:</span>
@@ -253,14 +253,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_hands_sights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get all hands shapes sights path linked with the given prefix.</span>
+<span class="w">    </span><span class="sd">"""Get all hands shapes sights path linked with the given prefix.</span>
 
 <span class="sd">        :param identifier: (str) The identifier (prefix) of the hands set</span>
 
 <span class="sd">        :return: (list[sppasSights] or None) The path of the hands shapes sights</span>
 <span class="sd">                                             None if no hands set is associated with the given prefix</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hands</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hands</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">identifier</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
@@ -302,7 +302,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_sights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sppasImage</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get hand image path associated with the given prefix and index.</span>
+<span class="w">    </span><span class="sd">"""Get hand image path associated with the given prefix and index.</span>
 
 <span class="sd">        :param identifier: (str) The identifier (prefix) of the hands set</span>
 <span class="sd">        :param index: (int) The index of the shape</span>
@@ -313,7 +313,7 @@ View Source
 <span class="sd">        :return: (sppasImage or None) The path of the hand shape</span>
 <span class="sd">                                      None if no hands set is associated with the given prefix</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">NegativeValueError</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="n">NB_SHAPES</span><span class="p">:</span>
@@ -339,7 +339,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">clear_hands_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Clear all hands sets loaded.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Clear all hands sets loaded."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__hands</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 </code></pre></div>
 
@@ -366,17 +366,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">automatic_loading</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search and load all hands sets in the resources&#39; folder.</span>
+<span class="w">    </span><span class="sd">"""Search and load all hands sets in the resources' folder.</span>
 
-<span class="sd">        :raises: sppasEnableFeatureError: If the resources/cuedspeech folder doesn&#39;t exist</span>
+<span class="sd">        :raises: sppasEnableFeatureError: If the resources/cuedspeech folder doesn't exist</span>
 <span class="sd">        :raises: sppasIOError: If a hands set found has a missing file (image or annotation)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;cuedspeech&#39;</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasEnableFeatureError</span><span class="p">(</span><span class="s1">&#39;cuedspeech&#39;</span><span class="p">)</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;cuedspeech&#39;</span><span class="p">))</span>
+<span class="sd">        """</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">'cuedspeech'</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasEnableFeatureError</span><span class="p">(</span><span class="s1">'cuedspeech'</span><span class="p">)</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">'cuedspeech'</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;^[^0-9]+_[0-8][^0-9]*</span><span class="se">\\</span><span class="s1">..+$&#39;</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">'^[^0-9]+_[0-8][^0-9]*</span><span class="se">\\</span><span class="s1">..+$'</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
             <span class="k">continue</span>
         <span class="n">file_root</span> <span class="o">=</span> <span class="n">FileRoot</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="n">prefix</span> <span class="o">=</span> <span class="n">file_root</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
@@ -386,7 +386,7 @@ View Source
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">load_hand_set</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">postfix</span><span class="o">=</span><span class="n">postfix</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">sppasIOError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The hands set &#39;</span><span class="si">{0}</span><span class="s2">&#39; is missing a file.</span><span class="se">\n</span><span class="s2">Log Trace: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">error</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"The hands set '</span><span class="si">{0}</span><span class="s2">' is missing a file.</span><span class="se">\n</span><span class="s2">Log Trace: </span><span class="si">{1}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">error</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -417,25 +417,25 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_hand_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">postfix</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;-hands&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a hands set from the given prefix and postfix in the resources&#39; folder.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_hand_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">postfix</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">'-hands'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Load a hands set from the given prefix and postfix in the resources' folder.</span>
 
 <span class="sd">        :param prefix: (str) The prefix (identifier) of the hands set</span>
 <span class="sd">        :param postfix: (str) The postfix of the hands set</span>
 
 <span class="sd">        :raises: sppasIOError: If the image or the annotation files are not found</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">image_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">sights_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NB_SHAPES</span><span class="p">):</span>
         <span class="n">image_filepath</span><span class="p">,</span> <span class="n">sights_filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__check_shape_files</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">postfix</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; - Image file path: </span><span class="si">{</span><span class="n">image_filepath</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; - Sights file path: </span><span class="si">{</span><span class="n">sights_filepath</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">' - Image file path: </span><span class="si">{</span><span class="n">image_filepath</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">' - Sights file path: </span><span class="si">{</span><span class="n">sights_filepath</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_filepath</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">sppasIOError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Missing image file </span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">i</span><span class="si">}{</span><span class="n">postfix</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">sppasIOError</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Missing image file </span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">i</span><span class="si">}{</span><span class="n">postfix</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sights_filepath</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">sppasIOError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Missing annotation file </span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">i</span><span class="si">}{</span><span class="n">postfix</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">sppasIOError</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Missing annotation file </span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">i</span><span class="si">}{</span><span class="n">postfix</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
         <span class="n">image_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_filepath</span><span class="p">)</span>
         <span class="n">sights_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sights_filepath</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__hands</span><span class="p">[</span><span class="n">prefix</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">image_list</span><span class="p">,</span> <span class="n">sights_list</span><span class="p">)</span>
@@ -474,29 +474,29 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__check_shape_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">postfix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the file path of the image and annotation file (or empty string).</span>
+<span class="w">    </span><span class="sd">"""Return the file path of the image and annotation file (or empty string).</span>
 
 <span class="sd">        :param prefix: (str) The prefix (identifier) of the hands set</span>
 <span class="sd">        :param postfix: (str) The postfix of the hands set</span>
 <span class="sd">        :param index: (int) The index of the shape files</span>
 
 <span class="sd">        :return: (tuple[str, str]) The file path of the image and sights annotation</span>
-<span class="sd">                                  Empty string if the doesn&#39;t exist</span>
+<span class="sd">                                  Empty string if the doesn't exist</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">img_file_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="n">annotation_file_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="n">files_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_</span><span class="si">{1}{2}</span><span class="s1">&#39;</span>
-    <span class="n">files_path1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;cuedspeech&#39;</span><span class="p">,</span> <span class="n">files_name</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
-    <span class="n">files_path2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;cuedspeech&#39;</span><span class="p">,</span> <span class="n">files_name</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">postfix</span><span class="p">))</span>
+<span class="sd">        """</span>
+    <span class="n">img_file_path</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="n">annotation_file_path</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="n">files_name</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{0}</span><span class="s1">_</span><span class="si">{1}{2}</span><span class="s1">'</span>
+    <span class="n">files_path1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">'cuedspeech'</span><span class="p">,</span> <span class="n">files_name</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="s1">''</span><span class="p">))</span>
+    <span class="n">files_path2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">'cuedspeech'</span><span class="p">,</span> <span class="n">files_name</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">postfix</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">image_extensions</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">files_path1</span> <span class="o">+</span> <span class="n">extension</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">img_file_path</span> <span class="o">=</span> <span class="n">files_path1</span> <span class="o">+</span> <span class="n">extension</span>
             <span class="k">break</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">files_path2</span> <span class="o">+</span> <span class="s1">&#39;.xra&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">annotation_file_path</span> <span class="o">=</span> <span class="n">files_path2</span> <span class="o">+</span> <span class="s1">&#39;.xra&#39;</span>
-    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">files_path2</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">annotation_file_path</span> <span class="o">=</span> <span class="n">files_path2</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">files_path2</span> <span class="o">+</span> <span class="s1">'.xra'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">annotation_file_path</span> <span class="o">=</span> <span class="n">files_path2</span> <span class="o">+</span> <span class="s1">'.xra'</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">files_path2</span> <span class="o">+</span> <span class="s1">'.csv'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">annotation_file_path</span> <span class="o">=</span> <span class="n">files_path2</span> <span class="o">+</span> <span class="s1">'.csv'</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">img_file_path</span><span class="p">,</span> <span class="n">annotation_file_path</span><span class="p">)</span>
 </code></pre></div>
 
@@ -519,7 +519,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of hands sets loaded.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of hands sets loaded."""</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__hands</span><span class="p">)</span>
 </code></pre></div>
 
@@ -531,7 +531,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

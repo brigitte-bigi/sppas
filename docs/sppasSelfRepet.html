@@ -87,12 +87,12 @@ The output is made of 2 tiers with sources and echos.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasRepetition instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasRepetition instance.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasSelfRepet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;selfrepet.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasSelfRepet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'selfrepet.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -120,17 +120,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">self_detection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Self-Repetition detection.</span>
+<span class="w">    </span><span class="sd">"""Self-Repetition detection.</span>
 
 <span class="sd">        :param tier: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s1">&#39;SR-Source&#39;</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s1">&#39;SR-SrcStrain&#39;</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s1">&#39;SR-SrcLen&#39;</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s1">&#39;SR-SrcType&#39;</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s1">&#39;SR-Repet&#39;</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s1">'SR-Source'</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s1">'SR-SrcStrain'</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s1">'SR-SrcLen'</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s1">'SR-SrcType'</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s1">'SR-Repet'</span><span class="p">)</span>
     <span class="n">stop_words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_words</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">stop_words</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">merge</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">repetition</span> <span class="o">=</span> <span class="n">SelfRepetition</span><span class="p">(</span><span class="n">stop_words</span><span class="p">)</span>
@@ -178,23 +178,23 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on an input.</span>
 
 <span class="sd">        :param input_files: (list of str) Time-aligned tokens</span>
 <span class="sd">        :param output: (str) the output file name</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     <span class="n">tier_tokens</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">aligned_tokens</span><span class="p">(</span><span class="n">trs_input</span><span class="p">)</span>
     <span class="n">tier_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_word_strain</span><span class="p">(</span><span class="n">tier_tokens</span><span class="p">)</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">self_detection</span><span class="p">(</span><span class="n">tier_input</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;self_repetition_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'self_repetition_result_of'</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">transfer_metadata</span><span class="p">(</span><span class="n">trs_input</span><span class="p">,</span> <span class="n">trs_output</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_word_strain</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_input</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;stopwords&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'stopwords'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">make_stop_words</span><span class="p">(</span><span class="n">tier_input</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -223,8 +223,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-srepet&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation uses in an output filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="s1">'-srepet'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -243,8 +243,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation expects for its input filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-palign&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation expects for its input filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'inputpattern'</span><span class="p">,</span> <span class="s1">'-palign'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -283,16 +283,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">__find_next_break</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">span</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the index of the next interval representing a break.</span>
+<span class="w">    </span><span class="sd">"""Return the index of the next interval representing a break.</span>
 
-<span class="sd">        It depends on the &#39;span&#39; value.</span>
+<span class="sd">        It depends on the 'span' value.</span>
 
 <span class="sd">        :param tier: (sppasTier)</span>
 <span class="sd">        :param start: (int) the position of the token where the search will start</span>
 <span class="sd">        :param span: (int)</span>
 <span class="sd">        :returns: (int) index of the next interval corresponding to the span</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">nb_breaks</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">tier</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">serialize_labels</span><span class="p">(</span><span class="n">tier</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get_labels</span><span class="p">())</span> <span class="o">==</span> <span class="n">SIL_ORTHO</span><span class="p">:</span>
@@ -314,7 +314,7 @@ View Source
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__fix_indexes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">tok_start</span><span class="p">,</span> <span class="n">shift</span><span class="p">):</span>
     <span class="n">tok_start</span> <span class="o">+=</span> <span class="n">shift</span>
     <span class="n">tok_search</span> <span class="o">=</span> <span class="n">sppasSelfRepet</span><span class="o">.</span><span class="n">__find_next_break</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">tok_start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">span</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">tok_end</span> <span class="o">=</span> <span class="n">sppasSelfRepet</span><span class="o">.</span><span class="n">__find_next_break</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">tok_start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">span</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;span&#39;</span><span class="p">])</span>
+    <span class="n">tok_end</span> <span class="o">=</span> <span class="n">sppasSelfRepet</span><span class="o">.</span><span class="n">__find_next_break</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">tok_start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">span</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'span'</span><span class="p">])</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">tok_start</span><span class="p">,</span> <span class="n">tok_search</span><span class="p">,</span> <span class="n">tok_end</span><span class="p">)</span>
 </code></pre></div>
 
@@ -350,7 +350,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">__add_repetition</span><span class="p">(</span><span class="n">repetition</span><span class="p">,</span> <span class="n">spk_tier</span><span class="p">,</span> <span class="n">start_idx</span><span class="p">,</span> <span class="n">trs_out</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a repetition - source and echos - in tiers.</span>
+<span class="w">    </span><span class="sd">"""Add a repetition - source and echos - in tiers.</span>
 
 <span class="sd">        :param repetition: (DataRepetition)</span>
 <span class="sd">        :param spk_tier: (sppasTier) The tier of the speaker (to detect sources)</span>
@@ -358,17 +358,17 @@ View Source
 <span class="sd">        :param trs_out: (sppasTranscription)</span>
 <span class="sd">        :returns: (bool) the repetition was added or not</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">src_tier</span> <span class="o">=</span> <span class="n">trs_out</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;SR-Source&#39;</span><span class="p">)</span>
-    <span class="n">echo_tier</span> <span class="o">=</span> <span class="n">trs_out</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;SR-Repet&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">src_tier</span> <span class="o">=</span> <span class="n">trs_out</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'SR-Source'</span><span class="p">)</span>
+    <span class="n">echo_tier</span> <span class="o">=</span> <span class="n">trs_out</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'SR-Repet'</span><span class="p">)</span>
     <span class="n">sr_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">src_tier</span><span class="p">)</span>
     <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">repetition</span><span class="o">.</span><span class="n">get_source</span><span class="p">()</span>
     <span class="n">src_begin</span> <span class="o">=</span> <span class="n">spk_tier</span><span class="p">[</span><span class="n">start_idx</span> <span class="o">+</span> <span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">get_lowest_localization</span><span class="p">()</span>
     <span class="n">src_end</span> <span class="o">=</span> <span class="n">spk_tier</span><span class="p">[</span><span class="n">start_idx</span> <span class="o">+</span> <span class="n">e</span><span class="p">]</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">()</span>
     <span class="n">iitime</span> <span class="o">=</span> <span class="n">sppasInterval</span><span class="p">(</span><span class="n">src_begin</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">src_end</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="n">src_tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">iitime</span><span class="p">),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="s1">&#39;S&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sr_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))))</span>
-        <span class="n">src_id</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">src_tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">iitime</span><span class="p">),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="s1">'S'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sr_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))))</span>
+        <span class="n">src_id</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="n">echo_labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -380,22 +380,22 @@ View Source
         <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">anns</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">lbl</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
                 <span class="n">echo_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lbl</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="n">echo_tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">eetime</span><span class="p">),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="s1">&#39;R&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sr_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))))</span>
-        <span class="n">a</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;is_self_repetition_of&#39;</span><span class="p">,</span> <span class="n">src_id</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">echo_tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">eetime</span><span class="p">),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="s1">'R'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sr_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))))</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'is_self_repetition_of'</span><span class="p">,</span> <span class="n">src_id</span><span class="p">)</span>
     <span class="n">anns</span> <span class="o">=</span> <span class="n">spk_tier</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">src_begin</span><span class="p">,</span> <span class="n">src_end</span><span class="p">)</span>
     <span class="n">src_labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">anns</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">lbl</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
             <span class="n">src_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lbl</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">trs_out</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;SR-SrcStrain&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">iitime</span><span class="p">),</span> <span class="n">src_labels</span><span class="p">)</span>
-    <span class="n">a</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;source_id&#39;</span><span class="p">,</span> <span class="n">src_id</span><span class="p">)</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">trs_out</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;SR-SrcLen&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">iitime</span><span class="p">),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">src_labels</span><span class="p">),</span> <span class="s1">&#39;int&#39;</span><span class="p">)))</span>
-    <span class="n">a</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;source_id&#39;</span><span class="p">,</span> <span class="n">src_id</span><span class="p">)</span>
-    <span class="n">or_type</span> <span class="o">=</span> <span class="s1">&#39;variation&#39;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">trs_out</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'SR-SrcStrain'</span><span class="p">)</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">iitime</span><span class="p">),</span> <span class="n">src_labels</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'source_id'</span><span class="p">,</span> <span class="n">src_id</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">trs_out</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'SR-SrcLen'</span><span class="p">)</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">iitime</span><span class="p">),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">src_labels</span><span class="p">),</span> <span class="s1">'int'</span><span class="p">)))</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'source_id'</span><span class="p">,</span> <span class="n">src_id</span><span class="p">)</span>
+    <span class="n">or_type</span> <span class="o">=</span> <span class="s1">'variation'</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">repetition</span><span class="o">.</span><span class="n">get_echos</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">or_type</span> <span class="o">=</span> <span class="s1">&#39;split:</span><span class="si">{:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">repetition</span><span class="o">.</span><span class="n">get_echos</span><span class="p">()))</span>
+        <span class="n">or_type</span> <span class="o">=</span> <span class="s1">'split:</span><span class="si">{:d}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">repetition</span><span class="o">.</span><span class="n">get_echos</span><span class="p">()))</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">src_labels</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">echo_labels</span><span class="p">):</span>
-        <span class="n">or_type</span> <span class="o">=</span> <span class="s1">&#39;reduction&#39;</span>
+        <span class="n">or_type</span> <span class="o">=</span> <span class="s1">'reduction'</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">src_labels</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">echo_labels</span><span class="p">):</span>
         <span class="n">equals</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="n">ls</span><span class="p">,</span> <span class="n">le</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">src_labels</span><span class="p">,</span> <span class="n">echo_labels</span><span class="p">):</span>
@@ -403,10 +403,10 @@ View Source
                 <span class="n">equals</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="k">break</span>
         <span class="k">if</span> <span class="n">equals</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">or_type</span> <span class="o">=</span> <span class="s1">&#39;strict&#39;</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">trs_out</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;SR-SrcType&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">iitime</span><span class="p">),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">or_type</span><span class="p">)))</span>
-    <span class="n">a</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;source_id&#39;</span><span class="p">,</span> <span class="n">src_id</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;OR </span><span class="si">{:d}</span><span class="s1">. </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> -&gt; </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sr_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">src_labels</span><span class="p">,</span> <span class="n">echo_labels</span><span class="p">,</span> <span class="n">or_type</span><span class="p">))</span>
+            <span class="n">or_type</span> <span class="o">=</span> <span class="s1">'strict'</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">trs_out</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'SR-SrcType'</span><span class="p">)</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">iitime</span><span class="p">),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">or_type</span><span class="p">)))</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'source_id'</span><span class="p">,</span> <span class="n">src_id</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'OR </span><span class="si">{:d}</span><span class="s1">. </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> -&gt; </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sr_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">src_labels</span><span class="p">,</span> <span class="n">echo_labels</span><span class="p">,</span> <span class="n">or_type</span><span class="p">))</span>
     <span class="k">return</span> <span class="kc">True</span>
 </code></pre></div>
 
@@ -418,7 +418,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

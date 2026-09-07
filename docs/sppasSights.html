@@ -105,12 +105,12 @@ are: 64 + 68<em>64 + 2</em>68<em>24 + 1</em>68*24 = 9312</li>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb</span><span class="o">=</span><span class="mi">68</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constructor of the sppasSights class.</span>
+<span class="w">    </span><span class="sd">"""Constructor of the sppasSights class.</span>
 
 <span class="sd">    :param nb: (int) Number of expected sights</span>
 <span class="sd">    :raises: sppasTypeError: If the number parameter is not an integer</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__nb</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unsigned</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">nb</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">nb</span>
@@ -143,11 +143,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_x</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of x values.</span>
+<span class="w">    </span><span class="sd">"""Return the list of x values.</span>
 
 <span class="sd">        :return: (list) The list that contains all x values</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </code></pre></div>
 
@@ -173,11 +173,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_y</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; Return the list of y values.</span>
+<span class="w">    </span><span class="sd">""" Return the list of y values.</span>
 
 <span class="sd">        :return: (list) The list that contains all y values</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </code></pre></div>
 
@@ -203,12 +203,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_z</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of z values or None.</span>
+<span class="w">    </span><span class="sd">"""Return the list of z values or None.</span>
 
 <span class="sd">        :return: (list or None) The list that contains all z values,</span>
 <span class="sd">        or None if 3D axis is not set.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__z</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__z</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -236,12 +236,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_score</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of confidence score values or None.</span>
+<span class="w">    </span><span class="sd">"""Return the list of confidence score values or None.</span>
 
 <span class="sd">        :return: (list or None) The list that contains all score values,</span>
 <span class="sd">        or None if scores are not set.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -283,7 +283,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the x-axe value of the sight at the given index.</span>
+<span class="w">    </span><span class="sd">"""Return the x-axe value of the sight at the given index.</span>
 
 <span class="sd">        :param index: (int) Index of the sight</span>
 <span class="sd">        :raises: sppasTypeError: If the index is not an integer</span>
@@ -291,7 +291,7 @@ View Source
 <span class="sd">        :raises: IndexRangeException: If the index is superior of the number of sights</span>
 <span class="sd">        :return: (int) The x value</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">checked_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">[</span><span class="n">checked_index</span><span class="p">]</span>
 </code></pre></div>
@@ -332,7 +332,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the y-axe value of the sight at the given index.</span>
+<span class="w">    </span><span class="sd">"""Return the y-axe value of the sight at the given index.</span>
 
 <span class="sd">        :param index: (int) Index of the sight</span>
 <span class="sd">        :raises: sppasTypeError: If the index is not an integer</span>
@@ -340,7 +340,7 @@ View Source
 <span class="sd">        :raises: IndexRangeException: If the index is superior of the number of sights</span>
 <span class="sd">        :return: (int) The y value</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">checked_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">[</span><span class="n">checked_index</span><span class="p">]</span>
 </code></pre></div>
@@ -381,7 +381,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">z</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the z-axe value of the sight at the given index or None.</span>
+<span class="w">    </span><span class="sd">"""Return the z-axe value of the sight at the given index or None.</span>
 
 <span class="sd">        :param index: (int) Index of the sight</span>
 <span class="sd">        :raises: sppasTypeError: If the index is not an integer</span>
@@ -389,7 +389,7 @@ View Source
 <span class="sd">        :raises: IndexRangeException: If the index is superior of the number of sights</span>
 <span class="sd">        :return: (int or None) The z value or None if 3D axis is not set</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__z</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">checked_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
@@ -432,7 +432,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the score of the sight at the given index or None.</span>
+<span class="w">    </span><span class="sd">"""Return the score of the sight at the given index or None.</span>
 
 <span class="sd">        :param index: (int) Index of the sight</span>
 <span class="sd">        :raises: sppasTypeError: If the index is not an integer</span>
@@ -440,7 +440,7 @@ View Source
 <span class="sd">        :raises: IndexRangeException: If the index is superior of the number of sights</span>
 <span class="sd">        :return: (float or None) The score value or None if scores are not set</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">checked_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
@@ -483,7 +483,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_sight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the (x, y, z, s) of the given sight.</span>
+<span class="w">    </span><span class="sd">"""Return the (x, y, z, s) of the given sight.</span>
 
 <span class="sd">        :param index: (int) Index of the sight</span>
 <span class="sd">        :raises: sppasTypeError: If the index is not an integer</span>
@@ -491,7 +491,7 @@ View Source
 <span class="sd">        :raises: IndexRangeException: If the index is superior of the number of sights</span>
 <span class="sd">        :return: (tuple[int, int, int, float]) The data of the sight associated with the given index</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">checked_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">[</span><span class="n">checked_index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">[</span><span class="n">checked_index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">(</span><span class="n">checked_index</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">checked_index</span><span class="p">))</span>
 </code></pre></div>
@@ -530,7 +530,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_sight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the sight at the given index.</span>
+<span class="w">    </span><span class="sd">"""Set the sight at the given index.</span>
 
 <span class="sd">        :param index: (int) Index of the sight</span>
 <span class="sd">        :param x: (int) pixel position on the x-axis (width)</span>
@@ -541,7 +541,7 @@ View Source
 <span class="sd">        :raises: NegativeValueError: If the index is negative (Impossible for an index !)</span>
 <span class="sd">        :raises: IndexRangeException: If the index is superior of the number of sights</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">checked_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
     <span class="n">checked_x</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unsigned</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">checked_y</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unsigned</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -582,7 +582,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_sight_z</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a z value to the sight at the given index.</span>
+<span class="w">    </span><span class="sd">"""Set a z value to the sight at the given index.</span>
 
 <span class="sd">        :param index: (int) Index of the sight</span>
 <span class="sd">        :param z: (int or None) An optional z value</span>
@@ -590,7 +590,7 @@ View Source
 <span class="sd">        :raises: NegativeValueError: If the index is negative (Impossible for an index !)</span>
 <span class="sd">        :raises: IndexRangeException: If the index is superior of the number of sights</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">checked_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__z</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -633,7 +633,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_sight_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a score to the sight at the given index.</span>
+<span class="w">    </span><span class="sd">"""Set a score to the sight at the given index.</span>
 
 <span class="sd">        :param index: (int) Index of the sight</span>
 <span class="sd">        :param score: (float or None) An optional confidence score</span>
@@ -641,7 +641,7 @@ View Source
 <span class="sd">        :raises: NegativeValueError: If the index is negative (Impossible for an index !)</span>
 <span class="sd">        :raises: IndexRangeException: If the index is superior of the number of sights</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">checked_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">score</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -669,7 +669,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reset all values to their default.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Reset all values to their default."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nb</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nb</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__z</span> <span class="o">=</span> <span class="kc">None</span>
@@ -698,11 +698,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of the current sppasSights instance.</span>
+<span class="w">    </span><span class="sd">"""Return a deep copy of the current sppasSights instance.</span>
 
 <span class="sd">        :return: (sppasSights) The copy of the instance</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">copied</span> <span class="o">=</span> <span class="n">sppasSights</span><span class="p">(</span><span class="n">nb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__nb</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__nb</span><span class="p">):</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sight</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
@@ -746,7 +746,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raise an exception if the given index is not valid.</span>
+<span class="w">    </span><span class="sd">"""Raise an exception if the given index is not valid.</span>
 
 <span class="sd">        :param value: (int) The index to check</span>
 <span class="sd">        :raises: sppasTypeError: If the index is not an integer</span>
@@ -754,9 +754,9 @@ View Source
 <span class="sd">        :raises: IndexRangeException: If the index is superior of the number of sights</span>
 <span class="sd">        :return: (int) The value given</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">'int'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">NegativeValueError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nb</span> <span class="o">&lt;</span> <span class="n">value</span><span class="p">:</span>
@@ -786,11 +786,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_mean_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the mean score or None.</span>
+<span class="w">    </span><span class="sd">"""Return the mean score or None.</span>
 
 <span class="sd">        :return: (float or None) The mean score or None if no score is set</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
@@ -827,14 +827,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">intermediate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the sights with the intermediate positions.</span>
+<span class="w">    </span><span class="sd">"""Return the sights with the intermediate positions.</span>
 
 <span class="sd">        :param other: (sppasSights) The other instance of sights</span>
 <span class="sd">        :return: (sppasSights) The computed intermediate sights</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasSights</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasSights&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">'sppasSights'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nb</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">sppasValueError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__nb</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
     <span class="n">intermediate_sights</span> <span class="o">=</span> <span class="n">sppasSights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__nb</span><span class="p">)</span>
@@ -869,7 +869,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">center</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the center of the sights.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the center of the sights."""</span>
     <span class="n">x_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">)</span>
     <span class="n">x_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">)</span>
     <span class="n">y_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">)</span>
@@ -933,15 +933,15 @@ z' = z<em>c + factor * (z - z</em>c)</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">factor</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">2.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply a scaling transformation with respect to a given center.</span>
+<span class="w">    </span><span class="sd">"""Apply a scaling transformation with respect to a given center.</span>
 
 <span class="sd">        The scaling operation enlarges or shrinks the distance between the</span>
 <span class="sd">        point and the center by a given factor, without affecting the center</span>
 <span class="sd">        itself. The transformation is applied using the following formula:</span>
 
-<span class="sd">            x&#39; = x_c + factor * (x - x_c)</span>
-<span class="sd">            y&#39; = y_c + factor * (y - y_c)</span>
-<span class="sd">            z&#39; = z_c + factor * (z - z_c)</span>
+<span class="sd">            x' = x_c + factor * (x - x_c)</span>
+<span class="sd">            y' = y_c + factor * (y - y_c)</span>
+<span class="sd">            z' = z_c + factor * (z - z_c)</span>
 
 <span class="sd">        where:</span>
 <span class="sd">        - (x, y, z) are the original coordinates of the point,</span>
@@ -958,7 +958,7 @@ View Source
 <span class="sd">        :raises: sppasTypeError: If factor or center is not a valid number</span>
 <span class="sd">        :raises: IndexRangeException: If center index is out of range</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">center_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
     <span class="n">center_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
     <span class="n">center_z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">(</span><span class="n">center</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__z</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
@@ -991,14 +991,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="n">string_builder</span> <span class="o">=</span> <span class="s1">&#39;sppasSights[&#39;</span>
+    <span class="n">string_builder</span> <span class="o">=</span> <span class="s1">'sppasSights['</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__nb</span><span class="p">):</span>
-        <span class="n">string_builder</span> <span class="o">+=</span> <span class="s1">&#39;(</span><span class="si">{0}</span><span class="s1">,</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">string_builder</span> <span class="o">+=</span> <span class="s1">'(</span><span class="si">{0}</span><span class="s1">,</span><span class="si">{1}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__z</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">string_builder</span> <span class="o">+=</span> <span class="s1">&#39;,</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__z</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">string_builder</span> <span class="o">+=</span> <span class="s1">',</span><span class="si">{0}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__z</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">string_builder</span> <span class="o">+=</span> <span class="s1">&#39;: </span><span class="si">{0}</span><span class="s1">), &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="n">string_builder</span> <span class="o">+=</span> <span class="s1">&#39;]&#39;</span>
+            <span class="n">string_builder</span> <span class="o">+=</span> <span class="s1">': </span><span class="si">{0}</span><span class="s1">), '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__confidence</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">string_builder</span> <span class="o">+=</span> <span class="s1">']'</span>
     <span class="k">return</span> <span class="n">string_builder</span>
 </code></pre></div>
 
@@ -1044,7 +1044,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of sights.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of sights."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nb</span>
 </code></pre></div>
 
@@ -1064,7 +1064,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Browse the current sights.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Browse the current sights."""</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__nb</span><span class="p">):</span>
         <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sight</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </code></pre></div>
@@ -1106,11 +1106,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return true if value in sights -- score is ignored.</span>
+<span class="w">    </span><span class="sd">"""Return true if value in sights -- score is ignored.</span>
 
 <span class="sd">        :param other: A list/tuple of (x,y,...)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -1136,7 +1136,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

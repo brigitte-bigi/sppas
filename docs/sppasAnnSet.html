@@ -85,7 +85,7 @@ A sppasAnnSet() manages a dictionary with:</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasAnnSet instance.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create a sppasAnnSet instance."""</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasAnnSet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 </code></pre></div>
 
@@ -110,11 +110,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a deep copy of self.</span>
+<span class="w">    </span><span class="sd">"""Make a deep copy of self.</span>
 
 <span class="sd">        Overridden to return a sppasAnnSet() instead of a sppasBaseSet().</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">sppasAnnSet</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_set</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -149,15 +149,15 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AnnSet&#39;</span><span class="p">,</span> <span class="n">annot_value</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a tier from the data set.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'AnnSet'</span><span class="p">,</span> <span class="n">annot_value</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Create a tier from the data set.</span>
 
 <span class="sd">        :param name: (str) Name of the tier to be returned</span>
 <span class="sd">        :param annot_value: (bool) format of the resulting annotation label.             By default, the label of the annotation is used. Instead,             its value in the data set is used.</span>
 
 <span class="sd">        :returns: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_set</span><span class="p">:</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -169,7 +169,7 @@ View Source
                 <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
         <span class="n">new_ann</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">labels</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_meta_keys</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s1">'id'</span><span class="p">:</span>
                 <span class="n">new_ann</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">tier</span>
 </code></pre></div>
@@ -200,11 +200,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Implements the &#39;&amp;&#39; operator between 2 data sets.</span>
+<span class="w">    </span><span class="sd">"""Implements the '&amp;' operator between 2 data sets.</span>
 
 <span class="sd">        Overridden to return a sppasAnnSet() instead of a sppasBaseSet().</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">sppasAnnSet</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">other</span><span class="p">:</span>
@@ -221,7 +221,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

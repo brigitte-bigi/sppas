@@ -72,9 +72,9 @@ depending on the type of the tags.</p>
 <h5>Example</h5>
 
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">tc</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="p">()</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">tc</span><span class="o">.</span><span class="n">exact</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">))</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">tc</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">](</span><span class="n">sppasTag</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">))</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">tc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;exact&#39;</span><span class="p">)(</span><span class="n">sppasTag</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">))</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">tc</span><span class="o">.</span><span class="n">exact</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="s2">"abc"</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s2">"abc"</span><span class="p">))</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">tc</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'exact'</span><span class="p">](</span><span class="n">sppasTag</span><span class="p">(</span><span class="s2">"abc"</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s2">"abc"</span><span class="p">))</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">tc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'exact'</span><span class="p">)(</span><span class="n">sppasTag</span><span class="p">(</span><span class="s2">"abc"</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s2">"abc"</span><span class="p">))</span>
 </code></pre></div>
 
     </article>
@@ -94,21 +94,21 @@ depending on the type of the tags.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasTagCompare instance.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create a sppasTagCompare instance."""</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasTagCompare</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">exact</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;iexact&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">iexact</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;startswith&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">startswith</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;istartswith&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">istartswith</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;endswith&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">endswith</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;iendswith&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">iendswith</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;contains&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">contains</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;icontains&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">icontains</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;regexp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">regexp</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;greater&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">greater</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;lower&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">lower</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;equal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">equal</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">&#39;bool&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">bool</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'exact'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">exact</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'iexact'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">iexact</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'startswith'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">startswith</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'istartswith'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">istartswith</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'endswith'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">endswith</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'iendswith'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">iendswith</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'contains'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">contains</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'icontains'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">icontains</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'regexp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">regexp</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'greater'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">greater</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'lower'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">lower</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'equal'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">equal</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="s1">'bool'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="o">.</span><span class="n">bool</span>
 </code></pre></div>
 
     </details>
@@ -148,16 +148,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">exact</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test if two texts strictly contain the same characters.</span>
+<span class="w">    </span><span class="sd">"""Test if two texts strictly contain the same characters.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param text: (unicode) Unicode string to be compared with.</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span> <span class="o">==</span> <span class="n">text</span>
@@ -197,16 +197,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">iexact</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Case-insensitive exact.</span>
+<span class="w">    </span><span class="sd">"""Case-insensitive exact.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param text: (unicode) Unicode string to be compared with.</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
@@ -246,16 +246,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">startswith</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test if first text starts with the characters of the second text.</span>
+<span class="w">    </span><span class="sd">"""Test if first text starts with the characters of the second text.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param text: (unicode) Unicode string to be compared with.</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
@@ -295,16 +295,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">istartswith</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Case-insensitive startswith.</span>
+<span class="w">    </span><span class="sd">"""Case-insensitive startswith.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param text: (unicode) Unicode string to be compared with.</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
@@ -344,16 +344,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">endswith</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test if first text ends with the characters of the second text.</span>
+<span class="w">    </span><span class="sd">"""Test if first text ends with the characters of the second text.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param text: (unicode) Unicode string to be compared with.</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
@@ -393,16 +393,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">iendswith</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Case-insensitive endswith.</span>
+<span class="w">    </span><span class="sd">"""Case-insensitive endswith.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param text: (unicode) Unicode string to be compared with.</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
@@ -442,16 +442,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">contains</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test if the first text contains the second text.</span>
+<span class="w">    </span><span class="sd">"""Test if the first text contains the second text.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param text: (unicode) Unicode string to be compared with.</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span>
@@ -491,16 +491,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">icontains</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Case-insensitive contains.</span>
+<span class="w">    </span><span class="sd">"""Case-insensitive contains.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param text: (unicode) Unicode string to be compared with.</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text_type</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
@@ -540,16 +540,16 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">regexp</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;test if text matches pattern.</span>
+<span class="w">    </span><span class="sd">"""test if text matches pattern.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param pattern: (unicode) Pattern to search.</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span>
     <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
 </code></pre></div>
@@ -588,20 +588,20 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">equal</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if numerical value of the tag is equal to x.</span>
+<span class="w">    </span><span class="sd">"""Return True if numerical value of the tag is equal to x.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param x: (int, float)</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;int/float&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'int'</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'int/float'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sppasType</span><span class="p">()</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;int/float&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">'int/float'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_typed_content</span><span class="p">()</span> <span class="o">==</span> <span class="n">x</span>
 </code></pre></div>
 
@@ -639,20 +639,20 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">greater</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if numerical value of the tag is greater than x.</span>
+<span class="w">    </span><span class="sd">"""Return True if numerical value of the tag is greater than x.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param x: (int, float)</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;int/float&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'int'</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'int/float'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sppasType</span><span class="p">()</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;int/float&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">'int/float'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_typed_content</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">x</span>
 </code></pre></div>
 
@@ -690,20 +690,20 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">lower</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if numerical value of the tag is lower than x.</span>
+<span class="w">    </span><span class="sd">"""Return True if numerical value of the tag is lower than x.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param x: (int, float)</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;int/float&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'int'</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'int/float'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sppasType</span><span class="p">()</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;int/float&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">'int/float'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_typed_content</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">x</span>
 </code></pre></div>
 
@@ -741,20 +741,20 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">bool</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if boolean value of the tag is equal to boolean x.</span>
+<span class="w">    </span><span class="sd">"""Return True if boolean value of the tag is equal to boolean x.</span>
 
 <span class="sd">        :param tag: (sppasTag) Tag to compare.</span>
 <span class="sd">        :param x: (bool)</span>
 <span class="sd">        :returns: (bool)</span>
 <span class="sd">        :raises: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">sppasTag</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;sppasTag&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'sppasTag'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">'bool'</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">'bool'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sppasType</span><span class="p">()</span><span class="o">.</span><span class="n">is_bool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">'bool'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tag</span><span class="o">.</span><span class="n">get_typed_content</span><span class="p">()</span> <span class="o">==</span> <span class="n">x</span>
 </code></pre></div>
 
@@ -766,7 +766,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

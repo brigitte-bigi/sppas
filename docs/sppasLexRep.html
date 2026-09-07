@@ -90,15 +90,15 @@ results. If None, logs are redirected to the default logging system.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasLexVar instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasLexVar instance.</span>
 
 <span class="sd">    Log is used for a better communication of the annotation process and its</span>
 <span class="sd">    results. If None, logs are redirected to the default logging system.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasLexRep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;lexrep.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasLexRep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'lexrep.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__rules</span> <span class="o">=</span> <span class="n">OtherRules</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stop_words</span><span class="p">)</span>
 </code></pre></div>
 
@@ -127,22 +127,22 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+<span class="w">    </span><span class="sd">"""Fix all options.</span>
 
 <span class="sd">        :param options: list of sppasOption instances</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;spandur&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'spandur'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_span_duration</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;span&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'span'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_span</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;stopwords&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'stopwords'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_stopwords</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;alpha&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'alpha'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'pattern'</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -170,14 +170,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_span</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the max span, in number of words.</span>
+<span class="w">    </span><span class="sd">"""Set the max span, in number of words.</span>
 
 <span class="sd">        :param value: (int) Max nb of tokens in a span window.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">200</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid span value&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;span&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid span value'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'span'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -202,12 +202,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_span_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the spandur option.</span>
+<span class="w">    </span><span class="sd">"""Set the spandur option.</span>
 
 <span class="sd">        :param value: (float, int) Max duration of a span window.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;spandur&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'spandur'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -232,12 +232,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_stopwords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the stopwords option.</span>
+<span class="w">    </span><span class="sd">"""Set the stopwords option.</span>
 
 <span class="sd">        :param value: (bool) Enable the fact to add estimated stopwords</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;stopwords&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'stopwords'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -262,14 +262,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the alpha option.</span>
+<span class="w">    </span><span class="sd">"""Set the alpha option.</span>
 
 <span class="sd">        :param value: (float) Coefficient to estimated stopwords</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mf">0.1</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mf">2.0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid alpha value&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid alpha value'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'alpha'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -302,13 +302,13 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">tier_to_list</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a list with the tokens contained in a tier.</span>
+<span class="w">    </span><span class="sd">"""Create a list with the tokens contained in a tier.</span>
 
 <span class="sd">        :param tier: (sppasTier)</span>
 <span class="sd">        :param loc: (bool) if true create the corresponding list of sppasLocation()</span>
 <span class="sd">        :returns:  (list, list) list of unicode content and list of location</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">content</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">localiz</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">tier</span><span class="p">:</span>
@@ -356,7 +356,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_longest</span><span class="p">(</span><span class="n">speaker1</span><span class="p">,</span> <span class="n">speaker2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the index of the last token of the longest repeated sequence.</span>
+<span class="w">    </span><span class="sd">"""Return the index of the last token of the longest repeated sequence.</span>
 
 <span class="sd">        No matter if a non-speech event occurs in the middle of the repeated</span>
 <span class="sd">        sequence and no matter if a non-speech event occurs in the middle of</span>
@@ -367,7 +367,7 @@ View Source
 <span class="sd">        :param speaker2: (DataSpeaker) Entries of speaker 2</span>
 <span class="sd">        :returns: (int) Index or -1</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">last_token</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">for</span> <span class="n">index1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">speaker1</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">speaker1</span><span class="o">.</span><span class="n">is_word</span><span class="p">(</span><span class="n">index1</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -410,14 +410,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index1</span><span class="p">,</span> <span class="n">speaker1</span><span class="p">,</span> <span class="n">speaker2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append (or not) a repetition.</span>
+<span class="w">    </span><span class="sd">"""Append (or not) a repetition.</span>
 
 <span class="sd">        :param index1: (int) end index of the entry of the source (speaker1)</span>
 <span class="sd">        :param speaker1: (DataSpeaker) Entries of speaker 1</span>
 <span class="sd">        :param speaker2: (DataSpeaker) Entries of speaker 2</span>
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">keep_me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rules</span><span class="o">.</span><span class="n">rule_syntagme</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index1</span><span class="p">,</span> <span class="n">speaker1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">keep_me</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">keep_me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rules</span><span class="o">.</span><span class="n">rule_strict</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index1</span><span class="p">,</span> <span class="n">speaker1</span><span class="p">,</span> <span class="n">speaker2</span><span class="p">)</span>
@@ -454,14 +454,14 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_tier</span><span class="p">(</span><span class="n">sources</span><span class="p">,</span> <span class="n">locations</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a tier from content end localization lists.</span>
+<span class="w">    </span><span class="sd">"""Create a tier from content end localization lists.</span>
 
 <span class="sd">        :param sources: (dict) dict of sources -- in fact, the indexes.</span>
 <span class="sd">        :param locations: (list) list of location corresponding to the tokens</span>
 <span class="sd">        :returns: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">tier_content</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;LexRepContent&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">tier_content</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">'LexRepContent'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">lexreprise</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
         <span class="n">start_idx</span> <span class="o">=</span> <span class="n">lexreprise</span><span class="o">.</span><span class="n">get_start</span><span class="p">()</span>
         <span class="n">end_idx</span> <span class="o">=</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="n">lexreprise</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span>
@@ -503,15 +503,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">windowing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of DataSpeaker matching the given content.</span>
+<span class="w">    </span><span class="sd">"""Return the list of DataSpeaker matching the given content.</span>
 
 <span class="sd">        :param content: (list) List of entries</span>
 <span class="sd">        :param location: (list) List of locations of the entries</span>
 <span class="sd">        :returns: list of DataSpeaker</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">span_tok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;span&#39;</span><span class="p">]</span>
-    <span class="n">span_dur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;spandur&#39;</span><span class="p">]</span>
+<span class="sd">        """</span>
+    <span class="n">span_tok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'span'</span><span class="p">]</span>
+    <span class="n">span_dur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'spandur'</span><span class="p">]</span>
     <span class="n">windows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)):</span>
         <span class="n">end_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">span_tok</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
@@ -527,7 +527,7 @@ View Source
                     <span class="k">break</span>
                 <span class="n">end_size</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">end_size</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">(</span><span class="n">span_tok</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">):</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39; ... window was reduced to </span><span class="si">{}</span><span class="s1"> tokens.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">end_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">' ... window was reduced to </span><span class="si">{}</span><span class="s1"> tokens.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">end_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
         <span class="n">win_tok</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">end_size</span><span class="p">]</span>
         <span class="n">windows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DataSpeaker</span><span class="p">(</span><span class="n">win_tok</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">windows</span>
@@ -556,12 +556,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lexical_variation_detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier1</span><span class="p">,</span> <span class="n">tier2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect the lexical variations between 2 tiers.</span>
+<span class="w">    </span><span class="sd">"""Detect the lexical variations between 2 tiers.</span>
 
 <span class="sd">        :param tier1: (sppasTier)</span>
 <span class="sd">        :param tier2: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">content_tier1</span><span class="p">,</span> <span class="n">loc_tier1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tier_to_list</span><span class="p">(</span><span class="n">tier1</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">content_tier2</span><span class="p">,</span> <span class="n">loc_tier2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tier_to_list</span><span class="p">(</span><span class="n">tier2</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">window_list1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">windowing</span><span class="p">(</span><span class="n">content_tier1</span><span class="p">,</span> <span class="n">loc_tier1</span><span class="p">)</span>
@@ -570,8 +570,8 @@ View Source
     <span class="n">sources2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detect_all_sources</span><span class="p">(</span><span class="n">window_list2</span><span class="p">,</span> <span class="n">window_list1</span><span class="p">)</span>
     <span class="n">tier1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="n">sources1</span><span class="p">,</span> <span class="n">loc_tier1</span><span class="p">)</span>
     <span class="n">tier2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="n">sources2</span><span class="p">,</span> <span class="n">loc_tier2</span><span class="p">)</span>
-    <span class="n">tier1</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier1</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-1&#39;</span><span class="p">)</span>
-    <span class="n">tier2</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier2</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-2&#39;</span><span class="p">)</span>
+    <span class="n">tier1</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier1</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'-1'</span><span class="p">)</span>
+    <span class="n">tier2</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier2</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'-2'</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">tier1</span><span class="p">,</span> <span class="n">tier2</span><span class="p">)</span>
 </code></pre></div>
 
@@ -607,15 +607,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return 2 tiers with aligned tokens.</span>
+<span class="w">    </span><span class="sd">"""Return 2 tiers with aligned tokens.</span>
 
 <span class="sd">        :param input_files: (list)</span>
 <span class="sd">        :raise: NoTierInputError</span>
 <span class="sd">        :return: (sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid format of input files.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid format of input files.'</span><span class="p">)</span>
     <span class="n">tier_src</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -623,7 +623,7 @@ View Source
         <span class="k">if</span> <span class="n">tier_src</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">tier_src</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">aligned_tokens</span><span class="p">(</span><span class="n">trs_input</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tier_src</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;A source tier with time-aligned tokens was expected but not found.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'A source tier with time-aligned tokens was expected but not found.'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">NoTierInputError</span>
     <span class="n">tier_echo</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
@@ -632,7 +632,7 @@ View Source
         <span class="k">if</span> <span class="n">tier_echo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">tier_echo</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">aligned_tokens</span><span class="p">(</span><span class="n">trs_input</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tier_echo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;An echo tier with time-aligned tokens was expected but not found.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'An echo tier with time-aligned tokens was expected but not found.'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">NoTierInputError</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">tier_src</span><span class="p">,</span> <span class="n">tier_echo</span><span class="p">)</span>
 </code></pre></div>
@@ -666,31 +666,31 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on an input.</span>
 
 <span class="sd">        :param input_files: (list of list of str) time-aligned tokens of 2 files</span>
 <span class="sd">        :param output: (str) the output file name</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier_tokens_src</span><span class="p">,</span> <span class="n">tier_tokens_echo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
     <span class="n">tier1</span><span class="p">,</span> <span class="n">tier2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexical_variation_detect</span><span class="p">(</span><span class="n">tier_tokens_src</span><span class="p">,</span> <span class="n">tier_tokens_echo</span><span class="p">)</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'annotation_result_of'</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_word_strain</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">tier_tokens_src</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier_tokens_src</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-1&#39;</span><span class="p">)</span>
+        <span class="n">tier_tokens_src</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier_tokens_src</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'-1'</span><span class="p">)</span>
         <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_tokens_src</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;stopwords&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'stopwords'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">stopwords1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_stop_words</span><span class="p">(</span><span class="n">tier_tokens_src</span><span class="p">)</span>
-        <span class="n">stopwords1</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">stopwords1</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-1&#39;</span><span class="p">)</span>
+        <span class="n">stopwords1</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">stopwords1</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'-1'</span><span class="p">)</span>
         <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stopwords1</span><span class="p">)</span>
     <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier1</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_word_strain</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">tier_tokens_echo</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier_tokens_echo</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-2&#39;</span><span class="p">)</span>
+        <span class="n">tier_tokens_echo</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier_tokens_echo</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'-2'</span><span class="p">)</span>
         <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_tokens_echo</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;stopwords&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'stopwords'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">stopwords2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_stop_words</span><span class="p">(</span><span class="n">tier_tokens_echo</span><span class="p">)</span>
-        <span class="n">stopwords2</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">stopwords2</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-2&#39;</span><span class="p">)</span>
+        <span class="n">stopwords2</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">stopwords2</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'-2'</span><span class="p">)</span>
         <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stopwords2</span><span class="p">)</span>
     <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier2</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -720,8 +720,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-rms&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation uses in an output filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="s1">'-rms'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -749,7 +749,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_get_longest_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_spk1</span><span class="p">,</span> <span class="n">data_spk2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the end-index of the longest selected sequence.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the end-index of the longest selected sequence."""</span>
     <span class="n">spk2_echo_idx</span> <span class="o">=</span> <span class="n">sppasLexRep</span><span class="o">.</span><span class="n">get_longest</span><span class="p">(</span><span class="n">data_spk1</span><span class="p">,</span> <span class="n">data_spk2</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">spk2_echo_idx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">spk2_echo_idx</span><span class="p">,</span> <span class="n">data_spk1</span><span class="p">,</span> <span class="n">data_spk2</span><span class="p">):</span>
@@ -782,7 +782,7 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_add_source</span><span class="p">(</span><span class="n">sources</span><span class="p">,</span> <span class="n">win_idx</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">dataspk</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add the source in the list of sources.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Add the source in the list of sources."""</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">win_idx</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
         <span class="n">lex_reprise</span> <span class="o">=</span> <span class="n">LexReprise</span><span class="p">(</span><span class="n">win_idx</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
         <span class="n">lex_reprise</span><span class="o">.</span><span class="n">set_content</span><span class="p">(</span><span class="n">dataspk</span><span class="p">)</span>
@@ -819,14 +819,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_detect_all_sources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win_spk1</span><span class="p">,</span> <span class="n">win_spk2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return all reprises of speaker1 in speaker2.</span>
+<span class="w">    </span><span class="sd">"""Return all reprises of speaker1 in speaker2.</span>
 
 <span class="sd">        :return: (dict) dict of sources</span>
 
 <span class="sd">        - key: (index_start, index_end)</span>
 <span class="sd">        - value: the number of time the source is repeated</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">sources</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">prev_max_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="n">spk1_widx</span> <span class="o">=</span> <span class="mi">0</span>
@@ -840,7 +840,7 @@ View Source
             <span class="k">if</span> <span class="n">spk2_echo_idx</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">spk1_widx</span> <span class="o">+</span> <span class="n">spk2_echo_idx</span> <span class="o">&gt;</span> <span class="n">prev_max_index</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">spk2_echo_idx</span> <span class="o">&gt;</span> <span class="n">max_index</span><span class="p">:</span>
                     <span class="n">max_index</span> <span class="o">=</span> <span class="n">spk2_echo_idx</span>
-                    <span class="k">if</span> <span class="n">max_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;span&#39;</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">max_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'span'</span><span class="p">]:</span>
                         <span class="k">break</span>
             <span class="n">spk2_widx</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">max_index</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
@@ -871,7 +871,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_merge_sources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sources</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Merge sources if content is the same.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Merge sources if content is the same."""</span>
     <span class="k">return</span> <span class="n">sources</span>
 </code></pre></div>
 
@@ -883,7 +883,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

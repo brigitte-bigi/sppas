@@ -95,7 +95,7 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ioverlays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">coord1</span><span class="p">,</span> <span class="n">coord2</span><span class="p">,</span> <span class="n">nb_img</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">blur</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of the image with other overlaid between coords.</span>
+<span class="w">    </span><span class="sd">"""Return a list of the image with other overlaid between coords.</span>
 
 <span class="sd">        :param other: (sppasImage) Image to overlay</span>
 <span class="sd">        :param coord1: (sppasCoords) Position and optionally size to overlay - src</span>
@@ -104,7 +104,7 @@ View Source
 <span class="sd">        :param blur: (bool)</span>
 <span class="sd">        :return: (list of sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">coord1</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_coords</span><span class="p">(</span><span class="n">coord1</span><span class="p">)</span>
     <span class="n">coord2</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_coords</span><span class="p">(</span><span class="n">coord2</span><span class="p">)</span>
@@ -174,7 +174,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">irotates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle1</span><span class="p">,</span> <span class="n">angle2</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">nb_img</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of the image rotated ranging the given angles.</span>
+<span class="w">    </span><span class="sd">"""Return a list of the image rotated ranging the given angles.</span>
 
 <span class="sd">        :param angle1: (float) Angle start</span>
 <span class="sd">        :param angle2: (float) Angle end</span>
@@ -183,7 +183,7 @@ View Source
 <span class="sd">        :param nb_img: (int) Total number of images</span>
 <span class="sd">        :return: (list of sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">irotate</span><span class="p">(</span><span class="n">angle1</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">nb_img</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
@@ -230,13 +230,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iscales</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">nb_img</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of the image scaled ranging from 1 to the value.</span>
+<span class="w">    </span><span class="sd">"""Return a list of the image scaled ranging from 1 to the value.</span>
 
 <span class="sd">        :param scale: (float) Scale value</span>
 <span class="sd">        :param nb_img: (int) Total number of images</span>
 <span class="sd">        :return: (list of sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irotates</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">nb_img</span><span class="p">)</span>
 </code></pre></div>
 
@@ -269,13 +269,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ifade_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_img</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fade in the image in nb times from the given color.</span>
+<span class="w">    </span><span class="sd">"""Fade in the image in nb times from the given color.</span>
 
 <span class="sd">        :param nb_img: (int) Total number of images of the sequence</span>
 <span class="sd">        :param color: BGR of the color</span>
 <span class="sd">        :return: (list of sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__back</span><span class="o">.</span><span class="n">ialpha</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">direction</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
@@ -298,7 +298,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

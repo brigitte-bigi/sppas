@@ -86,15 +86,15 @@ results. If None, logs are redirected to the default logging system.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasFillIPUs instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasFillIPUs instance.</span>
 
 <span class="sd">    Log is used for a better communication of the annotation process and its</span>
 <span class="sd">    results. If None, logs are redirected to the default logging system.</span>
 
 <span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">sppasFillIPUs</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;fillipus.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasFillIPUs</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'fillipus.json'</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__audio_filename</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
 
@@ -134,7 +134,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+<span class="w">    </span><span class="sd">"""Fix all options.</span>
 
 <span class="sd">        Available options are:</span>
 
@@ -147,18 +147,18 @@ View Source
 
 <span class="sd">        :param options: (sppasOption)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;min_sil&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'min_sil'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_min_sil</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;min_ipu&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'min_ipu'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_min_ipu</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;shift_start&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'shift_start'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_shift_start</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;shift_end&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'shift_end'</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_shift_end</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s1">'pattern'</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -174,7 +174,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_min_sil</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_sil&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_sil'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -187,7 +187,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_min_ipu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_ipu&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_ipu'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -200,7 +200,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_shift_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_start&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_start'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -213,7 +213,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_shift_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_end&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_end'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -238,12 +238,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_min_sil</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the initial minimum duration of a silence.</span>
+<span class="w">    </span><span class="sd">"""Fix the initial minimum duration of a silence.</span>
 
 <span class="sd">        :param value: (float) Duration in seconds.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_sil&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_sil'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -268,12 +268,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_min_ipu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the initial minimum duration of an IPU.</span>
+<span class="w">    </span><span class="sd">"""Fix the initial minimum duration of an IPU.</span>
 
 <span class="sd">        :param value: (float) Duration in seconds.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_ipu&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_ipu'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -298,12 +298,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_shift_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the start boundary shift value.</span>
+<span class="w">    </span><span class="sd">"""Fix the start boundary shift value.</span>
 
 <span class="sd">        :param value: (float) Duration in seconds.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_start'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -328,12 +328,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_shift_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the end boundary shift value.</span>
+<span class="w">    </span><span class="sd">"""Fix the end boundary shift value.</span>
 
 <span class="sd">        :param value: (float) Duration in seconds.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_end'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
     </details>
@@ -365,28 +365,28 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">text_tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a tier with transcription aligned to the audio.</span>
+<span class="w">    </span><span class="sd">"""Return a tier with transcription aligned to the audio.</span>
 
 <span class="sd">        :param channel: (Channel) Input audio channel</span>
 <span class="sd">        :param text_tier: (sppasTier) Input transcription text in a PointTier</span>
 <span class="sd">        :return: (sppasTier | None) Tier with transcription aligned to the audio</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">units</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">text_tier</span><span class="p">:</span>
         <span class="n">units</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">serialize_labels</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">get_labels</span><span class="p">()))</span>
     <span class="n">ipus</span> <span class="o">=</span> <span class="p">[</span><span class="n">unit</span> <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">units</span> <span class="k">if</span> <span class="n">unit</span> <span class="o">!=</span> <span class="n">SIL_ORTHO</span><span class="p">]</span>
     <span class="n">filler</span> <span class="o">=</span> <span class="n">FillIPUs</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
-    <span class="n">filler</span><span class="o">.</span><span class="n">set_min_ipu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_ipu&#39;</span><span class="p">])</span>
-    <span class="n">filler</span><span class="o">.</span><span class="n">set_min_sil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_sil&#39;</span><span class="p">])</span>
-    <span class="n">filler</span><span class="o">.</span><span class="n">set_shift_start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_start&#39;</span><span class="p">])</span>
-    <span class="n">filler</span><span class="o">.</span><span class="n">set_shift_end</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;shift_end&#39;</span><span class="p">])</span>
+    <span class="n">filler</span><span class="o">.</span><span class="n">set_min_ipu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_ipu'</span><span class="p">])</span>
+    <span class="n">filler</span><span class="o">.</span><span class="n">set_min_sil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'min_sil'</span><span class="p">])</span>
+    <span class="n">filler</span><span class="o">.</span><span class="n">set_shift_start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_start'</span><span class="p">])</span>
+    <span class="n">filler</span><span class="o">.</span><span class="n">set_shift_end</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">'shift_end'</span><span class="p">])</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">filler</span><span class="o">.</span><span class="n">fix_threshold_durations</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ipus</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">tracks</span> <span class="o">=</span> <span class="n">filler</span><span class="o">.</span><span class="n">get_tracks</span><span class="p">(</span><span class="n">time_domain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasSearchIPUs</span><span class="o">.</span><span class="n">tracks_to_tier</span><span class="p">(</span><span class="n">tracks</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">get_duration</span><span class="p">(),</span> <span class="n">filler</span><span class="o">.</span><span class="n">get_vagueness</span><span class="p">())</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;Transcription&#39;</span><span class="p">)</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">'Transcription'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_set_meta</span><span class="p">(</span><span class="n">filler</span><span class="p">,</span> <span class="n">tier</span><span class="p">)</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">tier</span><span class="p">:</span>
@@ -428,19 +428,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the channel and the tier with ipus.</span>
+<span class="w">    </span><span class="sd">"""Return the channel and the tier with ipus.</span>
 
 <span class="sd">        :param input_files: (list)</span>
 <span class="sd">        :raise: NoTierInputError</span>
 <span class="sd">        :return: (Channel, sppasTier)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_extensions</span><span class="p">()</span>
     <span class="n">audio_ext</span> <span class="o">=</span> <span class="n">ext</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">annot_ext</span> <span class="o">=</span> <span class="n">ext</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">channel</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">audio_filename</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">audio_filename</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
         <span class="n">fn</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">channel</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fe</span> <span class="ow">in</span> <span class="n">audio_ext</span><span class="p">:</span>
@@ -457,21 +457,21 @@ View Source
             <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
             <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
             <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">transcription</span><span class="p">(</span><span class="n">trs_input</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s1">&#39;raw&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="k">if</span> <span class="s1">'raw'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
                 <span class="n">tier</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;A tier with the raw transcription was not found.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'A tier with the raw transcription was not found.'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">NoTierInputError</span>
     <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The tier with the raw transcription should be of type: Point.&#39;</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">&#39;PointTier&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'The tier with the raw transcription should be of type: Point.'</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">'PointTier'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">EmptyInputError</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
     <span class="k">if</span> <span class="n">channel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;No audio file found or invalid one. An audio file with only one channel was expected.&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'No audio file found or invalid one. An audio file with only one channel was expected.'</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">NoChannelInputError</span>
     <span class="n">extm</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">audio_filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
-    <span class="n">media</span> <span class="o">=</span> <span class="n">sppasMedia</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">audio_filename</span><span class="p">),</span> <span class="n">mime_type</span><span class="o">=</span><span class="s1">&#39;audio/&#39;</span> <span class="o">+</span> <span class="n">extm</span><span class="p">)</span>
+    <span class="n">media</span> <span class="o">=</span> <span class="n">sppasMedia</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">audio_filename</span><span class="p">),</span> <span class="n">mime_type</span><span class="o">=</span><span class="s1">'audio/'</span> <span class="o">+</span> <span class="n">extm</span><span class="p">)</span>
     <span class="n">tier</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">tier</span><span class="p">)</span>
 </code></pre></div>
@@ -507,7 +507,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+<span class="w">    </span><span class="sd">"""Run the automatic annotation process on an input.</span>
 
 <span class="sd">        input_filename is a tuple (audio, raw transcription)</span>
 
@@ -515,7 +515,7 @@ View Source
 <span class="sd">        :param output: (str) the output file name</span>
 <span class="sd">        :returns: (sppasTranscription)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">input_channel</span><span class="p">,</span> <span class="n">input_tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
     <span class="n">framerate</span> <span class="o">=</span> <span class="n">input_channel</span><span class="o">.</span><span class="n">get_framerate</span><span class="p">()</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">input_channel</span><span class="p">,</span> <span class="n">input_tier</span><span class="p">)</span>
@@ -523,8 +523,8 @@ View Source
         <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">_info</span><span class="p">(</span><span class="mi">1296</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[]</span>
     <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;media_sample_rate&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">framerate</span><span class="p">))</span>
-    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'media_sample_rate'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">framerate</span><span class="p">))</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'annotation_result_of'</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="n">tier</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">input_tier</span><span class="o">.</span><span class="n">get_media</span><span class="p">())</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -568,9 +568,9 @@ output file, and call the run method.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run_for_batch_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform the annotation on a file.</span>
+<span class="w">    </span><span class="sd">"""Perform the annotation on a file.</span>
 
-<span class="sd">        This method is called by &#39;batch_processing&#39;. It fixes the name of the</span>
+<span class="sd">        This method is called by 'batch_processing'. It fixes the name of the</span>
 <span class="sd">        output file, and call the run method.</span>
 
 <span class="sd">        Override to NOT ANNOTATE if an annotation is already existing.</span>
@@ -578,11 +578,11 @@ View Source
 <span class="sd">        :param input_files: (list of str) the required inputs for a run</span>
 <span class="sd">        :returns: output file name or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">root_pattern</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_out_name</span><span class="p">(</span><span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">ext</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">sppasTrsRW</span><span class="o">.</span><span class="n">annot_extensions</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">e</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;.txt&#39;</span><span class="p">,):</span>
+        <span class="k">if</span> <span class="n">e</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'.txt'</span><span class="p">,):</span>
             <span class="n">ext</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
     <span class="n">exists_out_name</span> <span class="o">=</span> <span class="n">sppasBaseAnnotation</span><span class="o">.</span><span class="n">_get_filename</span><span class="p">(</span><span class="n">root_pattern</span><span class="p">,</span> <span class="n">ext</span><span class="p">)</span>
     <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -604,7 +604,7 @@ View Source
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_files</span><span class="p">,</span> <span class="n">root_pattern</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">'</span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">new_files</span>
 </code></pre></div>
 
@@ -624,8 +624,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation uses in an output filename."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'outputpattern'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -644,8 +644,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation expects for its input filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern1&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern2&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)]</span>
+<span class="w">    </span><span class="sd">"""Pattern this annotation expects for its input filename."""</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'inputpattern1'</span><span class="p">,</span> <span class="s1">''</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'inputpattern2'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)]</span>
 </code></pre></div>
 
     </details>
@@ -665,8 +665,8 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_input_extensions</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its input filename.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;AUDIO&#39;</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;.txt&#39;</span><span class="p">]]</span>
+<span class="w">    </span><span class="sd">"""Extensions that the annotation expects for its input filename."""</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">'AUDIO'</span><span class="p">),</span> <span class="p">[</span><span class="s1">'.txt'</span><span class="p">]]</span>
 </code></pre></div>
 
     </details>
@@ -694,12 +694,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_set_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filler</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set meta values to the tier.&quot;&quot;&quot;</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;threshold_volume&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_vol_threshold</span><span class="p">()))</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;minimum_silence_duration&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_min_sil_dur</span><span class="p">()))</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;minimum_ipus_duration&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_min_ipu_dur</span><span class="p">()))</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;shift_ipus_start&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_shift_start</span><span class="p">()))</span>
-    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;shift_ipus_end&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_shift_end</span><span class="p">()))</span>
+<span class="w">    </span><span class="sd">"""Set meta values to the tier."""</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'threshold_volume'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_vol_threshold</span><span class="p">()))</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'minimum_silence_duration'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_min_sil_dur</span><span class="p">()))</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'minimum_ipus_duration'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_min_ipu_dur</span><span class="p">()))</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'shift_ipus_start'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_shift_start</span><span class="p">()))</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'shift_ipus_end'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_shift_end</span><span class="p">()))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">_info</span><span class="p">(</span><span class="mi">1058</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">m1</span> <span class="o">=</span> <span class="n">_info</span><span class="p">(</span><span class="mi">1290</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_vol_threshold</span><span class="p">()))</span>
     <span class="n">m2</span> <span class="o">=</span> <span class="n">_info</span><span class="p">(</span><span class="mi">1292</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filler</span><span class="o">.</span><span class="n">get_min_sil_dur</span><span class="p">())</span>
@@ -716,7 +716,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

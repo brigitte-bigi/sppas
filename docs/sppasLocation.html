@@ -92,7 +92,7 @@ is assigned to all items.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">localization</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasLocation instance and add the entry.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasLocation instance and add the entry.</span>
 
 <span class="sd">    :param localization: (Localization or list of localizations)</span>
 <span class="sd">    :param score: (float or list of float)</span>
@@ -100,7 +100,7 @@ View Source
 <span class="sd">    If a list of alternative localizations are given, the same score</span>
 <span class="sd">    is assigned to all items.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">localization</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -140,22 +140,22 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">localization</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a localization into the list.</span>
+<span class="w">    </span><span class="sd">"""Add a localization into the list.</span>
 
 <span class="sd">        :param localization: (Localization) the localization to append</span>
 <span class="sd">        :param score: (float)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="n">sppasBaseLocalization</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="s1">&#39;sppasBaseLocalization&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="s1">'sppasBaseLocalization'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">localization</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="o">!=</span> <span class="n">localization</span><span class="o">.</span><span class="n">is_point</span><span class="p">():</span>
-                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="s1">'sppasPoint'</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_interval</span><span class="p">()</span> <span class="o">!=</span> <span class="n">localization</span><span class="o">.</span><span class="n">is_interval</span><span class="p">():</span>
-                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="s1">&#39;sppasInterval&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="s1">'sppasInterval'</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_disjoint</span><span class="p">()</span> <span class="o">!=</span> <span class="n">localization</span><span class="o">.</span><span class="n">is_disjoint</span><span class="p">():</span>
-                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="s1">&#39;sppasDisjoint&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="s1">'sppasDisjoint'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">localization</span><span class="p">,</span> <span class="n">score</span><span class="p">])</span>
 </code></pre></div>
 
@@ -181,15 +181,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">localization</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove a localization of the list.</span>
+<span class="w">    </span><span class="sd">"""Remove a localization of the list.</span>
 
 <span class="sd">        :param localization: (sppasLocalization) the loc to be removed</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="n">sppasBaseLocalization</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="s1">&#39;sppasBaseLocalization&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="s1">'sppasBaseLocalization'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;A location must contain at least one localization. The single one can&#39;t be removed.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">"A location must contain at least one localization. The single one can't be removed."</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">localization</span><span class="p">:</span>
@@ -224,14 +224,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the score of a localization or None if it is not in.</span>
+<span class="w">    </span><span class="sd">"""Return the score of a localization or None if it is not in.</span>
 
 <span class="sd">        :param loc: (sppasLocalization)</span>
 <span class="sd">        :returns: score: (float)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="n">sppasBaseLocalization</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="s1">&#39;sppasLocalization&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="s1">'sppasLocalization'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">loc</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -261,14 +261,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">score</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a score to a given localization.</span>
+<span class="w">    </span><span class="sd">"""Set a score to a given localization.</span>
 
 <span class="sd">        :param loc: (sppasLocalization)</span>
 <span class="sd">        :param score: (float)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="n">sppasBaseLocalization</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="s1">&#39;sppasLocalization&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="s1">'sppasLocalization'</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">loc</span><span class="p">:</span>
@@ -297,11 +297,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_best</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the best localization.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the best localization.</span>
 
 <span class="sd">        :returns: (sppasLocalization) localization with the highest score.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">_max_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -329,7 +329,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the location is made of sppasPoint localizations.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the location is made of sppasPoint localizations."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span>
 </code></pre></div>
 
@@ -349,7 +349,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the location is made of sppasInterval locs.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the location is made of sppasInterval locs."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_interval</span><span class="p">()</span>
 </code></pre></div>
 
@@ -369,7 +369,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_disjoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the location is made of sppasDisjoint locs.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the location is made of sppasDisjoint locs."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_disjoint</span><span class="p">()</span>
 </code></pre></div>
 
@@ -394,7 +394,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the localization point is in the list.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the localization point is in the list."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">():</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="n">point</span> <span class="o">==</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">])</span>
     <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_bound</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">])</span>
@@ -421,7 +421,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">inside</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the localization point is inside one of loc.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the localization point is inside one of loc."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">loc</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">loc</span><span class="p">:</span>
@@ -445,7 +445,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of the location.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a deep copy of the location."""</span>
     <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div>
 
@@ -465,7 +465,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_lowest_localization</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the sppasPoint with the lowest localization.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the sppasPoint with the lowest localization."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">():</span>
         <span class="n">min_localization</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
@@ -489,7 +489,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_highest_localization</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the sppasPoint with the highest loc.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the sppasPoint with the highest loc."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_point</span><span class="p">():</span>
         <span class="n">max_localization</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
@@ -546,7 +546,7 @@ View Source
 
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;</span> <span class="n">Search</span> <span class="k">if</span> <span class="n">a</span> <span class="n">duration</span> <span class="ow">is</span> <span class="n">comprised</span> <span class="n">between</span> <span class="mf">0.3</span> <span class="ow">and</span> <span class="mf">0.7</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">match</span><span class="p">([(</span><span class="n">ge</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="n">le</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="kc">False</span><span class="p">)],</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="n">le</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="kc">False</span><span class="p">)],</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">"and"</span><span class="p">)</span>
 </code></pre></div>
 
 <p>See sppasDurationCompare() to get a list of functions.</p>
@@ -558,11 +558,11 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">match_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dur_functions</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s1">&#39;and&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if a duration matches all or any of the functions.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">match_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dur_functions</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s1">'and'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return True if a duration matches all or any of the functions.</span>
 
 <span class="sd">        :param dur_functions: list of (function, value, logical_not)</span>
-<span class="sd">        :param logic_bool: (str) Apply a logical &quot;and&quot; or &quot;or&quot;</span>
+<span class="sd">        :param logic_bool: (str) Apply a logical "and" or "or"</span>
 <span class="sd">        :returns: (bool)</span>
 
 <span class="sd">        - function: a function in python with 2 arguments: dur/value</span>
@@ -580,11 +580,11 @@ View Source
 
 <span class="sd">        :Example: Search if a duration is comprised between 0.3 and 0.7</span>
 <span class="sd">            &gt;&gt;&gt; l.match([(ge, 0.03, False),</span>
-<span class="sd">            &gt;&gt;&gt;          (le, 0.07, False)], logic_bool=&quot;and&quot;)</span>
+<span class="sd">            &gt;&gt;&gt;          (le, 0.07, False)], logic_bool="and")</span>
 
 <span class="sd">        See sppasDurationCompare() to get a list of functions.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">is_matching</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">loc</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">:</span>
         <span class="n">dur</span> <span class="o">=</span> <span class="n">loc</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
@@ -594,7 +594,7 @@ View Source
                 <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="ow">not</span> <span class="n">func</span><span class="p">(</span><span class="n">dur</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">dur</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">logic_bool</span> <span class="o">==</span> <span class="s1">&#39;and&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">logic_bool</span> <span class="o">==</span> <span class="s1">'and'</span><span class="p">:</span>
             <span class="n">is_matching</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">is_matching</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
@@ -655,7 +655,7 @@ View Source
 <h5>Example</h5>
 
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">match</span><span class="p">([(</span><span class="n">rangefrom</span><span class="p">,</span> <span class="mf">60.</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="n">rangeto</span><span class="p">,</span> <span class="mf">180.</span><span class="p">,</span> <span class="kc">False</span><span class="p">)],</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="n">rangeto</span><span class="p">,</span> <span class="mf">180.</span><span class="p">,</span> <span class="kc">False</span><span class="p">)],</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">"and"</span><span class="p">)</span>
 </code></pre></div>
 
 <p>See sppasLocalizationCompare() to get a list of functions.</p>
@@ -667,11 +667,11 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">match_localization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc_functions</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s1">&#39;and&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if a localization matches all or any of the functions.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">match_localization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc_functions</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s1">'and'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return True if a localization matches all or any of the functions.</span>
 
 <span class="sd">        :param loc_functions: list of (function, value, logical_not)</span>
-<span class="sd">        :param logic_bool: (str) Apply a logical &quot;and&quot; or a logical &quot;or&quot;</span>
+<span class="sd">        :param logic_bool: (str) Apply a logical "and" or a logical "or"</span>
 <span class="sd">        between the functions.</span>
 <span class="sd">        :returns: (bool)</span>
 
@@ -690,11 +690,11 @@ View Source
 <span class="sd">        :Example: Search if a localization is between 1 min and 3 min</span>
 
 <span class="sd">            &gt;&gt;&gt; l.match([(rangefrom, 60., False),</span>
-<span class="sd">            &gt;&gt;&gt;          (rangeto, 180., False)], logic_bool=&quot;and&quot;)</span>
+<span class="sd">            &gt;&gt;&gt;          (rangeto, 180., False)], logic_bool="and")</span>
 
 <span class="sd">        See sppasLocalizationCompare() to get a list of functions.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">is_matching</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">loc</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">:</span>
         <span class="n">matches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -703,7 +703,7 @@ View Source
                 <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="ow">not</span> <span class="n">func</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">logic_bool</span> <span class="o">==</span> <span class="s1">&#39;and&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">logic_bool</span> <span class="o">==</span> <span class="s1">'and'</span><span class="p">:</span>
             <span class="n">is_matching</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">is_matching</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
@@ -738,12 +738,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a radius value to all localizations.</span>
+<span class="w">    </span><span class="sd">"""Set a radius value to all localizations.</span>
 
 <span class="sd">        :param radius: (int, float) New radius value</span>
 <span class="sd">        :raise: AnnDataTypeError, AnnDataNegValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">:</span>
         <span class="n">t</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
 </code></pre></div>
@@ -774,12 +774,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shift the location to a given delay.</span>
+<span class="w">    </span><span class="sd">"""Shift the location to a given delay.</span>
 
 <span class="sd">        :param delay: (int, float) delay to shift all localizations</span>
 <span class="sd">        :raise: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">loc</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">:</span>
         <span class="n">loc</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
 </code></pre></div>
@@ -810,9 +810,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">:</span>
-        <span class="n">st</span> <span class="o">+=</span> <span class="s1">&#39;sppasLocalization(</span><span class="si">{!s:s}</span><span class="s1">, score=</span><span class="si">{:s}</span><span class="s1">), &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">+=</span> <span class="s1">'sppasLocalization(</span><span class="si">{!s:s}</span><span class="s1">, score=</span><span class="si">{:s}</span><span class="s1">), '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">st</span>
 </code></pre></div>
 
@@ -826,9 +826,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">st</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__localizations</span><span class="p">:</span>
-        <span class="n">st</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{!s:s}</span><span class="s1">, </span><span class="si">{!s:s}</span><span class="s1"> ; &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">+=</span> <span class="s1">'</span><span class="si">{!s:s}</span><span class="s1">, </span><span class="si">{!s:s}</span><span class="s1"> ; '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">st</span>
 </code></pre></div>
 
@@ -913,7 +913,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

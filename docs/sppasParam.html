@@ -85,11 +85,11 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotation_keys</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasParam instance with default values.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasParam instance with default values.</span>
 
 <span class="sd">    :param annotation_keys: (list) List of annotations to load. None=ALL.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_report</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_workspace</span> <span class="o">=</span> <span class="n">sppasWorkspace</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span> <span class="o">=</span> <span class="p">[]</span>
@@ -127,19 +127,19 @@ default sppas ui configuration file.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotation_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the annotation configuration files.</span>
+<span class="w">    </span><span class="sd">"""Load the annotation configuration files.</span>
 
 <span class="sd">        Load from a list of given file names (without path) or from the</span>
 <span class="sd">        default sppas ui configuration file.</span>
 
 <span class="sd">        :param annotation_files: (list) List of annotations to load. None=ALL.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">annotation_files</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">annotation_files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parse_config_file</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">cfg_file</span> <span class="ow">in</span> <span class="n">annotation_files</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Loading annotation configuration file </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'Loading annotation configuration file </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">etc</span><span class="p">,</span> <span class="n">cfg_file</span><span class="p">))</span>
 </code></pre></div>
 
@@ -162,29 +162,29 @@ of annotations and parse the corresponding "json" file.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">parse_config_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse all the sppasui.*.json files and load annotation configuration files.</span>
+<span class="w">    </span><span class="sd">"""Parse all the sppasui.*.json files and load annotation configuration files.</span>
 
 <span class="sd">        Parse the file JSON config file and the ones of the spin-off to get the list</span>
-<span class="sd">        of annotations and parse the corresponding &quot;json&quot; file.</span>
+<span class="sd">        of annotations and parse the corresponding "json" file.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">_config</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">etc</span><span class="p">,</span> <span class="s1">&#39;sppasui.json&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">_config</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">etc</span><span class="p">,</span> <span class="s1">'sppasui.json'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">_config</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Installation error: the file </span><span class="si">{</span><span class="n">_config</span><span class="si">}</span><span class="s1"> to configure the automatic annotations does not exist.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Installation error: the file </span><span class="si">{</span><span class="n">_config</span><span class="si">}</span><span class="s1"> to configure the automatic annotations does not exist.'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">etc</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;sppasui.&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'sppasui.'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.json&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'.json'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="n">cfg_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">etc</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cfg_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg</span><span class="p">:</span>
                 <span class="n">_dict_cfg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Configuration file </span><span class="si">{</span><span class="n">cfg_path</span><span class="si">}</span><span class="s1"> not loaded: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Configuration file </span><span class="si">{</span><span class="n">cfg_path</span><span class="si">}</span><span class="s1"> not loaded: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
             <span class="k">continue</span>
-        <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">_dict_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;annotate&#39;</span><span class="p">,</span> <span class="p">[]):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">etc</span><span class="p">,</span> <span class="n">ann</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">_dict_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'annotate'</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">etc</span><span class="p">,</span> <span class="n">ann</span><span class="p">[</span><span class="s1">'config'</span><span class="p">]))</span>
 </code></pre></div>
 
     </details>
@@ -203,7 +203,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_workspace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the workspace.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the workspace."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workspace</span>
 </code></pre></div>
 
@@ -218,8 +218,8 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_workspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wkp</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wkp</span><span class="p">,</span> <span class="n">sppasWorkspace</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">&#39;sppasWorkspace&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">wkp</span><span class="p">))</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;New data to set in sppasParam. Id=</span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wkp</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">'sppasWorkspace'</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">wkp</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'New data to set in sppasParam. Id=</span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wkp</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_workspace</span> <span class="o">=</span> <span class="n">wkp</span>
 </code></pre></div>
 
@@ -247,13 +247,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_to_workspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a list of files or directories into the workspace.</span>
+<span class="w">    </span><span class="sd">"""Add a list of files or directories into the workspace.</span>
 
 <span class="sd">        The state of all the added files is set to CHECKED.</span>
 
 <span class="sd">        :param files: (str or list of str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
@@ -269,7 +269,7 @@ View Source
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">sppasIOError</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;File </span><span class="si">{!s:s}</span><span class="s1"> not added into the workspace: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'File </span><span class="si">{!s:s}</span><span class="s1"> not added into the workspace: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_to_workspace</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -291,7 +291,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_checked_roots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of entries to annotate.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of entries to annotate."""</span>
     <span class="n">roots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workspace</span><span class="o">.</span><span class="n">get_fileroot_from_state</span><span class="p">(</span><span class="n">States</span><span class="p">()</span><span class="o">.</span><span class="n">CHECKED</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workspace</span><span class="o">.</span><span class="n">get_fileroot_from_state</span><span class="p">(</span><span class="n">States</span><span class="p">()</span><span class="o">.</span><span class="n">AT_LEAST_ONE_CHECKED</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">roots</span><span class="p">]</span>
 </code></pre></div>
@@ -318,11 +318,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_report_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the name of the file to save the report of the annotations.</span>
+<span class="w">    </span><span class="sd">"""Fix the name of the file to save the report of the annotations.</span>
 
 <span class="sd">        :param filename: (str) Filename for the Procedure Outcome Report</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_report</span> <span class="o">=</span> <span class="n">filename</span>
 </code></pre></div>
 
@@ -342,7 +342,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_report_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the file for the Procedure Outcome Report.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of the file for the Procedure Outcome Report."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_report</span>
 </code></pre></div>
 
@@ -522,16 +522,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_step_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotation_key</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the annotation step index from an annotation key.</span>
+<span class="w">    </span><span class="sd">"""Get the annotation step index from an annotation key.</span>
 
 <span class="sd">        :param annotation_key: (str)</span>
 <span class="sd">        :raises: KeyError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span> <span class="o">==</span> <span class="n">annotation_key</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">i</span>
-    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;No configuration file is available for an annotationwith key </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">annotation_key</span><span class="p">))</span>
+    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">'No configuration file is available for an annotationwith key </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">annotation_key</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -612,7 +612,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the &#39;sppasParam&#39; instance of the annotation.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the 'sppasParam' instance of the annotation."""</span>
     <span class="n">step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__check_step</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="n">step</span><span class="p">]</span>
 </code></pre></div>
@@ -666,7 +666,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_format</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the output extension defined for the given out_format.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the output extension defined for the given out_format."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="n">out_format</span><span class="p">]</span>
 </code></pre></div>
 
@@ -703,23 +703,23 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_output_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_ext</span><span class="p">,</span> <span class="n">output_format</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the output extension of all the annotations of a given out_format.</span>
+<span class="w">    </span><span class="sd">"""Fix the output extension of all the annotations of a given out_format.</span>
 
 <span class="sd">        :param output_ext: (str) File extension (with or without a dot)</span>
 <span class="sd">        :param output_format: (str) Either ANNOT, AUDIO, VIDEO OR IMAGE</span>
 <span class="sd">        :return: (str) the assigned extension</span>
 <span class="sd">        :raise: ValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">output_ext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
-        <span class="n">output_ext</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">output_ext</span>
+<span class="sd">        """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">output_ext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'.'</span><span class="p">):</span>
+        <span class="n">output_ext</span> <span class="o">=</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">output_ext</span>
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_outformat_extensions</span><span class="p">(</span><span class="n">output_format</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">e</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">e</span>
         <span class="k">if</span> <span class="n">output_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">e</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="n">output_format</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
             <span class="k">return</span> <span class="n">e</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> not in supported extensions of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output_ext</span><span class="p">,</span> <span class="n">output_format</span><span class="p">))</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1"> not in supported extensions of </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output_ext</span><span class="p">,</span> <span class="n">output_format</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -744,11 +744,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ref_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of identifiers of the reference publications.</span>
+<span class="w">    </span><span class="sd">"""Return a list of identifiers of the reference publications.</span>
 
 <span class="sd">        :param step: (int) Annotation index</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__check_step</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="n">step</span><span class="p">]</span><span class="o">.</span><span class="n">get_reference_identifiers</span><span class="p">()</span>
 </code></pre></div>
@@ -776,12 +776,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ref_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">ref_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the URL of the reference publication.</span>
+<span class="w">    </span><span class="sd">"""Return the URL of the reference publication.</span>
 
 <span class="sd">        :param step: (int) Annotation index</span>
 <span class="sd">        :param ref_id: (str) Identifier of a reference</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__check_step</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="n">step</span><span class="p">]</span><span class="o">.</span><span class="n">get_reference_url</span><span class="p">(</span><span class="n">ref_id</span><span class="p">)</span>
 </code></pre></div>
@@ -817,15 +817,15 @@ they're not under development anymore!</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_devel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a percentage of development.</span>
+<span class="w">    </span><span class="sd">"""Return a percentage of development.</span>
 
 <span class="sd">        It is supposed that the annotations which have references are done,</span>
-<span class="sd">        they&#39;re not under development anymore!</span>
+<span class="sd">        they're not under development anymore!</span>
 
 <span class="sd">        :param step: (int) Annotation index</span>
 <span class="sd">        :return: (int) 0=unknown. 1-99=in progress value. 100=done.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__check_step</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="n">step</span><span class="p">]</span><span class="o">.</span><span class="n">get_devel</span><span class="p">()</span>
 </code></pre></div>
@@ -854,14 +854,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg_file</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load parameters of an annotation from its configuration file.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Load parameters of an annotation from its configuration file."""</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">a</span> <span class="o">=</span> <span class="n">annotationParam</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Configuration file </span><span class="si">{:s}</span><span class="s1"> loaded.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Configuration file </span><span class="si">{:s}</span><span class="s1"> loaded.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">))</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">a</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Configuration file </span><span class="si">{:s}</span><span class="s1"> not loaded: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Configuration file </span><span class="si">{:s}</span><span class="s1"> not loaded: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">a</span>
 </code></pre></div>
 
@@ -878,11 +878,11 @@ View Source
     <span class="k">try</span><span class="p">:</span>
         <span class="n">step</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="s1">'int'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="s1">&#39;unsigned int&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="s1">'unsigned int'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">step</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Annotation step index </span><span class="si">{:d}</span><span class="s1"> out of range.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">step</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Annotation step index </span><span class="si">{:d}</span><span class="s1"> out of range.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">step</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">step</span>
 </code></pre></div>
 
@@ -894,7 +894,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

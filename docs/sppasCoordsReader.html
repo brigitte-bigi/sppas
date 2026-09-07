@@ -92,22 +92,22 @@
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">csv_separator</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the list of coords defined in the given file.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">csv_separator</span><span class="o">=</span><span class="s1">';'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Set the list of coords defined in the given file.</span>
 
 <span class="sd">    :param input_file: (str) coords from a sppasCoordsImageWriter</span>
 <span class="sd">    :param csv_separator: (char) Columns separator in the CSV file</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">fn</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">fe</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;.csv&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">fe</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'.csv'</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__load_from_csv</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">csv_separator</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">fe</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;.xra&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">fe</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'.xra'</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__load_from_xra</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Unrecognized extension, expected .csv or .xra.Got </span><span class="si">{}</span><span class="s1"> instead.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fe</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Unrecognized extension, expected .csv or .xra.Got </span><span class="si">{}</span><span class="s1"> instead.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fe</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -123,7 +123,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__load_from_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">separator</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv</span><span class="p">:</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
@@ -147,14 +147,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__load_from_xra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_file</span><span class="p">):</span>
-    <span class="n">trs</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="p">(</span><span class="s1">&#39;ImageCoordinates&#39;</span><span class="p">)</span>
+    <span class="n">trs</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="p">(</span><span class="s1">'ImageCoordinates'</span><span class="p">)</span>
     <span class="n">trs</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="n">trs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="n">trs</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">sppasCoordsImageWriter</span><span class="p">()</span><span class="o">.</span><span class="n">get_xra_tiername</span><span class="p">())</span>
     <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid tier in XRA. Cant load coordinates.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid tier in XRA. Cant load coordinates.'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">tier</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
@@ -162,7 +162,7 @@ View Source
                 <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">fuzzy_rect</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
                 <span class="n">coord</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
-                <span class="n">media_name</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;image_name&#39;</span><span class="p">,</span> <span class="s1">&#39;unk&#39;</span><span class="p">)</span>
+                <span class="n">media_name</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'image_name'</span><span class="p">,</span> <span class="s1">'unk'</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">media_name</span><span class="p">)</span>
 </code></pre></div>
 
@@ -174,7 +174,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

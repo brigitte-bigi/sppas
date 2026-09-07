@@ -86,11 +86,11 @@ called the "Procedure Outcome Report".</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasLog instance and open an output stream to NULL.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasLog instance and open an output stream to NULL.</span>
 
 <span class="sd">    :param parameters: (sppasParam)</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
@@ -120,14 +120,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and open a new output stream.</span>
+<span class="w">    </span><span class="sd">"""Create and open a new output stream.</span>
 
 <span class="sd">        :param filename: (str) Output filename</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -152,14 +152,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Open an existing file and set the output stream.</span>
+<span class="w">    </span><span class="sd">"""Open an existing file and set the output stream.</span>
 
 <span class="sd">        :param filename: (str) Output filename</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;a+&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'a+'</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__encoding__</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -178,7 +178,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Close the current output stream.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Close the current output stream."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="o">=</span> <span class="kc">None</span>
@@ -206,24 +206,24 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_number</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a step name in the output stream from its number.</span>
+<span class="w">    </span><span class="sd">"""Print a step name in the output stream from its number.</span>
 
 <span class="sd">        :param step_number: (1..N) Number of an annotation defined in a</span>
 <span class="sd">        sppasParam instance.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_step_name</span><span class="p">(</span><span class="n">step_number</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Annotation step &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">step_number</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s1">'Annotation step '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">step_number</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_separator</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">+</span> <span class="n">message</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">' '</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">+</span> <span class="n">message</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_separator</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; * * * &#39;</span> <span class="o">+</span> <span class="n">message</span> <span class="o">+</span> <span class="s1">&#39; * * * &#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">' * * * '</span> <span class="o">+</span> <span class="n">message</span> <span class="o">+</span> <span class="s1">' * * * '</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -256,7 +256,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a message at the end of the current output stream.</span>
+<span class="w">    </span><span class="sd">"""Print a message at the end of the current output stream.</span>
 
 <span class="sd">        :param message: (str) The message to communicate</span>
 <span class="sd">        :param indent: (int) Shift the message with indents</span>
@@ -268,7 +268,7 @@ View Source
 <span class="sd">        3 means INFO,</span>
 <span class="sd">        -1 means ERROR.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">message</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span>
@@ -314,11 +314,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_raw_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a text at the end of the output stream.</span>
+<span class="w">    </span><span class="sd">"""Print a text at the end of the output stream.</span>
 
 <span class="sd">        :param text: (str) text to print</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
@@ -342,9 +342,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_newline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a CR in the output file stream, do nothing if logging.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Print a CR in the output file stream, do nothing if logging."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -363,9 +363,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_separator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a line in the output file stream, do nothing if logging.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Print a line in the output file stream, do nothing if logging."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">78</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'-'</span> <span class="o">*</span> <span class="mi">78</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
 </code></pre></div>
 
@@ -393,19 +393,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stats</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the statistics values in the output stream for a given step.</span>
+<span class="w">    </span><span class="sd">"""Print the statistics values in the output stream for a given step.</span>
 
 <span class="sd">        Do not print anything if no parameters were given.</span>
 
 <span class="sd">        :param stats: List of values (one for each annotation)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_step_numbers</span><span class="p">():</span>
         <span class="k">return</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">print_separator</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Result statistics:&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">'Result statistics:'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">print_separator</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">)):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_stat_item</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
@@ -437,7 +437,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_stat_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_number</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a statistic value in the output stream for a given step.</span>
+<span class="w">    </span><span class="sd">"""Print a statistic value in the output stream for a given step.</span>
 
 <span class="sd">        Do not print anything if no parameters were given.</span>
 
@@ -445,14 +445,14 @@ View Source
 <span class="sd">        :param value: (str) A statistic value.</span>
 <span class="sd">        Instead, print the status (enabled or disabled).</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_step_status</span><span class="p">(</span><span class="n">step_number</span><span class="p">):</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1030</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1030</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1031</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1031</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">print_item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_step_name</span><span class="p">(</span><span class="n">step_number</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 </code></pre></div>
 
@@ -479,15 +479,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">main_info</span><span class="p">,</span> <span class="n">second_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print an item in the output stream.</span>
+<span class="w">    </span><span class="sd">"""Print an item in the output stream.</span>
 
 <span class="sd">        :param main_info: (str) Main information to print</span>
 <span class="sd">        :param second_info: (str) A secondary info to print</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">message</span> <span class="o">=</span> <span class="n">sppasAnnReport</span><span class="o">.</span><span class="n">STR_ITEM</span> <span class="o">+</span> <span class="n">main_info</span>
     <span class="k">if</span> <span class="n">second_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="n">second_info</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="s1">': '</span> <span class="o">+</span> <span class="n">second_info</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
@@ -512,18 +512,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the parameters information in the output file stream.&quot;&quot;&quot;</span>
-    <span class="n">sppas_name</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1032</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__version__</span>
+<span class="w">    </span><span class="sd">"""Print the parameters information in the output file stream."""</span>
+    <span class="n">sppas_name</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">' '</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1032</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' '</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__version__</span>
     <span class="n">sppas_copy</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">__copyright__</span>
-    <span class="n">sppas_url</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1033</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__url__</span>
-    <span class="n">sppas_contact</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1034</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__author__</span> <span class="o">+</span> <span class="s1">&#39; (&#39;</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__contact__</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+    <span class="n">sppas_url</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1033</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">': '</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__url__</span>
+    <span class="n">sppas_contact</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1034</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">': '</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__author__</span> <span class="o">+</span> <span class="s1">' ('</span> <span class="o">+</span> <span class="n">sg</span><span class="o">.</span><span class="n">__contact__</span> <span class="o">+</span> <span class="s1">')'</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_separator</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1054</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">' '</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1054</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1035</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">' '</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">+</span> <span class="n">info</span><span class="p">(</span><span class="mi">1035</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_separator</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
@@ -558,26 +558,26 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_annotations_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the parameters information in the output stream.</span>
+<span class="w">    </span><span class="sd">"""Print the parameters information in the output stream.</span>
 
 <span class="sd">        Do not print anything if no parameters were given.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1036</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="n">sppasTime</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1037</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1036</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">': '</span> <span class="o">+</span> <span class="n">sppasTime</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1037</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">': '</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_step_numbers</span><span class="p">()):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_lang</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">print_item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_step_name</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_lang</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">print_item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_step_name</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s1">&#39;---&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">print_item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_step_name</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s1">'---'</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1038</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1038</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">': '</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">sinput</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_checked_roots</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_item</span><span class="p">(</span><span class="n">sinput</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1039</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1039</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">': '</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get_step_numbers</span><span class="p">()):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_stat_item</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
@@ -606,25 +606,25 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_status_text</span><span class="p">(</span><span class="n">status_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a status text from a status identifier.</span>
+<span class="w">    </span><span class="sd">"""Return a status text from a status identifier.</span>
 
 <span class="sd">        :param status_id: (int)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">status_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">return</span> <span class="s1">''</span>
     <span class="n">status_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">status_id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">status_id</span> <span class="o">==</span> <span class="n">annots</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="mi">1041</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="mi">1041</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">status_id</span> <span class="o">==</span> <span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="mi">1043</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="mi">1043</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">status_id</span> <span class="o">==</span> <span class="n">annots</span><span class="o">.</span><span class="n">ignore</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="mi">1044</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="mi">1044</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">status_id</span> <span class="o">==</span> <span class="n">annots</span><span class="o">.</span><span class="n">info</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="mi">1042</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="mi">1042</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">status_id</span> <span class="o">==</span> <span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="mi">1045</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="mi">1045</span><span class="p">,</span> <span class="s1">'annotations'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -650,11 +650,11 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_indent_text</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a string representing some indentation.</span>
+<span class="w">    </span><span class="sd">"""Return a string representing some indentation.</span>
 
 <span class="sd">        :param number: (int) A positive integer.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">number</span> <span class="o">&gt;</span> <span class="n">sppasAnnReport</span><span class="o">.</span><span class="n">MAX_INDENT</span><span class="p">:</span>
         <span class="n">number</span> <span class="o">=</span> <span class="n">sppasAnnReport</span><span class="o">.</span><span class="n">MAX_INDENT</span>
@@ -671,7 +671,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

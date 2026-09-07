@@ -87,18 +87,18 @@ of the software.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasWkps instance.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasWkps instance.</span>
 
 <span class="sd">    Load the list of existing wjson file names of the workspaces folder</span>
 <span class="sd">    of the software.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">wkp_dir</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">wkps</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">wkp_dir</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">wkp_dir</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Blank&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">sppasWkpRW</span><span class="o">.</span><span class="n">default_extension</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'Blank'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">sppasWkpRW</span><span class="o">.</span><span class="n">default_extension</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_workspaces</span><span class="p">()</span>
 </code></pre></div>
 
@@ -124,19 +124,19 @@ not clear the list first: see update() to re-scan from scratch.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_workspaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the list of existing workspaces in the software.</span>
+<span class="w">    </span><span class="sd">"""Fix the list of existing workspaces in the software.</span>
 
 <span class="sd">        Append the workspaces found on disk to the current list. It does</span>
 <span class="sd">        not clear the list first: see update() to re-scan from scratch.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">):</span>
         <span class="n">fn_observed</span><span class="p">,</span> <span class="n">ext_observed</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ext_observed</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span><span class="p">:</span>
             <span class="n">wkp_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fn_observed</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">wkp_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wkp_name</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Workspace added: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wkp_name</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Workspace added: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wkp_name</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -167,7 +167,7 @@ disk, but "Blank" always stays first.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Re-scan the workspaces folder and update the list accordingly.</span>
+<span class="w">    </span><span class="sd">"""Re-scan the workspaces folder and update the list accordingly.</span>
 
 <span class="sd">        The list of workspaces is built once, at instantiation. A workspace</span>
 <span class="sd">        created, renamed or deleted by another process -- typically, the wx</span>
@@ -175,26 +175,26 @@ View Source
 <span class="sd">        instance -- is invisible until this method is called: it aligns</span>
 <span class="sd">        the list on the current content of the workspaces folder.</span>
 
-<span class="sd">        Only &quot;Blank&quot; is guaranteed to remain at index 0: a workspace file</span>
+<span class="sd">        Only "Blank" is guaranteed to remain at index 0: a workspace file</span>
 <span class="sd">        deleted on disk since the last scan is removed from the list, one</span>
 <span class="sd">        appearing is appended. The index of an unaffected workspace does</span>
 <span class="sd">        not change: the update is unordered on the workspaces found on</span>
-<span class="sd">        disk, but &quot;Blank&quot; always stays first.</span>
+<span class="sd">        disk, but "Blank" always stays first.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">found</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">):</span>
         <span class="n">fn_observed</span><span class="p">,</span> <span class="n">ext_observed</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ext_observed</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span><span class="p">:</span>
             <span class="n">found</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fn_observed</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">wkp_name</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">wkp_name</span> <span class="o">!=</span> <span class="s1">&#39;Blank&#39;</span> <span class="ow">and</span> <span class="n">wkp_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">found</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wkp_name</span> <span class="o">!=</span> <span class="s1">'Blank'</span> <span class="ow">and</span> <span class="n">wkp_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">found</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">wkp_name</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Workspace removed: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wkp_name</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Workspace removed: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wkp_name</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">wkp_name</span> <span class="ow">in</span> <span class="n">found</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">wkp_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wkp_name</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Workspace added: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wkp_name</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Workspace added: </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wkp_name</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -225,12 +225,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">import_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Import and append an external workspace.</span>
+<span class="w">    </span><span class="sd">"""Import and append an external workspace.</span>
 
 <span class="sd">        :param filename: (str)</span>
 <span class="sd">        :returns: The real name used to save the workspace</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">FileTypeError</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">name</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
@@ -284,13 +284,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and append a new empty workspace.</span>
+<span class="w">    </span><span class="sd">"""Create and append a new empty workspace.</span>
 
 <span class="sd">        :param name: (str) Name of the workspace to create.</span>
 <span class="sd">        :returns: The real name used to save the workspace</span>
 <span class="sd">        :raises: IOError, ValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__raises_existing</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">,</span> <span class="n">u_name</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u_name</span><span class="p">)</span>
@@ -328,7 +328,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">export_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save an existing workspace into an external file.</span>
+<span class="w">    </span><span class="sd">"""Save an existing workspace into an external file.</span>
 
 <span class="sd">        Override filename if the file already exists.</span>
 
@@ -336,7 +336,7 @@ View Source
 <span class="sd">        :param filename: (str)</span>
 <span class="sd">        :raises: IOError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">WkpExportBlankError</span>
     <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
@@ -372,12 +372,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete the workspace with the given index.</span>
+<span class="w">    </span><span class="sd">"""Delete the workspace with the given index.</span>
 
 <span class="sd">        :param index: (int) Index of the workspace</span>
 <span class="sd">        :raises: IndexError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">WkpDeleteBlankError</span>
     <span class="k">try</span><span class="p">:</span>
@@ -420,13 +420,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the index of the workspace with the given name.</span>
+<span class="w">    </span><span class="sd">"""Return the index of the workspace with the given name.</span>
 
 <span class="sd">        :param name: (str)</span>
 <span class="sd">        :returns: (int)</span>
 <span class="sd">        :raises: ValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__raises_not_existing</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">u_name</span><span class="p">:</span>
@@ -467,14 +467,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new name to the workspace at the given index.</span>
+<span class="w">    </span><span class="sd">"""Set a new name to the workspace at the given index.</span>
 
 <span class="sd">        :param index: (int) Index of the workspace</span>
 <span class="sd">        :param new_name: (str) New name of the workspace</span>
 <span class="sd">        :returns: (str)</span>
 <span class="sd">        :raises: IndexError, OSError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">WkpRenameBlankError</span>
     <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__raises_existing</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
@@ -520,14 +520,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the filename of the workspace at the given index.</span>
+<span class="w">    </span><span class="sd">"""Get the filename of the workspace at the given index.</span>
 
 <span class="sd">        :param index: (int) Index of the workspace</span>
 <span class="sd">        :returns: (str) name of the file</span>
 <span class="sd">        :raises: IndexError, OSError</span>
 
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">WkpFileError</span><span class="p">(</span><span class="n">fn</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
@@ -566,19 +566,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the data of the workspace at the given index.</span>
+<span class="w">    </span><span class="sd">"""Return the data of the workspace at the given index.</span>
 
 <span class="sd">        :param index: (int) Index of the workspace</span>
 <span class="sd">        :returns: (str) sppasWorkspace()</span>
 <span class="sd">        :raises: IndexError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">sppasWorkspace</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_filename</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Workspace can&#39;t be loaded: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">"Workspace can't be loaded: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
         <span class="k">return</span> <span class="n">sppasWorkspace</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">sppasWkpRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </code></pre></div>
@@ -620,10 +620,10 @@ workspace.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">save_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save data into a workspace.</span>
+<span class="w">    </span><span class="sd">"""Save data into a workspace.</span>
 
 <span class="sd">        The data can already match an existing workspace or a new workspace</span>
-<span class="sd">        is created. Raises indexerror if is attempted to save the &#39;Blank&#39;</span>
+<span class="sd">        is created. Raises indexerror if is attempted to save the 'Blank'</span>
 <span class="sd">        workspace.</span>
 
 <span class="sd">        :param data: (sppasWorkspace) Data of a workspace to save</span>
@@ -631,11 +631,11 @@ View Source
 <span class="sd">        :returns: The real name used to save the workspace</span>
 <span class="sd">        :raises: IOError, IndexError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">WkpSaveBlankError</span>
     <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-        <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;New workspace&#39;</span><span class="p">)</span>
+        <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'New workspace'</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">,</span> <span class="n">u_name</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span>
@@ -668,7 +668,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__raises_not_existing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raises WkpNameError if name is not already in self.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Raises WkpNameError if name is not already in self."""</span>
     <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="n">u_name</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
     <span class="n">contains</span> <span class="o">=</span> <span class="kc">False</span>
@@ -702,7 +702,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__raises_existing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raises WkpIdValueError if name is already in self.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Raises WkpIdValueError if name is already in self."""</span>
     <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="n">u_name</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
     <span class="n">contains</span> <span class="o">=</span> <span class="kc">False</span>
@@ -734,7 +734,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of workspaces.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the number of workspaces."""</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">)</span>
 </code></pre></div>
 
@@ -795,7 +795,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

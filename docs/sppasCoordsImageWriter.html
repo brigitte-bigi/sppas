@@ -82,17 +82,17 @@ Output images can be resized.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasCoordsImageWriter instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasCoordsImageWriter instance.</span>
 
 <span class="sd">    Write the given image in the given filename.</span>
 <span class="sd">    Parts of the image can be extracted in separate image files and/or</span>
 <span class="sd">    surrounded on the given image.</span>
 <span class="sd">    Output images can be resized.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">ImageCoordsWriterOptions</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_colors</span> <span class="o">=</span> <span class="n">sppasCoordsImageWriter</span><span class="o">.</span><span class="n">gen_colors</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_csv_separator</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_csv_separator</span> <span class="o">=</span> <span class="s1">';'</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_xra_tiername</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
 
@@ -128,15 +128,15 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">gen_colors</span><span class="p">(</span><span class="n">nb</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of visually distinct colors.</span>
+<span class="w">    </span><span class="sd">"""Return a list of visually distinct colors.</span>
 
 <span class="sd">        :param nb: (int) A number of colors</span>
 <span class="sd">        :return: dict of (r, g, b) values</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="s1">&#39;rgb&#39;</span><span class="p">}</span>
+<span class="sd">        """</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="s1">'rgb'</span><span class="p">}</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb</span><span class="p">):</span>
-        <span class="n">temp</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="s1">&#39;rgb&#39;</span><span class="p">}</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="s1">'rgb'</span><span class="p">}</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">temp</span><span class="p">:</span>
             <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">c</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
@@ -165,7 +165,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of (r, g, b) values to tag the image.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of (r, g, b) values to tag the image."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_colors</span>
 </code></pre></div>
 
@@ -263,7 +263,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xra</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the value of each option.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Set the value of each option."""</span>
     <span class="k">if</span> <span class="n">csv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">set_csv_output</span><span class="p">(</span><span class="n">csv</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">xra</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -308,8 +308,8 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">out_img_name</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the image into file(s) depending on the options.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">out_img_name</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Save the image into file(s) depending on the options.</span>
 
 <span class="sd">        :param image: (sppasImage) The image to write</span>
 <span class="sd">        :param coords: (list or list of list of sppasCoords) The coordinates of objects</span>
@@ -317,20 +317,20 @@ View Source
 <span class="sd">        :param pattern: (str) Pattern to add to a cropped image filename</span>
 <span class="sd">        :return: List of created file names</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sppasImage</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;sppasImage&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'sppasImage'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">&#39;coords&#39;</span><span class="p">,</span> <span class="s1">&#39;(list, tuple)&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">'coords'</span><span class="p">,</span> <span class="s1">'(list, tuple)'</span><span class="p">)</span>
     <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">csv</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">fn</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">out_img_name</span><span class="p">)</span>
-        <span class="n">out_csv_name</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span>
+        <span class="n">out_csv_name</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">+</span> <span class="s1">'.csv'</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write_csv_coords</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">out_csv_name</span><span class="p">,</span> <span class="n">out_img_name</span><span class="p">)</span>
         <span class="n">new_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_csv_name</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">xra</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">fn</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">out_img_name</span><span class="p">)</span>
-        <span class="n">out_xra_name</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">+</span> <span class="s1">&#39;.xra&#39;</span>
+        <span class="n">out_xra_name</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">+</span> <span class="s1">'.xra'</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write_xra_coords</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">out_xra_name</span><span class="p">,</span> <span class="n">out_img_name</span><span class="p">)</span>
         <span class="n">new_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_xra_name</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tag</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -372,8 +372,8 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_csv_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">out_csv_name</span><span class="p">,</span> <span class="n">img_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write or append a list of coordinates in a CSV file.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_csv_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">out_csv_name</span><span class="p">,</span> <span class="n">img_name</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Write or append a list of coordinates in a CSV file.</span>
 
 <span class="sd">        - index of the coords in the image</span>
 <span class="sd">        - confidence</span>
@@ -384,22 +384,22 @@ View Source
 <span class="sd">        :param out_csv_name: (str) The filename of the CSV file to write</span>
 <span class="sd">        :param img_name: (str) The filename of the image</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
+<span class="sd">        """</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="s1">'w'</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_csv_name</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;a+&#39;</span>
-    <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">out_csv_name</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s1">'a+'</span>
+    <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">out_csv_name</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_csv_separator</span><span class="p">))</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="si">{:d}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_csv_separator</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">write_coords</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">c1</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">c2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">c1</span><span class="p">):</span>
-                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_csv_separator</span><span class="p">))</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="si">{:d}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_csv_separator</span><span class="p">))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">write_coords</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_csv_separator</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">img_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_csv_separator</span><span class="p">))</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="si">{:s}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">img_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_csv_separator</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -432,8 +432,8 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_xra_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">out_xra_name</span><span class="p">,</span> <span class="n">img_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write or append a list of coordinates in an XRA file.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_xra_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">out_xra_name</span><span class="p">,</span> <span class="n">img_name</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Write or append a list of coordinates in an XRA file.</span>
 
 <span class="sd">        - index of the coords in the image</span>
 <span class="sd">        - confidence</span>
@@ -444,40 +444,40 @@ View Source
 <span class="sd">        :param out_xra_name: (str) The filename of the XRA file to write</span>
 <span class="sd">        :param img_name: (str) The filename of the image</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">tiername</span> <span class="o">=</span> <span class="s1">&#39;ImgCoords&#39;</span>
+<span class="sd">        """</span>
+    <span class="n">tiername</span> <span class="o">=</span> <span class="s1">'ImgCoords'</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xra_tiername</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">tiername</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xra_tiername</span>
     <span class="n">loc</span> <span class="o">=</span> <span class="n">sppasPoint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_xra_name</span><span class="p">):</span>
-        <span class="n">trs</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="p">(</span><span class="s1">&#39;ImageCoordinates&#39;</span><span class="p">)</span>
+        <span class="n">trs</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="p">(</span><span class="s1">'ImageCoordinates'</span><span class="p">)</span>
         <span class="n">trs</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">out_xra_name</span><span class="p">)</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="n">trs</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tiername</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid tier in XRA. Cant add coordinates.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid tier in XRA. Cant add coordinates.'</span><span class="p">)</span>
         <span class="n">last_point</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_last_point</span><span class="p">()</span>
         <span class="n">loc</span> <span class="o">=</span> <span class="n">sppasPoint</span><span class="p">(</span><span class="n">last_point</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fn</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span>
-            <span class="n">mime_type</span> <span class="o">=</span> <span class="s1">&#39;image/&#39;</span> <span class="o">+</span> <span class="n">fe</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">mime_type</span> <span class="o">=</span> <span class="s1">'image/'</span> <span class="o">+</span> <span class="n">fe</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">mime_type</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">media</span> <span class="o">=</span> <span class="n">sppasMedia</span><span class="p">(</span><span class="n">img_name</span><span class="p">,</span> <span class="n">mime_type</span><span class="o">=</span><span class="n">mime_type</span><span class="p">)</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="n">tiername</span><span class="p">)</span>
         <span class="n">tier</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
-        <span class="n">trs</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="p">(</span><span class="s1">&#39;ImageCoordinates&#39;</span><span class="p">)</span>
+        <span class="n">trs</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="p">(</span><span class="s1">'ImageCoordinates'</span><span class="p">)</span>
         <span class="n">trs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_coords</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-        <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">((</span><span class="n">c</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">h</span><span class="p">),</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">((</span><span class="n">c</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">h</span><span class="p">),</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">'rect'</span><span class="p">)</span>
         <span class="n">label</span> <span class="o">=</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">())</span>
         <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
     <span class="n">ann</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">loc</span><span class="p">),</span> <span class="n">labels</span><span class="p">)</span>
-    <span class="n">ann</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;image_name&#39;</span><span class="p">,</span> <span class="n">img_name</span><span class="p">)</span>
+    <span class="n">ann</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'image_name'</span><span class="p">,</span> <span class="n">img_name</span><span class="p">)</span>
     <span class="n">trs</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">out_xra_name</span><span class="p">)</span>
 </code></pre></div>
 
@@ -504,19 +504,19 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write coordinates in the given stream.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">';'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Write coordinates in the given stream.</span>
 
 <span class="sd">        :param fd: (Stream) File descriptor, String descriptor, stdout, etc</span>
 <span class="sd">        :param coords: (sppasCoordinates) Coordinates to write in other columns</span>
 <span class="sd">        :param sep: (char) CSV separator</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:f}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">(),</span> <span class="n">sep</span><span class="p">))</span>
-    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
-    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
-    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
-    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+<span class="sd">        """</span>
+    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="si">{:f}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">(),</span> <span class="n">sep</span><span class="p">))</span>
+    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="si">{:d}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="si">{:d}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="si">{:d}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="si">{:d}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -543,13 +543,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_tagged_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">out_img_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tag and save the images with colored squares at given coords.</span>
+<span class="w">    </span><span class="sd">"""Tag and save the images with colored squares at given coords.</span>
 
 <span class="sd">        :param image: (sppasImage) The image to write</span>
 <span class="sd">        :param coords: (list or list of list of sppasCoords) The coordinates of objects</span>
 <span class="sd">        :param out_img_name: (str) The filename of the output image file</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_height</span><span class="p">())</span>
@@ -587,25 +587,25 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">tag_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="nb">list</span><span class="p">()):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tag the image at the given coords.</span>
+<span class="w">    </span><span class="sd">"""Tag the image at the given coords.</span>
 
 <span class="sd">        :param image: (sppasImage) The image to write</span>
 <span class="sd">        :param coords: (list of sppasCoords OR list(list of sppasCoords)) The coordinates of objects</span>
 <span class="sd">        :param colors: list of (r,g,b) List of tuple with RGB int values</span>
 <span class="sd">        :return: a copy of the image with colored squares at the given coords</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">coords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">image</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sppasImage</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;sppasImage&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'sppasImage'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">&#39;coords&#39;</span><span class="p">,</span> <span class="s1">&#39;(list, tuple)&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">'coords'</span><span class="p">,</span> <span class="s1">'(list, tuple)'</span><span class="p">)</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
     <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">pen_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="mf">500.0</span><span class="p">))</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]):</span>
-        <span class="n">nb</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">'r'</span><span class="p">]):</span>
+        <span class="n">nb</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">'r'</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">new_colors</span> <span class="o">=</span> <span class="n">sppasCoordsImageWriter</span><span class="o">.</span><span class="n">gen_colors</span><span class="p">(</span><span class="n">nb</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_colors</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_coords</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">pen_width</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span>
@@ -641,28 +641,28 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">tag_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">pen_width</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="nb">list</span><span class="p">()):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tag image for the given coords.</span>
+<span class="w">    </span><span class="sd">"""Tag image for the given coords.</span>
 
 <span class="sd">        :param img: (sppasImage) The image to write</span>
 <span class="sd">        :param coords: (list of sppasCoords OR list(list of sppasCoords)) The coordinates of objects</span>
 <span class="sd">        :param colors: List of (r,g,b) Tuple with RGB int values</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">coords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">img</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">sppasImage</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;sppasImage&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'sppasImage'</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">&#39;coords&#39;</span><span class="p">,</span> <span class="s1">&#39;(list, tuple)&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="s1">'coords'</span><span class="p">,</span> <span class="s1">'(list, tuple)'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
-            <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">])</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">][</span><span class="n">i</span> <span class="o">%</span> <span class="n">n</span><span class="p">]</span>
-            <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">][</span><span class="n">i</span> <span class="o">%</span> <span class="n">n</span><span class="p">]</span>
-            <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">][</span><span class="n">i</span> <span class="o">%</span> <span class="n">n</span><span class="p">]</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">'r'</span><span class="p">])</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">'r'</span><span class="p">][</span><span class="n">i</span> <span class="o">%</span> <span class="n">n</span><span class="p">]</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">'g'</span><span class="p">][</span><span class="n">i</span> <span class="o">%</span> <span class="n">n</span><span class="p">]</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_colors</span><span class="p">[</span><span class="s1">'b'</span><span class="p">][</span><span class="n">i</span> <span class="o">%</span> <span class="n">n</span><span class="p">]</span>
             <span class="n">rgb</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">rgb</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -702,8 +702,8 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_cropped_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">out_img_name</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Crop and save the images with squares at given coords.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_cropped_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">out_img_name</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Crop and save the images with squares at given coords.</span>
 
 <span class="sd">        :param image: (sppasImage) The image to write</span>
 <span class="sd">        :param coords: (sppasCoords) The coordinates of objects</span>
@@ -711,13 +711,13 @@ View Source
 <span class="sd">        :param pattern: (str) Pattern to add to each file</span>
 <span class="sd">        :return: list of file names</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">cropped_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
         <span class="n">fn</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">out_img_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">fn</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">pattern</span><span class="p">):</span>
             <span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)]</span>
-        <span class="n">out_iname</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">_</span><span class="si">{:d}{:s}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">fe</span><span class="p">)</span>
+        <span class="n">out_iname</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{:s}</span><span class="s1">_</span><span class="si">{:d}{:s}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">fe</span><span class="p">)</span>
         <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_and_size_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_height</span><span class="p">())</span>
@@ -755,13 +755,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">crop_and_size_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Crop the given image at the given coords and resize.</span>
+<span class="w">    </span><span class="sd">"""Crop the given image at the given coords and resize.</span>
 
 <span class="sd">        :param image: (sppasImage) The image to write</span>
 <span class="sd">        :param coord: (sppasCoords) The coordinates of the area to crop</span>
 <span class="sd">        :return: (sppasImage)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">icrop</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_height</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">img</span><span class="p">)</span>
@@ -775,7 +775,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

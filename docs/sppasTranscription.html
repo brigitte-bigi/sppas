@@ -86,13 +86,13 @@ instances included in those of annotations of tier B.</li>
 <h5>Example</h5>
 
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Create an instance</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">trs</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="s2">&quot;trs name&quot;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">trs</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="s2">"trs name"</span><span class="p">)</span>
 </code></pre></div>
 
 <h5>Example</h5>
 
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Create a tier</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">trs</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s2">&quot;tier name&quot;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">trs</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="s2">"tier name"</span><span class="p">)</span>
 </code></pre></div>
 
 <h5>Example</h5>
@@ -104,7 +104,7 @@ instances included in those of annotations of tier B.</li>
 <h5>Example</h5>
 
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Get a tier of a transcription from its name</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">tier</span> <span class="o">=</span> <span class="n">trs</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;tier name&quot;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">tier</span> <span class="o">=</span> <span class="n">trs</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"tier name"</span><span class="p">)</span>
 </code></pre></div>
 
 <h5>Example</h5>
@@ -136,11 +136,11 @@ instances included in those of annotations of tier B.</li>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasTranscription instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasTranscription instance.</span>
 
 <span class="sd">    :param name: (str) Name of the transcription.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasTranscription</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_media</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -178,11 +178,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the object matching the given identifier.</span>
+<span class="w">    </span><span class="sd">"""Return the object matching the given identifier.</span>
 
 <span class="sd">        :param identifier: (GUID)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">identifier</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tier_from_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
@@ -216,7 +216,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the transcription.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of the transcription."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 </code></pre></div>
 
@@ -248,12 +248,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the name of the transcription.</span>
+<span class="w">    </span><span class="sd">"""Set the name of the transcription.</span>
 
 <span class="sd">        :param name: (str or None) The identifier or None to set the GUID.</span>
 <span class="sd">        :returns: the name</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
@@ -278,7 +278,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_media_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of sppasMedia.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of sppasMedia."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_media</span>
 </code></pre></div>
 
@@ -304,14 +304,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_media_from_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">media_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasMedia from its name or None.</span>
+<span class="w">    </span><span class="sd">"""Return a sppasMedia from its name or None.</span>
 
 <span class="sd">        :param media_id: (str) Identifier name of a media</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">idt</span> <span class="o">=</span> <span class="n">media_id</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_media</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">idt</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">)</span> <span class="o">==</span> <span class="n">idt</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">m</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -344,18 +344,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_media</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_media</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a new media in the list of media.</span>
+<span class="w">    </span><span class="sd">"""Add a new media in the list of media.</span>
 
 <span class="sd">        Does not add the media if a media with the same id is already in self.</span>
 
 <span class="sd">        :param new_media: (sppasMedia) The media to add.</span>
 <span class="sd">        :raises: AnnDataTypeError, TrsAddError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_media</span><span class="p">,</span> <span class="n">sppasMedia</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">new_media</span><span class="p">,</span> <span class="s1">&#39;sppasMedia&#39;</span><span class="p">)</span>
-    <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_media</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">new_media</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">new_media</span><span class="p">,</span> <span class="s1">'sppasMedia'</span><span class="p">)</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_media</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">new_media</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">TrsAddError</span><span class="p">(</span><span class="n">new_media</span><span class="o">.</span><span class="n">get_filename</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_media</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_media</span><span class="p">)</span>
 </code></pre></div>
@@ -386,14 +386,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_media</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_media</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove a media of the list of media.</span>
+<span class="w">    </span><span class="sd">"""Remove a media of the list of media.</span>
 
 <span class="sd">        :param old_media: (sppasMedia)</span>
 <span class="sd">        :raises: AnnDataTypeError, TrsRemoveError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">old_media</span><span class="p">,</span> <span class="n">sppasMedia</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">old_media</span><span class="p">,</span> <span class="s1">&#39;sppasMedia&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">old_media</span><span class="p">,</span> <span class="s1">'sppasMedia'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">old_media</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_media</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">TrsRemoveError</span><span class="p">(</span><span class="n">old_media</span><span class="o">.</span><span class="n">get_filename</span><span class="p">())</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_media</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">old_media</span><span class="p">)</span>
@@ -430,12 +430,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_media_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">media_list</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the list of media.</span>
+<span class="w">    </span><span class="sd">"""Set the list of media.</span>
 
 <span class="sd">        :param media_list: (list)</span>
 <span class="sd">        :returns: list of rejected media</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_media</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">rejected</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">:</span>
@@ -462,7 +462,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ctrl_vocab_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of controlled vocabularies.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of controlled vocabularies."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ctrlvocab</span>
 </code></pre></div>
 
@@ -488,11 +488,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ctrl_vocab_from_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctrl_vocab_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasCtrlVocab from its name or None.</span>
+<span class="w">    </span><span class="sd">"""Return a sppasCtrlVocab from its name or None.</span>
 
 <span class="sd">        :param ctrl_vocab_name: (str) Identifier name of a ctrl vocabulary</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">idt</span> <span class="o">=</span> <span class="n">ctrl_vocab_name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ctrlvocab</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="n">idt</span><span class="p">:</span>
@@ -522,14 +522,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ctrl_vocab_from_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctrl_vocab_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasCtrlVocab from its id or None.</span>
+<span class="w">    </span><span class="sd">"""Return a sppasCtrlVocab from its id or None.</span>
 
 <span class="sd">        :param ctrl_vocab_id: (str) Identifier name of a ctrl vocab</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">idt</span> <span class="o">=</span> <span class="n">ctrl_vocab_id</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ctrlvocab</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">idt</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">)</span> <span class="o">==</span> <span class="n">idt</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">m</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -560,14 +560,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_ctrl_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_ctrl_vocab</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a new controlled vocabulary in the list of ctrl vocab.</span>
+<span class="w">    </span><span class="sd">"""Add a new controlled vocabulary in the list of ctrl vocab.</span>
 
 <span class="sd">        :param new_ctrl_vocab: (sppasCtrlVocab)</span>
 <span class="sd">        :raises: AnnDataTypeError, TrsAddError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_ctrl_vocab</span><span class="p">,</span> <span class="n">sppasCtrlVocab</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">new_ctrl_vocab</span><span class="p">,</span> <span class="s1">&#39;sppasCtrlVocab&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">new_ctrl_vocab</span><span class="p">,</span> <span class="s1">'sppasCtrlVocab'</span><span class="p">)</span>
     <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ctrlvocab</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">new_ctrl_vocab</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">TrsAddError</span><span class="p">(</span><span class="n">new_ctrl_vocab</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
@@ -600,14 +600,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_ctrl_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_ctrl_vocab</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove a controlled vocabulary of the list of ctrl vocab.</span>
+<span class="w">    </span><span class="sd">"""Remove a controlled vocabulary of the list of ctrl vocab.</span>
 
 <span class="sd">        :param old_ctrl_vocab: (sppasCtrlVocab)</span>
 <span class="sd">        :raises: AnnDataTypeError, TrsRemoveError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">old_ctrl_vocab</span><span class="p">,</span> <span class="n">sppasCtrlVocab</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">old_ctrl_vocab</span><span class="p">,</span> <span class="s1">&#39;sppasCtrlVocab&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">old_ctrl_vocab</span><span class="p">,</span> <span class="s1">'sppasCtrlVocab'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">old_ctrl_vocab</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ctrlvocab</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">TrsRemoveError</span><span class="p">(</span><span class="n">old_ctrl_vocab</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_ctrlvocab</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">old_ctrl_vocab</span><span class="p">)</span>
@@ -644,12 +644,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_ctrl_vocab_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctrl_vocab_list</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the list of controlled vocabularies.</span>
+<span class="w">    </span><span class="sd">"""Set the list of controlled vocabularies.</span>
 
 <span class="sd">        :param ctrl_vocab_list: (list)</span>
 <span class="sd">        :returns: list of rejected ctrl_vocab</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_ctrlvocab</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">rejected</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ctrl_vocab_list</span><span class="p">:</span>
@@ -684,13 +684,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_hierarchy_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">link_type</span><span class="p">,</span> <span class="n">parent_tier</span><span class="p">,</span> <span class="n">child_tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate and add a hierarchy link between 2 tiers.</span>
+<span class="w">    </span><span class="sd">"""Validate and add a hierarchy link between 2 tiers.</span>
 
 <span class="sd">        :param link_type: (constant) One of the hierarchy types</span>
 <span class="sd">        :param parent_tier: (Tier) The reference tier</span>
 <span class="sd">        :param child_tier: (Tier) The child tier to be linked to reftier</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">parent_tier</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">TrsInvalidTierError</span><span class="p">(</span><span class="n">parent_tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">child_tier</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="p">:</span>
@@ -725,19 +725,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate_annotation_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">location</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate a location.</span>
+<span class="w">    </span><span class="sd">"""Validate a location.</span>
 
 <span class="sd">        :param tier: (Tier) The reference tier</span>
 <span class="sd">        :param location: (sppasLocation)</span>
 <span class="sd">        :raises: AnnDataTypeError, HierarchyContainsError, HierarchyTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">parent_tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span><span class="o">.</span><span class="n">get_parent</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">parent_tier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">link_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span><span class="o">.</span><span class="n">get_hierarchy_type</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">&#39;TimeAssociation&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">'TimeAssociation'</span><span class="p">:</span>
             <span class="n">sppasHierarchy</span><span class="o">.</span><span class="n">validate_time_association</span><span class="p">(</span><span class="n">parent_tier</span><span class="p">,</span> <span class="n">tier</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">&#39;TimeAlignment&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">'TimeAlignment'</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">location</span><span class="o">.</span><span class="n">is_point</span><span class="p">():</span>
                 <span class="n">lowest</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">location</span><span class="p">])</span>
                 <span class="n">highest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">location</span><span class="p">])</span>
@@ -758,9 +758,9 @@ View Source
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">child_tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">tier</span><span class="p">):</span>
             <span class="n">link_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span><span class="o">.</span><span class="n">get_hierarchy_type</span><span class="p">(</span><span class="n">child_tier</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">&#39;TimeAssociation&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">'TimeAssociation'</span><span class="p">:</span>
                 <span class="n">sppasHierarchy</span><span class="o">.</span><span class="n">validate_time_association</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">child_tier</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">&#39;TimeAlignment&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">'TimeAlignment'</span><span class="p">:</span>
                 <span class="n">sppasHierarchy</span><span class="o">.</span><span class="n">validate_time_alignment</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">child_tier</span><span class="p">)</span>
 </code></pre></div>
 
@@ -780,7 +780,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_hierarchy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the hierarchy.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the hierarchy."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span>
 </code></pre></div>
 
@@ -797,16 +797,16 @@ View Source
     <span class="n">parent_tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span><span class="o">.</span><span class="n">get_parent</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">parent_tier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">link_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span><span class="o">.</span><span class="n">get_hierarchy_type</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">&#39;TimeAssociation&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">'TimeAssociation'</span><span class="p">:</span>
             <span class="n">sppasHierarchy</span><span class="o">.</span><span class="n">validate_time_association</span><span class="p">(</span><span class="n">parent_tier</span><span class="p">,</span> <span class="n">tier</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">&#39;TimeAlignment&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">'TimeAlignment'</span><span class="p">:</span>
             <span class="n">sppasHierarchy</span><span class="o">.</span><span class="n">validate_time_alignment</span><span class="p">(</span><span class="n">parent_tier</span><span class="p">,</span> <span class="n">tier</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">child_tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">tier</span><span class="p">):</span>
             <span class="n">link_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span><span class="o">.</span><span class="n">get_hierarchy_type</span><span class="p">(</span><span class="n">child_tier</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">&#39;TimeAssociation&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">'TimeAssociation'</span><span class="p">:</span>
                 <span class="n">sppasHierarchy</span><span class="o">.</span><span class="n">validate_time_association</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">child_tier</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">&#39;TimeAlignment&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s1">'TimeAlignment'</span><span class="p">:</span>
                 <span class="n">sppasHierarchy</span><span class="o">.</span><span class="n">validate_time_alignment</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">child_tier</span><span class="p">)</span>
 </code></pre></div>
 
@@ -826,7 +826,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_tier_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of tiers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of tiers."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span>
 </code></pre></div>
 
@@ -852,14 +852,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_tier_from_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasTier from its id or None.</span>
+<span class="w">    </span><span class="sd">"""Return a sppasTier from its id or None.</span>
 
 <span class="sd">        :param tier_id: (str) Identifier name of a tier</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">idt</span> <span class="o">=</span> <span class="n">tier_id</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">idt</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">'id'</span><span class="p">)</span> <span class="o">==</span> <span class="n">idt</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">t</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
@@ -880,7 +880,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the transcription does not contain tiers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if the transcription does not contain tiers."""</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
 </code></pre></div>
 
@@ -905,9 +905,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the given tier is in the list of tiers.</span>
+<span class="w">    </span><span class="sd">"""Return True if the given tier is in the list of tiers.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">sppasTier</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="p">:</span>
@@ -947,13 +947,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find a tier from its name.</span>
+<span class="w">    </span><span class="sd">"""Find a tier from its name.</span>
 
 <span class="sd">        :param name: (str) EXACT name of the tier</span>
 <span class="sd">        :param case_sensitive: (bool)</span>
 <span class="sd">        :returns: sppasTier or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">case_sensitive</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
@@ -991,12 +991,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find a tier from its identifier.</span>
+<span class="w">    </span><span class="sd">"""Find a tier from its identifier.</span>
 
 <span class="sd">        :param tier_id: (str) Exact identifier of the tier</span>
 <span class="sd">        :returns: sppasTier or None</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tier_id</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">tier_id</span><span class="p">:</span>
@@ -1033,13 +1033,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_tier_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the index of a tier from its name.</span>
+<span class="w">    </span><span class="sd">"""Get the index of a tier from its name.</span>
 
 <span class="sd">        :param name: (str) EXACT name of the tier</span>
 <span class="sd">        :param case_sensitive: (bool)</span>
 <span class="sd">        :returns: index or -1 if not found</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
     <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1075,12 +1075,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_tier_index_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the index of a tier from its id.</span>
+<span class="w">    </span><span class="sd">"""Get the index of a tier from its id.</span>
 
 <span class="sd">        :param identifier: (str) GUID</span>
 <span class="sd">        :returns: index or -1 if not found</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tier</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">identifier</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">i</span>
@@ -1116,20 +1116,20 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_tier_index_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">new_index</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the index of a tier from its identifier.</span>
+<span class="w">    </span><span class="sd">"""Set the index of a tier from its identifier.</span>
 
 <span class="sd">        :param identifier: (str)</span>
 <span class="sd">        :param new_index: (int) New index of the tier in self</span>
 <span class="sd">        :returns: index or -1 if not found</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">old_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tier_index_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">old_index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;No tier with identifier </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">identifier</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">'No tier with identifier </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">identifier</span><span class="p">))</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">new_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">old_index</span><span class="p">))</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}</span><span class="s1"> is not a valid index for tier </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_index</span><span class="p">,</span> <span class="n">identifier</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">'</span><span class="si">{:d}</span><span class="s1"> is not a valid index for tier </span><span class="si">{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_index</span><span class="p">,</span> <span class="n">identifier</span><span class="p">))</span>
 </code></pre></div>
 
     </details>
@@ -1164,7 +1164,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_tier_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">new_index</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the index of a tier from its name.</span>
+<span class="w">    </span><span class="sd">"""Set the index of a tier from its name.</span>
 
 <span class="sd">        THIS SHOULD NEVER BE USED. USE TIER IDENTIFIER INSTEAD OF ITS NAME.</span>
 
@@ -1173,7 +1173,7 @@ View Source
 <span class="sd">        :param case_sensitive: (bool)</span>
 <span class="sd">        :returns: index or -1 if not found</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">old_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tier_index</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">old_index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">IndexError</span>
@@ -1205,17 +1205,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rename_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Rename a tier by appending a digit.</span>
+<span class="w">    </span><span class="sd">"""Rename a tier by appending a digit.</span>
 
 <span class="sd">        :param tier: (sppasTier) The tier to rename.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">sppasTier</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="s1">&#39;sppasTier&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="s1">'sppasTier'</span><span class="p">)</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">(</span><span class="si">{:d}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{:s}</span><span class="s1">(</span><span class="si">{:d}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="n">i</span><span class="p">)</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">tier</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
@@ -1250,14 +1250,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ctrl_vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">media</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and append a new empty tier.</span>
+<span class="w">    </span><span class="sd">"""Create and append a new empty tier.</span>
 
 <span class="sd">        :param name: (str) the name of the tier to create</span>
 <span class="sd">        :param ctrl_vocab: (sppasCtrlVocab)</span>
 <span class="sd">        :param media: (sppasMedia)</span>
 <span class="sd">        :returns: newly created empty tier</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">ctrl_vocab</span><span class="p">,</span> <span class="n">media</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tier</span>
@@ -1285,11 +1285,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append a new tier.</span>
+<span class="w">    </span><span class="sd">"""Append a new tier.</span>
 
 <span class="sd">        :param tier: (sppasTier) the tier to append</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">TrsAddError</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">rename_tier</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
@@ -1342,7 +1342,7 @@ and returns the last tier in the transcription.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove the tier at the given position in the transcription.</span>
+<span class="w">    </span><span class="sd">"""Remove the tier at the given position in the transcription.</span>
 
 <span class="sd">        Return it. If no index is specified, pop() removes</span>
 <span class="sd">        and returns the last tier in the transcription.</span>
@@ -1351,7 +1351,7 @@ View Source
 <span class="sd">        :returns: (sppasTier)</span>
 <span class="sd">        :raise: AnnDataIndexError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hierarchy</span><span class="o">.</span><span class="n">remove_tier</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
@@ -1378,7 +1378,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_min_loc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the sppasPoint with the lowest value through all tiers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the sppasPoint with the lowest value through all tiers."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">min_point</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1411,7 +1411,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_max_loc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the sppasPoint with the highest value through all tiers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the sppasPoint with the highest value through all tiers."""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">max_point</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1454,12 +1454,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shift all annotation&#39; location to a given delay.</span>
+<span class="w">    </span><span class="sd">"""Shift all annotation' location to a given delay.</span>
 
 <span class="sd">        :param delay: (int, float) delay to shift all localizations</span>
 <span class="sd">        :raise: AnnDataTypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tiers</span><span class="p">:</span>
@@ -1540,7 +1540,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

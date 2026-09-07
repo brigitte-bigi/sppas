@@ -81,11 +81,11 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasMetaData instance.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasMetaData instance.</span>
 
-<span class="sd">    Add a GUID-like in the dictionary of metadata, with key &quot;id&quot;.</span>
+<span class="sd">    Add a GUID-like in the dictionary of metadata, with key "id".</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">gen_id</span><span class="p">()</span>
 </code></pre></div>
@@ -109,8 +109,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the identifier of this object.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">"""Return the identifier of this object."""</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
 </code></pre></div>
 
     </details>
@@ -129,8 +129,8 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">gen_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Re-generate an &#39;id&#39;.&quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+<span class="w">    </span><span class="sd">"""Re-generate an 'id'."""</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
 </code></pre></div>
 
     </details>
@@ -161,12 +161,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_meta_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if an entry is a key in the list of metadata.</span>
+<span class="w">    </span><span class="sd">"""Check if an entry is a key in the list of metadata.</span>
 
 <span class="sd">        :param entry: (str) Entry to check</span>
 <span class="sd">        :returns: (Boolean)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span>
 </code></pre></div>
 
@@ -198,14 +198,14 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the value of the given key.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the value of the given key.</span>
 
 <span class="sd">        :param entry: (str) Entry to be checked as a key.</span>
 <span class="sd">        :param default: (str) Default value to return if entry is not a key.</span>
 <span class="sd">        :returns: (str) meta data value or default value</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
 </code></pre></div>
 
@@ -225,7 +225,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_meta_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of metadata keys.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the list of metadata keys."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 </code></pre></div>
 
@@ -254,16 +254,16 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set or update a metadata.</span>
+<span class="w">    </span><span class="sd">"""Set or update a metadata.</span>
 
 <span class="sd">        :param key: (str) The key of the metadata.</span>
 <span class="sd">        :param value: (str) The value assigned to the key.</span>
 
 <span class="sd">        key, and value are formatted and stored in unicode.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="n">su</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
     <span class="n">su</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -293,13 +293,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pop_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove a metadata from its key.</span>
+<span class="w">    </span><span class="sd">"""Remove a metadata from its key.</span>
 
 <span class="sd">        :param key: (str)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Identifier key can&#39;t be removed of the metadata.&quot;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'id'</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Identifier key can't be removed of the metadata."</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">:</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 </code></pre></div>
@@ -325,9 +325,9 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_license_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add metadata about the license applied to the object (GPLv3).&quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_license_text_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;GNU AGPL V3&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_license_url_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;https://www.gnu.org/licenses/gpl-3.0.en.html&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Add metadata about the license applied to the object (GPLv3)."""</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_license_text_</span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">idx</span><span class="p">,</span> <span class="s1">'GNU AGPL V3'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'file_license_url_</span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">idx</span><span class="p">,</span> <span class="s1">'https://www.gnu.org/licenses/gpl-3.0.en.html'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -348,17 +348,17 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_software_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add metadata about this software.</span>
+<span class="w">    </span><span class="sd">"""Add metadata about this software.</span>
 
 <span class="sd">        TODO: CHECK IF KEYS NOT ALREADY EXISTING.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_name&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_version&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_url&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__url__</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_author&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__author__</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_contact&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__contact__</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_copyright&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__copyright__</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'software_name'</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'software_version'</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'software_url'</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__url__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'software_author'</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__author__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'software_contact'</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__contact__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'software_copyright'</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__copyright__</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -379,15 +379,15 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_language_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add metadata about the language (und).</span>
+<span class="w">    </span><span class="sd">"""Add metadata about the language (und).</span>
 
 <span class="sd">        TODO: CHECK IF KEYS NOT ALREADY EXISTING.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_iso&#39;</span><span class="p">,</span> <span class="s1">&#39;iso639-3&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_code_0&#39;</span><span class="p">,</span> <span class="s1">&#39;und&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_name_0&#39;</span><span class="p">,</span> <span class="s1">&#39;Undetermined&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_url_0&#39;</span><span class="p">,</span> <span class="s1">&#39;https://iso639-3.sil.org/code/und&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'language_iso'</span><span class="p">,</span> <span class="s1">'iso639-3'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'language_code_0'</span><span class="p">,</span> <span class="s1">'und'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'language_name_0'</span><span class="p">,</span> <span class="s1">'Undetermined'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'language_url_0'</span><span class="p">,</span> <span class="s1">'https://iso639-3.sil.org/code/und'</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -409,20 +409,20 @@ TODO: CHECK IF KEYS NOT ALREADY EXISTING.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_project_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add metadata about the project this object is included-in.</span>
+<span class="w">    </span><span class="sd">"""Add metadata about the project this object is included-in.</span>
 
 <span class="sd">        Currently do not assign any value.</span>
 <span class="sd">        TODO: CHECK IF KEYS NOT ALREADY EXISTING.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_description&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_corpus_owner&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_corpus_type&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_license&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_environment&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_collection&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_title&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_noises&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'project_description'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'project_corpus_owner'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'project_corpus_type'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'project_license'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'project_environment'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'project_collection'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'project_title'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'project_noises'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -450,8 +450,8 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_annotator_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">version_date</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add metadata about an annotator.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_annotator_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">version_date</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Add metadata about an annotator.</span>
 
 <span class="sd">        :param name: (str)</span>
 <span class="sd">        :param version: (str)</span>
@@ -459,10 +459,10 @@ View Source
 
 <span class="sd">        TODO: CHECK IF KEYS ARE NOT ALREADY EXISTING.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotator_name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotator_version&#39;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotator_version_date&#39;</span><span class="p">,</span> <span class="n">version_date</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'annotator_name'</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'annotator_version'</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">'annotator_version_date'</span><span class="p">,</span> <span class="n">version_date</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -489,7 +489,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

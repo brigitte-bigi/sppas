@@ -79,13 +79,13 @@ description are all empty strings.</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">o</span> <span class="o">=</span> <span class="n">sppasBaseOption</span><span class="p">(</span><span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">o</span> <span class="o">=</span> <span class="n">sppasBaseOption</span><span class="p">(</span><span class="s2">"integer"</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="o">&lt;</span><span class="nb">type</span> <span class="s1">&#39;int&#39;</span><span class="o">&gt;</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="o">&lt;</span><span class="nb">type</span> <span class="s1">'int'</span><span class="o">&gt;</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">get_untypedvalue</span><span class="p">()</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="o">&lt;</span><span class="nb">type</span> <span class="s1">&#39;str&#39;</span><span class="o">&gt;</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="o">&lt;</span><span class="nb">type</span> <span class="s1">'str'</span><span class="o">&gt;</span>
 </code></pre></div>
 
     </article>
@@ -116,24 +116,24 @@ example, 'int, 'integer', 'long or 'short' will be all stored into
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option_type</span><span class="p">,</span> <span class="n">option_value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasBaseOption instance.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option_type</span><span class="p">,</span> <span class="n">option_value</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Create a sppasBaseOption instance.</span>
 
-<span class="sd">    The type of an option is one of the key of type_mapping (i.e. &#39;int&#39;,</span>
-<span class="sd">    &#39;bool&#39;, &#39;float&#39;, ...). Notice that the type will be normalized. For</span>
-<span class="sd">    example, &#39;int, &#39;integer&#39;, &#39;long or &#39;short&#39; will be all stored into</span>
-<span class="sd">    &#39;int&#39; type.</span>
+<span class="sd">    The type of an option is one of the key of type_mapping (i.e. 'int',</span>
+<span class="sd">    'bool', 'float', ...). Notice that the type will be normalized. For</span>
+<span class="sd">    example, 'int, 'integer', 'long or 'short' will be all stored into</span>
+<span class="sd">    'int' type.</span>
 
 <span class="sd">    :param option_type: (str) Type of the option.</span>
 <span class="sd">    :param option_value: (str) Value of the option.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_type</span><span class="p">(</span><span class="n">option_type</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">option_value</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_description</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_description</span> <span class="o">=</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -161,11 +161,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the type of the option.</span>
+<span class="w">    </span><span class="sd">"""Return the type of the option.</span>
 
 <span class="sd">        :returns: normalized value of the type</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span>
 </code></pre></div>
 
@@ -187,11 +187,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_untypedvalue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the value as it was given.</span>
+<span class="w">    </span><span class="sd">"""Return the value as it was given.</span>
 
 <span class="sd">        i.e. without taking the given type into account.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
 </code></pre></div>
 
@@ -211,18 +211,18 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the typed-value or None if the type is unknown.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Return the typed-value or None if the type is unknown."""</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s1">'bool'</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'true'</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s1">&#39;int&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s1">'int'</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s1">'float'</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s1">&#39;str&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s1">'str'</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'file'</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">,</span> <span class="p">(</span><span class="n">text_type</span><span class="p">,</span> <span class="n">binary_type</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">v</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -247,7 +247,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of to this option.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the name of to this option."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 </code></pre></div>
 
@@ -267,7 +267,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the brief text which describes the option.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the brief text which describes the option."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text</span>
 </code></pre></div>
 
@@ -287,7 +287,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the long text which describes the option.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the long text which describes the option."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_description</span>
 </code></pre></div>
 
@@ -313,11 +313,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set self from another instance.</span>
+<span class="w">    </span><span class="sd">"""Set self from another instance.</span>
 
 <span class="sd">        :param other: (sppasBaseOption) The option from which to get info.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_untypedvalue</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
@@ -356,34 +356,34 @@ If the given type is not valid, it will be set to 'str'.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option_type</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new type.</span>
+<span class="w">    </span><span class="sd">"""Set a new type.</span>
 
-<span class="sd">        Possible types are: &#39;int&#39;, &#39;bool&#39;, &#39;float&#39;, &#39;str&#39;.</span>
-<span class="sd">        If the given type is not valid, it will be set to &#39;str&#39;.</span>
+<span class="sd">        Possible types are: 'int', 'bool', 'float', 'str'.</span>
+<span class="sd">        If the given type is not valid, it will be set to 'str'.</span>
 
 <span class="sd">        :param option_type: (str) Type of the option</span>
 <span class="sd">        :returns: True if option_type is valid and set.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">option_type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">option_type</span><span class="p">)</span>
     <span class="n">option_type</span> <span class="o">=</span> <span class="n">option_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">option_type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">&#39;bool&#39;</span>
+    <span class="k">if</span> <span class="n">option_type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'bool'</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">'bool'</span>
         <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">elif</span> <span class="n">option_type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;long&#39;</span> <span class="ow">or</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;short&#39;</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">&#39;int&#39;</span>
+    <span class="k">elif</span> <span class="n">option_type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'int'</span><span class="p">)</span> <span class="ow">or</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">'long'</span> <span class="ow">or</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">'short'</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">'int'</span>
         <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">elif</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span> <span class="ow">or</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;double&#39;</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
+    <span class="k">elif</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">'float'</span> <span class="ow">or</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">'double'</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">'float'</span>
         <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">elif</span> <span class="s1">&#39;file&#39;</span> <span class="ow">in</span> <span class="n">option_type</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">option_type</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">&#39;filename&#39;</span>
+    <span class="k">elif</span> <span class="s1">'file'</span> <span class="ow">in</span> <span class="n">option_type</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'name'</span> <span class="ow">in</span> <span class="n">option_type</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">'filename'</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">elif</span> <span class="s1">&#39;path&#39;</span> <span class="ow">in</span> <span class="n">option_type</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">&#39;filepath&#39;</span>
+        <span class="k">elif</span> <span class="s1">'path'</span> <span class="ow">in</span> <span class="n">option_type</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">'filepath'</span>
             <span class="k">return</span> <span class="kc">True</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">&#39;str&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="s1">'str'</span>
     <span class="k">return</span> <span class="kc">False</span>
 </code></pre></div>
 
@@ -409,11 +409,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new value.</span>
+<span class="w">    </span><span class="sd">"""Set a new value.</span>
 
 <span class="sd">        :param value: (any type) Un-typed value of the option.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
@@ -439,11 +439,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a name to describe the option.</span>
+<span class="w">    </span><span class="sd">"""Set a name to describe the option.</span>
 
 <span class="sd">        :param name: (str) Option description.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
 </code></pre></div>
 
@@ -469,11 +469,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a brief text to describe the option.</span>
+<span class="w">    </span><span class="sd">"""Set a brief text to describe the option.</span>
 
 <span class="sd">        :param text: (str) Option description.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="n">text</span>
 </code></pre></div>
 
@@ -499,11 +499,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a long text to describe the option.</span>
+<span class="w">    </span><span class="sd">"""Set a long text to describe the option.</span>
 
 <span class="sd">        :param description: (str) Option description.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_description</span> <span class="o">=</span> <span class="n">description</span>
 </code></pre></div>
 
@@ -515,7 +515,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

@@ -70,7 +70,7 @@ profile, cat face, car...).</p>
 <div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="p">()</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_filename</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Detect all the objects in an image</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">sppasImage</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;image path&quot;</span><span class="p">))</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">sppasImage</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">"image path"</span><span class="p">))</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Get number of detected objects</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
  <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Browse through the detected object coordinates:</span>
@@ -104,11 +104,11 @@ object is expected to range [0., 1.].</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new detector instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new detector instance.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__min_ratio</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">DEFAULT_MIN_RATIO</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__min_score</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">DEFAULT_MIN_SCORE</span>
@@ -133,7 +133,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">invalidate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Invalidate current list of detected object coordinates.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Invalidate current list of detected object coordinates."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 </code></pre></div>
 
@@ -153,7 +153,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the expected extension of the model filename.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the expected extension of the model filename."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span>
 </code></pre></div>
 
@@ -173,7 +173,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_min_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum ratio of an object compared to the image.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the minimum ratio of an object compared to the image."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__min_ratio</span>
 </code></pre></div>
 
@@ -206,15 +206,15 @@ least 'value' percent of the image width and height respectively</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_min_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the minimum ratio of an object compared to the image.</span>
+<span class="w">    </span><span class="sd">"""Set the minimum ratio of an object compared to the image.</span>
 
 <span class="sd">        It means that width and height of a detected object must be at</span>
-<span class="sd">        least &#39;value&#39; percent of the image width and height respectively</span>
+<span class="sd">        least 'value' percent of the image width and height respectively</span>
 
 <span class="sd">        :param value: (float) Value ranging [0., 1.]</span>
 <span class="sd">        :raise: ValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
@@ -237,7 +237,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_min_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum score of a detected object to consider it.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the minimum score of a detected object to consider it."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__min_score</span>
 </code></pre></div>
 
@@ -271,7 +271,7 @@ range between 0. and 1.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_min_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the minimum score of a detected object to consider it.</span>
+<span class="w">    </span><span class="sd">"""Set the minimum score of a detected object to consider it.</span>
 
 <span class="sd">        It means that any detected object with a score lesser than the given</span>
 <span class="sd">        one will be ignored. The score of detected objects are supposed to</span>
@@ -280,7 +280,7 @@ View Source
 <span class="sd">        :param value: (float) Value ranging [0., 1.]</span>
 <span class="sd">        :raise: ValueError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
@@ -317,14 +317,14 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_best</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the coordinates with the n-best scores.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the coordinates with the n-best scores.</span>
 
-<span class="sd">        Add &quot;None&quot; if more objects are requested than those detected.</span>
+<span class="sd">        Add "None" if more objects are requested than those detected.</span>
 
 <span class="sd">        :param nb: (int) number of coordinates to return</span>
 <span class="sd">        :return: (list of sppasCoords or sppasCoords or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">nb</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">nb</span><span class="p">)</span>
@@ -364,12 +364,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_confidence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the coordinate objects with the better scores.</span>
+<span class="w">    </span><span class="sd">"""Return a copy of the coordinate objects with the better scores.</span>
 
 <span class="sd">        :param confidence: (float) Minimum confidence score ranging [0., 1.]</span>
 <span class="sd">        :return: (list of sppasCoords or sppasCoords or None)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">score</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">confidence</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
@@ -402,12 +402,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load at least a model to instantiate a detector.</span>
+<span class="w">    </span><span class="sd">"""Load at least a model to instantiate a detector.</span>
 
 <span class="sd">        :param model: Filename of a model (DNN, HaarCascade, ...)</span>
 <span class="sd">        :raise: IOError if model is not loaded.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_extension</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IOExtensionError</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -444,19 +444,19 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Determine the coordinates of all the detected objects.</span>
+<span class="w">    </span><span class="sd">"""Determine the coordinates of all the detected objects.</span>
 
 <span class="sd">        :param image: (sppasImage or numpy.ndarray)</span>
 <span class="sd">        :raises: sppasTypeError: Given parameter is not an image.</span>
 <span class="sd">        :raises: sppasError: No model was instantiated.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">invalidate</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">image</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sppasImage</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Object detection requires a sppasImage. Got </span><span class="si">{}</span><span class="s1"> instead.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">))))</span>
-        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">)),</span> <span class="n">expected</span><span class="o">=</span><span class="s1">&#39;sppasImage&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'Object detection requires a sppasImage. Got </span><span class="si">{}</span><span class="s1"> instead.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">))))</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">)),</span> <span class="n">expected</span><span class="o">=</span><span class="s1">'sppasImage'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">channel</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
         <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">ibgra_to_bgr</span><span class="p">()</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -489,11 +489,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">sort_by_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sort the detected objects by their confidence score.</span>
+<span class="w">    </span><span class="sd">"""Sort the detected objects by their confidence score.</span>
 
 <span class="sd">        The highest the better.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">detected</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">:</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -529,14 +529,14 @@ changed.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_best</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter the coordinates to select only the n-best scores.</span>
+<span class="w">    </span><span class="sd">"""Filter the coordinates to select only the n-best scores.</span>
 
 <span class="sd">        If there are less coordinates than those requested, nothing is</span>
 <span class="sd">        changed.</span>
 
 <span class="sd">        :param nb: (int) number of coordinates to keep</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_best</span><span class="p">(</span><span class="n">nb</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">nb</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">best</span> <span class="o">=</span> <span class="p">[</span><span class="n">best</span><span class="p">]</span>
@@ -566,11 +566,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_confidence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter the coordinates to select only the highest scores.</span>
+<span class="w">    </span><span class="sd">"""Filter the coordinates to select only the highest scores.</span>
 
 <span class="sd">        :param confidence: (float) Minimum confidence score</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">(</span><span class="n">confidence</span><span class="p">)</span>
@@ -612,14 +612,14 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">to_dtype</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a value to dtype or raise the appropriate exception.</span>
+<span class="w">    </span><span class="sd">"""Convert a value to dtype or raise the appropriate exception.</span>
 
 <span class="sd">        :param value: (any type)</span>
 <span class="sd">        :param dtype: (type) Expected type of the value</span>
 <span class="sd">        :returns: Value of the given type</span>
 <span class="sd">        :raises: TypeError</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -652,11 +652,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_overlapped</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">50.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove overlapping detected objects.</span>
+<span class="w">    </span><span class="sd">"""Remove overlapping detected objects.</span>
 
 <span class="sd">        To be overridden.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">pass</span>
 </code></pre></div>
 
@@ -686,11 +686,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_set_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Really load the model and instantiate the detector.</span>
+<span class="w">    </span><span class="sd">"""Really load the model and instantiate the detector.</span>
 
 <span class="sd">        To be overridden.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div>
 
@@ -717,11 +717,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_detection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Determine the coordinates of the detected objects.</span>
+<span class="w">    </span><span class="sd">"""Determine the coordinates of the detected objects.</span>
 
 <span class="sd">        To be overridden.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div>
 
@@ -789,7 +789,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return true if value in self.__coordinates.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return true if value in self.__coordinates."""</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -806,7 +806,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">])</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">])</span>
 </code></pre></div>
 
     </details>
@@ -843,7 +843,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

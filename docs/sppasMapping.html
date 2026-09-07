@@ -87,15 +87,15 @@ of strings.</p>
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasMapping instance.</span>
+<span class="w">    </span><span class="sd">"""Create a new sppasMapping instance.</span>
 
 <span class="sd">    :param dict_name: (str) file name with the mapping data (2 columns)</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasMapping</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dict_name</span><span class="p">,</span> <span class="n">nodump</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_keep_miss</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_reverse</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span> <span class="o">=</span> <span class="s1">''</span>
 </code></pre></div>
 
     </details>
@@ -117,7 +117,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the boolean value of reverse member.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the boolean value of reverse member."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reverse</span>
 </code></pre></div>
 
@@ -137,7 +137,7 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_miss_symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the boolean value of reverse member.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the boolean value of reverse member."""</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span>
 </code></pre></div>
 
@@ -163,13 +163,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_keep_miss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keep_miss</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the keep_miss option.</span>
+<span class="w">    </span><span class="sd">"""Fix the keep_miss option.</span>
 
 <span class="sd">        :param keep_miss: (bool) If keep_miss is set to True, each missing</span>
 <span class="sd">        entry is kept without change; instead each missing entry is replaced</span>
 <span class="sd">        by a specific symbol.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_keep_miss</span> <span class="o">=</span> <span class="n">keep_miss</span>
 </code></pre></div>
 
@@ -195,12 +195,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reverse</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the reverse option.</span>
+<span class="w">    </span><span class="sd">"""Fix the reverse option.</span>
 
 <span class="sd">        :param reverse: (bool) If replace is set to True, the mapping will</span>
 <span class="sd">        replace value by key instead of replacing key by value.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_reverse</span> <span class="o">=</span> <span class="n">reverse</span>
 </code></pre></div>
 
@@ -226,12 +226,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_miss_symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the symbol to be used if keep_miss is False.</span>
+<span class="w">    </span><span class="sd">"""Fix the symbol to be used if keep_miss is False.</span>
 
 <span class="sd">        :param symbol: (str) US-ASCII symbol to be used in case of a symbol</span>
 <span class="sd">        is missing of the mapping table.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
 </code></pre></div>
 
@@ -263,12 +263,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">map_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Map an entry (a key or a value).</span>
+<span class="w">    </span><span class="sd">"""Map an entry (a key or a value).</span>
 
 <span class="sd">        :param entry: (str) input string to map</span>
 <span class="sd">        :returns: mapped entry is a string</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">entry</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reverse</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -312,27 +312,27 @@ View Source
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mstr</span><span class="p">,</span> <span class="n">delimiters</span><span class="o">=</span><span class="n">DEFAULT_SEP</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the Mapping process on an input string.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mstr</span><span class="p">,</span> <span class="n">delimiters</span><span class="o">=</span><span class="n">DEFAULT_SEP</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Run the Mapping process on an input string.</span>
 
 <span class="sd">        :param mstr: input string to map</span>
-<span class="sd">        :param delimiters: (list) list of character delimiters. Default is:               [&#39;;&#39;, &#39;,&#39;, &#39; &#39;, &#39;.&#39;, &#39;|&#39;, &#39;+&#39;, &#39;-&#39;]</span>
+<span class="sd">        :param delimiters: (list) list of character delimiters. Default is:               [';', ',', ' ', '.', '|', '+', '-']</span>
 <span class="sd">        :param separator: (char) used to separate parts of the mapped result</span>
 <span class="sd">        (when longest matching algorithm was used to map a string)</span>
 <span class="sd">        :returns: a string</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">mstr</span>
     <span class="n">tab</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">delimiters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">,</span> <span class="n">delimiters</span><span class="p">))</span>
-        <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="n">pattern</span> <span class="o">+</span> <span class="s1">&#39;)</span><span class="se">\\</span><span class="s1">s*&#39;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s1">'|'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">,</span> <span class="n">delimiters</span><span class="p">))</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s1">'('</span> <span class="o">+</span> <span class="n">pattern</span> <span class="o">+</span> <span class="s1">')</span><span class="se">\\</span><span class="s1">s*'</span>
         <span class="n">tab</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">mstr</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span>
         <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keep_miss</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span> <span class="o">=</span> <span class="s1">&#39;UNKNOWN&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span> <span class="o">=</span> <span class="s1">'UNKNOWN'</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_keep_miss</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
@@ -354,7 +354,7 @@ View Source
         <span class="k">else</span><span class="p">:</span>
             <span class="n">mapped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_entry</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">mapped</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;In </span><span class="si">{:s}</span><span class="s1">, missing symbol </span><span class="si">{:s}</span><span class="s1">. Mapped into </span><span class="si">{:s}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mstr</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mapped</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'In </span><span class="si">{:s}</span><span class="s1">, missing symbol </span><span class="si">{:s}</span><span class="s1">. Mapped into </span><span class="si">{:s}</span><span class="s1">.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mstr</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mapped</span><span class="p">))</span>
             <span class="n">map_tab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mapped</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">map_tab</span><span class="p">)</span>
 </code></pre></div>
@@ -367,7 +367,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     

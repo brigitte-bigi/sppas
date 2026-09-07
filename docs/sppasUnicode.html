@@ -83,11 +83,11 @@
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasUnicode instance.</span>
+<span class="w">    </span><span class="sd">"""Create a sppasUnicode instance.</span>
 
 <span class="sd">    :param entry: (str or unicode or bytes in python 2)</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="p">(</span><span class="n">binary_type</span><span class="p">,</span> <span class="n">text_type</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">entry</span>
@@ -118,11 +118,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">unicode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the unicode string of the given entry.</span>
+<span class="w">    </span><span class="sd">"""Return the unicode string of the given entry.</span>
 
 <span class="sd">        :returns: unicode</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">,</span> <span class="n">binary_type</span><span class="p">):</span>
         <span class="n">e</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
@@ -151,11 +151,11 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_lower</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the unicode string with lower case.</span>
+<span class="w">    </span><span class="sd">"""Return the unicode string with lower case.</span>
 
 <span class="sd">        :returns: unicode</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unicode</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span>
@@ -185,21 +185,21 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_strip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Strip the string.</span>
+<span class="w">    </span><span class="sd">"""Strip the string.</span>
 
 <span class="sd">        Remove also multiple whitespace, tab and CR/LF inside the string.</span>
 
 <span class="sd">        :returns: unicode</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unicode</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[</span><span class="se">\\</span><span class="s1">s]+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;^[ ]+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[ ]+$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39;</span><span class="se">\ufeff</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\ufeff</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">'[</span><span class="se">\\</span><span class="s1">s]+'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">' '</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">'^[ ]+'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">' '</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">'[ ]+$'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">'</span><span class="se">\ufeff</span><span class="s1">'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">'</span><span class="se">\ufeff</span><span class="s1">'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span>
 </code></pre></div>
 
@@ -225,13 +225,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">clear_whitespace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Replace the whitespace by underscores.</span>
+<span class="w">    </span><span class="sd">"""Replace the whitespace by underscores.</span>
 
 <span class="sd">        :returns: unicode</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
-    <span class="n">e</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">s&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">'</span><span class="se">\\</span><span class="s1">s'</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">e</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span>
 </code></pre></div>
@@ -258,13 +258,13 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_ascii</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Replace the non-ASCII characters by underscores.</span>
+<span class="w">    </span><span class="sd">"""Replace the non-ASCII characters by underscores.</span>
 
 <span class="sd">        :returns: unicode</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
     <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unicode</span><span class="p">()</span>
-    <span class="n">e</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^</span><span class="se">\\</span><span class="s1">x00-</span><span class="se">\\</span><span class="s1">x7F]&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">'[^</span><span class="se">\\</span><span class="s1">x00-</span><span class="se">\\</span><span class="s1">x7F]'</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">e</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span>
 </code></pre></div>
@@ -291,12 +291,12 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_restricted_ascii</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the entry key is using only a-Z_ characters.</span>
+<span class="w">    </span><span class="sd">"""Check if the entry key is using only a-Z_ characters.</span>
 
 <span class="sd">        :returns: (bool)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">ra</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^a-zA-Z0-9_]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
+<span class="sd">        """</span>
+    <span class="n">ra</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">'[^a-zA-Z0-9_]'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">==</span> <span class="n">ra</span>
 </code></pre></div>
 
@@ -308,7 +308,7 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
-                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
+                <p class="copyright">Powered by <a href="https://brigitte-bigi.github.io/Whakerexa/">Whakerexa</a></p>
             </footer>
         
     
