@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Logging design • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, logging, console, design"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; Logging &gt; Design</p>
+    </header>
+
+    <nav class="nav-wexa top" aria-label="Page navigation">
+        <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
+        </a>
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch theme" title="Switch theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+
+    <main id="main-content">
+
+        <section id="needs" class="chapter">
+            <h1>Definition of the needs</h1>
+
+            <section class="ssection"><h2>The problem, and what is aimed at</h2>
+
+                <p>The framework says things: a name no set carries, a theme it was asked for
+                    and does not know, a file it could not read. Whoever writes the page wants
+                    to hear them while writing, and wants silence once the page is written.
+                    Whoever reads the page wants to hear nothing at all.</p>
+
+                <p>Today the level is a call, <code>WexaLogger.setLogLevel()</code>, and
+                    nothing else: a page that loads the framework by its tag has no way of
+                    saying it, and a call made after the loading arrives after the messages it
+                    was meant to silence. That is what this dossier is written for.</p>
+            </section>
+
+            <section class="ssection"><h2>Elicitation of the needs</h2>
+
+                <p>Three things are handled, and they are all that is handled.</p>
+
+                <p><b>L1.</b> A <b>message</b> is what the framework says: a text, and what
+                    went with it when something went wrong.</p>
+
+                <p><b>L2.</b> A <b>severity</b> is how much a message weighs. Five of them,
+                    counted as Python counts them: debug 10, info 20, warning 30, error 40,
+                    critical 50.</p>
+
+                <p><b>L3.</b> The <b>level</b> is what a document lets through: a message of a
+                    severity below it is not said. One level at a time, for the whole
+                    document.</p>
+            </section>
+
+            <section class="ssection"><h2>Organisation of the needs</h2>
+
+                <p><b>L10 Saying the level</b></p>
+                <ul>
+                    <li>L11 The author fixes the level of what the framework says.</li>
+                    <li>L12 The author fixes it where he already says what the page loads, and without writing a line of JavaScript.</li>
+                    <li>L13 The level is in force before the first message: what is said while the framework loads is subject to it.</li>
+                    <li>L14 A page that says nothing keeps the level the framework holds, which lets through what a written page has no reason to hide.</li>
+                    <li>L15 The author can change the level once the page is open, to hear more of what he is looking at.</li>
+                </ul>
+
+                <p><b>L20 What is said</b></p>
+                <ul>
+                    <li>L21 A message says which framework said it, so that it is not taken for the page's own.</li>
+                    <li>L22 A message of a severity below the level is not said, and costs nothing.</li>
+                    <li>L23 What is critical is said whatever the level: it is what the author cannot choose to ignore.</li>
+                    <li>L24 Nothing is said to the reader: what is said goes to the console and nowhere else.</li>
+                </ul>
+
+                <p><b>L30 What is guaranteed</b></p>
+                <ul>
+                    <li>L31 A level nobody understands changes nothing, and the page holds.</li>
+                    <li>L32 Nothing of what is said leaves the document: nothing is sent, nothing is kept.</li>
+                </ul>
+            </section>
+
+            <section class="ssection"><h2>What was set aside</h2>
+
+                <p>A level per module, so that one component may be heard and not the others.
+                    A history kept in the page. Sending what was said to a server.</p>
+
+                <p>Saying the level in the address, as the theme and the set of icons are said
+                    there. What a document says of itself is the author's, and nobody else's:
+                    an address that raised the level would make a page say more than whoever
+                    wrote it chose.</p>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="constraints" class="chapter">
+            <h1>The constraints</h1>
+
+            <section class="ssection"><h2>What the code holds to</h2>
+
+                <table>
+                    <caption>The constraints, and what they come from</caption>
+                    <thead>
+                    <tr><th>No.</th><th>Constraint</th><th>Comes from</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>C1</td><td>The level is read before anything of the framework runs: a level read afterwards is a level that arrives after the messages</td><td>L13</td></tr>
+                    <tr><td>C2</td><td>One level at a time, for the whole document: two parts of a page that heard differently would not say where a message came from</td><td>L3</td></tr>
+                    <tr><td>C3</td><td>What the page writes is a name or a number, and what it does not write is the level the framework holds</td><td>L11, L14, L31</td></tr>
+                    <tr><td>C4</td><td>A message below the level costs nothing more than the comparison: what is not said is not built</td><td>L22</td></tr>
+                    <tr><td>C5</td><td>Whatever is said is said to the console of the browser, and to nothing else</td><td>L24, L32</td></tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="decisions" class="chapter">
+            <h1>The decisions</h1>
+
+            <section class="ssection"><h2>The decisions of the tool</h2>
+
+                <p><b>D1. The level is written on the namespace, before the framework
+                    starts.</b> <code>Wexa.logLevel = 'debug'</code> in a script placed before
+                    the loader: the object is made by whoever gets there first, and the
+                    framework reads it as it reads what a build gathered for it. A call cannot
+                    do it — <code>Wexa</code> does not exist before the framework is there, and
+                    a call made after it arrives once the messages of the loading have already
+                    passed (L13, C1).</p>
+
+                <p><b>D2. A name or a number, as Python writes them.</b>
+                    <code>'debug'</code> or <code>10</code>, <code>'info'</code> or
+                    <code>20</code>, and so on to <code>'critical'</code> and <code>50</code>.
+                    What is understood by neither changes nothing (C3, L31).</p>
+
+                <p><b>D3. Nothing said, the level is 20.</b> Info, as Python counts it: what the
+                    framework says of itself as it starts is heard, and a page that wants
+                    silence says so (L14).</p>
+
+                <p><b>D4. The call stays.</b> <code>Wexa.logger.setLogLevel()</code> is what
+                    changes the level once the page is open, for an author looking at what he
+                    is writing (L15). It is not what a page uses to say its level.</p>
+            </section>
+        </section>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"></script>
+
+</body>
+</html>

@@ -56,7 +56,7 @@ from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 BODY_SCRIPT = (
     "const Book = (await import(window.WEXA_JS_PATH + '/extras/book.js')).Book;"
     "const book = new Book('main-content');"
-    "book.fill_table();"
+    "book.fillTable();"
 )
 
 # ---------------------------------------------------------------------------

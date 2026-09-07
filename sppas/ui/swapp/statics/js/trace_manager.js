@@ -196,7 +196,7 @@ export default class TraceManager {
         // RequestManager catches its own network errors and resolves with
         // the Error object instead of rejecting: a failure is read from
         // the returned value, not from a thrown exception.
-        const response = await this.requestManager.send_post_request(
+        const response = await this.requestManager.sendPostRequest(
             {trace_heartbeat: true}, "application/json", pageUri);
 
         if (response instanceof Error) {

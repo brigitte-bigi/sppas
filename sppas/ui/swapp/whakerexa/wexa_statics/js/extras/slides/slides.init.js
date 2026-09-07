@@ -35,11 +35,10 @@
  Case 1 — No theme (plain wexa.css only):
    <script type="module" src="slides.init.js"></script>
 
- Case 2 — Whakerexa built-in themes, switch on the fly:
+ Case 2 — Themes of the framework, switch on the fly:
    <script type="module" src="slides.init.js"
-           data-themes="wexa:wexa_theme.css,aurora:wexa_theme_aurora.css"
-           data-default="wexa"
-           data-themes-path="wexa_statics/css/themes/">
+           data-themes="wexa_theme, aurora"
+           data-default="wexa_theme">
    </script>
 
  Case 3 — No ThemeManager, custom overrides in a <style> block:
@@ -52,25 +51,28 @@
    <link rel="stylesheet" href="my_theme.css">
    <script type="module" src="slides.init.js"></script>
 
- Case 5 — Own theme + Whakerexa themes, switch on the fly.
-   Use explicit paths in data-themes (omit data-themes-path):
+ Case 5 — Own theme and themes of the framework, switch on the fly:
    <script type="module" src="slides.init.js"
-           data-themes="mine:./my_theme.css,wexa:wexa_statics/css/themes/wexa_theme.css"
+           data-themes="mine:./my_theme.css, wexa_theme, highcontrast"
            data-default="mine">
    </script>
-   Any file starting with ./ ../ / or http is used as-is.
-   data-themes-path (if set) is prepended only to bare filenames.
 
  -------------------------------------------------------------------------
  Data attributes (all optional)
  -------------------------------------------------------------------------
 
-   data-themes      Comma-separated "name:file.css" pairs. Registers themes
-                    with ThemeManager. Omit entirely to skip ThemeManager.
+   data-themes      The themes the presentation takes, in the order it cycles
+                    through them: a name alone for one of the framework --
+                    wexa_theme, aurora, highcontrast --, and "name:path" for
+                    one the page brings. Separated by commas or one per line,
+                    as on wexa.loader.js. Omit entirely to skip ThemeManager.
    data-default     Name of the theme active on load (must be in data-themes).
-   data-themes-path Common path prefix for bare filenames in data-themes.
-                    Omit when themes live in different directories — use
-                    explicit paths in data-themes instead (see case 5).
+   data-themes-base Where the themes of the framework stand, when they are not
+                    under css/themes/ of wexa_statics. Read from this file
+                    otherwise, and required in bundle mode, where nothing says
+                    where this file is. data-themes-path is the name it had,
+                    and is still read: "wexa:wexa_theme.css" says what
+                    "wexa_theme" says, the file being read from that folder.
    data-mode        Initial view mode: "presentation" (default), "handout", "note".
    data-logo        Path to a logo image (relative to the HTML page).
                     Omit to disable the logo overlay.
@@ -127,8 +129,8 @@ export default class SlidesInitializer {
     /** @type {string} Name of the default theme (data-default). */
     #defaultName;
 
-    /** @type {string} Path prefix prepended to bare theme filenames (data-themes-path). */
-    #themesPath;
+    /** @type {string} Where the themes of the framework stand (data-themes-base). */
+    #themesBase;
 
     /** @type {string} Initial view mode (data-mode). */
     #mode;
@@ -158,7 +160,10 @@ export default class SlidesInitializer {
 
         this.#themesAttr  = (scriptEl?.dataset.themes     || '').trim();
         this.#defaultName = (scriptEl?.dataset.default    || '').trim();
-        this.#themesPath  = (scriptEl?.dataset.themesPath || '').trim();
+        // data-themes-path is what this attribute was called: a presentation
+        // written before keeps working, and says the same thing.
+        this.#themesBase  = (scriptEl?.dataset.themesBase
+                             || scriptEl?.dataset.themesPath || '').trim();
         this.#mode        = (scriptEl?.dataset.mode       || 'presentation').trim();
         this.#logoSrc     = (scriptEl?.dataset.logo       || '').trim();
         this.#progressOn  = (scriptEl?.dataset.progress   !== 'false');
@@ -242,7 +247,8 @@ export default class SlidesInitializer {
                 window.Wexa = window.Wexa || {};
                 await this.#injectBoilerplate();
                 window.Wexa.accessibility = new window.Wexa.AccessibilityManager();
-                this.#registerThemes(window.Wexa.ThemeManager || null);
+                this.#registerThemes(window.Wexa.ThemeManager || null,
+                                     window.Wexa.REFERENCE_THEMES);
                 const app = this.#buildConfig(window.Wexa.Slides);
                 app.init();
                 this.#ready(app);
@@ -270,7 +276,8 @@ export default class SlidesInitializer {
         window.Wexa = window.Wexa || {};
         await this.#injectBoilerplate();
         window.Wexa.accessibility = new window.Wexa.AccessibilityManager();
-        this.#registerThemes(window.Wexa.ThemeManager || null);
+        this.#registerThemes(window.Wexa.ThemeManager || null,
+                                     window.Wexa.REFERENCE_THEMES);
         await this.#paginate(window.Wexa.SlidesPagination || null);
         const app = this.#buildConfig(window.Wexa.Slides);
         app.init();
@@ -299,8 +306,11 @@ export default class SlidesInitializer {
         await this.#injectBoilerplate();
 
         if (this.#themesAttr !== '') {
-            const { ThemeManager } = await import(new URL('../../customize/theme_manager.js', this.#base).href);
-            this.#registerThemes(ThemeManager);
+            const [{ ThemeManager }, { REFERENCE_THEMES }] = await Promise.all([
+                import(new URL('../../customize/theme_manager.js', this.#base).href),
+                import(new URL('../../customize/theme_reference.js', this.#base).href)
+            ]);
+            this.#registerThemes(ThemeManager, REFERENCE_THEMES);
         }
 
         const { SlidesPagination } = await import(new URL('slides_pagination.js', this.#base).href);
@@ -485,29 +495,102 @@ export default class SlidesInitializer {
     // -----------------------------------------------------------------------
 
     /**
-     * Register themes with a ThemeManager instance.
+     * Say where the themes of the framework stand.
      *
-     * Parses data-themes as comma-separated "name:file" pairs. A filename that
-     * starts with ./, ../, / or http is used as-is; otherwise data-themes-path
-     * is prepended. Sets the default theme if data-default is provided.
+     * data-themes-base when the page says it, and otherwise the folder they
+     * stand in, read from where this file stands. In bundle mode nothing says
+     * where this file is, and the page has to.
      *
      * @private
-     * @param {Function|null} ThemeManager - ThemeManager constructor, or null to skip.
+     * @returns {string}
+     */
+    #themesFolder() {
+        if (this.#themesBase !== '') {
+            return this.#themesBase;
+        }
+        if (this.#base === null) {
+            return '';
+        }
+        return new URL('../../../css/themes/', this.#base).href;
+    }
+
+    /**
+     * Give the place a page wrote, as the page meant it.
+     *
+     * The same rule as the loader: what is written './', '../', '/' or with a
+     * scheme is taken as it is, and a bare path is read from where the themes
+     * of the framework stand.
+     *
+     * @private
+     * @param {string} path - What the page wrote.
+     * @returns {string}
+     */
+    #placeOf(path) {
+        if (/^(\.{1,2}\/|\/)/.test(path) === true) {
+            return path;
+        }
+        if (/^[a-z][a-z0-9+.-]*:\/\//i.test(path) === true) {
+            return path;
+        }
+        return this.#themesFolder() + path;
+    }
+
+    /**
+     * Register the themes the page takes, and hold them for it.
+     *
+     * data-themes is written as it is on the loader: a name alone chooses among
+     * the themes of the framework, and 'name:path' is one the page brings. A
+     * presentation that names none of the framework's takes them all, after
+     * what it brings. Saying nothing at all registers nothing, a presentation
+     * being free of a theme.
+     *
+     * @private
+     * @param {Function|null} ThemeManager - The class, or null to skip.
+     * @param {Array} reference - What the framework carries: (name, file).
      * @returns {void}
      */
-    #registerThemes(ThemeManager) {
+    #registerThemes(ThemeManager, reference) {
         if (this.#themesAttr === '' || ThemeManager === null) {
             return;
         }
 
+        const carried = Array.isArray(reference) === true ? reference : [];
         const manager = new ThemeManager();
+        let chosen = false;
 
-        for (const entry of this.#themesAttr.split(',')) {
-            const parts = entry.trim().split(':');
-            const name  = parts[0].trim();
-            const file  = parts[1].trim();
-            const href  = /^([./]|https?:)/.test(file) ? file : this.#themesPath + file;
-            manager.register(name, href);
+        for (const declared of this.#themesAttr.split(/[\n,]/)) {
+            const said = declared.trim();
+            if (said === '') {
+                continue;
+            }
+
+            const first = said.indexOf(':');
+            if (first === -1) {
+                const found = carried.find(theme => theme[0] === said);
+                if (found === undefined) {
+                    console.error('SlidesInitializer: the framework carries no theme'
+                        + ' named "' + said + '".');
+                    continue;
+                }
+                manager.register(found[0], this.#themesFolder() + found[1]);
+                chosen = true;
+                continue;
+            }
+
+            manager.register(said.slice(0, first).trim(),
+                             this.#placeOf(said.slice(first + 1).trim()));
+        }
+
+        // Nothing chosen among the framework's: it takes them all.
+        if (chosen === false) {
+            carried.forEach(theme => manager.register(theme[0],
+                                                      this.#themesFolder() + theme[1]));
+        }
+
+        const logger = (window.Wexa || {}).logger;
+        if (manager.themeNames.length === 1 && logger !== undefined) {
+            logger.warn('SlidesInitializer: one theme is registered, "'
+                + manager.themeNames[0] + '". What switches them has nowhere to go.');
         }
 
         if (this.#defaultName !== '') {

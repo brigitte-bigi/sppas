@@ -86,21 +86,90 @@
 
         <article class="card-doc" aria-label="Loading whichever suits the protocol">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
-                <p>A page that has to work both ways chooses on the protocol. Every page of this
-                    documentation ends with these lines.</p>
+                <p>A page that has to work both ways says neither of the two: it names the
+                    loader, which reads the protocol and takes the modules over http, the
+                    bundle from the disk. Every page of this documentation ends with this
+                    line.</p>
+            </div>
+            <pre class="dark"><code>&lt;script src="wexa_statics/js/wexa.loader.js"
+        data-base="wexa_statics/"&gt;&lt;/script&gt;</code></pre>
+        </article>
+
+        <article class="card-doc" aria-label="wexa.loader.js">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>One tag does the choosing, and says at the same time what the page brings:
+                    its themes, its sets of icons, the extras it loads. Everything is
+                    registered before the framework reads the address, so a theme or a set
+                    named in the address is known when it is asked for.</p>
+            </div>
+            <pre class="dark"><code>&lt;script src="wexa_statics/js/wexa.loader.js"
+        data-base="wexa_statics/"
+        data-default="wexa_theme"
+        data-links="btn-back,nav-menu"&gt;&lt;/script&gt;</code></pre>
+        </article>
+
+        <table>
+            <caption>What the tag of the loader carries</caption>
+            <thead>
+            <tr><th>Attribute</th><th>What it says</th></tr>
+            </thead>
+            <tbody>
+            <tr><td><code>data-base</code></td><td>Where <code>wexa_statics/</code> stands, seen from the page. Required.</td></tr>
+            <tr><td><code>data-default</code></td><td>The theme to apply when the address names none.</td></tr>
+            <tr><td><code>data-themes</code></td><td>The themes the page takes, in the order it cycles through them: a name alone for one of the framework, <code>name:path</code> for one the page brings. All of them when it says nothing.</td></tr>
+            <tr><td><code>data-themes-base</code></td><td>Where the themes of the framework stand, when they are not under <code>css/themes/</code> of the base.</td></tr>
+            <tr><td><code>data-icons</code></td><td>The sets the page brings, one per line, written <code>name:path:file,file</code>.</td></tr>
+            <tr><td><code>data-icons-default</code></td><td>The set to show when the address names none.</td></tr>
+            <tr><td><code>data-icons-fallback</code></td><td>The set that answers what the others leave unanswered.</td></tr>
+            <tr><td><code>data-links</code></td><td>The identifiers whose address carries the theme and the set.</td></tr>
+            <tr><td><code>data-extras</code></td><td>The files to load besides <code>wexa.js</code>, separated by commas. Ignored on <code>file://</code>, where the bundle already holds them.</td></tr>
+            </tbody>
+        </table>
+
+        <p>A path a page writes — a theme, a set of icons, an extra — is read from
+            <code>data-base</code> only when it is written bare, as the files of the
+            framework are. One written <code>./</code> or <code>../</code> is read from the
+            page, one written <code>/</code> from the root of the site, one carrying a
+            scheme from its host.</p>
+
+        <article class="card-doc" aria-label="Saying how much the framework says">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>What the framework says goes to the console, and a page says how much of it
+                    it wants to hear. It is written before the loader, on the namespace: a
+                    call would come after the messages of the loading. A name as Python writes
+                    it, or a number between 0 and 50; nothing said, the level is 20.</p>
             </div>
             <pre class="dark"><code>&lt;script&gt;
-    const usingFile = (window.location.protocol === 'file:');
-    const loader = document.createElement('script');
-    if (usingFile === true) {
-        loader.src = 'wexa_statics/js/wexa.bundle.js';
-    } else {
-        loader.type = 'module';
-        loader.src = 'wexa_statics/js/wexa.js';
-    }
-    document.head.appendChild(loader);
-&lt;/script&gt;</code></pre>
+    window.Wexa = window.Wexa || {};
+    window.Wexa.logLevel = 'warning';
+&lt;/script&gt;
+
+&lt;script src="wexa_statics/js/wexa.loader.js" data-base="wexa_statics/"&gt;&lt;/script&gt;</code></pre>
         </article>
+
+        <p>Once the page is open, <code>Wexa.logger.setLogLevel('debug')</code> changes it,
+            for an author looking at what he is writing.</p>
+
+        <p>A page that has something of its own to start declares a function named
+            <code>bootPage</code>: it is called once everything is loaded, and receives the
+            namespace of the framework and the extras it asked for.</p>
+
+        <p><strong>Two ways, and only two.</strong> Either the loader is asked for everything
+            — it reads the protocol, registers the themes and the sets, and hands the
+            namespace to <code>bootPage</code> —, or the page does the wiring itself: it names
+            <code>wexa.js</code> or <code>wexa.bundle.js</code>, builds its
+            <code>ThemeManager</code>, registers what it wants and declares its sets of icons.
+            What must not be done is half of each: a theme registered after the loader has
+            read the address is a name the manager has already refused.</p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <p>What this is for, what it deliberately does not do, and why:
+            <a href="logger-design.html">logger-design.html</a> for what the framework says,
+            <a href="javascript-design.html">javascript-design.html</a> for the rest.</p>
 
     </section>
 
@@ -300,8 +369,7 @@ Wexa.logger.debug('Slides: 57 pages laid out.');</code></pre>
         <h2>Components speak through events</h2>
 
         <p>A component that has something to announce dispatches a <code>CustomEvent</code> on
-            the document rather than calling what listens: what is announced does not have to
-            know who hears it. The name carries its domain first, then what happened &mdash;
+            the document. The name carries its domain first, then what happened &mdash;
             <code>slides:navigate</code>, <code>slides:viewmode</code>,
             <code>wexa:slides:ready</code>. This is also what a keyboard shortcut may be given
             instead of a function.</p>
@@ -348,52 +416,6 @@ document.addEventListener('page:next', () => book.nextPage());</code></pre>
             <li>A class name is unique in the whole framework. The bundle concatenates every
                 file into one scope, where two classes of the same name are one bug.</li>
         </ul>
-
-        <h2>Tests</h2>
-
-        <p>The unit tests are in <code>js/tests/</code>, one file per tested class, and they run
-            in a browser: <code>tests.html</code> puts the classes on the global object, imports
-            the test files, and every assertion writes in the console, green or red. The page
-            has to be served, since it loads modules.</p>
-
-        <article class="card-doc" aria-label="Running the unit tests">
-            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
-                <p>From the root of the repository, then open
-                    <code>http://localhost:8000/wexa_statics/js/tests/tests.html</code>.</p>
-            </div>
-            <pre class="dark"><code>python3 -m http.server 8000</code></pre>
-        </article>
-
-        <article class="card-doc" aria-label="Writing a test">
-            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
-                <p>A test file builds a <code>UnitTest</code>, adds its functions, and launches
-                    them at the end of the file.</p>
-            </div>
-            <pre class="dark"><code>const keyboard_tests = new UnitTest('KeyboardController');
-
-keyboard_tests.add_test(function test_declared_key() {
-    const controller = new KeyboardController();
-    controller.register({keys: ['n'], action: 'page:next'});
-    UnitTest.assert_values_equals(controller.shortcuts.length, 1);
-});
-
-keyboard_tests.launch_unit_test();</code></pre>
-        </article>
-
-        <h2>Building the bundle</h2>
-
-        <p>The bundle is generated from the sources: the script reads the files in the order it
-            declares, removes the <code>import</code> and <code>export</code> lines, and writes
-            one file. A source that changes leaves the bundle behind until it is built again,
-            and a page opened from the disk keeps showing the old behaviour.</p>
-
-        <article class="card-doc" aria-label="Generating wexa.bundle.js">
-            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
-                <p>A new module is added to the list of the script, before the files that use
-                    it.</p>
-            </div>
-            <pre class="dark"><code>python3 scripts/build_bundle_js.py</code></pre>
-        </article>
 
     </section>
 

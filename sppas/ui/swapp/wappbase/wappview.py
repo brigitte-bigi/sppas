@@ -42,6 +42,7 @@ from __future__ import annotations
 from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
 
+from sppas.core.config import cfg
 from sppas.core.config import sg
 from sppas.core.config import get_language
 
@@ -75,6 +76,10 @@ MSG_INFORMATION = _("Information")
 JS_INIT = (
     f"window.WEXA_JS_PATH = '/{wapp_settings.wexa_statics}js';"
     f"window.SPPAS_DEFAULT_PAGE = '{wapp_settings.default_page()}';"
+    # The namespace is written before the framework is there: its logger
+    # reads the level by itself when it starts, and no page asks for it.
+    "window.Wexa = window.Wexa || {};"
+    f"window.Wexa.logLevel = {cfg.log_level};"
 )
 
 # What the page starts once the loader has everything ready: the loader
@@ -106,6 +111,13 @@ JS_BOOT_PAGE = (
     "        action: () => document.getElementById('btn-color').click()});"
     "    window.keyboard.register({keys: ['>'], label: 'Theme',"
     "        action: () => document.getElementById('btn-css-theme').click()});"
+    # The Journal is the only page holding a button closing its own tab: the
+    # key is declared for every page, and answers where the button stands.
+    "    window.keyboard.register({keys: ['w', 'W'], label: 'Close',"
+    "        action: () => {"
+    "            const button = document.getElementById('close-tab_button');"
+    "            if (button !== null) { button.click(); }"
+    "        }});"
     "    window.keyboard.init();"
     "};"
 )

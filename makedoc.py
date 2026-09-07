@@ -59,7 +59,7 @@ except ImportError:
 
 
 # ---------------------------------------------------------------------------
-logging.getLogger().setLevel(0)
+logging.getLogger().setLevel(1)
 
 # -------------------------------------------------
 # List of modules to be documented: automatically create the documentation 
@@ -89,7 +89,7 @@ opts_export.copyright = sppas.config.sg.__copyright__
 opts_export.title = 'sppas doc'
 opts_export.theme = 'light'
 opts_export.favicon = 'icons/sppas.ico'   # relative path to statics
-opts_export.icon = 'images/sppas-logo-v5.png'   # relative path to statics
+opts_export.icon = 'logos/sppas-logo-v5.png'   # relative path to statics
 opts_export.readme = True
 # New in ClammingPy 3.1
 # ... the table of contents is either a collapsible aside or a fixed panel

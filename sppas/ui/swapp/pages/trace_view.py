@@ -202,6 +202,8 @@ class TraceView(swappBaseView):
         _button.add_attribute("data-icon", "cancel")
         _button.add_attribute("id", "close-tab_button")
         _button.add_attribute("aria-label", MSG_CLOSE)
+        _button.add_attribute("aria-keyshortcuts", "w")
+        _button.add_attribute("title", MSG_CLOSE + " (w)")
         _button.add_attribute("type", "button")
         _button.add_attribute("class", "menuitem")
         _button.add_attribute("onclick", go_home + " window.close()")

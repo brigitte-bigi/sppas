@@ -170,6 +170,7 @@
 
 <script type="module">
     // The classes that customise the look stand in their own script too.
+    import { WexaLogger } from '../logger.js';
     import { IconSet } from '../customize/icon_set.js';
     import { IconSets } from '../customize/icon_sets.js';
     import { IconChoice } from '../customize/icon_choice.js';
@@ -180,6 +181,7 @@
     import { IconRegister } from '../customize/icon_register.js';
     import { IconManager } from '../customize/icon_manager.js';
 
+    window.WexaLogger = WexaLogger;
     window.IconSet = IconSet;
     window.IconSets = IconSets;
     window.IconChoice = IconChoice;
@@ -190,6 +192,7 @@
     window.IconRegister = IconRegister;
     window.IconManager = IconManager;
 
+    await import('./loggerTest.js');
     await import('./icon_setsTest.js');
     await import('./icon_choiceTest.js');
     await import('./icon_readerTest.js');

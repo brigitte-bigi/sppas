@@ -83,6 +83,14 @@
     <!-- ============================================================ -->
     <section class="panel-item">
 
+        <p>What this is for, what it deliberately does not do, and why:
+            <a href="themes-design.html">themes-design.html</a>.</p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
         <h2>Integration</h2>
         <p>Two requirements make theme switching work correctly:</p>
         <ol>
@@ -129,6 +137,60 @@ themes.register('highcontrast', 'wexa_statics/css/themes/wexa_theme_highcontrast
 themes.setDefault('wexa_theme');
 window.themes = themes;</code></pre>
         </article>
+
+        <article class="card-doc" aria-label="The themes a page takes">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>
+                    A page says on the tag of the loader which themes it takes, and in which
+                    order it cycles through them. A name alone is one of the framework, which
+                    it names without saying where it stands. A <code>name:path</code> is a
+                    theme the page brings, its path read from <code>data-base</code> only when
+                    it is written bare: one written <code>./</code> or <code>../</code> is read
+                    from the page.
+                </p>
+                <p>
+                    They are declared there and not after the page is loaded: the manager reads
+                    the address as soon as it is built, and a theme registered afterwards is a
+                    name it has already refused.
+                </p>
+            </div>
+            <pre class="dark"><code>&lt;!-- All three of the framework: say nothing. --&gt;
+&lt;script src="wexa_statics/js/wexa.loader.js"
+        data-base="wexa_statics/"&gt;&lt;/script&gt;
+
+&lt;!-- Some of them, in the order of the cycle. --&gt;
+&lt;script src="wexa_statics/js/wexa.loader.js"
+        data-base="wexa_statics/"
+        data-themes="wexa_theme, highcontrast"&gt;&lt;/script&gt;
+
+&lt;!-- One of them, and nothing else: the button then has nothing to cycle. --&gt;
+data-themes="highcontrast"
+
+&lt;!-- One the page brings, alone. --&gt;
+data-themes="swapp:./statics/swapp_theme.css"
+
+&lt;!-- One the page brings, then two of the framework. --&gt;
+data-themes="swapp:./statics/swapp_theme.css, aurora, highcontrast"</code></pre>
+        </article>
+
+        <table>
+            <caption>What a page writes, and what it gets</caption>
+            <thead>
+            <tr><th>Written</th><th>Registered</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>Nothing</td><td><code>wexa_theme</code>, <code>aurora</code>, <code>highcontrast</code>, in that order.</td></tr>
+            <tr><td>A name alone</td><td>That theme of the framework, taken from <code>css/themes/</code>.</td></tr>
+            <tr><td><code>name:path</code></td><td>The theme the page brings, under the name it gives it.</td></tr>
+            <tr><td>Several, separated by commas or one per line</td><td>Those, in the order they are written — which is the order of the cycle.</td></tr>
+            </tbody>
+        </table>
+
+        <p>The names the framework answers to are <code>wexa_theme</code>,
+            <code>aurora</code> and <code>highcontrast</code>.</p>
+
+        <p><code>data-default</code> names the one applied when the address carries no
+            <code>wexa_theme</code> parameter. It has to be one of those the page takes.</p>
 
     </section>
 
@@ -194,7 +256,17 @@ window.themes = themes;</code></pre>
 
         <article class="card-doc" aria-label="Custom theme example">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
-                <p>Register it the same way as built-in themes. The <code>.contrast</code> class is managed by <code>AccessibilityManager</code> — a theme must not override colors in contrast mode.</p>
+                <p>Write it beside your page, then declare it on the tag of the loader, under
+                    the name it will answer to: <code>data-themes="mytheme:./css/my_theme.css"</code>,
+                    and <code>data-default="mytheme"</code> if it is the one to apply when the
+                    address says nothing. Add the names of the themes of the framework to keep
+                    them in the cycle.</p>
+                <p>A group of variables is answered whole, in the two modes: a ground without the
+                    text laid on it borrows a colour from another palette. See
+                    <a id="nav-cssvariables-contract" data-href="css-variables.html" data-target="_self">CSS
+                    variables</a> for the groups. The <code>.contrast</code> class belongs to
+                    <code>AccessibilityManager</code> — a theme must not override colours in
+                    contrast mode.</p>
             </div>
             <pre class="dark"><code>/* my_theme.css */
 :root:not(.dark) {
@@ -220,6 +292,10 @@ window.themes = themes;</code></pre>
     }
 
 }</code></pre>
+            <pre class="dark"><code>&lt;script src="wexa_statics/js/wexa.loader.js"
+        data-base="wexa_statics/"
+        data-themes="mytheme:./css/my_theme.css, wexa_theme, highcontrast"
+        data-default="mytheme"&gt;&lt;/script&gt;</code></pre>
         </article>
 
     </section>

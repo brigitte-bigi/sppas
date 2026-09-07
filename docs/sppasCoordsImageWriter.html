@@ -10,70 +10,14 @@
             <meta name="description" content="Python Class Documentation of sppasCoordsImageWriter. Write an image and optionally coordinates into files." />
 
             <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css.min/wexa.css" type="text/css" media="screen" />
             <link rel="stylesheet" id="wexa-theme" href="../sppas/ui/swapp/statics/clamming_theme.css" type="text/css" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/extras/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css.min/print.css" type="text/css" media="print" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css.min/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css.min/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css.min/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css.min/extras/book.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
-
-            <!-- Whakerexa JS loader: bundle on file://, ES6 modules on http(s) -->
-            <script>
-            (function () {
-              const usingFile = (window.location.protocol === 'file:');
-              if (usingFile === false) {
-                return;
-              }
-              const s = document.createElement('script');
-              s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
-
-              s.onload = function () {
-                const themes = new window.Wexa.ThemeManager();
-                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
-                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
-                themes.setDefault('clamming_theme');
-                window.themes = themes;
-
-                window.Wexa.onload.addLoadFunction(function () {
-                  const wexaLinks = [];
-                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
-                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
-                });
-
-                window.Wexa.onload.addLoadFunction(function () {
-                  const book = new window.Wexa.Book("main-content");
-                  book.fill_table(false);
-                });
-              };
-
-              document.head.appendChild(s);
-            })();
-            </script>
-
-            <!-- The Book extra is not part of the 'wexa.js' API: it is imported apart -->
-            <script type="module">
-              if (window.location.protocol !== 'file:') {
-                await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js');
-                const { ThemeManager } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/theme_manager.js');
-                const themes = new ThemeManager();
-                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
-                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
-                themes.setDefault('clamming_theme');
-                window.themes = themes;
-
-                window.Wexa.onload.addLoadFunction(function () {
-                  const wexaLinks = [];
-                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
-                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
-                });
-
-                const { Book } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/book.js');
-                const book = new Book("main-content");
-                book.fill_table(false);
-              }
-            </script>
 
        </head>
        
@@ -89,8 +33,8 @@
                 <button id="btn-css-theme" class="menuitem print-off" type="button" aria-label="Switch CSS theme" title="Switch CSS theme" onclick="window.themes && window.themes.next()"></button>
             </nav>
         
-    <h1>sppas 5.0.3</h1>
-        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+    <h1>sppas 5.0.5</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/logos/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
     <aside id="nav-book" class="book-toc-aside" aria-label="Table of contents">
@@ -831,7 +775,35 @@ View Source
     
             <footer>
                 <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+                <p class="copyright">This page was propulsed by <a href="">Whakerexa</a></p>
             </footer>
         
+    
+    <script>
+        /**
+         * Start what this page has of its own: its table of contents, and the
+         * links that carry the theme and the accessibility choices to the page
+         * they open.
+         *
+         * @param {Object} wexa - The framework and the extras the loader was asked for.
+         * @returns {void}
+         */
+        function bootPage(wexa) {
+            const book = new wexa.Book("main-content");
+            book.fillTable(false);
+
+            const wexaLinks = [];
+            document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+            wexa.links.handleLinksWithParameters(wexaLinks);
+        }
+    </script>
+
+    <script src="../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.loader.js"
+            data-base="../sppas/ui/swapp/whakerexa/wexa_statics/"
+            data-extras="js/extras/book.js"
+            data-themes-base="../sppas/ui/swapp/whakerexa/wexa_statics/css.min/themes/"
+            data-themes="clamming_theme:../sppas/ui/swapp/statics/clamming_theme.css"
+            data-default="clamming_theme" ></script>
+
 </body>
 </html>

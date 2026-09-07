@@ -59,6 +59,7 @@ import { IconSet } from './customize/icon_set.js';
 import { IconSets } from './customize/icon_sets.js';
 import { IconManager } from './customize/icon_manager.js';
 import { icons } from './customize/icons.js';
+import { THEMES_BASE, REFERENCE_THEMES } from './customize/theme_reference.js';
 import { KeyboardController } from './keyboard.js';
 
 import { BaseManager } from './transport/base_manager.js';
@@ -85,6 +86,8 @@ console.debug('Imports OK:', {
 
 // ----- Exports (framework public API) -----
 export {
+    THEMES_BASE,
+    REFERENCE_THEMES,
     OnLoadManager,
     WexaLogger,
     AccessibilityManager,
@@ -129,6 +132,11 @@ window.Wexa = Object.assign(window.Wexa || {}, {
     // What answers a name with a drawing. A page brings its own sets to it,
     // and the components of the framework ask it for what they draw.
     icons,
+
+    // What the framework carries as themes: a page names one of them by its
+    // name alone, and the loader knows where it stands.
+    THEMES_BASE,
+    REFERENCE_THEMES,
 
     accessibility: new AccessibilityManager(),
     dialog: new DialogManager(),

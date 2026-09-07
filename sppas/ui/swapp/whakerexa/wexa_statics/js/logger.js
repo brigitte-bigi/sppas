@@ -51,7 +51,79 @@
  */
 export class WexaLogger {
 
-    static #logLevel = 20;
+    /** @type {number} What is heard when a page says nothing. Info, as Python counts it. */
+    static DEFAULT_LEVEL = 20;
+
+    /** @type {Object} The names Python writes, and what they count for. */
+    static #NAMES = {
+        debug: 10,
+        info: 20,
+        warning: 30,
+        error: 40,
+        critical: 50
+    };
+
+    static #logLevel = WexaLogger.DEFAULT_LEVEL;
+
+    // -----------------------------------------------------------------------
+
+    /**
+     * Say what a level written by a page counts for.
+     *
+     * A name as Python writes it, or a number between 0 and 50. Anything else
+     * is not a level, and is answered with null so that what holds holds.
+     *
+     * @param {string|number} said - What the page wrote.
+     * @returns {number|null} The level, or null when it is not one.
+     */
+    static levelOf(said) {
+        if (typeof said === 'number') {
+            return (said >= 0 && said <= 50) ? said : null;
+        }
+
+        if (typeof said !== 'string') {
+            return null;
+        }
+
+        const written = said.trim().toLowerCase();
+        if (written === '') {
+            return null;
+        }
+
+        if (Object.prototype.hasOwnProperty.call(WexaLogger.#NAMES, written) === true) {
+            return WexaLogger.#NAMES[written];
+        }
+
+        if (/^[0-9]+$/.test(written) === false) {
+            return null;
+        }
+
+        const counted = Number(written);
+        return counted <= 50 ? counted : null;
+    }
+
+    // -----------------------------------------------------------------------
+
+    /**
+     * Take the level a page left on the namespace, before anything is said.
+     *
+     * A page writes it before the framework is there -- Wexa.logLevel = 'debug'
+     * -- so this is read when this file is read, which is before any other of
+     * the framework. What is not a level is ignored, and the page holds.
+     *
+     * @returns {void}
+     */
+    static takeWhatThePageSaid() {
+        const namespace = (typeof window !== 'undefined') ? window.Wexa : undefined;
+        if (namespace === undefined || namespace === null) {
+            return;
+        }
+
+        const level = WexaLogger.levelOf(namespace.logLevel);
+        if (level !== null) {
+            WexaLogger.#logLevel = level;
+        }
+    }
 
     /**
      * Get the current log level.
@@ -63,17 +135,24 @@ export class WexaLogger {
     }
 
     /**
-     * Set the global log level for Whakerexa logging.
+     * Set the global log level, once the page is open.
      *
-     * @param {number} level - A value between 0 and 50.
+     * A name as Python writes it, or a number between 0 and 50 -- what a page
+     * writes on the namespace is written the same way. What is neither is said
+     * and changes nothing.
+     *
+     * @param {string|number} level - A name, or a value between 0 and 50.
      * @returns {void}
      */
     static setLogLevel(level) {
-        if (typeof level !== 'number' || level < 0 || level > 50) {
-            console.warn('[WexaWarning] Invalid log level. Must be between 0 and 50.');
+        const counted = WexaLogger.levelOf(level);
+        if (counted === null) {
+            console.warn('[WexaWarning] Invalid log level: ' + level
+                + '. A name -- debug, info, warning, error, critical -- or a'
+                + ' number between 0 and 50.');
             return;
         }
-        this.#logLevel = level;
+        WexaLogger.#logLevel = counted;
     }
 
     /**
@@ -128,3 +207,7 @@ export class WexaLogger {
         console.error(`[WexaCritical] ${msg}`, err || '');
     }
 }
+
+// What the page said before the framework was there. This file is the first of
+// the framework to be read, so nothing of it has spoken yet.
+WexaLogger.takeWhatThePageSaid();

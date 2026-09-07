@@ -193,7 +193,7 @@ export default class SetupManager extends BaseManager {
      */
     async _sendCheckboxUpdate(postData) {
         try {
-            const response = await this._requestManager.send_post_request(
+            const response = await this._requestManager.sendPostRequest(
                 postData,
                 'application/json',
                 this._uri

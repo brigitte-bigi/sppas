@@ -38,10 +38,12 @@
  *  data-base    where wexa_statics/ stands, seen from the page. Required.
  *  data-links   the identifiers whose address carries the theme, if any.
  *  data-default the theme to apply when the address names none, if any.
- *  data-themes  the themes the page brings, one per line, written
- *               "name:path". They are registered before those of the
- *               repository, so that a page whose default is its own theme
- *               cycles through the others.
+ *  data-themes  the themes the page takes, in the order it cycles through
+ *               them: a name alone chooses among those of the framework --
+ *               wexa_theme, aurora, highcontrast --, and "name:path" is one
+ *               the page brings. Separated by commas or written one per line.
+ *               A page that names none of the framework's takes them all,
+ *               after what it brings.
  *  data-themes-base  where the themes stand, when they are not under
  *               css/themes/ of the base: a page served with the minified
  *               stylesheets asks for the minified themes.
@@ -134,62 +136,89 @@
         .map(name => name.trim())
         .filter(name => name.length > 0);
 
-    // The themes of the repository. A document brings its own on its tag.
-    const THEMES = [
-        ['wexa_theme',   'wexa_theme.css'],
-        ['aurora',       'wexa_theme_aurora.css'],
-        ['highcontrast', 'wexa_theme_highcontrast.css'],
-    ];
+    // -----------------------------------------------------------------------
+
+    /**
+     * Say the default, and leave the manager where a page finds it.
+     *
+     * @param {Object} themes - The manager of the themes.
+     * @returns {void}
+     */
+    function hold(themes) {
+        if (defaultTheme !== '') {
+            themes.setDefault(defaultTheme);
+        }
+        window.themes = themes;
+    }
 
     // -----------------------------------------------------------------------
 
     /**
-     * Register the themes, and hold them for the page.
+     * Register the themes the page takes, and hold them for it.
      *
-     * What the page brings is registered first, and the themes of the
-     * repository after it: next() walks the list from the one in force and
-     * comes back to the default when it runs out, so a page whose default is
-     * its own theme would have nothing to cycle through if that theme closed
-     * the list.
+     * data-themes says what the page takes, in the order it wants to cycle
+     * through them. A name alone chooses among the themes of the framework;
+     * 'name:path' is a theme the page brings. A page that names none of the
+     * framework's takes them all, after what it brings: bringing a theme is
+     * adding one, and choosing among the others is said by naming them.
      *
-     * Everything is registered here, before the manager reads the address:
-     * a page that declared its theme afterwards would already have been told
+     * Everything is registered here, before the manager reads the address: a
+     * page that declared its theme afterwards would already have been told
      * that the name written in the address is unknown.
      *
      * @param {Function} ThemeManager - The class that switches a theme.
+     * @param {Array} reference - What the framework carries: (name, file).
      * @returns {void}
      */
-    function registerThemes(ThemeManager) {
+    function registerThemes(ThemeManager, reference) {
         if (typeof ThemeManager !== 'function') {
             return;
         }
 
+        const carried = Array.isArray(reference) === true ? reference : [];
         const themes = new ThemeManager();
+        let chosen = false;
 
-        for (const declared of pageThemes.split('\n')) {
+        for (const declared of pageThemes.split(/[\n,]/)) {
             const said = declared.trim();
             if (said === '') {
                 continue;
             }
 
-            // The name is what stands before the first colon, the place all
-            // that follows: the colon of a https:// address is kept.
+            // A name alone: one of the framework, which says where it stands.
             const first = said.indexOf(':');
             if (first === -1) {
-                console.error('wexa.loader: a theme is written "name:path": ' + said);
+                const found = carried.find(theme => theme[0] === said);
+                if (found === undefined) {
+                    console.error('wexa.loader: the framework carries no theme'
+                        + ' named "' + said + '".');
+                    continue;
+                }
+                themes.register(found[0], themesBase + found[1]);
+                chosen = true;
                 continue;
             }
 
+            // A theme of the page: the place is written as the page sees it.
             themes.register(said.slice(0, first).trim(),
                             placeOf(said.slice(first + 1).trim()));
         }
 
-        THEMES.forEach(theme => themes.register(theme[0], themesBase + theme[1]));
-
-        if (defaultTheme !== '') {
-            themes.setDefault(defaultTheme);
+        // Nothing chosen among the framework's: it takes them all.
+        if (chosen === false) {
+            carried.forEach(theme => themes.register(theme[0], themesBase + theme[1]));
         }
-        window.themes = themes;
+
+        // One theme is one theme: the button that switches is shown all the
+        // same, and it has nowhere to go. Said here, where the page is at
+        // fault, and not when a reader presses it.
+        const logger = (window.Wexa || {}).logger;
+        if (themes.themeNames.length === 1 && logger !== undefined) {
+            logger.warn('wexa.loader: one theme is registered, "'
+                + themes.themeNames[0] + '". What switches them has nowhere to go.');
+        }
+
+        hold(themes);
     }
 
     // -----------------------------------------------------------------------
@@ -255,10 +284,14 @@
                 said.slice(last + 1).split(',').map(file => file.trim())));
         }
 
-        // What a build gathered into the document, if anything did. It is left
-        // on the window by a file the page loads, in no particular order: the
-        // drawings are held before the first demand is answered.
-        const gathered = window.WEXA_GATHERED_ICONS;
+        // What a build gathered into the document, if anything did. A file the
+        // page loads writes it on the namespace of the framework, which may not
+        // be there yet: the file makes it, wexa.js adds to what it finds, and
+        // the drawings are held before the first demand is answered.
+        // WEXA_GATHERED_ICONS is where it was written before: a file produced
+        // by an older build is read the same way.
+        const gathered = (window.Wexa || {}).gatheredIcons
+            || window.WEXA_GATHERED_ICONS;
         if (Array.isArray(gathered) === true) {
             gathered.forEach(one => icons.gather(one[0], one[1], one[2]));
         }
@@ -332,7 +365,7 @@
                 console.error('wexa.loader: the bundle loaded without a namespace.');
                 return;
             }
-            registerThemes(wexa.ThemeManager);
+            registerThemes(wexa.ThemeManager, wexa.REFERENCE_THEMES);
             startIcons(wexa);
             handleLinks(wexa);
             bootPage(wexa);
@@ -383,7 +416,7 @@
             ]);
             iconModules.forEach(module => Object.assign(namespace, module));
 
-            registerThemes(themeModule.ThemeManager);
+            registerThemes(themeModule.ThemeManager, wexa.REFERENCE_THEMES);
             startIcons(namespace);
             handleLinks(window.Wexa || wexa);
             bootPage(namespace);

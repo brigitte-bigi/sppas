@@ -143,11 +143,10 @@
             a button without the color it takes under the pointer, leaves a page
             half dressed, and it is only seen in the mode nobody opened.</p>
 
-        <p>Run <code>python3 scripts/check_themes.py</code> from the root of the
-            repository: it reads every theme of
-            <code>wexa_statics/css/themes/</code> and names the groups it leaves
-            incomplete. It exits with an error when one is, so it belongs with the
-            bundle rebuild, before a commit.</p>
+        <p>The themes of the framework are checked against this contract before every
+            release: each group one of them touches is answered whole, in the two modes.
+            A theme you write yourself is held to the same rule, and the groups it holds
+            are listed below.</p>
 
         <table role="grid">
             <caption>The groups, and what each one holds</caption>

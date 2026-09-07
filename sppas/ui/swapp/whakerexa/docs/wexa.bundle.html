@@ -183,36 +183,9 @@ bar.start();</code></pre>
   })();
 </script>
 
-<script>
-    (function () {
-        const usingFile = (window.location.protocol === 'file:');
-        const s = document.createElement('script');
-        if (usingFile) {
-            s.src = '../wexa_statics/js/wexa.bundle.js';
-            s.addEventListener('load', function () {
-                if (window.Wexa && window.Wexa.ThemeManager) {
-                    const t = new window.Wexa.ThemeManager();
-                    t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-                    t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-                    window.themes = t;
-                }
-            });
-        } else {
-            s.type = 'module';
-            s.src = '../wexa_statics/js/wexa.js';
-        }
-        document.head.appendChild(s);
-    })();
-</script>
-<script type="module">
-    import { ThemeManager } from '../wexa_statics/js/customize/theme_manager.js';
-    const themes = new ThemeManager();
-        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-    window.themes = themes;
-</script>
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"></script>
 
 </body>
 </html>

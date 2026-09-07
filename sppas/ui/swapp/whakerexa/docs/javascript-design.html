@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>JavaScript design • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, javascript, loader, design"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; JavaScript &gt; Design</p>
+    </header>
+
+    <nav class="nav-wexa top" aria-label="Page navigation">
+        <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
+        </a>
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch theme" title="Switch theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+
+    <main id="main-content">
+
+        <section id="needs" class="chapter">
+            <h1>Definition of the needs</h1>
+
+            <section class="ssection"><h2>The problem, and what is aimed at</h2>
+
+                <p>A page uses Whakerexa where it is read: served by a server, or opened from
+                    a disk with nothing serving it. The two do not load the same way — modules
+                    over http, one file from a disk — and a page that has to work both ways
+                    wrote that choice itself, in twenty lines it copied from another page.</p>
+
+                <p>What is aimed at is a page that says once what it loads and what it brings,
+                    and a framework whose parts do not know each other: a component announces
+                    what it has done without naming who listens, and a page starts what is its
+                    own when everything is there.</p>
+
+                <p>This dossier records what the JavaScript base of the framework decides. It
+                    was written after the code it describes, which is the wrong order: it is
+                    the state of the decisions, to be amended where they do not suit.</p>
+            </section>
+
+            <section class="ssection"><h2>Organisation of the needs</h2>
+
+                <p><b>J10 Loading</b></p>
+                <ul>
+                    <li>J11 One tag loads the framework, whatever the protocol the document is read under.</li>
+                    <li>J12 What a page calls is named the same way whether the modules or the single file answered.</li>
+                    <li>J13 A page says what it brings — its themes, its sets of icons, its extras — where it already says what it loads.</li>
+                    <li>J14 A path a page writes is read as the page wrote it: from the page, from the root of the site, from another host, and from where the tool stands only when nothing else is said.</li>
+                    <li>J15 What a page brings is registered before anything reads the address, a name registered afterwards being one the framework has already refused.</li>
+                </ul>
+
+                <p><b>J20 What the framework holds</b></p>
+                <ul>
+                    <li>J21 A service that must exist once is already built and answers under a lowercase name.</li>
+                    <li>J22 A component a page may own several of is given as a class, under its own name.</li>
+                    <li>J23 The framework holds one global and no more: what a page or a build leaves for it is left on that one.</li>
+                </ul>
+
+                <p><b>J30 What a page runs of its own</b></p>
+                <ul>
+                    <li>J31 Code that waits for the document runs when the document is there, in the order it was given.</li>
+                    <li>J32 A page starts what is its own once the framework and the extras it asked for are there, and receives them.</li>
+                </ul>
+
+                <p><b>J40 Between the components</b></p>
+                <ul>
+                    <li>J41 A component announces what it has done without knowing who listens.</li>
+                    <li>J42 What is announced is named by its domain first, then by what happened.</li>
+                </ul>
+
+                <p><b>J50 What is said to whoever wrote the page</b></p>
+                <ul>
+                    <li>J51 What the framework says is filtered by level.</li>
+                    <li>J52 What goes wrong is said in the console, and the page holds.</li>
+                </ul>
+            </section>
+
+            <section class="ssection"><h2>What was set aside</h2>
+
+                <p>Loading a part of the framework alone: every page of the documentation uses
+                    the whole of it, and a page that uses two components would gain a few
+                    kilobytes against a mechanism nobody asked for.</p>
+
+                <p>A page that adds a theme or a set once it is open. What a page brings is
+                    known when it is written.</p>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="decisions" class="chapter">
+            <h1>The decisions</h1>
+
+            <section class="ssection"><h2>Loading</h2>
+
+                <p><b>D1. The loader, or the page's own wiring, and never half of each.</b>
+                    Either <code>wexa.loader.js</code> is asked for everything — it reads the
+                    protocol, registers the themes and the sets, and hands the namespace to
+                    <code>bootPage</code> —, or the page names <code>wexa.js</code> or
+                    <code>wexa.bundle.js</code> and does the registering itself. Half of each
+                    is what J15 forbids: a theme registered after the loader has read the
+                    address is a name already refused.</p>
+
+                <p><b>D2. A path is read from the base only when it is written bare.</b>
+                    <code>js/extras/book.js</code> stands where the framework stands, and
+                    nothing else does: <code>./</code> and <code>../</code> are read from the
+                    page, <code>/</code> from the root of the site, a scheme from its host
+                    J14. What a page brings has no reason to stand under
+                    <code>wexa_statics/</code>, nor to be written as if it did.</p>
+
+                <p><b>D3. What the framework carries of its own is written by a build, not
+                    held in the loader.</b> The themes of the framework and the drawings of
+                    its reference set are inventories, written from the folders that hold
+                    them. The loader reads them; it does not know them.</p>
+            </section>
+
+            <section class="ssection"><h2>The namespace</h2>
+
+                <p><b>D4. One global, and everything on it.</b> <code>Wexa</code> is made by
+                    whoever gets there first and completed by the others: a file that a page
+                    loads before the framework makes the object if it has to, and
+                    <code>wexa.js</code> adds to what it finds J23. A second global would be
+                    one too many, which the style guide of the project already says.</p>
+
+                <p><b>D5. A service is built, a component is given.</b> What must exist once —
+                    the logger, the manager of the icons, the one of the dialogs — is already
+                    built and answers under a lowercase name. What a page may own several of —
+                    a menu, a progress bar, a keyboard — is a class it builds itself J21
+                    J22.</p>
+            </section>
+
+            <section class="ssection"><h2>Between the components</h2>
+
+                <p><b>D6. A component dispatches an event on the document rather than calling
+                    what listens.</b> What is announced does not have to know who hears it
+                    J41, and a page that hears nothing loses nothing. The name carries its
+                    domain first, then what happened — <code>slides:navigate</code>,
+                    <code>slides:viewmode</code>, <code>wexa:slides:ready</code> J42 — so
+                    that a page reads what it listens to. It is also what a keyboard shortcut
+                    may be given instead of a function.</p>
+
+                <p><b>D7. Nothing raises in the reader's face.</b> What goes wrong is said in
+                    the console, at its level, and the page holds J51 J52: a drawing that
+                    does not arrive leaves a button without a drawing, not a page without a
+                    menu.</p>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="tests" class="chapter">
+            <h1>The tests, and the build</h1>
+
+            <p>What follows is of the repository and not of the distribution: neither the
+                tests nor the script that writes the bundle are given to whoever uses
+                Whakerexa.</p>
+
+            <section class="ssection"><h2>Tests</h2>
+
+
+        <p>The unit tests are in <code>js/tests/</code>, one file per tested class, and they run
+            in a browser: <code>tests.html</code> puts the classes on the global object, imports
+            the test files, and every assertion writes in the console, green or red. The page
+            has to be served, since it loads modules.</p>
+
+        <article class="card-doc" aria-label="Running the unit tests">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>From the root of the repository, then open
+                    <code>http://localhost:8000/wexa_statics/js/tests/tests.html</code>.</p>
+            </div>
+            <pre class="dark"><code>python3 -m http.server 8000</code></pre>
+        </article>
+
+        <article class="card-doc" aria-label="Writing a test">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>A test file builds a <code>UnitTest</code>, adds its functions, and launches
+                    them at the end of the file.</p>
+            </div>
+            <pre class="dark"><code>const keyboard_tests = new UnitTest('KeyboardController');
+
+keyboard_tests.add_test(function test_declared_key() {
+    const controller = new KeyboardController();
+    controller.register({keys: ['n'], action: 'page:next'});
+    UnitTest.assert_values_equals(controller.shortcuts.length, 1);
+});
+
+keyboard_tests.launch_unit_test();</code></pre>
+        </article>
+            </section>
+
+            <section class="ssection"><h2>Building the bundle</h2>
+
+
+        <p>The bundle is generated from the sources: the script reads the files in the order it
+            declares, removes the <code>import</code> and <code>export</code> lines, and writes
+            one file. A source that changes leaves the bundle behind until it is built again,
+            and a page opened from the disk keeps showing the old behaviour.</p>
+
+        <p>You have nothing to build: <code>wexa.bundle.js</code> is written before every
+            release and comes with the framework. The script that writes it lives in the
+            repository, for whoever works on Whakerexa itself.</p>
+
+
+            </section>
+        </section>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"></script>
+
+</body>
+</html>

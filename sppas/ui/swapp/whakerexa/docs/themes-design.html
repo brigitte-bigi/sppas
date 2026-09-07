@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Themes design • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, themes, colours, design"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; Themes &gt; Design</p>
+    </header>
+
+    <nav class="nav-wexa top" aria-label="Page navigation">
+        <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
+        </a>
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch theme" title="Switch theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+
+    <main id="main-content">
+
+        <section id="needs" class="chapter">
+            <h1>Definition of the needs</h1>
+
+            <section class="ssection"><h2>The problem, and what is aimed at</h2>
+
+                <p>One palette does not answer every reader. What is read for an hour is not
+                    read as what is glanced at, a page of an institution is not a page of a
+                    presentation, and what one reader finds legible another finds tiring.
+                    Colours, weights and shapes answer needs and tastes that differ, and a
+                    framework that carries one palette answers only its own.</p>
+
+                <p>A theme is also a way of answering a disability, beside conformance. WCAG
+                    says what a text must hold against its ground; it does not say that a
+                    reader may want colours that go well beyond it, on every element and not
+                    on the text alone. A palette drawn for that is not a conformance box: it
+                    is a way of reading.</p>
+
+                <p>What is aimed at: a document whose look is chosen by whoever reads it,
+                    among the ones the page offers, without the page being written twice and
+                    without the framework being touched.</p>
+            </section>
+
+            <section class="ssection"><h2>Elicitation of the needs</h2>
+
+                <p>Six things are handled, and they are all that is handled.</p>
+
+                <p><b>TH1.</b> A <b>variable</b> is what a look is made of: a colour, a size, a
+                    weight, a shape. The framework gives every one of them a value.</p>
+
+                <p><b>TH2.</b> A <b>theme</b> is a set of variables written together, under a
+                    name. It redefines what it wants and leaves the rest.</p>
+
+                <p><b>TH3.</b> A <b>group</b> is what variables answer together: a ground and
+                    the text laid on it, a button and the colour it takes under the pointer.
+                    A group is answered whole or not at all.</p>
+
+                <p><b>TH4.</b> A <b>mode</b> is how a document is read: light or dark. Every
+                    group has a value in each of the two.</p>
+
+                <p><b>TH5.</b> The <b>theme in force</b> is the one a document is shown with.
+                    There is one at a time, and the reader chooses it.</p>
+
+                <p><b>TH6.</b> The <b>contrast mode</b> is not a theme. It belongs to the
+                    accessibility layer of the framework, which owns it: a theme does not
+                    define what a document looks like when it is read in that mode.</p>
+            </section>
+
+            <section class="ssection"><h2>Organisation of the needs</h2>
+
+                <p><b>TH10 What a theme answers</b></p>
+                <ul>
+                    <li>TH11 The author can give a document a look of its own without touching the framework.</li>
+                    <li>TH12 A theme redefines the variables it wants, and what it leaves keeps the value the framework gives it.</li>
+                    <li>TH13 A theme may be drawn for a way of reading — colours that go beyond what conformance asks, on every element — and not for a taste alone.</li>
+                    <li>TH14 A theme never defines what a document looks like in contrast mode: that mode belongs to the accessibility layer. TH6</li>
+                    <li>TH15 A theme is written without fighting the framework: no rule of the framework has to be beaten, and nothing is forced.</li>
+                </ul>
+
+                <p><b>TH20 Choosing a theme</b></p>
+                <ul>
+                    <li>TH21 The reader can choose the theme the document is shown with.</li>
+                    <li>TH22 One theme is in force at a time, for the whole document.</li>
+                    <li>TH23 The theme in force is the same from one page of the document to the next.</li>
+                    <li>TH24 The theme in force changes without the page being loaded again.</li>
+                    <li>TH25 The author says which themes a page offers, and in which order they are walked through.</li>
+                    <li>TH26 The author says which one is shown when nothing else is said.</li>
+                </ul>
+
+                <p><b>TH30 What a theme is made of</b></p>
+                <ul>
+                    <li>TH31 A theme defines variables and nothing else: no rule of its own, no selector of the framework rewritten.</li>
+                    <li>TH32 A group of variables is answered whole, in the two modes: a ground without the text laid on it borrows a colour from another palette. TH3</li>
+                    <li>TH33 A theme that touches no variable of a group leaves that group to the framework, whose palette holds on its own.</li>
+                    <li>TH34 What has no mode of its own is defined once, and read the same way in both.</li>
+                </ul>
+
+                <p><b>TH40 Where a theme stands</b></p>
+                <ul>
+                    <li>TH41 The author says where his theme stands, wherever that is: beside the page, at the root of the site, or on another host.</li>
+                    <li>TH42 A theme the framework carries is named without saying where it stands.</li>
+                    <li>TH43 The reader sees the theme on a document opened from a disk, with no server.</li>
+                </ul>
+
+                <p><b>TH50 What is guaranteed</b></p>
+                <ul>
+                    <li>TH51 A name no page offers changes nothing, and is said in the console.</li>
+                    <li>TH52 A document whose theme does not load is read all the same, in the palette of the framework.</li>
+                    <li>TH53 Nothing of the theme is asked of the internet.</li>
+                </ul>
+            </section>
+
+            <section class="ssection"><h2>What was set aside</h2>
+
+                <p>Showing two themes at once, so that they can be compared. Adding a theme
+                    once the page is open. A theme of its own for the printed page: what is
+                    printed is answered by the print stylesheet, and a theme that had to be
+                    written twice would be written wrong once.</p>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="constraints" class="chapter">
+            <h1>The constraints</h1>
+
+            <section class="ssection"><h2>What the code holds to</h2>
+
+                <table>
+                    <caption>The constraints, and what they come from</caption>
+                    <thead>
+                    <tr><th>No.</th><th>Constraint</th><th>Comes from</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>C1</td><td>A theme that defines one variable of a group defines them all, in the two modes</td><td>TH32, TH3</td></tr>
+                    <tr><td>C2</td><td>A theme defines no colour under the contrast mode: what that mode looks like is the accessibility layer's and nothing else's</td><td>TH14, TH6</td></tr>
+                    <tr><td>C3</td><td>A theme is read after the framework and defines variables only: it never has to beat a rule, and never writes one</td><td>TH15, TH31</td></tr>
+                    <tr><td>C4</td><td>The themes a page offers are registered before anything reads the address: a name registered afterwards is one the manager has already refused</td><td>TH21, TH23</td></tr>
+                    <tr><td>C5</td><td>The order the page writes is the order the reader is taken through, and the one shown by default closes the walk</td><td>TH25, TH26</td></tr>
+                    <tr><td>C6</td><td>Changing the theme in force changes one address and nothing else: no page is loaded again, and nothing of the document is built twice</td><td>TH24</td></tr>
+                    <tr><td>C7</td><td>The name in force is written in the address of the document, and carried to the addresses the page names</td><td>TH23</td></tr>
+                    <tr><td>C8</td><td>Where a theme stands is written by the page and read as the page writes it, the framework's own being named without a place</td><td>TH41, TH42</td></tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="decisions" class="chapter">
+            <h1>The decisions</h1>
+
+            <section class="ssection"><h2>The decisions of the tool</h2>
+
+                <p><b>D1. A theme is a stylesheet of variables, swapped on one link.</b> The
+                    document carries a <code>&lt;link id="wexa-theme"&gt;</code> and changing
+                    the theme changes its address. One link and not several: two stylesheets
+                    that both define a palette answer at the same time, and which one wins is
+                    read in their order rather than in the choice of the reader.</p>
+
+                <p><b>D2. A theme defines variables, never rules.</b> The framework writes its
+                    rules in layers, and a theme that wrote rules of its own would beat them
+                    all, whatever their specificity. What a theme is allowed to change is
+                    therefore what the framework reads from a variable, and the answer to
+                    TH15 is a rule of writing and not a mechanism.</p>
+
+                <p><b>D3. The contrast mode is not answered by a theme.</b> It is written in
+                    <code>@layer accessibility</code>, which owns the class it hangs on. A
+                    theme that redefined a colour there would answer for a reader it was not
+                    drawn for, and the mode would differ from one theme to the next
+                    (TH14).</p>
+
+                <p><b>D4. A group is answered whole, and a build says so.</b> The contract is
+                    written group by group, and every theme of the framework is held to it
+                    before a release: what is left half defined is only seen in the mode
+                    nobody opened (C1).</p>
+
+                <p><b>D5. What the framework carries is an inventory, written from its
+                    folder</b>, as the reference set of the icons is. The loader reads it and
+                    does not know it: a theme added to the framework is named by its file, and
+                    nothing in the loader is written again (TH42).</p>
+
+                <p><b>D6. A page says on one attribute which themes it takes, and in which
+                    order.</b> A name alone is one of the framework, <code>name:path</code> is
+                    one the page brings. The order written is the order walked through, which
+                    is what makes the default the end of the walk rather than a special case
+                    (TH25, TH26, C5).</p>
+
+                <p><b>D7. A page that says nothing takes them all.</b> What was written before
+                    the attribute existed keeps working, and a page that has no opinion has
+                    nothing to write.</p>
+
+                <p><b>D8. The name in force is written in the address, and nowhere else.</b>
+                    Not in the browser's storage: a choice kept there is not carried by a link,
+                    and a document read from a disk keeps it for a page nobody shares. The
+                    address is what travels (TH23, C7).</p>
+            </section>
+        </section>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"></script>
+
+</body>
+</html>

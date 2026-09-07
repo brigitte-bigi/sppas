@@ -80,14 +80,23 @@ def _run_file_dialog(filetypes=None):
 
 # ---------------------------------------------------------------------------
 
+# What the page brings of Whakerexa: the classes are imported, and nothing
+# waits for the namespace. A module of the head runs before the loader has
+# finished, and window.Wexa holds nothing of the framework yet.
+JS_IMPORTS = (
+    "import { RequestManager, OnLoadManager, LinkController } from "
+    f"'/{wapp_settings.wexa_statics}js/wexa.js';"
+)
+
 # javascript code example to send a post request and get data in response
-JS_VALUE = """
+JS_VALUE = JS_IMPORTS + """
+
 const PAGE_URI = window.location.pathname.substring(1);
 
 async function setRandomColor() {
     // test with json post request
-    const requestManager = new window.Wexa.RequestManager();
-    const response = await requestManager.send_post_request({update_text_color: true}, "application/json", PAGE_URI);
+    const requestManager = new RequestManager();
+    const response = await requestManager.sendPostRequest({update_text_color: true}, "application/json", PAGE_URI);
 
     let date = new Date();
     console.log("time to receive server response: " + (date.getTime() - response["time"]) + "ms");
@@ -97,32 +106,32 @@ async function setRandomColor() {
 }
 
 async function choisirFichier() {
-    const requestManager = new window.Wexa.RequestManager();
-    const response = await requestManager.send_post_request({choose_file: true}, "application/json", PAGE_URI);
+    const requestManager = new RequestManager();
+    const response = await requestManager.sendPostRequest({choose_file: true}, "application/json", PAGE_URI);
     alert("Fichier choisi : " + response["file_path"]);
 }
 
-window.Wexa.onload.addLoadFunction(() => {
-    window.Wexa.links.handleLinksWithParameters(["home_button"]);
+OnLoadManager.addLoadFunction(() => {
+    new LinkController().handleLinksWithParameters(["home_button"]);
 });
 
-window.Wexa.onload.addLoadFunction(() => {
+OnLoadManager.addLoadFunction(() => {
     document.getElementsByName("update_btn_text")[0].onclick = async () => {
-        const requestManager = new window.Wexa.RequestManager();
-        await requestManager.send_post_request({update_btn_text_event: true}, "application/json", PAGE_URI);
+        const requestManager = new RequestManager();
+        await requestManager.sendPostRequest({update_btn_text_event: true}, "application/json", PAGE_URI);
         window.location.reload();
     };
 });
 
-window.Wexa.onload.addLoadFunction(() => {
+OnLoadManager.addLoadFunction(() => {
     document.getElementsByName("socket_ping")[0].onclick = async () => {
-        const requestManager = new window.Wexa.RequestManager();
-        const response = await requestManager.send_post_request({socket_ping: true}, "application/json", PAGE_URI);
+        const requestManager = new RequestManager();
+        const response = await requestManager.sendPostRequest({socket_ping: true}, "application/json", PAGE_URI);
         alert(JSON.stringify(response["socket_response"]));
     };
 });
 
-window.Wexa.onload.addLoadFunction(() => {
+OnLoadManager.addLoadFunction(() => {
     const pages = ["page_files", "page_annotate", "page_analyze",
                    "page_editor", "page_convert", "page_plugins"];
     pages.forEach((page) => {
@@ -131,31 +140,31 @@ window.Wexa.onload.addLoadFunction(() => {
             return;
         }
         button.onclick = async () => {
-            const requestManager = new window.Wexa.RequestManager();
+            const requestManager = new RequestManager();
             const request = {};
             request["show_" + page] = true;
-            const response = await requestManager.send_post_request(request, "application/json", PAGE_URI);
+            const response = await requestManager.sendPostRequest(request, "application/json", PAGE_URI);
             alert(JSON.stringify(response["socket_response"]));
         };
     });
 });
 
-window.Wexa.onload.addLoadFunction(() => {
+OnLoadManager.addLoadFunction(() => {
     document.getElementsByName("choose_file")[0].onclick = choisirFichier;
 });
 
-window.Wexa.onload.addLoadFunction(() => {
+OnLoadManager.addLoadFunction(() => {
     document.getElementsByName("choose_txt_file")[0].onclick = async () => {
-        const requestManager = new window.Wexa.RequestManager();
-        const response = await requestManager.send_post_request({choose_txt_file: true}, "application/json", PAGE_URI);
+        const requestManager = new RequestManager();
+        const response = await requestManager.sendPostRequest({choose_txt_file: true}, "application/json", PAGE_URI);
         alert("Fichier TXT choici : " + response["file_path"]);
     };
 });
 
-window.Wexa.onload.addLoadFunction(() => {
+OnLoadManager.addLoadFunction(() => {
     document.getElementsByName("show_workspace")[0].onclick = async () => {
-        const requestManager = new window.Wexa.RequestManager();
-        const response = await requestManager.send_post_request({show_workspace: true}, "application/json", PAGE_URI);
+        const requestManager = new RequestManager();
+        const response = await requestManager.sendPostRequest({show_workspace: true}, "application/json", PAGE_URI);
         const workspaceElement = document.getElementsByName("workspace_content")[0];
         workspaceElement.textContent = JSON.stringify(response["workspace"], null, 4);
     };
@@ -163,7 +172,7 @@ window.Wexa.onload.addLoadFunction(() => {
 
 
 // we wait that the page finished to load to get the h2 element
-window.Wexa.onload.addLoadFunction(() => {
+OnLoadManager.addLoadFunction(() => {
     // loop every 1.5s times
     setInterval(() => {
         setRandomColor();

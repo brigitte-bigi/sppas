@@ -138,29 +138,29 @@
 
             <section class="ssection"><h2>Elicitation of the needs</h2>
 
-                <p>Four things are handled, and they are all that is handled.</p>
+                <p>Six things are handled, and they are all that is handled.</p>
 
-                <p>A <b>name</b> is what an icon is asked for by. It says what the icon
+                <p><b>I1.</b> A <b>name</b> is what an icon is asked for by. It says what the icon
                     stands for, never where it is drawn: the same name is answered by a
                     different drawing from one set to the next.</p>
 
-                <p>A <b>drawing</b> is what answers a name. Its form follows from the file
+                <p><b>I2.</b> A <b>drawing</b> is what answers a name. Its form follows from the file
                     it stands in: a line drawing, which takes the color of what surrounds it,
                     or an image, which carries its own.</p>
 
-                <p>A <b>ground</b> is what covers a surface: a texture laid on a plain
+                <p><b>I3.</b> A <b>ground</b> is what covers a surface: a texture laid on a plain
                     background. It is named as an icon is, and answered the same way, but it
                     designates nothing, and it is asked for by a surface and not by a
                     place.</p>
 
-                <p>A <b>set</b> is what holds drawings and grounds under names. It carries
+                <p><b>I4.</b> A <b>set</b> is what holds drawings and grounds under names. It carries
                     part of the names, or all of them, and says which ones it carries. One is
                     the reference set, and answers what the others leave unanswered.</p>
 
-                <p>The <b>set in force</b> is the one a document is read with. There is one
+                <p><b>I5.</b> The <b>set in force</b> is the one a document is read with. There is one
                     at a time, and the reader chooses it.</p>
 
-                <p>A name it does not carry goes down a chain of two: the <b>fallback
+                <p><b>I6.</b> A name it does not carry goes down a chain of two: the <b>fallback
                     set</b>, which the application names among its own, and then the
                     <b>reference set</b>, which belongs to the framework. Either may be
                     absent, and the chain is the same for every name.</p>
@@ -168,67 +168,69 @@
 
             <section class="ssection"><h2>Organisation of the needs</h2>
 
-                <p><b>[010] Icons of an application</b></p>
+                <p><b>I10 Icons of an application</b></p>
                 <ul>
-                    <li>[011] The author can declare a set of icons that belongs to the application.</li>
-                    <li>[012] The icons an application brings are shown in place of the ones that came with the tool.</li>
-                    <li>[013] The author is free to draw only some of the icons, the others being no less shown.</li>
-                    <li>[014] A name the shown set does not carry is answered all the same, by another set.</li>
-                    <li>[016] The author says which of the sets answers what the others leave unanswered. What that one does not carry either is answered last, by what came with the tool.</li>
-                    <li>[015] The author adds an icon by bringing its drawing, and writes nothing else.</li>
+                    <li>I11 The author can declare a set of icons that belongs to the application.</li>
+                    <li>I12 The icons an application brings are shown in place of the ones that came with the tool.</li>
+                    <li>I13 The author is free to draw only some of the icons, the others being no less shown.</li>
+                    <li>I14 A name the shown set does not carry is answered all the same, by another set.</li>
+                    <li>I16 The author says which of the sets answers what the others leave unanswered. What that one does not carry either is answered last, by what came with the tool.</li>
+                    <li>I15 The author adds an icon by bringing its drawing, and writes nothing else.</li>
+                    <li>I17 The author can be told the names a set answers, so that a page lays out the drawings it can ask for without listing them by hand.</li>
+                    <li>I18 The author says where his set stands, wherever that is: beside the page, at the root of the site, or on another host. A set he brings has no reason to stand where the tool stands.</li>
                 </ul>
 
-                <p><b>[020] Several sets</b></p>
+                <p><b>I20 Several sets</b></p>
                 <ul>
-                    <li>[021] The author can declare several sets, each under a name.</li>
-                    <li>[022] The reader can choose the set the document is shown with.</li>
-                    <li>[023] One set is in force at a time, for the whole document.</li>
-                    <li>[024] The set in force is the same from one page of the document to the next.</li>
-                    <li>[025] The set in force changes without the page being loaded again.</li>
-                    <li>[026] A drawing is loaded only when it comes into what the reader sees. RGESN</li>
-                    <li>[027] A change of set loads again only the drawings the document is showing.</li>
+                    <li>I21 The author can declare several sets, each under a name.</li>
+                    <li>I22 The reader can choose the set the document is shown with.</li>
+                    <li>I23 One set is in force at a time, for the whole document.</li>
+                    <li>I24 The set in force is the same from one page of the document to the next.</li>
+                    <li>I25 The set in force changes without the page being loaded again.</li>
+                    <li>I26 A drawing is loaded only when it comes into what the reader sees. RGESN</li>
+                    <li>I27 A change of set loads again only the drawings the document is showing.</li>
                 </ul>
 
-                <p><b>[030] What an icon is made of</b></p>
+                <p><b>I30 What an icon is made of</b></p>
                 <ul>
-                    <li>[031] The author can bring line drawings and images, of whatever the file they stand in, in one set. Grounds are [070].</li>
-                    <li>[032] A line drawing is shown in the color of what surrounds it.</li>
-                    <li>[033] An icon that carries its colors is shown as it is drawn.</li>
-                    <li>[034] The element that holds an icon declares the room it takes, in both its dimensions, before the drawing arrives. RGESN</li>
-                    <li>[037] An image carries the two dimensions the place declared, so that nothing waits for the file to know them. RGESN</li>
-                    <li>[038] A drawing whose proportions are not those of the place is held inside it, and never stretched.</li>
-                    <li>[035] Nothing moves around the icon when the drawing arrives.</li>
-                    <li>[036] An icon is drawn at the size of the text around it, and grows with it.</li>
+                    <li>I31 The author can bring line drawings and images, of whatever the file they stand in, in one set. Grounds are I70.</li>
+                    <li>I32 A line drawing is shown in the color of what surrounds it.</li>
+                    <li>I33 An icon that carries its colors is shown as it is drawn.</li>
+                    <li>I34 The element that holds an icon declares the room it takes, in both its dimensions, before the drawing arrives. RGESN</li>
+                    <li>I37 An image carries the two dimensions the place declared, so that nothing waits for the file to know them. RGESN</li>
+                    <li>I38 A drawing whose proportions are not those of the place is held inside it, and never stretched.</li>
+                    <li>I35 Nothing moves around the icon when the drawing arrives.</li>
+                    <li>I36 An icon is drawn at the size of the text around it, and grows with it.</li>
                 </ul>
 
-                <p><b>[070] Grounds</b></p>
+                <p><b>I70 Grounds</b></p>
                 <ul>
-                    <li>[071] The author can bring grounds, each under a name, in the sets that carry the icons.</li>
-                    <li>[072] A surface is covered with the ground of the set in force.</li>
-                    <li>[073] A surface whose name the shown set does not carry is covered all the same, by the ground of another set.</li>
-                    <li>[074] What a ground stands for is never told: it stands for nothing.</li>
-                    <li>[075] Nothing moves around a surface when its ground arrives.</li>
-                    <li>[076] A surface is covered only while the reader sees it.</li>
+                    <li>I71 The author can bring grounds, each under a name, in the sets that carry the icons.</li>
+                    <li>I72 A surface is covered with the ground of the set in force.</li>
+                    <li>I73 A surface whose name the shown set does not carry is covered all the same, by the ground of another set.</li>
+                    <li>I74 What a ground stands for is never told: it stands for nothing.</li>
+                    <li>I75 Nothing moves around a surface when its ground arrives.</li>
+                    <li>I76 A surface is covered only while the reader sees it.</li>
                 </ul>
 
-                <p><b>[040] Where the document is read</b></p>
+                <p><b>I40 Where the document is read</b></p>
                 <ul>
-                    <li>[041] The reader can see the icons on a document opened from a disk, with no server.</li>
-                    <li>[042] Nothing is asked of the internet.</li>
-                    <li>[043] The reader sees the icons in every mode and every theme.</li>
+                    <li>I41 The reader can see the icons on a document opened from a disk, with no server.</li>
+                    <li>I42 Nothing is asked of the internet.</li>
+                    <li>I43 The reader sees the icons in every mode and every theme.</li>
                 </ul>
 
-                <p><b>[050] What an icon says</b></p>
+                <p><b>I50 What an icon says</b></p>
                 <ul>
-                    <li>[051] The reader who does not see the icon is told what it stands for.</li>
-                    <li>[052] The icon itself is not read out.</li>
+                    <li>I51 The reader who does not see the icon is told what it stands for.</li>
+                    <li>I52 The icon itself is not read out.</li>
                 </ul>
 
-                <p><b>[060] What is missing</b></p>
+                <p><b>I60 What is missing</b></p>
                 <ul>
-                    <li>[061] Nothing is shown for a name no set carries.</li>
-                    <li>[062] That name is said in the console, for whoever wrote the page.</li>
-                    <li>[063] Everything else is shown, and the page holds.</li>
+                    <li>I61 Nothing is shown for a name no set carries.</li>
+                    <li>I62 That name is said in the console, for whoever wrote the page.</li>
+                    <li>I63 Everything else is shown, and the page holds.</li>
                 </ul>
 
                 <p>Left for later: showing two sets at the same time, so that they can be
@@ -346,7 +348,7 @@
 
                 <p>Flows 1 to 4 come from outside and become the external events of the MCT.
                     Flows 5 and 6 leave it and are its results. Nothing else crosses: nothing
-                    is asked of a server, nothing is stored, nothing is sent back. [042]</p>
+                    is asked of a server, nothing is stored, nothing is sent back. I42</p>
             </section>
 
 
@@ -384,14 +386,14 @@
                     and two sets name a content the same way without naming the same content.
                     The set is the aggregating class, the content the aggregated one.</p>
 
-                <p>R2 leaves a place with no content, which is the case [061] asks to treat:
+                <p>R2 leaves a place with no content, which is the case I61 asks to treat:
                     a name no set carries answers nothing, and the room stays empty. R4 says
                     the same of a surface, which keeps the plain background it had.</p>
 
                 <p>Two things are computed, never held: which content answers a place or a
                     surface, which follows from R3 and R1 and changes when the reading is
-                    shown with another set [025]; and whether a place or a surface is in view,
-                    which is what triggers the question [026] [076].</p>
+                    shown with another set I25; and whether a place or a surface is in view,
+                    which is what triggers the question I26 I76.</p>
 
             </section>
 
@@ -417,15 +419,17 @@
                     </thead>
                     <tbody>
                     <tr><td>C1</td><td>A set carries a name once. Two drawings under one name in one set is a set declared twice</td><td>R1</td></tr>
-                    <tr><td>C2</td><td>The reference set carries every name asked for by what the organisation draws itself</td><td>[014]</td></tr>
-                    <tr><td>C3</td><td>A place is answered by the first set of the chain that carries the name: the set in force, then the one it falls back to, then the reference set</td><td>R1, R2, R3, R5, [014] [016]</td></tr>
+                    <tr><td>C2</td><td>The reference set carries every name asked for by what the organisation draws itself</td><td>I14</td></tr>
+                    <tr><td>C3</td><td>A place is answered by the first set of the chain that carries the name: the set in force, then the one it falls back to, then the reference set</td><td>R1, R2, R3, R5, I14 I16</td></tr>
                     <tr><td>C10</td><td>The chain of the fallback has no cycle and is read once: a set that falls back to itself, or to one that falls back to it, answers as if it fell back to nothing</td><td>R5</td></tr>
-                    <tr><td>C4</td><td>A place that no set answers is not asked again under the same set in force: what a set carries it has already said</td><td>[I6] [061]</td></tr>
-                    <tr><td>C5</td><td>The form of a content follows from its file, and from nothing else: a set carries line drawings and images side by side, since an author takes the files he has</td><td>CONTENT.file, [031]</td></tr>
+                    <tr><td>C4</td><td>A place that no set answers is not asked again under the same set in force: what a set carries it has already said</td><td>I6 I61</td></tr>
+                    <tr><td>C5</td><td>The form of a content follows from its file, and from nothing else: a set carries line drawings and images side by side, since an author takes the files he has</td><td>CONTENT.file, I31</td></tr>
                     <tr><td>C8</td><td>A content answers places, or covers surfaces, and never both: its kind says which</td><td>R2, R4, CONTENT.kind</td></tr>
-                    <tr><td>C9</td><td>A surface is never told to whoever does not see it, a ground standing for nothing</td><td>[074]</td></tr>
-                    <tr><td>C6</td><td>A place declares its room, in both dimensions, before it is answered. The room does not depend on which set answers it, nor on the proportions of the drawing that does</td><td>[034] [035] [038]</td></tr>
-                    <tr><td>C7</td><td>A place is asked for only while it is in view, and only once under a given set in force</td><td>[026] [027]</td></tr>
+                    <tr><td>C9</td><td>A surface is never told to whoever does not see it, a ground standing for nothing</td><td>I74</td></tr>
+                    <tr><td>C6</td><td>A place declares its room, in both dimensions, before it is answered. The room does not depend on which set answers it, nor on the proportions of the drawing that does</td><td>I34 I35 I38</td></tr>
+                    <tr><td>C7</td><td>A place is asked for only while it is in view, and only once under a given set in force</td><td>I26 I27</td></tr>
+                    <tr><td>C11</td><td>Where a set stands is written by the page and read as the page writes it: from the page, from the root of the site, from another host, and from where the tool stands only when nothing else is said</td><td>I18</td></tr>
+                    <tr><td>C12</td><td>The names a set answers are the names of the chain of C3, said once and in the order of that chain: what the set in force carries, then what answers for it, then the reference set</td><td>I17, C3</td></tr>
                     </tbody>
                 </table>
 
@@ -465,7 +469,7 @@
                 </table>
 
                 <p>Nothing is read here: a set says what it carries, and OP1 believes it.
-                    That is what lets OP3 answer without asking. [I6]</p>
+                    That is what lets OP3 answer without asking. I6</p>
 
                 <table>
                     <caption>OP2 — Put a set in force</caption>
@@ -480,7 +484,7 @@
                 </table>
 
                 <p>A set that was never declared is a set nobody named: the set in force does
-                    not change for it. [023]</p>
+                    not change for it. I23</p>
 
                 <table>
                     <caption>OP3 — Answer a demand</caption>
@@ -498,7 +502,7 @@
                 <p>OP3 is ininterruptible for one demand: a set put in force while a content
                     is being read is taken into account after, by E5, and not during. Nothing
                     moves around what was asked for, the room of a place having been declared
-                    before and a surface keeping the one it has. [034] [075]</p>
+                    before and a surface keeping the one it has. I34 I75</p>
 
                 <p>What the content is decides what OP3 produces, and nothing else does: a
                     drawing is shown at a place, a ground is laid on a surface, and neither is
@@ -515,7 +519,7 @@
                 </table>
 
                 <p>OP4 answers nothing of its own: it gives OP3 its event back, and for what
-                    is in view only. What is not seen is answered when it is seen. [027]</p>
+                    is in view only. What is not seen is answered when it is seen. I27</p>
 
                 <p>One process, four operations. E1 and E2 open it, E3 comes as often as the
                     reader asks, E4 as often as the reading moves, and E5 only when OP2
@@ -570,7 +574,7 @@
                     it cannot go and get anything, so what it will need has to be gathered
                     into it beforehand. That happens elsewhere, at another time, and under the
                     responsibility of the author — which is why a set meant for such a
-                    document is gathered as the reference set is. [041]</p>
+                    document is gathered as the reference set is. I41</p>
 
                 <p>Everything else happens where the document is read. Nothing is done
                     elsewhere, and nothing is kept from one opening to the next: PF1 and PF2
@@ -578,7 +582,7 @@
 
                 <p>PF2 and PF3 are one operation cut in two, because two events trigger it and
                     two are in charge: the system at the opening, the reader afterwards. What
-                    they produce is the same, one set in force. [024]</p>
+                    they produce is the same, one set in force. I24</p>
 
                 <p>PF4 comes as often as the reading moves, and never before PF2: a demand
                     answered without a set in force would be answered twice. Its resources
@@ -678,7 +682,7 @@
                     set says it carries is what makes the chain work with no request: on
                     <code>file://</code> a request would never be answered, and on
                     <code>http</code> it would cost one for every name a set does not carry,
-                    at every step of the chain. [I6]</p>
+                    at every step of the chain. I6</p>
             </section>
 
             <section class="ssection"><h2>MOpT — where the code goes</h2>
@@ -737,16 +741,36 @@
                 <p><b>D3. A place declares its room counted on the font size</b>, in
                     <code>calc(var(--font-size) * n)</code> as the framework counts every
                     size, and in both dimensions. One declaration holds three needs: the room
-                    kept before the image arrives [034], the size that follows the text [036],
+                    kept before the image arrives I34, the size that follows the text I36,
                     and the two dimensions an image is given so that nothing waits for the
-                    file to know them [037]. A drawing of other proportions is held inside
-                    that room [038]: the place is what does not change from one set to the
+                    file to know them I37. A drawing of other proportions is held inside
+                    that room I38: the place is what does not change from one set to the
                     next, so it is the place that decides the shape.</p>
 
                 <p><b>D4. A set is declared on the loader</b>, beside the themes, and not in a
                     call written in every page. A page says what it brings where it already
                     says what it loads, and names there the set that answers for the
                     others.</p>
+
+                <p><b>D7. A set is declared in one line: its name, its place, its files.</b>
+                    The name is what stands before the first colon and the files what stands
+                    after the last one, so that the place between the two keeps the colon of an
+                    address that carries a host. The files are written and not asked for: it is
+                    what lets a name fall back with no request at all, on a document read from a
+                    disk as on one that is served I41 I42.</p>
+
+                <p><b>D8. The names a set answers are computed, never held.</b> They follow the
+                    chain of C3 and change with the set in force, exactly as the drawing that
+                    answers a place does. A page that lays them out asks for them when it lays
+                    them out I17.</p>
+
+                <p><b>D9. The demand is carried by the element that means something</b> — a
+                    button, a link, a heading — and never by an element written for the icon
+                    alone. What the icon stands for is said by that element and not by the
+                    drawing I51: an element written for the drawing alone would carry
+                    something that names nothing, and a reader who does not see it would be
+                    told nothing. It is also what keeps the drawing out of the reading I52,
+                    the element that holds it being what is announced.</p>
 
                 <p><b>D6. The chain has two links and no more.</b> A set that answers for the
                     others, then the reference set. Letting each set name the one it falls
@@ -755,13 +779,34 @@
                     cycles.</p>
 
                 <p><b>D5. What a set carries is gathered into the document at build time</b>,
-                    by a script beside the one that builds the bundle. It is the only way a
-                    document read with nothing serving it can answer a name, and it is the
-                    author who runs it. What the script writes is left on the window rather
-                    than called on a class: a file loaded by a page cannot know when the
-                    framework will be there, and a list waits without asking anything. Only
-                    the line drawings are gathered — an image is answered by its address,
-                    which a document finds beside itself.</p>
+                    by a tool the author runs. It is the only way a document read with nothing
+                    serving it can answer a name. Only the line drawings are gathered — an
+                    image is answered by its address, which a document finds beside itself.</p>
+
+                <p><b>D5b. What is gathered is written on the namespace of the framework,</b>
+                    as <code>Wexa.gatheredIcons</code>, and not under a name of its own. The
+                    style guide of the project asks that a global be avoided; the framework
+                    already holds one, <code>Wexa</code>, and a second would be one too many.
+                    The file that carries the drawings is loaded before Whakerexa is there, so
+                    it makes that object if it has to and <code>wexa.js</code> adds to what it
+                    finds. What an older build left under a name of its own is read as
+                    well: the decision changes where the list is written, not what a document
+                    already carrying one can do.</p>
+
+                <p>It is a script and not a file of settings. A browser refuses
+                    <code>fetch()</code> on a <code>file://</code> address, and that address is
+                    the one case this file exists for I41 I42: a <code>.json</code> could
+                    not be read there, while a script is run. Served, nothing of this is
+                    needed — a drawing is asked for when a place demands it — so a file of
+                    settings would fail where it would be useful, and add a request where it
+                    would not.</p>
+
+                <p>It is a list and not a call on a class: a file loaded by a page cannot know
+                    when the framework will be there, and a list waits without asking anything.
+                    Its name says a list and not a constant — the page fills it, the loader
+                    empties it. And a list is all it is, so an author whose tools are his own
+                    writes it as he likes: nothing of the framework runs to produce it, and
+                    nothing of it is asked at the moment it is read.</p>
             </section>
 
         </section>
@@ -900,7 +945,7 @@
                     <tbody>
                     <tr><td>constructor</td><td>(name, base, files)</td><td>pre: name and base are not empty; files names a file under each name it answers to, and may be empty. post: the object does not change any more</td></tr>
                     <tr><td>get name</td><td>(): String</td><td>post: the name the set was declared under</td></tr>
-                    <tr><td>carries</td><td>(name: String): Boolean</td><td>pre: none. post: true when the set declared that name. Reads nothing and asks nothing. [I6]</td></tr>
+                    <tr><td>carries</td><td>(name: String): Boolean</td><td>pre: none. post: true when the set declared that name. Reads nothing and asks nothing. I6</td></tr>
                     <tr><td>addressOf</td><td>(name: String): String</td><td>pre: the set carries the name. post: where the content stands, from the base of the set and the file declared under that name</td></tr>
                     <tr><td>/formOf</td><td>(name: String): IconForm</td><td>pre: the set carries the name. post: line when the file is an SVG, image otherwise. Read in the file, never held. C5</td></tr>
                     </tbody>
@@ -942,16 +987,16 @@
                     <tr><td>IconSets.fallback</td><td>(name: String): void</td><td>pre: none. post: the set of that name is the one the others fall back to. A name that was never declared leaves the chain as it was</td></tr>
                     <tr><td>IconSets.setFor</td><td>(name: String, inForce: String): IconSet</td><td>pre: none. post: the first set of the chain that carries the name — the one in force, the one it falls back to, the reference one — or null when none carries it. Reads nothing. C3, C10</td></tr>
                     <tr><td>IconChoice.inForce</td><td>(): String</td><td>post: the name of the set the document is shown with. Never empty: the reference set when nothing else was named</td></tr>
-                    <tr><td>IconChoice.put</td><td>(name: String): Boolean</td><td>pre: none. post: true when the set in force changed, and the address says it; false when the name was already in force or was never declared. [023] [024]</td></tr>
+                    <tr><td>IconChoice.put</td><td>(name: String): Boolean</td><td>pre: none. post: true when the set in force changed, and the address says it; false when the name was already in force or was never declared. I23 I24</td></tr>
                     <tr><td>IconReader.read</td><td>(set: IconSet, name: String): Promise&lt;IconContent&gt;</td><td>pre: the set carries the name. post: the content, read where the document is read from; raises UnreadableContent when it cannot be read. The only one that goes and gets anything</td></tr>
-                    <tr><td>IconPlacer.place</td><td>(demand: IconDemand, content: IconContent): void</td><td>pre: the kind of the content answers the kind of the demand. post: the content is where it was asked for, held inside the room the place declared and never stretched to it; an image carries that room in its two dimensions; nothing around it has moved; a line drawing takes the color of what surrounds it, an image keeps its own. [032] [033] [035] [037] [038] [075]</td></tr>
+                    <tr><td>IconPlacer.place</td><td>(demand: IconDemand, content: IconContent): void</td><td>pre: the kind of the content answers the kind of the demand. post: the content is where it was asked for, held inside the room the place declared and never stretched to it; an image carries that room in its two dimensions; nothing around it has moved; a line drawing takes the color of what surrounds it, an image keeps its own. I32 I33 I35 I37 I38 I75</td></tr>
                     <tr><td>IconPlacer.clear</td><td>(demand: IconDemand): void</td><td>pre: none. post: the demand shows nothing, and keeps its room. Calling it twice does nothing wrong</td></tr>
-                    <tr><td>IconWatcher.watch</td><td>(demands: IconDemand[], onView): void</td><td>pre: none. post: onView is called once per demand when it comes into view, and again after clear(). Reads the rendering, and decides nothing. [026] [076]</td></tr>
+                    <tr><td>IconWatcher.watch</td><td>(demands: IconDemand[], onView): void</td><td>pre: none. post: onView is called once per demand when it comes into view, and again after clear(). Reads the rendering, and decides nothing. I26 I76</td></tr>
                     <tr><td>IconRegister.hold</td><td>(demand: IconDemand): void</td><td>pre: none. post: the demand is given back by inView()</td></tr>
-                    <tr><td>IconRegister.inView</td><td>(): IconDemand[]</td><td>post: those of the held demands that are in view, in no order. May be empty. [027]</td></tr>
+                    <tr><td>IconRegister.inView</td><td>(): IconDemand[]</td><td>post: those of the held demands that are in view, in no order. May be empty. I27</td></tr>
                     <tr><td>IconManager.constructor</td><td>(sets, named, watcher)</td><td>pre: sets is not null. post: one set in force. A watcher is made when none is given: a test gives one, being unable to wait for a rendering</td></tr>
                     <tr><td>IconManager.run</td><td>(root): Promise&lt;void&gt;</td><td>post: every demand in view is answered or left empty; never raises; kept when everything is done</td></tr>
-                    <tr><td>IconManager.show</td><td>(name: String): Promise&lt;void&gt;</td><td>pre: none. post: the document is shown with that set; the demands in view are answered again and no others; never raises. [025] [027]</td></tr>
+                    <tr><td>IconManager.show</td><td>(name: String): Promise&lt;void&gt;</td><td>pre: none. post: the document is shown with that set; the demands in view are answered again and no others; never raises. I25 I27</td></tr>
                     </tbody>
                 </table>
 
@@ -990,30 +1035,30 @@
                 <p><code>IconChoice</code> reads and writes one name: a set that was never
                     declared does not become the set in force; putting the one already in
                     force changes nothing and says so; the name is found again in the address.
-                    [023] [024]</p>
+                    I23 I24</p>
 
                 <p><code>IconRegister</code> gives back what it holds, and only what is in
-                    view. [027]</p>
+                    view. I27</p>
             </section>
 
             <section class="ssection"><h2>With a document</h2>
 
                 <p><code>IconPlacer</code> is checked on written markup: a line drawing takes
-                    the color of what surrounds it and an image keeps its own [032] [033]; a
+                    the color of what surrounds it and an image keeps its own I32 I33; a
                     ground covers a surface and no place [C8]; what surrounds a demand has the
                     same size before and after, and the same again with a drawing of other
-                    proportions [035] [038] [075]; an image carries the two dimensions the
-                    place declared [037]; and <code>clear()</code> leaves the room where it
+                    proportions I35 I38 I75; an image carries the two dimensions the
+                    place declared I37; and <code>clear()</code> leaves the room where it
                     was.</p>
 
                 <p><code>IconWatcher</code> is checked on a document taller than one screen: a
                     demand out of view is not announced, and is announced when the reading
-                    reaches it. [026] [076]</p>
+                    reaches it. I26 I76</p>
 
                 <p><code>IconManager</code> is checked on what must not break the page: not one
                     set declared, a name nobody carries, a content that cannot be read. It
-                    never raises, the page holds, and the console has said the name. [061]
-                    [062] [063]</p>
+                    never raises, the page holds, and the console has said the name. I61
+                    I62 I63</p>
             </section>
 
             <section class="ssection"><h2>Where</h2>

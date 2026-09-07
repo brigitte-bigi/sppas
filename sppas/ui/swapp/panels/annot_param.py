@@ -74,7 +74,7 @@ function validate_options() {
 
     // send options values to the server
     const request_manager = new RequestManager();
-    request_manager.send_post_request(data);
+    request_manager.sendPostRequest(data);
     
     // close the dialog
     close_dialog(dialog_id);

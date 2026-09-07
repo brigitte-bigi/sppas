@@ -275,7 +275,7 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - Extra Book. The number of a chapter is announced by its word, in the language of the page.
 
 
-## Version 3.5 - stable
+## Version 4.0.0 - stable
 
 - New `KeyboardController` in `keyboard.js`, used by extra slides.
 - New page `docs/javascript.html`: the JavaScript API, and the conventions a module follows.
@@ -284,10 +284,20 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
   each one is called. 
 - New : Bring your own icons. Declare sets of them, the reader chooses, and what you do not draw is still shown.
 - New `wexa.loader.js`: one tag loads Whakerexa, the bundle on `file://` and the modules over HTTP.
+- New `scripts/check_ecodesign.py`: what a served page downloads, and what it borrows from elsewhere.
+- Fonts. The whole fonts move to `build/fonts/`: they are cut, never served.
 - Icons. Extended and cleaned icon set in mono-svg: the same grid of 32, the same stroke of 2, rounded 
-  caps and joins, and the color of the text it stands beside. Now 151 icons available.
+  caps and joins, and the color of the text it stands beside. Now 153 icons available.
 - Dialogs. New `--dialog-bg-color` and `--dialog-fg-color` variables.
 - Breaking change. `ThemeManager` moves to `js/customize/theme_manager.js`, and `SVGIconsManager` is removed: 
   `Wexa.icons` is now the manager of the sets, with the same `get()` and `inject()`.
 - Breaking change. The JavaScript API is camelCase throughout: `fillTable`, `addHtmlTags`, 
   `deleteHtmlTags`, `sendPostRequest`, `sendGetRequest`, `requestUrl`.
+- Loading. `wexa.loader.js` takes `data-themes`.
+
+
+## Version 4.1.0 - develop
+
+- Themes. `data-themes` says which ones a page takes, and in which order.
+- Icons. New `Wexa.gatheredIcons`. A file written by an older build is still read.
+- Themes. Slides read `data-themes` the way the loader does.

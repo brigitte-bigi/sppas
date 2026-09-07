@@ -174,7 +174,7 @@ export default class DashboardManager extends BaseManager {
         // the Error object instead of rejecting: the guard below already
         // discards it, since it never has a workspace_name string.
         const pageUri = window.location.pathname.substring(1) || window.SPPAS_DEFAULT_PAGE;
-        const response = await this._requestManager.send_post_request(
+        const response = await this._requestManager.sendPostRequest(
             {workspace_name: true}, "application/json", pageUri);
 
         if (response instanceof Error) {

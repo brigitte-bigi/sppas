@@ -199,6 +199,15 @@
             </tbody>
         </table>
 
+        <p><strong>Where the set stands.</strong> The path is read from
+            <code>data-base</code> only when it is written bare, as the files of the
+            framework are. One written <code>./</code> or <code>../</code> is read from the
+            page, one written <code>/</code> from the root of the site, one carrying a
+            scheme from its host: a set a page brings has no reason to stand under
+            <code>wexa_statics/</code>, nor to be written as if it did. The same holds for
+            <code>data-themes</code>, <code>data-themes-base</code> and
+            <code>data-extras</code>.</p>
+
         <p><strong>Why the files are written.</strong> They are what lets a missing name
             fall back to the set of Whakerexa with no request at all. On a document opened
             from a disk a request is never answered, and on a served one it would cost a
@@ -276,10 +285,8 @@
 
         <p><strong>Accessibility.</strong> An icon says nothing to a screen reader: what it
             stands for is written on what holds it — the text of a link, the
-            <code>aria-label</code> of a button that holds nothing else. That is why the
-            attribute goes on that element: an element written for the icon alone would
-            carry a drawing that names nothing. A ground stands for nothing and is never
-            announced.</p>
+            <code>aria-label</code> of a button that holds nothing else. The attribute goes on
+            that element. A ground stands for nothing and is never announced.</p>
 
         <p>A line drawing holds in dark mode and in high contrast, since it takes the color
             of what surrounds it. An image keeps the colors it was drawn with: read it in
@@ -331,18 +338,32 @@
         <h2>A document read from a disk</h2>
 
         <p>A document opened without a server cannot go and get a file: a browser refuses
-            to read one there. The drawings of Whakerexa are gathered into the bundle when
-            it is built; the drawings of your sets are gathered the same way, by a script
-            that reads your folders and writes one file:</p>
-
-        <pre class="dark"><code>python3 scripts/build_icons.py icons/child/ icons/adult/</code></pre>
-
-        <p>The name of a set is the name of its folder, so that what you declare on the
-            loader and what the script writes say the same thing. Add the file it produced
-            to the page, anywhere, and the loader pours it in before answering the first
-            demand:</p>
+            to read one there. The drawings of Whakerexa are gathered into the bundle when it
+            is built; the drawings of your sets are gathered the same way, into one file you
+            write beside your page. Add it anywhere in the page, and the loader pours it in
+            before answering the first demand:</p>
 
         <pre class="dark"><code>&lt;script src="wexa_icons.js"&gt;&lt;/script&gt;</code></pre>
+
+        <p><strong>What that file holds.</strong> One list on the namespace of the
+            framework, one entry per drawing: the name of the set, the name the drawing
+            answers to — its file without its extension — and the drawing itself. Nothing
+            else is read in it. The file may be loaded before Whakerexa, so it makes the
+            namespace if it is not there yet. Written by hand or by a tool of your own, it is
+            answered the same way, so a page that never runs the script says as much as one
+            that does. A file written by an older build, which left the list under a name of
+            its own, is read all the same:</p>
+
+        <pre class="dark"><code>window.Wexa = window.Wexa || {};
+window.Wexa.gatheredIcons = [
+    ["child", "home", "&lt;svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" …&gt;…&lt;/svg&gt;"],
+    ["child", "back", "&lt;svg …&gt;…&lt;/svg&gt;"],
+    ["adult", "home", "&lt;svg …&gt;…&lt;/svg&gt;"]
+];</code></pre>
+
+        <p>The name of the set is the one declared on the loader, and the name of the drawing
+            the one a page asks for. A set gathered this way still declares its files on the
+            loader: the list says what exists, the gathering says what it looks like.</p>
 
         <p>Only line drawings are gathered, and only they need it: they are written into
             the page. An image is never read — its address is what answers, and a document

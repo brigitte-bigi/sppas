@@ -115,12 +115,12 @@
         <pre><code>&lt;script&gt;
     (function () {
         const s = document.createElement('script');
-        s.dataset.themes = 'wexa:wexa_theme.css,aurora:wexa_theme_aurora.css';
-        s.dataset.default = 'wexa';
-        s.dataset.themesPath = 'wexa_statics/css/themes/';
+        s.dataset.themes = 'wexa_theme, aurora';
+        s.dataset.default = 'wexa_theme';
         s.dataset.logo = 'images/logo.png';
         if (window.location.protocol === 'file:') {
             s.src = 'wexa_statics/js/wexa.bundle.js';
+            s.dataset.themesBase = 'wexa_statics/css/themes/';
         } else {
             s.type = 'module';
             s.src = 'wexa_statics/js/extras/slides/slides.init.js';
@@ -193,13 +193,10 @@ app.init();</code></pre>
 
     <section class="slide" id="slide-themes-2">
         <h2>Themes — case 2: built-in, switch on the fly</h2>
-        <p>All themes share the same folder → use <code>data-themes-path</code> as prefix.</p>
+        <p>A name alone is one of the framework: where it stands is its own business.</p>
         <pre><code>&lt;script type="module" src="slides.init.js"
-        data-themes="wexa:wexa_theme.css,
-                     aurora:wexa_theme_aurora.css,
-                     highcontrast:wexa_theme_highcontrast.css"
-        data-default="wexa"
-        data-themes-path="wexa_statics/css/themes/"&gt;
+        data-themes="wexa_theme, aurora, highcontrast"
+        data-default="wexa_theme"&gt;
 &lt;/script&gt;</code></pre>
     </section>
 
@@ -231,12 +228,10 @@ app.init();</code></pre>
 
     <section class="slide" id="slide-themes-5">
         <h2>Themes — case 5: own theme + built-in, switch on the fly</h2>
-        <p>Themes are in different folders → omit <code>data-themes-path</code>,
-           write each path in full.</p>
+        <p>The one the presentation brings is written with its place, the others by name.
+           The order written is the order the reader is taken through.</p>
         <pre><code>&lt;script type="module" src="slides.init.js"
-        data-themes="mine:./my_theme.css,
-                     wexa:wexa_statics/css/themes/wexa_theme.css,
-                     aurora:wexa_statics/css/themes/wexa_theme_aurora.css"
+        data-themes="mine:./my_theme.css, wexa_theme, aurora"
         data-default="mine"&gt;
 &lt;/script&gt;</code></pre>
     </section>
@@ -908,9 +903,9 @@ app.init();</code></pre>
         (function () {
             const usingFile = (window.location.protocol === 'file:');
             const s = document.createElement('script');
-            s.dataset.themes = 'wexa:wexa_theme.css,aurora:wexa_theme_aurora.css,highcontrast:wexa_theme_highcontrast.css';
-            s.dataset.default = 'wexa';
-            s.dataset.themesPath = '../wexa_statics/css/themes/';
+            s.dataset.themes = 'wexa_theme, aurora, highcontrast';
+            s.dataset.default = 'wexa_theme';
+            s.dataset.themesBase = '../wexa_statics/css/themes/';
             s.dataset.logo = './images/GFDL_logo.png';
             if (usingFile) {
                 s.src = '../wexa_statics/js/wexa.bundle.js';

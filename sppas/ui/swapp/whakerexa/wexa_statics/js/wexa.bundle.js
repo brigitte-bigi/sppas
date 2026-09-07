@@ -1,17 +1,60 @@
-// Bundle automatically generated on 2026-09-06 13:31:02
+// Bundle automatically generated on 2026-09-07 15:43:06
 
 // ---------------- logger.js ---------------
 class WexaLogger {
-    static #logLevel = 20;
+    static DEFAULT_LEVEL = 20;
+    static #NAMES = {
+        debug: 10,
+        info: 20,
+        warning: 30,
+        error: 40,
+        critical: 50
+    };
+    static #logLevel = WexaLogger.DEFAULT_LEVEL;
+    // -----------------------------------------------------------------------
+    static levelOf(said) {
+        if (typeof said === 'number') {
+            return (said >= 0 && said <= 50) ? said : null;
+        }
+        if (typeof said !== 'string') {
+            return null;
+        }
+        const written = said.trim().toLowerCase();
+        if (written === '') {
+            return null;
+        }
+        if (Object.prototype.hasOwnProperty.call(WexaLogger.#NAMES, written) === true) {
+            return WexaLogger.#NAMES[written];
+        }
+        if (/^[0-9]+$/.test(written) === false) {
+            return null;
+        }
+        const counted = Number(written);
+        return counted <= 50 ? counted : null;
+    }
+    // -----------------------------------------------------------------------
+    static takeWhatThePageSaid() {
+        const namespace = (typeof window !== 'undefined') ? window.Wexa : undefined;
+        if (namespace === undefined || namespace === null) {
+            return;
+        }
+        const level = WexaLogger.levelOf(namespace.logLevel);
+        if (level !== null) {
+            WexaLogger.#logLevel = level;
+        }
+    }
     static getLogLevel() {
         return this.#logLevel;
     }
     static setLogLevel(level) {
-        if (typeof level !== 'number' || level < 0 || level > 50) {
-            console.warn('[WexaWarning] Invalid log level. Must be between 0 and 50.');
+        const counted = WexaLogger.levelOf(level);
+        if (counted === null) {
+            console.warn('[WexaWarning] Invalid log level: ' + level
+                + '. A name -- debug, info, warning, error, critical -- or a'
+                + ' number between 0 and 50.');
             return;
         }
-        this.#logLevel = level;
+        WexaLogger.#logLevel = counted;
     }
     static debug(msg) {
         if (this.#logLevel <= 10) console.info(`[WexaDebug] ${msg}`);
@@ -29,6 +72,9 @@ class WexaLogger {
         console.error(`[WexaCritical] ${msg}`, err || '');
     }
 }
+// What the page said before the framework was there. This file is the first of
+// the framework to be read, so nothing of it has spoken yet.
+WexaLogger.takeWhatThePageSaid();
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
 window.Wexa.WexaLogger = WexaLogger;
@@ -3905,6 +3951,14 @@ window.Wexa.IconRegister = IconRegister;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
+// ---------------- customize/theme_reference.js ---------------
+'use strict';
+const THEMES_BASE = 'css/themes/';
+const REFERENCE_THEMES = [
+    ['wexa_theme', 'wexa_theme.css'],
+    ['aurora', 'wexa_theme_aurora.css'],
+    ['highcontrast', 'wexa_theme_highcontrast.css'],
+];
 // ---------------- customize/icon_reference.js ---------------
 'use strict';
 const REFERENCE_BASE = 'icons/mono-svg/';
@@ -6921,6 +6975,10 @@ window.Wexa = Object.assign(window.Wexa || {}, {
     // What answers a name with a drawing. A page brings its own sets to it,
     // and the components of the framework ask it for what they draw.
     icons,
+    // What the framework carries as themes: a page names one of them by its
+    // name alone, and the loader knows where it stands.
+    THEMES_BASE,
+    REFERENCE_THEMES,
     accessibility: new AccessibilityManager(),
     dialog: new DialogManager(),
     links: new LinkController(),
@@ -6953,7 +7011,7 @@ class SlidesInitializer {
     #base;
     #themesAttr;
     #defaultName;
-    #themesPath;
+    #themesBase;
     #mode;
     #logoSrc;
     #progressOn;
@@ -6965,7 +7023,10 @@ class SlidesInitializer {
         const scriptEl = this.#findScriptElement();
         this.#themesAttr  = (scriptEl?.dataset.themes     || '').trim();
         this.#defaultName = (scriptEl?.dataset.default    || '').trim();
-        this.#themesPath  = (scriptEl?.dataset.themesPath || '').trim();
+        // data-themes-path is what this attribute was called: a presentation
+        // written before keeps working, and says the same thing.
+        this.#themesBase  = (scriptEl?.dataset.themesBase
+                             || scriptEl?.dataset.themesPath || '').trim();
         this.#mode        = (scriptEl?.dataset.mode       || 'presentation').trim();
         this.#logoSrc     = (scriptEl?.dataset.logo       || '').trim();
         this.#progressOn  = (scriptEl?.dataset.progress   !== 'false');
@@ -7012,7 +7073,8 @@ class SlidesInitializer {
                 window.Wexa = window.Wexa || {};
                 await this.#injectBoilerplate();
                 window.Wexa.accessibility = new window.Wexa.AccessibilityManager();
-                this.#registerThemes(window.Wexa.ThemeManager || null);
+                this.#registerThemes(window.Wexa.ThemeManager || null,
+                                     window.Wexa.REFERENCE_THEMES);
                 const app = this.#buildConfig(window.Wexa.Slides);
                 app.init();
                 this.#ready(app);
@@ -7028,7 +7090,8 @@ class SlidesInitializer {
         window.Wexa = window.Wexa || {};
         await this.#injectBoilerplate();
         window.Wexa.accessibility = new window.Wexa.AccessibilityManager();
-        this.#registerThemes(window.Wexa.ThemeManager || null);
+        this.#registerThemes(window.Wexa.ThemeManager || null,
+                                     window.Wexa.REFERENCE_THEMES);
         await this.#paginate(window.Wexa.SlidesPagination || null);
         const app = this.#buildConfig(window.Wexa.Slides);
         app.init();
@@ -7042,8 +7105,11 @@ class SlidesInitializer {
         window.Wexa = window.Wexa || {};
         await this.#injectBoilerplate();
         if (this.#themesAttr !== '') {
-            const { ThemeManager } = await import(new URL('../../customize/theme_manager.js', this.#base).href);
-            this.#registerThemes(ThemeManager);
+            const [{ ThemeManager }, { REFERENCE_THEMES }] = await Promise.all([
+                import(new URL('../../customize/theme_manager.js', this.#base).href),
+                import(new URL('../../customize/theme_reference.js', this.#base).href)
+            ]);
+            this.#registerThemes(ThemeManager, REFERENCE_THEMES);
         }
         const { SlidesPagination } = await import(new URL('slides_pagination.js', this.#base).href);
         await this.#paginate(SlidesPagination);
@@ -7165,17 +7231,60 @@ class SlidesInitializer {
     // -----------------------------------------------------------------------
     // PRIVATE METHODS — application bootstrap
     // -----------------------------------------------------------------------
-    #registerThemes(ThemeManager) {
+    #themesFolder() {
+        if (this.#themesBase !== '') {
+            return this.#themesBase;
+        }
+        if (this.#base === null) {
+            return '';
+        }
+        return new URL('../../../css/themes/', this.#base).href;
+    }
+    #placeOf(path) {
+        if (/^(\.{1,2}\/|\/)/.test(path) === true) {
+            return path;
+        }
+        if (/^[a-z][a-z0-9+.-]*:\/\//i.test(path) === true) {
+            return path;
+        }
+        return this.#themesFolder() + path;
+    }
+    #registerThemes(ThemeManager, reference) {
         if (this.#themesAttr === '' || ThemeManager === null) {
             return;
         }
+        const carried = Array.isArray(reference) === true ? reference : [];
         const manager = new ThemeManager();
-        for (const entry of this.#themesAttr.split(',')) {
-            const parts = entry.trim().split(':');
-            const name  = parts[0].trim();
-            const file  = parts[1].trim();
-            const href  = /^([./]|https?:)/.test(file) ? file : this.#themesPath + file;
-            manager.register(name, href);
+        let chosen = false;
+        for (const declared of this.#themesAttr.split(/[\n,]/)) {
+            const said = declared.trim();
+            if (said === '') {
+                continue;
+            }
+            const first = said.indexOf(':');
+            if (first === -1) {
+                const found = carried.find(theme => theme[0] === said);
+                if (found === undefined) {
+                    console.error('SlidesInitializer: the framework carries no theme'
+                        + ' named "' + said + '".');
+                    continue;
+                }
+                manager.register(found[0], this.#themesFolder() + found[1]);
+                chosen = true;
+                continue;
+            }
+            manager.register(said.slice(0, first).trim(),
+                             this.#placeOf(said.slice(first + 1).trim()));
+        }
+        // Nothing chosen among the framework's: it takes them all.
+        if (chosen === false) {
+            carried.forEach(theme => manager.register(theme[0],
+                                                      this.#themesFolder() + theme[1]));
+        }
+        const logger = (window.Wexa || {}).logger;
+        if (manager.themeNames.length === 1 && logger !== undefined) {
+            logger.warn('SlidesInitializer: one theme is registered, "'
+                + manager.themeNames[0] + '". What switches them has nowhere to go.');
         }
         if (this.#defaultName !== '') {
             manager.setDefault(this.#defaultName);
