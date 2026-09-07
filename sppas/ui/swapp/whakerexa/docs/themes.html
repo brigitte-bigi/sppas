@@ -166,10 +166,10 @@ window.themes = themes;</code></pre>
 &lt;!-- One of them, and nothing else: the button then has nothing to cycle. --&gt;
 data-themes="highcontrast"
 
-&lt;!-- One the page brings, alone. --&gt;
+&lt;!-- One the page brings, then the three of the framework. --&gt;
 data-themes="swapp:./statics/swapp_theme.css"
 
-&lt;!-- One the page brings, then two of the framework. --&gt;
+&lt;!-- One the page brings, and two of the framework, and nothing else. --&gt;
 data-themes="swapp:./statics/swapp_theme.css, aurora, highcontrast"</code></pre>
         </article>
 
@@ -180,9 +180,9 @@ data-themes="swapp:./statics/swapp_theme.css, aurora, highcontrast"</code></pre>
             </thead>
             <tbody>
             <tr><td>Nothing</td><td><code>wexa_theme</code>, <code>aurora</code>, <code>highcontrast</code>, in that order.</td></tr>
-            <tr><td>A name alone</td><td>That theme of the framework, taken from <code>css/themes/</code>.</td></tr>
-            <tr><td><code>name:path</code></td><td>The theme the page brings, under the name it gives it.</td></tr>
-            <tr><td>Several, separated by commas or one per line</td><td>Those, in the order they are written — which is the order of the cycle.</td></tr>
+            <tr><td>A name alone</td><td>That theme of the framework, and it alone: naming one is choosing among them.</td></tr>
+            <tr><td><code>name:path</code></td><td>The theme the page brings, and then the three of the framework — bringing one adds it, and says nothing of the others.</td></tr>
+            <tr><td>Both</td><td>What is written, in the order it is written, and nothing else: the framework's are named, so they are chosen.</td></tr>
             </tbody>
         </table>
 
@@ -191,6 +191,12 @@ data-themes="swapp:./statics/swapp_theme.css, aurora, highcontrast"</code></pre>
 
         <p><code>data-default</code> names the one applied when the address carries no
             <code>wexa_theme</code> parameter. It has to be one of those the page takes.</p>
+
+        <p>A page that wants its own theme and none of the framework's does not have to say
+            so: it shows no switching button. A registered theme costs nothing until it is
+            activated — no stylesheet is asked for — and nothing activates it. The one
+            exception is a reader who writes <code>?wexa_theme=aurora</code> in the address
+            himself.</p>
 
     </section>
 

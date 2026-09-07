@@ -38,7 +38,7 @@ Simply unpack it.
 
 For usage examples of the CSS and JS frameworks, visit the **online documentation**:
 
-👉 <https://whakerexa.sourceforge.io>
+👉 <https://brigitte-bigi.github.io/Whakerexa/>
 
 The HTML files available in the `docs` folder are also provided for offline reference.
 
@@ -275,7 +275,7 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - Extra Book. The number of a chapter is announced by its word, in the language of the page.
 
 
-## Version 4.0.0 - stable
+## Version 4.0.0
 
 - New `KeyboardController` in `keyboard.js`, used by extra slides.
 - New page `docs/javascript.html`: the JavaScript API, and the conventions a module follows.
@@ -287,7 +287,7 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - New `scripts/check_ecodesign.py`: what a served page downloads, and what it borrows from elsewhere.
 - Fonts. The whole fonts move to `build/fonts/`: they are cut, never served.
 - Icons. Extended and cleaned icon set in mono-svg: the same grid of 32, the same stroke of 2, rounded 
-  caps and joins, and the color of the text it stands beside. Now 153 icons available.
+  caps and joins, and the color of the text it stands beside. Now 152 icons available.
 - Dialogs. New `--dialog-bg-color` and `--dialog-fg-color` variables.
 - Breaking change. `ThemeManager` moves to `js/customize/theme_manager.js`, and `SVGIconsManager` is removed: 
   `Wexa.icons` is now the manager of the sets, with the same `get()` and `inject()`.
@@ -296,8 +296,9 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - Loading. `wexa.loader.js` takes `data-themes`.
 
 
-## Version 4.1.0 - develop
+## Version 4.1.0 - stable
 
 - Themes. `data-themes` says which ones a page takes, and in which order.
 - Icons. New `Wexa.gatheredIcons`. A file written by an older build is still read.
 - Themes. Slides read `data-themes` the way the loader does.
+- Logging. A page says how much the framework says: `Wexa.logLevel = 'warning'`, before the loader.

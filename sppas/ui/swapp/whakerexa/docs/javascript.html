@@ -116,7 +116,7 @@
             <tbody>
             <tr><td><code>data-base</code></td><td>Where <code>wexa_statics/</code> stands, seen from the page. Required.</td></tr>
             <tr><td><code>data-default</code></td><td>The theme to apply when the address names none.</td></tr>
-            <tr><td><code>data-themes</code></td><td>The themes the page takes, in the order it cycles through them: a name alone for one of the framework, <code>name:path</code> for one the page brings. All of them when it says nothing.</td></tr>
+            <tr><td><code>data-themes</code></td><td>The themes the page takes, in the order it cycles through them: a name alone chooses among those of the framework, <code>name:path</code> is one the page brings. Naming none of the framework's takes them all.</td></tr>
             <tr><td><code>data-themes-base</code></td><td>Where the themes of the framework stand, when they are not under <code>css/themes/</code> of the base.</td></tr>
             <tr><td><code>data-icons</code></td><td>The sets the page brings, one per line, written <code>name:path:file,file</code>.</td></tr>
             <tr><td><code>data-icons-default</code></td><td>The set to show when the address names none.</td></tr>
@@ -310,9 +310,10 @@ Wexa.logger.info('Page ready.');</code></pre>
         <h2>Saying what happened</h2>
 
         <p>A module never writes into the console directly: it says it to the logger, which
-            prefixes the message and drops it if it is below the level of the page. The level
-            is a number, and the default is 20 &mdash; information, warnings and errors are
-            shown, debug messages are not.</p>
+            prefixes the message and drops it if it is below the level of the page. A level is
+            a name as Python writes it, or the number that goes with it, and the default is 20
+            &mdash; information, warnings and errors are shown, debug messages are not. A page
+            says its own before the loader, as above.</p>
 
         <table>
             <caption>The levels of <code>Wexa.logger</code></caption>
@@ -333,7 +334,7 @@ Wexa.logger.info('Page ready.');</code></pre>
                 <p>A page asking to see everything lowers the level; 0 silences nothing, it
                     shows all of it.</p>
             </div>
-            <pre class="dark"><code>Wexa.logger.setLogLevel(10);
+            <pre class="dark"><code>Wexa.logger.setLogLevel('debug');
 Wexa.logger.debug('Slides: 57 pages laid out.');</code></pre>
         </article>
 
