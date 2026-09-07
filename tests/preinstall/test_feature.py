@@ -274,6 +274,49 @@ class TestDepsFeature(unittest.TestCase):
 
     # ---------------------------------------------------------------------------
 
+    def test_get_set_pip_options(self):
+        """Return(get_pip_options) or set(set_pip_options) the pip options."""
+        # Initial state: no option at all
+        self.assertEqual(self.__feature.get_pip_options(), "")
+        self.assertEqual(self.__feature.get_pip_options("torch"), "")
+
+        # Options of a given package
+        self.__feature.set_pip_options({"torch": "--index-url https://download.pytorch.org/whl/cpu"})
+        self.assertEqual(
+            self.__feature.get_pip_options("torch"),
+            "--index-url https://download.pytorch.org/whl/cpu"
+        )
+        # ... are not the ones of the other packages of the feature
+        self.assertEqual(self.__feature.get_pip_options("openai-whisper"), "")
+
+        # Options of all the packages of the feature
+        self.__feature.set_pip_options({"": "-f https://wxpython.org/Phoenix/snapshot-builds/"})
+        self.assertEqual(
+            self.__feature.get_pip_options("wxpython"),
+            "-f https://wxpython.org/Phoenix/snapshot-builds/"
+        )
+        self.assertEqual(
+            self.__feature.get_pip_options(),
+            "-f https://wxpython.org/Phoenix/snapshot-builds/"
+        )
+
+        # The options of a package are used instead of the ones of the feature
+        self.__feature.set_pip_options({"": "--pre", "torch": "--index-url https://download.pytorch.org/whl/cpu"})
+        self.assertEqual(
+            self.__feature.get_pip_options("torch"),
+            "--index-url https://download.pytorch.org/whl/cpu"
+        )
+        self.assertEqual(self.__feature.get_pip_options("numpy"), "--pre")
+
+        # Any given package name is turned into a string
+        self.__feature.set_pip_options({"4": "--pre"})
+        self.assertEqual(self.__feature.get_pip_options(4), "--pre")
+
+        with self.assertRaises(TypeError):
+            self.__feature.set_pip_options(4)
+
+    # ---------------------------------------------------------------------------
+
     def test_get_set_pip_test(self):
         """Return(get_pip_test) or set(set_pip_test) the value of pip_test."""
         # Initial state: should be empty string

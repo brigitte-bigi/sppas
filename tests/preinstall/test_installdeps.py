@@ -44,6 +44,8 @@ from sppas.core.preinstall.depsinstall import sppasGuessInstaller
 from sppas.core.preinstall.depsinstall import sppasInstallerDeps
 from sppas.core.preinstall.installer import WindowsInstaller
 from sppas.core.preinstall.installer import MacOsInstaller
+from sppas.core.preinstall.installer import DebianInstaller
+from sppas.core.preinstall.installer import DnfInstaller
 
 # ---------------------------------------------------------------------------
 
@@ -53,7 +55,12 @@ class TestGuessInstaller(unittest.TestCase):
     def test_guess(self):
         self.assertEqual(WindowsInstaller, sppasGuessInstaller.guess("win32"))
         self.assertEqual(MacOsInstaller, sppasGuessInstaller.guess("darwin"))
-        self.assertIsNone(sppasGuessInstaller.guess("linux"))
+        self.assertEqual(DebianInstaller, sppasGuessInstaller.guess("debian"))
+        self.assertEqual(DnfInstaller, sppasGuessInstaller.guess("fedora"))
+
+        # An unknown system: the installer depends on the available commands
+        self.assertIn(sppasGuessInstaller.guess("linux"),
+                      (None, DebianInstaller, MacOsInstaller, DnfInstaller))
 
 # ---------------------------------------------------------------------------
 
@@ -71,7 +78,11 @@ class TestInstallerDeps(unittest.TestCase):
         self.assertGreaterEqual(len(y), 3)
         self.assertIn("wxpython", y)
         self.assertIn("video", y)
-        self.assertIn("julius", y)
+        self.assertIn("stt", y)
+
+        y = self.__installer_deps.features_ids("deps")
+        self.assertIn("stt", y)
+        self.assertNotIn("fra", y)
 
     # ---------------------------------------------------------------------------
 

@@ -75,12 +75,12 @@ class TestInstaller(unittest.TestCase):
 
     def test_download_resource(self):
         with self.assertRaises(sppasInstallationError):
-            InstallerTest().install_resource("url", "toto.zip")
+            InstallerTest().install_resource("url", "toto.zip", paths.resources)
 
         with self.assertRaises(sppasInstallationError):
-            InstallerTest().install_resource(DATA, "badtest.zip")
+            InstallerTest().install_resource(DATA, "badtest.zip", paths.resources)
 
-        InstallerTest().install_resource(DATA, "test.zip")
+        InstallerTest().install_resource(DATA, "test.zip", paths.resources)
         downloaded = os.path.join(paths.resources, "test.zip")
         installed = os.path.join(paths.resources, "faces", "test.txt")
         self.assertTrue(os.path.exists(installed))
@@ -91,7 +91,7 @@ class TestInstaller(unittest.TestCase):
 
     def test_type(self):
         self.assertEqual(self.__installer.feature_type("video"), "deps")
-        self.assertEqual(self.__installer.feature_type("julius"), "deps")
+        self.assertEqual(self.__installer.feature_type("stt"), "deps")
         self.assertEqual(self.__installer.feature_type("wxpython"), "deps")
 
     # ---------------------------------------------------------------------------
@@ -99,24 +99,24 @@ class TestInstaller(unittest.TestCase):
     def test_get_feat_ids(self):
         # Return the list of feature identifiers.
         y = self.__installer.get_fids()
-        self.assertEqual(len(y), 3)
+        self.assertEqual(len(y), 33)
         self.assertTrue("wxpython" in y)
-        self.assertTrue("brew" in y)
-        self.assertTrue("julius" in y)
+        self.assertTrue("stt" in y)
+        self.assertTrue("wintools" in y)
+
+        y = self.__installer.get_fids("deps")
+        self.assertEqual(len(y), 9)
 
     # ---------------------------------------------------------------------------
 
     def test_enable(self):
         """Return True if the feature is enabled and/or set it."""
         y = self.__installer.get_fids()
-        self.assertEqual(len(self.__installer.get_fids()), 3)
-        # self.assertEqual(self.__installer.enable(y[0]), True)
+        self.__installer.enable(y[0], True)
+        self.assertTrue(self.__installer.enable(y[0]))
 
-        y = self.__installer.get_fids()
-        # self.assertEqual(self.__installer.enable(y[1]), False)
-
-        y = self.__installer.get_fids()
-        # self.assertEqual(self.__installer.enable(y[2]), True)
+        self.__installer.enable(y[0], False)
+        self.assertFalse(self.__installer.enable(y[0]))
 
     # ---------------------------------------------------------------------------
 
@@ -125,46 +125,69 @@ class TestInstaller(unittest.TestCase):
         y = self.__installer.get_fids()
         self.assertEqual(self.__installer.available(y[0]), True)
 
-        # y = self.__installer.get_fids()
-        # self.assertEqual(self.__installer.available(y[1]), False)
-
-        # y = self.__installer.get_fids()
-        # self.assertEqual(self.__installer.available(y[2]), False)
+        self.__installer.available(y[0], False)
+        self.assertEqual(self.__installer.available(y[0]), False)
 
     # ---------------------------------------------------------------------------
 
     def test_get_fids(self):
         y = self.__installer.get_fids()
-        self.assertEqual(len(y), 3)
+        self.assertEqual(len(y), 33)
 
     # ---------------------------------------------------------------------------
 
-    def test_install_pypis(self):
-        # Manage the installation of pip packages.
-        with self.assertRaises(sppasInstallationError):
-            self.__installer._Installer__install_pypi("wxpythonnnn")
+    def test_pip_command(self):
+        # Return the pip command line to install or update a package.
+        y = self.__installer._pip_command("pip", "")
+        self.assertTrue(y.endswith(" -m pip install 'pip' --no-warn-script-location") or
+                        y.endswith(" -m pip install 'pip' --user --no-warn-script-location"))
 
-        # Wont raise exception and wont return error message
-        self.__installer._Installer__install_pypi("pip")
+        # The version constraints are appended to the name of the package
+        y = self.__installer._pip_command("wxpython", ">=4.1")
+        self.assertIn(" 'wxpython>=4.1'", y)
+
+        # The arguments are given before the options and the package
+        y = self.__installer._pip_command("torch", "", "--index-url https://download.pytorch.org/whl/cpu", "-U")
+        self.assertIn(" -m pip install -U --index-url https://download.pytorch.org/whl/cpu 'torch'", y)
+
+        y = self.__installer._pip_command("wxpython", ">=4.1", "-f https://wxpython.org/Phoenix/snapshot-builds/", "--pre")
+        self.assertIn(" -m pip install --pre -f https://wxpython.org/Phoenix/snapshot-builds/ 'wxpython>=4.1'", y)
+
+        y = self.__installer._pip_command("numpy", ">2.0,<2.3.0", "", "--only-binary=:all:")
+        self.assertIn(" -m pip install --only-binary=:all: 'numpy>2.0,<2.3.0'", y)
 
     # ---------------------------------------------------------------------------
 
-    def test_search_pypi(self):
-        self.assertTrue(self.__installer._Installer__search_pypi("pip"))
-        self.assertFalse(self.__installer._Installer__search_pypi("wxpythonnnnnn"))
+    def test_pip_command_options(self):
+        # The options of a package are the ones of the feature it belongs to.
+        features = self.__installer._features
+
+        y = self.__installer._pip_command("torch", "", features.pypi_opt("stt", "torch"))
+        self.assertIn("--index-url https://download.pytorch.org/whl/cpu 'torch'", y)
+
+        # The index url of torch must not be used for the other packages
+        y = self.__installer._pip_command("openai-whisper", "", features.pypi_opt("stt", "openai-whisper"))
+        self.assertNotIn("--index-url", y)
+        self.assertIn(" 'openai-whisper'", y)
+
+    # ---------------------------------------------------------------------------
+
+    def test_show_pypi(self):
+        self.assertTrue(self.__installer._show_pypi("pip"))
+        self.assertFalse(self.__installer._show_pypi("wxpythonnnnnn"))
         with self.assertRaises(sppasInstallationError):
-            self.assertFalse(self.__installer._Installer__search_pypi(4))
+            self.assertFalse(self.__installer._show_pypi(4))
 
     # ---------------------------------------------------------------------------
 
     def test_version_pypi(self):
         # Bug on MacOS but only in the test file not with the script "sppasinstall.py"
-        # self.assertTrue(self.__installer._Installer__version_pypi("pip", ">;0.0"))
-        self.assertFalse(self.__installer._Installer__version_pypi("numpy", ">;8.0"))
+        # self.assertTrue(self.__installer._version_pypi("pip", ">;0.0"))
+        self.assertFalse(self.__installer._version_pypi("numpy", ">;8.0"))
 
-        self.assertFalse(self.__installer._Installer__version_pypi("pip", "aaaa"))
-        self.assertFalse(self.__installer._Installer__version_pypi("pip", "<;4.2"))
-        self.assertFalse(self.__installer._Installer__version_pypi("pip", "=;4.2"))
+        self.assertFalse(self.__installer._version_pypi("pip", "aaaa"))
+        self.assertFalse(self.__installer._version_pypi("pip", "<;4.2"))
+        self.assertFalse(self.__installer._version_pypi("pip", "=;4.2"))
 
     # ---------------------------------------------------------------------------
 
@@ -182,32 +205,31 @@ class TestInstaller(unittest.TestCase):
             "Author: Travis E. Oliphant et al. \\r\\n"
 
         with self.assertRaises(IndexError):
-            self.__installer._Installer__need_update_pypi("Bonjour", "aaaa")
+            self.__installer._need_update_pypi("Bonjour", "aaaa")
 
         with self.assertRaises(IndexError):
-            self.__installer._Installer__need_update_pypi(y, "aaaa")
+            self.__installer._need_update_pypi(y, "aaaa")
 
-        self.assertTrue(self.__installer._Installer__need_update_pypi(x, ">;4.2"))
-        self.assertFalse(self.__installer._Installer__need_update_pypi(x, ">;4.0"))
+        self.assertTrue(self.__installer._need_update_pypi(x, ">;4.2"))
+        self.assertFalse(self.__installer._need_update_pypi(x, ">;4.0"))
 
-        self.assertTrue(self.__installer._Installer__need_update_pypi(y, ">;1.2"))
-        self.assertFalse(self.__installer._Installer__need_update_pypi(y, ">;1.0"))
-
-        with self.assertRaises(ValueError):
-            self.assertTrue(self.__installer._Installer__need_update_pypi(x, "<;4.2"))
+        self.assertTrue(self.__installer._need_update_pypi(y, ">;1.2"))
+        self.assertFalse(self.__installer._need_update_pypi(y, ">;1.0"))
 
         with self.assertRaises(ValueError):
-            self.assertTrue(self.__installer._Installer__need_update_pypi(y, "=;1.2"))
+            self.assertTrue(self.__installer._need_update_pypi(x, "<;4.2"))
+
+        with self.assertRaises(ValueError):
+            self.assertTrue(self.__installer._need_update_pypi(y, "=;1.2"))
 
     # ---------------------------------------------------------------------------
 
-    def test_update_pypi(self):
-        with self.assertRaises(sppasInstallationError):
-            self.__installer._Installer__update_pypi("wxpythonnnn")
-        with self.assertRaises(sppasInstallationError):
-            self.assertFalse(self.__installer._Installer__update_pypi(4))
-
-        self.__installer._Installer__update_pypi("pip")
+    def test_update_pypi_command(self):
+        # The update of a package is using the options of this package
+        y = self.__installer._pip_command("torch", "", "--index-url https://download.pytorch.org/whl/cpu", "-U")
+        self.assertIn(" -m pip install -U ", y)
+        self.assertIn("--index-url https://download.pytorch.org/whl/cpu", y)
+        self.assertIn(" 'torch'", y)
 
     # ---------------------------------------------------------------------------
 

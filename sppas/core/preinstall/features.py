@@ -256,17 +256,18 @@ class Features:
 
     # ------------------------------------------------------------------------
 
-    def pypi_opt(self, fid):
+    def pypi_opt(self, fid, package_name=""):
         """Return the options of a pip dependency of the feature.
 
         :param fid: (str) Identifier of a feature
+        :param package_name: (str) Name of a pip package of the feature
         :return: (str)
 
         """
         for feat in self.__features:
             if feat.get_id() == fid:
                 if isinstance(feat, DepsFeature) is True:
-                    return feat.get_pip_options()
+                    return feat.get_pip_options(package_name)
 
         return ""
 
@@ -648,11 +649,14 @@ class Features:
                 depend_pypi = self.__parse_depend(d)
                 for key in depend_pypi:
                     feature.add_pypi_alt(key, depend_pypi[key])
+        except cp.NoOptionError:
+            pass
 
-            # Specific options to be applied when installing
+        # Specific options to be applied when installing
+        try:
             opt = parser.get(fid, "pip_opt")
             if len(opt) > 0 and opt.lower() != "nil":
-                feature.set_pip_options(opt)
+                feature.set_pip_options(self.__parse_pip_options(opt))
         except cp.NoOptionError:
             pass
 
@@ -779,6 +783,38 @@ class Features:
                 # With pip<24.x, it was allowed to use brackets:
                 # depend[tab[0]] = tab[1:]
         return depend
+
+    # ------------------------------------------------------------------------
+
+    @staticmethod
+    def __parse_pip_options(string_options):
+        """Create a dictionary from the pip_opt value given as an argument.
+
+        Each line is either the options of a given pip package, in the form
+        "package:options", or the options of all the packages of the feature.
+        The latter are stored with an empty string as key.
+
+        :param string_options: (string) The value of the pip_opt key in one of the section of features.ini.
+        :return: (dict) key=package name or an empty string; value=options
+
+        """
+        string_options = str(string_options)
+        options = dict()
+        for line in string_options.split("\n"):
+            line = line.strip()
+            if len(line) == 0:
+                continue
+
+            # At left of the first ':' there's the package name, but only if
+            # this first ':' is part of the package name and not of an option,
+            # like in "-f https://wxpython.org/".
+            tab = line.split(":", maxsplit=1)
+            if len(tab) == 2 and len(tab[0]) > 0 and " " not in tab[0]:
+                options[tab[0]] = tab[1].strip()
+            else:
+                options[""] = line
+
+        return options
 
     # ------------------------------------------------------------------------
 

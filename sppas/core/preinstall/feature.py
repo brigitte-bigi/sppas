@@ -237,8 +237,9 @@ class DepsFeature(Feature):
         # Represent the required pip packages
         self.__pypi = dict()
 
-        # The pip specific options
-        self.__pipot = ""
+        # The pip specific options: key=package name; value=options.
+        # The key is an empty string for the options of all the packages.
+        self.__pipot = dict()
 
         # The pip alternatives -- in case regular pip failed to be installed
         self.__pypi_alt = dict()
@@ -371,19 +372,33 @@ class DepsFeature(Feature):
 
     # ------------------------------------------------------------------------
 
-    def get_pip_options(self):
-        """Return the pip specific options."""
-        return self.__pipot
+    def get_pip_options(self, package_name=""):
+        """Return the pip specific options of the given pip package.
+
+        The options defined for all the packages of the feature are returned
+        if none is defined for the given package.
+
+        :param package_name: (str) Name of a pip package
+        :return: (str) Pip specific options or an empty string
+
+        """
+        package_name = str(package_name)
+        if package_name in self.__pipot:
+            return self.__pipot[package_name]
+
+        return self.__pipot.get("", "")
 
     # ------------------------------------------------------------------------
 
     def set_pip_options(self, options):
         """Set the pip specific options.
 
-        :param options: (str) Pip specific options
+        :param options: (dict) Pip specific options. key=package name;
+            value=options. The key is an empty string to define the options
+            of all the packages of the feature.
 
         """
-        self.__pipot = str(options)
+        self.__pipot = dict(options)
 
     # ------------------------------------------------------------------------
 

@@ -55,8 +55,11 @@ class TestFeatures(unittest.TestCase):
 
     def test_type(self):
         self.assertEqual(self.__features.feature_type("video"), "deps")
-        self.assertEqual(self.__features.feature_type("julius"), "deps")
+        self.assertEqual(self.__features.feature_type("stt"), "deps")
         self.assertEqual(self.__features.feature_type("wxpython"), "deps")
+        self.assertEqual(self.__features.feature_type("facedetect"), "annot")
+        self.assertEqual(self.__features.feature_type("fra"), "lang")
+        self.assertEqual(self.__features.feature_type("autocs"), "spin")
         self.assertEqual(self.__features.feature_type("toto"), None)
 
     # -----------------------------------------------------------------------
@@ -72,8 +75,8 @@ class TestFeatures(unittest.TestCase):
         # Return the list of feature identifiers.
         y = self.__features.get_ids()
         self.assertTrue("wxpython" in y)
-        self.assertTrue("brew" in y)
-        self.assertTrue("julius" in y)
+        self.assertTrue("stt" in y)
+        self.assertTrue("wintools" in y)
         self.assertTrue("video" in y)
         self.assertTrue("pol" in y)
 
@@ -103,7 +106,7 @@ class TestFeatures(unittest.TestCase):
         y = self.__features.available("wxpython")
         self.assertEqual(y, False)
 
-        y = self.__features.available("brew")
+        y = self.__features.available("toto")
         self.assertEqual(y, False)
 
     # -----------------------------------------------------------------------
@@ -113,10 +116,10 @@ class TestFeatures(unittest.TestCase):
         y = self.__features.description("wxpython")
         self.assertGreater(len(y), 0)
 
-        y = self.__features.description("brew")
+        y = self.__features.description("stt")
         self.assertGreater(len(y), 0)
 
-        y = self.__features.description("julius")
+        y = self.__features.description("wintools")
         self.assertGreater(len(y), 0)
 
     # -----------------------------------------------------------------------
@@ -127,7 +130,7 @@ class TestFeatures(unittest.TestCase):
         y = self.__features.packages("wxpython")
         self.assertEqual(y, {})
 
-        y = self.__features.packages("brew")
+        y = self.__features.packages("stt")
         self.assertEqual(y, {})
 
     # ------------------------------------------------------------------------
@@ -136,9 +139,13 @@ class TestFeatures(unittest.TestCase):
         # For WindowsInstaller
         """Return the pip dependencies dictionary of the feature."""
         y = self.__features.pypi("wxpython")
-        self.assertEqual(y, {'wxpython': '>4.0'})
+        self.assertEqual(y, {'wxpython': '>=4.1'})
 
-        y = self.__features.pypi("brew")
+        # The packages are installed in the order they are declared
+        y = self.__features.pypi("stt")
+        self.assertEqual(list(y.keys()), ['torch', 'openai-whisper'])
+
+        y = self.__features.pypi("wintools")
         self.assertEqual(y, {})
 
     # -----------------------------------------------------------------------
@@ -149,8 +156,10 @@ class TestFeatures(unittest.TestCase):
         y = self.__features.cmd("wxpython")
         self.assertEqual(y, "")
 
-        y = self.__features.cmd("brew")
+        y = self.__features.cmd("stt")
         self.assertEqual(y, "")
+
+        self.assertTrue("wintools.py" in self.__features.cmd("wintools"))
 
     # -----------------------------------------------------------------------
 
@@ -161,9 +170,9 @@ class TestFeatures(unittest.TestCase):
         self.assertGreater(len(y.sections()), 20)
         self.assertTrue("wxpython" in y.sections())
 
-        self.assertEqual(y.get("wxpython", "pip"), "wxpython:>4.0")
+        self.assertEqual(y.get("wxpython", "pip"), "wxpython:>=4.1")
 
-        self.assertTrue("juliusdownload.py" in y.get("julius", "cmd_win"))
+        self.assertTrue("wintools.py" in y.get("wintools", "cmd_win"))
 
     # -----------------------------------------------------------------------
 
@@ -175,69 +184,115 @@ class TestFeatures(unittest.TestCase):
 
         y = self.__features.get_ids()
 
-        self.assertEqual(y[0], "wxpython")
+        self.assertEqual(y[0], "sppas")
         self.assertEqual(self.__features.packages(y[0]), {})
-        self.assertEqual(self.__features.pypi(y[0]), {'wxpython': '>4.0'})
+        self.assertEqual(self.__features.pypi(y[0]), {'sppas': ''})
         self.assertEqual(self.__features.pypi_alt(y[0]), {})
         self.assertEqual(self.__features.cmd(y[0]), "")
 
-        self.assertEqual(y[1], "julius")
+        self.assertEqual(y[1], "wintools")
         self.assertEqual(self.__features.packages(y[1]), {})
         self.assertEqual(self.__features.pypi(y[1]), {})
         self.assertEqual(self.__features.pypi_alt(y[1]), {})
-        self.assertTrue("juliusdownload.py" in self.__features.cmd(y[1]))
+        self.assertTrue("wintools.py" in self.__features.cmd(y[1]))
 
-        self.assertEqual(y[3], "video")
+        self.assertEqual(y[3], "wxpython")
         self.assertEqual(self.__features.packages(y[3]), {})
-        self.assertEqual(len(self.__features.pypi(y[3])), 3)
+        self.assertEqual(self.__features.pypi(y[3]), {'wxpython': '>=4.1'})
         self.assertEqual(self.__features.pypi_alt(y[3]), {})
         self.assertEqual(self.__features.cmd(y[3]), "")
 
-        self.assertEqual(y[2], "audioplay")
-        self.assertEqual(self.__features.packages(y[2]), {})
-        self.assertEqual(len(self.__features.pypi(y[2])), 1)
-        self.assertEqual(len(self.__features.pypi_alt(y[2])), 1)
-        self.assertEqual(self.__features.cmd(y[2]), "")
+        self.assertEqual(y[6], "audioplay")
+        self.assertEqual(self.__features.packages(y[6]), {})
+        self.assertEqual(len(self.__features.pypi(y[6])), 1)
+        self.assertEqual(len(self.__features.pypi_alt(y[6])), 2)
+        self.assertEqual(self.__features.cmd(y[6]), "")
+
+        self.assertEqual(y[7], "video")
+        self.assertEqual(self.__features.packages(y[7]), {})
+        self.assertEqual(len(self.__features.pypi(y[7])), 3)
+        self.assertEqual(self.__features.pypi_alt(y[7]), {})
+        self.assertEqual(self.__features.cmd(y[7]), "")
 
     # -----------------------------------------------------------------------
 
     def test_parse_depend(self):
         # Create a dictionary from the string given as an argument.
-        def parse(string_require):
-            string_require = str(string_require)
-            dependencies = string_require.split(" ")
-            depend = dict()
-            for line in dependencies:
-                tab = line.split(":")
-                depend[tab[0]] = tab[1]
-            return depend
+        parse = self.__features._Features__parse_depend
 
         y = parse("aa:aa aa:aa aa:aa aa:aa")
         self.assertEqual(y, {'aa': 'aa'})
         y = parse("aa:aa bb:bb cc:cc dd:dd")
         self.assertEqual(y, {'aa': 'aa', 'bb': 'bb', 'cc': 'cc', 'dd': 'dd'})
 
-        with self.assertRaises(IndexError):
-            parse(4)
+        # A package without any version constraint
+        y = parse("torch openai-whisper")
+        self.assertEqual(y, {'torch': '', 'openai-whisper': ''})
 
-        with self.assertRaises(IndexError):
-            parse("Bonjour")
+        # Only the first ':' is separating the name and the constraints
+        y = parse("numpy:>2.0,<2.3.0")
+        self.assertEqual(y, {'numpy': '>2.0,<2.3.0'})
 
-        with self.assertRaises(IndexError):
-            parse(4.0)
+        # Any given value is turned into a string
+        y = parse(4)
+        self.assertEqual(y, {'4': ''})
 
-        with self.assertRaises(IndexError):
-            parse("aaaa aaaa aaaa aaaa")
+    # -----------------------------------------------------------------------
 
-        with self.assertRaises(IndexError):
-            parse(["aa", ":aa", "bb", ":bb", "cc", ":cc", "dd", ":dd"])
+    def test_parse_pip_options(self):
+        # Create a dictionary from the pip_opt value given as an argument.
+        parse = self.__features._Features__parse_pip_options
+
+        # Options of a given package
+        y = parse("torch:--index-url https://download.pytorch.org/whl/cpu")
+        self.assertEqual(y, {'torch': '--index-url https://download.pytorch.org/whl/cpu'})
+
+        # Options of all the packages of the feature
+        y = parse("-f https://wxpython.org/Phoenix/snapshot-builds/")
+        self.assertEqual(y, {'': '-f https://wxpython.org/Phoenix/snapshot-builds/'})
+
+        # One line for each package
+        y = parse("torch:--index-url https://download.pytorch.org/whl/cpu\nnumpy:--pre")
+        self.assertEqual(y, {'torch': '--index-url https://download.pytorch.org/whl/cpu',
+                             'numpy': '--pre'})
+
+        # Empty lines are ignored
+        y = parse("\n   torch:--pre  \n\n")
+        self.assertEqual(y, {'torch': '--pre'})
+
+        y = parse("")
+        self.assertEqual(y, {})
+
+    # -----------------------------------------------------------------------
+
+    def test_pypi_opt(self):
+        # Return the options of a pip dependency of the feature.
+        # The 'stt' feature requires the CPU-only version of torch, but the
+        # index url must not be used for the other packages of the feature.
+        y = self.__features.pypi_opt("stt", "torch")
+        self.assertEqual(y, "--index-url https://download.pytorch.org/whl/cpu")
+
+        y = self.__features.pypi_opt("stt", "openai-whisper")
+        self.assertEqual(y, "")
+
+        # The 'wxpython' feature defines options for all its packages, and it
+        # does not define any alternative package
+        y = self.__features.pypi_opt("wxpython", "wxpython")
+        self.assertEqual(y, "-f https://wxpython.org/Phoenix/snapshot-builds/")
+
+        # No option at all
+        y = self.__features.pypi_opt("video", "numpy")
+        self.assertEqual(y, "")
+
+        y = self.__features.pypi_opt("toto", "numpy")
+        self.assertEqual(y, "")
 
     # -----------------------------------------------------------------------
 
     def test__len__(self):
         # Return the number of features.
         y = self.__features.__len__()
-        self.assertEqual(y, 29)
+        self.assertEqual(y, 33)
 
     # -----------------------------------------------------------------------
 
@@ -246,11 +301,14 @@ class TestFeatures(unittest.TestCase):
         y = self.__features.__contains__("wxpython")
         self.assertTrue(y)
 
-        y = self.__features.__contains__("brew")
+        y = self.__features.__contains__("stt")
         self.assertTrue(y)
 
-        y = self.__features.__contains__("julius")
+        y = self.__features.__contains__("wintools")
         self.assertTrue(y)
+
+        y = self.__features.__contains__("toto")
+        self.assertFalse(y)
 
     # -----------------------------------------------------------------------
 
@@ -261,6 +319,7 @@ class TestFeatures(unittest.TestCase):
         from sppas.core.preinstall.feature import DepsFeature
         dummy = DepsFeature("dummyfeature")
         dummy.set_pip_test("idonotexist987654")
+        dummy.set_available(True)
         dummy.set_enable(True)
         features._Features__features.append(dummy)
         features.check_pip_deps()
@@ -276,6 +335,7 @@ class TestFeatures(unittest.TestCase):
         from sppas.core.preinstall.feature import DepsFeature
         feat = DepsFeature("sys_or_bogus")
         feat.set_pip_test("sys|idonotexist123")
+        feat.set_available(True)
         feat.set_enable(True)
         features._Features__features.append(feat)
         features.check_pip_deps()
@@ -289,6 +349,7 @@ class TestFeatures(unittest.TestCase):
         from sppas.core.preinstall.feature import DepsFeature
         feat = DepsFeature("sys_and_unittest")
         feat.set_pip_test("sys unittest")
+        feat.set_available(True)
         feat.set_enable(True)
         features._Features__features.append(feat)
         features.check_pip_deps()
@@ -298,6 +359,7 @@ class TestFeatures(unittest.TestCase):
         # Now with a required module that doesn't exist
         feat2 = DepsFeature("sys_and_bogus")
         feat2.set_pip_test("sys idonotexist999")
+        feat2.set_available(True)
         feat2.set_enable(True)
         features._Features__features.append(feat2)
         features.check_pip_deps()

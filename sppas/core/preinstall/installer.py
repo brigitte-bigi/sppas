@@ -814,7 +814,6 @@ class Installer:
 
         """
         out_pip = list()
-        pip_options = self._features.pypi_opt(fid)
         if alt is False:
             pip_items = self._features.pypi(fid).items()
         else:
@@ -824,6 +823,7 @@ class Installer:
 
         for package, version in pip_items:
             logging.info(" ... python library: {}".format(package))
+            pip_options = self._features.pypi_opt(fid, package)
             if self._show_pypi(package) is False:
                 try:
                     logging.info(" ... is going to be installed.")
@@ -840,7 +840,7 @@ class Installer:
             elif self._version_pypi(package, version) is False:
                 try:
                     logging.info(" ... is going to be updated.")
-                    self._update_pypi(package, version)
+                    self._update_pypi(package, version, pip_options)
                 except sppasInstallationError as e:
                     logging.error(" ... but the update failed with the error: {}".format(str(e)))
                     out_pip.append(str(e))
@@ -1013,6 +1013,31 @@ class Installer:
 
     # ------------------------------------------------------------------------
 
+    def _pip_command(self, package, version, options="", args=""):
+        """Return the pip command line to install or update a package.
+
+        :param package: (str) The pip package to install or update
+        :param version: (str) The version constraint
+        :param options: (str) The options of the package, like an index url
+        :param args: (str) The arguments of the pip install command
+        :return: (str) The command to be executed
+
+        """
+        command = self._python + " -m pip install"
+        if len(args) > 0:
+            command += " " + args
+        if len(options) > 0:
+            command += " " + options
+        command += " '" + package + version + "'"
+        if 'env' not in self._python:
+            # --user is not compatible with virtual environments
+            command += " --user"
+        command += " --no-warn-script-location"
+
+        return command
+
+    # ------------------------------------------------------------------------
+
     def _install_pypi(self, package, version, options=""):
         """Install a Python Pypi package.
 
@@ -1029,14 +1054,8 @@ class Installer:
         logging.debug("python pip cache purge return status: {}".format(process.status()))
 
         logging.info("Try to install the stable version of {:s} python package.".format(package))
-        if 'env' not in self._python:
-            # Try to download the wheel
-            command = self._python + " -m pip install" + " --only-binary=:all: " + options + " '" \
-                      + package + version + "' " + " --user --no-warn-script-location"
-        else:
-            # --user is not compatible with virtual environments
-            command = self._python + " -m pip install --only-binary=:all: " + options + " '" \
-                      + package + version + "' " + " --no-warn-script-location"
+        # Try to download the wheel
+        command = self._pip_command(package, version, options, "--only-binary=:all:")
 
         process = sppasExecProcess()
         process.run(command)
@@ -1068,11 +1087,7 @@ class Installer:
                     logging.error("The following error occurred: " + err)
                     logging.info(" ... but we'll attempt a last way to install the package:")
                     # Try (again) then without forcing binary
-                    if 'env' not in self._python:
-                        command = self._python + " -m pip install '" + package + version + "' --user --no-warn-script-location"
-                    else:
-                        # --user is not compatible with virtual environments
-                        command = self._python + " -m pip install '" + package + version + "' --no-warn-script-location"
+                    command = self._pip_command(package, version, options)
                     process = sppasExecProcess()
                     process.run(command)
                     err = u(process.error().strip())
@@ -1111,13 +1126,7 @@ class Installer:
 
         # Then do the package installation
         logging.info("Try to install a pre-build version of {:s} python package.".format(package))
-        if 'env' not in self._python:
-            command = self._python + " -m pip install --pre " + options + " '" + \
-                      package + version + "' --user --no-warn-script-location"
-        else:
-            # --user is not compatible with virtual environments
-            command = self._python + " -m pip install --pre " + options + " '" + \
-                      package + version + "' --no-warn-script-location"
+        command = self._pip_command(package, version, options, "--pre")
         process = sppasExecProcess()
         process.run(command)
         err = u(process.error().strip())
@@ -1197,11 +1206,12 @@ class Installer:
 
     # ------------------------------------------------------------------------
 
-    def _update_pypi(self, package, version):
+    def _update_pypi(self, package, version, options=""):
         """Update package.
 
         :param package: (str) The pip package to update.
         :param version: (str) The version constraint
+        :param options: (str) The options of the package, like an index url
         :raises: sppasInstallationError
 
         """
@@ -1213,8 +1223,7 @@ class Installer:
             logging.debug("python pip cache purge return status: {}".format(process.status()))
 
             # Then install the requested version!
-            command = self._python + " -m pip install -U '" + package + version + "'"
-            command += " --no-warn-script-location"
+            command = self._pip_command(package, version, options, "-U")
             process = sppasExecProcess()
             process.run(command)
             logging.debug("Update pypi return status: {}".format(process.status()))
