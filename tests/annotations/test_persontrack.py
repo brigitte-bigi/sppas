@@ -49,10 +49,8 @@ from sppas.src.imgdata import sppasCoordsImageWriter, sppasImage
 
 from sppas.src.videodata import sppasCoordsVideoWriter
 
-from sppas.src.annotations.FaceIdentity.kidsbuffer import sppasFacesVideoBuffer
+from sppas.src.annotations.FaceIdentity.kidsbuffer import sppasKidsVideoBuffer
 from sppas.src.annotations.FaceIdentity.sppasfaceid import sppasFaceIdentifier
-from sppas.src.annotations.FaceIdentity.facetrack import FaceRecognition
-from sppas.src.annotations.FaceIdentity.facetrack import FaceTracking
 from sppas.src.annotations.FaceDetection.imgfacedetect import ImageFaceDetection
 
 # ---------------------------------------------------------------------------
@@ -106,7 +104,7 @@ class TestFaceBuffer(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_load_resources(self):
-        fvb = sppasFacesVideoBuffer()
+        fvb = sppasKidsVideoBuffer()
         with self.assertRaises(IOError):
             fvb.load_fd_model("toto.txt", "toto")
         with self.assertRaises(IOError):
@@ -119,7 +117,7 @@ class TestFaceBuffer(unittest.TestCase):
 
     def test_nothing(self):
         # Instantiate a video buffer
-        fvb = sppasFacesVideoBuffer(size=10)
+        fvb = sppasKidsVideoBuffer(size=10)
         with self.assertRaises(ValueError):
             fvb.get_detected_faces(3)
         fvb.detect_buffer()
@@ -146,7 +144,7 @@ class TestFaceBuffer(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_getters_setters(self):
-        vb = sppasFacesVideoBuffer(video=None, size=10)
+        vb = sppasKidsVideoBuffer(video=None, size=10)
         self.assertEqual(0, vb.get_filter_best())
         self.assertEqual(0.18, vb.get_filter_confidence())
         with self.assertRaises(ValueError):
@@ -157,7 +155,7 @@ class TestFaceBuffer(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_detect_getters(self):
-        fvb = sppasFacesVideoBuffer(video=TestFaceBuffer.VIDEO, size=10)
+        fvb = sppasKidsVideoBuffer(video=TestFaceBuffer.VIDEO, size=10)
         fvb.next()
         self.assertEqual(10, len(fvb))
         self.assertEqual(10, fvb.tell())
@@ -208,7 +206,7 @@ class TestFaceBuffer(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_detect_setters(self):
-        fvb = sppasFacesVideoBuffer(video=TestFaceBuffer.VIDEO, size=10)
+        fvb = sppasKidsVideoBuffer(video=TestFaceBuffer.VIDEO, size=10)
         fvb.load_fd_model(NET, HAAR1, HAAR2)
         fvb.next()
         fvb.detect_faces_buffer()
@@ -263,7 +261,7 @@ class TestFaceBuffer(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_detect_set_persons(self):
-        fvb = sppasFacesVideoBuffer(video=TestFaceBuffer.VIDEO, size=10)
+        fvb = sppasKidsVideoBuffer(video=TestFaceBuffer.VIDEO, size=10)
         fvb.load_fd_model(NET, HAAR1, HAAR2)
         fvb.next()
         fvb.detect_faces_buffer()
@@ -294,180 +292,6 @@ class TestFaceBuffer(unittest.TestCase):
         self.assertEqual(410, person_coords["toto"][4].y)
 
         fvb.close()
-
-# ---------------------------------------------------------------------------
-
-
-class TestFaceRecognition(unittest.TestCase):
-
-    PHOTO1 = "/E/Photos/BientotQuadra1.jpg"
-    PHOTO2 = "/E/Photos/BientotQuadra2.jpg"
-
-    def setUp(self):
-        # Detect persons of photo 1
-        self.img1 = sppasImage(filename=TestFaceRecognition.PHOTO1)
-        fd = ImageFaceDetection()
-        fd.load_model(NET, HAAR1, HAAR2)
-        fd.detect(self.img1)
-        fd.to_portrait(self.img1)
-        self.coords1 = [x.copy() for x in fd]
-        self.assertEqual(7, len(self.coords1))
-
-        fn = os.path.join(MANUAL_CHECK_OUT, "BientotQuadra1-face.png")
-        w = sppasCoordsImageWriter()
-        w.set_options(tag=True)
-        w.write(self.img1, self.coords1, fn)
-        self.persons = dict()
-        self.persons["lea"] = self.img1.icrop(fd[0])
-        self.persons["beatrice"] = self.img1.icrop(fd[1])
-        self.persons["gael"] = self.img1.icrop(fd[2])
-        self.persons["myriam"] = self.img1.icrop(fd[3])
-        self.persons["roselyne"] = self.img1.icrop(fd[4])
-        self.persons["brigitte"] = self.img1.icrop(fd[5])
-        self.persons["franck"] = self.img1.icrop(fd[6])
-
-        # Detect persons of photo 2
-        self.img2 = sppasImage(filename=TestFaceRecognition.PHOTO2)
-        fd = ImageFaceDetection()
-        fd.load_model(NET, HAAR1, HAAR2)
-        fd.detect(self.img2)
-        fd.to_portrait(self.img2)
-        self.coords2 = [x.copy() for x in fd]
-        self.assertEqual(7, len(self.coords2))
-
-        fn = os.path.join(MANUAL_CHECK_OUT, "BientotQuadra2-face.png")
-        w = sppasCoordsImageWriter()
-        w.set_options(tag=True)
-        w.write(self.img2, self.coords2, fn)
-
-    def test_score_img_similarity_fr(self):
-        img_faces = [self.img2.icrop(c) for c in self.coords2]
-
-        # So, now we have portraits of the known persons and
-        # their portrait in a new image. Can we match the persons?
-        fr = FaceRecognition(self.persons)
-
-        # in img_faces, beatrice is at index 0.
-        d = fr.scores_img_similarity(img_faces[0])
-        ds = sorted(d.items(), key=lambda x: x[1], reverse=True)
-        self.assertEqual("beatrice", ds[0][0])
-
-        d = fr.scores_img_similarity(img_faces[1])
-        ds = sorted(d.items(), key=lambda x: x[1], reverse=True)
-        self.assertEqual("myriam", ds[0][0])
-
-        d = fr.scores_img_similarity(img_faces[2])
-        ds = sorted(d.items(), key=lambda x: x[1], reverse=True)
-        self.assertEqual("roselyne", ds[0][0])
-
-        # Recognition error ********************** : brigitte expected
-        # brigitte detected at index 5 in image1 and at index 3 in image2
-        d = fr.scores_img_similarity(img_faces[3])
-        ds = sorted(d.items(), key=lambda x: x[1], reverse=True)
-        self.assertEqual("beatrice", ds[0][0])
-        self.assertEqual("brigitte", ds[1][0])
-
-        d = fr.scores_img_similarity(img_faces[4])
-        ds = sorted(d.items(), key=lambda x: x[1], reverse=True)
-        self.assertEqual("franck", ds[0][0])
-
-        d = fr.scores_img_similarity(img_faces[5])
-        ds = sorted(d.items(), key=lambda x: x[1], reverse=True)
-        self.assertEqual("gael", ds[0][0])
-
-        d = fr.scores_img_similarity(img_faces[6])
-        ds = sorted(d.items(), key=lambda x: x[1], reverse=True)
-        self.assertEqual("lea", ds[0][0])
-
-    # -----------------------------------------------------------------------
-
-    def test_score_img_similarity_ft(self):
-        img2_faces = [self.img2.icrop(c) for c in self.coords2]
-
-        ft = FaceTracking()
-        # in img2_faces, beatrice is at index 0.
-        scores = ft._scores_img_similarity(
-            img2_faces[0],           # detected portrait of beatrice in image2
-            self.persons.values(),   # all detected portraits in image1
-            ref_coords=self.coords2[0],      # coords of beatrice in image2
-            compare_coords=self.coords1)     # all detected coords in image1
-        d = dict()
-        for p, s in zip(self.persons, scores):
-            d[p] = s
-        ds = sorted(d.items(), key=lambda x: x[1], reverse=True)
-        self.assertEqual("beatrice", ds[0][0])
-
-        # in img2_faces, brigitte is at index 3. BUT NOT RECOGNIZED
-        scores = ft._scores_img_similarity(
-            img2_faces[3],  # detected portrait of brigitte in image2
-            self.persons.values(),  # all detected portraits in image1
-            ref_coords=self.coords2[3],  # coords of brigitte in image2
-            compare_coords=self.coords1)  # all detected coords in image1
-        d = dict()
-        for p, s in zip(self.persons, scores):
-            d[p] = s
-        ds = sorted(d.items(), key=lambda x: x[1], reverse=True)
-        self.assertEqual("beatrice", ds[0][0])
-        self.assertEqual("brigitte", ds[1][0])
-
-    # -----------------------------------------------------------------------
-
-    def test_get_best_scores(self):
-        img2_faces = [self.img2.icrop(c) for c in self.coords2]
-
-        ft = FaceTracking()
-
-        # if we detected several persons in image 1 but only one in image 2
-        scores = ft._scores_img_similarity(
-            img2_faces[0],  # i-th detected portrait in image2
-            self.persons.values(),  # all detected portraits in image1
-            ref_coords=self.coords2[0],  # i-th coords in image2
-            compare_coords=self.coords1)  # all detected coords in image1
-        best_scores = ft._get_best_scores([scores])
-        self.assertEqual([1], best_scores)
-
-        all_scores = list()
-        for i in range(len(img2_faces)):
-            scores_i = ft._scores_img_similarity(
-                img2_faces[i],           # i-th detected portrait in image2
-                self.persons.values(),   # all detected portraits in image1
-                ref_coords=self.coords2[i],    # i-th coords in image2
-                compare_coords=self.coords1)   # all detected coords in image1
-            all_scores.append(scores_i)
-
-        best_scores = ft._get_best_scores(all_scores)
-        self.assertEqual([1, 3, 4, 5, 6, 2, 0], best_scores)
-
-# ---------------------------------------------------------------------------
-
-
-class TestFaceTracking(unittest.TestCase):
-
-    VIDEO = os.path.join(paths.samples, "faces", "video_sample.mp4")
-
-    # -----------------------------------------------------------------------
-
-    def test_create_initial_image_data(self):
-        fvb = sppasFacesVideoBuffer(video=TestFaceBuffer.VIDEO, size=20)
-        fvb.load_fd_model(NET, HAAR1, HAAR2)
-        fvb.next()
-        fvb.detect_faces_buffer()
-        # 1 face is detected in the 1st image (344, 49) (264, 264): 0.504026
-        self.assertEqual(1, len(fvb.get_detected_faces(0)))
-        self.assertEqual(1, len(fvb.get_detected_persons(0)))
-        # but no person is defined.
-        self.assertIsNone(fvb.get_detected_persons(0)[0])
-
-        ft = FaceTracking()
-        ft._create_initial_image_data(fvb)
-        # now we expect that the 1st image has 1 associated person
-        persons = fvb.get_detected_persons(0)
-        self.assertEqual(1, len(persons))
-        self.assertEqual("X000", persons[0][0])
-        self.assertEqual(0, persons[0][1])
-
-        ft.invalidate()
-        ft._track_persons(fvb)
 
 # ---------------------------------------------------------------------------
 
@@ -529,7 +353,7 @@ class TestSPPASFaceTracking(unittest.TestCase):
 
         # Set our custom video buffer and writer and configure them
         # with our options
-        vb = sppasFacesVideoBuffer(video=None, size=10)
+        vb = sppasKidsVideoBuffer(video=None, size=10)
         vw = sppasCoordsVideoWriter()
         ann.set_videos(vb, vw, options=True)
         self.assertEqual(3, ann.get_option("nbest"))
@@ -542,7 +366,7 @@ class TestSPPASFaceTracking(unittest.TestCase):
 
         # Set our custom video buffer and writer and set options
         # with their configuration
-        vb = sppasFacesVideoBuffer(video=None, size=10)
+        vb = sppasKidsVideoBuffer(video=None, size=10)
         self.assertEqual(0.18, vb.get_filter_confidence())
         vw = sppasCoordsVideoWriter()
         ann.set_videos(vb, vw, options=False)

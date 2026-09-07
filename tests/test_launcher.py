@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 
-from sppas.ui.swapp.__main__ import SPPASLauncher
+from sppas.ui.wxapp.__main__ import SPPASLauncher
 
 
 class TestSPPASLauncher(unittest.TestCase):
