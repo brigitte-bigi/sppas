@@ -118,7 +118,8 @@ class DashboardView(swappBaseView):
     # Getters/Setters
     # -----------------------------------------------------------------------
 
-    def append_app_card(self, ident: str, name: str, icon_name: str, text: str, link: str, enable: bool = True):
+    def append_app_card(self, ident: str, name: str, icon_name: str, text: str, link: str,
+                        enable: bool = True, theme_name: str = ""):
         """Append an application card to its section.
 
         :param ident: (str) Stable, locale-independent identifier of the card.
@@ -127,10 +128,12 @@ class DashboardView(swappBaseView):
         :param text: (str) Text description of the application
         :param link: (str) Link to the application
         :param enable: (bool) Enable or disable the card.
+        :param theme_name: (str) The theme the application brings, if any.
 
         """
         apps_node = self._htree.body_main.get_child(AppsNode.ID)
-        apps_node.create_app_card(ident, name, icon_name, text, link, enable)
+        apps_node.create_app_card(ident, name, icon_name, text, link, enable,
+                                  theme_name=theme_name)
 
     # -----------------------------------------------------------------------
 

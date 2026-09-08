@@ -127,15 +127,6 @@ class CiteResponseRecipe(swappBaseResponse):
         self._data = dict()
         self._status.code = 200
 
-        # Accessibility events can be received in the same post
-        if "accessibility_color" in events:
-            self.__view.set_accessibility(color=events["accessibility_color"])
-            events.pop("accessibility_color")
-
-        if "accessibility_contrast" in events:
-            self.__view.set_accessibility(contrast=events["accessibility_contrast"])
-            events.pop("accessibility_contrast")
-
         # This page defines no event of its own.
         if len(events) > 0:
             logging.error(f"Unknown events={events}")

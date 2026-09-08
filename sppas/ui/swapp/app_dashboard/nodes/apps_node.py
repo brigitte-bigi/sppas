@@ -75,7 +75,7 @@ class AppsNode(HTMLNode):
     # -----------------------------------------------------------------------
 
     def create_app_card(self, ident: str, name: str, icon_name: str, text: str, link: str = "",
-                        enable: bool = True, busy: bool = False):
+                        enable: bool = True, busy: bool = False, theme_name: str = ""):
         """A specific card to represent the card of an app to launch.
 
         :param ident: (str) Stable technical identifier of the card, used to
@@ -92,6 +92,9 @@ class AppsNode(HTMLNode):
             Launch button is disabled, exactly as the click that launched
             it already did, client-side -- a later re-bake of this same
             page must render the identical result, not a different one.
+        :param theme_name: (str) The theme the application brings, if any:
+            the launch button carries it, and the client then leaves the
+            theme of this page behind instead of handing it over.
 
         """
         ident = ident.lower().replace(" ", "_")
@@ -158,5 +161,8 @@ class AppsNode(HTMLNode):
                 _b.add_attribute("id", ident + "_button")
                 if busy is True:
                     _b.add_attribute("disabled", None)
+
+        if len(theme_name) > 0:
+            _b.add_attribute("data-theme", theme_name)
 
         content.append_child(_b)

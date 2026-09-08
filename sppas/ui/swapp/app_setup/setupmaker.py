@@ -142,15 +142,6 @@ class SetupResponseRecipe(swappBaseResponse):
         self._data = dict()
         self._status.code = 200
 
-        # Accessibility events can be received in the same post
-        if "accessibility_color" in events:
-            self.__view.set_accessibility(color=events["accessibility_color"])
-            events.pop("accessibility_color")
-
-        if "accessibility_contrast" in events:
-            self.__view.set_accessibility(contrast=events["accessibility_contrast"])
-            events.pop("accessibility_contrast")
-
         # Other events are received one-by-one
         if "event_bake" in events:
 

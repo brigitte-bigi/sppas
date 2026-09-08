@@ -78,3 +78,15 @@ class swappWebData(WebSiteData):
     def id() -> str:
         """Return an identifier of the application."""
         return "Undefined"
+
+    @staticmethod
+    def theme_name() -> str:
+        """Return the name of the theme the application brings, if any.
+
+        An application bringing its own theme is shown with it, whatever
+        the theme in force where it was launched from: the theme is its
+        identity. An empty name means the application takes the theme of
+        the page it was launched from.
+
+        """
+        return ""

@@ -264,8 +264,26 @@ class sppasWebApp:
     def client_url(self):
         """Return the client URL of this server.
 
+        The address names what the reader chose to be shown with: the managers
+        of the client read these parameters when the page is loaded, and carry
+        them to the next page. A choice that was not made is not named, and
+        the pages are shown the way SPPAS is by default.
+
         """
-        return "http://{:s}:{:d}/".format(self.__location, self.__port)
+        url = "http://{:s}:{:d}/".format(self.__location, self.__port)
+
+        parameters = list()
+        if len(wapp_settings.accessibility_theme) > 0:
+            parameters.append("wexa_theme=" + wapp_settings.accessibility_theme)
+        if len(wapp_settings.accessibility_color) > 0:
+            parameters.append("wexa_color=" + wapp_settings.accessibility_color)
+        if len(wapp_settings.accessibility_contrast) > 0:
+            parameters.append("wexa_contrast=" + wapp_settings.accessibility_contrast)
+
+        if len(parameters) == 0:
+            return url
+
+        return url + "?" + "&".join(parameters)
 
     # -----------------------------------------------------------------------
 

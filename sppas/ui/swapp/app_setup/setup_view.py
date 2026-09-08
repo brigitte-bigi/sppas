@@ -60,8 +60,6 @@ BODY_SCRIPT = f"""
         import {{ SetupManager }} from '/{wapp_settings.js}sppas.js';
         const setupManager = new SetupManager();
         setupManager.handleSetupManagerOnLoad();
-
-        window.Wexa.links.handleLinks(['link-sppas_button']);
 """
 
 # ---------------------------------------------------------------------------

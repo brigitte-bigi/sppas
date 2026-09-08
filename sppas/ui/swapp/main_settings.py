@@ -159,11 +159,13 @@ class sppasWebAppSettings:
         """
         # The 'dict' of the class contains the user preferences.
         self.__dict__ = dict(
-            # The current color scheme: one of 'light' or 'dark'
-            accessibility_color_scheme="light",
-
-            # The current color scheme: one of 'light' or 'dark'
-            accessibility_contrast=False,
+            # What the reader chose to be shown with, written with the words
+            # the client announces them with and carried in the address of the
+            # pages. An empty value is the way SPPAS is shown by default. An
+            # application bringing its own theme does not change any of them.
+            accessibility_theme="",
+            accessibility_color="",
+            accessibility_contrast="",
 
             # The lastly used httpd port
             hport=80,
@@ -317,5 +319,12 @@ class sppasWebAppSettings:
         """
         self.reset()
         for k in d:
+            if k not in self.__dict__:
+                # A preference SPPAS does not have any more.
+                continue
             v = d[k]
+            if isinstance(v, type(self.__dict__[k])) is False:
+                # A preference that changed of nature since it was saved:
+                # what the file says is dropped and the default is kept.
+                continue
             setattr(self, k, v)

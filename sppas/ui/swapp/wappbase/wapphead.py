@@ -70,6 +70,16 @@ ICONS_SET = f"{ICONS_SET_NAME}:/{wapp_settings.icons}:{ICONS_SET_FILES}"
 THEME_NAME = "swapp"
 THEME_SET = f"{THEME_NAME}:/{wapp_settings.css}main_swapp_theme.css"
 
+# What the client announces a choice of the reader with. An empty value is
+# the way a page of SPPAS is shown by default: the manager of the theme says
+# so when the cycle of the button comes back to its beginning.
+# The themes are the one SPPAS brings and the ones the loader adds because
+# none of the framework's is named. A theme outside of this list belongs to
+# an application, and is never kept as a preference.
+THEME_NAMES = ("", THEME_NAME, "wexa_theme", "aurora", "highcontrast")
+COLOR_NAMES = ("", "dark")
+CONTRAST_NAMES = ("", "contrast")
+
 # ---------------------------------------------------------------------------
 
 
@@ -130,13 +140,49 @@ class swappHeadNode(HTMLHeadNode):
         loader = HTMLNode(self.identifier, None, "script")
         loader.add_attribute("src", "/" + wapp_settings.wexa_statics + "js/wexa.loader.js")
         loader.add_attribute("data-base", "/" + wapp_settings.wexa_statics)
-        # The Journal button is a button with a data-href: the loader hands
-        # it to handleLinksWithParameters() once the framework is there. A
-        # page cannot do it itself any more -- its own script runs first.
-        loader.add_attribute("data-links", "link-trace_button")
+        # The buttons carrying a data-href: the loader hands them to
+        # handleLinksWithParameters() once the framework is there. A page
+        # cannot do it itself any more -- its own script runs first.
+        loader.add_attribute(
+            "data-links",
+            "link-trace_button,link-sppas_button,link-feedback_button")
         loader.add_attribute("data-icons", ICONS_SET)
         loader.add_attribute("data-icons-default", ICONS_SET_NAME)
         loader.add_attribute("data-icons-fallback", ICONS_SET_NAME)
         loader.add_attribute("data-themes", THEME_SET)
+        # The theme of SPPAS. What the reader chose is named in the address,
+        # and the manager of the client applies it over this one.
         loader.add_attribute("data-default", THEME_NAME)
         self.append_child(loader)
+
+        # Held for the applications inserting themselves into SPPAS: a
+        # spin-off brings its theme with add_theme(), and the format of the
+        # declaration stays where it is written.
+        self.__loader = loader
+
+    # -----------------------------------------------------------------------
+
+    def add_theme(self, name: str, href: str) -> None:
+        """Add a theme to the ones the page cycles through.
+
+        The theme is declared before the ones already there: it is the one
+        the page is shown with when it is also named as the default. The
+        themes of Whakerexa are added by its loader, after all of them.
+
+        :param name: (str) The name the theme answers to
+        :param href: (str) Its address, from the root of the served files
+
+        """
+        declared = self.__loader.get_attribute_value("data-themes")
+        self.__loader.set_attribute("data-themes",
+                                    f"{name}:{href},{declared}")
+
+    # -----------------------------------------------------------------------
+
+    def set_default_theme(self, name: str) -> None:
+        """Name the theme the page is shown with when the address names none.
+
+        :param name: (str) The name of one of the declared themes
+
+        """
+        self.__loader.set_attribute("data-default", name)

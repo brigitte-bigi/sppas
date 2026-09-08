@@ -136,15 +136,6 @@ class ConfigurationResponseRecipe(swappBaseResponse):
         self._status.code = 200
         self.__status_message = ""
 
-        # Accessibility events can be received in the same post
-        if "accessibility_color" in events:
-            self.__view.set_accessibility(color=events["accessibility_color"])
-            events.pop("accessibility_color")
-
-        if "accessibility_contrast" in events:
-            self.__view.set_accessibility(contrast=events["accessibility_contrast"])
-            events.pop("accessibility_contrast")
-
         if "event_bake" in events:
             if events["event_bake"] == "handle_configuration_save":
                 # A checkbox is absent of the post when it is not checked.

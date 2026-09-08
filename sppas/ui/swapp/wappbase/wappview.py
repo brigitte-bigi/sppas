@@ -161,12 +161,6 @@ class swappBaseView:
         self._htree = tree
         self._htree.add_html_attribute("lang", get_language().split('_')[0])
 
-        # Accessibility default values
-        self._accessibility = {
-            "color": wapp_settings.accessibility_color_scheme,  # str: (light,dark)
-            "contrast": wapp_settings.accessibility_contrast    # bool
-        }
-
         # Populate, to fill the given tree with content
         self.populate_head()
         self.populate_body_header(title)
@@ -176,28 +170,6 @@ class swappBaseView:
 
     # -----------------------------------------------------------------------
     # Public
-    # -----------------------------------------------------------------------
-
-    def set_accessibility(self,
-                          color: str | None = None,
-                          contrast: str | None = None) -> None:
-        """Update the current accessibility parameters.
-
-        This method sets the active color and/or contrast schemes used by the
-        web interface. When a value is given, it replaces the previously stored
-        one in the internal accessibility dictionary.
-
-        :param color: (str | None) Name of the color scheme to apply
-                      (e.g. 'dark', 'light'). If None, no change is made.
-        :param contrast: (str | None) Name or flag of the contrast mode to apply.
-                         An empty value disables contrast mode.
-
-        """
-        if color is not None:
-            self._accessibility['color'] = color
-        if contrast is not None:
-            self._accessibility['contrast'] = len(contrast.strip()) > 0
-
     # -----------------------------------------------------------------------
 
     def populate_head(self):

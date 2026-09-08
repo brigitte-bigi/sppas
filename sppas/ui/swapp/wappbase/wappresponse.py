@@ -45,7 +45,11 @@ import os
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.httpd import BaseResponseRecipe
 
+from ..wappcore.wappsg import wapp_settings
 from .wapphead import swappHeadNode
+from .wapphead import THEME_NAMES
+from .wapphead import COLOR_NAMES
+from .wapphead import CONTRAST_NAMES
 
 # ---------------------------------------------------------------------------
 
@@ -120,9 +124,12 @@ class swappBaseResponse(BaseResponseRecipe):
         of the POST it was written for -- the page is already displayed --
         but not of a GET, which is a navigation and has a page to build.
 
-        The ThemeManager announces the CSS theme it applied under the name
-        "theme", without the prefix -- it is not an accessibility matter.
-        Nothing to do with it either: the client alone carries the theme.
+        The three managers of the client announce what they applied: the
+        theme, the color scheme and the contrast one. They are kept here, the
+        only place every request goes through, so that SPPAS opens again the
+        way its reader left it. An empty value is the way it is shown by
+        default. The theme of an application is its identity and not a
+        preference: a name SPPAS does not carry is not kept.
 
         :param events: (dict) The requested events to be processed
         :param headers: (dict) The headers of the http request received
@@ -132,8 +139,22 @@ class swappBaseResponse(BaseResponseRecipe):
             if event_name.startswith("wexa_") is True:
                 events.pop(event_name)
 
+        # The manager of the theme announces it under the name "theme",
+        # without the prefix the two others carry.
         if "theme" in events:
-            events.pop("theme")
+            theme = events.pop("theme")
+            if theme in THEME_NAMES:
+                wapp_settings.accessibility_theme = theme
+
+        if "accessibility_color" in events:
+            color = events.pop("accessibility_color")
+            if color in COLOR_NAMES:
+                wapp_settings.accessibility_color = color
+
+        if "accessibility_contrast" in events:
+            contrast = events.pop("accessibility_contrast")
+            if contrast in CONTRAST_NAMES:
+                wapp_settings.accessibility_contrast = contrast
 
         return super(swappBaseResponse, self).bake(events, headers)
 

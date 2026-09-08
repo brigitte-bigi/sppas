@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -63,6 +63,7 @@ import os
 import importlib
 import pkgutil
 import inspect
+import logging
 
 
 # Absolute path to the current directory (spinoff/)
@@ -102,6 +103,6 @@ for _, module_name, is_pkg in pkgutil.iter_modules([current_dir]):
             SPINOFF_PAGES.extend(page_infos)
 
     except Exception as e:
-        # Silently fail to keep robustness (optional: log this if needed)
-        # print(f"Warning: Failed to import module {full_module_name}: {e}")
+        # Silently fail to keep robustness
+        logging.warning(f"Spinoff init. Failed to import module {full_module_name}: {e}")
         continue

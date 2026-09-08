@@ -235,7 +235,8 @@ class DashboardController:
                     bakery.icon(),
                     bakery.description(),
                     bakery.get_default_page(),
-                    enabled
+                    enabled,
+                    theme_name=bakery.theme_name()
                 )
             except Exception as e:
                 logging.error(f"Failed to create app card for {app_name}: {str(e)}")

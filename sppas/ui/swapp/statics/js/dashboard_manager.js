@@ -2,6 +2,7 @@ const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
 const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
 const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
+const dialogManager = new DialogManager();
 
 /**
  * :filename: sppas.ui.swapp.statics.js.dashboard_manager.js
@@ -213,7 +214,7 @@ export default class DashboardManager extends BaseManager {
             this.#hideTraceDialog();
         } else if (dlg.classList.contains('hidden-alert')) {
             dlg.classList.remove('hidden-alert');
-            DialogManager.open('trace_dialog', true);
+            dialogManager.open('trace_dialog', true);
         }
     }
 
@@ -266,8 +267,16 @@ export default class DashboardManager extends BaseManager {
         }
 
         const absolute = new URL(href, window.location.href).href;
-        const target = window.Wexa.accessibility.setUrlWithParameters(absolute);
-        window.location.href = target;
+        const target = new URL(window.Wexa.accessibility.setUrlWithParameters(absolute));
+
+        // An application bringing its own theme is shown with it: the theme
+        // of this page is left behind, while the color scheme and the
+        // contrast follow -- they are choices of the reader, not of the app.
+        if (button.hasAttribute('data-theme') === true) {
+            target.searchParams.delete('wexa_theme');
+        }
+
+        window.location.href = target.href;
     }
 
     // ----------------------------------------------------------------------
@@ -307,7 +316,7 @@ export default class DashboardManager extends BaseManager {
         const dlg = document.getElementById('trace_dialog');
         if (dlg != null) {
             dlg.classList.add("hidden-alert");
-            DialogManager.close('trace_dialog');
+            dialogManager.close('trace_dialog');
         }
     }
 
@@ -363,7 +372,7 @@ export default class DashboardManager extends BaseManager {
             let dlg = document.getElementById('agreement_dialog');
             if (dlg != null) {
                 dlg.classList.add("hidden-alert");
-                DialogManager.close('agreement_dialog');
+                dialogManager.close('agreement_dialog');
             } else {
                 WexaLogger.warn("No such dialog with ID 'agreement_dialog'.");
             }
