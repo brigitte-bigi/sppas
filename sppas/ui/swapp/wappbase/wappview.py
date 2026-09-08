@@ -53,6 +53,7 @@ from ..nodes.buttons.hbutton import sppasHTMLButton
 from ..wappcore.wappsg import wapp_settings
 from ..nodes.layout.hheader import SwappHeader
 from ..nodes.layout.hfooter import SwappFooter
+from .wapphead import THEME_NAME
 
 # ---------------------------------------------------------------------------
 
@@ -406,8 +407,8 @@ class swappBaseView:
 
     # -----------------------------------------------------------------------
 
-    @staticmethod
-    def append_home_link_button(parent: HTMLNode, home_target: str = "") -> HTMLNode:
+    def append_home_link_button(self, parent: HTMLNode,
+                                home_target: str = "") -> HTMLNode:
         """Create and append the button leading to the Dashboard.
 
         An 'a' element, because the named target is read by the
@@ -421,11 +422,22 @@ class swappBaseView:
         :return: (HTMLNode) the home link button node
 
         """
+        href = wapp_settings.default_page()
+
+        # A page an application brought its own theme to gives the global one
+        # back when the reader leaves it: the link names the theme chosen for
+        # SPPAS, and what a link names wins over what an address names.
+        if self._htree.head.get_default_theme() != THEME_NAME:
+            theme = wapp_settings.accessibility_theme
+            if len(theme) == 0:
+                theme = THEME_NAME
+            href += "?wexa_theme=" + theme
+
         _button = HTMLNode(parent.identifier, "link-home_button", "a",
                            value="<span>" + MSG_DASHBOARD + "</span>")
         _button.add_attribute("data-icon", "dashboard")
         _button.add_attribute("id", "link-home_button")
-        _button.add_attribute("href", wapp_settings.default_page())
+        _button.add_attribute("href", href)
         _button.add_attribute("role", "button")
         _button.add_attribute("aria-label", MSG_DASHBOARD)
         _button.add_attribute("aria-keyshortcuts", "q")

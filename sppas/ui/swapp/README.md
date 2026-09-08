@@ -109,6 +109,22 @@ preserves the accessibility parameters when navigating. The "Traces"
 page is declared with False: it is served, but reachable from the nav
 of the apps only.
 
+### How a page is shown
+
+The reader chooses a theme, a color scheme and a contrast one. The three
+choices are announced by the client and kept by `bake()` of
+`swappBaseResponse`, the only place every request goes through. They are
+named in the address SPPAS is opened at (`client_url()`), where the
+managers of Whakerexa read them and carry them from a page to the next.
+
+An application can bring its own theme: it is its identity, and it is
+never kept as the choice of the reader. It says so twice, and writes
+nothing else. Its bakery answers `theme_name()`: the Dashboard marks its
+launch button and does not carry the current theme into its address. Its
+head declares the theme while it is populated -- `add_theme(name, href)`
+then `set_default_theme(name)` -- so that the nav, built right after, gives
+the theme of SPPAS back in the link leading to the Dashboard.
+
 
 ## The trace/info store
 

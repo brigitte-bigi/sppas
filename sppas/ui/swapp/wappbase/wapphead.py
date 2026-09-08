@@ -182,7 +182,17 @@ class swappHeadNode(HTMLHeadNode):
     def set_default_theme(self, name: str) -> None:
         """Name the theme the page is shown with when the address names none.
 
+        An application declares its theme while its head is populated: what
+        the page shows afterwards, the link leading back to SPPAS included,
+        is written knowing it.
+
         :param name: (str) The name of one of the declared themes
 
         """
         self.__loader.set_attribute("data-default", name)
+
+    # -----------------------------------------------------------------------
+
+    def get_default_theme(self) -> str:
+        """Return the name of the theme the page is shown with by default."""
+        return self.__loader.get_attribute_value("data-default")
