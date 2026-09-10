@@ -45,14 +45,12 @@ the parent.
 
 import os
 import wx
-import json
 import xml.etree.ElementTree as ET
 import wx.richtext
 
 from sppas.core.config import paths
 from sppas.src.anndata import sppasTrsRW
 from sppas.src.anndata import sppasXRA
-from sppas.src.anndata.aio.xra import sppasJRA
 from sppas.src.anndata import serialize_labels
 from sppas.src.anndata import format_labels
 
@@ -77,7 +75,7 @@ class sppasAnnLabelsCtrl(wx.richtext.RichTextCtrl):
 
     """
     
-    MODES = ("code_review", "code_json", "code_xml")
+    MODES = ("code_review", "code_xml")
     
     # -----------------------------------------------------------------------
 
@@ -222,12 +220,6 @@ class sppasAnnLabelsCtrl(wx.richtext.RichTextCtrl):
             for label_root in tree.findall('Label'):
                 labels.append(sppasXRA.parse_label(label_root))
 
-        # The text is in JSON (.jra) format
-        elif self.__code_edit == "code_json":
-            json_obj = json.loads(content)
-            for tags in json_obj:
-                labels.append(sppasJRA.parse_label(tags))
-
         # The text is serialized
         elif self.__code_edit == "code_review":
             tag_type = "str"
@@ -264,14 +256,6 @@ class sppasAnnLabelsCtrl(wx.richtext.RichTextCtrl):
             sppasXRA.indent(root)
             xml_text = ET.tostring(root, encoding="utf-8", method="xml")
             return xml_text.decode('utf-8')
-
-        # The annotation labels are to be displayed in JSON (.jra) format
-        if self.__code_edit == "code_json":
-            root = list()
-            for label in labels:
-                sppasJRA.format_label(root, label)
-            json_text = json.dumps(root, indent=4, separators=(',', ': '))
-            return json_text
 
         # The annotation labels are to be displayed in text
         if self.__code_edit == "code_review":
@@ -419,14 +403,6 @@ class sppasAnnLabelsCtrl(wx.richtext.RichTextCtrl):
             else:
                 self.WriteText(char)
 
-        elif self.__code_edit == "code_json":
-            if char in ('{', '[', '<', ':', '|', '}', ']', '>'):
-                self.BeginStyle(self.tags_attr)
-                self.WriteText(char)
-                self.EndStyle()
-            else:
-                self.WriteText(char)
-
         else:  # some of the TOE special chars
             if char in ('{', '}'):
                 self.BeginTextColour(wx.Colour(250, 10, 10))
@@ -463,7 +439,6 @@ class TestPanel(sppasPanel):
         tb.AddSpacer(1)
         tb.AddToggleButton("code_review", value=True, group_name="view_mode")
         tb.AddToggleButton("code_xml", group_name="view_mode")
-        tb.AddToggleButton("code_json", group_name="view_mode")
         tb.AddSpacer(1)
         tb.AddButton("restore")
         tb.AddSpacer(1)
@@ -493,7 +468,7 @@ class TestPanel(sppasPanel):
         btn = event.GetEventObject()
         btn_name = btn.GetName()
 
-        if btn_name in ("code_review", "code_xml", "code_json"):
+        if btn_name in ("code_review", "code_xml"):
             self.FindWindow('ann_panel').switch_view(btn_name)
 
         elif btn_name == "restore":

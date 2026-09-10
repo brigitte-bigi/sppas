@@ -105,7 +105,6 @@ ADD_BEFORE = _("Add an annotation in the hole before")
 ADD_AFTER = _("Add an annotation in the hole after")
 LABEL_TEXT = _("Edit label in TEXT mode")
 LABEL_XML = _("Edit label in XML mode")
-LABEL_JSON = _("Edit label in JSON mode")
 
 # ----------------------------------------------------------------------------
 
@@ -598,8 +597,6 @@ class sppasTiersEditWindow(sppasSplitterWindow):
         bcs.SetToolTip(LABEL_TEXT)
         bcx = tb.AddToggleButton("code_xml", group_name="view_mode")
         bcx.SetToolTip(LABEL_XML)
-        bcj = tb.AddToggleButton("code_json", group_name="view_mode")
-        bcj.SetToolTip(LABEL_JSON)
         br = tb.AddButton("restore")
         br.SetToolTip(RESTORE)
         tb.AddSpacer(2)
@@ -817,7 +814,7 @@ class sppasTiersEditWindow(sppasSplitterWindow):
         if name == "tags":
             self.edit_annotation_metadata()
 
-        elif name in ("code_review", "code_xml", "code_json"):
+        elif name in ("code_review", "code_xml"):
             self.switch_ann_mode(name)
 
         elif name == "restore":
