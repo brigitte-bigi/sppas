@@ -53,7 +53,7 @@ class sppasScrolledPanel(sc.ScrolledPanel):
 
     """
 
-    def __init_(self, *args, **kw):
+    def __init__(self, *args, **kw):
         super(sppasScrolledPanel, self).__init__(*args, **kw)
         try:
             s = wx.GetApp().settings

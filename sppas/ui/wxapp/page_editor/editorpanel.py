@@ -77,14 +77,6 @@ class EditorPanel(sppasSplitterWindow):
         # The dialog to search for tags in annotations
         self._searchdlg = None
 
-        # Look&feel
-        try:
-            self.SetBackgroundColour(wx.GetApp().settings.bg_color)
-            self.SetForegroundColour(wx.GetApp().settings.fg_color)
-            self.SetFont(wx.GetApp().settings.text_font)
-        except AttributeError:
-            self.InheritAttributes()
-
         self.Layout()
 
     # -----------------------------------------------------------------------

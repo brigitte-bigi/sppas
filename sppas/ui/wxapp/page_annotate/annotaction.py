@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -104,6 +104,11 @@ class sppasActionAnnotatePanel(sppasPanel):
         """Set the background of our panel to the given color."""
         wx.Panel.SetBackgroundColour(self, colour)
         hi_color = self.GetHighlightedBackgroundColour()
+
+        # Every child is getting the color, including the one hosting the
+        # others: naming them one by one is forgetting the host.
+        for c in self.GetChildren():
+            c.SetBackgroundColour(colour)
 
         for name in ("format", "lang", "annselect", "annot", "show_report"):
             w = self.FindWindow(name + "_panel")

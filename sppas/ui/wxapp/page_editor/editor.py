@@ -106,14 +106,6 @@ class sppasEditorPanel(sppasPanel):
         self._create_content()
         self._setup_events()
 
-        # Look&feel
-        try:
-            self.SetBackgroundColour(wx.GetApp().settings.bg_color)
-            self.SetForegroundColour(wx.GetApp().settings.fg_color)
-            self.SetFont(wx.GetApp().settings.text_font)
-        except AttributeError:
-            self.InheritAttributes()
-
         self.Layout()
 
     # ------------------------------------------------------------------------

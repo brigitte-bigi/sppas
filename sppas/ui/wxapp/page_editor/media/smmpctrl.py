@@ -127,6 +127,11 @@ class sppasMMPCtrl(sppasPlayerControlsPanel):
         wx.Panel.SetBackgroundColour(self, colour)
         hi_color = self.GetHighlightedBackgroundColour()
 
+        # Every child is getting the color, including the ones hosting the
+        # others: naming them one by one is forgetting the hosts.
+        for c in self.GetChildren():
+            c.SetBackgroundColour(colour)
+
         for name in ("transport", "widgets_left", "widgets_right", "slider"):
             w = self.FindWindow(name + "_panel")
             w.SetBackgroundColour(colour)
