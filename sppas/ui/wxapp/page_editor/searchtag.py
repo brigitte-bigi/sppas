@@ -165,6 +165,15 @@ class sppasSearchTagDialog(sppasDialog):
                 if f == filename and t is tier:
                     self.__tiers.pop(i)
                     self.__cbt.Delete(i)
+                    # The removal is shifting the index of the selected tier.
+                    if i == self.__selected_tier:
+                        self.__selected_tier = -1
+                        self.__selected_ann = -1
+                    elif i < self.__selected_tier:
+                        self.__selected_tier = self.__selected_tier - 1
+                    # A tier is added only once, and the list was just
+                    # modified: it must not be iterated anymore.
+                    break
         self.Layout()
         #if len(self.__tiers) == 0:
         #    self.Close()
@@ -426,15 +435,25 @@ class sppasSearchTagDialog(sppasDialog):
         matching_ann_idx = None
         matching_tier_idx = -1
         matching_time = None
-        tier = self.__tiers[self.__selected_tier][1]
-        search_time = self.__get_timepos(tier[self.__selected_ann], forward)
+        # Time from which the search is starting. It is the beginning of the
+        # tiers if no annotation is currently selected.
+        search_time = 0.
+        if -1 < self.__selected_tier < len(self.__tiers):
+            tier = self.__tiers[self.__selected_tier][1]
+            if -1 < self.__selected_ann < len(tier):
+                search_time = self.__get_timepos(tier[self.__selected_ann], forward)
+
         direction = 1
         if forward is False:
             direction = -1
-        for tier_idx in self.__cbt.GetSelection():
+
+        for tier_idx in checked:
             tier = self.__tiers[tier_idx][1]
             # index of the 1st annotation to start to search
             start_idx = tier.near(sppasPoint(search_time), direction)
+            if start_idx == -1:
+                # There's no annotation to be searched in this tier.
+                continue
 
             if forward is True:
                 for i in range(start_idx, len(tier)):
@@ -449,7 +468,7 @@ class sppasSearchTagDialog(sppasDialog):
                         matching_time = self.__get_timepos(tier[i], forward=False)
                         break
             else:
-                for i in reversed(range(self.__selected_ann)):
+                for i in reversed(range(start_idx + 1)):
                     tp = self.__get_timepos(tier[i], forward=True)
                     if matching_ann_idx is not None and matching_time > tp:
                         # a match was already found after the current time
@@ -480,12 +499,13 @@ class sppasSearchTagDialog(sppasDialog):
     # -----------------------------------------------------------------------
 
     def __get_timepos(self, ann, forward):
-        """Return a time value."""
-        if self.__selected_tier == -1:
-            return 0.
-        if self.__selected_ann == -1:
-            return 0.
+        """Return the end time of the given annotation, or its begin time.
 
+        :param ann: (sppasAnnotation)
+        :param forward: (bool) Return the end time if True, the begin one if False
+        :return: (float)
+
+        """
         if forward is True:
             loc = ann.get_highest_localization()
             if loc.is_float() is False:
