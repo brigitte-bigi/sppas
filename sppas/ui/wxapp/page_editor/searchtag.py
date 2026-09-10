@@ -349,9 +349,9 @@ class sppasSearchTagDialog(sppasDialog):
         key_code = event.GetKeyCode()
 
         if key_code == wx.WXK_F4 and event.AltDown():
-            # ALT+F4
+            # ALT+F4 is asking the window to close, like ctrl+w below.
             self.notify("search_close")
-            self.Destroy()
+            self.Close()
             return
 
         if event.ControlDown() is True or event.CmdDown() is True:
