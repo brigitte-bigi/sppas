@@ -42,6 +42,7 @@ import os
 import wx
 
 from sppas.core.config import paths
+from sppas.core.coreutils import msg
 from sppas.src.anndata import sppasTrsRW
 
 from sppas.ui.wxapp.windows import sppasScrolledPanel
@@ -50,6 +51,12 @@ from .timedatatype import TimelineType
 from .timeevents import EVT_TIMELINE_VIEW
 from .baseview_risepanel import sppasFileViewPanel
 from .trsvista import TranscriptionVista, EVT_TRS
+
+# ---------------------------------------------------------------------------
+# List of displayed messages:
+
+
+TOOLTIP_SAVE = msg("Save", "ui")
 
 # ---------------------------------------------------------------------------
 
@@ -248,7 +255,7 @@ class TrsViewPanel(sppasFileViewPanel):
     def _create_content(self):
         """Override. Create the content of the panel."""
         btn = self.AddButton("save")
-        btn.SetToolTip("Save")
+        btn.SetToolTip(TOOLTIP_SAVE)
 
         tp = TranscriptionVista(self)
         self.SetPane(tp)

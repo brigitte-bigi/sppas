@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -80,6 +80,9 @@ class AudioDataValues(object):
             logging.debug(" -- given framerate: {}".format(self._framerate))
         if frames is not None:
             self._frames = frames
+            # The values which were extracted are the ones of other frames:
+            # the period has to be given again to extract the new ones.
+            self.__fperiod = (0, 0)
 
         if duration is not None:
             self._duration = float(duration)
@@ -131,10 +134,24 @@ class AudioDataValues(object):
 
         :param nb_steps: (int) Number of expected sample values (7680 = 2*4K width)
 
+        TODO: extract only the missing values when the new period is overlapping
+        the current one, instead of extracting all of them again. The cost is
+        the frames which are read -- it is proportional to the duration of the
+        period, not to nb_steps -- so scrolling of 20% should cost 20%.
+        To be done before: the sampling grid has to be anchored on absolute
+        positions in the frames. It is currently spread over the period, so the
+        values of two overlapping periods are not the same samples and they
+        can't be joined.
+
         """
         # Convert the time (in seconds) into a position in the frames
         start_pos = self._time_to_pos(start_time)
         end_pos = self._time_to_pos(end_time)
+        if (start_pos, end_pos) == self.__fperiod:
+            # The values of this period were already extracted. Extracting
+            # them again is costly and it wouldn't change anything.
+            return
+
         self.__fperiod = (start_pos, end_pos)
 
         # Evaluate all values during this period, with a given nb of steps

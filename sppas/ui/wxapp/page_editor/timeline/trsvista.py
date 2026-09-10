@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2023  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -104,6 +104,20 @@ class TranscriptionVista(sppasPanel):
 
     # -----------------------------------------------------------------------
 
+    def __tier_windows(self):
+        """Return the list of the windows displaying a tier.
+
+        The children of this panel are all displaying a tier, but nothing is
+        forcing it to stay that way.
+
+        :return: (list of sppasTierWindow)
+
+        """
+        return [child for child in self.GetChildren()
+                if isinstance(child, sppasTierWindow) is True]
+
+    # -----------------------------------------------------------------------
+
     def __process_tier_event(self, event):
         """Process an event from the embedded tier.
 
@@ -120,7 +134,7 @@ class TranscriptionVista(sppasPanel):
     def SetFont(self, font):
         """Override to keep the tier height proportional."""
         wx.Panel.SetFont(self, font)
-        for tier_ctrl in self.GetChildren():
+        for tier_ctrl in self.__tier_windows():
             tier_ctrl.SetFont(font)
             tier_ctrl.SetMinSize(wx.Size(-1, self.get_font_height() * 2))
         self.Layout()
@@ -171,7 +185,7 @@ class TranscriptionVista(sppasPanel):
 
     def set_visible_period(self, start, end):
         """Period to display (in seconds)."""
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             changed = child.set_visible_period(start, end)
             if changed and child.IsShown():
                 child.Refresh()
@@ -184,7 +198,7 @@ class TranscriptionVista(sppasPanel):
     # -----------------------------------------------------------------------
 
     def get_selected_tiername(self):
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child.is_selected() is True:
                 return child.get_tiername()
         return None
@@ -192,7 +206,7 @@ class TranscriptionVista(sppasPanel):
     # -----------------------------------------------------------------------
 
     def get_selected_tier(self):
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child.is_selected() is True:
                 return child.get_tier()
         return None
@@ -214,7 +228,7 @@ class TranscriptionVista(sppasPanel):
                             "transcription.".format(tier_name))
                 return
 
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child.is_selected() is True:
                 child.set_selected(False)
                 child.Refresh()
@@ -234,7 +248,7 @@ class TranscriptionVista(sppasPanel):
 
     def get_selected_localization(self):
         """Return begin and end time value (float) rounded to milliseconds."""
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child.is_selected() is True:
                 return child.get_selected_localization()
 
@@ -244,7 +258,7 @@ class TranscriptionVista(sppasPanel):
 
     def get_selected_ann(self):
         """Return the index of the currently selected annotation or -1."""
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child.is_selected() is True:
                 return child.get_selected_ann()
 
@@ -259,7 +273,7 @@ class TranscriptionVista(sppasPanel):
         selected point.
 
         """
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child.is_selected() is True:
                 child.set_selected_ann(idx)
 
@@ -267,7 +281,7 @@ class TranscriptionVista(sppasPanel):
 
     def update_ann(self, idx):
         """An annotation was modified."""
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child.is_selected() is True:
                 # Update the selected tier: no need to update the others.
                 child.update_ann(idx)
@@ -281,7 +295,7 @@ class TranscriptionVista(sppasPanel):
         annotation.
 
         """
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child.is_selected() is True:
                 # Update the selected tier: no need to update the others.
                 child.set_selected_point(point)
@@ -295,7 +309,7 @@ class TranscriptionVista(sppasPanel):
         annotation after delete.
 
         """
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child.is_selected() is True:
                 child.delete_ann(idx)
 
@@ -303,7 +317,7 @@ class TranscriptionVista(sppasPanel):
 
     def create_ann(self, idx):
         """An annotation was created. """
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child.is_selected() is True:
                 child.create_ann(idx)
 
@@ -311,7 +325,7 @@ class TranscriptionVista(sppasPanel):
 
     def get_selected_point(self):
         """Return a copy of the currently selected point or None."""
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child.is_selected() is True:
                 return child.get_selected_point()
         return None
@@ -329,7 +343,7 @@ class TranscriptionVista(sppasPanel):
         """
         if self.__trs is None:
             return
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if tiername is None or tiername == child.get_tiername():
                 child.show_infos(value)
                 child.Refresh()
@@ -369,7 +383,7 @@ class TranscriptionVista(sppasPanel):
         self._zoom = value
         tier_height = self.get_tier_height()
         min_height = tier_height
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             child.SetMinSize(wx.Size(width=-1, height=tier_height))
         self.SetMinSize(wx.Size(-1, max(min_height, tier_height)))
 
@@ -383,7 +397,7 @@ class TranscriptionVista(sppasPanel):
 
         # Show/Hide tiers
         nb = 0
-        for i, child in enumerate(self.GetChildren()):
+        for i, child in enumerate(self.__tier_windows()):
             child.SetMinSize(wx.Size(width=-1, height=tier_height))
             if i in checked_tier_idx and self._check_popup.checkbox.IsItemEnabled(i):
                 nb += 1
@@ -450,7 +464,7 @@ class TranscriptionVista(sppasPanel):
         # Update selection: disable any other selected tier. It has to be done
         # whether the clicked tier was already selected or not, otherwise two
         # of them are selected at the same time.
-        for child in self.GetChildren():
+        for child in self.__tier_windows():
             if child is not tierctrl_click and child.is_selected() is True:
                 child.set_selected(False)
                 child.Refresh()

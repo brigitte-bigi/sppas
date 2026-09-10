@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -334,7 +334,7 @@ class TimeSliderPanel(sppasPanel):
         """
         value = float(value)
         if value < 0.:
-            raise ValueError
+            raise ValueError("The duration can't be negative. Got {}.".format(value))
 
         self.__duration = value
         self._btn_duration.SetLabel("{:s} {:s} {:s}".format(MSG_TOTAL_DURATION, self.__seconds_label(value), SECONDS_UNIT))
@@ -390,13 +390,18 @@ class TimeSliderPanel(sppasPanel):
         if start < 0.:
             start = 0.
         if end < start:
-            raise ValueError
+            raise ValueError("The end {} of the visible range is before its "
+                             "start {}.".format(end, start))
 
         if end > self.__duration:
+            # The visible period can't be after the end. Enlarging the duration
+            # here would make believe the caller that its range was accepted.
             logging.warning(
                 "Given end visible value {} is greater than duration {}. "
-                "Duration is updated.".format(end, self.__duration))
-            self.__duration = end
+                "It is reduced to the duration.".format(end, self.__duration))
+            end = self.__duration
+            if start > end:
+                start = end
 
         self.__start_visible = start
         self.__end_visible = end
@@ -439,15 +444,20 @@ class TimeSliderPanel(sppasPanel):
         start = float(start)
         end = float(end)
         if end < start:
-            raise ValueError
+            raise ValueError("The end {} of the selection is before its "
+                             "start {}.".format(end, start))
         if start < 0.:
-            raise ValueError
+            raise ValueError("The start {} of the selection can't be "
+                             "negative.".format(start))
 
         if end > self.__duration:
+            # Same as the visible range: the selection is inside the media.
             logging.warning(
                 "Given end selection value {} is greater than duration {}. "
-                "Duration is updated.".format(end, self.__duration))
-            self.__duration = end
+                "It is reduced to the duration.".format(end, self.__duration))
+            end = self.__duration
+            if start > end:
+                start = end
 
         self.__start_selection = start
         self.__end_selection = end
@@ -641,20 +651,8 @@ class TimeSliderPanel(sppasPanel):
 
     def _process_toggle_event(self, event):
         """Process a change of time range."""
-        obj = event.GetEventObject()
-        name = obj.GetName()
-        for child in self.GetChildren():
-            if isinstance(child, ToggleTextButton) is True:
-                if child is event.GetEventObject():
-                    child.SetValue(True)
-                else:
-                    child.SetValue(False)
-            for c in child.GetChildren():
-                if isinstance(c, ToggleTextButton) is True:
-                    if c is event.GetEventObject():
-                        c.SetValue(True)
-                    else:
-                        c.SetValue(False)
+        # Only the button which was toggled is kept pressed
+        self.__choose_toggle(event.GetEventObject())
 
         modified = self.__update_ruler()
         if modified is True:
@@ -682,19 +680,19 @@ class TimeSliderPanel(sppasPanel):
     # -----------------------------------------------------------------------
 
     def __update_ruler(self):
-        old_start, old_end = self._ruler.get_range()
-        # if self._btn_duration.GetValue() is True:
-        #     self._ruler.set_range(0., self.__duration)
-        # elif self._btn_visible.GetValue() is True:
-        #     self._ruler.set_range(self.__start_visible, self.__end_visible)
-        # elif self._btn_before.GetValue() is True:
-        #     self._ruler.set_range(self.__start_visible, self.__start_selection)
-        # elif self._btn_selection.GetValue() is True:
-        #     self._ruler.set_range(self.__start_selection, self.__end_selection)
-        # elif self._btn_after.GetValue() is True:
-        #     self._ruler.set_range(self.__end_selection, self.__end_visible)
+        """Set the ruler to the visible period.
 
+        :return: (bool) True if the range of the ruler was changed
+
+        """
+        old_start, old_end = self._ruler.get_range()
+
+        # The ruler is showing the visible period. It is NOT showing the period
+        # given by get_range(), the one the toggle buttons are enabling: they
+        # are choosing which part of the visible period is played, and scaling
+        # the ticks again at each of these choices would be misleading.
         self._ruler.set_range(self.__start_visible, self.__end_visible)
+
         new_start, new_end = self._ruler.get_range()
         if old_start != new_start or old_end != new_end:
             self._ruler.Refresh()

@@ -876,12 +876,11 @@ class sppasMMPCtrl(sppasPlayerControlsPanel):
     # ----------------------------------------------------------------------
 
     def __update_after_event(self, start, end, to_notify=True):
-        """Update and notify.
+        """Update and notify if the visible period changed.
 
         :param start: start value before changes
         :param end: end value before changes
-
-        TODO: check why start/end are not used... they should be!
+        :param to_notify: (bool) Notify the parent of a change
 
         """
         # Refresh the timeline
@@ -900,7 +899,8 @@ class sppasMMPCtrl(sppasPlayerControlsPanel):
 
         # Notify the parent if the visible part has changed.
         if to_notify is True:
-            self.notify(action="visible", value=(new_visible_start, new_visible_end))
+            if start != new_visible_start or end != new_visible_end:
+                self.notify(action="visible", value=(new_visible_start, new_visible_end))
 
     # ----------------------------------------------------------------------
 
