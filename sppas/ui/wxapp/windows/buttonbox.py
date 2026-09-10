@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2022  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -119,7 +119,7 @@ class sppasRadioBoxPanel(sppasScrolledPanel):
         """
         if n < 0:
             return False
-        if n > len(self._buttons):
+        if n >= len(self._buttons):
             return False
         # do not disable the selected button
         if n == self._selection and enable is False:
@@ -186,7 +186,7 @@ class sppasRadioBoxPanel(sppasScrolledPanel):
         :param n: (int) – Index of the item or -1 to disable the current
 
         """
-        if n > len(self._buttons):
+        if n >= len(self._buttons):
             return
 
         if n >= 0:
@@ -218,7 +218,7 @@ class sppasRadioBoxPanel(sppasScrolledPanel):
         """
         if n < 0:
             return ""
-        if n > len(self._buttons):
+        if n >= len(self._buttons):
             return ""
         return self._buttons[n].GetLabel()
 
@@ -255,7 +255,7 @@ class sppasRadioBoxPanel(sppasScrolledPanel):
         """
         if n < 0:
             return False
-        if n > len(self._buttons):
+        if n >= len(self._buttons):
             return False
         return self._buttons[n].IsEnabled()
 
@@ -269,7 +269,7 @@ class sppasRadioBoxPanel(sppasScrolledPanel):
         """
         if n < 0:
             return False
-        if n > len(self._buttons):
+        if n >= len(self._buttons):
             return False
         self._buttons[n].SetLabel(text)
         self._buttons[n].Refresh()
@@ -297,7 +297,7 @@ class sppasRadioBoxPanel(sppasScrolledPanel):
         if nothing was done because it already was in the requested state.
 
         """
-        if item > len(self._buttons) or item < 0:
+        if item >= len(self._buttons) or item < 0:
             return False
         btn = self._buttons[item]
         self.GetSizer().Show(btn, show)
@@ -313,7 +313,7 @@ class sppasRadioBoxPanel(sppasScrolledPanel):
         :returns: (bool)
 
         """
-        if n > len(self._buttons) or n < 0:
+        if n >= len(self._buttons) or n < 0:
             return False
         return self._buttons[n].IsShown()
 
@@ -416,7 +416,9 @@ class sppasRadioBoxPanel(sppasScrolledPanel):
             if self._major_dimension > 1:
                 if self._style == wx.RA_SPECIFY_COLS:
                     cols = self._major_dimension
-                    rows = (len(choices)+1) // self._major_dimension
+                    rows = len(choices) // self._major_dimension
+                    if len(choices) % self._major_dimension > 0:
+                        rows += 1
                 elif self._style == wx.RA_SPECIFY_ROWS:
                     logging.debug("NB rows fixed to {:d}; choices={}".format(self._major_dimension, choices))
                     rows = self._major_dimension
@@ -449,8 +451,9 @@ class sppasRadioBoxPanel(sppasScrolledPanel):
         if len(choices) > 0:
             try:
                 self.SetSelection(0)
-            except:
-                pass
+            except Exception as e:
+                # the first button could be disabled: nothing is selected
+                logging.debug(str(e))
 
     # -----------------------------------------------------------------------
 
@@ -621,7 +624,7 @@ class sppasCheckBoxPanel(sppasRadioBoxPanel):
         """
         if n < 0:
             return False
-        if n > len(self._buttons):
+        if n >= len(self._buttons):
             return False
 
         self._buttons[n].Enable(enable)
@@ -636,7 +639,7 @@ class sppasCheckBoxPanel(sppasRadioBoxPanel):
         :param value: (bool) – Select or un-select the given item
 
         """
-        if n > len(self._buttons):
+        if n >= len(self._buttons):
             return
 
         if n >= 0:
