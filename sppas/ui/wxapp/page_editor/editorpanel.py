@@ -172,6 +172,26 @@ class EditorPanel(sppasSplitterWindow):
 
     # -----------------------------------------------------------------------
 
+    def validate_pending_edit(self):
+        """Validate the annotation being edited before an action on the files.
+
+        :return: (bool) False if the user asked to continue editing the labels
+
+        """
+        can_continue, ann_idx = self._listview.validate_pending_edit()
+        if can_continue is False:
+            return False
+
+        if ann_idx != -1:
+            # The list view posted an event to notify the modification, but it
+            # would be processed after the action on the files: the timeline
+            # view has to know now that the content of the file was changed.
+            self.ProcessPendingEvents()
+
+        return True
+
+    # -----------------------------------------------------------------------
+
     def save_file(self, name):
         """Save a file.
 
@@ -202,13 +222,23 @@ class EditorPanel(sppasSplitterWindow):
         :return: (bool) The file was removed or not
 
         """
-        if self._timeview.is_trs(name):
+        # The tiers must be collected before the removal: the timeline view
+        # doesn't know this file anymore after it was removed.
+        is_trs = self._timeview.is_trs(name)
+        tiers = list()
+        if is_trs is True:
             tiers = self._timeview.get_tier_list(name)
+
+        # The timeline view is refusing to remove a modified file if not forced.
+        removed = self._timeview.remove_file(name, force)
+        if removed is False:
+            return False
+
+        if is_trs is True:
             self._listview.remove_tiers(name, tiers)
             if self._searchdlg is not None:
                 self._searchdlg.remove_tiers(name, tiers)
 
-        self._timeview.remove_file(name, force)
         self._timeview.Layout()
         return True
 
@@ -323,7 +353,8 @@ class EditorPanel(sppasSplitterWindow):
                 self._searchdlg.add_tiers(filename, value)
 
         elif action == "save":
-            self.save_file(filename)
+            if self.validate_pending_edit() is True:
+                self.save_file(filename)
 
         elif action == "ann_create":
             self._listview.inserted_at(value)

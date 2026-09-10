@@ -336,6 +336,38 @@ class sppasTiersEditWindow(sppasSplitterWindow):
 
     # -----------------------------------------------------------------------
 
+    def validate_pending_edit(self):
+        """Push the labels of the text editor into the selected annotation.
+
+        The annotation is modified only if the text of the editor was changed.
+        The parent is notified of the modification, like it is when the
+        selected annotation is changing.
+
+        :return: (bool, int) False if the user asked to continue editing the
+        labels, and the index of the modified annotation or -1 if none
+
+        """
+        if self.__cur_index == -1:
+            return True, -1
+
+        modified = self.__annctrl.text_modified()
+        if modified == 0:
+            # The text of the editor was not changed.
+            return True, -1
+
+        idx = self.__cur_index
+        if self.__annotation_validator(idx) is False:
+            # The user asked to continue editing invalid labels.
+            return False, -1
+
+        if modified == -1:
+            # The labels were invalid and the user accepted to cancel changes.
+            return True, -1
+
+        return True, idx
+
+    # -----------------------------------------------------------------------
+
     def update(self, idx=None):
         """Update ui of the current ann or the one of the given index."""
         if idx is None:

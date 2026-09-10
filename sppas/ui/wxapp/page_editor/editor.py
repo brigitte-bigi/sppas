@@ -227,6 +227,10 @@ class sppasEditorPanel(sppasPanel):
 
     def save_files(self):
         """Save the files on disk."""
+        if self._editpanel.validate_pending_edit() is False:
+            # The user asked to continue editing the labels of an annotation.
+            return list()
+
         saved = list()
         for filename in self._editpanel.get_files():
             s = self._editpanel.save_file(filename)
@@ -252,6 +256,10 @@ class sppasEditorPanel(sppasPanel):
         :returns: (int) -1 if user cancelled, or number of closed files.
 
         """
+        if self._editpanel.validate_pending_edit() is False:
+            # The user asked to continue editing the labels of an annotation.
+            return -1
+
         if self._editpanel.is_modified() is True:
             wx.LogWarning("At least one file contains not saved changes.")
             # Ask the user to confirm to close (and changes are lost)
@@ -299,6 +307,10 @@ class sppasEditorPanel(sppasPanel):
         """Close and unlock the file in the data BUT do not notify parent.
 
         """
+        if self._editpanel.validate_pending_edit() is False:
+            # The user asked to continue editing the labels of an annotation.
+            return
+
         if self._editpanel.is_modified(filename) is True:
             wx.LogWarning("The file contains not saved changes.")
             # Ask the user to confirm to close (and changes are lost)
