@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -312,13 +312,12 @@ class AllensRelationsTable(ulc.UltimateListCtrl):
         for i, col in enumerate(headers):
             self.InsertColumn(col=i, heading=col)
 
-        p = sppasPanel()
-        self.SetColumnWidth(col=0, width=p.fix_size(150))
-        self.SetColumnWidth(col=1, width=p.fix_size(180))
-        self.SetColumnWidth(col=2, width=p.fix_size(150))
-        self.SetColumnWidth(col=3, width=p.fix_size(100))
-        self.SetColumnWidth(col=4, width=p.fix_size(100))
-        self.SetColumnWidth(col=5, width=p.fix_size(100))
+        self.SetColumnWidth(col=0, width=sppasPanel.fix_size(150))
+        self.SetColumnWidth(col=1, width=sppasPanel.fix_size(180))
+        self.SetColumnWidth(col=2, width=sppasPanel.fix_size(150))
+        self.SetColumnWidth(col=3, width=sppasPanel.fix_size(100))
+        self.SetColumnWidth(col=4, width=sppasPanel.fix_size(100))
+        self.SetColumnWidth(col=5, width=sppasPanel.fix_size(100))
 
         # Create first row, used as an header.
         index = self.InsertStringItem(0, headers[0])
@@ -359,8 +358,8 @@ class AllensRelationsTable(ulc.UltimateListCtrl):
         item = self.GetItem(1)
         self._mainWin.CheckItem(item)
         self.SetMinSize(wx.Size(
-            p.fix_size(780),
-            p.fix_size(520)
+            sppasPanel.fix_size(780),
+            sppasPanel.fix_size(520)
         ))
 
     # -----------------------------------------------------------------------

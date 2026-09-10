@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -75,15 +75,6 @@ class SMMPCPanel(sppasVerticalRisePanel):
         mmpc = sppasMMPCtrl(self, name="smmpc_panel")
         mmpc.SetButtonWidth(24)
         self.SetPane(mmpc)
-
-        # Look&feel
-        try:
-            settings = wx.GetApp().settings
-            self.SetBackgroundColour(settings.bg_color)
-            self.SetForegroundColour(settings.fg_color)
-            self.SetFont(settings.text_font)
-        except AttributeError:
-            self.InheritAttributes()
 
         self.Layout()
         self.Expand()

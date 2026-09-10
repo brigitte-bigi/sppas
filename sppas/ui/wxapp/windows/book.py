@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@ class sppasChoicebook(wx.Choicebook):
 
     """
 
-    def __init_(self, *args, **kw):
+    def __init__(self, *args, **kw):
         super(sppasChoicebook, self).__init__(*args, **kw)
         try:
             s = wx.GetApp().settings
@@ -104,12 +104,15 @@ class sppasNotebook(wx.Notebook):
 
     """
 
-    def __init_(self, *args, **kw):
+    def __init__(self, *args, **kw):
         super(sppasNotebook, self).__init__(*args, **kw)
-        s = wx.GetApp().settings
-        self.SetBackgroundColour(s.bg_color)
-        self.SetForegroundColour(s.fg_color)
-        self.SetFont(s.text_font)
+        try:
+            s = wx.GetApp().settings
+            self.SetBackgroundColour(s.bg_color)
+            self.SetForegroundColour(s.fg_color)
+            self.SetFont(s.text_font)
+        except AttributeError:
+            self.InheritAttributes()
 
     # -----------------------------------------------------------------------
 
@@ -171,7 +174,7 @@ class sppasSimplebook(wx.Simplebook):
 
     """
 
-    def __init_(self, *args, **kw):
+    def __init__(self, *args, **kw):
         super(sppasSimplebook, self).__init__(*args, **kw)
         try:
             s = wx.GetApp().settings

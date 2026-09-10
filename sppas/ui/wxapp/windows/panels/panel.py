@@ -52,7 +52,6 @@ class sppasPanel(wx.Panel):
 
     Possible constructors:
 
-        - sppasPanel()
         - sppasPanel(parent, id=ID_ANY, pos=DefaultPosition, size=DefaultSize,
               style=TAB_TRAVERSAL, name=PanelNameStr)
 
@@ -70,7 +69,6 @@ class sppasPanel(wx.Panel):
             style |= wx.BORDER_NONE
 
         super(sppasPanel, self).__init__(parent, id, pos, size, style, name)
-        self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
 
         try:
             s = wx.GetApp().settings

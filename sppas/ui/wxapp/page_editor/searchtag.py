@@ -278,7 +278,7 @@ class sppasSearchTagDialog(sppasDialog):
         notebook.AddPage(page4, " Boolean ")
 
         w, h = page1.GetMinSize()
-        notebook.SetMinSize(wx.Size(w, h + (sppasPanel().get_font_height() * 4)))
+        notebook.SetMinSize(wx.Size(w, h + (page1.get_font_height() * 4)))
 
         return notebook
 

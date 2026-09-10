@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -123,7 +123,7 @@ class sppasTagFilterDialog(sppasDialog):
         notebook.AddPage(page4, " Boolean ")
 
         w, h = page1.GetMinSize()
-        notebook.SetMinSize(wx.Size(w, h+(sppasPanel().get_font_height()*4)))
+        notebook.SetMinSize(wx.Size(w, h+(page1.get_font_height()*4)))
         self.SetContent(notebook)
 
 # ---------------------------------------------------------------------------

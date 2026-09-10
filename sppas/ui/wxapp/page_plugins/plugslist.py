@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -431,7 +431,11 @@ class sppasPluginDescription(sppasPanel):
 
         wx.Window.SetBackgroundColour(self, ccolour)
         for c in self.GetChildren():
-            if c.GetName() != "plugdescr_panel":
+            if c.GetName() == "plugdescr_panel":
+                # this one is not highlighted, but it has to follow a change
+                # of the color: giving it nothing was keeping the previous one
+                c.SetBackgroundColour(colour)
+            else:
                 c.SetBackgroundColour(ccolour)
         self.FindWindow("plugtext_message").SetBackgroundColour(ccolour)
 
