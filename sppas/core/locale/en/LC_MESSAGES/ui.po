@@ -170,7 +170,7 @@ msgstr ""
 # ---------------------------------------------------------------------------
 # Tooltips of the toolbar
 msgid ":INFO 9101: "
-msgstr "Open checked files of the workspace (ctrl+O)"
+msgstr "Open checked files of the workspace (ctrl+shift+o)"
 
 msgid ":INFO 9111: "
 msgstr "Save all modified files (ctrl+s)"
@@ -185,7 +185,7 @@ msgid ":INFO 9141: "
 msgstr "Switch the list and the selected annotation labels"
 
 msgid ":INFO 9151: "
-msgstr "Open the search dialog"
+msgstr "Open the search dialog (ctrl+f)"
 
 # Dialogs
 msgid ":INFO 9050: "
@@ -199,7 +199,7 @@ msgid ":INFO 9200: "
 msgstr "Search for tags in given tiers"
 
 msgid "Hide"
-msgstr "Cacher"
+msgstr "Hide"
 
 msgid ":INFO 9201: "
 msgstr "Close the search dialog window (ctrl+w)"
@@ -211,7 +211,7 @@ msgid ":INFO 9221: "
 msgstr "Search forward (ctrl+g)"
 
 msgid ":INFO 9231: "
-msgstr "Search backward (ctrl+G)"
+msgstr "Search backward (ctrl+shift+g)"
 
 # Timeline toolbar
 msgid ":INFO 9301: "
@@ -272,10 +272,10 @@ msgid ":INFO 9551: "
 msgstr "Enable or disable loop playback"
 
 msgid ":INFO 9601: "
-msgstr "Display backward three successive video frames"
+msgstr "Display backward three successive video frames (shift+←)"
 
 msgid ":INFO 9611: "
-msgstr "Display forward three successive video frames"
+msgstr "Display forward three successive video frames (shift+→)"
 
 msgid ":INFO 9621: "
 msgstr "Number of video frames to skip for backward playback"

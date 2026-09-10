@@ -52,6 +52,7 @@ from sppas.src.anndata import sppasInterval
 from sppas.src.anndata import sppasLocation
 from sppas.src.anndata import sppasAnnotation
 from sppas.src.anndata import sppasTier
+from sppas.ui import _
 from sppas.ui.wxapp.windows import sppasWindow, WindowState
 from sppas.ui.wxapp.windows import sppasDCWindow
 from sppas.ui.wxapp.windows.cursors import sppasCursor
@@ -264,6 +265,7 @@ TierCommandEvent, EVT_TIER_COMMAND = wx.lib.newevent.NewCommandEvent()
 MSG_NO_TIER = "No tier defined"
 MSG_ANNOTATIONS = "annotations"
 MSG_IS_SELECTED = "is selected"
+MSG_SHORTCUT_SELECT_ANN = _("alt+← / alt+→: select the previous/next annotation")
 
 # ---------------------------------------------------------------------------
 
@@ -1149,38 +1151,38 @@ class sppasTierWindow(sppasWindow):
         ann = self._tier[idx]
         x, y, w, h = self.GetContentRect()
 
-        # Evaluate x and w of the begin point, and draw it
+        # Evaluate x and w of the begin point and of the end point
         x_a, w_pb = self.xw_point(ann.get_lowest_localization(), x)
+        xw_a, w_pe = self.xw_point(ann.get_highest_localization(), x, w)
+
+        if x_a < xw_a:
+            # Labels: width available for the annotation labels
+            shift = 0
+            if wx.Platform == "__WXMAC__":
+                shift = -1
+            x_l = x_a + w_pb + shift
+            w_l = xw_a - x_l
+            if w_l > 1:
+                # Draw a rectangle for the labels background
+                if idx == self.__ann_idx:
+                    bg_color = self.SELECTION_BG_COLOUR
+                else:
+                    bg_color = self.GetPenBackgroundColour()
+                dc.SetBrush(wx.Brush(bg_color, wx.BRUSHSTYLE_SOLID))
+                dc.SetPen(wx.TRANSPARENT_PEN)
+                dc.DrawRectangle(x_l, y, w_l, h)
+
+                # Draw label tags
+                label = serialize_labels(ann.get_labels(), separator=" ")
+                self._DrawAnnotationLabel(dc, gc, label, x_l, y, w_l, h)
+
+        # Draw the points over the labels background. Under MacOS, the
+        # background is starting at the x-pos of the begin point (shift=-1)
+        # so it would hide a point of only 1 pixel width.
         if w_pb > 0:
             self._DrawAnnotationPoint(dc, x_a, y, w_pb, h)
-
-        # Evaluate x and w of the end point, and draw it
-        xw_a, w_pe = self.xw_point(ann.get_highest_localization(), x, w)
         if w_pe > 0:
             self._DrawAnnotationPoint(dc, xw_a, y, w_pe, h)
-
-        if x_a >= xw_a:
-            return
-
-        # Labels: width available for the annotation labels
-        shift = 0
-        if wx.Platform == "__WXMAC__":
-            shift = -1
-        x_l = x_a + w_pb + shift
-        w_l = xw_a - x_l
-        if w_l > 1:
-            # Draw a rectangle for the labels background
-            if idx == self.__ann_idx:
-                bg_color = self.SELECTION_BG_COLOUR
-            else:
-                bg_color = self.GetPenBackgroundColour()
-            dc.SetBrush(wx.Brush(bg_color, wx.BRUSHSTYLE_SOLID))
-            dc.SetPen(wx.TRANSPARENT_PEN)
-            dc.DrawRectangle(x_l, y, w_l, h)
-
-            # Draw label tags
-            label = serialize_labels(ann.get_labels(), separator=" ")
-            self._DrawAnnotationLabel(dc, gc, label, x_l, y, w_l, h)
 
     # -----------------------------------------------------------------------
 
@@ -1287,6 +1289,7 @@ class sppasTierWindow(sppasWindow):
         if self._tier is not None:
             msg = self._tier.get_name() + ": "
             msg += str(len(self._tier))+" annotations"
+            msg += "\n" + MSG_SHORTCUT_SELECT_ANN
             return msg
 
         return "No data"

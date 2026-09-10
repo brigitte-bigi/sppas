@@ -447,7 +447,7 @@ msgstr "Format de fichier inconnu"
 # EDITOR
 # Tooltips of the toolbar
 msgid ":INFO 9101: "
-msgstr "Ouvrir les fichiers cochés de l'espace de travail"
+msgstr "Ouvrir les fichiers cochés de l'espace de travail (ctrl+shift+o)"
 
 msgid ":INFO 9111: "
 msgstr "Enregistrer les fichiers modifiés (ctrl+s)"
@@ -462,7 +462,7 @@ msgid ":INFO 9141: "
 msgstr "Permutter l'affichage de la liste des annotations avec celui des labels de l'annotation sélectionnée"
 
 msgid ":INFO 9151: "
-msgstr "Ouvrir la fenêtre de recherche"
+msgstr "Ouvrir la fenêtre de recherche (ctrl+f)"
 
 # Dialogs
 msgid ":INFO 9050: "
@@ -485,7 +485,7 @@ msgid ":INFO 9221: "
 msgstr "Rechercher vers l'avant (ctrl+g)"
 
 msgid ":INFO 9231: "
-msgstr "Recherche vers l'arrière (ctrl+G)"
+msgstr "Rechercher vers l'arrière (ctrl+shift+g)"
 
 # Tooltip of the timeline toolbar
 msgid ":INFO 9301: "
@@ -546,10 +546,10 @@ msgid ":INFO 9551: "
 msgstr "Activer ou désactiver la lecture en boucle"
 
 msgid ":INFO 9601: "
-msgstr "Afficher trois images vidéo vers l'arrière"
+msgstr "Afficher trois images vidéo vers l'arrière (shift+←)"
 
 msgid ":INFO 9611: "
-msgstr "Afficher trois images vidéo vers l'avant"
+msgstr "Afficher trois images vidéo vers l'avant (shift+→)"
 
 msgid ":INFO 9621: "
 msgstr "Nombre d'images à ignorer en lecture vers l'arrière"
@@ -608,6 +608,13 @@ msgstr "Déplacer le point à la fin de l'image courante et n'utiliser aucun ray
 
 msgid "Move the point to current frame's end and use the duration of a frame as radius"
 msgstr "Déplacer le point à la fin de l'image courante et utiliser la durée d'une image comme rayon"
+
+# Tier and point windows
+msgid "alt+← / alt+→: select the previous/next annotation"
+msgstr "alt+← / alt+→ : sélectionner l'annotation précédente/suivante"
+
+msgid "escape: cancel the current move or resize"
+msgstr "échap : annuler le déplacement ou le redimensionnement en cours"
 
 # Timeline panels
 msgid ":INFO 9701: "
