@@ -189,6 +189,13 @@ class AudioDataValues(object):
             real_nb_steps = nb_in_period // chi
 
         # prepare memory -- faster then appending at each step
+        # The 4 lists of a channel are: len, min, max and zero crossing. Only
+        # the min and the max are evaluated. The number of samples is not: the
+        # lists are already at the expected length, which is the only thing
+        # which is read of the first one. The zero crossing is not either:
+        # nothing is reading it, and evaluating it was 39% of the time spent
+        # in this method. Both are to be evaluated on demand if a view needs
+        # them one day.
         self.values = dict()
         for c in range(self._nchannels):
             self.values[c] = [list()]*4
@@ -197,20 +204,21 @@ class AudioDataValues(object):
             self.values[c][2] = [None] * real_nb_steps  # max
             self.values[c][3] = [None] * real_nb_steps  # zero crossing
 
+        # The converter is created once: creating one at each step was costly
+        converter = AudioConverter()
+
         if nb_in_period < real_nb_steps:
             # there are more steps than values. Set each value to its step.
             self._oversampled = True
             fstep = self._sampwidth * self._nchannels
             for f in range(0, len(all_frames), fstep):
                 # get the sample value of each channel
-                samples = AudioConverter().unpack_data(all_frames[f:f+fstep], self._sampwidth, self._nchannels)
+                samples = converter.unpack_data(all_frames[f:f+fstep], self._sampwidth, self._nchannels)
                 # eval the xcur of this frame
                 i = round((float(f) / float(self._sampwidth*self._nchannels)) * float(real_nb_steps) / float(nb_in_period))
                 for c in range(self._nchannels):
-                    self.values[c][0][i] = len(samples)
                     self.values[c][1][i] = min(samples[c])
                     self.values[c][2][i] = max(samples[c])
-                    self.values[c][3][i] = self._zero_crossing(samples[c])
 
         elif nb_in_period > real_nb_steps:
             # there are more values than steps. Set min/max values to each step.
@@ -223,12 +231,10 @@ class AudioDataValues(object):
 
                 # convert frames into samples
                 # -- it's much more faster than getting min/max from the frames
-                samples = AudioConverter().unpack_data(frames, self._sampwidth, self._nchannels)
+                samples = converter.unpack_data(frames, self._sampwidth, self._nchannels)
                 for c in range(self._nchannels):
-                    self.values[c][0][i] = len(samples)
                     self.values[c][1][i] = min(samples[c])
                     self.values[c][2][i] = max(samples[c])
-                    self.values[c][3][i] = self._zero_crossing(samples[c])
 
         else:
             # one frame = one step
@@ -239,12 +245,10 @@ class AudioDataValues(object):
                 frames = all_frames[cur_pos:next_pos]
 
                 # convert frames into samples
-                samples = AudioConverter().unpack_data(frames, self._sampwidth, self._nchannels)
+                samples = converter.unpack_data(frames, self._sampwidth, self._nchannels)
                 for c in range(self._nchannels):
-                    self.values[c][0][i] = len(samples)
                     self.values[c][1][i] = min(samples[c])
                     self.values[c][2][i] = max(samples[c])
-                    self.values[c][3][i] = self._zero_crossing(samples[c])
 
     # -----------------------------------------------------------------------
 

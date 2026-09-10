@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -128,7 +128,10 @@ class sppasWaveformWindow(sppasDCWindow):
         value = bool(value)
         if value != self._auto_scroll:
             self._auto_scroll = value
-            self.__reset_minmax()
+            if self._audiodata is not None:
+                # The min and the max are the ones of the audio: they can be
+                # evaluated only when there is one.
+                self.__reset_minmax()
 
     # -----------------------------------------------------------------------
     # Samples to draw
@@ -181,16 +184,25 @@ class sppasWaveformWindow(sppasDCWindow):
     # -----------------------------------------------------------------------
 
     def __get_minmax_values(self):
-        """Min and max amplitude values observed in the samples of the period."""
+        """Min and max amplitude values observed in the samples of the period.
+
+        A step without any sample value is None: it happens when the period is
+        so short that there are more steps than samples. These steps are
+        ignored, they can't be compared to a number.
+
+        """
         min_val = AudioFrames().get_maxval(self._audiodata.get_sampwidth())
         max_val = -self._audiodata_max
         for c in range(len(self._audiodata.values)):
-            if len(self._audiodata.values[c][1]) > 0:
-                min_val_channel = min(self._audiodata.values[c][1])
+            min_values = [v for v in self._audiodata.values[c][1] if v is not None]
+            if len(min_values) > 0:
+                min_val_channel = min(min_values)
                 if min_val_channel < min_val:
                     min_val = min_val_channel
-            if len(self._audiodata.values[c][2]) > 0:
-                max_val_channel = max(self._audiodata.values[c][2])
+
+            max_values = [v for v in self._audiodata.values[c][2] if v is not None]
+            if len(max_values) > 0:
+                max_val_channel = max(max_values)
                 if max_val_channel > max_val:
                     max_val = max_val_channel
 
