@@ -1312,6 +1312,11 @@ class sppasTierWindow(sppasWindow):
 
     def _eval_sec(self, width):
         """Return the duration represented by the given number of pixels."""
+        if self._pxsec == 0.:
+            # No period of time is currently represented, so no pixel is
+            # representing any duration.
+            return 0.
+
         return float(width) / float(self._pxsec)
 
     # -----------------------------------------------------------------------
@@ -1412,7 +1417,10 @@ class sppasTierWindow(sppasWindow):
             self.move_midpoint(old_time_value, time_value)
             # logging.debug("The pointctrl at midpoint {:f} was moved to: expected {:f} = observed {:f}"
             #               "".format(old_time_value, time_value, self.__point.get_point().get_midpoint()))
-        except:
+        except Exception as e:
+            # The new midpoint value was refused, by the tier or by the
+            # annotation: it is a normal answer to a drag, not an error.
+            wx.LogDebug(str(e))
             self.__point.RestorePosition()
 
     # -----------------------------------------------------------------------
