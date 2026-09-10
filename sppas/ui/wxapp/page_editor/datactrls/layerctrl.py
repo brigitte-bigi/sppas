@@ -868,11 +868,6 @@ class sppasTierWindow(sppasWindow):
         self._state[0] = self._state[1]
         self._state[1] = state
 
-        if state == WindowState().focused:
-            self._has_focus = True
-        else:
-            self._has_focus = False
-
         if self:
             if refresh is True:
                 if wx.Platform == '__WXMSW__':

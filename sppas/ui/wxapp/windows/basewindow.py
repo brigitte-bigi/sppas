@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2022  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -206,7 +206,7 @@ class sppasWindow(sppasImageDCWindow):
         """Overridden. Force this window to have the focus."""
         if self._state[1] != WindowState().selected:
             self._set_state(WindowState().focused)
-        super(sppasImageDCWindow, self).SetFocus()
+        super(sppasWindow, self).SetFocus()
 
     # ----------------------------------------------------------------------
 
@@ -424,11 +424,6 @@ class sppasWindow(sppasImageDCWindow):
         """
         self._state[0] = self._state[1]
         self._state[1] = state
-
-        if state == WindowState().focused:
-            self._has_focus = True
-        else:
-            self._has_focus = False
 
         if self:
             if refresh is True:
