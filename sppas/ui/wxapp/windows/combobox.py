@@ -71,6 +71,9 @@ class sppasComboBox(sppasPanel):
         :param name: (str) the widget name.
 
         """
+        # A combo box is showing a border, like the entries it is looking like
+        if style & wx.BORDER_MASK == 0:
+            style |= wx.BORDER_SIMPLE
         super(sppasComboBox, self).__init__(
             parent, id, pos, size, style, name=name)
 
