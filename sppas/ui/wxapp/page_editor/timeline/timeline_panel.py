@@ -645,7 +645,9 @@ class sppasTimelinePanel(sppasPanel):
         new_idx = panel.get_selected_ann()
         if new_idx != -1:
             self.notify(action="tier_selected", filename=self._sel_file, value=self.get_selected_tiername())
-            panel.update_ann(new_idx)
+            # Only the selected annotation changed: the panel has to be drawn
+            # again, but nothing was modified into the file.
+            panel.Refresh()
             s, e = panel.get_selected_localization()
             self.smmpc.set_selection_range(s, e)
             self.update_visible_range(s, e)
