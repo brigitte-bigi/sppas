@@ -105,9 +105,9 @@ class sppasAnnLabelsCtrl(wx.richtext.RichTextCtrl):
         self.SetDefaultStyle(self.text_attr)
         self.SetEditable(True)
 
+        self.__code_edit = "code_review"
         self.__ann = ann
         self.update()
-        self.__code_edit = "code_review"
 
         self.Bind(wx.EVT_CHAR, self._on_char)
 
@@ -363,6 +363,9 @@ class sppasAnnLabelsCtrl(wx.richtext.RichTextCtrl):
         #     evt.Skip()
         if kc > 31 and kc != 127:
             # either both CTRL+ALT or none of them + of a valid char
+            if self.CanDeleteSelection() is True:
+                # The typed character is replacing the selected text.
+                self.DeleteSelection()
             self.__append_styled_char(char)
         else:
             evt.Skip()
