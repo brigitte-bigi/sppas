@@ -197,6 +197,14 @@ class sppasTimelinePanel(sppasPanel):
 
     # -----------------------------------------------------------------------
 
+    def is_expanded(self, name):
+        """Return True if the panel displaying the file is expanded."""
+        if name not in self._files:
+            return False
+        return self._files[name].IsExpanded()
+
+    # -----------------------------------------------------------------------
+
     def is_modified(self, name=None):
         """Return True if the content of the file has changed.
 

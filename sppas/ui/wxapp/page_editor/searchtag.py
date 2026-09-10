@@ -180,15 +180,6 @@ class sppasSearchTagDialog(sppasDialog):
 
     # -----------------------------------------------------------------------
 
-    def remove_all_tiers(self):
-        """Remove all tiers of the search."""
-        for i in reversed(range(len(self.__tiers))):
-            self.__tiers.pop(i)
-            self.__cbt.Delete(i)
-        self.Layout()
-
-    # -----------------------------------------------------------------------
-
     def set_selected_tiername(self, filename, tiername, ann_idx):
         """Set the selected tier.
 
@@ -317,7 +308,6 @@ class sppasSearchTagDialog(sppasDialog):
         self.Bind(wx.EVT_CHAR_HOOK, self._process_key_event)
 
         # Tier selected / Notebook page changed
-        self.__cbt.Bind(wx.EVT_CHECKBOX, self._on_tier_checked_event)
         self.__book.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self._on_book_page_changed)
 
     # -----------------------------------------------------------------------
@@ -384,16 +374,6 @@ class sppasSearchTagDialog(sppasDialog):
 
     # -----------------------------------------------------------------------
 
-    def _on_tier_checked_event(self, event):
-        """A tier was checked or unchecked.
-
-        :param event: (wx.Event)
-
-        """
-        pass
-
-    # -----------------------------------------------------------------------
-
     def _on_book_page_changed(self, event):
         """The page of the book changed, so does the type of tier to consider."""
         self.update_checkable_tiers()
@@ -435,13 +415,19 @@ class sppasSearchTagDialog(sppasDialog):
         matching_ann_idx = None
         matching_tier_idx = -1
         matching_time = None
-        # Time from which the search is starting. It is the beginning of the
-        # tiers if no annotation is currently selected.
+        # Position the search is starting from: a time and a tier. Two
+        # annotations at the same time are ordered by their tier, so that the
+        # ones of a tier are not hiding the ones of another. It is the
+        # beginning of the tiers if no annotation is currently selected.
+        # The compared side is the same for the reference and for the
+        # candidates: their begin when searching forward, their end otherwise.
         search_time = 0.
+        search_tier = -1
         if -1 < self.__selected_tier < len(self.__tiers):
             tier = self.__tiers[self.__selected_tier][1]
             if -1 < self.__selected_ann < len(tier):
-                search_time = self.__get_timepos(tier[self.__selected_ann], forward)
+                search_tier = self.__selected_tier
+                search_time = self.__get_timepos(tier[self.__selected_ann], forward is False)
 
         direction = 1
         if forward is False:
@@ -458,26 +444,43 @@ class sppasSearchTagDialog(sppasDialog):
             if forward is True:
                 for i in range(start_idx, len(tier)):
                     tp = self.__get_timepos(tier[i], forward=False)
+                    if tp < search_time:
+                        # this annotation is starting before the searched time
+                        continue
+                    if tp == search_time and tier_idx <= search_tier:
+                        # at the searched time, but not in a following tier
+                        continue
                     if matching_ann_idx is not None and matching_time < tp:
                         # a match was already found before the current time
                         break
                     is_matching = self.__matching(tier[i], tag_functions)
                     if is_matching is True:
-                        matching_tier_idx = tier_idx
-                        matching_ann_idx = i
-                        matching_time = self.__get_timepos(tier[i], forward=False)
+                        if matching_ann_idx is None or tp < matching_time:
+                            # at the same time, the first tier is kept
+                            matching_tier_idx = tier_idx
+                            matching_ann_idx = i
+                            matching_time = tp
                         break
             else:
                 for i in reversed(range(start_idx + 1)):
                     tp = self.__get_timepos(tier[i], forward=True)
+                    if tp > search_time:
+                        # this annotation is ending after the searched time
+                        continue
+                    if tp == search_time and tier_idx >= search_tier:
+                        # at the searched time, but not in a preceding tier
+                        continue
                     if matching_ann_idx is not None and matching_time > tp:
                         # a match was already found after the current time
                         break
                     is_matching = self.__matching(tier[i], tag_functions)
                     if is_matching is True:
-                        matching_tier_idx = tier_idx
-                        matching_ann_idx = i
-                        matching_time = self.__get_timepos(tier[i], forward=True)
+                        if matching_ann_idx is None or tp > matching_time \
+                                or (tp == matching_time and tier_idx > matching_tier_idx):
+                            # at the same time, the last tier is kept
+                            matching_tier_idx = tier_idx
+                            matching_ann_idx = i
+                            matching_time = tp
                         break
 
         if matching_ann_idx is not None:
@@ -501,6 +504,9 @@ class sppasSearchTagDialog(sppasDialog):
     def __get_timepos(self, ann, forward):
         """Return the end time of the given annotation, or its begin time.
 
+        The radius is not used: two annotations are compared by their midpoints,
+        so that contiguous ones are ordered the one after the other.
+
         :param ann: (sppasAnnotation)
         :param forward: (bool) Return the end time if True, the begin one if False
         :return: (float)
@@ -508,20 +514,13 @@ class sppasSearchTagDialog(sppasDialog):
         """
         if forward is True:
             loc = ann.get_highest_localization()
-            if loc.is_float() is False:
-                return 0.
-            radius = 0.
-            if loc.get_radius() is not None:
-                radius = loc.get_radius()
-            return loc.get_midpoint() + radius
         else:
             loc = ann.get_lowest_localization()
-            if loc.is_float() is False:
-                return 0.
-            radius = 0.
-            if loc.get_radius() is not None:
-                radius = loc.get_radius()
-            return loc.get_midpoint() - radius
+
+        if loc.is_float() is False:
+            return 0.
+
+        return loc.get_midpoint()
 
 # ---------------------------------------------------------------------------
 

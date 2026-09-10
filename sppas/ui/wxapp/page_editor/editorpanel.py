@@ -43,7 +43,6 @@ import os
 import wx
 
 from sppas.core.config import paths
-from sppas.ui import _
 
 from sppas.ui.wxapp.windows import sppasPanel
 from sppas.ui.wxapp.windows import sppasSplitterWindow
@@ -54,14 +53,6 @@ from .timeline import sppasTimelinePanel
 from .timeline import EVT_TIMELINE_VIEW
 from .searchtag import sppasSearchTagDialog
 from .searchtag import EVT_SEARCH_VIEW
-
-# ---------------------------------------------------------------------------
-# List of displayed messages:
-
-
-MSG_CLOSE = _("Close")
-CLOSE_CONFIRM = _("The file contains not saved work that will be "
-                  "lost. Are you sure you want to close?")
 
 # ----------------------------------------------------------------------------
 
@@ -132,7 +123,7 @@ class EditorPanel(sppasSplitterWindow):
             # Add tiers
             files = self._timeview.get_files()
             for f in files:
-                if self._timeview.is_trs(f) is True:
+                if self._timeview.is_trs(f) is True and self._timeview.is_expanded(f) is True:
                     self._searchdlg.add_tiers(f, self._timeview.get_tier_list(f))
             # Check the selected tier
             filename = self._timeview.get_selected_filename()
@@ -361,6 +352,18 @@ class EditorPanel(sppasSplitterWindow):
 
         elif action == "ann_update":
             self._listview.update(value)
+
+        elif action in ("expanded", "collapsed"):
+            # Only the tiers of the expanded files are searchable.
+            if self._searchdlg is not None and self._timeview.is_trs(filename) is True:
+                tiers = self._timeview.get_tier_list(filename)
+                if action == "expanded":
+                    self._searchdlg.add_tiers(filename, tiers)
+                else:
+                    self._searchdlg.remove_tiers(filename, tiers)
+            # we also need to layout ourselves, and the parent needs the event
+            self.UpdateSize()
+            event.Skip()
 
         else:
             # we just need to layout ourselves

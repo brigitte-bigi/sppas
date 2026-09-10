@@ -240,7 +240,7 @@ class sppasEditorPanel(sppasPanel):
         if len(saved) > 0:
             wx.LogMessage("{:d} files saved.".format(len(saved)))
         else:
-            wx.LogMessage("No files saved.".format(len(saved)))
+            wx.LogMessage("No files saved.")
 
         return saved
 
