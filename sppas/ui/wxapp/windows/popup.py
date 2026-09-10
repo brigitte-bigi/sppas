@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -112,7 +112,7 @@ class PopupLabel(wx.PopupTransientWindow):
 # ---------------------------------------------------------------------------
 
 
-class PopupToggleBox(wx.PopupWindow):
+class PopupToggleBox(wx.PopupTransientWindow):
     """A popup window embedding a sppasToggleBoxPanel.
 
     The parent can bind wx.EVT_COMBOBOX.
@@ -120,11 +120,14 @@ class PopupToggleBox(wx.PopupWindow):
 
     The popup has to be destroyed externally.
 
+    It has to be shown with Popup(), not with Show(): only the first one is
+    taking the mouse, which is required by GTK to send the clicks to the items.
+
     """
 
     def __init__(self, parent, choices):
         """Constructor"""
-        wx.PopupWindow.__init__(self, parent)
+        wx.PopupTransientWindow.__init__(self, parent)
 
         sizer = wx.BoxSizer()
         tglbox = sppasToggleBoxPanel(self, choices=choices, majorDimension=1, name="togglebox")

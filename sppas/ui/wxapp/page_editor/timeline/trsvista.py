@@ -486,11 +486,11 @@ class TranscriptionVista(sppasPanel):
         self._check_popup.SetPosition(wx.Point(cx, my - (h // 2)))
         self._check_popup.SetSize(wx.Size(sppasPanel.fix_size(150), h))
 
-        # Show the popup window
+        # Show the popup window. Popup() is taking the mouse, Show() is not:
+        # under GTK, a popup window without the mouse is displayed but the
+        # items can't be clicked.
         self._check_popup.Layout()
-        self._check_popup.Show()
-        self._check_popup.SetFocus()
-        self._check_popup.Raise()
+        self._check_popup.Popup()
 
     # ------------------------------------------------------------------------
 
@@ -500,7 +500,7 @@ class TranscriptionVista(sppasPanel):
         """
         if event.Leaving():
             # Mouse went out, don't show the menu anymore
-            self._check_popup.Hide()
+            self._check_popup.Dismiss()
             self.update_with_checked_tier()
 
     # ------------------------------------------------------------------------
