@@ -130,7 +130,67 @@ class sppasSearchTagDialog(sppasDialog):
     # Public methods to manage files and tiers
     # -----------------------------------------------------------------------
 
-    def add_tiers(self, filename, tiers):
+    def set_tiers(self, files_tiers):
+        """Set the tiers to search in, in the given order.
+
+        The tiers which are checked, and the one the search is currently at,
+        are kept if they are still in the given ones.
+
+        :param files_tiers: (list of tuple) List of (filename, list of sppasTier)
+
+        """
+        checked = self.__get_checked()
+        selected = None
+        selected_ann = self.__selected_ann
+        if -1 < self.__selected_tier < len(self.__tiers):
+            selected = self.__tiers[self.__selected_tier]
+
+        # Empty the list, then fill it in the given order
+        for i in reversed(range(len(self.__tiers))):
+            self.__tiers.pop(i)
+            self.__cbt.Delete(i)
+        self.__selected_tier = -1
+        self.__selected_ann = -1
+
+        for filename, tiers in files_tiers:
+            self.__add_tiers(filename, tiers)
+
+        self.__set_checked(checked)
+        if selected is not None:
+            i = self.__index_of(selected[0], selected[1])
+            if i != -1:
+                self.__selected_tier = i
+                self.__selected_ann = selected_ann
+
+        self.Layout()
+
+    # -----------------------------------------------------------------------
+
+    def __index_of(self, filename, tier):
+        """Return the index of the given tier of the given file, or -1."""
+        for i, x in enumerate(self.__tiers):
+            if x[0] == filename and x[1] is tier:
+                return i
+        return -1
+
+    # -----------------------------------------------------------------------
+
+    def __get_checked(self):
+        """Return the (filename, tier) of each checked tier."""
+        return [self.__tiers[i] for i in self.__cbt.GetSelection()]
+
+    # -----------------------------------------------------------------------
+
+    def __set_checked(self, checked):
+        """Check again the given tiers, the ones which are still in the list."""
+        for filename, tier in checked:
+            i = self.__index_of(filename, tier)
+            if i != -1:
+                self.__cbt.SetSelection(i, True)
+
+    # -----------------------------------------------------------------------
+
+    def __add_tiers(self, filename, tiers):
         """Add a set of tiers of the given file.
 
         :param filename: (str)
@@ -148,35 +208,6 @@ class sppasSearchTagDialog(sppasDialog):
                 self.__cbt.Append(tier.get_name())
 
         self.update_checkable_tiers()
-
-    # -----------------------------------------------------------------------
-
-    def remove_tiers(self, filename, tiers):
-        """Remove a set of tiers of the given file.
-
-        :param filename: (str)
-        :param tiers: (list of sppasTier)
-
-        """
-        for tier in tiers:
-            for i, x in enumerate(self.__tiers):
-                f = x[0]
-                t = x[1]
-                if f == filename and t is tier:
-                    self.__tiers.pop(i)
-                    self.__cbt.Delete(i)
-                    # The removal is shifting the index of the selected tier.
-                    if i == self.__selected_tier:
-                        self.__selected_tier = -1
-                        self.__selected_ann = -1
-                    elif i < self.__selected_tier:
-                        self.__selected_tier = self.__selected_tier - 1
-                    # A tier is added only once, and the list was just
-                    # modified: it must not be iterated anymore.
-                    break
-        self.Layout()
-        #if len(self.__tiers) == 0:
-        #    self.Close()
 
     # -----------------------------------------------------------------------
 
@@ -631,10 +662,12 @@ class TestPanel(wx.Panel):
         if self._search is None:
             self._search = sppasSearchTagDialog(self)
             all_trs = list()
+            files_tiers = list()
             for filename in TestPanel.TEST_FILES:
                 parser = sppasTrsRW(filename)
                 trs = parser.read()
-                self._search.add_tiers(filename, [t for t in trs])
+                files_tiers.append((filename, [t for t in trs]))
                 all_trs.append(trs)
+            self._search.set_tiers(files_tiers)
             self._search.set_selected_tiername(TestPanel.TEST_FILES[0], all_trs[0][1].get_name(), 0)
         self._search.Show()

@@ -120,11 +120,7 @@ class EditorPanel(sppasSplitterWindow):
         if self._searchdlg is None:
             # Create the dialog
             self._searchdlg = sppasSearchTagDialog(self)
-            # Add tiers
-            files = self._timeview.get_files()
-            for f in files:
-                if self._timeview.is_trs(f) is True and self._timeview.is_expanded(f) is True:
-                    self._searchdlg.add_tiers(f, self._timeview.get_tier_list(f))
+            self.__update_search_tiers()
             # Check the selected tier
             filename = self._timeview.get_selected_filename()
             tiername = self._timeview.get_selected_tiername()
@@ -136,6 +132,25 @@ class EditorPanel(sppasSplitterWindow):
                 self._searchdlg.Show()
             self._searchdlg.SetFocus()
             self._searchdlg.Raise()
+
+    # -----------------------------------------------------------------------
+
+    def __update_search_tiers(self):
+        """Give the searchable tiers to the search dialog, in the timeline order.
+
+        Only the transcription files which are expanded into the timeline are
+        searchable.
+
+        """
+        if self._searchdlg is None:
+            return
+
+        files_tiers = list()
+        for f in self._timeview.get_files():
+            if self._timeview.is_trs(f) is True and self._timeview.is_expanded(f) is True:
+                files_tiers.append((f, self._timeview.get_tier_list(f)))
+
+        self._searchdlg.set_tiers(files_tiers)
 
     # -----------------------------------------------------------------------
     # Public methods to manage files and tiers
@@ -227,8 +242,7 @@ class EditorPanel(sppasSplitterWindow):
 
         if is_trs is True:
             self._listview.remove_tiers(name, tiers)
-            if self._searchdlg is not None:
-                self._searchdlg.remove_tiers(name, tiers)
+            self.__update_search_tiers()
 
         self._timeview.Layout()
         return True
@@ -340,8 +354,7 @@ class EditorPanel(sppasSplitterWindow):
 
         elif action == "tiers_added":
             self._listview.add_tiers(filename, value)
-            if self._searchdlg is not None:
-                self._searchdlg.add_tiers(filename, value)
+            self.__update_search_tiers()
 
         elif action == "save":
             if self.validate_pending_edit() is True:
@@ -353,14 +366,9 @@ class EditorPanel(sppasSplitterWindow):
         elif action == "ann_update":
             self._listview.update(value)
 
-        elif action in ("expanded", "collapsed"):
-            # Only the tiers of the expanded files are searchable.
-            if self._searchdlg is not None and self._timeview.is_trs(filename) is True:
-                tiers = self._timeview.get_tier_list(filename)
-                if action == "expanded":
-                    self._searchdlg.add_tiers(filename, tiers)
-                else:
-                    self._searchdlg.remove_tiers(filename, tiers)
+        elif action in ("expanded", "collapsed", "files_sorted"):
+            # The searchable tiers, or their order, just changed.
+            self.__update_search_tiers()
             # we also need to layout ourselves, and the parent needs the event
             self.UpdateSize()
             event.Skip()

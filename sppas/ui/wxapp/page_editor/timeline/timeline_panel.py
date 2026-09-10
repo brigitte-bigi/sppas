@@ -160,8 +160,19 @@ class sppasTimelinePanel(sppasPanel):
     # -----------------------------------------------------------------------
 
     def get_files(self):
-        """Return the list of filenames this panel is displaying."""
-        return list(self._files.keys())
+        """Return the list of filenames this panel is displaying.
+
+        The files are in the displayed order, which is the one of the sizer of
+        the scrolled panel. It is the order the user is seeing, and the one
+        _sort_files() is changing.
+
+        :return: (list of str)
+
+        """
+        files = list()
+        for child in self._sizer.GetChildren():
+            files.append(child.GetWindow().get_filename())
+        return files
 
     # -----------------------------------------------------------------------
 
@@ -609,6 +620,7 @@ class sppasTimelinePanel(sppasPanel):
                     old_idx = files.index(filename)
                     self._sizer.Add(panels[old_idx], 0, wx.EXPAND | wx.BOTTOM, sppasPanel.fix_size(2))
                 self.Layout()
+                self.notify(action="files_sorted", filename="", value=None)
         dlg.DestroyFadeOut()
 
     # -----------------------------------------------------------------------
