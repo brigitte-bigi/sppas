@@ -269,6 +269,12 @@ class EditorPanel(sppasSplitterWindow):
         """
         key_code = event.GetKeyCode()
 
+        # The media keys of the keyboard are not combined with a modifier.
+        # Post to the timeline view: it will post to the media player control.
+        if key_code in (wx.WXK_MEDIA_STOP, wx.WXK_MEDIA_PLAY_PAUSE):
+            wx.PostEvent(self._timeview, event)
+            return
+
         if event.ControlDown() or event.CmdDown():
 
             if key_code == 70 and event.ShiftDown() is False:

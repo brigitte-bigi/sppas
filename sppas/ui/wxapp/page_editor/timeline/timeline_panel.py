@@ -781,6 +781,13 @@ class sppasTimelinePanel(sppasPanel):
 
         """
         key_code = event.GetKeyCode()
+
+        # The media keys of the keyboard are not combined with a modifier.
+        # Posting event to the SMMPC is not recommended: it must ***NOT** skip it.
+        if key_code in (wx.WXK_MEDIA_STOP, wx.WXK_MEDIA_PLAY_PAUSE):
+            wx.PostEvent(self.smmpc, event)
+            return
+
         if event.ShiftDown() is False:
 
             if event.AltDown() is True and event.ControlDown() is False:
@@ -803,14 +810,6 @@ class sppasTimelinePanel(sppasPanel):
                     # a, i, o
                     wx.PostEvent(self.smmpc, event)
                     return
-
-        elif key_code == wx.WXK_MEDIA_STOP:
-            wx.PostEvent(self.smmpc, event)
-            return
-
-        elif key_code == wx.WXK_MEDIA_PLAY_PAUSE:
-            wx.PostEvent(self.smmpc, event)
-            return
 
         event.Skip()
 

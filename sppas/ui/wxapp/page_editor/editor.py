@@ -497,6 +497,12 @@ class sppasEditorPanel(sppasPanel):
         """
         key_code = event.GetKeyCode()
 
+        if key_code in (wx.WXK_MEDIA_STOP, wx.WXK_MEDIA_PLAY_PAUSE):
+            # The media keys are active wherever the focus is in the page.
+            # The views are handling them by themselves when they have the focus.
+            wx.PostEvent(self._editpanel, event)
+            return
+
         if event.ControlDown() or event.CmdDown():
             if key_code == 79 and event.ShiftDown() is True:
                 # ctrl+O Open the checked files
