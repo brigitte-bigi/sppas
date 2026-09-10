@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -50,6 +50,7 @@ import wx
 
 from sppas.core.config import paths
 from sppas.src.anndata import sppasTrsRW
+from sppas.src.anndata.anndataexc import AnnDataIndexError
 from sppas.src.anndata.aio.aioutils import serialize_labels
 from sppas.ui import _
 
@@ -162,6 +163,21 @@ class sppasTierListCtrl(LineListCtrl):
 
     # -----------------------------------------------------------------------
 
+    def __check_index(self, idx):
+        """Raise an exception if idx is not the index of an annotation.
+
+        A negative index is accepted by the tier -- it is a list -- so it would
+        silently read or write the annotation at the end of it.
+
+        :param idx: (int) Index of an annotation in the tier
+        :raise: AnnDataIndexError
+
+        """
+        if idx < 0 or idx >= len(self._tier):
+            raise AnnDataIndexError(idx)
+
+    # -----------------------------------------------------------------------
+
     def get_selected_annotation(self):
         """Return the annotation matching the selected line in the list.
 
@@ -182,7 +198,7 @@ class sppasTierListCtrl(LineListCtrl):
         :return: (sppasAnnotation)
 
         """
-        assert 0 <= idx < len(self._tier)
+        self.__check_index(idx)
         return self._tier[idx]
 
     # -----------------------------------------------------------------------
@@ -197,7 +213,7 @@ class sppasTierListCtrl(LineListCtrl):
         :raise: Exception if annotation can't be deleted of the tier
 
         """
-        assert 0 <= idx < len(self._tier)
+        self.__check_index(idx)
         self._tier.pop(idx)
         self.DeleteItem(idx)
 
@@ -229,7 +245,7 @@ class sppasTierListCtrl(LineListCtrl):
         :raise: Exception if merged annotation can't be deleted of the tier
 
         """
-        assert 0 <= idx < len(self._tier)
+        self.__check_index(idx)
 
         # Merge annotation into the tier
         merged = self._tier.merge(idx, direction)
@@ -270,7 +286,7 @@ class sppasTierListCtrl(LineListCtrl):
         :raise: Exception if annotation can't be splitted
 
         """
-        assert 0 <= idx < len(self._tier)
+        self.__check_index(idx)
 
         # Split annotation into the tier
         self._tier.split(idx)
@@ -286,6 +302,8 @@ class sppasTierListCtrl(LineListCtrl):
             logging.debug("Ann at index {}: {}".format(idx, self._tier[idx]))
             self.set_annotation_labels(idx+1, labels)
 
+        return True
+
     # -----------------------------------------------------------------------
 
     def add_annotation(self, idx, direction):
@@ -297,7 +315,7 @@ class sppasTierListCtrl(LineListCtrl):
         :raise: Exception if annotation can't be created
 
         """
-        assert 0 <= idx < len(self._tier)
+        self.__check_index(idx)
 
         if direction == 0:
             return False
@@ -336,6 +354,7 @@ class sppasTierListCtrl(LineListCtrl):
         :param labels: (list) List of labels
 
         """
+        self.__check_index(idx)
         annotation = self._tier[idx]
         cur_labels = annotation.get_labels()
         try:
@@ -358,6 +377,7 @@ class sppasTierListCtrl(LineListCtrl):
         :param localization: (sppasLocalization)
 
         """
+        self.__check_index(idx)
         annotation = self._tier[idx]
         annotation.set_best_localization(localization)
         self.__set_item_localization(idx)
@@ -396,8 +416,7 @@ class sppasTierListCtrl(LineListCtrl):
         :param idx: (int) Index of an annotation/item in the tier/list
 
         """
-        assert 0 <= idx <= len(self._tier)
-        ann = self._tier[idx]
+        self.__check_index(idx)
         self.InsertItem(idx, "")
         self.UpdateItem(idx)
 
@@ -409,7 +428,7 @@ class sppasTierListCtrl(LineListCtrl):
         :param idx: (int) Index of an annotation/item in the tier/list
 
         """
-        assert 0 <= idx <= len(self._tier)
+        self.__check_index(idx)
         ann = self._tier[idx]
 
         # fix location
