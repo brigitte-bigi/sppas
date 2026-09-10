@@ -721,10 +721,17 @@ class sppasMMPCtrl(sppasPlayerControlsPanel):
                 event.Skip()
 
         elif key_code == wx.WXK_MEDIA_STOP:
-            pass
+            # The "stop" media key of the keyboard: do the same as the button.
+            self.stop()
 
         elif key_code == wx.WXK_MEDIA_PLAY_PAUSE:
-            pass
+            # The "play/pause" media key of the keyboard is a toggle: do the
+            # same as clicking either the play button or the pause one.
+            if self.__smmps.is_playing() is True:
+                self.FindWindow("media_pause").SetValue(True)
+                self.pause()
+            else:
+                self.play()
 
         else:
             event.Skip()

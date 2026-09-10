@@ -354,7 +354,7 @@ class sppasSearchTagDialog(sppasDialog):
             self.Destroy()
             return
 
-        if event.ControlDown or event.CmdDown():
+        if event.ControlDown() is True or event.CmdDown() is True:
             if event.ShiftDown() is False:
                 if key_code == 72:  # h
                     self.Hide()
