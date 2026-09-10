@@ -303,12 +303,12 @@ class sppasTimelinePanel(sppasPanel):
             # this file must be removed of the multimedia player control.
             self.smmpc.remove_media(name)
 
-            # Destroy the panel and remove of the sizer
-            for i, child in enumerate(self.GetChildren()):
-                if child == panel:
-                    self._sizer.Remove(i)
-                    break
-            panel.Destroy()
+            # Detach the panel of the sizer of the scrolled panel, then ask
+            # for its destruction. It can't be destroyed now: this method is
+            # invoked while the event its own close button emitted is still
+            # being processed.
+            self._sizer.Detach(panel)
+            panel.DestroyLater()
 
             # Delete of the list
             self._files.pop(name)
