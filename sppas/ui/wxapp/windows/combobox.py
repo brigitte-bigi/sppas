@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2022  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -266,21 +266,21 @@ class sppasComboBox(sppasPanel):
         sel = obj.GetStringSelection()
         self._txtbtn.SetLabel(sel)
         self._txtbtn.Refresh()
-        self._popup.Hide()
+        self._popup.Dismiss()
         self.Notify()
 
     # ------------------------------------------------------------------------
 
     def _process_mouse_event(self, event):
         if event.Leaving():
-            self._popup.Hide()
+            self._popup.Dismiss()
         event.Skip()
 
     # ------------------------------------------------------------------------
 
     def _process_rise(self, event):
         if self._popup.IsShown() is True:
-            self._popup.Hide()
+            self._popup.Dismiss()
         else:
             # Show the togglebox at an appropriate place.
             # Get all sizes (this toggle, screen and popup)
@@ -298,9 +298,10 @@ class sppasComboBox(sppasPanel):
                 self._popup.SetPosition(wx.Point(x, y + h))
 
             self._popup.Layout()
-            self._popup.Show()
-            self._popup.SetFocus()
-            self._popup.Raise()
+            # Popup() is taking the mouse, Show() is not: under GTK, a popup
+            # window without the mouse is displayed but the items can't be
+            # clicked.
+            self._popup.Popup()
 
     # ------------------------------------------------------------------------
 
