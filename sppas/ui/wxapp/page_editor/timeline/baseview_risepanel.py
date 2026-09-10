@@ -104,6 +104,7 @@ class sppasFileViewPanel(sppasBaseRisePanel):
 
         """
         self._collapsed_tools_panel = None
+        self.__label_popup = None
         super(sppasFileViewPanel, self).__init__(
             parent, id, label, pos, size, style, name=name)
 
@@ -202,6 +203,11 @@ class sppasFileViewPanel(sppasBaseRisePanel):
         self._filename = name
         self.SetLabel(name)
         self._dirty = True
+
+        # The popup is showing the previous name: it can't be shown again.
+        if self.__label_popup is not None and bool(self.__label_popup) is True:
+            self.__label_popup.Destroy()
+        self.__label_popup = None
 
     # ------------------------------------------------------------------------
 
@@ -302,14 +308,15 @@ class sppasFileViewPanel(sppasBaseRisePanel):
         if self._zoom in sppasFileViewPanel.ZOOMS:
             prev_cur_zoom_idx = self.ZOOMS.index(self._zoom) - 1
         else:
-            # a custom zoom value is in use. Find the next higher one.
-            prev_cur_zoom_idx = 0
-            while prev_cur_zoom_idx > 0:
+            # a custom zoom value is in use. Find the next lower one.
+            prev_cur_zoom_idx = len(sppasFileViewPanel.ZOOMS) - 1
+            while prev_cur_zoom_idx >= 0:
                 if sppasFileViewPanel.ZOOMS[prev_cur_zoom_idx] < self._zoom:
                     break
                 prev_cur_zoom_idx -= 1
 
-        if prev_cur_zoom_idx > 0:
+        # The index is -1 if the minimum of the zooms is already applied.
+        if prev_cur_zoom_idx >= 0:
             self._zoom = self.ZOOMS[prev_cur_zoom_idx]
 
         # Apply the zoom value.
@@ -606,14 +613,24 @@ class sppasFileViewPanel(sppasBaseRisePanel):
         """
         evt_obj = event.GetEventObject()
         if evt_obj.GetName() == "slashdot":
-            # Open a "window" to show the label
-            win = PopupLabel(self.GetTopLevelParent(), wx.SIMPLE_BORDER, self._filename)
+            # Creating a window is slow, so the popup is created once and it is
+            # shown again at each click. It is destroying itself when it is
+            # clicked in: in that case only, another one is created.
+            if self.__label_popup is None or bool(self.__label_popup) is False:
+                self.__label_popup = PopupLabel(
+                    self.GetTopLevelParent(), wx.SIMPLE_BORDER, self._filename)
+
+            # Show the "window" with the label
+            win = self.__label_popup
             # Show the popup right below
             # depending on available screen space...
             pos = evt_obj.ClientToScreen((0, self.fix_size(self.get_font_height())))
             # the label popup will hide the button.
             win.Position(pos, (0, 0))
-            win.Show(True)
+            # Popup() is arming the dismissal by a click outside of it, which
+            # is hiding it. Show() is only showing it, so it could be closed
+            # by a click inside only -- which is destroying it.
+            win.Popup()
 
         else:  # we shouldn't be here
             event.Skip()

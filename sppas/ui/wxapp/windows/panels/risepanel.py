@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2022  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -544,6 +544,7 @@ class sppasVerticalRisePanel(sppasBaseRisePanel):
         The parent can Bind the wx.EVT_COLLAPSIBLEPANE_CHANGED.
 
         """
+        self.__label_popup = None
         super(sppasVerticalRisePanel, self).__init__(
             parent, id, label, pos, size, style, name=name)
 
@@ -713,14 +714,24 @@ class sppasVerticalRisePanel(sppasBaseRisePanel):
         """
         evt_obj = event.GetEventObject()
         if evt_obj.GetName() == "slashdot":
-            # Open a "window" to show the label
-            win = PopupLabel(self.GetTopLevelParent(), wx.SIMPLE_BORDER, self._label)
+            # Creating a window is slow, so the popup is created once and it is
+            # shown again at each click. It is destroying itself when it is
+            # clicked in: in that case only, another one is created.
+            if self.__label_popup is None or bool(self.__label_popup) is False:
+                self.__label_popup = PopupLabel(
+                    self.GetTopLevelParent(), wx.SIMPLE_BORDER, self._label)
+
+            # Show the "window" with the label
+            win = self.__label_popup
             # Show the popup right below or above the button
             # depending on available screen space...
             pos = evt_obj.ClientToScreen((0, 0))
             # the label popup will hide the button.
             win.Position(pos, (0, 0))
-            win.Show(True)
+            # Popup() is arming the dismissal by a click outside of it, which
+            # is hiding it. Show() is only showing it, so it could be closed
+            # by a click inside only -- which is destroying it.
+            win.Popup()
 
         else:
             # we shouldn't be here
