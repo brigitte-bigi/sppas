@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -58,15 +58,16 @@ class sppasPanel(wx.Panel):
 
     """
 
-    def __init_(self, parent, id=-1,
-                pos=wx.DefaultPosition, size=wx.DefaultSize,
-                style=0, name="sppas_panel"):
+    def __init__(self, parent, id=-1,
+                 pos=wx.DefaultPosition, size=wx.DefaultSize,
+                 style=0, name="sppas_panel"):
         # always turn on tab traversal
         style |= wx.TAB_TRAVERSAL
 
-        # and turn off any border styles
-        style &= ~wx.BORDER_MASK
-        style |= wx.BORDER_NONE
+        # and turn off the border, but only if none was asked: a child class
+        # can ask for one, and it was the platform default until now
+        if style & wx.BORDER_MASK == 0:
+            style |= wx.BORDER_NONE
 
         super(sppasPanel, self).__init__(parent, id, pos, size, style, name)
         self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
@@ -80,8 +81,6 @@ class sppasPanel(wx.Panel):
             self.InheritAttributes()
 
         self.SetAutoLayout(True)
-        self.SetMinSize(wx.Size(self.fix_size(320),
-                                self.fix_size(200)))
 
     # -----------------------------------------------------------------------
 
