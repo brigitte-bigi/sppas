@@ -361,14 +361,42 @@ class sppasAnnLabelsCtrl(wx.richtext.RichTextCtrl):
         #     evt.Skip()
         # elif evt.ControlDown() is False and evt.AltDown() is True:
         #     evt.Skip()
-        if kc > 31 and kc != 127:
+        if kc == 22:
+            # ctrl+v. The control would paste the text without any style, so
+            # the text is written by this class instead.
+            self.__paste_styled_text()
+
+        elif kc > 31 and kc != 127:
             # either both CTRL+ALT or none of them + of a valid char
             if self.CanDeleteSelection() is True:
                 # The typed character is replacing the selected text.
                 self.DeleteSelection()
             self.__append_styled_char(char)
+
         else:
             evt.Skip()
+
+    # -----------------------------------------------------------------------
+
+    def __paste_styled_text(self):
+        """Write the text of the clipboard with the appropriate style."""
+        text = ""
+        if wx.TheClipboard.IsOpened() is False:
+            if wx.TheClipboard.Open() is True:
+                data = wx.TextDataObject()
+                if wx.TheClipboard.GetData(data) is True:
+                    text = data.GetText()
+                wx.TheClipboard.Close()
+
+        if len(text) == 0:
+            return
+
+        if self.CanDeleteSelection() is True:
+            # The pasted text is replacing the selected one.
+            self.DeleteSelection()
+
+        for char in text:
+            self.__append_styled_char(char)
 
     # -----------------------------------------------------------------------
 

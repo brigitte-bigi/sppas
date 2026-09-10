@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -112,7 +112,10 @@ class sppasTicksSlider(sppasSlider):
         :param colour: (wx.Colour) Colour of the indicator line
 
         """
-        seconds = float(seconds)
+        # The time value is used as a key of the dict, so it is rounded to
+        # the microsecond: two values evaluated by different ways can differ
+        # of an insignificant epsilon.
+        seconds = round(float(seconds), 6)
         if seconds not in self._indicators:
             self._indicators[seconds] = colour
 
@@ -181,6 +184,9 @@ class sppasTicksSlider(sppasSlider):
     def DrawContent(self, dc, gc):
         """Override."""
         x, y, w, h = self.GetContentRect()
+        if w * h <= 0:
+            # Nothing to draw, and the width is a divisor of the ticks
+            return
 
         # Height of the ticks
         lw, lh = self.get_text_extend(dc, gc, "Any Text")

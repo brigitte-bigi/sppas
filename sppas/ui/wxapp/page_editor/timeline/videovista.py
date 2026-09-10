@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2023  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -119,9 +119,8 @@ class sppasVideoVista(sppasPanel):
         :param end: (float) end time in seconds.
 
         """
-        self.__film.set_visible_period(start=start, end=end)
-        if self.__film.IsShown():
-            # self.__film.Layout()
+        changed = self.__film.set_visible_period(start=start, end=end)
+        if changed is True and self.__film.IsShown() is True:
             self.__film.Refresh()
 
     # -----------------------------------------------------------------------
