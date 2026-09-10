@@ -1247,7 +1247,7 @@ class sppasTierWindow(sppasWindow):
             dc.GradientFillLinear(box_rect, c1, c2, wx.WEST)
 
         else:
-            pen = wx.Pen(c2, 1, wx.SOLID)
+            pen = wx.Pen(c2, 1, wx.PENSTYLE_SOLID)
             pen.SetCap(wx.CAP_BUTT)
             # pen.SetJoin(wx.JOIN_INVALID)
             dc.SetPen(pen)
