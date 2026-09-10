@@ -205,20 +205,15 @@ class sppasTimelinePanel(sppasPanel):
         """
         if name is not None:
             page = self._files.get(name, None)
-            try:
-                changed = page.is_modified()
-                return changed
-            except:
+            if page is None:
+                # There's no file with this name: nothing was changed.
                 return False
+            return page.is_modified()
 
         # All files
-        for name in self._files:
-            page = self._files.get(name, None)
-            try:
-                if page.is_modified() is True:
-                    return True
-            except:
-                pass
+        for page in self._files.values():
+            if page.is_modified() is True:
+                return True
 
         return False
 
@@ -240,7 +235,7 @@ class sppasTimelinePanel(sppasPanel):
 
         """
         if name in self._files:
-            wx.LogError('Name {:s} is already in the list of files.')
+            wx.LogError("Name {:s} is already in the list of files.".format(name))
             return False
 
         else:
@@ -694,9 +689,10 @@ class sppasTimelinePanel(sppasPanel):
                 self.__set_selection(filename, value, ann_idx)
 
             elif action == "selected_point_update":
-                selected_file_panel = self._files[self._sel_file]
-                selected_ann_idx = selected_file_panel.get_selected_ann()
-                self.update_video_players(self._sel_file, selected_ann_idx, event.value)
+                if self._sel_file is not None:
+                    selected_file_panel = self._files[self._sel_file]
+                    selected_ann_idx = selected_file_panel.get_selected_ann()
+                    self.update_video_players(self._sel_file, selected_ann_idx, event.value)
 
             elif action == "size":
                 self.Layout()
@@ -710,6 +706,11 @@ class sppasTimelinePanel(sppasPanel):
                     self.update_video_players(self._sel_file, selected_ann_idx, selected_point)
 
         elif isinstance(panel, VideoViewPanel):
+            if self._sel_file is None:
+                # Every action of a video player is about the annotation which
+                # is selected into a transcription file, and there's none.
+                return
+
             if action == "ann_update":
                 # update the selected annotation panel
                 selected_file_panel = self._files[self._sel_file]
@@ -1068,10 +1069,11 @@ class sppasTimelinePanel(sppasPanel):
                         panel.create_ann(idx)
                     break
 
-        selected_file_panel = self._files[self._sel_file]
-        selected_ann_idx = selected_file_panel.get_selected_ann()
-        selected_point = selected_file_panel.get_selected_point()
-        self.update_video_players(self._sel_file, selected_ann_idx, selected_point)
+        if self._sel_file is not None:
+            selected_file_panel = self._files[self._sel_file]
+            selected_ann_idx = selected_file_panel.get_selected_ann()
+            selected_point = selected_file_panel.get_selected_point()
+            self.update_video_players(self._sel_file, selected_ann_idx, selected_point)
 
     # -----------------------------------------------------------------------
 

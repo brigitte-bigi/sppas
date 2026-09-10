@@ -46,7 +46,7 @@ the parent.
 import os
 import wx
 import json
-import xml.etree.cElementTree as ET
+import xml.etree.ElementTree as ET
 import wx.richtext
 
 from sppas.core.config import paths
