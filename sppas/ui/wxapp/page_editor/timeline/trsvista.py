@@ -209,7 +209,10 @@ class TranscriptionVista(sppasPanel):
             return
 
         if tier_name is not None:
-            assert tier_name in [t.get_name() for t in self.__trs]
+            if tier_name not in [t.get_name() for t in self.__trs]:
+                wx.LogError("Tier {:s} can't be selected: it is not in the "
+                            "transcription.".format(tier_name))
+                return
 
         for child in self.GetChildren():
             if child.is_selected() is True:
@@ -302,7 +305,7 @@ class TranscriptionVista(sppasPanel):
         """An annotation was created. """
         for child in self.GetChildren():
             if child.is_selected() is True:
-                child.update_ann(idx)
+                child.create_ann(idx)
 
     # -----------------------------------------------------------------------
 
@@ -444,12 +447,13 @@ class TranscriptionVista(sppasPanel):
         if tierctrl_click.is_selected() is False:
             tierctrl_click.set_selected(True)
 
-        else:
-            # Update selection: disable a previously selected tier
-            for child in self.GetChildren():
-                if child is not tierctrl_click and child.is_selected():
-                    child.set_selected(False)
-                    child.Refresh()
+        # Update selection: disable any other selected tier. It has to be done
+        # whether the clicked tier was already selected or not, otherwise two
+        # of them are selected at the same time.
+        for child in self.GetChildren():
+            if child is not tierctrl_click and child.is_selected() is True:
+                child.set_selected(False)
+                child.Refresh()
 
         self.notify(action="tier_selected", value=tierctrl_click.get_tiername())
 

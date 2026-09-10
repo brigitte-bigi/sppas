@@ -527,13 +527,42 @@ class sppasTierWindow(sppasWindow):
     # -----------------------------------------------------------------------
 
     def delete_ann(self, idx):
-        """Re-draw the tier."""
+        """An annotation was deleted of the tier. Re-draw it.
+
+        The annotations after the deleted one are shifted of one, so are their
+        indexes memorized here.
+
+        :param idx: (int) Index of the deleted annotation
+
+        """
         if idx in self.__point_anns:
             self.__point_anns.remove(idx)
-            if len(self.__point_anns) == 0:
-                self.__point.Show(False)
+        self.__point_anns = [i - 1 if i > idx else i for i in self.__point_anns]
+        if len(self.__point_anns) == 0:
+            self.__point.Show(False)
+
         if self.__ann_idx == idx:
             self.__ann_idx = -1
+        elif idx < self.__ann_idx:
+            self.__ann_idx = self.__ann_idx - 1
+
+        self.Refresh()
+
+    # -----------------------------------------------------------------------
+
+    def create_ann(self, idx):
+        """An annotation was created into the tier. Re-draw it.
+
+        The annotations after the created one are shifted of one, so are their
+        indexes memorized here.
+
+        :param idx: (int) Index of the created annotation
+
+        """
+        self.__point_anns = [i + 1 if i >= idx else i for i in self.__point_anns]
+        if self.__ann_idx != -1 and idx <= self.__ann_idx:
+            self.__ann_idx = self.__ann_idx + 1
+
         self.Refresh()
 
     # -----------------------------------------------------------------------
