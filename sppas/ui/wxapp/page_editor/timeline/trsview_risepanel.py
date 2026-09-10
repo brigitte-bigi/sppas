@@ -280,6 +280,12 @@ class TrsViewPanel(sppasFileViewPanel):
         :param event: (wx.Event)
 
         """
+        if event.action in ("ann_create", "ann_update"):
+            # The content of the transcription was changed into the timeline:
+            # the file has to be known as modified, like it is when the change
+            # is coming from the list of annotations.
+            self._dirty = True
+
         self.notify(action=event.action, value=event.value)
 
     # -----------------------------------------------------------------------
