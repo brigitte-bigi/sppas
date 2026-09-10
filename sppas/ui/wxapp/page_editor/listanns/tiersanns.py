@@ -451,12 +451,21 @@ class sppasTiersEditWindow(sppasSplitterWindow):
                 if merged is True:
                     # OK. The annotation was merged in the listctrl.
                     if direction > 0:
+                        # The next annotation was absorbed: it's the one which
+                        # is removed, and the merged one is not moving.
                         delete_idx = self.__cur_index + 1
+                        modified_idx = self.__cur_index
                     else:
-                        delete_idx = self.__cur_index - 1
-                    modified_idx = self.__cur_index
-                    ann = self.__tierctrl.get_selected_annotation()
-                    self.__annctrl.set_ann(ann)
+                        # The previous annotation was absorbed: the merged one
+                        # is now at its index, and the following ones are all
+                        # shifted of one.
+                        delete_idx = self.__cur_index
+                        modified_idx = self.__cur_index - 1
+                        self.__cur_index = self.__cur_index - 1
+
+                    # The merged annotation is the selected one: the listctrl
+                    # lost its selection when its item was removed.
+                    self.__annotation_selected(self.__cur_index, to_notify=False)
                     self.notify(action="ann_selected", filename=self.get_filename(), value=self.__cur_index)
 
         return delete_idx, modified_idx

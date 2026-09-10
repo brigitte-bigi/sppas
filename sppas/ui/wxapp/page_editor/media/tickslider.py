@@ -195,7 +195,7 @@ class sppasTicksSlider(sppasSlider):
 
         if self.__show_ticks is True:
             # Draw major ticks
-            dc.SetPen(wx.Pen(self.GetForegroundColour(), 2, wx.SOLID))
+            dc.SetPen(wx.Pen(self.GetForegroundColour(), 2, wx.PENSTYLE_SOLID))
             dc.SetFont(self.GetMajorFont())
             for label in self._major_labels:
                 pos = label.pos
@@ -203,21 +203,21 @@ class sppasTicksSlider(sppasSlider):
                 dc.DrawLine(x + pos, h, x + pos, h - 3)
             # Draw minor ticks
             dc.SetFont(self.GetMinorFont())
-            dc.SetPen(wx.Pen(self.GetForegroundColour(), 1, wx.SOLID))
+            dc.SetPen(wx.Pen(self.GetForegroundColour(), 1, wx.PENSTYLE_SOLID))
             for label in self._minor_labels:
                 pos = label.pos
                 dc.DrawLine(x + pos, y, x + pos, y + (self._tick_height // 2))
 
         if self.__show_labels is True:
             # Draw major labels
-            dc.SetPen(wx.Pen(self.GetForegroundColour(), 2, wx.SOLID))
+            dc.SetPen(wx.Pen(self.GetForegroundColour(), 2, wx.PENSTYLE_SOLID))
             dc.SetFont(self.GetMajorFont())
             for label in self._major_labels:
                 if label.text != "":
                     dc.DrawText(label.text, label.lx, label.ly)
             # Draw minor labels
             dc.SetFont(self.GetMinorFont())
-            dc.SetPen(wx.Pen(self.GetForegroundColour(), 1, wx.SOLID))
+            dc.SetPen(wx.Pen(self.GetForegroundColour(), 1, wx.PENSTYLE_SOLID))
             for label in self._minor_labels:
                 if label.text != "":
                     dc.DrawText(label.text, label.lx, label.ly)

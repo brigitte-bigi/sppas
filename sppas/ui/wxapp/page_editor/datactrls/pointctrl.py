@@ -298,7 +298,7 @@ class sppasPointWindow(sppasWindow):
             dc.GradientFillLinear(box_rect, c1, c2, wx.WEST)
         else:
             # Fill in the content with a solid color
-            pen = wx.Pen(c1, 1, wx.SOLID)
+            pen = wx.Pen(c1, 1, wx.PENSTYLE_SOLID)
             pen.SetCap(wx.CAP_BUTT)
             # pen.SetJoin(wx.JOIN_INVALID)  # not supported under Windows
             dc.SetPen(pen)

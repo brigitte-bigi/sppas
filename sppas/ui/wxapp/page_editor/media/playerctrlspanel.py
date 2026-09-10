@@ -387,7 +387,7 @@ class sppasPlayerControlsPanel(sppasPanel):
         """
         btn.SetBackgroundColour(self.GetBackgroundColour())
         btn.SetFocusColour(self._focus_color)
-        btn.SetFocusStyle(wx.SOLID)
+        btn.SetFocusStyle(wx.PENSTYLE_SOLID)
         btn.SetFocusWidth(1)
         btn.SetSpacing(0)
         btn.SetMinSize(wx.Size(width=self._btn_size, height=self._btn_size))
