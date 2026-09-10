@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -45,6 +45,7 @@ import wx.lib.newevent
 
 from sppas.core.coreutils import sppasTypeError
 from sppas.src.anndata import sppasPoint
+from sppas.ui import _
 from sppas.ui.wxapp.windows import sppasWindow, WindowState
 from sppas.ui.wxapp.windows.cursors import sppasCursor
 
@@ -61,6 +62,12 @@ PointMovedCommandEvent, sppasEVT_POINT_MOVED_COMMAND = wx.lib.newevent.NewComman
 
 PointResizedEvent, sppasEVT_POINT_RESIZED = wx.lib.newevent.NewEvent()
 PointResizedCommandEvent, sppasEVT_POINT_RESIZED_COMMAND = wx.lib.newevent.NewCommandEvent()
+
+# ----------------------------------------------------------------------------
+# Messages
+# ----------------------------------------------------------------------------
+
+MSG_SHORTCUT_CANCEL_DRAG = _("escape: cancel the current move or resize")
 
 # ----------------------------------------------------------------------------
 # Cursor pixmaps
@@ -282,7 +289,7 @@ class sppasPointWindow(sppasWindow):
             c1 = bg_color
             c2 = self.GetPenForegroundColour()
 
-        if w > 5:
+        if w > 7:
             # Fill in the content with a gradient color
             mid = w // 2
             box_rect = wx.Rect(0, 0, mid, h)
@@ -295,7 +302,7 @@ class sppasPointWindow(sppasWindow):
             pen.SetCap(wx.CAP_BUTT)
             # pen.SetJoin(wx.JOIN_INVALID)  # not supported under Windows
             dc.SetPen(pen)
-            for i in range(w):
+            for i in range(max(self._min_width, w)):
                 dc.DrawLine(i, 0, i, h)
 
     # -----------------------------------------------------------------------
@@ -310,11 +317,10 @@ class sppasPointWindow(sppasWindow):
     def _tooltip(self):
         """Set a tooltip string with the midpoint and radius of the point."""
         if self.__point is not None:
+            tooltip = "Midpoint: " + str(self.__point.get_midpoint())
             if self.__point.get_radius() is not None:
-                return "Midpoint: " + str(self.__point.get_midpoint()) + \
-                       "\nRadius: " + str(self.__point.get_radius())
-            else:
-                return "Midpoint: " + str(self.__point.get_midpoint())
+                tooltip += "\nRadius: " + str(self.__point.get_radius())
+            return tooltip + "\n" + MSG_SHORTCUT_CANCEL_DRAG
 
         return ""
 
