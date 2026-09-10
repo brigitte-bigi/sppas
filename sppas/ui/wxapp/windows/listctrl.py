@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -193,13 +193,14 @@ class sppasListCtrl(wx.ListCtrl):
             alt_bg = wx.Colour(r, g, b, a).ChangeLightness(105)
 
         if index == -1:
-            for i in range(self._header, self.GetItemCount()):
+            for i in range(self.GetItemCount()):
                 if self._bg_selected is not None and i in self._selected:
                     continue
-                if i % 2:
-                    wx.ListCtrl.SetItemBackgroundColour(self, i, bg)
+                row = i + self._header
+                if row % 2:
+                    wx.ListCtrl.SetItemBackgroundColour(self, row, bg)
                 else:
-                    wx.ListCtrl.SetItemBackgroundColour(self, i, alt_bg)
+                    wx.ListCtrl.SetItemBackgroundColour(self, row, alt_bg)
         else:
             index += self._header
             if index % 2:
@@ -475,15 +476,16 @@ class sppasListCtrl(wx.ListCtrl):
         :param index: (int) Index of an item in the data
 
         """
-        index += self._header
+        # The selected items are memorized with the index of the data: the
+        # deleted one is removed of them and the following ones are shifted.
         if index in self._selected:
             self._selected.remove(index)
 
         for i in range(len(self._selected)):
-            if self._selected[i] >= index:
+            if self._selected[i] > index:
                 self._selected[i] = self._selected[i] - 1
 
-        wx.ListCtrl.DeleteItem(self, index)
+        wx.ListCtrl.DeleteItem(self, index + self._header)
 
         if self._altcolors is True:
             for i in range(index, self.GetItemCount()):
@@ -507,12 +509,12 @@ class sppasListCtrl(wx.ListCtrl):
         """Override.
 
         """
-        item += self._header
-        s = sorted(self._selected)
-        i = wx.ListCtrl.GetNextItem(self, item)
+        # The rows are walked, but the selected items are memorized with the
+        # index of their data.
+        i = wx.ListCtrl.GetNextItem(self, item + self._header)
         while i != -1:
-            if i in s:
-                return i
+            if (i - self._header) in self._selected:
+                return i - self._header
             i = wx.ListCtrl.GetNextItem(self, i)
         return -1
 
@@ -527,8 +529,11 @@ class sppasListCtrl(wx.ListCtrl):
     # ---------------------------------------------------------------------
 
     def IsSelected(self, index):
-        """Override. Return True if the item is checked."""
-        index += self._header
+        """Override. Return True if the item is checked.
+
+        :param index: (int) Index of an item in the data
+
+        """
         return index in self._selected
 
     # ---------------------------------------------------------------------
@@ -543,7 +548,8 @@ class sppasListCtrl(wx.ListCtrl):
         :param on: (int/bool) 0 to deselect, 1 to select
 
         """
-        assert 0 <= idx < self.GetItemCount()
+        if idx < 0 or idx >= self.GetItemCount():
+            raise IndexError("No item at index {:d} to be selected.".format(idx))
         wx.ListCtrl.Select(self, idx, on=0)
 
         # if single selection, de-select current item
@@ -653,7 +659,8 @@ class sppasListCtrl(wx.ListCtrl):
             wx.PostEvent(self, nex_evt)
             return
 
-        # manage our own selection
+        # manage our own selection, with the index of the data
+        item_index -= self._header
         if self.HasFlag(wx.LC_SINGLE_SEL):
             if item_index in self._selected:
                 self.Select(item_index, on=0)
