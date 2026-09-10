@@ -1,5 +1,5 @@
 # French translation for SPPAS
-# Copyright (c) 2011-2023 Brigitte Bigi
+# Copyright (c) 2011-2026 Brigitte Bigi
 # This file is distributed under the same license as the SPPAS package.
 msgid ""
 msgstr ""
