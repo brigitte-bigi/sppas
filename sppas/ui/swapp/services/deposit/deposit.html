@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>B. Bigi - A place for files which have to travel</title>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../../statics/icons/sppas5.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../../whakerexa/wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/extras/book.css" type="text/css" media="all" />
+</head>
+
+<body>
+
+<header id="header-content">
+
+	<a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+
+	<h1>A place for files which have to travel</h1>
+	<h2>Brigitte Bigi</h2>
+
+</header>
+
+
+
+<nav class="nav-wexa top" aria-label="Accessibilité">
+	<button id="btn-css-theme" class="menuitem" type="button"
+			aria-label="Switch CSS theme" title="Switch CSS theme"
+			onclick="window.themes && window.themes.next()">
+	</button>
+	<button id="btn-contrast" class="menuitem accessibility"
+			aria-label="contrast" aria-pressed="false"
+			onclick="Wexa.accessibility.switchContrastScheme()"></button>
+	<button id="btn-color" class="menuitem accessibility"
+			aria-label="color" aria-pressed="false"
+			onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+
+
+<main id="main-content">
+
+
+<!-- ====================== PROBLEM AND SCOPE ====================== -->
+
+
+<section class="chapter">
+<h1>Problem and scope</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Description</h2>
+
+		<p>
+			SPPAS reads files where it runs, and the files of a person are not always
+			there: she works on her machine and SPPAS answers from a server. What crosses
+			that gap has to stand somewhere while it is being treated, and has to stop
+			standing there afterwards.
+		</p>
+
+		<p>
+			This is that somewhere, and it is nothing else. It gives a place, says what it
+			takes, writes a file there, gives an address at which a file of a place is
+			reached, and forgets what is out of date without being asked. It has no face:
+			nobody sees it, no person acts on it. It is called.
+		</p>
+
+		<p>
+			It knows nothing of what it holds. Not a workspace, not a root, not an app,
+			not what a file is for. That ignorance is the whole point: it is what lets one
+			place serve the provision of files to the apps of swapp, an app served online,
+			and whatever comes next.
+		</p>
+
+		<p>
+			<b>It exists already, in one place.</b> The spin-off Auto-CS holds it inside
+			one of its apps: a place, a lifetime, and a cleanup which runs at every
+			request rather than on a schedule. That code is the proof of concept and the
+			starting point; what it lacks is a name of its own, a place said once instead
+			of written in an app, and this dossier.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What is required of it</h2>
+
+		<p>
+			It has no needs of a person to serve: a person never reaches it. What follows
+			is what the domains which call it require, and every one of them answers a
+			need written in their dossiers.
+		</p>
+
+		<ul>
+			<li><b>R1</b> — To obtain a place where files may stand, or a refusal saying when to come back.</li>
+			<li><b>R2</b> — To be told what is accepted — what size for one file, what volume for one place, how many places — before anything is sent.</li>
+			<li><b>R3</b> — To put a file in a place, under the name it was given.</li>
+			<li><b>R4</b> — To obtain an address at which a file of a place is reached, and which lasts exactly as long as the file.</li>
+			<li><b>R5</b> — That nothing stays beyond its lifetime, and that no caller has to ask for that.</li>
+			<li><b>R6</b> — That what is in one place never meets what is in another.</li>
+		</ul>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Scope</h2>
+
+		<p>
+			This document covers a place: what it accepts, how it is obtained, what
+			becomes of what stands in it, how long, and who may reach it.
+		</p>
+
+		<p>
+			What is not covered, and belongs to whoever calls: what a file is for, which
+			files SPPAS is able to read, what is shown to a person, and what is done with
+			a file once it stands here.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== MODELLING ============================== -->
+
+
+<section class="chapter">
+<h1>Modelling</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Data dictionary</h2>
+
+		<p>
+			Three things are handled, and they are all that is handled.
+		</p>
+
+		<ul>
+			<li>
+				<b>D1. The place</b> — where files stand and nothing else stands. It is
+				named, it holds a moment, and it does not last.
+			</li>
+			<li>
+				<b>D2. The file</b> — an object standing in a place, identified by its name
+				inside it. What is manipulated here is its name and its size; its content is
+				bytes, and what they mean is not read.
+			</li>
+			<li>
+				<b>D3. The address</b> — what a file of a place is reached by. It leads to
+				that file and to nothing else of the machine, and it lasts as long as it
+				does.
+			</li>
+		</ul>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What it offers</h2>
+
+		<table>
+			<thead><tr><th>Operation</th><th>What it promises</th></tr></thead>
+			<tbody>
+				<tr><td>Say what is accepted</td><td>A size for one file, a volume for one place, a number of places. It depends on no file and on no place</td></tr>
+				<tr><td>Give a place</td><td>A place of its own, or a refusal with the hour at which there will be room. A place given is empty and named</td></tr>
+				<tr><td>Put a file in a place</td><td>The file stands there under the name it was given, or it is refused for its size or for the volume. Two places never meet</td></tr>
+				<tr><td>Give an address</td><td>An address which leads to that file and to nothing else of the machine, and which dies with it</td></tr>
+				<tr><td>Serve what an address names</td><td>The file, or nothing at all when it is out of date or when the address names none</td></tr>
+				<tr><td>Forget what is out of date</td><td>No place older than the one duration remains, with anything it held. Nobody asks for it: it is done while something else is</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			Nothing here reads a content. A type refused on its bytes, an extension which
+			is not read: those are the caller's, who knows what a file is for.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== CONSTRAINTS ============================ -->
+
+
+<section class="chapter">
+<h1>Constraints</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What the code holds to</h2>
+
+		<table>
+			<thead><tr><th>No.</th><th>Constraint</th><th>Imposed by</th></tr></thead>
+			<tbody>
+				<tr><td>C1</td><td>A place lives one single duration, the same for every place.</td><td>R5, and that nothing of what was given is kept</td></tr>
+				<tr><td>C2</td><td>The deletion is done during the requests, nothing here holding a clock.</td><td>C1, R5</td></tr>
+				<tr><td>C3</td><td>A place is not deleted while what authorises reaching it still does: it lives at least as long.</td><td>C1, R4</td></tr>
+				<tr><td>C4</td><td>A file put here does not exceed what the machine accepts.</td><td>The host of that machine, which refuses beyond</td></tr>
+				<tr><td>C5</td><td>What one place holds does not exceed a fixed volume.</td><td>A decision of the tool</td></tr>
+				<tr><td>C6</td><td>The space holds at most a fixed number of places at a time.</td><td>Whoever runs SPPAS on the machine, who will not have it filled by whoever asks</td></tr>
+				<tr><td>C7</td><td>A file is written under the name it was given, and under no other.</td><td>R3, and the callers, which find their files again by name</td></tr>
+				<tr><td>C8</td><td>Two files of one name in one place cannot both stand: the first stays, the second is refused.</td><td>C7, and a place being a place</td></tr>
+				<tr><td>C9</td><td>Where the space stands is said once, and never written in the code of whoever calls.</td><td>R1</td></tr>
+				<tr><td>C10</td><td>An address reaches a file of a place, and nothing else of the machine.</td><td>R4, and whoever runs the machine</td></tr>
+			</tbody>
+		</table>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== DECISIONS ============================== -->
+
+
+<section class="chapter">
+<h1>The decisions of the tool</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 4.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The four values</h2>
+
+		<p>
+			What the levels above do not determine, written here alone: a value written
+			twice is a value which will differ from itself.
+		</p>
+
+		<p>
+			<b>D1. A place lives thirty minutes.</b> Taken at the judgment of the moment,
+			and aligned on what already authorised an access for that long. Two durations
+			would have meant a file outliving what authorises reaching it, or the reverse.
+		</p>
+
+		<p>
+			<b>D2. A file does not exceed ten megabytes.</b> This one is not chosen: the
+			front server of the machine refuses beyond, and its configuration is not ours.
+			A file of twelve megabytes has been tried, and it does not pass. The day the
+			host changes, this value changes and nothing else does.
+		</p>
+
+		<p>
+			<b>D3. One place does not exceed a hundred megabytes.</b> Taken at the
+			judgment of the moment.
+		</p>
+
+		<p>
+			<b>D4. The space holds ten places.</b> Taken at the judgment of the moment,
+			and it is what bounds the space: ten places of a hundred megabytes, and no
+			more. Without it, whoever asks opens places until the disk gives out, every
+			one of them within its own bound.
+		</p>
+
+		<p>
+			Three of the four are ours and change by changing a line. The fourth is not
+			ours. None of them belongs to the model: a value which moves is not a rule.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== NOT WRITTEN ============================ -->
+
+
+<section class="chapter">
+<h1>What is not written yet</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 5.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What this dossier owes</h2>
+
+		<p>
+			This is a seed. It holds what came out of the dossier of the provision of
+			files, where it had been written and where it did not belong. What it owes:
+		</p>
+
+		<ul>
+			<li>the treatments and their events, written as the neighbouring dossier writes them;</li>
+			<li>the organisational level — where a place stands, when it is emptied, by whom;</li>
+			<li>the logical and physical levels: what names a place, what authorises reaching it, what an address is made of;</li>
+			<li>where the code goes, the classes, the contracts and the tests;</li>
+			<li>and a reading of what the spin-off already answers, which comes before any of it is written.</li>
+		</ul>
+
+		<p>
+			One thing is settled and should not be reopened without a reason: this domain
+			has no interface. What a person sees of a deposit — what may be given, what
+			was refused and why, what was produced and what it came from — is shown by
+			whoever calls, because it is that one which knows what the files are.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== ANNEXES ================================ -->
+
+
+<section class="chapter nonumber">
+
+<h1>Annexes</h1>
+
+<!-- =============================================================== -->
+
+	<section>
+	<h2>Annex: Legal notices</h2>
+
+	<ul>
+		<li>Author: Brigitte Bigi</li>
+		<li>Document License: GNU Free Documentation License (GFDL) 1.3</li>
+		<li>Copyright (C) 2026 Brigitte Bigi, CNRS</li>
+		<li>Creation Date: 2026-09-13</li>
+		<li>Last update: 2026-09-13</li>
+	</ul>
+
+	</section>
+
+</section>
+
+</main>
+
+
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<script>
+	window.WEXA_JS_PATH = '../whakerexa/wexa_statics/js';
+</script>
+
+<script>
+	function bootBook(Book) {
+		const book = new Book("main-content");
+		book.fillTable();
+	}
+</script>
+
+<script>
+    (function () {
+        const usingFile = (window.location.protocol === 'file:');
+        const s = document.createElement('script');
+        if (usingFile) {
+            s.src = '../whakerexa/wexa_statics/js/wexa.bundle.js';
+            s.addEventListener('load', function () {
+                if (window.Wexa && window.Wexa.ThemeManager) {
+                    const t = new window.Wexa.ThemeManager();
+                    t.register('wexa_theme',   '../whakerexa/wexa_statics/css/themes/wexa_theme.css');
+                    t.register('aurora',       '../whakerexa/wexa_statics/css/themes/wexa_theme_aurora.css');
+                    t.register('highcontrast', '../whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+					t.setDefault('wexa_theme');
+					window.themes = t;
+                }
+                if (window.Wexa && window.Wexa.Book) {
+                    bootBook(window.Wexa.Book);
+                }
+            });
+        } else {
+            s.type = 'module';
+            s.src = '../whakerexa/wexa_statics/js/wexa.js';
+        }
+        document.head.appendChild(s);
+    })();
+</script>
+
+<script type="module">
+	import { ThemeManager } from '../whakerexa/wexa_statics/js/customize/theme_manager.js';
+	import { Book } from '../whakerexa/wexa_statics/js/extras/book.js';
+	const themes = new ThemeManager();
+	themes.register('wexa_theme',   '../whakerexa/wexa_statics/css/themes/wexa_theme.css');
+	themes.register('aurora',       '../whakerexa/wexa_statics/css/themes/wexa_theme_aurora.css');
+	themes.register('highcontrast', '../whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+	themes.setDefault('wexa_theme');
+
+	window.themes = themes;
+	bootBook(Book);
+</script>
+
+
+
+</body>
+</html>
