@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2023  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -86,6 +86,7 @@ class sppasSlider(sppasImageDCWindow):
 
         # Members indicating the current state
         self._drag = None
+        self._drag_range = None
         self._key = False
         self._allow_changes = True
 
@@ -279,6 +280,7 @@ class sppasSlider(sppasImageDCWindow):
     def onMouseLeftDown(self, event):
         """Respond to mouse left down event."""
         self._drag = wx.Point(event.X, event.Y)
+        self._drag_range = (self._start, self._end)
 
     # ------------------------------------------------------------------------
     def x2time(self, x):
@@ -297,11 +299,18 @@ class sppasSlider(sppasImageDCWindow):
             coeff = float(distance) / float(w)
             # Scroll or Zoom proportionally to the mouse dragged distance.
             if self._key is True:
-                self.__Zoom(coeff, notify=True)
+                action = "zoom"
+                self.__Zoom(coeff)
             else:
-                self.__Scroll(coeff, notify=True)
+                action = "scroll"
+                self.__Scroll(coeff)
+            # The gesture is finished. Request the range the slider is showing,
+            # whatever the way it was reached during the drag.
+            if self._drag_range != (self._start, self._end):
+                self.Notify(action=action, value=(self._start, self._end))
 
         self._drag = None
+        self._drag_range = None
         self._key = False
 
     # ------------------------------------------------------------------------
@@ -316,18 +325,17 @@ class sppasSlider(sppasImageDCWindow):
             # update the period. Scroll proportionally to the mouse dragged distance.
             if abs(distance) > 10:
                 if self._key is True:
-                    self.__Zoom(coeff, notify=False)
+                    self.__Zoom(coeff)
                 else:
-                    self.__Scroll(coeff, notify=False)
+                    self.__Scroll(coeff)
                 self._drag = wx.Point(event.GetX(), event.GetY())
 
     # -----------------------------------------------------------------------
 
-    def __Scroll(self, coeff: float, notify: bool = False):
-        """Send event to parent to scroll proportionally the range.
+    def __Scroll(self, coeff: float):
+        """Scroll proportionally the displayed range. Do not notify the parent.
 
         :param coeff: (float) any value except 0.
-        :param notify: (bool) post EVT_SLIDER to the parent
 
         """
         if coeff == 0.:
@@ -338,16 +346,13 @@ class sppasSlider(sppasImageDCWindow):
         end = self._end + scroll_duration
         self.set_range(start, end)
         self.Refresh()
-        if notify is True:
-            self.Notify(action="scroll", value=(start, end))
 
     # -----------------------------------------------------------------------
 
-    def __Zoom(self, coeff: float, notify: bool = False):
-        """Send event to parent to zoom proportionally the range.
+    def __Zoom(self, coeff: float):
+        """Zoom proportionally the displayed range. Do not notify the parent.
 
         :param coeff: (float) any value except 0.
-        :param notify: (bool) post EVT_SLIDER to the parent
 
         """
         if coeff == 0.:
@@ -358,8 +363,6 @@ class sppasSlider(sppasImageDCWindow):
         end = self._end - zoom_duration
         self.set_range(start, end)
         self.Refresh()
-        if notify is True:
-            self.Notify(action="zoom", value=(start, end))
 
 # ----------------------------------------------------------------------------
 # Panel for tests
