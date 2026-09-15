@@ -883,8 +883,8 @@ class sppasMMPCtrl(sppasPlayerControlsPanel):
     def __update_after_event(self, start, end, to_notify=True):
         """Update and notify if the visible period changed.
 
-        :param start: start value before changes
-        :param end: end value before changes
+        :param start: start value before changes, or None if not known
+        :param end: end value before changes, or None if not known
         :param to_notify: (bool) Notify the parent of a change
 
         """
@@ -902,9 +902,11 @@ class sppasMMPCtrl(sppasPlayerControlsPanel):
             self.led.SetValue("{:.3f}".format(self._timeslider.get_enabled_start()))
         self._set_led_fg_color()
 
-        # Notify the parent if the visible part has changed.
+        # Notify the parent if the visible part has changed, or if the values
+        # it had before are not known.
         if to_notify is True:
-            if start != new_visible_start or end != new_visible_end:
+            if start is None or end is None or \
+                    start != new_visible_start or end != new_visible_end:
                 self.notify(action="visible", value=(new_visible_start, new_visible_end))
 
     # ----------------------------------------------------------------------
@@ -933,7 +935,9 @@ class sppasMMPCtrl(sppasPlayerControlsPanel):
         if event.action in ("scroll", "zoom"):
             s, e = event.value
             self.media_period(s, e)
-            self.__update_after_event(s, e)
+            # The ruler already applied the new period, so the values it had
+            # before are lost: they can't be compared to the current ones.
+            self.__update_after_event(None, None)
         else:
             event.Skip()
 
