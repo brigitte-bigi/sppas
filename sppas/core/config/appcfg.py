@@ -44,6 +44,7 @@
 import os
 import sys
 import json
+import hashlib
 
 from .settings import paths
 
@@ -158,8 +159,26 @@ class sppasAppConfig(object):
 
     @staticmethod
     def cfg_filename():
-        """Return the name of the config file."""
-        return os.path.join(paths.basedir, sppasAppConfig.APP_CONFIG_FILENAME)
+        """Return the name of the config file.
+
+        The file says which features are installed, and they are installed
+        in the environment SPPAS is running in: two installed versions have
+        their own, and neither writes into the other. It is stored with the
+        other files of the user, and not in the environment: an environment
+        created by somebody to install SPPAS with pip is theirs, and SPPAS
+        leaves no file of its own in it.
+
+        The name carries the environment: the name of its directory, and a
+        short digest of its full path -- two environments named alike are
+        still told apart.
+
+        """
+        prefix = os.path.abspath(sys.prefix)
+        digest = hashlib.sha1(prefix.encode("utf-8")).hexdigest()[:8]
+        name = "{:s}-{:s}{:s}".format(os.path.basename(prefix), digest,
+                                      sppasAppConfig.APP_CONFIG_FILENAME)
+
+        return os.path.join(paths.ext_dir, name)
 
     # ------------------------------------------------------------------------
 
