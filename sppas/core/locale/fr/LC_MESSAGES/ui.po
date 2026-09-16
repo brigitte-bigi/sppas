@@ -757,3 +757,9 @@ msgstr "Informations et configuration :"
 
 msgid "Some of the changes only take effect the next time SPPAS starts."
 msgstr "Certains changements ne seront effectifs qu'au prochain démarrage de SPPAS."
+
+msgid "Are you sure you want to delete {:d} files?"
+msgstr "Voulez-vous vraiment supprimer {:d} fichiers ?"
+
+msgid "None of the files are selected to be deleted."
+msgstr "Aucun fichier n'est sélectionné pour être supprimé."

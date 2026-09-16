@@ -301,8 +301,8 @@ class WorkspacesPanel(sppasPanel):
             self.notify()
 
         except Exception as e:
-            import traceback
-            print(traceback.format_exc())
+            wx.LogError("Data of the workspace {:s} were not loaded: {:s}"
+                        "".format(wkp_name, str(e)))
             # the workspace panel has to switch back to the current
             wkpslist.switch_to(event.from_wkp)
 

@@ -496,7 +496,8 @@ class FileTreeViewPanel(sppasScrolledPanel):
         if filebase is None:
             # it happens when the graphical object is created but it does not
             # correspond to a valid instance of a file/folder
-            wx.LogWarning("The id {:s} does not match a valid file/folder.")
+            wx.LogWarning("The id {:s} does not match a valid file/folder."
+                          "".format(object_id))
             return
 
         # change state of the item
