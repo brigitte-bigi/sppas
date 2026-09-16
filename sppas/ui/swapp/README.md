@@ -125,6 +125,24 @@ head declares the theme while it is populated -- `add_theme(name, href)`
 then `set_default_theme(name)` -- so that the nav, built right after, gives
 the theme of SPPAS back in the link leading to the Dashboard.
 
+An application brings more than a theme, and everything the loader of
+Whakerexa is told is declared on its tag by `swappHeadNode`. Each of these
+declarations is written by a method of the head, so that an application
+adds to it or replaces it while its head is populated, and never has to
+write the tag itself:
+
+- the buttons whose link the framework attaches, once the page is loaded --
+  `add_links(ids)`, `set_links(ids)`, `get_links()`. A page cannot attach
+  them itself: its script runs before its body exists.
+- the icon sets it draws from -- `add_icons(name, path, files)`,
+  `set_icons(declaration)`, `set_default_icons(name)`,
+  `set_icons_fallback(name)`, and their readers. The fallback is the set of
+  SPPAS: an application replacing the whole list says which set falls back
+  instead.
+- the themes the button cycles through -- `add_theme(name, href)`,
+  `set_themes(declaration)`, `set_default_theme(name)`, and their readers.
+  Naming a theme of the framework in the declaration leaves out the others.
+
 
 ### How SPPAS is closed
 
