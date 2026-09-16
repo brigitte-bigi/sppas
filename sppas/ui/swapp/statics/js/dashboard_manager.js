@@ -402,15 +402,22 @@ export default class DashboardManager extends BaseManager {
     // ----------------------------------------------------------------------
 
     /**
-     * Trigger a clean exit by submitting a hidden POST form.
+     * Ask the server to close SPPAS, then go to the page it answers with.
      *
-     * This method allows the browser to perform a full HTTP POST navigation
-     * handled entirely by the server before it stops.
+     * The event is sent and waited for: the server then knows whether the
+     * exit is granted, refused, or waiting for the other interface. The
+     * navigation which follows is a plain one -- a submitted form is
+     * removed from the document right after it is sent, and the browser
+     * abandons the navigation it was starting.
      *
-     * @returns {void}
+     * @async
+     * @returns {Promise<void>}
      */
-    #submitExitForm() {
-        this.submitForm('event_bake', 'close');
+    async #submitExitForm() {
+        const pageUri = window.location.pathname.substring(1) || window.SPPAS_DEFAULT_PAGE;
+        await this._requestManager.sendPostRequest(
+            {event_bake: 'close'}, "application/json", pageUri);
+        window.location.href = window.location.pathname + window.location.search;
     }
 
 }

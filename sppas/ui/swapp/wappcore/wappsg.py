@@ -102,6 +102,14 @@ class sppasWxAppState:
         # The port the interface is listening to, announced in its HELLO:
         # it is what allows to ask it directly whether it is still there.
         self.port = None
+        # An exit was asked for, and this interface has not answered yet.
+        # While it is waiting, the web interface does nothing else: an exit
+        # of SPPAS is an exit of both of them, or of none.
+        self.exit_pending = False
+        # The interface granted the exit. The web application is not ended
+        # here: it ends by serving its last page, the one saying the session
+        # is over, and the page is asked for by the reader's browser.
+        self.exit_granted = False
 
     # -----------------------------------------------------------------------
 
@@ -172,6 +180,39 @@ def wx_is_running() -> bool:
 
     wapp_wxstate.running = True
     return True
+
+# -----------------------------------------------------------------------
+
+
+def request_wx_exit() -> int:
+    """Ask the wx interface whether it accepts to close.
+
+    The interface answers its verdict when it has one right away -- nothing
+    opened, nothing modified -- and an acknowledgement when it has to ask
+    its own reader: the verdict then comes later, in a message of its own.
+    A silence is an interface which is not there any more, and an interface
+    which is not there does not hold an exit back.
+
+    :return: (int) EXIT_OK, EXIT_NO, or ACK when the verdict comes later
+
+    """
+    if wapp_wxstate.port is None:
+        return sppasCommKeys.EXIT_OK
+
+    client = sppasCommClient(wapp_settings.shost, wapp_wxstate.port)
+    try:
+        answer = client.request(
+            client.format_request(sppasCommKeys.EXIT_REQUEST, {"source": "swapp"}))
+        key, value = sppasCommClient.parse_message(answer)
+    except Exception as e:
+        logging.info(f"The wx interface was not asked about the exit: {e}")
+        wapp_wxstate.running = False
+        return sppasCommKeys.EXIT_OK
+
+    if key in (sppasCommKeys.EXIT_OK, sppasCommKeys.EXIT_NO):
+        return key
+
+    return sppasCommKeys.ACK
 
 # -----------------------------------------------------------------------
 

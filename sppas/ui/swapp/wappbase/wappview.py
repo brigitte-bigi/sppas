@@ -51,8 +51,10 @@ from sppas.ui import _
 from ..wappcore.wapputils import sppasImagesAccess
 from ..nodes.buttons.hbutton import sppasHTMLButton
 from ..wappcore.wappsg import wapp_settings
+from ..wappcore.wappsg import wapp_wxstate
 from ..nodes.layout.hheader import SwappHeader
 from ..nodes.layout.hfooter import SwappFooter
+from ..nodes.feedback.exit_dialog import ExitWaitDialog
 from .wapphead import THEME_NAME
 
 # ---------------------------------------------------------------------------
@@ -120,6 +122,80 @@ JS_BOOT_PAGE = (
     "            if (button !== null) { button.click(); }"
     "        }});"
     "    window.keyboard.init();"
+
+    # SPPAS closes as a whole: every page asks the server where the exit
+    # stands, shows the same modal dialog while the other interface has not
+    # answered, and goes to the last page when it has. The dialog is shown
+    # by the element itself and not by the DialogManager: the manager adds
+    # a closing cross to what it opens, and there is nothing to close here.
+    "    let exitWaiting = false;"
+    "    let exitAsked = false;"
+    "    const exitDialog = document.getElementById('exit_dialog');"
+
+    # Nothing dismisses it while the exit waits: Escape is refused, and an
+    # event of any kind brings it back -- a closed dialog would leave a page
+    # which answers nothing and says nothing about why.
+    "    const showWaiting = function (event) {"
+    "        if (exitWaiting === false) { return; }"
+    "        if (exitDialog !== null) {"
+    "            exitDialog.classList.remove('hidden-alert');"
+    "            if (exitDialog.open === false) { exitDialog.showModal(); }"
+    "        }"
+    # Taken before anybody else: the shortcuts of the page are registered on
+    # the document too, and a key would open the Journal or the Help under
+    # the dialog. Nothing of the page answers while the exit waits.
+    "        if (event !== undefined && event !== null) {"
+    "            event.preventDefault();"
+    "            event.stopImmediatePropagation();"
+    "        }"
+    "    };"
+    "    if (exitDialog !== null) {"
+    "        exitDialog.addEventListener('cancel', function (event) {"
+    "            event.preventDefault();"
+    "        });"
+    "        exitDialog.addEventListener('close', showWaiting);"
+    "        document.addEventListener('click', showWaiting, true);"
+    "        document.addEventListener('keydown', showWaiting, true);"
+    "        document.addEventListener('keyup', showWaiting, true);"
+    "        document.addEventListener('keypress', showWaiting, true);"
+
+    # The server writes it open when an exit was already waiting as this
+    # page was asked for: it is shown before anything can be clicked.
+    "        if (exitDialog.classList.contains('hidden-alert') === false) {"
+    "            exitWaiting = true;"
+    "            exitDialog.showModal();"
+    "        }"
+    "    }"
+
+    "    const exitPoll = setInterval(async function () {"
+    "        let state = null;"
+    "        try {"
+    "            const answer = await fetch(window.location.pathname, {"
+    "                method: 'POST',"
+    "                headers: {'Accept': 'application/json',"
+    "                          'Content-Type': 'application/json; charset=utf-8'},"
+    "                body: JSON.stringify({exit_state: true})});"
+    "            state = await answer.json();"
+    "        } catch (error) { return; }"
+    "        if (state === null) { return; }"
+    "        if (state.exit_granted === true) {"
+    "            if (exitAsked === true) { return; }"
+    "            exitAsked = true;"
+    "            clearInterval(exitPoll);"
+    "            window.location.href = window.location.pathname + window.location.search;"
+    "            return;"
+    "        }"
+    "        if (exitDialog === null) { return; }"
+    "        if (state.exit_pending === true && exitWaiting === false) {"
+    "            exitWaiting = true;"
+    "            showWaiting(null);"
+    "        } else if (state.exit_pending === false && exitWaiting === true) {"
+    "            exitWaiting = false;"
+    "            exitDialog.close();"
+    "            exitDialog.classList.add('hidden-alert');"
+    "            document.body.classList.remove('exit-waiting');"
+    "        }"
+    "    }, 3000);"
     "};"
 )
 
@@ -269,6 +345,14 @@ class swappBaseView:
         """
         self._htree.body_footer = SwappFooter(self._htree.identifier)
         self._populate_body_footer(*args, **kwargs)
+
+        # The same on every page: SPPAS closes as a whole, and any page can
+        # be the one displayed when the exit is asked for. It stands in the
+        # footer, which the re-bake of a page never empties. It is written
+        # open when an exit is already waiting: a page which would arrive
+        # closed leaves the reader free to click until the next poll.
+        self._htree.body_footer.append_child(
+            ExitWaitDialog(self._htree.body_footer.identifier))
 
     # -----------------------------------------------------------------------
 

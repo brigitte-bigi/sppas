@@ -319,6 +319,25 @@ dialog {
     border-radius: calc(var(--border-radius) * 2);
 }
 
+/* The exit waits for the answer of the Desktop: the page is still there to
+   be read, and out of reach until the answer comes. The dialog itself is
+   displayed in the top layer of the browser, which no filter of the page
+   reaches. */
+
+#exit_dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+}
+
+body.exit-waiting > header,
+body.exit-waiting > nav,
+body.exit-waiting > main,
+body.exit-waiting > footer {
+    filter: grayscale(1) brightness(0.7);
+    pointer-events: none;
+    user-select: none;
+}
+
 /* ── Mobile: header padding to clear the nav toggle button ── */
 
 @media only screen and (max-width: 1023.98px) {

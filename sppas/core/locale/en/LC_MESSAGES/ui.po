@@ -445,3 +445,6 @@ msgstr ""
 
 msgid "None of the files are selected to be deleted."
 msgstr ""
+
+msgid "SPPAS is waiting for your answer in the Desktop window."
+msgstr ""

@@ -394,11 +394,20 @@ class sppasMainWindow(sppasDialog):
         elif key == sppasCommKeys.SHOW_PAGE:
             self.request_page(event.GetValue())
 
+        elif key == sppasCommKeys.EXIT_REQUEST:
+            # The web interface asks whether this one accepts to close.
+            # Its request was acknowledged long before the reader made up
+            # their mind: the answer travels as a message of its own.
+            granted = self.exit(interactive=True)
+            sppasMainWindow.answer_exit(granted)
+
         elif key == sppasCommKeys.BYE:
             # The web server announces its own shutdown: this interface
-            # does not survive it either.
+            # does not survive it either. Work in progress is asked about
+            # first, exactly as when the reader closes this interface: an
+            # exit decided elsewhere is not a reason to lose it.
             logging.info("The web server closed. Closing this interface too.")
-            self.exit(interactive=False)
+            self.exit(interactive=True)
 
         else:
             logging.warning("Unexpected message received: key={:s}."
@@ -491,10 +500,11 @@ class sppasMainWindow(sppasDialog):
     # Public methods
     # -----------------------------------------------------------------------
 
-    def exit(self, interactive=False):
+    def exit(self, interactive=False) -> bool:
         """Destroy the frame, terminating the application.
 
         :param interactive: (bool) Ask user to confirm if modified files.
+        :return: (bool) False if the reader cancelled, True if it is closing
 
         """
         # Close files in editor & analyze pages
@@ -503,7 +513,7 @@ class sppasMainWindow(sppasDialog):
             nb = book.FindWindow(page_name).close_files(interactive)
             if nb == -1:
                 # The user cancelled. Can occur only if 'interactive' is True.
-                return
+                return False
 
         # Remember some properties of this window
         wx.GetApp().settings.set("frame_size", self.GetSize())
@@ -511,11 +521,38 @@ class sppasMainWindow(sppasDialog):
 
         # Destroy after decreasing transparency of the frame
         self.DestroyFadeOut()
+        return True
 
         # Under Windows, for an unknown reason (?!), the wxapp.OnExit() **WAS**
         # not invoked if exit() is called directly after clicking the Exit button.
         # if wx.Platform == "__WXMSW__":
         #     wx.GetApp().OnExit()
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def answer_exit(granted: bool) -> None:
+        """Tell the web interface whether the exit was accepted.
+
+        Nothing of this window is used: it is gone when the exit was
+        accepted, and the answer is still owed.
+
+        :param granted: (bool) True when this interface is closing
+
+        """
+        key = sppasCommKeys.EXIT_NO
+        if granted is True:
+            key = sppasCommKeys.EXIT_OK
+
+        settings = wx.GetApp().settings
+        client = sppasCommClient(settings.shost, settings.sport)
+        try:
+            client.request(client.format_request(key, {"source": "wxapp"}))
+            logging.info("The answer to the exit request was sent: {:s}"
+                         "".format(sppasCommKeys.name_of(key)))
+        except sppasCommServerError:
+            logging.info("The answer to the exit request was not sent: no "
+                         "communication server.")
 
     # -----------------------------------------------------------------------
 

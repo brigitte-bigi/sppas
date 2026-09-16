@@ -763,3 +763,6 @@ msgstr "Voulez-vous vraiment supprimer {:d} fichiers ?"
 
 msgid "None of the files are selected to be deleted."
 msgstr "Aucun fichier n'est sélectionné pour être supprimé."
+
+msgid "SPPAS is waiting for your answer in the Desktop window."
+msgstr "SPPAS attend votre réponse dans la fenêtre Bureau."
