@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/menu.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/layout.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --toc-width: 18rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -40,6 +46,13 @@
 	<button id="btn-color" class="menuitem accessibility"
 			aria-label="color" aria-pressed="false"
 			onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+
+
+<nav class="book-toc" aria-label="Table of contents">
+	<h1>A place for files which have to travel</h1>
+	<ul id="toc"></ul>
 </nav>
 
 
@@ -87,7 +100,9 @@
 		<p>
 			<b>It exists already, in one place.</b> The spin-off Auto-CS holds it inside
 			one of its apps: a place, a lifetime, and a cleanup which runs at every
-			request rather than on a schedule. That code is the proof of concept and the
+			request rather than on a schedule. An access is authorised there too, by a
+			signature carried in the address, which the front of the machine verifies and
+			whose secret and lifetime it holds. That code is the proof of concept and the
 			starting point; what it lacks is a name of its own, a place said once instead
 			of written in an app, and this dossier.
 		</p>
@@ -185,6 +200,352 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
+	<h2>Conceptual model of communication</h2>
+
+		<p>
+			This domain gives a place, takes files into it, gives an address at which one
+			of them is reached, and forgets. Two actors border it, and neither of them is
+			a person: a person never acts here.
+		</p>
+
+		<h3>Actors</h3>
+
+		<ul>
+			<li><b>A1. A caller</b> &mdash; a domain which has files standing nowhere it can read them, and which knows what they are for. It asks what is accepted, asks for a place, puts files there, and asks for an address. Two are known: the domain of the provision of files of swapp, and the app of the spin-off Auto-CS.</li>
+			<li><b>A2. Whoever holds an address</b> &mdash; it asks at an address for what that address names. It knows the address and nothing else, and it did not necessarily ask for the place: the machine of a person to whom the address was given is one of them, the caller itself is another.</li>
+		</ul>
+
+		<h3>Flows</h3>
+
+		<ul>
+			<li><b>F1. A1 &rarr; domain</b> &mdash; what is accepted? asked before anything is sent (R2).</li>
+			<li><b>F2. domain &rarr; A1</b> &mdash; the size for one file, the volume for one place, the number of places (R2).</li>
+			<li><b>F3. A1 &rarr; domain</b> &mdash; the request for a place (R1).</li>
+			<li><b>F4. domain &rarr; A1</b> &mdash; a place of its own, empty and named; or a refusal saying at what hour there will be room (R1).</li>
+			<li><b>F5. A1 &rarr; domain</b> &mdash; a file, the name it is to stand under, and the place it is for (R3).</li>
+			<li><b>F6. domain &rarr; A1</b> &mdash; that it stands there; or that it is not taken in, and why (R3, C4, C5, C8).</li>
+			<li><b>F7. A1 &rarr; domain</b> &mdash; the request for an address for a file of a place (R4).</li>
+			<li><b>F8. domain &rarr; A1</b> &mdash; the address (R4).</li>
+			<li><b>F9. A2 &rarr; domain</b> &mdash; a request at an address.</li>
+			<li><b>F10. domain &rarr; A2</b> &mdash; the file, or nothing at all (C10).</li>
+		</ul>
+
+		<p>
+			The host of the machine is not an actor: it exchanges nothing with this domain.
+			It imposes the size beyond which a file does not pass, which this domain says
+			in F2 and does not choose (D2, C4).
+		</p>
+
+		<p>
+			No flow says what a file is for, and none could be added which did: what
+			crosses the border is a name, a size, bytes, and a place. That is what lets
+			one place serve callers which have nothing in common.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Conceptual model of data</h2>
+
+		<p>
+			Two classes, and the second exists only inside the first.
+		</p>
+
+		<h3>The classes of entities</h3>
+
+		<table>
+			<thead>
+				<tr><th>Class</th><th>Properties</th><th>What it is</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>PLACE</td>
+					<td># place, moment</td>
+					<td>Where files stand and nothing else stands (D1). The moment is the one it was given at, and it is what says whether it is still of this hour</td>
+				</tr>
+				<tr>
+					<td>FILE</td>
+					<td># place, # name, size, content</td>
+					<td>An object standing in a place (D2). Its content is bytes: they are held, they are given back, and they are never read</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3>The relations</h3>
+
+		<table>
+			<thead>
+				<tr><th>No.</th><th>Verb</th><th>Leg 1</th><th>Leg 2</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>R1</td><td>stands in</td><td>FILE (1,1)</td><td>PLACE (0,n)</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			R1 is an aggregation: a file is named inside the place which holds it, and two
+			places name a file the same way without naming the same file. It is also what
+			identifies a file &mdash; its name inside its place &mdash; and it is where R6
+			is answered: what is in one place cannot be reached from another, there being
+			no way to name it from there.
+		</p>
+
+		<p>
+			A place is given empty, which is why the leg reads (0,n); and it stays a place
+			while it holds nothing, until its duration runs out.
+		</p>
+
+		<h3>Computed, and never held</h3>
+
+		<ul>
+			<li>The address at which a file is reached, which is a place, a name, a moment, and a signature made from a secret held where the space stands. It is verified by being computed again, nothing of it being written down anywhere (R4).</li>
+			<li>That a place is out of date, which follows from its moment and the one duration (C1).</li>
+			<li>The hour at which there will be room, which follows from the moment of the oldest place and the one duration (T02).</li>
+			<li>The volume of a place, which is the sum of the sizes of what stands in it (C5).</li>
+		</ul>
+
+		<p>
+			An address carries a moment of its own, so it has a life of its own, and that
+			life is not the place's: it starts when the address is made, and not when the
+			place was given. The two cannot be made to end together without giving up one
+			single duration for every place (C1), so one of them outlives the other, and
+			C3 says which: never the place. An address made at the last instant of a place
+			authorises an access past the end of that place, and what it then reaches is
+			nothing at all, which is what T05 answers and what is wanted. The reverse
+			&mdash; a file still standing which no address can reach any more &mdash; is
+			what C3 forbids.
+		</p>
+
+		<h3>What the keys do not hold</h3>
+
+		<ul>
+			<li>A file is written under the name it was given, and under no other: nothing here renames (C7).</li>
+			<li>What one place holds does not exceed the volume, which no key says (C5).</li>
+			<li>The space holds at most its number of places at a time (C6).</li>
+		</ul>
+
+		<h3>What is not modelled, and why</h3>
+
+		<ul>
+			<li>The bounds and the duration: they are values (D1 to D4), and a value which moves is not a rule.</li>
+			<li>What a file is for, what reads it, what produced it: the caller's, and the ignorance is deliberate.</li>
+			<li>Who asked for a place. A place belongs to whoever holds its name, and this domain keeps nothing of a caller.</li>
+		</ul>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Conceptual model of treatments</h2>
+
+		<p>
+			Six treatments, and they are all that the domain does. Five answer a caller
+			which asked; the sixth answers nobody. None of them waits for two events:
+			there is no synchronisation here, a request being answered on what it carries
+			and on the state of the space, and never on a second request.
+		</p>
+
+		<h3>The events</h3>
+
+		<table>
+			<thead>
+				<tr><th>No.</th><th>Event</th><th>Kind</th><th>Comes from</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>E1</td><td>A caller asks what is accepted</td><td>external</td><td>F1</td></tr>
+				<tr><td>E2</td><td>A caller asks for a place</td><td>external</td><td>F3</td></tr>
+				<tr><td>E3</td><td>A caller gives a file, for a place</td><td>external</td><td>F5</td></tr>
+				<tr><td>E4</td><td>A caller asks for an address</td><td>external</td><td>F7</td></tr>
+				<tr><td>E5</td><td>A request arrives at an address</td><td>external</td><td>F9</td></tr>
+				<tr><td>E6</td><td>The duration of a place has run out</td><td>temporal</td><td>The moment the place holds, and C1</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			E6 is temporal and nothing here holds a clock. That is not a contradiction of
+			levels: the conceptual model says that a place which has outlived its duration
+			has to go, and the organisational level says by what this is noticed &mdash;
+			the requests, C2 saying it already, for want of that chapter.
+		</p>
+
+		<section class="subssection">
+		<h3>T01 &mdash; Say what is accepted</h3>
+
+			<p><b>Purpose:</b> that a caller knows what may be sent before it sends anything.</p>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E1</td></tr>
+					<tr><td>Actions</td><td>Give the size for one file, the volume for one place, the number of places</td></tr>
+					<tr><td>Result</td><td>What is accepted (F2). Always</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				It reads no place and no file: the same answer is given whatever the space
+				holds and whoever asks. It is the only treatment of which that is true.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T02 &mdash; Give a place</h3>
+
+			<p><b>Purpose:</b> that a caller has somewhere of its own to put files.</p>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E2</td></tr>
+					<tr><td>Actions</td><td>Make a place, empty, named, holding the moment it is made at</td></tr>
+					<tr><td>Result</td><td>The place (F4). When the space holds fewer places than it may</td></tr>
+					<tr><td>Result</td><td>A refusal, and the hour at which there will be room (F4). When it holds as many as it may &mdash; the hour being the moment of the oldest place and the duration</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				The refusal says an hour and not a fault: a caller which is refused has
+				nothing to correct, and the only thing it can be told which is of any use is
+				when to come back. That hour is exact, no place outliving its duration.
+			</p>
+
+			<p>
+				Whether room was made an instant before, by the forgetting, is not said here:
+				what is done at the same moment as what belongs to the organisational level.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T03 &mdash; Put a file in a place</h3>
+
+			<p><b>Purpose:</b> that a file stands in a place, under the name it was given.</p>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E3</td></tr>
+					<tr><td>Actions</td><td>Verify the place is one and is not out of date; verify the size of the file (C4); verify the volume of the place with it (C5); verify no file of that name stands there (C8); write it under that name</td></tr>
+					<tr><td>Result</td><td>It stands there (F6). When everything is verified</td></tr>
+					<tr><td>Result</td><td>It is not taken in, and why (F6). When the place is not one or is out of date, when the size, when the volume, or when the name is taken</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				The reason is given because a caller can act on it: it is the caller which
+				knows whose file it is and what to say about it. The name which is taken is
+				the one reason of the four which is not a bound: the first of the name stays
+				and this one does not, nothing here being renamed and nothing overwritten
+				(C7, C8).
+			</p>
+
+			<p>
+				The size is verified here although the host refuses beyond it before this
+				domain ever sees the file (D2). It is verified all the same: what the host
+				refuses is not this domain's to count on, and a file which does arrive is
+				measured.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T04 &mdash; Give an address</h3>
+
+			<p><b>Purpose:</b> that a file of a place can be reached from outside the machine.</p>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E4</td></tr>
+					<tr><td>Actions</td><td>Verify the file stands in the place; make the address at which it is reached</td></tr>
+					<tr><td>Result</td><td>The address (F8). When it stands there</td></tr>
+					<tr><td>Result</td><td>No address (F8). When the place is not one, is out of date, or holds no file of that name</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				The address is made and not kept, what authorises it being carried in it and
+				verified by being made again. Nothing has to be withdrawn when a place goes,
+				and nothing has to be remembered between the moment an address is given and
+				the moment it is used. What it costs is said above: an address is out of date
+				at an hour of its own, which is never earlier than the hour of the place
+				(C3).
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T05 &mdash; Serve what an address names</h3>
+
+			<p><b>Purpose:</b> that what an address names is given to whoever holds it.</p>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E5</td></tr>
+					<tr><td>Actions</td><td>Verify the address names a file of a place which is not out of date; give its content</td></tr>
+					<tr><td>Result</td><td>The file (F10). When it stands there</td></tr>
+					<tr><td>Result</td><td>Nothing at all (F10). When the place is out of date, when the address names no file, and when it names something of the machine which is not a file of a place</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				The three refusals are one single answer, and that is the rule: what was
+				there an hour ago cannot be told apart from what was never there, nor from
+				what is not this domain's to give. Nothing is said of why, because whoever
+				holds an address is not a caller and is owed no reason (C10).
+			</p>
+
+			<p>
+				That the place is not out of date is verified here and nowhere else. What
+				authorises an address knows a moment and a secret, and it knows no place: a
+				signature which is still of this hour says nothing of the place the file
+				stands in, and a place whose duration ran out stands until something sweeps
+				it (C2). Reading the moment of the place is therefore what holds C1 on the
+				way in, and it is not to be left to whatever verifies the signature.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T06 &mdash; Forget what is out of date</h3>
+
+			<p><b>Purpose:</b> that nothing stays beyond the duration, and that no caller has to ask for it.</p>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E6</td></tr>
+					<tr><td>Actions</td><td>Delete every place whose duration has run out, and everything it holds</td></tr>
+					<tr><td>Result</td><td>The space holds no place older than the duration. Always</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				It answers nobody: no flow leaves it, no caller asked for it, and a caller
+				whose place went is not told. It is the one treatment which is the reason
+				this domain exists as a domain rather than as a folder: a place is given
+				with an end already fixed, and the end comes whether or not anyone is still
+				there (R5).
+			</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.5 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
 	<h2>What it offers</h2>
 
 		<table>
@@ -209,6 +570,147 @@
 </section>
 
 
+<!-- ====================== ORGANISATIONAL ========================= -->
+
+
+<section class="chapter">
+<h1>Organisational level</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Organisational model of treatments</h2>
+
+		<p>
+			One procedure per treatment, numbered as it is, and each one triggered by one
+			event. There is one table and not several: nothing here branches on where the
+			software is installed, on who is at the other end, or on what the files are
+			for. A caller which is refused a place is refused the same way wherever it
+			runs.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>PF</th><th>What it does</th><th>Triggered by</th><th>In charge</th><th>Where</th><th>When</th><th>Nature</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>PF1 (T01)</td><td>Says what is accepted</td><td>E1</td><td>the domain</td><td>the machine where the space stands</td><td>whenever a caller asks</td><td>automated</td></tr>
+				<tr><td>PF2 (T02)</td><td>Gives a place</td><td>E2</td><td>the domain</td><td>the same machine</td><td>whenever a caller asks</td><td>automated</td></tr>
+				<tr><td>PF3 (T03)</td><td>Puts a file in a place</td><td>E3</td><td>the domain</td><td>the same machine</td><td>each time a caller gives a file</td><td>automated</td></tr>
+				<tr><td>PF4 (T04)</td><td>Gives an address</td><td>E4</td><td>the domain</td><td>the same machine</td><td>whenever a caller asks</td><td>automated</td></tr>
+				<tr><td>PF5 (T05)</td><td>Serves what an address names</td><td>E5</td><td>the front of the machine, then the domain</td><td>the same machine</td><td>at every request at an address</td><td>automated</td></tr>
+				<tr><td>PF6 (T06)</td><td>Forgets what is out of date</td><td>E6</td><td>the domain</td><td>the same machine</td><td>at the beginning of every request which reaches it</td><td>automated</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			Two columns say the same thing six times, and both are results. <b>Where</b>:
+			one machine, the one the space stands on, and a caller runs on it too &mdash;
+			it calls this domain where it stands, and nothing of what is exchanged from F1
+			to F8 crosses a network. What crosses one is what a caller collects from a
+			person, before, and what whoever holds an address follows, after.
+			<b>Nature</b>: every procedure is automated, and none is conversational. That
+			is what &laquo;&nbsp;it has no face&nbsp;&raquo; means once it is written at
+			this level: there is nobody to converse with.
+		</p>
+
+		<p>
+			PF5 is the one procedure with two operators, and they do not do each other's
+			work. What authorises an address is verified by the front of the machine,
+			which holds the secret and which lets nothing through without it; what is
+			verified by this domain is that the place is of this hour and that the file
+			stands in it. RO3
+		</p>
+
+		<p>
+			PF6 is triggered by an event nobody sends, and it is run at the beginning of a
+			request which asked for something else. Before, and not after: a place which
+			is out of date is then neither counted against the number of places, nor put
+			into, nor addressed, nor served, and the hour PF2 announces is exact. RO2
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What the forgetting does not reach</h2>
+
+		<p>
+			Nothing here holds a clock, so the forgetting happens when something else does.
+			A space which nobody comes to holds its places past their duration, on a disk,
+			until somebody comes. That is a fact of this level and it is not hidden: what
+			is promised is not that a place is gone at the minute, it is that a place past
+			its duration is never given, never added to, and never served.
+		</p>
+
+		<p>
+			What stays on the disk is not exposed by staying. Nothing under the space is
+			served without a signature which is still of this hour, whatever stands there;
+			and a place which has ended has no address but those which were made before it
+			ended, T04 making no new one for it, each of them dying at an hour of its own.
+			What the disk keeps past the duration, it keeps from everybody.
+		</p>
+
+		<p>
+			One window is not closed by that door, and it is the other one: a signature
+			still of this hour, and a place which is not. It cannot be avoided, an address
+			beginning its life when it is made and not when its place was given. This is
+			why T05 reads the moment of the place and does not take the front of
+			the machine for an answer. A signature which is still of this hour says
+			nothing of a place, and between the instant a place runs out and the request
+			which sweeps it, the file is still on the disk. What keeps C1 on the way in is
+			the reading, not the sweeping.
+		</p>
+
+		<p>
+			And it is wanted so. A file which stands still costs no more than its absence:
+			it is written once and it is read once, and between the two it asks nothing of
+			the machine. A process which runs on and on to verify that everything is still
+			valid costs, and here it costs for nothing &mdash; it would spend, at every
+			turn, to find that there is nothing to do, and on the turn where there is
+			something it would do what a request was going to do anyway.
+		</p>
+
+		<p>
+			That is the principle, and it decides this level: nothing runs here which is
+			not answering somebody. A clock would have to be installed, watched and
+			restarted, and it would buy a minute of exactness which nobody asked for. What
+			it would buy is a disk emptied sooner, which is a matter of room and not of
+			what is promised: the promise is held by the reading.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Rules of organisation</h2>
+
+		<ul>
+			<li><b>RO1</b> &mdash; A caller calls this domain where it stands: the space and whoever asks for a place are on one machine. Nothing of what is asked and answered from F1 to F8 travels.</li>
+			<li><b>RO2</b> &mdash; The forgetting is done at the beginning of every request which reaches this domain, nobody having asked for it and nothing holding a clock (C2).</li>
+			<li><b>RO3</b> &mdash; What authorises an address is verified by the front of the machine, which holds the secret; that a place is of this hour is verified by this domain. Neither does the other's work.</li>
+			<li><b>RO4</b> &mdash; Where the space stands is said in one place and read from there: by this domain, and by the front of the machine which protects that one place, once, and not one entry per place (C9, C10).</li>
+			<li><b>RO5</b> &mdash; What says which places exist is the space itself. No list of places is held beside it, and none of callers: counting the places and finding the oldest is reading the space (C6, T02).</li>
+			<li><b>RO6</b> &mdash; A caller is never told that its place was forgotten. It learns it by being refused a file (T03), by getting no address (T04), or by an address reaching nothing (T05). Nothing is sent to anybody who did not ask.</li>
+			<li><b>RO7</b> &mdash; The bounds and the duration are said in one place and read from there. A caller obtains them by asking (T01), and holds no copy of them: a bound written twice is a bound which will differ from itself.</li>
+		</ul>
+
+	</section>
+
+</section>
+
+
 <!-- ====================== CONSTRAINTS ============================ -->
 
 
@@ -219,7 +721,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.1 -->
+	<!-- 4.1 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
@@ -230,7 +732,7 @@
 			<tbody>
 				<tr><td>C1</td><td>A place lives one single duration, the same for every place.</td><td>R5, and that nothing of what was given is kept</td></tr>
 				<tr><td>C2</td><td>The deletion is done during the requests, nothing here holding a clock.</td><td>C1, R5</td></tr>
-				<tr><td>C3</td><td>A place is not deleted while what authorises reaching it still does: it lives at least as long.</td><td>C1, R4</td></tr>
+				<tr><td>C3</td><td>What authorises reaching a file never lives less long than a place does.</td><td>C1, R4: otherwise a file still standing is not reachable any more</td></tr>
 				<tr><td>C4</td><td>A file put here does not exceed what the machine accepts.</td><td>The host of that machine, which refuses beyond</td></tr>
 				<tr><td>C5</td><td>What one place holds does not exceed a fixed volume.</td><td>A decision of the tool</td></tr>
 				<tr><td>C6</td><td>The space holds at most a fixed number of places at a time.</td><td>Whoever runs SPPAS on the machine, who will not have it filled by whoever asks</td></tr>
@@ -240,6 +742,98 @@
 				<tr><td>C10</td><td>An address reaches a file of a place, and nothing else of the machine.</td><td>R4, and whoever runs the machine</td></tr>
 			</tbody>
 		</table>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== LOGICAL LEVEL ========================== -->
+
+
+<section class="chapter">
+<h1>Logical level</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 5.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The tables</h2>
+
+		<p>
+			Each class of entities becomes a table, and its identifier becomes its key.
+			There are two, and one of them is named inside the other.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>Table</th><th>Columns</th><th>Comes from</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>PLACE</td><td><u>place</u>, moment</td><td>The class PLACE</td></tr>
+				<tr><td>FILE</td><td><u>place</u>, <u>name</u>, content</td><td>The class FILE, and R1</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			R1 is an aggregation: the aggregated class takes the key of the aggregating
+			one, so a file carries the name of its place, and the two together tell one
+			file from another. Two places carry a file under one name without carrying the
+			same file, which is R6 answered by a key and not by a verification.
+		</p>
+
+		<p>
+			The low cardinality of R1 on the side of FILE is (1,1): the key of the place is
+			taken, and it is never empty. A file has no existence outside the place which
+			names it, and that is what makes the deletion of T06 one single act: what
+			deletes a row of PLACE deletes the rows of FILE which were named by it, there
+			being no way left to name them. Nothing has to go through the files one by one,
+			and nothing is left behind which nothing points at.
+		</p>
+
+		<p>
+			On the side of PLACE it is (0,n), and the table says so: a place is a row
+			before anything stands in it, and it stays one while nothing does.
+		</p>
+
+		<p>
+			<b>Content is a column, and it is the only one which is written whole and read
+			whole.</b> Nothing looks into it, nothing indexes it, nothing selects on it. It
+			is put there by T03 and given back by T05, and between the two it is bytes.
+		</p>
+
+		<p>
+			<b>The size is not a column.</b> It is read from the content, which is held: a
+			column would be a second statement of the same thing, and one of the two would
+			end up false. That is where this differs from the neighbouring dossier, which
+			holds a size on a copy: there, a size is known of a file whose content has not
+			travelled yet, and there is nothing to read it from.
+		</p>
+
+		<p>
+			Not in the tables, and computed every time they are wanted: the size of a file,
+			the volume of a place, whether a place is out of date, the number of places
+			standing, the hour at which there will be room, and the address at which a file
+			is reached with what authorises it. None of the six would stay true if it were
+			held.
+		</p>
+
+		<p>
+			Not in the tables, and not anywhere else either: what addresses were given and
+			to whom, and which caller a place was given to. An address is verified by being
+			made again, so there is nothing to keep and nothing to withdraw; and a place
+			belongs to whoever holds its name, which is all this domain will ever know of a
+			caller.
+		</p>
+
+		<p>
+			The secret which the signatures are made from is not in the tables: it is the
+			front of the machine's, and this domain neither holds it nor reads it. RO3
+		</p>
 
 	</section>
 
@@ -256,7 +850,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 4.1 -->
+	<!-- 6.1 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
@@ -268,9 +862,10 @@
 		</p>
 
 		<p>
-			<b>D1. A place lives thirty minutes.</b> Taken at the judgment of the moment,
-			and aligned on what already authorised an access for that long. Two durations
-			would have meant a file outliving what authorises reaching it, or the reverse.
+			<b>D1. A place lives thirty minutes.</b> Taken at the judgment of the moment.
+			What authorises reaching a file is set from it and never the other way round,
+			and never below it (C3): a signature which expires first would leave a file
+			standing which nothing can reach any more.
 		</p>
 
 		<p>
@@ -312,20 +907,17 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 5.1 -->
+	<!-- 7.1 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
 	<h2>What this dossier owes</h2>
 
 		<p>
-			This is a seed. It holds what came out of the dossier of the provision of
-			files, where it had been written and where it did not belong. What it owes:
+			The conceptual level is written. What is still owed:
 		</p>
 
 		<ul>
-			<li>the treatments and their events, written as the neighbouring dossier writes them;</li>
-			<li>the organisational level — where a place stands, when it is emptied, by whom;</li>
 			<li>the logical and physical levels: what names a place, what authorises reaching it, what an address is made of;</li>
 			<li>where the code goes, the classes, the contracts and the tests;</li>
 			<li>and a reading of what the spin-off already answers, which comes before any of it is written.</li>
@@ -360,7 +952,7 @@
 		<li>Document License: GNU Free Documentation License (GFDL) 1.3</li>
 		<li>Copyright (C) 2026 Brigitte Bigi, CNRS</li>
 		<li>Creation Date: 2026-09-13</li>
-		<li>Last update: 2026-09-13</li>
+		<li>Last update: 2026-09-14</li>
 	</ul>
 
 	</section>
@@ -371,59 +963,17 @@
 
 
 
-<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
 <script>
-	window.WEXA_JS_PATH = '../whakerexa/wexa_statics/js';
-</script>
-
-<script>
-	function bootBook(Book) {
-		const book = new Book("main-content");
+	function bootPage(wexa) {
+		const book = new wexa.Book("main-content");
 		book.fillTable();
 	}
 </script>
 
-<script>
-    (function () {
-        const usingFile = (window.location.protocol === 'file:');
-        const s = document.createElement('script');
-        if (usingFile) {
-            s.src = '../whakerexa/wexa_statics/js/wexa.bundle.js';
-            s.addEventListener('load', function () {
-                if (window.Wexa && window.Wexa.ThemeManager) {
-                    const t = new window.Wexa.ThemeManager();
-                    t.register('wexa_theme',   '../whakerexa/wexa_statics/css/themes/wexa_theme.css');
-                    t.register('aurora',       '../whakerexa/wexa_statics/css/themes/wexa_theme_aurora.css');
-                    t.register('highcontrast', '../whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
-					t.setDefault('wexa_theme');
-					window.themes = t;
-                }
-                if (window.Wexa && window.Wexa.Book) {
-                    bootBook(window.Wexa.Book);
-                }
-            });
-        } else {
-            s.type = 'module';
-            s.src = '../whakerexa/wexa_statics/js/wexa.js';
-        }
-        document.head.appendChild(s);
-    })();
-</script>
-
-<script type="module">
-	import { ThemeManager } from '../whakerexa/wexa_statics/js/customize/theme_manager.js';
-	import { Book } from '../whakerexa/wexa_statics/js/extras/book.js';
-	const themes = new ThemeManager();
-	themes.register('wexa_theme',   '../whakerexa/wexa_statics/css/themes/wexa_theme.css');
-	themes.register('aurora',       '../whakerexa/wexa_statics/css/themes/wexa_theme_aurora.css');
-	themes.register('highcontrast', '../whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
-	themes.setDefault('wexa_theme');
-
-	window.themes = themes;
-	bootBook(Book);
-</script>
-
-
+<script src="../../whakerexa/wexa_statics/js/wexa.loader.js"
+        data-base="../../whakerexa/wexa_statics/"
+        data-extras="js/extras/book.js"
+        data-default="wexa_theme"></script>
 
 </body>
 </html>
