@@ -166,7 +166,13 @@ class FileTreeViewPanel(sppasScrolledPanel):
         removed = list()
         checked_fns = self.__data.get_filename_from_state(States().CHECKED)
         for fn in checked_fns:
-            removed_ids = self.__data.remove_file(fn.get_id())
+            fn_id = fn.get_id()
+            removed_ids = self.__data.remove_file(fn_id)
+            if len(removed_ids) > 0:
+                # The file left the workspace. What the panels show is updated
+                # below and says nothing about what the data hold.
+                removed.append(fn_id)
+
             for fs_id in removed_ids:
                 # The path was removed
                 if fs_id in self.__fps:
@@ -185,7 +191,6 @@ class FileTreeViewPanel(sppasScrolledPanel):
                         r = p.remove_root(fs_id)
                         if r is False:
                             r = p.remove(fs_id)
-                            removed.append(fs_id)
                         # OK. The FileName or FileRoot was removed...
                         if r is True:
                             wx.LogMessage('{:s} removed.'.format(fs_id))
@@ -210,7 +215,15 @@ class FileTreeViewPanel(sppasScrolledPanel):
     # ------------------------------------------------------------------------
 
     def DeleteCheckedFiles(self):
-        """Delete all checked files."""
+        """Delete all checked files.
+
+        The files leave the workspace, then are moved into the trash of SPPAS.
+        A file the trash refuses is said in the journal: it left the workspace
+        anyway, so it is returned like the others.
+
+        :returns: (list) List of the filenames removed of the workspace
+
+        """
         removed_filenames = self.RemoveCheckedFiles()
 
         # move the files into the trash of SPPAS
@@ -222,6 +235,8 @@ class FileTreeViewPanel(sppasScrolledPanel):
                 # Re-Add it into the data and the panels or not?????
                 wx.LogError("File {!s:s} can't be deleted due to the "
                             "following error: {:s}.".format(filename, str(e)))
+
+        return removed_filenames
 
     # ------------------------------------------------------------------------
 
@@ -292,7 +307,11 @@ class FileTreeViewPanel(sppasScrolledPanel):
         fpx = self.__data.get_object(fp.id)
         if fpx is None:
             self.__data.add(fp)
-            self.__add_folder_panel(fp)
+            panel = self.__add_folder_panel(fp)
+            # The reader asked for this folder: the view goes to it. An update
+            # from the data creates panels too, and must not move anything.
+            panel.SetFocus()
+            self.ScrollChildIntoView(panel)
             added.append(foldername)
 
         if add_files is True:
@@ -392,8 +411,6 @@ class FileTreeViewPanel(sppasScrolledPanel):
 
         """
         p = FilePathCollapsiblePanel(self, fp)
-        p.SetFocus()
-        self.ScrollChildIntoView(p)
         p.GetPane().Bind(EVT_ITEM_CLICKED, self._process_item_clicked)
 
         if idx == -1:
@@ -637,6 +654,8 @@ class FilePathCollapsiblePanel(sppasCollapsiblePanel):
         """
         if fr.get_id() not in self.__frs:
             p = self.__add_root_panel(fr)
+            # The reader added this file: the view goes to its root.
+            p.SetFocus()
         else:
             p = self.__frs[fr.get_id()]
 
@@ -779,7 +798,6 @@ class FilePathCollapsiblePanel(sppasCollapsiblePanel):
 
         """
         p = FileRootCollapsiblePanel(self.GetPane(), fr)
-        p.SetFocus()
         self.Bind(wx.EVT_COLLAPSIBLEPANE_CHANGED, self.OnCollapseChanged, p)
         sizer = self.GetPane().GetSizer()
         if idx == -1:
@@ -991,10 +1009,18 @@ class FileRootCollapsiblePanel(sppasCollapsiblePanel):
             self.FindButton("choice_checkbox").SetImage(icon_name)
             self.FindButton("choice_checkbox").Refresh()
 
-        else:
+        elif identifier in self.__fns:
             listctrl = self.FindWindow("listctrl_files")
             idx = self.__fns.index(identifier)
             listctrl.SetItem(idx, 0, "", imageId=self.__ils.index(icon_name))
+
+        else:
+            # The file is in the data but has no line in this panel yet: its
+            # state is set when the line is created, and asking for it here
+            # would stop the change of state of the other files.
+            wx.LogWarning("The file {:s} is not displayed by the panel of its "
+                          "root: its state was not updated."
+                          "".format(identifier))
 
     # ------------------------------------------------------------------------
 
@@ -1248,11 +1274,11 @@ class FileRootCollapsiblePanel(sppasCollapsiblePanel):
 
         # update a column size to ensure the filename is fully visible
         fn_chars = 0
-        for filename in self.__fns:
-            fn = FileName(filename)
-            fn_nbc = len(fn.get_name()) - len(FileRoot.pattern(fn.get_name()))
-            if fn_nbc > fn_chars:
-                fn_chars = fn_nbc
+        for identifier in self.__fns:
+            name = os.path.basename(os.path.splitext(identifier)[0])
+            nb_chars = len(name) - len(FileRoot.pattern(name))
+            if nb_chars > fn_chars:
+                fn_chars = nb_chars
         if wx.Platform == "__WXMSW__":
             f = self.GetFont().GetPointSize()
         else:

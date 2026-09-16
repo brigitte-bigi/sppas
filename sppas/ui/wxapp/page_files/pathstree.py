@@ -279,7 +279,7 @@ class PathsTreePanel(sppasPanel):
         response = YesNoQuestion(message)
         if response == wx.ID_YES:
             deleted = self._filestree.DeleteCheckedFiles()
-            if deleted:
+            if len(deleted) > 0:
                 self.notify()
         elif response == wx.ID_NO:
             wx.LogMessage('Response is no. No file deleted.')
