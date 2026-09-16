@@ -420,10 +420,11 @@ class WorkspacesPanel(sppasPanel):
         if self._wkps_panel.get_wkp_current_index() == 0:
             dlg = sppasTextEntryDialog(
                 WKP_MSG_ASK_NAME, caption=WKP_ACT_SAVE, value="Corpus")
-            if dlg.ShowModal() == wx.ID_CANCEL:
-                return
+            response = dlg.ShowModal()
             wkp_name = dlg.GetValue()
             dlg.Destroy()
+            if response == wx.ID_CANCEL:
+                return
 
             try:
                 self._wkps_panel.pin(wkp_name)
@@ -450,10 +451,11 @@ class WorkspacesPanel(sppasPanel):
         current_name = self._wkps_panel.get_wkp_name()
         dlg = sppasTextEntryDialog(
             WKP_MSG_ASK_NAME, caption=WKP_ACT_RENAME, value=current_name)
-        if dlg.ShowModal() == wx.ID_CANCEL:
-            return
+        response = dlg.ShowModal()
         new_name = dlg.GetValue()
         dlg.Destroy()
+        if response == wx.ID_CANCEL:
+            return
 
         if new_name == current_name:
             return
@@ -663,6 +665,11 @@ class WkpsRadioboxPanel(sppasPanel):
 
         # Delete of the list
         self.__wkps.delete(index)
+
+        # The workspaces after the removed one moved one rank towards the
+        # beginning, the current one included: it is named by its index.
+        if index < self.__current:
+            self.__current -= 1
 
     # -----------------------------------------------------------------------
 

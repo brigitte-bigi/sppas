@@ -249,7 +249,7 @@ class AssociatePanel(sppasPanel):
         for fn, filename in zip(checked_fn, checked_files):
             if editor.is_loaded(filename) is True:
                 nb_loaded += 1
-                fn.set_state(States().LOCKED)
+                self.__data.set_object_state(States().LOCKED, fn)
 
         if nb_loaded > 0:
             self.notify()
@@ -379,12 +379,20 @@ class AssociatePanel(sppasPanel):
         if isinstance(filenames, (list, tuple)) is False:
             filenames = [filenames]
 
+        locked = list()
         for filename in filenames:
             wx.LogMessage(filename)
             filebase = self.__data.get_object(filename)
-            cur_state = filebase.get_state()
-            if cur_state == States().LOCKED:
-                filebase.set_state(States().CHECKED)
+            if filebase is None:
+                # The file left the workspace while it was being edited.
+                wx.LogWarning("The edited file {:s} is not in the workspace "
+                              "anymore.".format(filename))
+                continue
+            if filebase.get_state() == States().LOCKED:
+                locked.append(filebase)
+
+        if len(locked) > 0:
+            self.__data.unlock(locked)
 
         self.notify()
         textedit = event.GetEventObject()

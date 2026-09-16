@@ -128,6 +128,9 @@ class sppasMainWindow(sppasDialog):
         # Members
         self._init_infos()
 
+        # The other UI answered the last time a workspace was sent to it.
+        self.__wkp_listener = True
+
         # Fix this frame content
         self._pages = list()
         self._create_content()
@@ -336,9 +339,17 @@ class sppasMainWindow(sppasDialog):
         (a uuid, see sppasWorkspace), unrelated to its display name: the
         name is fetched from the workspaces panel and sent alongside.
 
+        Nothing is sent to a socket nobody listens to. The call waits for an
+        answer, and this window waits with it: one silence is enough to learn
+        that no one is there, and every click would pay for it again. The
+        sending starts over when the other UI talks by itself.
+
         :param wkp: (sppasWorkspace)
 
         """
+        if self.__wkp_listener is False:
+            return
+
         wjson = sppasWJSON()
         wjson.set(wkp)
         wkpslist = self.FindWindow("wkpslist")
@@ -351,7 +362,10 @@ class sppasMainWindow(sppasDialog):
             client.request(request)
             logging.debug("Workspace sent to the communication server.")
         except sppasCommServerError:
-            logging.info("No communication server to send the workspace to.")
+            self.__wkp_listener = False
+            logging.info("No communication server to send the workspace to. "
+                         "The workspace is not sent again until the other "
+                         "user interface talks.")
 
     # -----------------------------------------------------------------------
 
@@ -365,6 +379,9 @@ class sppasMainWindow(sppasDialog):
         :param event: (sppasCommMessageEvent)
 
         """
+        # The other UI is there: what it sends is also what proves it listens.
+        self.__wkp_listener = True
+
         key = event.GetKey()
         if key == sppasCommKeys.WKP_CHANGED:
             wjson = sppasWJSON()
