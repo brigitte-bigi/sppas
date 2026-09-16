@@ -1,3 +1,5 @@
+# DEPRECATED
+
 This package implements the SPPAS Workspaces web application: the web version
 of the "Files" page of the wxPython interface. Its user-facing name is "Files",
 but what it actually manipulates are *workspaces* -- hence the package name
