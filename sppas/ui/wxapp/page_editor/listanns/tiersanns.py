@@ -688,8 +688,22 @@ class sppasTiersEditWindow(sppasSplitterWindow):
     # -----------------------------------------------------------------------
 
     def restore_ann(self):
-        """Restore the original annotation."""
-        self.__annctrl.update()
+        """Restore the labels the annotation was selected with.
+
+        The text of the editor is not the only place the annotation is
+        displayed: the list and the timeline show it too, and the text was
+        pushed into them as soon as the mouse left the editor. Restoring
+        puts the original labels back into all of them.
+
+        """
+        original_labels = self.__annctrl.restore()
+        if self.__cur_index == -1:
+            return
+
+        self.__tierctrl.set_annotation_labels(self.__cur_index, original_labels)
+        ann = self.__tierctrl.get_annotation(self.__cur_index)
+        self.__annctrl.set_ann(ann)
+        self.notify(action="ann_update", filename=self.get_filename(), value=self.__cur_index)
 
     # -----------------------------------------------------------------------
     # Events management
@@ -724,9 +738,37 @@ class sppasTiersEditWindow(sppasSplitterWindow):
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self._on_annotation_selected)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self._on_annotation_deselected)
 
+        # The text of the annotation, as soon as the mouse leaves its editor.
+        # Nothing else pushes it into the annotation: without this, the edited
+        # labels wait for a change of annotation, of tier, or an action on the
+        # files -- and a click anywhere else loses them.
+        self.__annctrl.Bind(wx.EVT_LEAVE_WINDOW, self._on_annlabels_left)
+
         # Toolbar events
         self.Bind(wx.EVT_BUTTON, self._process_event)
         self.Bind(wx.EVT_TOGGLEBUTTON, self._process_event)
+
+    # -----------------------------------------------------------------------
+
+    def _on_annlabels_left(self, evt):
+        """The mouse left the text editor of the annotation.
+
+        The labels are pushed into the annotation when they are valid, and
+        the list and the timeline are told. Invalid ones are left as they
+        are: saying it needs a dialog, and the mouse passing by is not the
+        moment for one. They are said when the annotation, the tier, or the
+        file is left.
+
+        :param evt: (wx.MouseEvent)
+
+        """
+        evt.Skip()
+        if self.__cur_index == -1:
+            return
+        if self.__annctrl.text_modified() != 1:
+            return
+
+        self.__annotation_validator(self.__cur_index)
 
     # -----------------------------------------------------------------------
 

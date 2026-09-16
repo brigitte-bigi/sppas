@@ -105,6 +105,8 @@ class sppasAnnLabelsCtrl(wx.richtext.RichTextCtrl):
 
         self.__code_edit = "code_review"
         self.__ann = ann
+        self.__original_labels = list()
+        self.__keep_original()
         self.update()
 
         self.Bind(wx.EVT_CHAR, self._on_char)
@@ -121,8 +123,43 @@ class sppasAnnLabelsCtrl(wx.richtext.RichTextCtrl):
         :param ann: (sppasAnnotation)
 
         """
-        self.__ann = ann
+        # The original labels are those of the annotation which is selected,
+        # and not those it holds: pushing the text into it sets it here again,
+        # and re-keeping them there would make restoring come back to the
+        # text which was just pushed.
+        if ann is not self.__ann:
+            self.__ann = ann
+            self.__keep_original()
+        else:
+            self.__ann = ann
+
         self.update()
+
+    # -----------------------------------------------------------------------
+
+    def restore(self):
+        """Reset the textctrl with the labels the annotation was selected with.
+
+        The annotation itself may have been modified since -- the text is
+        pushed into it as soon as the mouse leaves this editor -- so its
+        labels are not what restoring comes back to.
+
+        :return: (list) The labels the annotation was selected with
+
+        """
+        self.SetValue("")
+        if len(self.__original_labels) > 0:
+            self.__set_text_value(self.__labels_to_text(self.__original_labels))
+
+        return self.__original_labels
+
+    # -----------------------------------------------------------------------
+
+    def __keep_original(self):
+        """Keep the labels of the annotation, as they are now."""
+        self.__original_labels = list()
+        if self.__ann is not None:
+            self.__original_labels = list(self.__ann.get_labels())
 
     # -----------------------------------------------------------------------
 
