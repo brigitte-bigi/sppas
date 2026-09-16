@@ -40,6 +40,7 @@
 
 from __future__ import annotations
 import logging
+import threading
 
 from sppas.src.wkps.wio import sppasWJSON
 from sppas.ui.agnostic import sppasCommServer
@@ -186,6 +187,25 @@ class sppasWappCommServer(sppasCommServer):
         Tolerant version of send(): when there is no interlocutor -- the
         other UI is not running -- the event is dropped, with a log only.
         This is the observer the application subscribes to the notifier.
+
+        The sending is done by a thread of its own, and nothing waits for it.
+        The notifier is called while an answer is owed -- to the HELLO of the
+        interlocutor, or to an HTTP request -- and a sending made here would
+        hold that answer until it comes back: the interlocutor waiting for it
+        would give up first, and would believe nobody is there.
+
+        :param key: (int) One of the sppasCommKeys constants
+        :param value: (any) A JSON-serializable object
+
+        """
+        sender = threading.Thread(target=self.__send_and_forget,
+                                  args=(key, value), daemon=True)
+        sender.start()
+
+    # -----------------------------------------------------------------------
+
+    def __send_and_forget(self, key: int, value) -> None:
+        """Send an event to the interlocutor and report to the journal only.
 
         :param key: (int) One of the sppasCommKeys constants
         :param value: (any) A JSON-serializable object

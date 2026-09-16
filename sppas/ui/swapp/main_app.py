@@ -50,6 +50,7 @@ from sppas.core.config import cfg
 from sppas.core.coreutils import sppasKeyError
 from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.ui.agnostic import sppasCommKeys
+from sppas.ui.agnostic import sppasCommServerError
 from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 from sppas.ui.swapp.wappcore.wappsg import wapp_notify
 from sppas.ui.swapp.wappcore.wappsg import wapp_trace
@@ -310,7 +311,14 @@ class sppasWebApp:
             # socket can still reach it -- the same BYE it sends when it
             # is the one closing.
             if wapp_wxstate.running is True:
-                wapp_notify.notify(sppasCommKeys.BYE, None)
+                # Sent by the socket itself and not by the notifier: what the
+                # notifier pushes is sent by a thread nobody waits for, and
+                # this process is about to end. This one has to be gone
+                # before it does.
+                try:
+                    self.__socket.send(sppasCommKeys.BYE, None)
+                except sppasCommServerError as e:
+                    logging.info(f"The shutdown was not announced: {e}")
 
             # The HTTP server is no longer serving -- whatever the exit path
             # (KeyboardInterrupt or shutdown by the handler on the 410 event):
