@@ -46,10 +46,13 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.httpd import BaseResponseRecipe
 
 from ..wappcore.wappsg import wapp_settings
+from ..wappcore.wappsg import wapp_wxstate
 from .wapphead import swappHeadNode
 from .wapphead import THEME_NAMES
 from .wapphead import COLOR_NAMES
 from .wapphead import CONTRAST_NAMES
+from ..nodes.feedback.hstatusnode import HTMLTreeError410
+from ..nodes.feedback.exit_dialog import ExitWaitDialog
 
 # ---------------------------------------------------------------------------
 
@@ -110,6 +113,41 @@ class swappBaseResponse(BaseResponseRecipe):
 
     # -----------------------------------------------------------------------
 
+    def __set_waiting(self, waiting: bool) -> None:
+        """Mark the page as waiting for the exit, or not.
+
+        :param waiting: (bool) True while the other interface has not answered
+
+        """
+        classes = self._htree.get_body_attribute_value("class")
+        if classes is None:
+            classes = ""
+        names = [name for name in classes.split(" ") if len(name) > 0]
+
+        if waiting is True and "exit-waiting" not in names:
+            names.append("exit-waiting")
+        elif waiting is False and "exit-waiting" in names:
+            names.remove("exit-waiting")
+
+        self._htree.set_body_attribute("class", " ".join(names))
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def asks_for_a_page(headers) -> bool:
+        """Return True if the request asks for a page, and not for data.
+
+        :param headers: (dict) The headers of the http request received
+        :return: (bool) True when the answer is a page to be displayed
+
+        """
+        if headers is None:
+            return True
+        accepted = headers.get("Accept", "text/html")
+        return "application/json" not in accepted
+
+    # -----------------------------------------------------------------------
+
     def bake(self, events: dict, headers: dict = None) -> str:
         """Override. Translate the ambient state before processing the events.
 
@@ -135,6 +173,42 @@ class swappBaseResponse(BaseResponseRecipe):
         :param headers: (dict) The headers of the http request received
 
         """
+        # The state of an exit, asked for by the periodic call of any page:
+        # an exit of SPPAS concerns them all, and not the Dashboard alone.
+        if "exit_state" in events:
+            self._data = {"exit_pending": wapp_wxstate.exit_pending,
+                          "exit_granted": wapp_wxstate.exit_granted}
+            self._status.code = 200
+            return self._htree.serialize()
+
+        # The exit was granted: whoever asks for a page gets the last one.
+        # A request for data is answered as usual -- the server stops once
+        # it has served the page, and data nobody displays would stop it
+        # with no page shown at all.
+        if wapp_wxstate.exit_granted is True:
+            if swappBaseResponse.asks_for_a_page(headers) is True:
+                self._status.code = 410
+                return HTMLTreeError410().serialize()
+
+        # The page is served blocked when an exit is waiting: it is written
+        # open, and the boot of the page shows it before anything can be
+        # clicked. The footer holding it is built once, so it is the answer
+        # which says what it looks like, request after request.
+        dialog = self._htree.body_footer.get_child(ExitWaitDialog.ID)
+        if dialog is not None:
+            if wapp_wxstate.exit_pending is True:
+                dialog.set_attribute("class", "info")
+            else:
+                dialog.set_attribute("class", "hidden-alert info")
+
+        # While the exit waits, the page is grey and answers nothing: the
+        # dialog can be dismissed -- Escape closes any modal dialog -- and
+        # a page which would then act on a click would be in a state its
+        # reader decided nothing about.
+        self.__set_waiting(wapp_wxstate.exit_pending)
+        if wapp_wxstate.exit_pending is True:
+            events.clear()
+
         for event_name in list(events.keys()):
             if event_name.startswith("wexa_") is True:
                 events.pop(event_name)

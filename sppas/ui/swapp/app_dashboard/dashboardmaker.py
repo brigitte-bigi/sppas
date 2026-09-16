@@ -52,6 +52,8 @@ from ..wappcore.wappsg import wapp_settings
 from ..wappcore.wappsg import wapp_wkps
 from ..wappcore.wappsg import wapp_wxstate
 from ..wappcore.wappsg import wapp_trace
+from ..wappcore.wappsg import request_wx_exit
+from sppas.ui.agnostic import sppasCommKeys
 from ..nodes.feedback.hstatusnode import HTMLTreeError410
 
 from .dashboard_view import DashboardView
@@ -188,6 +190,8 @@ class DashboardResponseRecipe(swappBaseResponse):
             self._data["workspace_name"] = wkp_name
             self._data["workspace_path"] = wkp_path
             self._data["trace_alive"] = wapp_trace.viewer_alive()
+            # An exit is waiting for the answer of the wx interface: the
+            # page says so and does nothing else until the answer comes.
             return False
 
         # Received events from an HTTP Post.
@@ -196,7 +200,20 @@ class DashboardResponseRecipe(swappBaseResponse):
 
             # --- Action events to got out ---
             if e == "close":
-                self._status.code = 410
+                # An exit of SPPAS is the exit of both interfaces, or of
+                # none: the wx interface is asked first and its answer
+                # decides. Without a verdict, it is asking its own reader,
+                # and this page waits for the answer instead of closing.
+                if wapp_wxstate.exit_pending is False:
+                    answer = request_wx_exit()
+                    if answer == sppasCommKeys.EXIT_OK:
+                        # The last page is answered to whoever asks for a
+                        # page. A data request is answered as usual, and the
+                        # page is asked for right after -- the server must
+                        # not stop before it was displayed.
+                        wapp_wxstate.exit_granted = True
+                    elif answer == sppasCommKeys.ACK:
+                        wapp_wxstate.exit_pending = True
 
             # --- Information event of license agreed ---
             elif e == 'handle_licence_agreement':

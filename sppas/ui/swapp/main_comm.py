@@ -152,6 +152,18 @@ class sppasWappCommServer(sppasCommServer):
             wapp_wxstate.running = False
             wapp_wxstate.port = None
             logging.info("Interlocutor un-registered.")
+            # An interface which leaves while an exit waits for its answer
+            # has answered: it is gone, and nothing holds the exit back.
+            if wapp_wxstate.exit_pending is True:
+                self.__grant_exit()
+
+        if key == sppasCommKeys.EXIT_OK:
+            logging.info("The wx interface accepts the exit.")
+            self.__grant_exit()
+
+        if key == sppasCommKeys.EXIT_NO:
+            logging.info("The wx interface refuses the exit.")
+            wapp_wxstate.exit_pending = False
 
         if key == sppasCommKeys.WKP_CHANGED:
             # The serialized workspace carries its own internal identifier
@@ -178,6 +190,23 @@ class sppasWappCommServer(sppasCommServer):
             return self.format_message(sppasCommKeys.ACK, "Trace stored.")
 
         return super(sppasWappCommServer, self)._prepare_response(key, value)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __grant_exit() -> None:
+        """Note that the exit was granted, and end nothing.
+
+        The web application ends by serving its last page -- the one saying
+        the session is over -- and a page is served to a browser which asks
+        for it. Stopping the server from here would leave the reader in
+        front of a page whose server is already gone.
+
+        :return: (None)
+
+        """
+        wapp_wxstate.exit_pending = False
+        wapp_wxstate.exit_granted = True
 
     # -----------------------------------------------------------------------
 

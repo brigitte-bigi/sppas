@@ -74,6 +74,14 @@ class sppasCommKeys:
     TRACE = 21         # a python logging record. value = its serialized dict
     SHOW_PAGE = 22     # show a page of the interface. value = its name
 
+    # An exit asked for by one interface, and answered by the other. The
+    # asked one answers its verdict right away when it has one, and an ACK
+    # when it has to ask its own reader: the verdict is then sent later,
+    # as a message of its own.
+    EXIT_REQUEST = 23  # do you accept to close? expects EXIT_OK/EXIT_NO/ACK
+    EXIT_OK = 24       # the interface accepts to close
+    EXIT_NO = 25       # the interface refuses to close
+
     # -----------------------------------------------------------------------
 
     @staticmethod

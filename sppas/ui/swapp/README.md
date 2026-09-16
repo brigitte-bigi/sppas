@@ -126,6 +126,38 @@ then `set_default_theme(name)` -- so that the nav, built right after, gives
 the theme of SPPAS back in the link leading to the Dashboard.
 
 
+### How SPPAS is closed
+
+The Exit button of the Dashboard closes SPPAS, which is both interfaces or
+neither. When the Desktop is not running, the server answers 410 and stops,
+as before. When it is running, it is asked first: it answers right away when
+nothing holds it back, and acknowledges when it has to put the question to
+its own reader. The acknowledgement leaves an exit waiting, and the Dashboard
+shows a modal dialog until the answer comes -- the state belongs to the
+server, so a second tab and a reloaded page find the same one.
+
+Waiting concerns every page, and not the Dashboard alone: the base response
+answers the state of the exit to the periodic call of any page, and the boot
+shared by all of them shows the dialog. A page served while an exit waits is
+written with its dialog open, so it arrives blocked instead of leaving a gap
+to click through. Nothing dismisses that dialog: Escape is refused, a close
+reopens it, and any click or key is taken in the capture phase -- the
+shortcuts of the page are registered on the document too, and a key would
+otherwise open the Journal under the dialog. The page behind it is grey and
+inert, and the server clears the events it receives while waiting: a click
+which would get through acts on nothing.
+
+The answer arrives as a message of its own, and it stops nothing by itself:
+a granted exit is noted in the shared state, the next poll reads it, and the
+page asks for the last one -- the server serves it, says the session is over,
+and stops. This last page is answered to a request asking for a page, never
+to the JSON of a poll: stopping on data nobody displays would leave the
+reader in front of a page whose server is already gone. A refusal removes the
+dialog at the next poll. A Desktop leaving while an exit waits has answered
+by leaving. A Desktop which never answers holds SPPAS open: an interface
+waiting for its reader has no deadline.
+
+
 ## The trace/info store
 
 The swapp server is the collector of the traces of all the SPPAS
