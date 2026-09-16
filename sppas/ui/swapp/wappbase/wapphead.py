@@ -179,6 +179,31 @@ class swappHeadNode(HTMLHeadNode):
 
     # -----------------------------------------------------------------------
 
+    def set_themes(self, declaration: str) -> None:
+        """Set the themes the page cycles through, dropping the ones declared.
+
+        An application does not always add to the themes of SPPAS: it may
+        show its own and one of the framework, and nothing else. Adding
+        never removes, so the whole list is written at once here.
+
+        The declaration is read by the loader of Whakerexa: entries are
+        separated by commas, "name:/address" declares a theme of the page,
+        and a name alone one of the framework -- and as soon as one of them
+        is named, the others are left out.
+
+        :param declaration: (str) The themes, as the loader reads them
+
+        """
+        self.__loader.set_attribute("data-themes", declaration)
+
+    # -----------------------------------------------------------------------
+
+    def get_themes(self) -> str:
+        """Return the themes the page cycles through, as they are declared."""
+        return self.__loader.get_attribute_value("data-themes")
+
+    # -----------------------------------------------------------------------
+
     def set_default_theme(self, name: str) -> None:
         """Name the theme the page is shown with when the address names none.
 
@@ -190,6 +215,127 @@ class swappHeadNode(HTMLHeadNode):
 
         """
         self.__loader.set_attribute("data-default", name)
+
+    # -----------------------------------------------------------------------
+
+    def add_links(self, identifiers: str) -> None:
+        """Add buttons to the ones the framework attaches their link to.
+
+        A button carrying a data-href is handed to the framework once it is
+        there, and the page cannot do it itself: its own script runs before
+        the body exists, and the loader is the one which waits for the page
+        to be loaded.
+
+        :param identifiers: (str) The ids of the buttons, separated by commas
+
+        """
+        declared = self.__loader.get_attribute_value("data-links")
+        self.__loader.set_attribute("data-links",
+                                    f"{declared},{identifiers}")
+
+    # -----------------------------------------------------------------------
+
+    def set_links(self, identifiers: str) -> None:
+        """Set the buttons the framework attaches their link to.
+
+        Adding never removes, so the whole list is written at once here.
+
+        :param identifiers: (str) The ids of the buttons, separated by commas
+
+        """
+        self.__loader.set_attribute("data-links", identifiers)
+
+    # -----------------------------------------------------------------------
+
+    def get_links(self) -> str:
+        """Return the buttons whose link the framework attaches."""
+        return self.__loader.get_attribute_value("data-links")
+
+    # -----------------------------------------------------------------------
+
+    def add_icons(self, name: str, path: str, files: str = "") -> None:
+        """Add an icon set to the ones the page can draw from.
+
+        The set is declared before the ones already there: it is the one a
+        name answers with when it is also named as the default. The set of
+        SPPAS stays declared after it, and stays the fallback: a drawing an
+        application does not carry falls back on the one of SPPAS, without
+        any request.
+
+        :param name: (str) The name the set answers to
+        :param path: (str) Its directory, from the root of the served files
+        :param files: (str) The drawings it carries, or an empty string
+
+        """
+        declared = self.__loader.get_attribute_value("data-icons")
+        self.__loader.set_attribute("data-icons",
+                                    f"{name}:{path}:{files}\n{declared}")
+
+    # -----------------------------------------------------------------------
+
+    def set_icons(self, declaration: str) -> None:
+        """Set the icon sets of the page, dropping the ones declared.
+
+        An application does not always draw from the set of SPPAS: it may
+        carry its own drawings and want no other. Adding never removes, so
+        the whole list is written at once here. What a name falls back to
+        stays said by set_default_icons() and by the fallback of the loader.
+
+        The declaration is read by the loader of Whakerexa: sets are
+        separated by line breaks, and each one is "name:/directory:drawings",
+        the drawings being the names the set carries, separated by commas,
+        or nothing.
+
+        :param declaration: (str) The icon sets, as the loader reads them
+
+        """
+        self.__loader.set_attribute("data-icons", declaration)
+
+    # -----------------------------------------------------------------------
+
+    def get_icons(self) -> str:
+        """Return the icon sets of the page, as they are declared."""
+        return self.__loader.get_attribute_value("data-icons")
+
+    # -----------------------------------------------------------------------
+
+    def set_default_icons(self, name: str) -> None:
+        """Name the icon set the page draws from when the address names none.
+
+        An application declares its drawings while its head is populated:
+        what the page shows afterwards is drawn knowing it. The fallback is
+        left to SPPAS, so that a name its set does not carry still answers.
+
+        :param name: (str) The name of one of the declared sets
+
+        """
+        self.__loader.set_attribute("data-icons-default", name)
+
+    # -----------------------------------------------------------------------
+
+    def get_default_icons(self) -> str:
+        """Return the name of the icon set the page draws from by default."""
+        return self.__loader.get_attribute_value("data-icons-default")
+
+    # -----------------------------------------------------------------------
+
+    def set_icons_fallback(self, name: str) -> None:
+        """Name the icon set a drawing falls back to.
+
+        It is the set of SPPAS, and an application replacing the declared
+        sets with set_icons() has to say what falls back instead: a name
+        nothing carries any more answers with nothing at all.
+
+        :param name: (str) The name of one of the declared sets
+
+        """
+        self.__loader.set_attribute("data-icons-fallback", name)
+
+    # -----------------------------------------------------------------------
+
+    def get_icons_fallback(self) -> str:
+        """Return the name of the icon set a drawing falls back to."""
+        return self.__loader.get_attribute_value("data-icons-fallback")
 
     # -----------------------------------------------------------------------
 
