@@ -311,7 +311,7 @@ class sppasTextEditPanel(sppasPanel):
             with codecs.open(self._filename, 'w', sg.__encoding__) as fp:
                 fp.write(self._textedit.GetValue())
         except Exception as e:
-            wx.LogMessage("File {:s} not saved: {}".format(self._filename, e))
+            wx.LogError("File {:s} not saved: {}".format(self._filename, e))
             return False
 
         self._textedit.SetModified(False)

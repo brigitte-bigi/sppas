@@ -43,7 +43,6 @@ import os
 import wx
 
 from sppas.core.config import paths
-from sppas.core.coreutils import msg
 from sppas.src.wkps import States
 from sppas.ui import _
 
@@ -66,7 +65,8 @@ FLS_ACT_REM = _("Remove checked files of the workspace")
 FLS_ACT_MISS = _("Remove missing files of the workspace")
 FLS_ACT_BROS = _("Add all existing files to checked roots")
 
-FLS_MSG_CONFIRM_DEL = msg("Are you sure you want to delete {:d} files?")
+FLS_MSG_CONFIRM_DEL = _("Are you sure you want to delete {:d} files?")
+FLS_MSG_NONE_CHECKED = _("None of the files are selected to be deleted.")
 
 # ----------------------------------------------------------------------------
 
@@ -271,7 +271,7 @@ class PathsTreePanel(sppasPanel):
 
         checked_files = self._filestree.GetCheckedFiles()
         if len(checked_files) == 0:
-            Information('None of the files are selected to be deleted.')
+            Information(FLS_MSG_NONE_CHECKED)
             return
 
         # User must confirm to really delete files

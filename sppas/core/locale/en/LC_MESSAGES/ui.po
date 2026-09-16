@@ -439,3 +439,9 @@ msgstr ""
 
 msgid "Some of the changes only take effect the next time SPPAS starts."
 msgstr ""
+
+msgid "Are you sure you want to delete {:d} files?"
+msgstr ""
+
+msgid "None of the files are selected to be deleted."
+msgstr ""
