@@ -139,7 +139,8 @@ export class ThemeManager extends BaseManager {
     // -----------------------------------------------------------------------
 
     /**
-     * Declare the theme to apply when no URL parameter is present.
+     * Declare the theme to apply when no URL parameter is present, or when
+     * it names a theme the page does not carry.
      *
      * Must be called after register(). Ignored if name is unknown.
      *
@@ -155,10 +156,18 @@ export class ThemeManager extends BaseManager {
 
         const params = new URLSearchParams(window.location.search);
         if (params.has(ThemeManager.THEME_PARAMETER_NAME)) {
+
+            // What the address says, when it is a theme the page carries.
+            // A name it does not carry does not leave the page without a
+            // theme: the default applies, and the address is written with it.
             const urlTheme = params.get(ThemeManager.THEME_PARAMETER_NAME);
             if (this.#themes.has(urlTheme)) {
                 this.activate(urlTheme);
+            } else {
+                console.warn(`ThemeManager.setDefault: the address names "${urlTheme}", which is not declared. The default "${name}" applies.`);
+                this.activate(name);
             }
+
         } else if (this.#activeTheme === "") {
             this.activate(name);
         }
