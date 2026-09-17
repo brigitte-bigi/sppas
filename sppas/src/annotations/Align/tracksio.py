@@ -174,7 +174,7 @@ class TracksReaderWriter(object):
 
         # Map phonetizations (even the alternatives)
         for ann in phon_tier:
-            text = serialize_labels(ann.get_labels(), separator="\n", empty="", alt=True)
+            text = TracksWriter.serialize_labels_for_aligner(ann.get_labels(), separator="\n")
             tab = text.split('\n')
             content = list()
             for item in tab:
@@ -392,6 +392,27 @@ class TracksWriter:
     """
 
     @staticmethod
+    def serialize_labels_for_aligner(labels, separator=" "):
+        """Return the serialized labels, without the score of the tags.
+
+        The aligners are expecting the alternative tags with the "{|}"
+        system but none of them supports the "=score" of a tag.
+
+        :param labels: (list of sppasLabel) The labels to serialize
+        :param separator: (str) String separating the labels
+        :return: (str)
+
+        """
+        unscored_labels = list()
+        for label in labels:
+            tags = [tag for tag, score in label]
+            unscored_labels.append(sppasLabel(tags))
+
+        return serialize_labels(unscored_labels, separator=separator, empty="", alt=True)
+
+    # ------------------------------------------------------------------------
+
+    @staticmethod
     def write_tracks(input_audio, phon_tier, tok_tier, tok_rescue_tier, dir_align):
         """Main method to write tracks from the given data.
 
@@ -544,7 +565,7 @@ class TracksWriter:
         :param number: (int)
 
         """
-        phonemes = serialize_labels(annotation.get_labels(), separator=" ", empty="", alt=True)
+        phonemes = TracksWriter.serialize_labels_for_aligner(annotation.get_labels())
         fnp = TrackNamesGenerator.phones_filename(dir_align, number)
         with codecs.open(fnp, "w", sg.__encoding__) as fp:
             fp.write(phonemes)
@@ -560,7 +581,7 @@ class TracksWriter:
         :param number: (int)
 
         """
-        tokens = serialize_labels(annotation.get_labels(), separator=" ", empty="", alt=True)
+        tokens = TracksWriter.serialize_labels_for_aligner(annotation.get_labels())
         fnt = TrackNamesGenerator.tokens_filename(dir_align, number)
         with codecs.open(fnt, "w", sg.__encoding__) as fp:
             fp.write(tokens)

@@ -49,6 +49,12 @@ from sppas.core.config import annots
 from sppas.src.resources.dictpron import sppasDictPron
 from sppas.src.resources.mapping import sppasMapping
 from sppas.src.anndata import sppasTrsRW
+from sppas.src.anndata import sppasTier
+from sppas.src.anndata import sppasLabel
+from sppas.src.anndata import sppasTag
+from sppas.src.anndata import sppasLocation
+from sppas.src.anndata import sppasInterval
+from sppas.src.anndata import sppasPoint
 
 from sppas.src.annotations.Phon.phonetize import sppasDictPhonetizer
 from sppas.src.annotations.Phon.dagphon import sppasDAGPhonetizer
@@ -74,6 +80,9 @@ class TestDictPhon(unittest.TestCase):
         self.dd.add_pron("b", "b")
         self.dd.add_pron("c", "c")
         self.dd.add_pron(SP_ORTHO, SP)
+        # The unknown symbol must be an entry of the dictionary. If not,
+        # sppasDictPron.get_unkstamp() returns the silence symbol instead.
+        self.dd.add_pron(symbols.unk, symbols.unk)
 
     # -----------------------------------------------------------------------
 
@@ -435,3 +444,39 @@ class TestPhonetization(unittest.TestCase):
         for key in expected.get_meta_keys():
             if key != 'id':
                 self.assertEqual(expected.get_meta(key), result.get_meta(key))
+
+# ---------------------------------------------------------------------------
+
+
+class TestPhonAlternatives(unittest.TestCase):
+    """Test the phonetization of the alternatives of a normalized token."""
+
+    def setUp(self):
+        dict_file = os.path.join(paths.resources, "dict", "eng.dict")
+        self.sp = sppasPhon()
+        self.sp.load_resources(dict_filename=dict_file)
+
+    # -----------------------------------------------------------------------
+
+    def test_convert_alternatives(self):
+        """... Phonetization of a token with alternative tags."""
+        tier = sppasTier("Tokens")
+        tier.create_annotation(
+            sppasLocation(sppasInterval(sppasPoint(0.), sppasPoint(1.))),
+            [sppasLabel([sppasTag("the"), sppasTag("a")]),
+             sppasLabel(sppasTag("flight"))])
+
+        phones_tier = self.sp.convert(tier)
+        self.assertEqual(1, len(phones_tier))
+
+        # One label is phonetized into one label, whatever its number of tags.
+        labels = phones_tier[0].get_labels()
+        self.assertEqual(2, len(labels))
+
+        # The phonetizations of all the tags of a label alternative are
+        # merged into the tags of a single label: the matching of a token
+        # and its pronunciation is lost.
+        self.assertEqual(sorted(["D-@", "D-i:", "D-V", "eI", "@"]),
+                         sorted(tag.get_content() for tag, score in labels[0]))
+        self.assertEqual(1, len(labels[1]))
+        self.assertEqual("f-l-aI-t", labels[1].get_best().get_content())

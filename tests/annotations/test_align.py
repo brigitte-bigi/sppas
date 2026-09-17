@@ -50,6 +50,7 @@ import sppas.src.anndata.aio.aioutils as aioutils
 from sppas.src.anndata import sppasTrsRW
 from sppas.src.anndata import sppasLocation
 from sppas.src.anndata import sppasPoint
+from sppas.src.anndata import sppasInterval
 from sppas.src.anndata import sppasTag
 from sppas.src.anndata import sppasLabel
 from sppas.src.anndata import sppasAnnotation
@@ -396,7 +397,7 @@ class TestListOfTracks(unittest.TestCase):
         units = [1, 2]
         ListOfTracks.write(TEMP, units)
         read_units = ListOfTracks.read(TEMP)
-        self.assertEqual(units, [(1.0, 1.9), (2.0, 2.9)])
+        self.assertEqual([(1.0, 2.0), (2.0, 3.0)], read_units)
 
 # ---------------------------------------------------------------------------
 
@@ -513,7 +514,7 @@ class TestTracksWriter(unittest.TestCase):
 
         dir_tracks = os.path.join(TEMP, "test_write_text_tracks_1")
         os.mkdir(dir_tracks)
-        TracksWriter._write_text_tracks(tier_phn, None, dir_tracks)
+        TracksWriter._write_text_tracks(tier_phn, None, None, dir_tracks)
         created_files = os.listdir(dir_tracks)
         self.assertEqual(4, len(created_files))
         lines = list()
@@ -529,7 +530,7 @@ class TestTracksWriter(unittest.TestCase):
 
         dir_tracks = os.path.join(TEMP, "test_write_text_tracks_2")
         os.mkdir(dir_tracks)
-        TracksWriter._write_text_tracks(tier_phn, tier_tok, dir_tracks)
+        TracksWriter._write_text_tracks(tier_phn, tier_tok, None, dir_tracks)
         created_files = os.listdir(dir_tracks)
         self.assertEqual(4, len(created_files))
         lines = list()
@@ -563,7 +564,7 @@ class TestTracksReader(unittest.TestCase):
     """Read time-aligned track files."""
 
     def test_read(self):
-        tier_phn, tier_tok, tier_pron = TracksReader.read_aligned_tracks(DATA)
+        tier_phn, tier_tok, tier_pron = TracksReader().read_aligned_tracks(DATA)
         self.assertEqual(36, len(tier_phn))
         self.assertEqual(12, len(tier_tok))
         self.assertEqual(12, len(tier_pron))
@@ -575,8 +576,9 @@ class TestTracksReader(unittest.TestCase):
         self.assertEqual("ay", aioutils.serialize_labels(tier_phn[5].get_labels()))
         self.assertEqual("t", aioutils.serialize_labels(tier_phn[6].get_labels()))
 
-        self.assertEqual("dh-ax", aioutils.serialize_labels(tier_pron[1].get_labels()))
-        self.assertEqual("f-l-ay-t" in aioutils.serialize_labels(tier_pron[2].get_labels()))
+        # The score of a time-aligned token is serialized with its content
+        self.assertEqual("dh-ax=0.618", aioutils.serialize_labels(tier_pron[1].get_labels()))
+        self.assertTrue("f-l-ay-t" in aioutils.serialize_labels(tier_pron[2].get_labels()))
 
 # ---------------------------------------------------------------------------
 
@@ -598,6 +600,34 @@ class TestTracksReaderWriter(unittest.TestCase):
             TracksReaderWriter("")
         t1 = TracksReaderWriter(sppasMapping())
         t2 = TracksReaderWriter(None)
+
+    # -----------------------------------------------------------------------
+
+    def test_split_into_tracks_alternatives_with_scores(self):
+        """Test the tracks of alternative tags having a score."""
+        phon_tier = sppasTier("Phones")
+        phon_tier.create_annotation(
+            sppasLocation(sppasInterval(sppasPoint(0.), sppasPoint(1.))),
+            [sppasLabel([sppasTag("D-@"), sppasTag("D-i:")], [0.5, 0.5]),
+             sppasLabel(sppasTag("f-l-aI-t"), 0.8)])
+        tok_tier = sppasTier("Tokens")
+        tok_tier.create_annotation(
+            sppasLocation(sppasInterval(sppasPoint(0.), sppasPoint(1.))),
+            [sppasLabel([sppasTag("the"), sppasTag("a")], [0.5, 0.5]),
+             sppasLabel(sppasTag("flight"))])
+
+        t = TracksReaderWriter(sppasMapping())
+        t.split_into_tracks(None, phon_tier, tok_tier, None, TEMP)
+
+        # None of the aligners supports the score of a tag, so the tracks
+        # are expected to be written without any of them.
+        with codecs.open(os.path.join(TEMP, "track_000001.phn"), "r", sg.__encoding__) as fp:
+            phonemes = fp.read()
+        self.assertEqual("D-@|D-i: f-l-aI-t", phonemes)
+
+        with codecs.open(os.path.join(TEMP, "track_000001.tok"), "r", sg.__encoding__) as fp:
+            tokens = fp.read()
+        self.assertEqual("{the|a} flight", tokens)
 
     # -----------------------------------------------------------------------
 
@@ -776,8 +806,9 @@ class TestAlign(unittest.TestCase):
         self.assertEqual("l", aioutils.serialize_labels(tier_phn[4].get_labels()))
         self.assertEqual("aI", aioutils.serialize_labels(tier_phn[5].get_labels()))
         self.assertEqual("t", aioutils.serialize_labels(tier_phn[6].get_labels()))
-        self.assertEqual("{", aioutils.serialize_labels(tier_phn[21].get_labels()))
-        self.assertEqual("{-n-d", aioutils.serialize_labels(tier_pron[7].get_labels()))
+        # The aligner selected the "@-n-d" variant of "and" among the others
+        self.assertEqual("@", aioutils.serialize_labels(tier_phn[21].get_labels()))
+        self.assertEqual("@-n-d=0.812", aioutils.serialize_labels(tier_pron[7].get_labels()))
 
     # -----------------------------------------------------------------------
 

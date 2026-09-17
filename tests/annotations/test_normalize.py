@@ -53,6 +53,8 @@ from sppas.src.anndata import sppasTrsRW
 from sppas.src.anndata import sppasLabel
 from sppas.src.anndata import sppasTag
 from sppas.src.anndata.transcription import sppasTranscription
+from sppas.src.anndata.tier import sppasTier
+from sppas.src.anndata.aio.aioutils import serialize_labels
 from sppas.src.anndata.ann.annotation import sppasAnnotation
 from sppas.src.anndata.ann.annlocation import sppasLocation
 from sppas.src.anndata.ann.annlocation import sppasInterval
@@ -440,46 +442,99 @@ class TestTierNormalizer(unittest.TestCase):
         label = sppasLabel(sppasTag("un texte <tag/> normal"))
         self.assertEqual(0, len(tn.parse_cut_label(label)))
 
+        # Each cut adds an entry for the event it delimits. Its name is the
+        # value of the "event" attribute, or "dummy" if not given.
+
         # cut is surrounded by whitespace
         label = sppasLabel(sppasTag('un texte <cut units="sec" from="23" to="54"/> à couper'))
         cuts = tn.parse_cut_label(label)
-        self.assertEqual(2, len(cuts))
+        self.assertEqual(3, len(cuts))
         self.assertEqual("un texte", cuts[0][0].get_best().get_typed_content())
-        self.assertEqual("à couper", cuts[1][0].get_best().get_typed_content())
+        self.assertEqual("dummy", cuts[1][0].get_best().get_typed_content())
+        self.assertEqual("à couper", cuts[2][0].get_best().get_typed_content())
 
         # cut is inside a word (no whitespace)
         label = sppasLabel(sppasTag('un tex<cut unit="sec" from="23" to="54"/>te'))
         cuts = tn.parse_cut_label(label)
-        self.assertEqual(2, len(cuts))
+        self.assertEqual(3, len(cuts))
         self.assertEqual("un tex", cuts[0][0].get_best().get_typed_content())
         self.assertEqual(None, cuts[0][1])
         self.assertEqual(23., cuts[0][2])
-        self.assertEqual("te", cuts[1][0].get_best().get_typed_content())
-        self.assertEqual(54., cuts[1][1])
-        self.assertEqual(None, cuts[1][2])
+        self.assertEqual("dummy", cuts[1][0].get_best().get_typed_content())
+        self.assertEqual(23., cuts[1][1])
+        self.assertEqual(54., cuts[1][2])
+        self.assertEqual("te", cuts[2][0].get_best().get_typed_content())
+        self.assertEqual(54., cuts[2][1])
+        self.assertEqual(None, cuts[2][2])
 
         # several cuts
         label = sppasLabel(sppasTag('un texte <cut unit="sec" from="23" to="54"/> à '
                                     'cou<cut unit="sec" from="62" to="64"/>per'))
         cuts = tn.parse_cut_label(label)
-        self.assertEqual(3, len(cuts))
+        self.assertEqual(5, len(cuts))
         self.assertEqual("un texte", cuts[0][0].get_best().get_typed_content())
         self.assertEqual(None, cuts[0][1])
         self.assertEqual(23., cuts[0][2])
-        self.assertEqual("à cou", cuts[1][0].get_best().get_typed_content())
-        self.assertEqual(54., cuts[1][1])
-        self.assertEqual(62., cuts[1][2])
-        self.assertEqual("per", cuts[2][0].get_best().get_typed_content())
-        self.assertEqual(64., cuts[2][1])
-        self.assertEqual(None, cuts[2][2])
+        self.assertEqual("dummy", cuts[1][0].get_best().get_typed_content())
+        self.assertEqual(23., cuts[1][1])
+        self.assertEqual(54., cuts[1][2])
+        self.assertEqual("à cou", cuts[2][0].get_best().get_typed_content())
+        self.assertEqual(54., cuts[2][1])
+        self.assertEqual(62., cuts[2][2])
+        self.assertEqual("dummy", cuts[3][0].get_best().get_typed_content())
+        self.assertEqual(62., cuts[3][1])
+        self.assertEqual(64., cuts[3][2])
+        self.assertEqual("per", cuts[4][0].get_best().get_typed_content())
+        self.assertEqual(64., cuts[4][1])
+        self.assertEqual(None, cuts[4][2])
+
+    def test_transcription_alternatives(self):
+        """Test the alternatives of the transcription: the "<a,b>" convention."""
+        vocab = sppasVocabulary(os.path.join(paths.resources, "vocab", "fra.vocab"))
+        tier = sppasTier("Transcription")
+        tier.create_annotation(
+            sppasLocation(sppasInterval(sppasPoint(0.), sppasPoint(1.))),
+            sppasLabel(sppasTag("J'ai <jamais,panais> réussi")))
+        tier.create_annotation(
+            sppasLocation(sppasInterval(sppasPoint(1.), sppasPoint(2.))),
+            sppasLabel(sppasTag("j'ai <il chante,ils chantent> bien")))
+        tier.create_annotation(
+            sppasLocation(sppasInterval(sppasPoint(2.), sppasPoint(3.))),
+            sppasLabel(sppasTag("J'ai jamais réussi")))
+
+        tokens_tier = TierNormalizer(vocab).normalize_tier(
+            tier, ["replace", "tokenize", "numbers", "lower", "punct"])
+        self.assertEqual(3, len(tokens_tier))
+
+        # A label alternative is a label with several tags. The number of
+        # labels is the same, with or without alternatives.
+        self.assertEqual(4, len(tokens_tier[0].get_labels()))
+        self.assertEqual(4, len(tokens_tier[1].get_labels()))
+        self.assertEqual(4, len(tokens_tier[2].get_labels()))
+
+        labels = tokens_tier[0].get_labels()
+        self.assertEqual(1, len(labels[0]))
+        self.assertEqual(2, len(labels[2]))
+        self.assertEqual("jamais", labels[2].get_best().get_content())
+        self.assertEqual(["jamais", "panais"],
+                         [tag.get_content() for tag, score in labels[2]])
+        self.assertEqual("j' ai {jamais|panais} réussi",
+                         serialize_labels(labels, separator=" "))
+
+        # The whitespace of a tag made of several tokens is replaced
+        labels = tokens_tier[1].get_labels()
+        self.assertEqual(2, len(labels[2]))
+        self.assertEqual("j' ai {il_chante|ils_chantent} bien",
+                         serialize_labels(labels, separator=" "))
 
     def test_cut_units(self):
         """Test label cut with different units."""
         label = sppasLabel(sppasTag('un texte <cut units="sec" from="23" to="54"/> à couper'))
         cuts = TierNormalizer().parse_cut_label(label)
-        self.assertEqual(2, len(cuts))
+        self.assertEqual(3, len(cuts))
         self.assertEqual("un texte", cuts[0][0].get_best().get_typed_content())
-        self.assertEqual("à couper", cuts[1][0].get_best().get_typed_content())
+        self.assertEqual("dummy", cuts[1][0].get_best().get_typed_content())
+        self.assertEqual("à couper", cuts[2][0].get_best().get_typed_content())
 
 # ---------------------------------------------------------------------------
 
