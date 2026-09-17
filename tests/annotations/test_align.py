@@ -578,7 +578,9 @@ class TestTracksReader(unittest.TestCase):
         self.assertEqual(2, len(labels[0]))
         self.assertEqual(["jamais", "panais"],
                          [tag.get_content() for tag, score in labels[0]])
-        self.assertEqual("{jamais|panais}", aioutils.serialize_labels(labels))
+
+        # An aligner scores a whole alternative, so its tags are equiprobable
+        self.assertEqual("{jamais=0.5|panais=0.5}", aioutils.serialize_labels(labels))
 
     # -----------------------------------------------------------------------
 
@@ -918,3 +920,191 @@ class TestAlign(unittest.TestCase):
         for key in expected.get_meta_keys():
             if key != 'id':
                 self.assertEqual(expected.get_meta(key), result.get_meta(key))
+
+# ---------------------------------------------------------------------------
+
+
+class TestAlternativesScoring(unittest.TestCase):
+    """Score the alternative tags of the tokens with the aligned pronunciation."""
+
+    def setUp(self):
+        if os.path.exists(TEMP) is False:
+            os.mkdir(TEMP)
+
+    def tearDown(self):
+        shutil.rmtree(TEMP)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def keyed_label(contents, key=None):
+        """Return a label with a tag for each given content."""
+        label = sppasLabel([sppasTag(c) for c in contents])
+        if key is not None:
+            label.set_key(key)
+        return label
+
+    @staticmethod
+    def one_annotation(labels):
+        """Return an annotation of a tier, located from 0. to 1. second."""
+        tier = sppasTier("tier")
+        return tier.create_annotation(
+            sppasLocation(sppasInterval(sppasPoint(0.), sppasPoint(1.))), labels)
+
+    # -----------------------------------------------------------------------
+
+    def test_get_alternatives(self):
+        """Collect the phonetizations of the alternatives of the tokens."""
+        annotation = TestAlternativesScoring.one_annotation(
+            [TestAlternativesScoring.keyed_label(["s-a~-z", "s-a~", "s-a~-t"], "w_2")])
+        annotation.set_meta("phon-w_2-1", "s-a~-z|s-a~")
+        annotation.set_meta("phon-w_2-2", "s-a~-t|s-a~")
+        self.assertEqual([[["s-a~-z", "s-a~"], ["s-a~-t", "s-a~"]]],
+                         TracksReaderWriter.get_alternatives(annotation))
+
+        # A token without metadata or without a key has no phonetization
+        annotation = TestAlternativesScoring.one_annotation(
+            [TestAlternativesScoring.keyed_label(["b-O~"], "w_1")])
+        self.assertEqual([[]], TracksReaderWriter.get_alternatives(annotation))
+        annotation = TestAlternativesScoring.one_annotation(
+            [TestAlternativesScoring.keyed_label(["b-O~"])])
+        self.assertEqual([[]], TracksReaderWriter.get_alternatives(annotation))
+
+    # -----------------------------------------------------------------------
+
+    def test_score_token(self):
+        """Score the tags of a token with the aligned pronunciation."""
+        phonetizations = [["s-a~-z", "s-a~"], ["s-a~-t", "s-a~"]]
+
+        # All the alternatives are kept. Only one of them has the aligned
+        # pronunciation, so it gets the probability of the aligner to have
+        # selected the right word: "1 - confidence" is divided by the 2
+        # candidate pronunciations, because selecting the wrong variant of
+        # "sans" is not an error on the word.
+        tok_ann = TestAlternativesScoring.one_annotation(
+            [TestAlternativesScoring.keyed_label(["sans", "cent"])])
+        pron_ann = TestAlternativesScoring.one_annotation(
+            [sppasLabel(sppasTag("s-a~-z"), 0.8)])
+        TracksReaderWriter._score_token(tok_ann, pron_ann, phonetizations)
+        label = tok_ann.get_labels()[0]
+        self.assertEqual([("sans", 0.9), ("cent", 0.1)],
+                         [(tag.get_content(), round(score, 6)) for tag, score in label])
+        self.assertEqual("sans", label.get_best().get_content())
+
+        # Homophones are equiprobable, so no word is selected among them
+        tok_ann = TestAlternativesScoring.one_annotation(
+            [TestAlternativesScoring.keyed_label(["sans", "cent"])])
+        pron_ann = TestAlternativesScoring.one_annotation(
+            [sppasLabel(sppasTag("s-a~"), 0.7)])
+        TracksReaderWriter._score_token(tok_ann, pron_ann, phonetizations)
+        self.assertEqual([("sans", 0.5), ("cent", 0.5)],
+                         [(tag.get_content(), score)
+                          for tag, score in tok_ann.get_labels()[0]])
+
+        # A word the transcriber judged possible is never impossible: the
+        # homophones share the probability, the other word gets the rest.
+        tok_ann = TestAlternativesScoring.one_annotation(
+            [TestAlternativesScoring.keyed_label(["sans", "cent", "bien"])])
+        pron_ann = TestAlternativesScoring.one_annotation(
+            [sppasLabel(sppasTag("s-a~"), 0.9)])
+        TracksReaderWriter._score_token(
+            tok_ann, pron_ann, phonetizations + [["b-j-e~"]])
+        self.assertEqual([("sans", 0.483333), ("cent", 0.483333), ("bien", 0.033333)],
+                         [(tag.get_content(), round(score, 6))
+                          for tag, score in tok_ann.get_labels()[0]])
+
+        # Without any confidence of the aligner, nothing can be departed:
+        # the words are equiprobable.
+        tok_ann = TestAlternativesScoring.one_annotation(
+            [TestAlternativesScoring.keyed_label(["sans", "cent"])])
+        pron_ann = TestAlternativesScoring.one_annotation(
+            [sppasLabel(sppasTag("s-a~-z"))])
+        TracksReaderWriter._score_token(tok_ann, pron_ann, phonetizations)
+        self.assertEqual([("sans", 0.5), ("cent", 0.5)],
+                         [(tag.get_content(), score)
+                          for tag, score in tok_ann.get_labels()[0]])
+
+    # -----------------------------------------------------------------------
+
+    def test_score_token_weights(self):
+        """Weight the words by their number of pronunciations."""
+        # "sang" has a single pronunciation, "sans" and "cent" have two of
+        # them, so they were giving only one chance out of two to "s-a~".
+        tok_ann = TestAlternativesScoring.one_annotation(
+            [TestAlternativesScoring.keyed_label(["sans", "cent", "sang"])])
+        pron_ann = TestAlternativesScoring.one_annotation(
+            [sppasLabel(sppasTag("s-a~"), 0.8)])
+        TracksReaderWriter._score_token(
+            tok_ann, pron_ann,
+            [["s-a~-z", "s-a~"], ["s-a~-t", "s-a~"], ["s-a~"]])
+        self.assertEqual([("sans", 0.25), ("cent", 0.25), ("sang", 0.5)],
+                         [(tag.get_content(), round(score, 6))
+                          for tag, score in tok_ann.get_labels()[0]])
+
+    # -----------------------------------------------------------------------
+
+    def test_score_token_guards(self):
+        """Do not score the tags if the phonetizations can't be trusted."""
+        # The aligned pronunciation is none of the phonetizations
+        tok_ann = TestAlternativesScoring.one_annotation(
+            [TestAlternativesScoring.keyed_label(["sans", "cent"])])
+        pron_ann = TestAlternativesScoring.one_annotation(
+            [sppasLabel(sppasTag("z-z-z"), 0.5)])
+        TracksReaderWriter._score_token(tok_ann, pron_ann, [["s-a~-z"], ["s-a~-t"]])
+        self.assertEqual([("sans", None), ("cent", None)],
+                         [(tag.get_content(), score)
+                          for tag, score in tok_ann.get_labels()[0]])
+
+        # The number of tags is not the number of phonetizations
+        tok_ann = TestAlternativesScoring.one_annotation(
+            [TestAlternativesScoring.keyed_label(["sans"])])
+        pron_ann = TestAlternativesScoring.one_annotation(
+            [sppasLabel(sppasTag("s-a~-z"), 0.5)])
+        TracksReaderWriter._score_token(tok_ann, pron_ann, [["s-a~-z"], ["s-a~-t"]])
+        self.assertEqual([("sans", None)],
+                         [(tag.get_content(), score)
+                          for tag, score in tok_ann.get_labels()[0]])
+
+    # -----------------------------------------------------------------------
+
+    def test_score_alternatives(self):
+        """Score the tokens of the tracks with their aligned pronunciation."""
+        phon_tier = sppasTier("Phones")
+        phon_ann = phon_tier.create_annotation(
+            sppasLocation(sppasInterval(sppasPoint(0.), sppasPoint(1.))),
+            [TestAlternativesScoring.keyed_label(["b-j-e~"], "w_1"),
+             TestAlternativesScoring.keyed_label(["s-a~-z", "s-a~", "s-a~-t"], "w_2")])
+        phon_ann.set_meta("phon-w_2-1", "s-a~-z|s-a~")
+        phon_ann.set_meta("phon-w_2-2", "s-a~-t|s-a~")
+
+        tok_tier = sppasTier("Tokens")
+        tok_tier.create_annotation(
+            sppasLocation(sppasInterval(sppasPoint(0.), sppasPoint(1.))),
+            [TestAlternativesScoring.keyed_label(["bien"], "w_1"),
+             TestAlternativesScoring.keyed_label(["sans", "cent"], "w_2")])
+
+        t = TracksReaderWriter(sppasMapping())
+        t.split_into_tracks(None, phon_tier, tok_tier, None, TEMP)
+
+        # The tracks, as an aligner returned them: one annotation per token
+        aligned_tok = sppasTier("TokensAlign")
+        aligned_pron = sppasTier("PronTokAlign")
+        for (begin, end), tokens, pron, score in (
+                ((0., 0.5), ["bien"], "b-j-e~", 0.9),
+                ((0.5, 1.), ["sans", "cent"], "s-a~-z", 0.812)):
+            location = sppasLocation(sppasInterval(sppasPoint(begin), sppasPoint(end)))
+            aligned_tok.create_annotation(
+                location, TestAlternativesScoring.keyed_label(tokens))
+            aligned_pron.create_annotation(
+                location.copy(), sppasLabel(sppasTag(pron), score))
+
+        t._score_alternatives(TEMP, aligned_tok, aligned_pron)
+
+        # The token without alternative is unchanged
+        self.assertEqual("bien", aioutils.serialize_labels(aligned_tok[0].get_labels()))
+        # A single word is matching the aligned pronunciation: it is THE word,
+        # and the alternative it was chosen among is kept.
+        self.assertEqual([("sans", 0.906), ("cent", 0.094)],
+                         [(tag.get_content(), round(score, 6))
+                          for tag, score in aligned_tok[1].get_labels()[0]])
+        self.assertEqual("sans", aligned_tok[1].get_labels()[0].get_best().get_content())

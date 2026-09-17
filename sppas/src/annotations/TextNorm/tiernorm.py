@@ -109,13 +109,17 @@ class TierNormalizer(TextNormalizer):
                 # New in SPPAS 1.9.6.
                 #  - The result is a sequence of labels.
                 #  - Token variants are stored into alternative tags
+                # New in SPPAS 5.1.
+                #  - Each token is identified by the key of its label
                 for tok in tokens:
                     if tok.startswith('{') and tok.endswith('}'):
                         tok = tok[1:-1]
                         tags = [sppasTag(p) for p in tok.split('|')]
                     else:
                         tags = sppasTag(tok)
-                    labels.append(sppasLabel(tags))
+                    token_label = sppasLabel(tags)
+                    token_label.set_key("w_" + str(len(labels) + 1))
+                    labels.append(token_label)
 
             tokens_tier.create_annotation(location, labels)
 
