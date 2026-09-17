@@ -406,8 +406,9 @@ class sppasTimelinePanel(sppasPanel):
             panel = self._files[self._sel_file]
             s, e = panel.get_selected_localization()
             self.smmpc.set_selection_range(s, e)
-            # ensure (s,e) is visible in the timeline
-            self.update_visible_range(s, e)
+            if ann_idx != -1:
+                # ensure (s,e) is visible in the timeline
+                self.update_visible_range(s, e)
 
     # -----------------------------------------------------------------------
 
