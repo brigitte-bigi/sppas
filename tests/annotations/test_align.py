@@ -563,6 +563,25 @@ class TestTracksWriter(unittest.TestCase):
 class TestTracksReader(unittest.TestCase):
     """Read time-aligned track files."""
 
+    def test_read_alternatives(self):
+        """Read a track in which the aligner returned alternative tags."""
+        # An aligner returns the alternatives of a track as they were given
+        # to it, so with the "{|}" system, and it must not be a part of the
+        # content of the tags.
+        tier = sppasTier("TokensAlign")
+        TracksReader()._add_aligned_track_into_tier(
+            tier, [(0., 1., "{jamais|panais}", None)], 0., 1.)
+        self.assertEqual(1, len(tier))
+
+        labels = tier[0].get_labels()
+        self.assertEqual(1, len(labels))
+        self.assertEqual(2, len(labels[0]))
+        self.assertEqual(["jamais", "panais"],
+                         [tag.get_content() for tag, score in labels[0]])
+        self.assertEqual("{jamais|panais}", aioutils.serialize_labels(labels))
+
+    # -----------------------------------------------------------------------
+
     def test_read(self):
         tier_phn, tier_tok, tier_pron = TracksReader().read_aligned_tracks(DATA)
         self.assertEqual(36, len(tier_phn))

@@ -362,7 +362,11 @@ class TracksReader(object):
                 location = sppasLocation(sppasInterval(sppasPoint(loc_s, self.__radius), sppasPoint(loc_e, self.__radius)))
 
                 # fix the label
-                # allow to work with alternative tags
+                # allow to work with alternative tags. The aligners are
+                # returning the alternatives as they were given to them, so
+                # with the "{|}" system of the tracks.
+                if contents.startswith('{') is True and contents.endswith('}') is True:
+                    contents = contents[1:-1]
                 tags = [sppasTag(c) for c in contents.split('|')]
                 if scores is not None:
                     tag_scores = [float(s) for s in scores.split('|')]
