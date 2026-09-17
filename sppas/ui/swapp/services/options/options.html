@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>B. Bigi - What an app lets one set</title>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../../statics/icons/sppas5.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../../whakerexa/wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --toc-width: 18rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<header id="header-content">
+
+	<a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+
+	<h1>What an app lets one set</h1>
+	<h2>Brigitte Bigi</h2>
+
+</header>
+
+
+
+<nav class="nav-wexa top" aria-label="Accessibilité">
+	<button id="btn-css-theme" class="menuitem" type="button"
+			aria-label="Switch CSS theme" title="Switch CSS theme"
+			onclick="window.themes && window.themes.next()">
+	</button>
+	<button id="btn-contrast" class="menuitem accessibility"
+			aria-label="contrast" aria-pressed="false"
+			onclick="Wexa.accessibility.switchContrastScheme()"></button>
+	<button id="btn-color" class="menuitem accessibility"
+			aria-label="color" aria-pressed="false"
+			onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+
+
+<nav class="book-toc" aria-label="Table of contents">
+	<h1>What an app lets one set</h1>
+	<ul id="toc"></ul>
+</nav>
+
+
+
+<main id="main-content">
+
+
+<!-- ====================== PROBLEM AND SCOPE ====================== -->
+
+
+<section class="chapter">
+<h1>Problem and scope</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Description</h2>
+
+		<p>
+			An app of SPPAS does not do one thing: it does what it was told to do. What
+			tells it is a handful of values &mdash; a language, a
+			threshold, a file of correspondences, a box ticked &mdash; and those values
+			have to come from somebody. That somebody is a person, and she has to be
+			shown what there is to set before she can set it.
+		</p>
+
+		<p>
+			This is what shows it, and it is nothing else. It is given what an app lets
+			one set, it shows it in a form which can be acted upon, it takes what was
+			set, it refuses what cannot be used, and it hands back what was decided. It
+			runs nothing, and it does not know what a single one of those values
+			means.
+		</p>
+
+		<p>
+			That ignorance is the whole point. A threshold is a number to this domain and
+			nothing more; which threshold, of what, and what happens above it, belongs to
+			the app which declared it. It is what lets one interface serve every app of
+			swapp, and whatever is added next, without being read again.
+		</p>
+
+		<p>
+			<b>It exists already, and it is shared already.</b> In the wx interface,
+			<code>sppasOptionsPanel</code> is one class, and its own header says who uses
+			it: <code>page_annotate.annotselect</code> and
+			<code>page_plugins.plug_list</code>. One panel, two pages, no page of its
+			own &mdash; which is what this domain is, written in the words of the
+			interface which exists. What swapp lacks is that panel, and it will lack it
+			the day one of its apps declares an option.
+		</p>
+
+		<p>
+			What an option is made of is established and is not redesigned here:
+			<code>sppasOption</code> carries a key, a type, an un-typed value, a name, a
+			short text and a long description, and its type is one of six &mdash;
+			<code>bool</code>, <code>int</code>, <code>float</code>, <code>str</code>,
+			<code>filename</code>, <code>filepath</code>. This document reads that, and
+			adds nothing to it.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Defining the needs</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Problem statement and objectives</h3>
+
+			<p>
+				Setting the options of an app raises a difficulty which is neither
+				technical nor linguistic: the person who sets them is not the person who
+				wrote the app. She is handed a few values to decide &mdash; a
+				threshold, a window, a language, a file of correspondences &mdash; named
+				in a few words by somebody who knew what they were for, and she has to
+				decide them before anything runs. What each of them does, what happens
+				above or below, and what was there before she touched it are not hers to
+				know, and today they are not shown to her.
+			</p>
+
+			<p>
+				The central problem addressed here is thus:
+			</p>
+
+			<blockquote role="region" aria-label="Key Idea" class="info">
+				<p>how to let a person set what an app will do, when she did not write
+				that app &mdash; making every value intelligible before it is
+				given, and reversible after.</p>
+			</blockquote>
+
+			<p>
+				The difficulty is sharpened by three conditions. The options are declared
+				by the app and not here: one app offers three, another twenty, and an app
+				written by somebody else offers whatever its author chose, and none of
+				them is known in advance. They are typed but not
+				bounded: nothing says that a threshold is a duration, that a duration is
+				in seconds, or which values are absurd. And the same must serve where
+				SPPAS runs on the machine of the person and where it runs on a server, a
+				difference which is invisible until an option asks for a file.
+			</p>
+
+			<p>
+				There is material to work with, and it is already written. Every option
+				carries a short text and a long description, both written by whoever
+				declared it. The interface which exists today shows the first and has
+				never shown the second.
+			</p>
+
+			<p>
+				<b>That is why this is designed again, and not translated.</b> Turning the
+				wx panel into a web page would carry that silence over with everything
+				else: a list of widgets, one terse label each, no way back to the value
+				which was proposed, and a dialog which opens on a machine which may not be
+				the right one. What is unsatisfactory there is not the toolkit, and
+				changing the toolkit would settle none of it.
+			</p>
+
+			<p>The objectives follow:</p>
+
+			<ul>
+				<li>to show, for every option, what it is for &mdash; in a few words, and
+				at length for whoever asks &mdash; using what its author already
+				wrote;</li>
+				<li>to show the value which stands, before anything is touched;</li>
+				<li>to give, for each kind of option, the thing which suits it, and to say
+				that a value cannot be used at the moment it is given and not when the
+				app runs;</li>
+				<li>to let the value which was proposed be restored, for one option or for
+				all of them, without anybody having to remember it;</li>
+				<li>to serve an option which takes a file as the others are served,
+				wherever that file stands and wherever SPPAS runs;</li>
+				<li>to keep what was set from one time to the next, so that it is not set
+				again;</li>
+				<li>to guarantee accessibility, of what is shown and of what is
+				operated.</li>
+			</ul>
+
+			<p>
+				This runs nothing, does not know what a value means, and does not judge
+				which values make sense together: all three belong to whoever declared
+				the option. It aims at one thing &mdash; that setting an option
+				be a decision taken with what it takes to take it, rather than a number
+				typed into a box.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Expressing the needs</h3>
+
+			<p>
+				The needs below come from two places: what the apps already declare and
+				what the interface which serves them today does with it, and what a
+				person doing the work runs into. None of them is a need of a machine, and
+				none of them says how it is answered.
+			</p>
+
+			<h4>Deciding with what it takes to decide</h4>
+
+			<p>
+				A person who sets an option is rarely the person who declared it. The few
+				words which name it were written by somebody who already knew what it was
+				for, and they are read by somebody who does not: <i>window</i>,
+				<i>threshold</i>, <i>shift</i> say nothing of what they measure, in what
+				unit, or what happens on either side of the value. Whoever declared the
+				option wrote more than those few words &mdash; a long description is part
+				of what an option carries &mdash; and it has never been shown. The need is
+				therefore not to document the tool: it is to put what was already written
+				where the decision is taken. And the value which stands has to be visible
+				before it is touched, because a person who cannot see what she is changing
+				is not changing it, she is replacing it.
+			</p>
+
+			<h4>Giving a value in the form it has</h4>
+
+			<p>
+				An option is typed, and the type is not a detail of storage: it says what
+				kind of thing is being decided. A yes or a no is not a word to be spelled,
+				a number is not a string which happens to hold digits, a file is not a path
+				to be copied by hand. The need is that what is offered to act on matches
+				what is being decided, so that a whole class of mistakes cannot be made
+				rather than being caught afterwards.
+			</p>
+
+			<p>
+				What cannot be prevented that way has to be said at once. An app runs
+				for minutes on a set of files; a value it cannot use, discovered
+				there, costs those minutes and the person has to start again with no idea
+				which of the twenty values was the wrong one. The need is that a refusal
+				reaches her where she gave the value, and names it.
+			</p>
+
+			<h4>Coming back to what was proposed</h4>
+
+			<p>
+				Options are explored. A person who does not know what a threshold does
+				finds out by moving it, and moving it is only reasonable if she can get
+				back. Today she cannot: once the proposed value has been overwritten, it is
+				gone, and nothing in the interface says what it was. The need is that the
+				value which was proposed remains reachable &mdash; for one option, when she
+				has spoilt one; for all of them, when she wants to start from a state she
+				can name.
+			</p>
+
+			<h4>An option which designates a file</h4>
+
+			<p>
+				Two of the six kinds of option do not hold a value: they designate a file.
+				An app which maps SAMPA phonemes onto IPA is given a file of
+				correspondences, and that file belongs to the person &mdash; it is her
+				alphabet, her corpus, her convention. In the interface which exists, a
+				dialog opens on the machine where that interface runs, which settles the
+				question by making it invisible: the two machines are the same one.
+			</p>
+
+			<p>
+				They are not the same one when SPPAS answers from a server. The file is
+				then on a machine which is not the one which will read it, and designating
+				it is not enough. The need is unchanged for the person &mdash; to choose
+				her own file, wherever it stands &mdash; and it is the need the provision
+				of files answers, locally as well as online. It is named here, and it is
+				answered there.
+			</p>
+
+			<h4>Setting once, running many times</h4>
+
+			<p>
+				An app is not run once. Somebody working on a corpus runs the same one on
+				one set of files, then on another, then on a third, with the same options
+				every time. Setting twenty values at each run is not a service
+				rendered, it is an obstacle, and the person who meets it stops using the
+				options at all and lives with what was proposed. The need is that what was
+				set be found again as it was left.
+			</p>
+
+			<p>
+				This is a need of the machine of the person and of no other. What is set
+				where SPPAS runs on her own machine is hers to find again; on a server,
+				there is nobody to find it again for, and nothing of hers stays there.
+			</p>
+
+			<h4>Accessibility</h4>
+
+			<p>
+				Everything above rests on things being perceived: a label, a description,
+				the value which stands, a refusal, the way back. Contrast, legibility, text
+				alternatives, keyboard and screen-reader operation, and a stable
+				terminology between what is shown and what an option is called are not
+				qualities added to this domain: they are the conditions under which it does
+				anything at all. An option which cannot be read is an option which was not
+				offered.
+			</p>
+
+			<p>
+				Two of the needs listed below are not argued here, because they are the act
+				itself and not a difficulty: that a person sets the options of an app, and
+				that the value she gave is the one which counts.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Eliciting the needs</h3>
+
+			<p>
+				Eliciting the needs means turning them into things this domain names and
+				shows. What follows is not a list of what the code will do: it is what the
+				person is put in front of, and what each of those things is called here.
+			</p>
+
+			<h4>Concepts manipulated by this domain</h4>
+
+			<dl>
+			<dt>Option</dt>
+			<dd>One thing which can be set. It carries a key, a kind, a value, a label,
+			a description, and the value it was declared with. It is declared by an app
+			and never by this domain.</dd>
+
+			<dt>Kind</dt>
+			<dd>What sort of thing an option holds, which says what suits it. There are
+			six: a yes or a no, a whole number, a number with decimals, a text, the name
+			of a file, the path of a folder.</dd>
+
+			<dt>Value</dt>
+			<dd>What the option holds at this moment. It is what is given back, and it is
+			the only thing of an option this domain ever changes.</dd>
+
+			<dt>Declared value</dt>
+			<dd>The value the option was declared with. It is what &laquo;&nbsp;going
+			back&nbsp;&raquo; goes back to, and it is never overwritten.</dd>
+
+			<dt>Label</dt>
+			<dd>The few words which name an option, written by whoever declared it.</dd>
+
+			<dt>Description</dt>
+			<dd>What that same author wrote at greater length. It exists, and it is what
+			the interface of today never shows.</dd>
+
+			<dt>Refusal</dt>
+			<dd>What is said of a value which cannot be used, at the moment it is given,
+			and about that value alone.</dd>
+
+			<dt>Container</dt>
+			<dd>The piece of page an app places in its own, holding the options it
+			declared. This domain has no page: it has this.</dd>
+			</dl>
+
+			<h4>One line per option, and three things on it</h4>
+
+			<p>
+				The need to decide with what it takes to decide is expressed by a line per
+				option carrying three things and always the same three: <b>what it
+				is</b> &mdash; the label, and the description for whoever asks for
+				it; <b>what it holds</b> &mdash; the value, readable before anything is
+				touched; and <b>what it may hold</b> &mdash; the thing which suits its
+				kind, which is what is acted upon.
+			</p>
+
+			<p>
+				The order does not change from one option to the next and the three are
+				never merged: a label which is also the control, or a value which is only
+				visible once the control has focus, puts the person back where she was
+				&mdash; changing something she cannot read.
+			</p>
+
+			<h4>What suits each kind</h4>
+
+			<table>
+			<thead>
+			  <tr><th scope="col">Kind</th><th scope="col">What the person is given</th><th scope="col">What it prevents</th></tr>
+			</thead>
+			<tbody>
+			  <tr><td>a yes or a no</td><td>Something with two states, and both are visible</td><td>Spelling a word which means yes</td></tr>
+			  <tr><td>a whole number</td><td>A field which takes digits, with the bounds when the option has any</td><td>A number which is not one</td></tr>
+			  <tr><td>a number with decimals</td><td>The same, and the separator is not the person's problem</td><td>A comma refused as a full stop</td></tr>
+			  <tr><td>a text</td><td>A field, and nothing more: what a text may hold is the app's business</td><td>Nothing, and it says so</td></tr>
+			  <tr><td>the name of a file</td><td>A way of designating one of her files</td><td>Writing a path which is right on another machine</td></tr>
+			  <tr><td>the path of a folder</td><td>The same, for a folder</td><td>The same</td></tr>
+			</tbody>
+			</table>
+
+			<p>
+				The last two are the ones which are not a matter of typing, and they are
+				where this domain stops: designating a file is asked of the provision of
+				files, which answers it on the machine of the person as well as from a
+				server. What comes back is a file this domain hands on without opening.
+			</p>
+
+			<h4>The value which was proposed, and where it comes from</h4>
+
+			<p>
+				<b>An option does not carry it.</b> What an option holds is one value, and
+				changing it overwrites what was there: nothing in what is declared today
+				says what that value was at the start. The need to come back therefore
+				cannot be answered by looking &mdash; there is nothing left to look
+				at.
+			</p>
+
+			<p>
+				It is expressed here as the <i>declared value</i>: what an app hands over
+				is not a value to be modified in place, but an option and the value it was
+				declared with, the second being kept and never written on. Going back is
+				then reading, for one option or for all of them, and it costs nothing.
+			</p>
+
+			<p>
+				This is the one point at which the elicitation asks something of the app
+				rather than of the person. It is not a new kind of data: it is what the app
+				already holds when it declares its options, and which it stops holding the
+				moment it hands them over.
+			</p>
+
+			<h4>What is said when a value cannot be used</h4>
+
+			<p>
+				A refusal names the option it is about, says what was expected, and
+				appears where the value was given. It never speaks of the others, and it
+				never prevents them from being set: a person who has given nineteen good
+				values and one bad one has given nineteen good values.
+			</p>
+
+			<p>
+				What is refused here is what the kind of an option settles &mdash; a
+				number which is not one, a value outside the bounds an option states. What
+				a value means, and whether it makes sense beside another, is refused
+				nowhere here: this domain does not know it, and pretending to would make
+				it the place where every app's knowledge accumulates.
+			</p>
+
+			<h4>Where the options stand when there are many (inferred need)</h4>
+
+			<p>
+				No person has asked for this, and it does not come from an expressed need:
+				it comes from what the interface of today is. The panel which serves the
+				options scrolls, in both directions, which is the shape a list takes when
+				nobody knows how long it will be. An app which declares twenty options
+				gives twenty lines with nothing to hold on to, and what is at the bottom
+				is what is never read.
+			</p>
+
+			<p>
+				It is expressed here as a need which is inferred and stated as such: that
+				the options of one app be given somewhere which does not require the
+				person to hold twenty things in mind at once. Whether that is an order, a
+				grouping, or something else is not decided by this chapter, and what
+				decides it is what the apps actually declare. It is written down so that
+				the day it is decided, it is decided on purpose.
+			</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Needs</h2>
+
+		<p>
+			The needs are those of the person. None of them says by what it is answered,
+			and none of them is the need of a machine.
+		</p>
+
+		<ul>
+			<li><b>B1</b> &mdash; To set the options of an app.</li>
+			<li><b>B2</b> &mdash; To know what each option is for: one short sentence, and a longer explanation on demand.</li>
+			<li><b>B3</b> &mdash; To see the value of each option before touching it.</li>
+			<li><b>B4</b> &mdash; To change a value, and to have that value be the one which counts.</li>
+			<li><b>B5</b> &mdash; To give each value with what suits it: a box for a yes or a no, a number for a number, a file for a file, and so on.</li>
+			<li><b>B6</b> &mdash; To know at once that a value cannot be used.</li>
+			<li><b>B7</b> &mdash; To restore the value which was proposed, for one option or for all of them.</li>
+			<li><b>B8</b> &mdash; To choose one's own file when an option takes one, wherever it stands.</li>
+			<li><b>B11</b> &mdash; To set everything by keyboard and by screen reader.</li>
+			<li><b>B12</b> &mdash; To find the options as they were left, instead of setting them again.</li>
+		</ul>
+
+		<p>
+			Four things which were written here as needs are not needs, and they have been
+			taken out: that an app obtains something to show, that it receives what was
+			set, that neither side knows what the other holds, and that a value already
+			given is still there when the next one is. They are how this domain is
+			arranged, and they are stated where that is stated. The number of a need which
+			left is not given to another.
+		</p>
+
+		<p>
+			<b>B8 is the one this domain does not answer.</b> An option of type
+			<code>filename</code> or <code>filepath</code> designates a file of a machine,
+			and in the wx interface a dialog opens on the machine where the interface
+			runs. Online that machine is not the one SPPAS runs on. The need is real
+			&mdash; an app which maps SAMPA phonemes onto IPA is given a file of
+			correspondences, and that file belongs to the person &mdash; and it is the
+			need the provision of files answers, locally as well as online. This domain
+			asks; it does not answer.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Scope</h2>
+
+		<p>
+			This document covers what an app lets one set: how it is obtained, how it is
+			shown, how it is changed, what is refused, and how what was set is handed
+			back.
+		</p>
+
+		<p>
+			What is not covered, and belongs to whoever declares an option: what it means,
+			what it is for, what a value does to an app, and which values make sense
+			together. What is not covered, and belongs elsewhere: where a file stands and
+			how it gets there, which is the provision of files; and the running itself,
+			which is the app's.
+		</p>
+
+		<p>
+			<code>sppasOption</code> and <code>sppasBaseOption</code> are read and not
+			modelled. Their functioning is established, and this document names them as it
+			names a neighbour.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== ANNEXES ================================ -->
+
+
+<section class="chapter nonumber">
+
+<h1>Annexes</h1>
+
+<!-- =============================================================== -->
+
+	<section>
+	<h2>Annex: Legal notices</h2>
+
+	<ul>
+		<li>Author: Brigitte Bigi</li>
+		<li>Document License: GNU Free Documentation License (GFDL) 1.3</li>
+		<li>Copyright (C) 2026 Brigitte Bigi, CNRS</li>
+		<li>Creation Date: 2026-09-17</li>
+		<li>Last update: 2026-09-17</li>
+	</ul>
+
+	</section>
+
+</section>
+
+</main>
+
+
+
+<script>
+	function bootPage(wexa) {
+		const book = new wexa.Book("main-content");
+		book.fillTable();
+	}
+</script>
+
+<script src="../../whakerexa/wexa_statics/js/wexa.loader.js"
+        data-base="../../whakerexa/wexa_statics/"
+        data-extras="js/extras/book.js"
+        data-default="wexa_theme"></script>
+
+</body>
+</html>
