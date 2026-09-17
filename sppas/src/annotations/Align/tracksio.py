@@ -83,6 +83,8 @@ class TracksReaderWriter(object):
 
         """
         self.__reader = TracksReader(radius)
+        # Phonetizations of the alternative tags of the tokens of each track
+        self.__alternatives = dict()
         # Mapping system for the phonemes
         if mapping is None:
             mapping = sppasMapping()
@@ -106,6 +108,171 @@ class TracksReaderWriter(object):
 
         """
         return ListOfTracks.read(dir_name)
+
+    # ------------------------------------------------------------------------
+    # Alternatives of the tokens
+    # ------------------------------------------------------------------------
+
+    @staticmethod
+    def get_alternatives(annotation):
+        """Return the phonetizations of the alternative tags of the tokens.
+
+        The phonetization of each alternative tag of a token is lost in the
+        tags of a label, so the Phonetization is storing them into the
+        metadata of its annotations, addressed by the key of a label and the
+        rank of a tag. An empty list is returned for a token without any
+        alternative, or if the annotation has no such metadata.
+
+        :param annotation: (sppasAnnotation) An annotation of a phonetization
+        :return: (list) For each label, the phonetizations of each of its tags
+
+        """
+        alternatives = list()
+        for label in annotation.get_labels():
+            key = label.get_key()
+            tag_phonetizations = list()
+            if key is not None:
+                rank = 1
+                phonetizations = annotation.get_meta("phon-" + key + "-" + str(rank), None)
+                while phonetizations is not None:
+                    tag_phonetizations.append(phonetizations.split(separators.variants))
+                    rank += 1
+                    phonetizations = annotation.get_meta("phon-" + key + "-" + str(rank), None)
+
+            alternatives.append(tag_phonetizations)
+
+        return alternatives
+
+    # ------------------------------------------------------------------------
+
+    def _score_alternatives(self, dir_name, tier_tok, tier_pron):
+        """Score the alternative tags of the tokens with the aligned pronunciation.
+
+        The tag of a token is scored with the score of the pronunciation the
+        aligner selected if one of its phonetizations is this pronunciation,
+        and with 0. if not. The tags of homophones are then sharing the same
+        score, so no word is selected among them.
+
+        Nothing is done if the phonetizations of the alternatives are missing
+        or if they are not matching the aligned tokens, which happens when the
+        tokenization was rescued or re-created.
+
+        :param dir_name: (str) Input directory with the aligned tracks
+        :param tier_tok: (sppasTier) The time-aligned tokens
+        :param tier_pron: (sppasTier) The time-aligned pronunciations
+
+        """
+        if len(self.__alternatives) == 0:
+            return
+
+        for track_number, unit in enumerate(ListOfTracks.read(dir_name), 1):
+            alternatives = self.__alternatives.get(track_number, list())
+            if len(alternatives) == 0:
+                continue
+
+            begin = sppasPoint(unit[0])
+            end = sppasPoint(unit[1])
+            tok_anns = tier_tok.find(begin, end, overlaps=False)
+            pron_anns = tier_pron.find(begin, end, overlaps=False)
+            if len(tok_anns) != len(alternatives) or len(pron_anns) != len(tok_anns):
+                logging.warning(
+                    "The phonetizations of the alternatives of the track {:d} are "
+                    "ignored: {:d} tokens were aligned but {:d} were phonetized."
+                    "".format(track_number, len(tok_anns), len(alternatives)))
+                continue
+
+            for tok_ann, pron_ann, tag_phonetizations in zip(tok_anns, pron_anns, alternatives):
+                if len(tag_phonetizations) > 1:
+                    TracksReaderWriter._score_token(tok_ann, pron_ann, tag_phonetizations)
+
+    # ------------------------------------------------------------------------
+
+    @staticmethod
+    def _score_token(tok_ann, pron_ann, tag_phonetizations):
+        """Score the tags of a time-aligned token with its aligned pronunciation.
+
+        :param tok_ann: (sppasAnnotation) One time-aligned token
+        :param pron_ann: (sppasAnnotation) The pronunciation of this token
+        :param tag_phonetizations: (list) The phonetizations of each of its tags
+
+        """
+        label = tok_ann.get_labels()[0]
+        tags = [tag for tag, score in label]
+        if len(tags) != len(tag_phonetizations):
+            logging.warning(
+                "The token '{:s}' has {:d} tags but {:d} of them were phonetized. "
+                "Its tags are not scored.".format(
+                    serialize_labels(tok_ann.get_labels()), len(tags), len(tag_phonetizations)))
+            return
+
+        pron_label = pron_ann.get_labels()[0]
+        pron_tag = pron_label.get_best()
+        pronunciation = pron_tag.get_content()
+
+        matching = list()
+        for rank, phonetizations in enumerate(tag_phonetizations):
+            if pronunciation in phonetizations:
+                matching.append(rank)
+
+        # The guard: an aligned pronunciation of none of the alternatives means
+        # that the phonetizations can't be trusted - a defective mapping table
+        # of the phone set, for example. The label is then left as it is.
+        if len(matching) == 0:
+            logging.warning(
+                "The aligned pronunciation '{:s}' of the token '{:s}' is none of "
+                "its phonetizations. Its tags are not scored.".format(
+                    pronunciation, serialize_labels(tok_ann.get_labels())))
+            return
+
+        # All the alternatives are kept and their scores are the probability
+        # of each of them to be the aligned word. A word the transcriber
+        # judged possible is never impossible, so none of them is scored 0.
+        confidence = pron_label.get_score(pron_tag)
+        if confidence is None or confidence <= 0. or confidence > 1.:
+            # Without the confidence of the aligner, nothing can be departed
+            scores = [1. / float(len(tags))] * len(tags)
+        else:
+            # The pronunciations of a word being equiprobable between them, a
+            # word with 'k' of them is giving only one chance out of 'k' to
+            # the selected one: the words matching it are weighted by 1/k.
+            # The dilution of the confidence by the number of variants is the
+            # same for all the words of the track, so it does not bias this
+            # weighting.
+            weights = list()
+            for rank in matching:
+                weights.append(1. / float(len(tag_phonetizations[rank])))
+            total_weight = sum(weights)
+
+            # The confidence of an aligner in the pronunciation it selected is
+            # diluted by the number of candidate pronunciations: 0.82 in
+            # average with one of them, 0.42 with five ones. So "1 -
+            # confidence" is mixing two errors: to have selected the wrong
+            # word, and the wrong variant of the right word. Only the first
+            # one is an error on the word, hence the division by the number of
+            # candidate pronunciations of the matching words.
+            candidates = list()
+            for rank in matching:
+                for phonetization in tag_phonetizations[rank]:
+                    if phonetization not in candidates:
+                        candidates.append(phonetization)
+
+            error_mass = (1. - confidence) / float(len(candidates))
+            if len(matching) == len(tags):
+                # There's no other word the error could be attributed to
+                error_mass = 0.
+            matching_mass = 1. - error_mass
+
+            scores = list()
+            for rank in range(len(tags)):
+                if rank in matching:
+                    weight = 1. / float(len(tag_phonetizations[rank]))
+                    scores.append(matching_mass * weight / total_weight)
+                else:
+                    scores.append(error_mass / float(len(tags) - len(matching)))
+
+        aligned_label = sppasLabel(tags, scores)
+        aligned_label.set_key(label.get_key())
+        tok_ann.set_labels([aligned_label])
 
     # ------------------------------------------------------------------------
     # Read files
@@ -149,6 +316,11 @@ class TracksReaderWriter(object):
                     scores.append(score)
                 labels.append(sppasLabel(tags, scores))
             ann.set_labels(labels)
+
+        # The pronunciations are back to the phone set of the phonetization,
+        # so the alternatives of the tokens can be scored with them.
+        self._score_alternatives(dir_name, tier_tok, tier_pron)
+
         return tier_phn, tier_tok, tier_pron
 
     # ------------------------------------------------------------------------
@@ -173,7 +345,13 @@ class TracksReaderWriter(object):
         self._mapping.set_reverse(True)
 
         # Map phonetizations (even the alternatives)
-        for ann in phon_tier:
+        self.__alternatives = dict()
+        for track_index, ann in enumerate(phon_tier):
+            # The phonetizations of the alternatives are collected before the
+            # labels of the annotation are replaced by the mapped ones.
+            self.__alternatives[track_index + 1] = \
+                TracksReaderWriter.get_alternatives(ann)
+
             text = TracksWriter.serialize_labels_for_aligner(ann.get_labels(), separator="\n")
             tab = text.split('\n')
             content = list()
@@ -372,6 +550,14 @@ class TracksReader(object):
                     tag_scores = [float(s) for s in scores.split('|')]
                 else:
                     tag_scores = None
+
+                # An aligner returns one score for a whole alternative, so its
+                # tags are made equiprobable. Alternative tags always have a
+                # score, even when the aligner gave none of them.
+                if len(tags) > 1:
+                    if tag_scores is None or len(tag_scores) != len(tags):
+                        tag_scores = [1. / float(len(tags))] * len(tags)
+
                 label = sppasLabel(tags, tag_scores)
 
                 tier.create_annotation(location, label)

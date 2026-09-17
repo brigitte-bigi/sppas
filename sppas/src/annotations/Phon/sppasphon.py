@@ -266,26 +266,48 @@ class sppasPhon(sppasBaseAnnotation):
                     normalized.append(label)
 
             # Phonetize all labels of the normalized transcription
+            metadata = list()
             for label in normalized:
 
                 phonetizations = list()
+                tag_phonetizations = list()
                 for text, score in label:
+                    tag_phones = list()
                     if text.is_pause() or text.is_silence():
                         # It's in case the pronunciation dictionary
                         # were not properly fixed.
-                        phonetizations.append(SIL)
+                        tag_phones.append(SIL)
 
                     elif text.is_empty() is False:
                         phones = self._phonetize(text.get_content(), track_nb=i+1)
                         for p in phones:
-                            phonetizations.extend(p.split(separators.variants))
+                            tag_phones.extend(p.split(separators.variants))
+
+                    tag_phonetizations.append(tag_phones)
+                    phonetizations.extend(tag_phones)
 
                 #  - The result is a sequence of labels.
                 #  - Variants are alternative tags.
+                #  - The key of the label is the one of the token it is the
+                #    phonetization of.
                 tags = [sppasTag(p) for p in set(phonetizations)]
-                labels.append(sppasLabel(tags))
+                phon_label = sppasLabel(tags)
+                phon_label.set_key(label.get_key())
+                labels.append(phon_label)
 
-            phones_tier.create_annotation(location, labels)
+                # The tags of the label are a set of phonetizations, so the
+                # one of each alternative tag of the token is lost. It is
+                # stored into the metadata of the annotation, addressed by the
+                # key of the label and the rank of the tag of the token.
+                if label.get_key() is not None and len(label) > 1:
+                    for rank, tag_phones in enumerate(tag_phonetizations):
+                        metadata.append(
+                            ("phon-" + label.get_key() + "-" + str(rank + 1),
+                             separators.variants.join(tag_phones)))
+
+            phon_ann = phones_tier.create_annotation(location, labels)
+            for meta_key, meta_value in metadata:
+                phon_ann.set_meta(meta_key, meta_value)
 
         return phones_tier
 

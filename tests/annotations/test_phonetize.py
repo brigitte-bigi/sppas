@@ -461,10 +461,13 @@ class TestPhonAlternatives(unittest.TestCase):
     def test_convert_alternatives(self):
         """... Phonetization of a token with alternative tags."""
         tier = sppasTier("Tokens")
+        token_label = sppasLabel([sppasTag("the"), sppasTag("a")])
+        token_label.set_key("w_1")
+        other_label = sppasLabel(sppasTag("flight"))
+        other_label.set_key("w_2")
         tier.create_annotation(
             sppasLocation(sppasInterval(sppasPoint(0.), sppasPoint(1.))),
-            [sppasLabel([sppasTag("the"), sppasTag("a")]),
-             sppasLabel(sppasTag("flight"))])
+            [token_label, other_label])
 
         phones_tier = self.sp.convert(tier)
         self.assertEqual(1, len(phones_tier))
@@ -473,6 +476,9 @@ class TestPhonAlternatives(unittest.TestCase):
         labels = phones_tier[0].get_labels()
         self.assertEqual(2, len(labels))
 
+        # The key of a phonetization is the one of the token
+        self.assertEqual(["w_1", "w_2"], [label.get_key() for label in labels])
+
         # The phonetizations of all the tags of a label alternative are
         # merged into the tags of a single label: the matching of a token
         # and its pronunciation is lost.
@@ -480,3 +486,43 @@ class TestPhonAlternatives(unittest.TestCase):
                          sorted(tag.get_content() for tag, score in labels[0]))
         self.assertEqual(1, len(labels[1]))
         self.assertEqual("f-l-aI-t", labels[1].get_best().get_content())
+
+    # -----------------------------------------------------------------------
+
+    def test_convert_alternatives_metadata(self):
+        """... Metadata of the phonetization of each tag of a token."""
+        tier = sppasTier("Tokens")
+        token_label = sppasLabel([sppasTag("the"), sppasTag("a")])
+        token_label.set_key("w_1")
+        other_label = sppasLabel(sppasTag("flight"))
+        other_label.set_key("w_2")
+        tier.create_annotation(
+            sppasLocation(sppasInterval(sppasPoint(0.), sppasPoint(1.))),
+            [token_label, other_label])
+
+        annotation = self.sp.convert(tier)[0]
+
+        # The phonetization of a tag of a token is addressed by the key of
+        # its label and the rank of the tag, both separated by a "-". A token
+        # without any alternative has no metadata: its label has them all.
+        self.assertEqual(
+            ["phon-w_1-1", "phon-w_1-2"],
+            sorted(k for k in annotation.get_meta_keys() if k.startswith("phon-")))
+        self.assertEqual(["D-@", "D-V", "D-i:"],
+                         sorted(annotation.get_meta("phon-w_1-1").split("|")))
+        self.assertEqual(["@", "eI"],
+                         sorted(annotation.get_meta("phon-w_1-2").split("|")))
+
+    # -----------------------------------------------------------------------
+
+    def test_convert_alternatives_no_key(self):
+        """... No metadata is set if the token has no key to address it."""
+        tier = sppasTier("Tokens")
+        tier.create_annotation(
+            sppasLocation(sppasInterval(sppasPoint(0.), sppasPoint(1.))),
+            [sppasLabel([sppasTag("the"), sppasTag("a")])])
+
+        annotation = self.sp.convert(tier)[0]
+        self.assertEqual(
+            [], [k for k in annotation.get_meta_keys() if k.startswith("phon-")])
+        self.assertEqual(None, annotation.get_labels()[0].get_key())

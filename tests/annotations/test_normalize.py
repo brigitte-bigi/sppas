@@ -512,6 +512,11 @@ class TestTierNormalizer(unittest.TestCase):
         self.assertEqual(4, len(tokens_tier[1].get_labels()))
         self.assertEqual(4, len(tokens_tier[2].get_labels()))
 
+        # Each token is identified by the key of its label
+        for annotation in tokens_tier:
+            self.assertEqual(["w_1", "w_2", "w_3", "w_4"],
+                             [label.get_key() for label in annotation.get_labels()])
+
         labels = tokens_tier[0].get_labels()
         self.assertEqual(1, len(labels[0]))
         self.assertEqual(2, len(labels[2]))
