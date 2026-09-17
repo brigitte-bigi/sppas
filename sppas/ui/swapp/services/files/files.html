@@ -1989,35 +1989,51 @@
 	<h2>Without a disk</h2>
 
 		<p>
-			<b>Acceptance</b> holds every rule of what is accepted and reads nothing, so
-			all of them are checked with no place and no API at all, on a machine where
-			nothing is installed: a name already taken, an extension SPPAS does not read,
-			a size beyond what the machine accepts, a volume beyond that of one deposit, a
-			count beyond the number of deposits, and a handful of bytes which say an
-			executable. Each refusal gives its reason, and the refusal on a count gives
-			when to come back.
+			On a machine where nothing is installed: no place, no API, no workspace, no
+			server, no person.
+		</p>
+
+		<table>
+			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+			<tbody>
+				<tr><td>TE1</td><td>What is accepted is said before anything is given, and depends on no file and on no deposit</td><td>B7, B8</td></tr>
+				<tr><td>TE2</td><td>A name already taken in what is being fed is refused, and the reason is given with the refusal</td><td>C12</td></tr>
+				<tr><td>TE3</td><td>An extension SPPAS does not read is refused, with its reason</td><td>C10</td></tr>
+				<tr><td>TE4</td><td>A size beyond what the machine accepts is refused; the size one under it passes</td><td>C4</td></tr>
+				<tr><td>TE5</td><td>A volume beyond that of one deposit is refused; the volume one under it passes</td><td>C4</td></tr>
+				<tr><td>TE6</td><td>A count beyond the number of deposits is refused, and the refusal says when to come back</td><td>C4, relayed and not invented</td></tr>
+				<tr><td>TE7</td><td>A handful of bytes which say an executable or a script is refused. The only check which needs a content</td><td>T01</td></tr>
+				<tr><td>TE8</td><td>A file fed in raises the volume by its size</td><td>T08</td></tr>
+				<tr><td>TE9</td><td>A file taken back lowers it, and taking back what was never fed does nothing wrong</td><td>T09</td></tr>
+				<tr><td>TE10</td><td>What is to be given comes back in the order it was fed</td><td>T08</td></tr>
+				<tr><td>TE11</td><td>Nothing of a content travels while the person feeds: what is held is a name and a size</td><td>RO8</td></tr>
+				<tr><td>TE12</td><td>A state handed to a view gives a tree which holds what that state said and nothing more: no refusal it invented, no total it counted</td><td>D1</td></tr>
+				<tr><td>TE13</td><td>A state which says nothing gives a tree which says nothing</td><td>D1</td></tr>
+				<tr><td>TE14</td><td>What is handed to an app holds the checked files and them only</td><td>B1, RO9</td></tr>
+				<tr><td>TE15</td><td>Everything in what was handed is changed, emptied and added to &mdash; and the workspace of the person has not moved</td><td>RO9</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>TE1 to TE7 are the whole of what acceptance does.</b> It holds every rule of
+			what is accepted and reads nothing, so all of them are checked with no place
+			and no API at all. Each refusal gives its reason, and the refusal on a count
+			gives when to come back.
 		</p>
 
 		<p>
-			<b>Feeding</b> is checked the same way: a file fed raises the volume by its
-			size, a file taken back lowers it, taking back what was never fed does
-			nothing, and what is to be given comes back in the order it was fed. No
-			content travels — a test which found a file written on a server before the
-			person gave would be a test which found RO8 broken.
+			<b>TE11 is RO8 written as a test.</b> A test which found a file written on a
+			server before the person gave would be a test which found that rule broken.
 		</p>
 
 		<p>
-			<b>The two views</b> are checked on what they build: a state handed to one of
-			them gives HTML which holds what that state said and nothing more — no
-			refusal it invented, no total it counted. A view which decided something
-			would be caught by a state which says nothing at all.
+			<b>TE12 and TE13 catch a view which decided something.</b> A view which counted
+			a total or invented a refusal is caught by a state which says nothing at all.
 		</p>
 
 		<p>
-			<b>Handing</b> carries the one test the whole design rests on: what is made
-			holds the checked files and them only; then everything in it is changed,
-			emptied, added to — and the workspace of the person has not moved. A door
-			which is not tested is a consigne.
+			<b>TE15 is the one test the whole design rests on.</b> A door which is not
+			tested is a consigne.
 		</p>
 
 	</section>
@@ -2029,17 +2045,19 @@
 	<section class="ssection">
 	<h2>With a disk</h2>
 
-		<p>
-			<b>The place</b> is checked against the deposit API: a place asked for and
-			obtained, a copy put there under the name it was given, an address which
-			leads to it — and a refusal relayed as it was given, with its hour, and not
-			invented.
-		</p>
+		<table>
+			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+			<tbody>
+				<tr><td>TE16</td><td>A place is asked of the deposit API and obtained; a copy is put there under the name it was given; an address leads to it</td><td>T01, T05</td></tr>
+				<tr><td>TE17</td><td>A refusal of that API is relayed as it was given, with its hour, and nothing of it is invented here</td><td>F13, D2</td></tr>
+				<tr><td>TE18</td><td>An address reaches its file, and nothing else of the machine</td><td>B13</td></tr>
+				<tr><td>TE19</td><td>Nothing at all when the file is out of date, and when the address names none</td><td>B13</td></tr>
+			</tbody>
+		</table>
 
 		<p>
-			<b>The delivery</b> is checked on what an address reaches: its file, and nothing
-			else of the machine; nothing at all when the file is out of date or when the
-			address names none.
+			TE16 and TE17 are the only tests which need that API, the place module being
+			the only module which calls it.
 		</p>
 
 	</section>
@@ -2051,12 +2069,18 @@
 	<section class="ssection">
 	<h2>With the domain of the workspaces</h2>
 
+		<table>
+			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+			<tbody>
+				<tr><td>TE20</td><td>Locking a file makes it no longer checked, so it is absent from what is handed next: checked by handing twice around a lock</td><td>T10</td></tr>
+				<tr><td>TE21</td><td>Releasing it puts it back among what is handed</td><td>T11, T12</td></tr>
+				<tr><td>TE22</td><td>Writing what an app produced unchecks nothing of what was checked before</td><td>T04</td></tr>
+			</tbody>
+		</table>
+
 		<p>
-			<b>The workspace module</b> is the only one which needs that domain to run:
-			locking a file makes it no longer checked, so it is absent from what is handed
-			next — which is checked by handing twice around a lock; releasing puts it
-			back; and writing what an app produced unchecks nothing of what was checked
-			before.
+			The workspace module is the only one which needs that domain to run, and these
+			three are the only tests which do.
 		</p>
 
 	</section>
@@ -2075,15 +2099,14 @@
 		</ul>
 
 		<p>
-			The tests of the first section are the ones to write first. They need nothing
-			to run, and they hold the whole of what was decided: what is accepted, what is
-			counted, and the door. The others need a disk or a neighbour, and they check
-			that what was decided was also done.
+			TE1 to TE15 are the ones to write first. They need nothing to run, and they
+			hold the whole of what was decided: what is accepted, what is counted, and the
+			door. The seven others need a disk or a neighbour, and they check that what was
+			decided was also done.
 		</p>
 
 		<p>
-			They stand where the project already puts its own, one file per class. This
-			document does not say where that is: it would be naming what it has not read.
+			They stand beside the code, in the folder of this service.
 		</p>
 
 	</section>

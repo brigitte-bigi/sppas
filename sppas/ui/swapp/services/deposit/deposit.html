@@ -840,6 +840,847 @@
 </section>
 
 
+<!-- ====================== PHYSICAL LEVEL ========================= -->
+
+
+<section class="chapter">
+<h1>Physical level</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 6.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Where each table stands</h2>
+
+		<p>
+			Here the machine is named, and not before. There is no database: one disk bears
+			both tables, and nothing bears anything else. RO5
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>Table</th><th>Where it stands</th><th>Between two requests</th><th>What a caller sees of it</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>PLACE</td>
+					<td>A folder in the folder of the space</td>
+					<td>The folder, and nothing held anywhere else</td>
+					<td>The name it was given, and that is all it will ever hold of a place</td>
+				</tr>
+				<tr>
+					<td>FILE</td>
+					<td>A file in the folder of its place, under the name it was given</td>
+					<td>The same</td>
+					<td>The name it gave</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>The name of a place carries the moment it was given at.</b> The moment is not
+			read from the disk, and the reason is exact: the moment a folder carries is the
+			one it was last written into, so it moves every time a file is put in the place.
+			A place would live its duration from its last file and not from its making, and
+			a caller which puts one file just before the end holds it for another turn, and
+			another. C1 says one single duration, and a duration which can be renewed is not
+			one.
+		</p>
+
+		<p>
+			The code of the spin-off reads the moment from the disk, and is right to: what
+			it sweeps is written once and never added to. A place is not that, and this is
+			the one place where this domain departs from the code it comes from.
+		</p>
+
+		<p>
+			<b>What else the name carries is drawn at random</b>, as the spin-off draws the
+			name of a page. Not to make a secret of it &mdash; what authorises reaching a
+			file is the signature and never the name &mdash; but so that two places made in
+			one second are two names, and so that a name says nothing of who asked for it.
+		</p>
+
+		<p>
+			<b>Where the space stands is one line, read by this domain and by the front of
+			the machine</b>, which protects that one folder by its prefix, once, and not one
+			entry per place. C9, C10, RO4
+		</p>
+
+		<p>
+			<b>The sweep is a reading of names.</b> T06 lists the folders of the space and
+			deletes those whose moment has run out; it opens nothing and asks the disk
+			nothing about them. The number of places standing (C6) and the moment of the
+			oldest (T02) are read from that same listing: one listing answers three
+			questions, and it is the whole of what this domain knows of itself.
+		</p>
+
+		<p>
+			<b>Deleting a place is deleting a folder</b>, which is the logical level said in
+			the terms of a disk: what named the files is gone, and they are gone with it.
+			The volume of a place is the sum of the sizes of what the folder holds, read
+			when it is wanted and never written down.
+		</p>
+
+		<p>
+			<b>Two requests read one listing, and nothing is locked.</b> Two callers which
+			ask for a place at the same instant may both find room where there was room for
+			one, and the space may stand one place over its number for a while. It is left
+			so: what one place may hold is bounded (C5), so what an overshoot costs is
+			bounded too, and the next sweep brings the space back under its number. The
+			state is the disk, and what the disk does with two writers at once is what
+			happens here.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 6.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Operational model of treatments</h2>
+
+		<p>
+			The organisational level said by what and when; this says in what tasks, and
+			what among them cannot be half done. One request is one unit: nothing here is
+			begun in one and finished in another, and nothing is held from one to the next.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>PF</th><th>The tasks, in order</th><th>What cannot be half done</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>PF1</td>
+					<td>The sweep; then say the four values</td>
+					<td>Nothing: nothing is written</td>
+				</tr>
+				<tr>
+					<td>PF2</td>
+					<td>The sweep; list the names of the space; count them; draw a name; make its folder</td>
+					<td>The making of the folder, which is done or refused because the name is taken</td>
+				</tr>
+				<tr>
+					<td>PF3</td>
+					<td>The sweep; read the moment of the place from its name; judge the size; list the place and sum its volume; make the file under its name; write the bytes into it</td>
+					<td>The making of the file, which is done or refused because the name is taken. Not the writing of the bytes</td>
+				</tr>
+				<tr>
+					<td>PF4</td>
+					<td>The sweep; read the moment of the place; see that the file is there; make the address and what authorises it</td>
+					<td>Nothing: nothing is written</td>
+				</tr>
+				<tr>
+					<td>PF5</td>
+					<td>The sweep; read the moment of the place; open the file; give the bytes</td>
+					<td>Nothing: nothing is written. The opening is what says whether there is anything to give</td>
+				</tr>
+				<tr>
+					<td>PF6</td>
+					<td>List the names of the space; delete the folder of each name whose moment has run out</td>
+					<td>The deletion of one folder, with what it holds. Not the sweep, which is as many deletions as there are names</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3>The sweep is the first task of every procedure</h3>
+
+		<p>
+			It is written in every row, PF6 excepted, which is that task and nothing else.
+			That is what RO2 becomes here, and it holds even for PF1, which reads neither a
+			place nor a file: what runs before PF1 is PF6, and T01 still reads nothing. A
+			caller which asks what is accepted is a caller which is about to deposit, so it
+			is the cheapest moment there is to find the space in the state PF2 will count.
+		</p>
+
+		<h3>Two tasks are a making which the name refuses</h3>
+
+		<p>
+			A name which is taken is not verified and then written: it is one task which
+			either makes the thing or says that the name is taken. Between a verification
+			and a writing, two requests both pass and the second overwrites the first; there
+			is no between here.
+		</p>
+
+		<p>
+			<b>C8 is therefore a property and not a control.</b> Two files of one name given
+			at one instant &mdash; which is what a browser does when a person gives several
+			files at once &mdash; are one file made and one refusal, and which of the two
+			was first is what the disk says. The refusal of T03 for a name taken is that
+			task failing, and nothing else.
+		</p>
+
+		<p>
+			The same holds of PF2: a drawn name which is already a place is a making which
+			is refused, and another name is drawn. Nothing has to be looked up beforehand.
+		</p>
+
+		<h3>The writing of the bytes is not one task</h3>
+
+		<p>
+			A request which dies in the middle of it leaves a file which stands under its
+			name and is short. Nothing repairs it, and nothing has to: the place dies at its
+			hour with what it holds. That is why there is no journal here, no transaction
+			and no recovery &mdash; <b>the duration is what undoes</b>, and it undoes
+			everything, whether or not anything went wrong.
+		</p>
+
+		<p>
+			What is short belongs to a request which failed, and it is that request's caller
+			which learns that it failed. A caller which is told nothing put nothing.
+		</p>
+
+		<h3>What two requests do to each other</h3>
+
+		<p>
+			Between the moment PF5 reads that a place is of this hour and the moment it
+			opens the file, the sweep of another request may have deleted the place. The
+			opening then fails, and what is answered is nothing at all &mdash; which is
+			already what T05 answers to the three other cases. There is nothing new to
+			decide, and nothing to lock.
+		</p>
+
+		<p>
+			Between the counting of PF2 and the making of its folder, another request may
+			have made one: that is the overshoot the previous section describes, and it is
+			left as it is for the reason given there.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 6.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Where the code goes</h2>
+
+		<p>
+			In <code>sppas/ui/swapp/services/deposit/</code>: in the family folder of the
+			services, beside the provision of files, because it is a service and not an app.
+		</p>
+
+		<p>
+			One module per kind of knowledge, and every procedure has one module and one
+			only.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>Module</th><th>What it does</th><th>Procedure</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>place</td><td>Makes the folder of a place, writes a file in one, reads the names of the space, deletes what is out of date</td><td>PF2, PF3, PF6</td></tr>
+				<tr><td>acceptance</td><td>Says what is accepted, and judges a size, a volume and a number on the numbers it is given</td><td>PF1, and what PF2 and PF3 ask of it</td></tr>
+				<tr><td>address</td><td>Makes an address and what authorises it, and serves what one names</td><td>PF4, PF5</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			The four values and the line which says where the space stands are in a file of
+			their own, read by the three and written in none of them: a value written twice
+			is a value which will differ from itself.
+		</p>
+
+		<p>
+			What each one promises, which is the reason for the cutting:
+		</p>
+
+		<ul>
+			<li>The <b>place</b> module is the only one which touches a disk. The day the space stands elsewhere, or is not a disk at all, it is the only one to be read again.</li>
+			<li><b>Acceptance</b> touches nothing and reads nothing: it is given a size, a volume, a number, and it answers. That is what makes it testable with no disk at all, and it is where the four values are answered from.</li>
+			<li>The <b>address</b> module is the only one which knows what an address is made of, and the only one which meets the front of the machine. It is also where the moment of the place is read before anything is served, which is T05 and not the front's to do. RO3</li>
+		</ul>
+
+		<p>
+			No module here knows a workspace, a root, an app, or what a file is for. The
+			ignorance which the first chapter claims is this cut and nothing else: there is
+			nowhere for that knowledge to be held.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 6.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The architecture of the code</h2>
+
+		<p>
+			No manager, no view, no controller. Those are the shapes of an app, which
+			assembles a page for a person at every request; nothing here is assembled and
+			nobody is shown anything. What a caller holds is one object, and the three
+			modules stand behind it.
+		</p>
+
+		<p>
+			<b>It holds nothing between two calls.</b> It is made, it is called, it reads
+			the disk, it answers. Two callers in two processes see one space without knowing
+			of each other, because the space is what they both read and neither of them
+			keeps. That is RO5 written as code, and it is what lets a caller be made and
+			dropped at every request without anything being lost.
+		</p>
+
+		<p>
+			<b>What it asks of whoever assembles the server</b>, and it asks one thing: that
+			a request under the prefix of the space reach this domain, once the front has
+			verified what authorises it. How it is routed there belongs to whoever assembles
+			the server, and it is not settled here. It is the only point at which this
+			domain needs anything of its host: everything else it does, it does because it
+			was called.
+		</p>
+
+		<p>
+			<b>A refusal is an answer and not a failure.</b> There being no room now (T02),
+			a size, a volume or a name (T03), an address which names nothing (T04, T05):
+			each of them is read by a caller, which knows what to say about it and to whom.
+			What fails here is what fails anywhere &mdash; a disk which will not be written
+			&mdash; and it is not answered, it is raised.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== UML ==================================== -->
+
+
+<section class="chapter">
+<h1>UML</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 7.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The classes</h2>
+
+		<p>
+			Those which carry the data come from the tables, one per table. Those which
+			work come from the modules, one per module. A name says what the class handles
+			and nothing of how it is arranged.
+		</p>
+
+		<h3>What carries the data</h3>
+
+		<table>
+			<thead><tr><th>Class</th><th>From</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td><code>Place</code></td><td>PLACE</td><td>A name, and the moment which is read from that name. It touches nothing: it is not where a place is made, listed or deleted</td></tr>
+				<tr><td><code>PlacedFile</code></td><td>FILE</td><td>A name inside a place. Its size and its content stand on the disk, and are read by the one class which reads a disk</td></tr>
+			</tbody>
+		</table>
+
+		<h3>What does the work</h3>
+
+		<table>
+			<thead><tr><th>Class</th><th>Module</th><th>What it is alone in knowing</th></tr></thead>
+			<tbody>
+				<tr><td><code>DepositSpace</code></td><td>&mdash;</td><td>The façade. It is what a caller holds, and the only object of this domain anything outside it ever sees. It is also where the tasks of one procedure are put in order</td></tr>
+				<tr><td><code>SpaceAcceptance</code></td><td>acceptance</td><td>The four values, and whether a size, a volume or a number passes them. Reads nothing, writes nothing, touches no disk</td></tr>
+				<tr><td><code>SpaceFolder</code></td><td>place</td><td>That a place is a folder and a file is a file in it: where the space stands, how a place is made, listed, read and deleted</td></tr>
+				<tr><td><code>FileAddress</code></td><td>address</td><td>What an address is made of, and what authorises it. The only class which meets the front of the machine</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>No view, no controller, no record.</b> Those are what an app has because it
+			assembles a page for a person at every request; nothing here is assembled and
+			nobody is shown anything, and the architecture of the code says it already.
+		</p>
+
+		<p>
+			<b>The façade puts the tasks in order, and that is not a formality.</b> Judging
+			a size is <code>SpaceAcceptance</code>'s, summing a volume is
+			<code>SpaceFolder</code>'s, and what says that the one comes before the other is
+			the façade. Written otherwise, one of the two would have to call the other, and
+			the promise that one class alone touches a disk would be false. The operational
+			model is what this order comes from.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 7.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The class diagram</h2>
+
+		<p>
+			<code>/</code> marks what is derived and held by nobody. What the operations
+			promise is the chapter on the contracts; what they are called is a proposal,
+			and one pass renames them all.
+		</p>
+
+		<table>
+			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
+			<tbody>
+				<tr><td><code>Place</code></td><td>name, /moment</td><td>a_name_for(moment), moment(), is_of_this_hour()</td></tr>
+				<tr><td><code>PlacedFile</code></td><td>place, name</td><td>&mdash;</td></tr>
+				<tr><td><code>DepositSpace</code></td><td>&mdash;</td><td>what_is_accepted(), ask_for_a_place(), put(), address_of(), serve(), forget()</td></tr>
+				<tr><td><code>SpaceAcceptance</code></td><td>&mdash;</td><td>what_is_accepted(), accepts_size(), accepts_volume(), accepts_one_more_place()</td></tr>
+				<tr><td><code>SpaceFolder</code></td><td>&mdash;</td><td>make_a_place(), places(), delete(), make_a_file(), files(), volume(), read()</td></tr>
+				<tr><td><code>FileAddress</code></td><td>&mdash;</td><td>address_of(), what_it_names()</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<code>SpaceFolder.make_a_place()</code> and
+			<code>SpaceFolder.make_a_file()</code> are the two operations which either do
+			the thing or say that the name is taken. They do not look first, and no other
+			operation looks for them: that is C8 as the operational model writes it.
+		</p>
+
+		<p>
+			<code>DepositSpace.forget()</code> is called by no caller. It is the first
+			thing the five others do.
+		</p>
+
+		<p>
+			<b>The class which reads a moment from a name is the one which writes it.</b>
+			<code>Place.a_name_for()</code> makes the name of a place for a moment, and
+			<code>SpaceFolder</code> is given that name and makes a folder of it. Written
+			otherwise, what a name is made of would be in two classes, and the day it
+			changes one of the two would keep the old shape.
+		</p>
+
+		<h3>What is tied to what</h3>
+
+		<table>
+			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td>holds</td><td><code>DepositSpace</code> 1 &mdash; 1 each of the three others</td><td>A composition: the façade makes them, and they go when it goes</td></tr>
+				<tr><td>holds</td><td><code>Place</code> 1 &mdash; 0..n <code>PlacedFile</code></td><td>A composition: a file has no existence outside the place which names it. It is R1, and it is the cascade of the deletion &mdash; not an object holding a list</td></tr>
+				<tr><td>uses</td><td><code>SpaceFolder</code> &rarr; <code>Place</code>, <code>PlacedFile</code></td><td>A dependency: it makes them, hands them over, and keeps none</td></tr>
+				<tr><td>uses</td><td><code>FileAddress</code> &rarr; <code>Place</code>, <code>PlacedFile</code></td><td>A dependency: an address is made of the two, and names nothing else</td></tr>
+				<tr><td>none</td><td><code>SpaceAcceptance</code></td><td>Tied to nothing at all: it answers on numbers handed to it</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<code>FileAddress</code> does not call <code>SpaceFolder</code>, and that is
+			deliberate: the promise that one class alone touches a disk would be false the
+			moment it did. It says what an address names; the façade is what then asks for
+			the bytes.
+		</p>
+
+		<p>
+			<b>No class holds a state.</b> There is no attribute in the three which work,
+			and the two which carry data are made, handed over and dropped. What a place is
+			and what it holds is on the disk, and it is read again at every request: that is
+			RO5 written as a diagram, and it is why two callers in two processes need to
+			know nothing of each other.
+		</p>
+
+		<h3>In yUML</h3>
+
+		<p>
+			To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
+			class diagram.
+		</p>
+
+		<pre class="dark"><code>[DepositSpace|what_is_accepted();ask_for_a_place();put();address_of();serve();forget()]
+
+[DepositSpace]++1-1&gt;[SpaceAcceptance|what_is_accepted();accepts_size();accepts_volume();accepts_one_more_place()]
+[DepositSpace]++1-1&gt;[SpaceFolder|make_a_place();places();delete();make_a_file();files();volume();read()]
+[DepositSpace]++1-1&gt;[FileAddress|address_of();what_it_names()]
+
+[Place|name;/moment|a_name_for();moment();is_of_this_hour()]++1-0..*&gt;[PlacedFile|place;name]
+
+[SpaceFolder]-.-&gt;[Place]
+[SpaceFolder]-.-&gt;[PlacedFile]
+[FileAddress]-.-&gt;[Place]
+[FileAddress]-.-&gt;[PlacedFile]</code></pre>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 7.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The sequences</h2>
+
+		<h3>When a caller deposits</h3>
+
+		<ol>
+			<li>It asks what is accepted, and is answered a size, a volume and a number.</li>
+			<li>It asks for a place. Either it is given a name, or it is refused with the hour at which there will be room, and it stops there.</li>
+			<li>It gives a file, with the name it is to stand under. The size is judged, the volume of the place is summed and judged, the file is made under that name &mdash; or the name was taken, and it is told so.</li>
+			<li>It gives the next file, and the next, one call each.</li>
+			<li>It asks for the address of one of them, and is given one which authorises reaching it. Or the place is gone, and there is no address.</li>
+		</ol>
+
+		<h3>When a request arrives at an address</h3>
+
+		<ol>
+			<li>The front of the machine verifies what authorises the address, and lets nothing through without it.</li>
+			<li>What the address names is read: a place and a name.</li>
+			<li>The moment of the place is read from its name. It is of this hour, or nothing at all is answered.</li>
+			<li>The file is opened. It is there, or nothing at all is answered.</li>
+			<li>The bytes are given.</li>
+		</ol>
+
+		<p>
+			Each of the two begins with the forgetting, which is in neither list because it
+			is in every step of both: it is the first task of each call, and the caller
+			neither asks for it nor is told of it.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 7.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The error policy</h2>
+
+		<table>
+			<thead><tr><th>Level</th><th>What happens</th><th>What is done</th></tr></thead>
+			<tbody>
+				<tr><td>1</td><td>A refusal: no room now, a size, a volume, a name already taken</td><td>It is answered, with its reason. Nothing is raised: a caller can act on it, and it is that caller which knows whose file it is and what to say</td></tr>
+				<tr><td>2</td><td>Nothing to give: a place which is out of date, an address which names no file, an address which names something else of the machine, a place deleted between two tasks of one request</td><td>Nothing at all, and no reason. The four are one answer, so that what was there an hour ago cannot be told from what was never there</td></tr>
+				<tr><td>3</td><td>The machine will not: a folder which cannot be made, a disk which is full, a file which cannot be read</td><td>Raised. Caught by whatever answers a request, said where whoever runs the machine reads it, and a caller learns that it failed and no more</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			A file which stands under its name and is short is none of the three: nothing
+			looks for it, nothing repairs it, and the place it stands in dies at its hour.
+			The operational model says why.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== CONTRACTS ============================== -->
+
+
+<section class="chapter">
+<h1>The contracts</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 8.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>How to read them</h2>
+
+		<p>
+			<i>pre</i> is what has to be true on the way in, and what the operation does not
+			check; <i>post</i> is what the caller can count on without looking. The
+			operations are named by what they do and not by a signature: a signature
+			invented before the code is a name nobody will use.
+		</p>
+
+		<h3>What holds everywhere</h3>
+
+		<ul>
+			<li>The forgetting has run before any operation of the façade answers. No caller asks for it, and no operation is answered on a place which has outlived its duration.</li>
+			<li>What is absent gives back an empty thing &mdash; an empty list, a volume of zero &mdash; and never nothing at all. The one exception is what an address names, where nothing at all is the answer and is meant.</li>
+			<li>Only <code>SpaceFolder</code> touches a disk, and it is the only class which knows where the space stands.</li>
+			<li>Nothing reads a content. The bytes are written as they are given and given back as they are written.</li>
+			<li>No class holds anything between two calls. Every operation reads what it needs and keeps none of it.</li>
+			<li>A refusal is answered. What the machine will not do is raised, caught by whatever answers a request, and no class below it writes a catch.</li>
+		</ul>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 8.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Class by class</h2>
+
+		<table>
+			<caption>DepositSpace</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Say what is accepted</td><td>pre: none. post: a size for one file, a volume for one place, a number of places. It reads no place and no file, and answers the same whatever the space holds</td></tr>
+				<tr><td>Ask for a place</td><td>pre: none. post: the name of a place which is empty and of this hour, or a refusal with the hour at which there will be room. Never both, and never a place which was given to somebody else</td></tr>
+				<tr><td>Put a file in a place</td><td>pre: the place was given by this domain, and the bytes are those of the file. post: the file stands there under the name it was given, holding those bytes &mdash; or nothing of it stands, and the reason is said: the place is not of this hour, the size, the volume, or the name is taken. Nothing is renamed and nothing is overwritten</td></tr>
+				<tr><td>Ask for an address</td><td>pre: none. post: an address which leads to that file and to nothing else of the machine, and which authorises reaching it for at least as long as the place lasts &mdash; or no address at all, when the place is not of this hour or holds no file of that name</td></tr>
+				<tr><td>Serve what an address names</td><td>pre: what authorises the address has been verified by the front of the machine. post: the bytes of the file, or nothing at all &mdash; and nothing at all is one answer for the four cases which give it, with no reason said</td></tr>
+				<tr><td>Forget what is out of date</td><td>pre: none. post: no place whose duration has run out stands in the space, nor anything it held. It answers nobody, and no caller calls it</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			This class is where the tasks of one procedure are put in order, and it is the
+			only class of this domain which anything outside it holds. What it promises is
+			the six operations of the model, one for one.
+		</p>
+
+		<table>
+			<caption>SpaceAcceptance</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Say what is accepted</td><td>pre: none. post: the values as they are written in the one file which holds them. It depends on no place and on no file</td></tr>
+				<tr><td>Answer on a size</td><td>pre: a size of zero or more. post: refused beyond what one file may be</td></tr>
+				<tr><td>Answer on a volume</td><td>pre: a volume of zero or more, being what a place would hold with the file added. post: refused beyond what one place may hold</td></tr>
+				<tr><td>Answer on a number of places</td><td>pre: a number counted after the forgetting. post: refused when the space already holds as many places as it may</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			It reads no disk, writes nothing, and makes no name. Every bound of this domain
+			is therefore verified with nothing installed, which makes it the first class to
+			be tested and the last to surprise.
+		</p>
+
+		<table>
+			<caption>SpaceFolder</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Make a place</td><td>pre: a name which <code>Place</code> made. post: a folder of the space of that name exists and is empty &mdash; or the name was taken and nothing was made. It counts no places and refuses for no number: that was judged before it was called</td></tr>
+				<tr><td>Give the places</td><td>pre: none. post: the names standing in the space, which may be none. It opens none of them, and asks the disk nothing about them</td></tr>
+				<tr><td>Delete a place</td><td>pre: none. post: neither the folder nor anything it held remains. Deleting what is not there does nothing wrong</td></tr>
+				<tr><td>Make a file in a place</td><td>pre: the place stands, and the bytes are those of the file. post: a file of that name stands in it and holds those bytes &mdash; or the name was taken, nothing was made, and what already stood there is untouched</td></tr>
+				<tr><td>Give the files of a place</td><td>pre: none. post: the names standing in it, which may be none</td></tr>
+				<tr><td>Give the volume of a place</td><td>pre: none. post: the sum of the sizes of what stands in it; zero when nothing does, and zero when the place is not there</td></tr>
+				<tr><td>Read a file</td><td>pre: the file stands in the place. post: its bytes, as they are on the disk. It judges nothing of them and says nothing of what they are</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			Making a place and making a file do not look before they make: each of them
+			either makes the thing or says that the name is taken, which is what turns C8
+			from a control into a property. This class judges no bound: what it is asked to
+			make has been judged before.
+		</p>
+
+		<table>
+			<caption>FileAddress</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Make an address</td><td>pre: a place and a name. post: an address which names that file and nothing else of the machine, carrying what authorises reaching it, which never lives less long than a place does (C3). It does not verify that the file stands there: that is asked of <code>SpaceFolder</code> before</td></tr>
+				<tr><td>Say what an address names</td><td>pre: none. post: the place and the name it names, or nothing when it names nothing of the space. It opens no file and reads no moment</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			It never touches a disk and never reads a moment. Whether a place is of this
+			hour is read from its name, by the façade, and never taken from what authorises
+			an address: the two know nothing of each other, and RO3 is that.
+		</p>
+
+		<table>
+			<caption>Place, PlacedFile</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Make the name of a place</td><td>pre: a moment. post: a name carrying that moment and something drawn, such that two names made at one moment differ. It writes nothing and touches no disk</td></tr>
+				<tr><td>Give the moment of a place</td><td>pre: the name is one this domain made. post: the moment the place was made at, read from that name and from nothing else &mdash; not from the disk, which would move at every file put there</td></tr>
+				<tr><td>Say that a place is of this hour</td><td>pre: none. post: true while the moment and the duration have not run out, against the hour of the machine. It reads nothing else</td></tr>
+				<tr><td><code>PlacedFile</code></td><td>It carries a place and a name and promises nothing. Its size and its content stand on the disk, and <code>SpaceFolder</code> is what reads them</td></tr>
+			</tbody>
+		</table>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 8.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Where each constraint is held</h2>
+
+		<p>
+			One place each, and a constraint held in two would be a constraint held in
+			neither.
+		</p>
+
+		<table>
+			<thead><tr><th>No.</th><th>Held by</th></tr></thead>
+			<tbody>
+				<tr><td>C1</td><td><code>Place.is_of_this_hour()</code> on the way in, and the forgetting on the disk. The reading is what holds it; the sweeping only frees the room</td></tr>
+				<tr><td>C2</td><td>The façade, which forgets before it answers anything</td></tr>
+				<tr><td>C3</td><td><code>FileAddress</code>, which makes what authorises an address and never makes it shorter-lived than a place</td></tr>
+				<tr><td>C4</td><td><code>SpaceAcceptance</code>, answering on a size</td></tr>
+				<tr><td>C5</td><td><code>SpaceAcceptance</code>, answering on a volume which <code>SpaceFolder</code> summed</td></tr>
+				<tr><td>C6</td><td><code>SpaceAcceptance</code>, answering on a number which <code>SpaceFolder</code> counted after the forgetting</td></tr>
+				<tr><td>C7</td><td><code>SpaceFolder</code>, which makes a file under the name it is given and under no other</td></tr>
+				<tr><td>C8</td><td><code>SpaceFolder</code>, whose making is refused by the name itself</td></tr>
+				<tr><td>C9</td><td><code>SpaceFolder</code>, the only class which knows where the space stands, and the front of the machine, which protects that one folder</td></tr>
+				<tr><td>C10</td><td><code>FileAddress</code>, which makes an address of a place and a name and of nothing else</td></tr>
+			</tbody>
+		</table>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== TESTS ================================== -->
+
+
+<section class="chapter">
+<h1>What is tested, and where</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 9.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Without a disk</h2>
+
+		<p>
+			Nothing is installed, nothing is written, nothing waits.
+		</p>
+
+		<table>
+			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+			<tbody>
+				<tr><td>TE1</td><td>The four values are read from the one file which holds them, and are written nowhere else</td><td>C9</td></tr>
+				<tr><td>TE2</td><td>A size beyond what one file may be is refused; the size one under it passes</td><td>C4</td></tr>
+				<tr><td>TE3</td><td>A volume beyond what one place may hold is refused; the volume one under it passes</td><td>C5</td></tr>
+				<tr><td>TE4</td><td>A number at or beyond the number of places is refused; the number one under it passes</td><td>C6</td></tr>
+				<tr><td>TE5</td><td>The moment of a place is read from its name: a name written for a minute ago is of this hour, one written for thirty-one minutes ago is not</td><td>C1</td></tr>
+				<tr><td>TE6</td><td>A name this domain never made carries no moment, and is not of this hour</td><td>C1</td></tr>
+				<tr><td>TE7</td><td>An address is made of a place and a name, and what it names is read back as that place and that name</td><td>C10</td></tr>
+				<tr><td>TE8</td><td>A name which climbs out of the space, a path of the machine, a name of another place: each of them names nothing</td><td>C10</td></tr>
+				<tr><td>TE9</td><td>What authorises an address, made at any moment of the life of a place, never runs out before that place does</td><td>C3</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>TE5 is where the physical level pays.</b> The moment is in the name, so a
+			place of any age is a name written by the test, and the minute on either side of
+			the bound is where the two are separated. No clock is faked and nothing waits
+			thirty minutes.
+		</p>
+
+		<p>
+			TE2 to TE4 are the whole of what <code>SpaceAcceptance</code> does, and they run
+			on a machine where no space has ever stood.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 9.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>With a disk</h2>
+
+		<p>
+			On a space of its own, made for the test and deleted with it.
+		</p>
+
+		<table>
+			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+			<tbody>
+				<tr><td>TE10</td><td>A place which was made stands in the listing of the space; a file made in it stands in the listing of that place</td><td>The tables, on a disk</td></tr>
+				<tr><td>TE11</td><td>The volume of a place is the sum of the sizes it holds; zero when it holds nothing, and zero when the place is not there</td><td>C5</td></tr>
+				<tr><td>TE12</td><td>A file is read back as it was written, byte for byte</td><td>C7</td></tr>
+				<tr><td>TE13</td><td>Deleting a place leaves neither a file of it nor its folder</td><td>R1, T06</td></tr>
+				<tr><td>TE14</td><td>Making a file whose name is taken changes nothing: what stood there is read again and is what it was &mdash; not the bytes of the second, not a mixture</td><td>C8</td></tr>
+				<tr><td>TE15</td><td>Making a place whose name is taken makes nothing, and the place which was there is untouched</td><td>C8</td></tr>
+				<tr><td>TE16</td><td>A file beyond the size is refused and nothing appears in the place</td><td>The order of the tasks</td></tr>
+				<tr><td>TE17</td><td>A place whose name is of thirty-one minutes ago takes nothing, gives no address and serves nothing, whether or not it has been swept</td><td>C1</td></tr>
+				<tr><td>TE18</td><td>A place of thirty-one minutes ago is gone from the listing after any operation at all, nobody having asked for it</td><td>C2, RO2</td></tr>
+				<tr><td>TE19</td><td>An address given the name of something which is not a file of a place &mdash; a path climbing out of the space, a file of the machine beside it, a place which has run out &mdash; serves nothing of the machine</td><td>C10</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>TE13, TE14 and TE15 are the three to write first</b>, being what the levels
+			above lean on: the cascade of the logical level seen on a disk, and the making
+			which a name refuses, twice.
+		</p>
+
+		<p>
+			<b>TE16 checks an order and not a bound.</b> A test which found a file written
+			and then removed would have found the tasks reversed: the judging comes before
+			the writing, and the dossier says so before the code does.
+		</p>
+
+		<p>
+			<b>TE19 is the test this design rests on.</b> A door which is not tested is a
+			consigne.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 9.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What only two at once show</h2>
+
+		<p>
+			Three things cannot be seen by one request, and they are exactly the three the
+			operational model settled.
+		</p>
+
+		<table>
+			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+			<tbody>
+				<tr><td>TE20</td><td>Two files of one name, given to one place at one instant: one stands and one is refused, and the one which stands is whole and is one of the two. Which of them wins is not checked, nothing promising it</td><td>C8</td></tr>
+				<tr><td>TE21</td><td>Two places asked for when there is room for one: both may be given, the space may then hold one place over its number, and the next sweep brings it back under</td><td>C6, and the limit written at the physical level</td></tr>
+				<tr><td>TE22</td><td>A file served while another request sweeps its place: the bytes, whole, or nothing at all &mdash; never half a file</td><td>T05</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			TE21 says that the overshoot happens, and does not forbid it. A test which
+			demanded exactness there would be a test written against the design, and it is
+			the design which would have to be answered, not the test.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 9.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What no test covers, and where they stand</h2>
+
+		<ul>
+			<li><b>A file left short</b> by a request which died in the middle of writing it. Nothing looks for it, by decision: the place dies at its hour with what it holds, and a test would have to assert the absence of a thing nothing is asked to detect.</li>
+			<li><b>What authorises an address</b>, which the front of the machine makes and verifies. Its secret and its lifetime are not this domain's; TE9 checks the only thing which is &mdash; that the lifetime is never the shorter of the two.</li>
+			<li><b>A disk which fills.</b> It is raised and not answered, and what catches it is whatever answers a request.</li>
+			<li><b>The routing</b> of a request under the prefix of the space, which belongs to whoever assembles the server.</li>
+		</ul>
+
+		<p>
+			The tests stand beside the code, in the folder of this service, and none of them
+			needs a server, a browser or a person. Nine need nothing at all, ten need a
+			disk, three need two things running at once &mdash; which is what the cutting
+			into three modules was for.
+		</p>
+
+	</section>
+
+</section>
+
+
 <!-- ====================== DECISIONS ============================== -->
 
 
@@ -850,7 +1691,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.1 -->
+	<!-- 10.1 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
@@ -907,21 +1748,20 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.1 -->
+	<!-- 11.1 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
 	<h2>What this dossier owes</h2>
 
 		<p>
-			The conceptual level is written. What is still owed:
+			The levels are written, the classes are drawn, what they promise is said, and
+			what is tested is named. One thing is still owed, and it comes before a line is
+			written: <b>a reading of what the spin-off already answers.</b> Its code holds a
+			place, a lifetime and a sweep which runs at every request, and it has been
+			running; what this dossier asks for beyond it is a name of its own, a moment
+			carried by a name, and the cutting into three.
 		</p>
-
-		<ul>
-			<li>the logical and physical levels: what names a place, what authorises reaching it, what an address is made of;</li>
-			<li>where the code goes, the classes, the contracts and the tests;</li>
-			<li>and a reading of what the spin-off already answers, which comes before any of it is written.</li>
-		</ul>
 
 		<p>
 			One thing is settled and should not be reopened without a reason: this domain
