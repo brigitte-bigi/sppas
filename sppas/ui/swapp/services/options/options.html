@@ -174,9 +174,9 @@
 			<p>
 				<b>That is why this is designed again, and not translated.</b> Turning the
 				wx panel into a web page would carry that silence over with everything
-				else: a list of widgets, one terse label each, no way back to the value
-				which was proposed, and a dialog which opens on a machine which may not be
-				the right one. What is unsatisfactory there is not the toolkit, and
+				else: a list of widgets, one terse label each, no way back to the value an
+				option arrived with, and a dialog which opens on a machine which may not
+				be the right one. What is unsatisfactory there is not the toolkit, and
 				changing the toolkit would settle none of it.
 			</p>
 
@@ -190,8 +190,8 @@
 				<li>to give, for each kind of option, the thing which suits it, and to say
 				that a value cannot be used at the moment it is given and not when the
 				app runs;</li>
-				<li>to let the value which was proposed be restored, for one option or for
-				all of them, without anybody having to remember it;</li>
+				<li>to let an option be put back to the value it arrived with, one option
+				or all of them, without anybody having to remember that value;</li>
 				<li>to serve an option which takes a file as the others are served,
 				wherever that file stands and wherever SPPAS runs;</li>
 				<li>to keep what was set from one time to the next, so that it is not set
@@ -257,14 +257,14 @@
 				reaches her where she gave the value, and names it.
 			</p>
 
-			<h4>Coming back to what was proposed</h4>
+			<h4>Coming back to the value an option arrived with</h4>
 
 			<p>
 				Options are explored. A person who does not know what a threshold does
 				finds out by moving it, and moving it is only reasonable if she can get
-				back. Today she cannot: once the proposed value has been overwritten, it is
-				gone, and nothing in the interface says what it was. The need is that the
-				value which was proposed remains reachable &mdash; for one option, when she
+				back. Today she cannot: once the value an option arrived with has been
+				overwritten, it is gone, and nothing in the interface says what it was. The
+				need is that this value remains reachable &mdash; for one option, when she
 				has spoilt one; for all of them, when she wants to start from a state she
 				can name.
 			</p>
@@ -296,7 +296,7 @@
 				one set of files, then on another, then on a third, with the same options
 				every time. Setting twenty values at each run is not a service
 				rendered, it is an obstacle, and the person who meets it stops using the
-				options at all and lives with what was proposed. The need is that what was
+				options at all and lives with the values the options arrived with. The need is that what was
 				set be found again as it was left.
 			</p>
 
@@ -415,37 +415,35 @@
 				server. What comes back is a file this domain hands on without opening.
 			</p>
 
-			<h4>The value which was proposed, and where it comes from</h4>
+			<h4>The value an option arrived with</h4>
 
 			<p>
-				<b>An option does not carry it.</b> What an option holds is one value, and
-				changing it overwrites what was there: nothing in what is declared today
-				says what that value was at the start. The need to come back therefore
-				cannot be answered by looking &mdash; there is nothing left to look
-				at.
+				<b>An option holds one value, and changing it overwrites what was
+				there.</b> Nothing of what SPPAS holds says what that value was at the
+				start, so the need to come back cannot be answered by looking: there is
+				nothing left to look at.
 			</p>
 
 			<p>
-				It is expressed here as the <i>declared value</i>: what an app hands over
-				is not a value to be modified in place, but an option and the value it was
-				declared with, the second being kept and never written on. Going back is
-				then reading, for one option or for all of them, and it costs nothing.
+				It is expressed here as the <i>value on arrival</i>: the value every option
+				of a set holds at the moment the set arrives, written down then and never
+				afterwards. Going back is reading it, for one option or for all of them,
+				and it costs nothing.
 			</p>
 
 			<p>
-				This is the one point at which the elicitation asks something of the app
-				rather than of the person. It is not a new kind of data: it is what the app
-				already holds when it declares its options, and which it stops holding the
-				moment it hands them over.
+				It is the one thing this domain holds beside what an option already
+				carries, and nothing is asked of the app for it: an app hands over its
+				options, and what they hold when they arrive is what they hold.
 			</p>
 
 			<h4>What is said when a value cannot be used</h4>
 
 			<p>
-				A refusal names the option it is about, says what was expected, and
-				appears where the value was given. It never speaks of the others, and it
-				never prevents them from being set: a person who has given nineteen good
-				values and one bad one has given nineteen good values.
+				A refusal names the option it is about, says what was expected, and appears
+				beside that option. The values which suit their options are taken in all
+				the same: a person who has given nineteen good values and one bad one has
+				given nineteen good values.
 			</p>
 
 			<p>
@@ -478,57 +476,80 @@
 
 		</section>
 
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Organising the needs</h3>
+
+			<h4>[010] The options which are shown</h4>
+			<ul class="req">
+			<li>[012] The system shows every option the app declared, and no other option.</li>
+			</ul>
+
+			<h4>[020] What is read of an option</h4>
+			<ul class="req">
+			<li>[021] The system shows the short label of every option.</li>
+			<li>[022] The system shows the long description of an option on demand.</li>
+			<li>[023] The label and the description shown are the ones which came with the option.</li>
+			</ul>
+
+			<h4>[030] What is shown of an option</h4>
+			<ul class="req">
+			<li>[031] The system shows the value of every option.</li>
+			<li>[032] The system shows what it takes to change the value of every option.</li>
+			</ul>
+
+			<h4>[100] Giving a value</h4>
+			<ul class="req">
+			<li>[101] The person can change nothing of an option but its value.</li>
+			<li>[102] The system offers a control suited to the kind of the option.</li>
+			<li>[103] The system shows the bounds of the options which have bounds.</li>
+			<li>[104] The system holds the value the person gave, and no other value.</li>
+			</ul>
+
+			<h4>[200] Refusing a value</h4>
+			<ul class="req">
+			<li>[201] The system refuses a value only where the value does not match the kind of the option or the bounds of the option.</li>
+			<li>[202] The system signals every refused value as soon as the set is validated, and says for each one which value is expected.</li>
+			</ul>
+
+			<h4>[300] Going back</h4>
+			<ul class="req">
+			<li>[301] The person can put an option back to the value it arrived with.</li>
+			<li>[302] The person can put every option back to the value it arrived with, at once.</li>
+			</ul>
+
+			<h4>[400] An option which designates a file</h4>
+			<ul class="req">
+			<li>[401] The person can choose her own file for an option which takes a file, wherever that file stands.</li>
+			</ul>
+
+			<h4>[500] Finding the options again</h4>
+			<ul class="req">
+			<li>[501] The person finds the values she gave the time before, without giving them again.</li>
+			</ul>
+
+			<h4>[600] What is really used</h4>
+			<ul class="req">
+			<li>[601] The person obtains a result which matches the values she was shown, those she did not change included.</li>
+			</ul>
+
+			<h4>[700] Finding an option</h4>
+			<ul class="req">
+			<li>[701] The person can find one option quickly among those of an app.</li>
+			</ul>
+
+			<h4>[1000] Accessibility</h4>
+			<ul class="req">
+			<li>[1001] The system holds to the WCAG rules.</li>
+			</ul>
+
+		</section>
+
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
 	<!-- 1.3 -->
-	<!-- ----------------------------------------------------------- -->
-
-	<section class="ssection">
-	<h2>Needs</h2>
-
-		<p>
-			The needs are those of the person. None of them says by what it is answered,
-			and none of them is the need of a machine.
-		</p>
-
-		<ul>
-			<li><b>B1</b> &mdash; To set the options of an app.</li>
-			<li><b>B2</b> &mdash; To know what each option is for: one short sentence, and a longer explanation on demand.</li>
-			<li><b>B3</b> &mdash; To see the value of each option before touching it.</li>
-			<li><b>B4</b> &mdash; To change a value, and to have that value be the one which counts.</li>
-			<li><b>B5</b> &mdash; To give each value with what suits it: a box for a yes or a no, a number for a number, a file for a file, and so on.</li>
-			<li><b>B6</b> &mdash; To know at once that a value cannot be used.</li>
-			<li><b>B7</b> &mdash; To restore the value which was proposed, for one option or for all of them.</li>
-			<li><b>B8</b> &mdash; To choose one's own file when an option takes one, wherever it stands.</li>
-			<li><b>B11</b> &mdash; To set everything by keyboard and by screen reader.</li>
-			<li><b>B12</b> &mdash; To find the options as they were left, instead of setting them again.</li>
-		</ul>
-
-		<p>
-			Four things which were written here as needs are not needs, and they have been
-			taken out: that an app obtains something to show, that it receives what was
-			set, that neither side knows what the other holds, and that a value already
-			given is still there when the next one is. They are how this domain is
-			arranged, and they are stated where that is stated. The number of a need which
-			left is not given to another.
-		</p>
-
-		<p>
-			<b>B8 is the one this domain does not answer.</b> An option of type
-			<code>filename</code> or <code>filepath</code> designates a file of a machine,
-			and in the wx interface a dialog opens on the machine where the interface
-			runs. Online that machine is not the one SPPAS runs on. The need is real
-			&mdash; an app which maps SAMPA phonemes onto IPA is given a file of
-			correspondences, and that file belongs to the person &mdash; and it is the
-			need the provision of files answers, locally as well as online. This domain
-			asks; it does not answer.
-		</p>
-
-	</section>
-
-	<!-- ----------------------------------------------------------- -->
-	<!-- 1.4 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
@@ -552,6 +573,705 @@
 			<code>sppasOption</code> and <code>sppasBaseOption</code> are read and not
 			modelled. Their functioning is established, and this document names them as it
 			names a neighbour.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== MODELLING ============================== -->
+
+
+<section class="chapter">
+<h1>Modelling</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Data dictionary</h2>
+
+		<p>
+			Two data, and that is all this domain holds of its own.
+		</p>
+
+		<ul>
+			<li>
+				<b>D1. A set of options</b> &mdash; what an app hands over at one time, and
+				what is handed back to it at one time.
+			</li>
+			<li>
+				<b>D2. A refusal</b> &mdash; what is said of a value which does not suit
+				the option it was given for. It exists while that value is being given, and
+				no longer.
+			</li>
+		</ul>
+
+		<p>
+			<code>sppasOption</code> is not one of them. Its functioning is established, it
+			is read and its value is changed, and this document adds nothing to it: it is
+			named here as a neighbour, as the dossier of Convert names the API which reads
+			and writes annotations.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Conceptual model of communication</h2>
+
+		<p>
+			Three actors border this domain. One is a person, one is what calls it, and
+			one is a neighbouring domain it calls in turn.
+		</p>
+
+		<h3>Actors</h3>
+
+		<ul>
+			<li><b>A1. The person</b> &mdash; reads what an option is for, sees the value it holds, changes that value, puts it back to the value it arrived with, and chooses a file where an option takes one.</li>
+			<li><b>A2. An app</b> &mdash; hands over a set of options, and gets that set back with the values.</li>
+			<li><b>A3. The provision of files</b> &mdash; the neighbouring domain which lets the person designate a file of hers, wherever SPPAS runs.</li>
+		</ul>
+
+		<h3>Flows</h3>
+
+		<ul>
+			<li><b>F1. A2 &rarr; domain</b> &mdash; a set of options [012].</li>
+			<li><b>F2. domain &rarr; A1</b> &mdash; the short label of every option [021].</li>
+			<li><b>F3. domain &rarr; A1</b> &mdash; the long description of one option, on demand [022].</li>
+			<li><b>F4. domain &rarr; A1</b> &mdash; the value of every option, and what it takes to change that value [031], [032].</li>
+			<li><b>F5. domain &rarr; A1</b> &mdash; the bounds of an option which has bounds [103].</li>
+			<li><b>F6. A1 &rarr; domain</b> &mdash; the values she gave, for the whole set, when she validates them [101].</li>
+			<li><b>F7. domain &rarr; A1</b> &mdash; one refusal per refused option, naming the option and the value which is expected [202].</li>
+			<li><b>F8. A1 &rarr; domain</b> &mdash; put one option back to the value it arrived with [301].</li>
+			<li><b>F9. A1 &rarr; domain</b> &mdash; put every option back to the value it arrived with [302].</li>
+			<li><b>F10. A1 &rarr; domain</b> &mdash; the request to choose a file, for one option [401].</li>
+			<li><b>F11. domain &rarr; A3</b> &mdash; the request for a file of the person.</li>
+			<li><b>F12. A3 &rarr; domain</b> &mdash; the file she chose.</li>
+			<li><b>F13. domain &rarr; A2</b> &mdash; the set of options, with their values [601].</li>
+		</ul>
+
+		<p>
+			<b>Nothing goes to A2 between F1 and F13.</b> An app hands over its options
+			and hears nothing more until they are handed back: it is not told which value
+			was changed, nor when, nor that one was refused. What it gets is the state at
+			the end, once.
+		</p>
+
+		<p>
+			<b>Nothing goes to A3 but a request.</b> This domain asks for a file and
+			receives one; it opens none, reads none, and holds what came back as the value
+			of an option and nothing more.
+		</p>
+
+		<p>
+			Two needs of the person are carried by this model and answered elsewhere. The
+			file of [401] is answered by A3, which serves it on the machine of the person
+			as well as from a server. And [501] &mdash; finding again the values given the
+			time before &mdash; is answered by A2: whether the values of a former setting
+			are restored is that app's decision, it hands over the options carrying the
+			values it wants shown, and F1 carries them. This domain does not know whether
+			a value it is given comes from a setting made yesterday or from a declaration
+			written today, and has no need to.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Conceptual model of data</h2>
+
+		<p>
+			Three classes. The option is one of them without being modelled: it is an
+			object of SPPAS, its functioning is established, and what is held here is its
+			identity inside a set and the value it had on arrival.
+		</p>
+
+		<h3>The classes of entities</h3>
+
+		<table>
+			<thead>
+				<tr><th>Class</th><th>Properties</th><th>What it is</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>OPTION SET</td>
+					<td># set</td>
+					<td>What an app hands over at one time, and what is handed back to it at one time (D1)</td>
+				</tr>
+				<tr>
+					<td>OPTION</td>
+					<td># set, # option, value on arrival</td>
+					<td>One option of a set. What it holds now is its own and belongs to SPPAS; what is held here is the value it had when it arrived</td>
+				</tr>
+				<tr>
+					<td>REFUSAL</td>
+					<td># set, # option, what is expected</td>
+					<td>What is said of a value which does not suit the option it was given for (D2)</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3>The relations</h3>
+
+		<table>
+			<thead>
+				<tr><th>No.</th><th>Verb</th><th>Leg 1</th><th>Leg 2</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>R1</td><td>belongs to</td><td>OPTION (1,1)</td><td>OPTION SET (1,n)</td></tr>
+				<tr><td>R2</td><td>concerns</td><td>REFUSAL (1,1)</td><td>OPTION (0,1)</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			R1 is an aggregation: an option is named by its key inside its set, and two
+			apps name an option <code>language</code> without naming the same option. It is
+			also what identifies an option here &mdash; its key inside its set.
+		</p>
+
+		<p>
+			R2 reads (0,1) on the side of the option: an option carries one refusal or
+			none, the one of the last validation. A value which is taken in leaves no
+			refusal behind, and a validation which refuses nothing leaves none at all.
+		</p>
+
+		<p>
+			<b>The value on arrival is the one thing this domain adds to an option of
+			SPPAS.</b> It is what going back goes back to, and without it nothing could.
+			It is written when the set arrives and never afterwards.
+		</p>
+
+		<h3>Computed, and never held</h3>
+
+		<ul>
+			<li>The value an option holds now, which is on the option itself and belongs to SPPAS.</li>
+			<li>That a value was changed, which is the value now against the value on arrival.</li>
+			<li>What is handed back to an app, which is the set itself.</li>
+		</ul>
+
+		<h3>What is not modelled, and why</h3>
+
+		<ul>
+			<li>The option itself &mdash; its kind, its label, its description, its value. All four are established, read where they are written, and nothing here adds to them.</li>
+			<li>What an option means, and what two values are together: the app's, and refused nowhere here.</li>
+			<li>The file an option designates, which is the provision of files', and of which this domain holds what came back and nothing else.</li>
+		</ul>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Conceptual model of treatments</h2>
+
+		<p>
+			Eight treatments, and they are all this domain does. Every one of them is
+			triggered by one event, and none of them waits for a second: a set arrives, a
+			person acts on it, an app asks for it back.
+		</p>
+
+		<h3>The events</h3>
+
+		<table>
+			<thead>
+				<tr><th>No.</th><th>Event</th><th>Kind</th><th>Comes from</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>E1</td><td>An app hands over a set of options</td><td>external</td><td>F1</td></tr>
+				<tr><td>E2</td><td>The person asks what an option is for</td><td>external</td><td>The person (A1)</td></tr>
+				<tr><td>E3</td><td>The person validates the values she gave</td><td>external</td><td>F6</td></tr>
+				<tr><td>E4</td><td>The person asks to put one option back</td><td>external</td><td>F8</td></tr>
+				<tr><td>E5</td><td>The person asks to put every option back</td><td>external</td><td>F9</td></tr>
+				<tr><td>E6</td><td>The person asks to choose a file for an option</td><td>external</td><td>F10</td></tr>
+				<tr><td>E7</td><td>A file comes back</td><td>external</td><td>F12</td></tr>
+				<tr><td>E8</td><td>An app asks for its set back</td><td>external</td><td>An app (A2)</td></tr>
+			</tbody>
+		</table>
+
+		<section class="subssection">
+		<h3>T01 &mdash; Take in a set of options</h3>
+
+			<p><b>Purpose:</b> that a set of options is ready to be acted upon, and that
+			what every option of it holds is written down before anything changes.</p>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E1</td></tr>
+					<tr><td>Actions</td><td>Write the value on arrival of every option of the set</td></tr>
+					<tr><td>Result</td><td>The label of every option (F2). Always</td></tr>
+					<tr><td>Result</td><td>The value of every option, and what it takes to change that value (F4). Always</td></tr>
+					<tr><td>Result</td><td>The bounds of the options which have bounds (F5). Always</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				The value on arrival is written here and nowhere else. An option which
+				arrives twice in two sets is two options, each with its own.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T02 &mdash; Say what an option is for</h3>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E2</td></tr>
+					<tr><td>Actions</td><td>Give the long description of that option</td></tr>
+					<tr><td>Result</td><td>The description (F3). Always</td></tr>
+				</tbody>
+			</table>
+
+			<p>It reads no value and changes nothing.</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T03 &mdash; Take in the values</h3>
+
+			<p><b>Purpose:</b> that the values a person gave become the values of the
+			options, and that she is told which of them could not.</p>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E3</td></tr>
+					<tr><td>Actions</td><td>For every value given: verify it against the kind of its option and against the bounds of that option; set it on the option</td></tr>
+					<tr><td>Result</td><td>The option holds that value (F4). For every value which suits the kind and the bounds</td></tr>
+					<tr><td>Result</td><td>A refusal naming the option and the value which is expected (F7). For every other value &mdash; and that option keeps the value it held</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>The values are judged one by one and taken in one by one.</b> A set is
+				not accepted or refused as a whole: nineteen good values out of twenty are
+				nineteen values taken in, and one refusal.
+			</p>
+
+			<p>
+				<b>A refusal erases nothing.</b> An option whose value was refused holds
+				what it held before, and the person loses no more than the value she has
+				just given.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T04 &mdash; Put one option back</h3>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E4</td></tr>
+					<tr><td>Actions</td><td>Set the value on arrival back on the option; drop the refusal that option carries, if it carries one</td></tr>
+					<tr><td>Result</td><td>The option holds its value on arrival (F4). Always</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				The refusal goes with the value it was about. Keeping it would leave a
+				reproach standing against a value which no longer exists anywhere.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T05 &mdash; Put every option back</h3>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E5</td></tr>
+					<tr><td>Actions</td><td>Do what T04 does, for every option of the set</td></tr>
+					<tr><td>Result</td><td>Every option holds its value on arrival, and the set carries no refusal (F4). Always</td></tr>
+				</tbody>
+			</table>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T06 &mdash; Obtain a file for an option</h3>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E6</td></tr>
+					<tr><td>Actions</td><td>Ask the provision of files for a file of the person</td></tr>
+					<tr><td>Result</td><td>The request (F11). Always</td></tr>
+				</tbody>
+			</table>
+
+			<p>It opens nothing itself, on any machine.</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T07 &mdash; Take in the file which came back</h3>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E7</td></tr>
+					<tr><td>Actions</td><td>Set what came back as the value of the option it was asked for</td></tr>
+					<tr><td>Result</td><td>The option holds it (F4). Always</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>Nothing verifies that what comes back suits the option.</b> An option
+				which expects a folder may be given a file, and no treatment here notices:
+				this domain does not open what it is handed. What would notice it, and
+				where, is not settled by this document.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>T08 &mdash; Hand the set back</h3>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E8</td></tr>
+					<tr><td>Actions</td><td>Give back the set, every option holding the value it holds</td></tr>
+					<tr><td>Result</td><td>The set with its values (F13). Always</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				What is handed back is what is on the screen: the options which were
+				changed and the ones which were not, and no refusal &mdash; a value which
+				was refused was never taken in.
+			</p>
+
+		</section>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== ORGANISATIONAL ========================= -->
+
+
+<section class="chapter">
+<h1>Organisational level</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Organisational model of treatments</h2>
+
+		<p>
+			One procedure per treatment, numbered as it is. One table and not two: what
+			differs between SPPAS running on the machine of the person and SPPAS running
+			on a server is not what is done here, and not where it is done.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>PF</th><th>What it does</th><th>Triggered by</th><th>In charge</th><th>Where</th><th>When</th><th>Nature</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>PF1 (T01)</td><td>Takes in a set of options</td><td>E1</td><td>the domain</td><td>the server</td><td>when an app hands its options over</td><td>automated</td></tr>
+				<tr><td>PF2 (T02)</td><td>Says what an option is for</td><td>E2</td><td>the domain</td><td>the server</td><td>when the person asks</td><td>conversational</td></tr>
+				<tr><td>PF3 (T03)</td><td>Takes in the values of a set</td><td>E3</td><td>the domain</td><td>the server</td><td>when the person validates what she gave</td><td>conversational</td></tr>
+				<tr><td>PF4 (T04)</td><td>Puts one option back</td><td>E4</td><td>the domain</td><td>the server</td><td>when the person asks</td><td>conversational</td></tr>
+				<tr><td>PF5 (T05)</td><td>Puts every option back</td><td>E5</td><td>the domain</td><td>the server</td><td>when the person asks</td><td>conversational</td></tr>
+				<tr><td>PF6 (T06)</td><td>Obtains a file for an option</td><td>E6</td><td>the provision of files</td><td>the server, then the machine of the person</td><td>when the person asks</td><td>conversational</td></tr>
+				<tr><td>PF7 (T07)</td><td>Takes in the file which came back</td><td>E7</td><td>the domain</td><td>the server</td><td>as soon as a file comes back</td><td>automated</td></tr>
+				<tr><td>PF8 (T08)</td><td>Hands the set back</td><td>E8</td><td>the domain</td><td>the server</td><td>when the app asks</td><td>automated</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>One column holds one value, and that is the result.</b> Everything happens
+			on the server. What the browser holds is the gesture &mdash; the box ticked,
+			the number typed, the button pressed &mdash; and the values already given,
+			which it carries from one request to the next. It decides nothing, because it
+			knows nothing of what an option accepts. RO1, RO2
+		</p>
+
+		<p>
+			<b>Five procedures out of eight are conversational, and they are a request
+			each.</b> Validating what was given is one request and carries the whole set;
+			asking for a description is another, and so is putting an option back. That is
+			what makes [202] hold: the refusals come back on the request which carried the
+			values, beside the options they are about.
+		</p>
+
+		<p>
+			PF6 is the one procedure this domain does not perform. It appears in the table
+			so that the request it makes to a neighbour is written down, and so that the
+			one moment something happens outside the server is visible.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Rules of organisation</h2>
+
+		<ul>
+			<li><b>RO1</b> &mdash; The values already given are carried from one request to the next by the page, and nothing of a set is held on the server between two requests.</li>
+			<li><b>RO2</b> &mdash; A value is verified where it is taken in, on the server. The browser holds no knowledge of what an option accepts, and refuses nothing of its own.</li>
+			<li><b>RO3</b> &mdash; Every request carries the whole set: the option which is being acted upon, and the values of all the others.</li>
+			<li><b>RO4</b> &mdash; The two contexts of execution are one organisation. Nothing here is done in one and not in the other.</li>
+			<li><b>RO5</b> &mdash; This domain has no page of its own. What it produces is a piece of page an app places in its own, and where that piece stands belongs to that app.</li>
+			<li><b>RO6</b> &mdash; A set of options exists for the time an app is being set up, and this domain keeps none of it afterwards.</li>
+		</ul>
+
+		<p>
+			RO1 is what the neighbouring dossiers already hold to, and it is what lets one
+			implementation serve a context which knows the person and one which does not.
+			It is also what T08 rests on: an app asking for its options back is answered
+			from what the page transmitted, and from nothing else.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== LOGICAL LEVEL ========================== -->
+
+
+<section class="chapter">
+<h1>Logical level</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 4.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The tables</h2>
+
+		<p>
+			Each class of entities becomes a table, and its identifier becomes its key.
+			Three tables, and one of them holds a key and nothing else.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>Table</th><th>Columns</th><th>Comes from</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>OPTION SET</td><td><u>set</u></td><td>The class OPTION SET</td></tr>
+				<tr><td>OPTION</td><td><u>set</u>, <u>option</u>, value on arrival</td><td>The class OPTION, and R1</td></tr>
+				<tr><td>REFUSAL</td><td><u>set</u>, <u>option</u>, what is expected</td><td>The class REFUSAL, and R2</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			R1 is an aggregation: the aggregated table takes the key of the aggregating
+			one, so an option carries the name of its set, and the two together tell one
+			option from another. Two sets carry an option called <code>language</code>
+			without carrying the same option.
+		</p>
+
+		<p>
+			<b>The key of a refusal is the key of the option it is about.</b> R2 reads
+			(0,1) on the side of the option, and a key says it better than a rule would:
+			an option carries one refusal or none, and a second value given for it takes
+			the place of the first.
+		</p>
+
+		<p>
+			OPTION SET is a key and nothing else. The table exists so that the others may
+			name it; what a set is made of is the options which carry its key.
+		</p>
+
+		<p>
+			Not in the tables, and belonging to SPPAS: the kind of an option, its label,
+			its description, and the value it holds. All four are read where they are
+			written, and this document adds nothing to them.
+		</p>
+
+		<p>
+			Not in the tables, and computed: whether the value an option holds differs
+			from the value it arrived with.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== PHYSICAL LEVEL ========================= -->
+
+
+<section class="chapter">
+<h1>Physical level</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 5.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Where each table stands</h2>
+
+		<p>
+			Here the machines are named, and not before. <b>There is no database, no file
+			and no disk: the three tables stand in what the page transmits, and nowhere
+			else.</b>
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>Table</th><th>Where it stands</th><th>Between two requests</th><th>What the person sees</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>OPTION SET</td><td>What the page transmits</td><td>Nothing: it is rebuilt at every request</td><td>The options of the app she is setting up</td></tr>
+				<tr><td>OPTION</td><td>The same, the value on arrival travelling with the rest</td><td>Nothing</td><td>One line, with what she may act on</td></tr>
+				<tr><td>REFUSAL</td><td>Made when a value is taken in, and sent back with the answer</td><td>Nothing</td><td>What was expected, where she gave the value</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			This is the one domain of the four which holds nothing anywhere. It has no
+			place of its own, no lifetime to manage and nothing to sweep: a set exists
+			while an app is being set up, and the last request is the end of it. RO6
+		</p>
+
+		<p>
+			<b>What comes back from the page is what the page was given, and nothing here
+			can tell otherwise.</b> The value on arrival travels to the browser and comes
+			back with every request; a page which sent back another one would be putting
+			an option back to a value it never arrived with. What that costs is bounded:
+			a person can only do it to the options she is setting herself, and what an app
+			receives it would have accepted from a keyboard. It is written down rather
+			than guarded against.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 5.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Operational model of treatments</h2>
+
+		<p>
+			The organisational level said by what and when; this says in what tasks. One
+			request is one unit: the set is rebuilt from what the page transmitted, the
+			one thing which was asked is done, and what is to be shown is sent back.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>PF</th><th>The tasks, in order</th><th>What cannot be half done</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>PF1</td><td>Read the options an app hands over; write the value on arrival of each of them; build what is to be shown</td><td>Nothing</td></tr>
+				<tr><td>PF2</td><td>Rebuild; give the description of one option</td><td>Nothing</td></tr>
+				<tr><td>PF3</td><td>Rebuild; then, for every value given: verify it against the kind and against the bounds, and set it on its option or make the refusal</td><td>Nothing</td></tr>
+				<tr><td>PF4, PF5</td><td>Rebuild; set the value on arrival back on one option or on all of them; drop the refusals of the options put back</td><td>Nothing</td></tr>
+				<tr><td>PF6</td><td>Rebuild; ask the provision of files, saying which option the file is for</td><td>Nothing</td></tr>
+				<tr><td>PF7</td><td>Rebuild; set what came back on the option it was asked for</td><td>Nothing</td></tr>
+				<tr><td>PF8</td><td>Rebuild; give the set back to the app</td><td>Nothing</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>The last column holds one word, and it is the consequence of holding
+			nothing.</b> There is no transaction here, no rollback and no recovery,
+			because there is nothing which could be half written: a request which dies
+			leaves the page as it was, and the next request starts from what the page
+			still holds.
+		</p>
+
+		<p>
+			<b>Two requests never meet.</b> Two persons setting up two apps carry two
+			sets, each in its own page, and neither is anywhere the other could reach. No
+			lock is needed, and none is taken.
+		</p>
+
+		<p>
+			PF6 and PF7 are two requests with nothing held between them. What ties them is
+			carried by the page and by what the provision of files gives back: which
+			option the file was asked for. A file which comes back for an option nobody
+			asked about is a file which is not taken in.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 5.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Where the code goes</h2>
+
+		<p>
+			In <code>sppas/ui/swapp/services/options/</code>: in the family folder of the
+			services, beside the provision of files, because it is a service and not an
+			app. One module per kind of knowledge.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>Module</th><th>What it does</th><th>Procedure</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>acceptance</td><td>Says whether a value suits the kind of an option and its bounds, and what was expected when it does not. Reads nothing, writes nothing</td><td>What PF3 asks of it</td></tr>
+				<tr><td>set</td><td>Rebuilds a set from what the page transmitted, holds the value every option arrived with, sets values, puts options back, and gives the set to an app</td><td>PF1, PF3, PF4, PF5, PF7, PF8</td></tr>
+				<tr><td>presentation</td><td>Builds the piece of page an app places in its own: one line per option, and what the person acts on</td><td>PF2, and the view of every other</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			What each one promises, which is the reason for the cutting:
+		</p>
+
+		<ul>
+			<li><b>Acceptance</b> is given a kind, bounds and a value, and answers. It knows no option, no set and no page, which is what lets every rule of what is accepted be tested with nothing installed.</li>
+			<li>The <b>set</b> module is the only one which knows what the page transmits and how a set is rebuilt from it. The day that changes, it is the only one to be read again.</li>
+			<li><b>Presentation</b> decides nothing: what it shows was decided before it was called, and the texts it shows are the ones the options carry.</li>
+		</ul>
+
+		<p>
+			No module here knows what an option means, what a value does, or what an app
+			will run. There is nowhere for that knowledge to be held, which is the
+			ignorance of the first chapter written as a cut.
+		</p>
+
+		<p>
+			The request for a file is made to the provision of files and to nothing else.
+			It is the only tie of this domain to a neighbour, and the <b>set</b> module
+			carries it: what comes back is a value like any other.
 		</p>
 
 	</section>
