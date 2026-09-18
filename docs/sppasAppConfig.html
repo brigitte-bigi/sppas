@@ -278,6 +278,17 @@ View Source
     <article class="docstring">
 <p><em>Return the name of the config file.</em></p>
 
+<p>The file says which features are installed, and they are installed
+in the environment SPPAS is running in: two installed versions have
+their own, and neither writes into the other. It is stored with the
+other files of the user, and not in the environment: an environment
+created by somebody to install SPPAS with pip is theirs, and SPPAS
+leaves no file of its own in it.</p>
+
+<p>The name carries the environment: the name of its directory, and a
+short digest of its full path -- two environments named alike are
+still told apart.</p>
+
     </article>
 
 
@@ -287,8 +298,24 @@ View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">cfg_filename</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">"""Return the name of the config file."""</span>
-    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">basedir</span><span class="p">,</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">APP_CONFIG_FILENAME</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Return the name of the config file.</span>
+
+<span class="sd">        The file says which features are installed, and they are installed</span>
+<span class="sd">        in the environment SPPAS is running in: two installed versions have</span>
+<span class="sd">        their own, and neither writes into the other. It is stored with the</span>
+<span class="sd">        other files of the user, and not in the environment: an environment</span>
+<span class="sd">        created by somebody to install SPPAS with pip is theirs, and SPPAS</span>
+<span class="sd">        leaves no file of its own in it.</span>
+
+<span class="sd">        The name carries the environment: the name of its directory, and a</span>
+<span class="sd">        short digest of its full path -- two environments named alike are</span>
+<span class="sd">        still told apart.</span>
+
+<span class="sd">        """</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+    <span class="n">digest</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">prefix</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">8</span><span class="p">]</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{:s}</span><span class="s1">-</span><span class="si">{:s}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">prefix</span><span class="p">),</span> <span class="n">digest</span><span class="p">,</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">APP_CONFIG_FILENAME</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">ext_dir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
