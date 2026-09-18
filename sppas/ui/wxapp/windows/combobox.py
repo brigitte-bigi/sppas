@@ -275,8 +275,14 @@ class sppasComboBox(sppasPanel):
     # ------------------------------------------------------------------------
 
     def _process_mouse_event(self, event):
-        if event.Leaving():
-            self._popup.Dismiss()
+        if event.Leaving() is True:
+            # The popup holds the mouse -- Popup() takes it, see _process_rise.
+            # Under GTK, entering one of the choices is leaving the window of
+            # the popup itself: what says the list was left is where the
+            # pointer stands, and not the event.
+            if self._popup.GetScreenRect().Contains(wx.GetMousePosition()) is False:
+                self._popup.Dismiss()
+
         event.Skip()
 
     # ------------------------------------------------------------------------
