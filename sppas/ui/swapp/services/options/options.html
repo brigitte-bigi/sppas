@@ -1868,6 +1868,143 @@
 	<!-- ------------------------------------------------------- -->
 
 	<section>
+	<h2>Annex: Mockup of the interface</h2>
+
+		<p>This annex is not a picture of the container. It is the container &mdash; the
+		fragment below is HTML, styled by Whakerexa, rendered here by the same
+		stylesheets that will render it inside the page of an app. What is unreadable
+		here will be unreadable there.</p>
+
+		<p>The options are the real ones of the search for IPUs, because their labels
+		are real sentences and a mockup written on short labels proves nothing. It shows
+		one state, after a validation where one value was refused and one option was
+		changed. Interactions are inert; the structure, the labels and the wording are
+		not.</p>
+
+		<!-- ============ BEGIN MOCKUP ============ -->
+
+		<div class="panel">
+
+		<h3>Search for IPUs</h3>
+
+		<form>
+
+		<dl>
+
+			<dt>Pattern of the file with IPUs
+				<details><summary>?</summary>
+				<p>Added to the name of every file which is written, so that what was
+				searched is told apart from what it was searched in.</p>
+				</details>
+			</dt>
+			<dd><input type="text" value="-ipus" size="40"></dd>
+
+			<dt>Duration of the analysis window for the estimation of the RMS values, in seconds
+				<details><summary>?</summary>
+				<p>The sound is cut into windows of that length, and one RMS value is
+				estimated on each of them. A shorter window follows the signal more
+				closely and is more sensitive to what is not speech.</p>
+				</details>
+			</dt>
+			<dd><input type="number" value="0.020" min="0.005" max="0.500" step="0.001">
+				<small>between 0.005 and 0.500</small></dd>
+
+			<dt>Threshold of the RMS value under which a window is a silence, 0 for automatic
+				<details><summary>?</summary>
+				<p>Left at zero, the threshold is estimated on the file itself. Any other
+				value is used as it stands, on every file. It depends on the recording and
+				this option declares no bound.</p>
+				</details>
+			</dt>
+			<dd><input type="text" value="quiet" size="10">
+				<p><b>A number is expected.</b> The threshold still holds 0.</p></dd>
+
+			<dt>Minimum duration of an IPU, in seconds</dt>
+			<dd><input type="number" value="0.400" min="0.010" max="10.000" step="0.001">
+				<small>between 0.010 and 10.000</small>
+				<button type="button">back to 0.300</button></dd>
+
+			<dt>Shift the beginning of an IPU to the left, in seconds</dt>
+			<dd><input type="number" value="0.020" min="0.000" max="0.200" step="0.001">
+				<small>between 0.000 and 0.200</small></dd>
+
+			<dt>Write the silences as well</dt>
+			<dd><label class="switch">
+				<input type="checkbox" aria-label="Write the silences as well">
+				<span class="switch-slider round switch-no-text"></span>
+				</label></dd>
+
+			<dt>File of the tier names to search in
+				<details><summary>?</summary>
+				<p>One name per line. Left empty, every tier of the file is searched.</p>
+				</details>
+			</dt>
+			<dd><button type="button">Choose a file</button>
+				<span>tiers.txt</span>
+				<button type="button">back to none</button></dd>
+
+		</dl>
+
+		<p>
+		<button type="button">Cancel</button>
+		<button type="button" class="apply-button">Put everything back</button>
+		<button type="submit" class="cta-button">Validate</button>
+		</p>
+
+		</form>
+
+		</div>
+
+		<!-- ============= END MOCKUP ============= -->
+
+		<h3>What the mockup settles, and what it does not</h3>
+
+		<p>The label stands alone on its line and the control under it. The labels are
+		sentences, written by whoever declared the option and not by this service: a
+		layout which puts the control beside the label holds for <i>Window</i> and
+		breaks on <i>Duration of the analysis window for the estimation of the RMS
+		values, in seconds</i>. The order is the same on every line, and only the
+		control changes with the kind [032].</p>
+
+		<p><b>A number is a field one steps through when its bounds are declared, and a
+		plain text field when they are not.</b> Arrows increase by something and stop
+		somewhere: with bounds they know where to stop, and the step follows from what
+		was declared &mdash; one for a whole number, and the precision of the declared
+		value for a decimal, a thousandth where the option was declared at 0.020. The
+		threshold above declares no bound, because it depends on the recording: it is a
+		field, and what it accepts is said in words.</p>
+
+		<p>A yes or a no is a switch with no words on it. Writing YES and NO inside it
+		says twice what its position already says, and in a language which is not
+		necessarily the one of the label.</p>
+
+		<p>The long description is a <code>?</code> at the end of the label, folded. It
+		is discreet because it is read once and the label is read every time; it is on
+		the label because that is what it explains. An option whose author wrote no
+		description has no <code>?</code> at all, rather than one which opens on
+		nothing &mdash; three of the seven options above have none.</p>
+
+		<p>Three buttons and not one. <b>Cancel</b> leaves without changing anything,
+		which is the only way out when a person opened the options to look; <b>put
+		everything back</b> answers [302] and is always there; <b>validate</b> sends
+		what was given. The way back of one option is on that option, and appears only
+		where something was changed [301].</p>
+
+		<p>The refusal stands under the field which caused it, says what is expected and
+		what the option still holds &mdash; the value on the screen is not the value
+		which counts, and the person has to know which is which. The five other options
+		were taken in.</p>
+
+		<p>Two things are shown here and are not settled: how the bounds read for a kind
+		which has none to speak of, and where a chosen file is shown when its name is
+		long. They are interface questions, and they are decided against this markup
+		rather than in the abstract.</p>
+
+	</section>
+
+	<!-- ------------------------------------------------------- -->
+
+	<section>
 	<h2>Annex: Legal notices</h2>
 
 	<ul>
