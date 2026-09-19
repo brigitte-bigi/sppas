@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.wappbase.wappbakery.py
+:filename: test_trace_store.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: Bakery for any SPPAS web-based application.
+:summary: Test the shared state and the notifications of swapp.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -38,55 +38,49 @@
 
 """
 
-from __future__ import annotations
+import unittest
 
-from whakerpy.webapp import WebSiteData
-from sppas.ui.swapp import sppasImagesAccess
+from sppas.ui.agnostic import sppasCommKeys
+
+from sppas.ui.swapp.swappcore.swappsg import swapp_notify
+from sppas.ui.swapp.swappcore.swappsg import notify_show_page
 
 # ---------------------------------------------------------------------------
 
 
-class swappWebData(WebSiteData):
-    """Parse the JSON file, store data and create the bakery system.
+class TestNotifyShowPage(unittest.TestCase):
+    """The request sent to the other UI to show one of its pages."""
 
-    """
+    def setUp(self):
+        self.received = list()
+        swapp_notify.subscribe(self.__observer)
 
-    def __init__(self, json_filename: str | None = None):
-        """Create a swappWebData instance.
+    def tearDown(self):
+        swapp_notify.unsubscribe(self.__observer)
 
-        """
-        super(swappWebData, self).__init__(json_filename)
+    def __observer(self, key, value):
+        self.received.append((key, value))
 
     # -----------------------------------------------------------------------
 
-    @staticmethod
-    def icon() -> str:
-        """Return the page icon name."""
-        return sppasImagesAccess.get_logo_filename("sppas-logo-v5")
+    def test_notify(self):
+        """The page name is published with the SHOW_PAGE key."""
+        notify_show_page("page_annotate")
+        self.assertEqual([(sppasCommKeys.SHOW_PAGE, "page_annotate")],
+                         self.received)
 
-    @staticmethod
-    def description() -> str:
-        """Return a short description of the application."""
-        return "No description available."
+    def test_notify_each_page(self):
+        """Any page of the wx interface travels as it is."""
+        pages = ("page_files", "page_annotate", "page_analyze",
+                 "page_editor", "page_convert", "page_plugins")
+        for page in pages:
+            notify_show_page(page)
+        self.assertEqual([(sppasCommKeys.SHOW_PAGE, p) for p in pages],
+                         self.received)
 
-    @staticmethod
-    def name() -> str:
-        """Return a short name of the application."""
-        return "Undefined"
-
-    @staticmethod
-    def id() -> str:
-        """Return an identifier of the application."""
-        return "Undefined"
-
-    @staticmethod
-    def theme_name() -> str:
-        """Return the name of the theme the application brings, if any.
-
-        An application bringing its own theme is shown with it, whatever
-        the theme in force where it was launched from: the theme is its
-        identity. An empty name means the application takes the theme of
-        the page it was launched from.
-
-        """
-        return ""
+    def test_notify_without_observer(self):
+        """Without any observer, nothing happens and nothing raises."""
+        swapp_notify.unsubscribe(self.__observer)
+        notify_show_page("page_files")
+        self.assertEqual(0, len(self.received))
+        swapp_notify.subscribe(self.__observer)

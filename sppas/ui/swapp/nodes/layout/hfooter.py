@@ -44,19 +44,19 @@ from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLFooterNode
 
 from sppas.core.config import sg
-from sppas.ui.swapp.wappcore.wappsg import wapp_settings
-from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
+from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+from sppas.ui.swapp.swappcore.swapputils import sppasImagesAccess
 
 # ---------------------------------------------------------------------------
 
 
-class SwappFooter(HTMLFooterNode):
+class swappFooter(HTMLFooterNode):
     """Create the footer node and make available nodes to be appended.
 
     """
 
     def __init__(self, parent_id: str):
-        super(SwappFooter, self).__init__(parent_id)
+        super(swappFooter, self).__init__(parent_id)
         self.set_attribute("class", "center")
 
     # -----------------------------------------------------------------------
@@ -66,7 +66,7 @@ class SwappFooter(HTMLFooterNode):
 
         """
         img_splash = EmptyNode(self.identifier, None, "img")
-        img_splash.add_attribute("src", f"{wapp_settings.images}/sppas-splash-v5.png")
+        img_splash.add_attribute("src", f"{swapp_settings.images}/sppas-splash-v5.png")
         img_splash.add_attribute("id", "splash")
         img_splash.add_attribute("class", "")
         img_splash.add_attribute("alt", "")

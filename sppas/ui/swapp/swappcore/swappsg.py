@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.wappsg.py
+:filename: sppas.ui.swapp.swappsg.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary: This is the SPPAS Web-based application global' variables.
@@ -56,17 +56,17 @@ from sppas.ui.swapp.main_trace_store import swappTraceStore
 
 
 # Instantiate the application settings
-wapp_settings = sppasWebAppSettings()
+swapp_settings = sppasWebAppSettings()
 
 # Instantiate the workspaces manager
-wapp_wkps = sppasWkpsManager()
+swapp_wkps = sppasWkpsManager()
 
 # Instantiate the application events notifier
-wapp_notify = sppasCommNotifier()
+swapp_notify = sppasCommNotifier()
 
 # Instantiate the shared store of the trace/info records: the swapp server
 # is the collector of the traces of all the SPPAS components.
-wapp_trace = swappTraceStore()
+swapp_trace = swappTraceStore()
 
 # -----------------------------------------------------------------------
 
@@ -134,7 +134,7 @@ class sppasWxAppState:
 
 
 # Instantiate the shared state of the wx interface
-wapp_wxstate = sppasWxAppState()
+swapp_wxstate = sppasWxAppState()
 
 # -----------------------------------------------------------------------
 
@@ -148,8 +148,8 @@ def notify_wkp_changed() -> None:
 
     """
     wjson = sppasWJSON()
-    wjson.set(wapp_wkps.data)
-    wapp_notify.notify(sppasCommKeys.WKP_CHANGED, wjson.serialize())
+    wjson.set(swapp_wkps.data)
+    swapp_notify.notify(sppasCommKeys.WKP_CHANGED, wjson.serialize())
 
 # -----------------------------------------------------------------------
 
@@ -165,20 +165,20 @@ def wx_is_running() -> bool:
     :return: (bool) True if the wx interface answered
 
     """
-    if wapp_wxstate.port is None:
+    if swapp_wxstate.port is None:
         return False
 
-    client = sppasCommClient(wapp_settings.shost, wapp_wxstate.port)
+    client = sppasCommClient(swapp_settings.shost, swapp_wxstate.port)
     try:
         client.request(client.format_request(sppasCommKeys.PING,
                                              {"source": "swapp"}))
     except sppasCommServerError:
         # The address stays: it is the last one the interface announced,
         # and a silence is not a reason to forget where to ask again.
-        wapp_wxstate.running = False
+        swapp_wxstate.running = False
         return False
 
-    wapp_wxstate.running = True
+    swapp_wxstate.running = True
     return True
 
 # -----------------------------------------------------------------------
@@ -196,17 +196,17 @@ def request_wx_exit() -> int:
     :return: (int) EXIT_OK, EXIT_NO, or ACK when the verdict comes later
 
     """
-    if wapp_wxstate.port is None:
+    if swapp_wxstate.port is None:
         return sppasCommKeys.EXIT_OK
 
-    client = sppasCommClient(wapp_settings.shost, wapp_wxstate.port)
+    client = sppasCommClient(swapp_settings.shost, swapp_wxstate.port)
     try:
         answer = client.request(
             client.format_request(sppasCommKeys.EXIT_REQUEST, {"source": "swapp"}))
         key, value = sppasCommClient.parse_message(answer)
     except Exception as e:
         logging.info(f"The wx interface was not asked about the exit: {e}")
-        wapp_wxstate.running = False
+        swapp_wxstate.running = False
         return sppasCommKeys.EXIT_OK
 
     if key in (sppasCommKeys.EXIT_OK, sppasCommKeys.EXIT_NO):
@@ -229,4 +229,4 @@ def notify_show_page(page_name: str) -> None:
     :param page_name: (str) The name of the page to show
 
     """
-    wapp_notify.notify(sppasCommKeys.SHOW_PAGE, page_name)
+    swapp_notify.notify(sppasCommKeys.SHOW_PAGE, page_name)

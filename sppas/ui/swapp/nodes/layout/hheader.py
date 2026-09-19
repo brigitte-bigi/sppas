@@ -45,7 +45,7 @@ from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLHeaderNode
 
 from sppas.ui import _
-from ...wappcore.wapputils import sppasImagesAccess
+from ...swappcore.swapputils import sppasImagesAccess
 
 # -----------------------------------------------------------------------
 
@@ -55,7 +55,7 @@ MSG_SKIP = _("Skip to content")
 # -----------------------------------------------------------------------
 
 
-class SwappHeader(HTMLHeaderNode):
+class swappHeader(HTMLHeaderNode):
     """Create the default header node for any SPPAS Web APPlication.
 
     """
@@ -64,7 +64,7 @@ class SwappHeader(HTMLHeaderNode):
         """Create the header node.
 
         """
-        super(SwappHeader, self).__init__(parent_id)
+        super(swappHeader, self).__init__(parent_id)
         self.set_attribute("id", "header-content")
         self.__title = title
         self.__nav = None

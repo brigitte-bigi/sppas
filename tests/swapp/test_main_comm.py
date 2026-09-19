@@ -44,8 +44,8 @@ from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import COMM_PROTOCOL_VERSION
 
 from sppas.ui.swapp.main_comm import sppasWappCommServer
-from sppas.ui.swapp.wappcore.wappsg import wapp_wxstate
-from sppas.ui.swapp.wappcore.wappsg import wx_is_running
+from sppas.ui.swapp.swappcore.swappsg import swapp_wxstate
+from sppas.ui.swapp.swappcore.swappsg import wx_is_running
 
 # ---------------------------------------------------------------------------
 
@@ -61,8 +61,8 @@ class TestInterlocutorGone(unittest.TestCase):
                       "port": 61998}
 
     def tearDown(self):
-        wapp_wxstate.running = False
-        wapp_wxstate.port = None
+        swapp_wxstate.running = False
+        swapp_wxstate.port = None
 
     # -----------------------------------------------------------------------
 
@@ -70,14 +70,14 @@ class TestInterlocutorGone(unittest.TestCase):
         """The handshake registers the interlocutor and the shared state."""
         self.server._prepare_response(sppasCommKeys.HELLO, self.hello)
         self.assertEqual(self.hello, self.server.get_interlocutor())
-        self.assertTrue(wapp_wxstate.running)
+        self.assertTrue(swapp_wxstate.running)
 
     def test_bye_unregisters(self):
         """The announced shutdown un-registers it."""
         self.server._prepare_response(sppasCommKeys.HELLO, self.hello)
         self.server._prepare_response(sppasCommKeys.BYE, None)
         self.assertIsNone(self.server.get_interlocutor())
-        self.assertFalse(wapp_wxstate.running)
+        self.assertFalse(swapp_wxstate.running)
 
     def test_push_to_a_gone_interlocutor(self):
         """An interlocutor which does not answer is un-registered too.
@@ -87,33 +87,33 @@ class TestInterlocutorGone(unittest.TestCase):
 
         """
         self.server._prepare_response(sppasCommKeys.HELLO, self.hello)
-        self.assertTrue(wapp_wxstate.running)
+        self.assertTrue(swapp_wxstate.running)
 
         # Nothing is listening on the announced port: the push fails
         self.server.push(sppasCommKeys.SHOW_PAGE, "page_files")
 
-        self.assertFalse(wapp_wxstate.running)
+        self.assertFalse(swapp_wxstate.running)
         # the announced address stays: a silence is not a reason to forget
         # where to ask again
-        self.assertEqual(self.hello["port"], wapp_wxstate.port)
+        self.assertEqual(self.hello["port"], swapp_wxstate.port)
 
     def test_ping_is_a_sign_of_life(self):
         """A ping of the wx interface keeps the shared state alive."""
-        wapp_wxstate.running = False
-        self.assertFalse(wapp_wxstate.running)
+        swapp_wxstate.running = False
+        self.assertFalse(swapp_wxstate.running)
 
         self.server._prepare_response(sppasCommKeys.PING, {"source": "wxapp"})
-        self.assertTrue(wapp_wxstate.running)
+        self.assertTrue(swapp_wxstate.running)
 
     def test_ping_of_another_source(self):
         """A ping of anything else says nothing about the wx interface."""
-        wapp_wxstate.running = False
+        swapp_wxstate.running = False
         self.server._prepare_response(sppasCommKeys.PING, {"source": "test.html"})
-        self.assertFalse(wapp_wxstate.running)
+        self.assertFalse(swapp_wxstate.running)
 
     def test_asked_directly_without_a_port(self):
         """Nothing was ever announced: there is nobody to ask."""
-        wapp_wxstate.port = None
+        swapp_wxstate.port = None
         self.assertFalse(wx_is_running())
 
     def test_asked_directly_and_silent(self):
@@ -124,13 +124,13 @@ class TestInterlocutorGone(unittest.TestCase):
 
         """
         self.server._prepare_response(sppasCommKeys.HELLO, self.hello)
-        self.assertTrue(wapp_wxstate.running)
-        self.assertEqual(self.hello["port"], wapp_wxstate.port)
+        self.assertTrue(swapp_wxstate.running)
+        self.assertEqual(self.hello["port"], swapp_wxstate.port)
 
         # Nothing is listening on the announced port
         self.assertFalse(wx_is_running())
-        self.assertFalse(wapp_wxstate.running)
-        self.assertEqual(self.hello["port"], wapp_wxstate.port)
+        self.assertFalse(swapp_wxstate.running)
+        self.assertEqual(self.hello["port"], swapp_wxstate.port)
 
     def test_push_without_interlocutor(self):
         """Without any interlocutor, a push is dropped and nothing raises."""

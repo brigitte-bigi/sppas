@@ -180,7 +180,7 @@ class sppasWebAppSettings:
 
         # Not modifiable members -- not loaded/saved.
         # Fix the name of the file with the stored settings
-        wapp_dir = os.path.dirname(os.path.abspath(__file__))
+        swapp_dir = os.path.dirname(os.path.abspath(__file__))
         self.__filename = os.path.join(paths.ext_dir, ".webapp~")
         self.__base_dir = os.path.dirname(os.path.abspath(__file__))
 

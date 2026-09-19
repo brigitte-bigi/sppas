@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.wappinfo.py
-:author: Brigitte Bigi
-:contact: contact@sppas.org
-:summary: This is the SPPAS Web-based application information.
+:filename: sppas.ui.swapp.swapputils.py
+:author:   Brigitte Bigi
+:contact:  contact@sppas.org
+:summary: Utilities for SPPAS Web-based applications.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2026 Brigitte Bigi
+    Copyright (C) 2011-2023 Brigitte Bigi
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -38,32 +38,27 @@
 
 """
 
-from dataclasses import dataclass
-from typing import Type
+from sppas.core.coreutils import error
 
-from sppas.core.coreutils import sppasTypeError
-
-# ---------------------------------------------------------------------------
+# -----------------------------------------------------------------------
 
 
-@dataclass
-class WebApplicationInfo:
-    """Store metadata for a web application.
+class sppasHTMLIncompleteFieldset(ValueError):
+    """:ERROR 0977:.
 
-    :param name: (str) Identifier name used to refer to the application.
-    :param bakery: (type) The class used to represent or launch the
-        application. Typically inherits from a WebSiteData class.
-    :param show: (bool) Indicates whether the app should appear in the GUI.
+    The input field '{:s}' is not completed.
 
     """
-    name: str
-    bakery: Type
-    show: bool
 
-    def __post_init__(self):
-        if isinstance(self.name, str) is False:
-            raise sppasTypeError(type(self.name).__name__, "string")
-        if isinstance(self.bakery, type) is False and hasattr(self.bakery, "bake_response") is False:
-            raise sppasTypeError(type(self.bakery).__name__, "WebSiteData")
-        if isinstance(self.show, bool) is False:
-            raise sppasTypeError(type(self.show).__name__, "bool")
+    def __init__(self, field_name):
+        self._status = 977
+        self.parameter = error(self._status) + \
+                         (error(self._status, "globals")).format(field_name)
+
+    def __str__(self):
+        return repr(self.parameter)
+
+    def get_status(self):
+        return self._status
+
+    status = property(get_status, None)

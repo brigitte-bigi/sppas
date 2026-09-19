@@ -45,8 +45,8 @@ from whakerpy.htmlmaker import HTMLComment
 from whakerpy.htmlmaker import HTMLNode
 
 from sppas.ui import _
-from sppas.ui.swapp.wappcore.wappsg import wapp_settings
-from sppas.ui.swapp.wappbase.wappresponse import BaseResponseRecipe
+from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+from sppas.ui.swapp.swappbase.swappresponse import BaseResponseRecipe
 
 from .col_wkps import WkpsNode
 from .col_files import FilesNode
@@ -104,16 +104,16 @@ class FilesResponseRecipe(BaseResponseRecipe):
         super().create()
 
         # Add this page style
-        # self._htree.add_css_link(os.path.join(wapp_settings.css, "page_files.css"))
+        # self._htree.add_css_link(os.path.join(swapp_settings.css, "page_files.css"))
         # Add the menubar page style
-        # self._htree.add_css_link(os.path.join(wapp_settings.css, "menubar.css"))
+        # self._htree.add_css_link(os.path.join(swapp_settings.css, "menubar.css"))
         # Add the style of each used element
-        # self._htree.add_css_link(os.path.join(wapp_settings.css, "title.css"))
-        # self._htree.add_css_link(os.path.join(wapp_settings.css, "modal.css"))
-        self._htree.head.link(rel="stylesheet", link_type="text/css", href=wapp_settings.css + "/main_swapp.css")
-        self._htree.head.link(rel="stylesheet", link_type="text/css", href=wapp_settings.css + "/main_swapp_theme.css")
-        self._htree.head.link(rel="stylesheet", link_type="text/css", href=wapp_settings.css + "/page_files.css")
-        self._htree.head.link(rel="stylesheet", link_type="text/css", href=wapp_settings.css + "/menubar.css")
+        # self._htree.add_css_link(os.path.join(swapp_settings.css, "title.css"))
+        # self._htree.add_css_link(os.path.join(swapp_settings.css, "modal.css"))
+        self._htree.head.link(rel="stylesheet", link_type="text/css", href=swapp_settings.css + "/main_swapp.css")
+        self._htree.head.link(rel="stylesheet", link_type="text/css", href=swapp_settings.css + "/main_swapp_theme.css")
+        self._htree.head.link(rel="stylesheet", link_type="text/css", href=swapp_settings.css + "/page_files.css")
+        self._htree.head.link(rel="stylesheet", link_type="text/css", href=swapp_settings.css + "/menubar.css")
 
     # -----------------------------------------------------------------------
 

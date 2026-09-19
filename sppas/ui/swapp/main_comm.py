@@ -48,10 +48,10 @@ from sppas.ui.agnostic import sppasCommClient
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommServerError
 
-from .wappcore.wappsg import wapp_wkps
-from .wappcore.wappsg import wapp_wxstate
-from .wappcore.wappsg import wapp_trace
-from .wappcore.wappsg import notify_wkp_changed
+from .swappcore.swappsg import swapp_wkps
+from .swappcore.swappsg import swapp_wxstate
+from .swappcore.swappsg import swapp_trace
+from .swappcore.swappsg import notify_wkp_changed
 from .main_trace_store import swappTraceStore
 
 # ---------------------------------------------------------------------------
@@ -104,10 +104,10 @@ class sppasWappCommServer(sppasCommServer):
         :return: (str) The response of the interlocutor -- JSON envelope.
 
         """
-        if wapp_wxstate.port is None:
+        if swapp_wxstate.port is None:
             raise sppasCommServerError("No interface announced itself to send to.")
 
-        client = sppasCommClient(self.host, wapp_wxstate.port)
+        client = sppasCommClient(self.host, swapp_wxstate.port)
         request = client.format_request(key, value)
         return client.request(request)
 
@@ -130,7 +130,7 @@ class sppasWappCommServer(sppasCommServer):
             # interface signs periodically, and its silence is the only
             # report a crashed interface is able to make.
             if isinstance(value, dict) is True and value.get("source", "") == "wxapp":
-                wapp_wxstate.running = True
+                swapp_wxstate.running = True
 
         if key == sppasCommKeys.HELLO:
             if isinstance(value, dict) is True and "port" in value:
@@ -139,8 +139,8 @@ class sppasWappCommServer(sppasCommServer):
                 # The shared state allows the Dashboard to disable the launch
                 # of a second wx instance: only one is allowed.
                 if value.get("source", "") == "wxapp":
-                    wapp_wxstate.running = True
-                    wapp_wxstate.port = value["port"]
+                    swapp_wxstate.running = True
+                    swapp_wxstate.port = value["port"]
                 # The interlocutor starts with its own workspace: publish the
                 # shared one, so that both UIs work on the same data.
                 notify_wkp_changed()
@@ -149,12 +149,12 @@ class sppasWappCommServer(sppasCommServer):
 
         if key == sppasCommKeys.BYE:
             self.__interlocutor = None
-            wapp_wxstate.running = False
-            wapp_wxstate.port = None
+            swapp_wxstate.running = False
+            swapp_wxstate.port = None
             logging.info("Interlocutor un-registered.")
             # An interface which leaves while an exit waits for its answer
             # has answered: it is gone, and nothing holds the exit back.
-            if wapp_wxstate.exit_pending is True:
+            if swapp_wxstate.exit_pending is True:
                 self.__grant_exit()
 
         if key == sppasCommKeys.EXIT_OK:
@@ -163,7 +163,7 @@ class sppasWappCommServer(sppasCommServer):
 
         if key == sppasCommKeys.EXIT_NO:
             logging.info("The wx interface refuses the exit.")
-            wapp_wxstate.exit_pending = False
+            swapp_wxstate.exit_pending = False
 
         if key == sppasCommKeys.WKP_CHANGED:
             # The serialized workspace carries its own internal identifier
@@ -171,16 +171,16 @@ class sppasWappCommServer(sppasCommServer):
             # the sender sends the name alongside, in the same envelope.
             # The name is not used as an identifier -- it is only stored
             # for display, exactly as reported by the interlocutor.
-            wapp_wxstate.workspace_name = value["name"]
+            swapp_wxstate.workspace_name = value["name"]
             wjson = sppasWJSON()
             wjson.parse(value["workspace"])
-            wapp_wkps.data = wjson
+            swapp_wkps.data = wjson
             logging.info("Workspace received and stored into the shared state.")
             return self.format_message(sppasCommKeys.ACK, "Workspace stored.")
 
         if key == sppasCommKeys.TRACE:
             if isinstance(value, dict) is True:
-                wapp_trace.append(
+                swapp_trace.append(
                     value.get("levelno", 0),
                     value.get("levelname", ""),
                     value.get("message", ""),
@@ -205,8 +205,8 @@ class sppasWappCommServer(sppasCommServer):
         :return: (None)
 
         """
-        wapp_wxstate.exit_pending = False
-        wapp_wxstate.exit_granted = True
+        swapp_wxstate.exit_pending = False
+        swapp_wxstate.exit_granted = True
 
     # -----------------------------------------------------------------------
 
@@ -248,6 +248,6 @@ class sppasWappCommServer(sppasCommServer):
             # An interlocutor which does not answer any more is gone: it
             # crashed, or it was killed. Un-register it, so that the state
             # it left behind does not outlive it.
-            if wapp_wxstate.running is True:
-                wapp_wxstate.running = False
+            if swapp_wxstate.running is True:
+                swapp_wxstate.running = False
                 logging.info("The interface does not answer any more.")

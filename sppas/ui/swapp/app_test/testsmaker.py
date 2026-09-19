@@ -3,7 +3,7 @@
 :filename: sppas.ui.swapp.app_test.testsmaker.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The page "Tests" of the SPPAS wapps.
+:summary: The page "Tests" of the SPPAS swapps.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -53,14 +53,14 @@ from sppas.src.wkps.wio import sppasWJSON
 from sppas.ui.agnostic import sppasCommClient
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic.filechooser.filechooser_mixin import FileChooserMixin
-from sppas.ui.swapp.wappcore.wappsg import wapp_settings
-from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
-from sppas.ui.swapp.wappcore.wappsg import notify_wkp_changed
-from sppas.ui.swapp.wappcore.wappsg import notify_show_page
-from sppas.ui.swapp.wappcore.wappsg import wx_is_running
-from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
+from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+from sppas.ui.swapp.swappcore.swappsg import swapp_wkps
+from sppas.ui.swapp.swappcore.swappsg import notify_wkp_changed
+from sppas.ui.swapp.swappcore.swappsg import notify_show_page
+from sppas.ui.swapp.swappcore.swappsg import wx_is_running
+from sppas.ui.swapp.swappcore.swapputils import sppasImagesAccess
 from sppas.ui.swapp.nodes import sppasHTMLButton
-from sppas.ui.swapp.wappbase.wappresponse import swappBaseResponse
+from sppas.ui.swapp.swappbase.swappresponse import swappBaseResponse
 
 # ---------------------------------------------------------------------------
 
@@ -85,7 +85,7 @@ def _run_file_dialog(filetypes=None):
 # finished, and window.Wexa holds nothing of the framework yet.
 JS_IMPORTS = (
     "import { RequestManager, OnLoadManager, LinkController } from "
-    f"'/{wapp_settings.wexa_statics}js/wexa.js';"
+    f"'/{swapp_settings.wexa_statics}js/wexa.js';"
 )
 
 # javascript code example to send a post request and get data in response
@@ -268,19 +268,19 @@ class TestsResponseRecipe(swappBaseResponse):
             elif event_name == "choose_file":
                 path = _run_file_dialog()
                 if os.path.isfile(path) is True:
-                    wapp_wkps.data.add_file(path)
+                    swapp_wkps.data.add_file(path)
                     notify_wkp_changed()
                 self._data = {"file_path": path}
 
             elif event_name == "choose_txt_file":
                 path = _run_file_dialog(filetypes=[("Texts", "*.txt"), ("All files", "*.*")])
                 if os.path.isfile(path) is True:
-                    wapp_wkps.data.add_file(path)
+                    swapp_wkps.data.add_file(path)
                     notify_wkp_changed()
                 self._data = {"file_path": path}
 
             elif event_name == "socket_ping":
-                client = sppasCommClient(wapp_settings.shost, wapp_settings.sport)
+                client = sppasCommClient(swapp_settings.shost, swapp_settings.sport)
                 request = client.format_request(sppasCommKeys.PING, {"source": "test.html"})
                 response = client.request(request)
                 self._data = {"socket_response": response}
@@ -300,7 +300,7 @@ class TestsResponseRecipe(swappBaseResponse):
 
             elif event_name == "show_workspace":
                 wjson = sppasWJSON()
-                wjson.set(wapp_wkps.data)
+                wjson.set(swapp_wkps.data)
                 self._data = {"workspace": wjson.serialize()}
 
             else:

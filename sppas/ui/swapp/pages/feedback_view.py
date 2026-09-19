@@ -48,8 +48,8 @@ from whakerpy.htmlmaker import TagNode
 from sppas.core.config import sg
 from sppas.core.coreutils import sppasLogFile
 from sppas.ui import _
-from sppas.ui.swapp.wappbase.wappview import swappBaseView
-from sppas.ui.swapp.wappcore.wappsg import wapp_settings
+from sppas.ui.swapp.swappbase.swappview import swappBaseView
+from sppas.ui.swapp.swappcore.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ MSG_NO_CLIPBOARD = _("The message can not be copied. Select and copy it manually
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Feedback")
 
 BODY_SCRIPT = f"""
-        import {{ FeedbackManager }} from '/{wapp_settings.js}sppas.js';
+        import {{ FeedbackManager }} from '/{swapp_settings.js}sppas.js';
 
         const feedbackManager = new FeedbackManager();
         feedbackManager.handleFeedbackManagerOnLoad();

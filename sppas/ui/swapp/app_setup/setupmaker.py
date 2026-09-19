@@ -48,7 +48,7 @@ from sppas.core.config import lgs
 from sppas.core.coreutils import sppasLogFile
 from sppas.ui import _
 
-from ..wappbase.wappresponse import swappBaseResponse
+from ..swappbase.swappresponse import swappBaseResponse
 from ..nodes.feedback.hstatusnode import HTMLTreeError410
 
 from .setup_model import SetupModel

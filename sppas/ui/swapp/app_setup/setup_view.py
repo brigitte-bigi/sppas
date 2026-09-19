@@ -44,8 +44,8 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import TagNode
 from sppas.core.config import sg
 
-from ..wappbase.wappview import swappBaseView
-from ..wappcore.wappsg import wapp_settings
+from ..swappbase.swappview import swappBaseView
+from ..swappcore.swappsg import swapp_settings
 
 from .basefieldset import SetupBaseFieldset
 from .fieldsets import SetupFieldsets
@@ -57,7 +57,7 @@ from .actions_node import SetupActionsNode
 MSG_HEADER = f"SPPAS {sg.__release__} » Setup"
 
 BODY_SCRIPT = f"""
-        import {{ SetupManager }} from '/{wapp_settings.js}sppas.js';
+        import {{ SetupManager }} from '/{swapp_settings.js}sppas.js';
         const setupManager = new SetupManager();
         setupManager.handleSetupManagerOnLoad();
 """
@@ -120,7 +120,7 @@ class SetupView(swappBaseView):
         """Override. Populate the `<head>` section of the HTML tree for CSS links.
 
         """
-        self._htree.head.link("stylesheet", wapp_settings.css + "app_setup.css", link_type="text/css")
+        self._htree.head.link("stylesheet", swapp_settings.css + "app_setup.css", link_type="text/css")
 
     # -----------------------------------------------------------------------
 

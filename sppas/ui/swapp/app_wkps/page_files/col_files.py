@@ -42,7 +42,7 @@ from whakerpy.htmlmaker import HTMLNode
 
 from sppas.src.wkps import States
 from sppas.ui import _
-from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
+from sppas.ui.swapp.swappcore.swappsg import swapp_wkps
 
 # ---------------------------------------------------------------------------
 
@@ -113,5 +113,5 @@ class FilesNode(HTMLNode):
 
         """
         p = HTMLNode(parent.identifier, None, "p",
-                     value="Tree of files of workspace: {:s}".format(wapp_wkps.get_wkp_name()))
+                     value="Tree of files of workspace: {:s}".format(swapp_wkps.get_wkp_name()))
         parent.append_child(p)

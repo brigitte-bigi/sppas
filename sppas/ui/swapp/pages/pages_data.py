@@ -43,8 +43,8 @@ import logging
 
 from whakerpy.httpd import BaseResponseRecipe
 
-from ..wappbase.wappbakery import swappWebData
-from ..wappcore.wpageinfo import WebPageInfo
+from ..swappbase.swappbakery import swappWebData
+from ..swappcore.wpageinfo import swappWebPageInfo
 
 from .citemaker import CiteResponseRecipe
 
@@ -64,13 +64,13 @@ class swappPagesData(swappWebData):
     def __init__(self, pages: list, json_filename: str | None = None) -> None:
         """Create a swappPagesData instance.
 
-        :param pages: (list) The WebPageInfo of all the pages to serve.
+        :param pages: (list) The swappWebPageInfo of all the pages to serve.
 
         """
         super(swappPagesData, self).__init__(json_filename)
         self.__pages = list()
         for page_info in pages:
-            if isinstance(page_info, WebPageInfo) is True:
+            if isinstance(page_info, swappWebPageInfo) is True:
                 self.__pages.append(page_info)
         self._default = CiteResponseRecipe.page()
 

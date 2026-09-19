@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.wappcore.wapps.py
+:filename: sppas.ui.swapp.swappcore.swapps.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Import the available SPPAS Web-based Applications.
@@ -40,8 +40,8 @@
 
 import logging
 
-from .wappinfo import WebApplicationInfo
-from .wpageinfo import WebPageInfo
+from .swappinfo import swappWebApplicationInfo
+from .wpageinfo import swappWebPageInfo
 
 # Import all locally developed applications
 from ..app_setup import SetupWebData
@@ -64,10 +64,10 @@ DEBUG_MODE = logging.getLogger().getEffectiveLevel() <= logging.DEBUG
 # List of all known web applications (stable and in development).
 # The 'Dashboard' one is the default in the main_app.
 WEB_APPLICATIONS = [
-    WebApplicationInfo('Dashboard', DashboardWebData, True),
-    WebApplicationInfo('Setup', SetupWebData, True),
-    WebApplicationInfo('Test', TestsWebData, DEBUG_MODE),
-    WebApplicationInfo('Wkps', WkpsWebData, DEBUG_MODE),
+    swappWebApplicationInfo('Dashboard', DashboardWebData, True),
+    swappWebApplicationInfo('Setup', SetupWebData, True),
+    swappWebApplicationInfo('Test', TestsWebData, DEBUG_MODE),
+    swappWebApplicationInfo('Wkps', WkpsWebData, DEBUG_MODE),
 ]
 
 # Add all discovered spin-off applications
@@ -75,7 +75,7 @@ for cls in SPINOFF_SWAPPS:
     try:
         inst = cls()        # if instantiation fails, skip the app
         app_id = inst.id()
-        WEB_APPLICATIONS.append(WebApplicationInfo(app_id, cls, True))
+        WEB_APPLICATIONS.append(swappWebApplicationInfo(app_id, cls, True))
     except Exception as e:
         logging.debug(f"SWAPP: skip {cls} (instantiation failed): {e}")
 
@@ -85,16 +85,16 @@ for cls in SPINOFF_SWAPPS:
 # or False: True to get a link button in the "Find out more" section of
 # the Dashboard, False to be served without a link button.
 WEB_PAGES = [
-    WebPageInfo(AboutResponseRecipe, True),
-    WebPageInfo(CiteResponseRecipe, True),
-    WebPageInfo(ConfigurationResponseRecipe, True),
-    WebPageInfo(FeedbackResponseRecipe, True),
-    WebPageInfo(TraceResponseRecipe, False),
+    swappWebPageInfo(AboutResponseRecipe, True),
+    swappWebPageInfo(CiteResponseRecipe, True),
+    swappWebPageInfo(ConfigurationResponseRecipe, True),
+    swappWebPageInfo(FeedbackResponseRecipe, True),
+    swappWebPageInfo(TraceResponseRecipe, False),
 ]
 
 # Add all discovered spin-off pages
 for page_info in SPINOFF_PAGES:
-    if isinstance(page_info, WebPageInfo) is True:
+    if isinstance(page_info, swappWebPageInfo) is True:
         WEB_PAGES.append(page_info)
     else:
-        logging.debug(f"SWAPP: skip page {page_info}: not a WebPageInfo.")
+        logging.debug(f"SWAPP: skip page {page_info}: not a swappWebPageInfo.")

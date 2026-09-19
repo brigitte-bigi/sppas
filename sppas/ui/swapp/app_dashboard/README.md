@@ -7,7 +7,7 @@ Model–View–Controller (MVC) architecture with a clear separation of concerns
 
 - **DashboardController** represents the *MVC controller*.
   It manages the application logic: updating internal states such as user
-  agreement, interacting with the model (e.g., list of WebApplicationInfo
+  agreement, interacting with the model (e.g., list of swappWebApplicationInfo
   instances), and invoking the view to construct the HTML representation of the
   dashboard.
 
@@ -16,7 +16,7 @@ Model–View–Controller (MVC) architecture with a clear separation of concerns
   WhakerPy's HTMLTree utilities.
 
 - **DashboardModel** is represented by the set of application descriptors
-  (`WebApplicationInfo` objects) managed by the controller and displayed in the
+  (`swappWebApplicationInfo` objects) managed by the controller and displayed in the
   dashboard as interactive cards.
 
 This structure ensures a clean separation between transport (HTTP),

@@ -48,9 +48,9 @@ from whakerpy.htmlmaker import TagNode
 from sppas.core.config import cfg
 from sppas.core.config import sg
 from sppas.ui import _
-from sppas.ui.swapp.wappbase.wappview import swappBaseView
-from sppas.ui.swapp.wappcore.wappsg import wapp_settings
-from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
+from sppas.ui.swapp.swappbase.swappview import swappBaseView
+from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+from sppas.ui.swapp.swappcore.swapputils import sppasImagesAccess
 from sppas.ui.swapp.main_trace_store import swappTraceStore
 
 # ---------------------------------------------------------------------------
@@ -93,7 +93,7 @@ LOG_LEVEL_CLASS = {
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Journal")
 
 BODY_SCRIPT = f"""
-        import {{ TraceManager }} from '/{wapp_settings.js}sppas.js';
+        import {{ TraceManager }} from '/{swapp_settings.js}sppas.js';
 
         const traceManager = new TraceManager();
         traceManager.handleTraceManagerOnLoad();
@@ -149,7 +149,7 @@ class TraceView(swappBaseView):
         The panel-view toggle needs Whakerexa's segmented control.
 
         """
-        self._htree.head.link("stylesheet", wapp_settings.wexa_statics + "css/togglegroup.css",
+        self._htree.head.link("stylesheet", swapp_settings.wexa_statics + "css/togglegroup.css",
                               link_type="text/css")
 
     # -----------------------------------------------------------------------
@@ -196,7 +196,7 @@ class TraceView(swappBaseView):
 
         """
         go_home = ("window.open(window.Wexa.accessibility.setUrlWithParameters("
-                   f"'{wapp_settings.default_page()}'), '{home_target}');")
+                   f"'{swapp_settings.default_page()}'), '{home_target}');")
         _button = HTMLNode(parent.identifier, None, "button",
                            value="<span>" + MSG_CLOSE + "</span>")
         _button.add_attribute("data-icon", "cancel")

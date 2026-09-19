@@ -42,7 +42,7 @@ from __future__ import annotations
 
 from sppas.ui import _
 from sppas.ui.swapp.panels import BaseLinksNode
-from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
+from sppas.ui.swapp.swappcore.swapputils import sppasImagesAccess
 
 # ---------------------------------------------------------------------------
 

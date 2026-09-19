@@ -45,14 +45,14 @@ import os
 from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
 
-from sppas.ui.swapp.wappbase.wappview import swappBaseView
-from sppas.ui.swapp.wappcore.wappsg import wapp_settings
+from sppas.ui.swapp.swappbase.swappview import swappBaseView
+from sppas.ui.swapp.swappcore.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
 
 # The Book is an extra: it is imported by the pages needing it, exactly as
-# the ThemeManager is -- see wappview.py.
+# the ThemeManager is -- see swappview.py.
 BODY_SCRIPT = (
     "const Book = (await import(window.WEXA_JS_PATH + '/extras/book.js')).Book;"
     "const book = new Book('main-content');"
@@ -102,7 +102,7 @@ class HelpView(swappBaseView):
         :return: (tuple) The status code and its message
 
         """
-        filename = os.path.join(wapp_settings.base_dir, document)
+        filename = os.path.join(swapp_settings.base_dir, document)
         if os.path.exists(filename) is False or os.path.isfile(filename) is False:
             return 404, f"Document {document} not found (filename: {filename})."
 
@@ -123,10 +123,10 @@ class HelpView(swappBaseView):
         by that sheet, not by the shared one.
 
         """
-        self._htree.head.link("stylesheet", wapp_settings.wexa_statics + "css/extras/book.css",
+        self._htree.head.link("stylesheet", swapp_settings.wexa_statics + "css/extras/book.css",
                               link_type="text/css")
         if len(self.__css) > 0:
-            self._htree.head.link("stylesheet", wapp_settings.css + self.__css,
+            self._htree.head.link("stylesheet", swapp_settings.css + self.__css,
                                   link_type="text/css")
 
     # -----------------------------------------------------------------------

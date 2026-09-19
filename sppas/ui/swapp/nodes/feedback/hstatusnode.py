@@ -45,7 +45,7 @@ from whakerpy.htmlmaker import HTMLTree
 from whakerpy.httpd import HTTPDStatus
 from sppas.ui import _
 
-from ...wappcore.wappsg import wapp_settings
+from ...swappcore.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -92,7 +92,7 @@ class HTMLTreeStatus(HTMLTree):
         self.head.title(title)
 
         # The CSS is added directly into to the page
-        self.add_css(wapp_settings.css + "errors.css")
+        self.add_css(swapp_settings.css + "errors.css")
 
     # -----------------------------------------------------------------------
 

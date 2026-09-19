@@ -46,8 +46,8 @@ from whakerpy.htmlmaker import HTMLNode
 from sppas.core.config import sg
 from sppas.ui import _
 from sppas.ui.swapp import sppasImagesAccess
-from sppas.ui.swapp.wappbase.wappview import swappBaseView
-from sppas.ui.swapp.wappcore.wappsg import wapp_settings
+from sppas.ui.swapp.swappbase.swappview import swappBaseView
+from sppas.ui.swapp.swappcore.swappsg import swapp_settings
 
 from .nodes.agree_node import AgreementDialog
 from .nodes.trace_dialog import TraceInfoDialog
@@ -72,7 +72,7 @@ MSG_WKP = _("Workspace: ")
 MSG_HEADER = f"SPPAS {sg.__release__} » Dashboard"
 
 BODY_SCRIPT = f"""
-        import {{ DashboardManager }} from '/{wapp_settings.js}sppas.js';
+        import {{ DashboardManager }} from '/{swapp_settings.js}sppas.js';
 
         const dashboardManager = new DashboardManager();
         dashboardManager.handleDashboardManagerOnLoad();
@@ -157,7 +157,7 @@ class DashboardView(swappBaseView):
         """Override. Populate the `<head>` section of the HTML tree for CSS links.
 
         """
-        self._htree.head.link("stylesheet", wapp_settings.css + "app_dashboard.css", link_type="text/css")
+        self._htree.head.link("stylesheet", swapp_settings.css + "app_dashboard.css", link_type="text/css")
 
     # -----------------------------------------------------------------------
 

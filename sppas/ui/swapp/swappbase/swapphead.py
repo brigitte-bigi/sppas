@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.wappbase.wapphead.py
+:filename: sppas.ui.swapp.swappbase.swapphead.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: SPPAS Web-Based application ResponseRecipe.
@@ -44,7 +44,7 @@ from __future__ import annotations
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import HTMLHeadNode
 
-from sppas.ui.swapp.wappcore.wappsg import wapp_settings
+from sppas.ui.swapp.swappcore.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -62,13 +62,13 @@ JS_MIME_TYPE = "application/javascript"
 # a drawing of its own is one more file in this list.
 ICONS_SET_NAME = "icons"
 ICONS_SET_FILES = ""
-ICONS_SET = f"{ICONS_SET_NAME}:/{wapp_settings.icons}:{ICONS_SET_FILES}"
+ICONS_SET = f"{ICONS_SET_NAME}:/{swapp_settings.icons}:{ICONS_SET_FILES}"
 
 # The theme of SPPAS, declared to the loader: it is registered before the
 # manager reads the address, so that ?wexa_theme=swapp is answered, and it
 # stands before the themes of the repository in the cycle of the button.
 THEME_NAME = "swapp"
-THEME_SET = f"{THEME_NAME}:/{wapp_settings.css}main_swapp_theme.css"
+THEME_SET = f"{THEME_NAME}:/{swapp_settings.css}main_swapp_theme.css"
 
 # What the client announces a choice of the reader with. An empty value is
 # the way a page of SPPAS is shown by default: the manager of the theme says
@@ -117,17 +117,17 @@ class swappHeadNode(HTMLHeadNode):
         self.append_child(title_node)
 
         # Add the CSS style, from Whakerexa
-        self.link(rel="stylesheet", href=wapp_settings.wexa_statics + "css/wexa.css", link_type=CSS_MIME_TYPE)
-        self.link(rel="stylesheet", href=wapp_settings.wexa_statics + "css/layout.css", link_type=CSS_MIME_TYPE)
-        self.link(rel="stylesheet", href=wapp_settings.wexa_statics + "css/button.css", link_type=CSS_MIME_TYPE)
-        self.link(rel="stylesheet", href=wapp_settings.wexa_statics + "css/menu.css", link_type=CSS_MIME_TYPE)
+        self.link(rel="stylesheet", href=swapp_settings.wexa_statics + "css/wexa.css", link_type=CSS_MIME_TYPE)
+        self.link(rel="stylesheet", href=swapp_settings.wexa_statics + "css/layout.css", link_type=CSS_MIME_TYPE)
+        self.link(rel="stylesheet", href=swapp_settings.wexa_statics + "css/button.css", link_type=CSS_MIME_TYPE)
+        self.link(rel="stylesheet", href=swapp_settings.wexa_statics + "css/menu.css", link_type=CSS_MIME_TYPE)
         # Every page baking a message dialog needs it, and a sheet of the
         # framework is loaded before the sheets of SPPAS, never after.
-        self.link(rel="stylesheet", href=wapp_settings.wexa_statics + "css/dialog.css", link_type=CSS_MIME_TYPE)
+        self.link(rel="stylesheet", href=swapp_settings.wexa_statics + "css/dialog.css", link_type=CSS_MIME_TYPE)
 
         print_css = HTMLNode(self.identifier, None, "link")
         print_css.add_attribute("rel", "stylesheet")
-        print_css.add_attribute("href", wapp_settings.wexa_statics + "css/print.css")
+        print_css.add_attribute("href", swapp_settings.wexa_statics + "css/print.css")
         print_css.add_attribute("type", CSS_MIME_TYPE)
         print_css.add_attribute("media", "print")
         self.append_child(print_css)
@@ -138,8 +138,8 @@ class swappHeadNode(HTMLHeadNode):
         # The files are listed so that a name the set does not carry falls
         # back on the one of Whakerexa without any request.
         loader = HTMLNode(self.identifier, None, "script")
-        loader.add_attribute("src", "/" + wapp_settings.wexa_statics + "js/wexa.loader.js")
-        loader.add_attribute("data-base", "/" + wapp_settings.wexa_statics)
+        loader.add_attribute("src", "/" + swapp_settings.wexa_statics + "js/wexa.loader.js")
+        loader.add_attribute("data-base", "/" + swapp_settings.wexa_statics)
         # The buttons carrying a data-href: the loader hands them to
         # handleLinksWithParameters() once the framework is there. A page
         # cannot do it itself any more -- its own script runs first.

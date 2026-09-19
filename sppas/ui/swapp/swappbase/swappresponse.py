@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.wappbase.wappresponse.py
+:filename: sppas.ui.swapp.swappbase.swappresponse.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: SPPAS Web-Based application ResponseRecipe.
@@ -45,12 +45,12 @@ import os
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.httpd import BaseResponseRecipe
 
-from ..wappcore.wappsg import wapp_settings
-from ..wappcore.wappsg import wapp_wxstate
-from .wapphead import swappHeadNode
-from .wapphead import THEME_NAMES
-from .wapphead import COLOR_NAMES
-from .wapphead import CONTRAST_NAMES
+from ..swappcore.swappsg import swapp_settings
+from ..swappcore.swappsg import swapp_wxstate
+from .swapphead import swappHeadNode
+from .swapphead import THEME_NAMES
+from .swapphead import COLOR_NAMES
+from .swapphead import CONTRAST_NAMES
 from ..nodes.feedback.hstatusnode import HTMLTreeError410
 from ..nodes.feedback.exit_dialog import ExitWaitDialog
 
@@ -176,8 +176,8 @@ class swappBaseResponse(BaseResponseRecipe):
         # The state of an exit, asked for by the periodic call of any page:
         # an exit of SPPAS concerns them all, and not the Dashboard alone.
         if "exit_state" in events:
-            self._data = {"exit_pending": wapp_wxstate.exit_pending,
-                          "exit_granted": wapp_wxstate.exit_granted}
+            self._data = {"exit_pending": swapp_wxstate.exit_pending,
+                          "exit_granted": swapp_wxstate.exit_granted}
             self._status.code = 200
             return self._htree.serialize()
 
@@ -185,7 +185,7 @@ class swappBaseResponse(BaseResponseRecipe):
         # A request for data is answered as usual -- the server stops once
         # it has served the page, and data nobody displays would stop it
         # with no page shown at all.
-        if wapp_wxstate.exit_granted is True:
+        if swapp_wxstate.exit_granted is True:
             if swappBaseResponse.asks_for_a_page(headers) is True:
                 self._status.code = 410
                 return HTMLTreeError410().serialize()
@@ -196,7 +196,7 @@ class swappBaseResponse(BaseResponseRecipe):
         # which says what it looks like, request after request.
         dialog = self._htree.body_footer.get_child(ExitWaitDialog.ID)
         if dialog is not None:
-            if wapp_wxstate.exit_pending is True:
+            if swapp_wxstate.exit_pending is True:
                 dialog.set_attribute("class", "info")
             else:
                 dialog.set_attribute("class", "hidden-alert info")
@@ -205,8 +205,8 @@ class swappBaseResponse(BaseResponseRecipe):
         # dialog can be dismissed -- Escape closes any modal dialog -- and
         # a page which would then act on a click would be in a state its
         # reader decided nothing about.
-        self.__set_waiting(wapp_wxstate.exit_pending)
-        if wapp_wxstate.exit_pending is True:
+        self.__set_waiting(swapp_wxstate.exit_pending)
+        if swapp_wxstate.exit_pending is True:
             events.clear()
 
         for event_name in list(events.keys()):
@@ -218,17 +218,17 @@ class swappBaseResponse(BaseResponseRecipe):
         if "theme" in events:
             theme = events.pop("theme")
             if theme in THEME_NAMES:
-                wapp_settings.accessibility_theme = theme
+                swapp_settings.accessibility_theme = theme
 
         if "accessibility_color" in events:
             color = events.pop("accessibility_color")
             if color in COLOR_NAMES:
-                wapp_settings.accessibility_color = color
+                swapp_settings.accessibility_color = color
 
         if "accessibility_contrast" in events:
             contrast = events.pop("accessibility_contrast")
             if contrast in CONTRAST_NAMES:
-                wapp_settings.accessibility_contrast = contrast
+                swapp_settings.accessibility_contrast = contrast
 
         return super(swappBaseResponse, self).bake(events, headers)
 

@@ -46,7 +46,7 @@ from whakerpy.httpd import BaseResponseRecipe
 from sppas.core.config import sg
 from sppas.ui import _
 
-from ..wappbase.wappbakery import swappWebData
+from ..swappbase.swappbakery import swappWebData
 from ..pages import HelpResponseRecipe
 
 from .dashboardmaker import DashboardResponseRecipe

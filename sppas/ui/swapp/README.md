@@ -11,14 +11,14 @@ package.
 - the root only contains the server process: `main_app.py` (HTTPD server),
   `main_comm.py` (communication socket), `main_settings.py`,
   `main_trace_store.py` and `main_trace_handler.py` (trace collector);
-- `wappcore/` holds the registries and the infrastructure: `wapps.py`
-  (the `WEB_APPLICATIONS` and `WEB_PAGES` registries), `wappinfo.py` and
-  `wpageinfo.py` (their entry classes), `wappsg.py` (the shared globals),
-  `wapputils.py` and `wexc.py`;
+- `swappcore/` holds the registries and the infrastructure: `swapps.py`
+  (the `WEB_APPLICATIONS` and `WEB_PAGES` registries), `swappinfo.py` and
+  `wpageinfo.py` (their entry classes), `swappsg.py` (the shared globals),
+  `swapputils.py` and `wexc.py`;
 - `nodes/` holds the reusable HTML nodes, grouped by role:
   `buttons/`, `dialogs/`, `inputs/`, `layout/`, `feedback/`;
-- `wappbase/` holds the base classes common to every app: `wappbakery.py`,
-  `wappresponse.py`, `wappview.py`, `wapphead.py`;
+- `swappbase/` holds the base classes common to every app: `swappbakery.py`,
+  `swappresponse.py`, `swappview.py`, `swapphead.py`;
 - `panels/` holds the composite panels, assembled from nodes and shared
   across apps;
 - each app is an `app_*` directory, like each wx page is a `page_*` one;
@@ -69,11 +69,11 @@ Examples: Agreement, error and information alert dialogs.
 ### How apps are served
 
 Each app is a module named `app_*`. It declares a `WebData` class, derived
-from `swappWebData` (see `wappbase/wappbakery.py`), which answers two
+from `swappWebData` (see `swappbase/swappbakery.py`), which answers two
 questions: `is_page(page_name)` and `bake_response(page_name)`.
 
 All the `WebData` classes are registered in the `WEB_APPLICATIONS` list of
-`wappcore/wapps.py`. When a page is requested, `main_app.py` iterates over this list
+`swappcore/swapps.py`. When a page is requested, `main_app.py` iterates over this list
 and asks each entry `is_page()`; the first one that answers `True` bakes
 the response.
 
@@ -89,10 +89,10 @@ has no model, no dedicated JavaScript manager, and a controller only when
 the page processes events (a form, for example).
 
 The `WEB_PAGES` registry lists all the known pages, exactly as
-`WEB_APPLICATIONS` lists the apps: one `WebPageInfo(recipe, show)` entry
+`WEB_APPLICATIONS` lists the apps: one `swappWebPageInfo(recipe, show)` entry
 per page. Each page recipe describes itself with the `page()`, `name()`
 and `icon()` class methods. A spin-off module declares its pages with a
-`SWAPP_PAGES` list of `WebPageInfo`, exactly as it declares its app with
+`SWAPP_PAGES` list of `swappWebPageInfo`, exactly as it declares its app with
 `SWAPP_CLASS`: whatever the origin of a page, the mechanics is the same.
 
 All the pages are served by the single `swappPagesData` provider. It owns
@@ -101,7 +101,7 @@ the given `WEB_PAGES` registry, consulted by `main_app.py` after the
 apps. This keeps the App/Page taxonomy visible in the code and keeps
 pages out of the Dashboard cards.
 
-The `show` member of a `WebPageInfo` follows the same principle as the
+The `show` member of a `swappWebPageInfo` follows the same principle as the
 app cards: only the pages declared with True get a link button in the
 "Find out more" section of the Dashboard. The buttons carry the
 `page-button` class and are handled by the JS `DashboardManager`, which
@@ -179,7 +179,7 @@ waiting for its reader has no deadline.
 ## The trace/info store
 
 The swapp server is the collector of the traces of all the SPPAS
-components. The shared store (`wapp_trace`, a `swappTraceStore`) replaces
+components. The shared store (`swapp_trace`, a `swappTraceStore`) replaces
 the wx log window: it accumulates the useful trace/info messages, to be
 displayed by the trace page, saved into the log files, or sent with a
 feedback.

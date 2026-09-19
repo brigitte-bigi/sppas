@@ -51,14 +51,14 @@ from sppas.core.coreutils import sppasKeyError
 from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommServerError
-from sppas.ui.swapp.wappcore.wappsg import wapp_settings
-from sppas.ui.swapp.wappcore.wappsg import wapp_notify
-from sppas.ui.swapp.wappcore.wappsg import wapp_trace
-from sppas.ui.swapp.wappcore.wappsg import wapp_wxstate
+from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+from sppas.ui.swapp.swappcore.swappsg import swapp_notify
+from sppas.ui.swapp.swappcore.swappsg import swapp_trace
+from sppas.ui.swapp.swappcore.swappsg import swapp_wxstate
 from .main_trace_handler import swappTraceHandler
 from .main_comm import sppasWappCommServer
 
-from .wappcore.wapps import *
+from .swappcore.swapps import *
 
 # ---------------------------------------------------------------------------
 
@@ -84,11 +84,11 @@ class sppasWebApp:
     # ---------------------------------------------------------------------------
 
     @staticmethod
-    def get_web_app_by_name(name: str) -> WebApplicationInfo:
+    def get_web_app_by_name(name: str) -> swappWebApplicationInfo:
         """Retrieve a web application by its name.
 
         :param name: Name of the application to retrieve.
-        :return: The matching WebApplicationInfo instance.
+        :return: The matching swappWebApplicationInfo instance.
         :raises: KeyError: If no application with the given name exists.
 
         """
@@ -99,8 +99,8 @@ class sppasWebApp:
 
     # ---------------------------------------------------------------------------
 
-    class wappServer(BaseHTTPDServer):
-        """A custom HTTPD server for SPPAS wapp.
+    class swappServer(BaseHTTPDServer):
+        """A custom HTTPD server for SPPAS swapp.
 
         """
 
@@ -213,7 +213,7 @@ class sppasWebApp:
         """
         # Collect the python logging into the shared trace store: the swapp
         # server is the collector of the traces of all the SPPAS components.
-        logging.getLogger().addHandler(swappTraceHandler(wapp_trace))
+        logging.getLogger().addHandler(swappTraceHandler(swapp_trace))
 
         self.__location = "localhost"
         self.__port = self.__port_value()
@@ -221,7 +221,7 @@ class sppasWebApp:
         server_address = (self.__location, self.__port)
 
         # Create an HTTPD server
-        self.__server = sppasWebApp.wappServer(server_address, HTTPDHandler)
+        self.__server = sppasWebApp.swappServer(server_address, HTTPDHandler)
 
         if arguments is not None and len(arguments) > 0:
             _app = None
@@ -244,20 +244,20 @@ class sppasWebApp:
         self.__server.create_pages(_app.name)
 
         # Create a socket to communicate with the apps
-        self.__socket = sppasWappCommServer(wapp_settings.shost, wapp_settings.sport)
+        self.__socket = sppasWappCommServer(swapp_settings.shost, swapp_settings.sport)
 
         # Any application event -- e.g. the shared workspace changed -- is
         # pushed to the interlocutor registered on this socket, if any.
-        wapp_notify.subscribe(self.__socket.push)
+        swapp_notify.subscribe(self.__socket.push)
 
     # -----------------------------------------------------------------------
 
     def __port_value(self):
         """Return a port value for this instance."""
-        pport = wapp_settings.hport + 1
+        pport = swapp_settings.hport + 1
         if pport > 99:
             pport = 80
-        wapp_settings.hport = pport
+        swapp_settings.hport = pport
         return pport + (pport*100)
 
     # -----------------------------------------------------------------------
@@ -274,12 +274,12 @@ class sppasWebApp:
         url = "http://{:s}:{:d}/".format(self.__location, self.__port)
 
         parameters = list()
-        if len(wapp_settings.accessibility_theme) > 0:
-            parameters.append("wexa_theme=" + wapp_settings.accessibility_theme)
-        if len(wapp_settings.accessibility_color) > 0:
-            parameters.append("wexa_color=" + wapp_settings.accessibility_color)
-        if len(wapp_settings.accessibility_contrast) > 0:
-            parameters.append("wexa_contrast=" + wapp_settings.accessibility_contrast)
+        if len(swapp_settings.accessibility_theme) > 0:
+            parameters.append("wexa_theme=" + swapp_settings.accessibility_theme)
+        if len(swapp_settings.accessibility_color) > 0:
+            parameters.append("wexa_color=" + swapp_settings.accessibility_color)
+        if len(swapp_settings.accessibility_contrast) > 0:
+            parameters.append("wexa_contrast=" + swapp_settings.accessibility_contrast)
 
         if len(parameters) == 0:
             return url
@@ -310,7 +310,7 @@ class sppasWebApp:
             # it depends on either: announce this shutdown too, while the
             # socket can still reach it -- the same BYE it sends when it
             # is the one closing.
-            if wapp_wxstate.running is True:
+            if swapp_wxstate.running is True:
                 # Sent by the socket itself and not by the notifier: what the
                 # notifier pushes is sent by a thread nobody waits for, and
                 # this process is about to end. This one has to be gone
@@ -327,13 +327,13 @@ class sppasWebApp:
 
         # Save the collected traces into the log file, like the former wx
         # log window did when the application exited.
-        saved = wapp_trace.save()
+        saved = swapp_trace.save()
         logging.info(f"Traces saved into: {saved}")
 
         # Save current configuration
         logging.debug("Save config files.")
         cfg.save()
-        wapp_settings.save()
+        swapp_settings.save()
 
         # Return exit status 0 = normal.
         return 0

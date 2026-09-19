@@ -45,10 +45,10 @@ from whakerpy.htmlmaker import HTMLNode
 from sppas.core.config import sg
 from sppas.core.config import cfg
 from sppas.core.coreutils import info
-from sppas.ui.swapp.wappcore.wexc import sppasHTMLIncompleteFieldset
+from sppas.ui.swapp.swappcore.wexc import sppasHTMLIncompleteFieldset
 from sppas.ui.swapp.nodes import sppasHTMLCheckboxNode
 
-from ..wappcore.wappsg import wapp_settings
+from ..swappcore.swappsg import swapp_settings
 
 from .basefieldset import SetupBaseFieldset
 
@@ -95,10 +95,10 @@ class SetupHomeFieldset(SetupBaseFieldset):
 
         # -- Logos
         logos = f"""
-         <img class="flex-item small-logo" src="{wapp_settings.logos}LPL_horiz.jpg" alt="LPL">
-         <img class="flex-item small-logo" src="{wapp_settings.logos}cnrs.png" alt="CNRS">
-         <img class="flex-item small-logo" src="{wapp_settings.logos}logo_AMU_bleu.png" alt="AMU">
-         <img class="flex-item small-logo" src="{wapp_settings.logos}GPLv3.png" alt="GPLv3">
+         <img class="flex-item small-logo" src="{swapp_settings.logos}LPL_horiz.jpg" alt="LPL">
+         <img class="flex-item small-logo" src="{swapp_settings.logos}cnrs.png" alt="CNRS">
+         <img class="flex-item small-logo" src="{swapp_settings.logos}logo_AMU_bleu.png" alt="AMU">
+         <img class="flex-item small-logo" src="{swapp_settings.logos}GPLv3.png" alt="GPLv3">
          <div class="flex-item small-logo">
              <img alt="Download count" src="https://img.shields.io/sourceforge/dm/sppas.svg" >
              <img alt="SourceForge"

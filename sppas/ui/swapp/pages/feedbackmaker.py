@@ -46,8 +46,8 @@ from whakerpy.htmlmaker import HTMLTree
 from sppas.core.config import sg
 from sppas.ui import _
 
-from ..wappbase.wappresponse import swappBaseResponse
-from ..wappcore.wappsg import wapp_trace
+from ..swappbase.swappresponse import swappBaseResponse
+from ..swappcore.swappsg import swapp_trace
 
 from .feedback_view import FeedbackView
 
@@ -144,4 +144,4 @@ class FeedbackResponseRecipe(swappBaseResponse):
         """
         self.comment("Body content")
         self.__view.update_accessibility()
-        self.__view.populate_tree_content(wapp_trace.serialize())
+        self.__view.populate_tree_content(swapp_trace.serialize())

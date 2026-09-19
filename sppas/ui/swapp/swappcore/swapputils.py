@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.wapputils.py
+:filename: sppas.ui.swapp.swapputils.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Utilities for SPPAS Web-based applications.
@@ -41,7 +41,7 @@
 import os
 import logging
 
-from .wappsg import wapp_settings
+from .swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ class sppasImagesAccess:
             return name
 
         for asked in (name, default):
-            for folder in (wapp_settings.images, wapp_settings.icons):
+            for folder in (swapp_settings.images, swapp_settings.icons):
                 for ext in (".png", ".svg"):
                     filename = folder + asked + ext
                     if os.path.exists(filename):
@@ -95,7 +95,7 @@ class sppasImagesAccess:
 
         """
         for ext in (".png", ".svg"):
-            filename = wapp_settings.logos + name + ext
+            filename = swapp_settings.logos + name + ext
             if os.path.exists(filename):
                 return filename
 
