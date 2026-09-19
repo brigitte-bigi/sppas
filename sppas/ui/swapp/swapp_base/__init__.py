@@ -1,9 +1,8 @@
-# -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.nodes.feedback.exit_dialog.py
+:filename: sppas.ui.swapp.swapp_base.__init__.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The dialog shown while the exit waits for the other interface.
+:summary: The base classes common to every SPPAS web-based application.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -39,37 +38,17 @@
 
 """
 
-from whakerpy.htmlmaker import HTMLNode
-
-from sppas.ui import _
-
-# ---------------------------------------------------------------------------
-
-MSG_WAIT = _("SPPAS is waiting for your answer in the Desktop window.")
+from .swapp_view import swappBaseView
+from .swapp_bakery import swappWebData
+from .swapp_response import swappBaseResponse
+from .swapp_head import swappHeadNode
 
 # ---------------------------------------------------------------------------
 
 
-class swappExitWaitDialog(HTMLNode):
-    """A dialog shown while an exit waits for the answer of the Desktop.
-
-    An exit of SPPAS is the exit of both interfaces, or of none. While the
-    Desktop asks its own reader, this dialog is what the web interface
-    shows, and it carries no button: there is nothing to decide here.
-    It is baked into every Dashboard and shown by the periodic poll, so
-    that a second tab and a reloaded page find the same state -- the one
-    of the server, not the one of the page which asked.
-
-    """
-
-    ID = "exit_dialog"
-
-    def __init__(self, parent_id):
-        super(swappExitWaitDialog, self).__init__(parent_id, swappExitWaitDialog.ID, "dialog")
-        self.add_attribute("id", self.identifier)
-        self.add_attribute("role", "alertdialog")
-        self.add_attribute("aria-labelledby", "exit_dialog_p")
-        self.add_attribute("class", "hidden-alert info")
-
-        wait_p = HTMLNode(self.identifier, "exit_dialog_p", "p", value=MSG_WAIT)
-        self.append_child(wait_p)
+__all__ = (
+    "swappBaseView",
+    "swappWebData",
+    "swappBaseResponse",
+    "swappHeadNode"
+)

@@ -43,9 +43,9 @@ import unittest
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import COMM_PROTOCOL_VERSION
 
-from sppas.ui.swapp.main_comm import sppasWappCommServer
-from sppas.ui.swapp.swappcore.swappsg import swapp_wxstate
-from sppas.ui.swapp.swappcore.swappsg import wx_is_running
+from sppas.ui.swapp.main_comm import swappCommServer
+from sppas.ui.swapp.swapp_core.swappsg import swapp_wxstate
+from sppas.ui.swapp.swapp_core.swappsg import wx_is_running
 
 # ---------------------------------------------------------------------------
 
@@ -56,7 +56,7 @@ class TestInterlocutorGone(unittest.TestCase):
     def setUp(self):
         # A port nothing is listening to: a push to it fails, exactly as it
         # does when the wx interface crashed.
-        self.server = sppasWappCommServer("127.0.0.1", 61999)
+        self.server = swappCommServer("127.0.0.1", 61999)
         self.hello = {"source": "wxapp", "version": COMM_PROTOCOL_VERSION,
                       "port": 61998}
 

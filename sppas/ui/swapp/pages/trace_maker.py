@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.pages.citemaker.py
+:filename: sppas.ui.swapp.pages.trace_maker.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The web page "How to cite" of SPPAS.
+:summary: The web page "Traces" of SPPAS.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -46,36 +46,42 @@ from whakerpy.htmlmaker import HTMLTree
 from sppas.core.config import sg
 from sppas.ui import _
 
-from ..swappbase.swappresponse import swappBaseResponse
+from ..swapp_base.swapp_response import swappBaseResponse
+from ..main_trace_store import swappTraceStore
+from ..swapp_core.swappsg import swapp_trace
 
-from .cite_view import CiteView
-
-# ---------------------------------------------------------------------------
-
-
-MSG_TITLE = f"SPPAS {sg.__release__} How to cite"
-MSG_CITE = _("How to cite")
+from .trace_view import swappTraceView
 
 # ---------------------------------------------------------------------------
 
 
-class CiteResponseRecipe(swappBaseResponse):
-    """The cite.html HTTPD response bakery.
+MSG_TITLE = f"SPPAS {sg.__release__} Journal"
+MSG_JOURNAL = _("Journal")
+MSG_SAVED = _("Saved into: ")
 
-    Displays the reference to be cited when SPPAS is used, and a link to
-    the list of all specific publications.
+# ---------------------------------------------------------------------------
+
+
+class swappTraceResponseRecipe(swappBaseResponse):
+    """The journal.html HTTPD response bakery.
+
+    Displays the content of the shared trace store: what SPPAS did, and
+    why, whatever the component which did it. It replaces the former wx
+    log window, with the same actions: save into a log file, and clear.
 
     """
 
-    def __init__(self, name: str = "Cite",
+    def __init__(self, name: str = "Traces",
                  tree: HTMLTree | None = None,
                  title: str = MSG_TITLE):
-        """Create the ResponseRecipe for the "How to cite" page.
+        """Create the ResponseRecipe for the "Traces" page.
 
         """
         self.__view = None
+        # The status of the last action, displayed once in the next bake.
+        self.__status_message = ""
 
-        super(CiteResponseRecipe, self).__init__(name, tree, title)
+        super(swappTraceResponseRecipe, self).__init__(name, tree, title)
 
     # -----------------------------------------------------------------------
     # OVERRIDE METHODS FROM Whakerpy -- Create the UI
@@ -84,21 +90,21 @@ class CiteResponseRecipe(swappBaseResponse):
     @classmethod
     def page(cls) -> str:
         """Override. Return the HTML page name."""
-        return "cite.html"
+        return "journal.html"
 
     # -----------------------------------------------------------------------
 
     @classmethod
     def name(cls) -> str:
         """Return the short name of the page, displayed in link buttons."""
-        return MSG_CITE
+        return MSG_JOURNAL
 
     # -----------------------------------------------------------------------
 
     @classmethod
     def icon(cls) -> str:
         """Return the name of the image representing the page."""
-        return "link_publis"
+        return "view_log"
 
     # -----------------------------------------------------------------------
 
@@ -110,7 +116,7 @@ class CiteResponseRecipe(swappBaseResponse):
 
         """
         super().create()
-        self.__view = CiteView(self._htree)
+        self.__view = swappTraceView(self._htree)
 
     # -----------------------------------------------------------------------
     # Callbacks
@@ -123,12 +129,33 @@ class CiteResponseRecipe(swappBaseResponse):
         :return: (bool) True if the whole page must be re-created.
 
         """
-        logging.debug(f" >>>>> Page How to cite -- Process events: {events} <<<<<< ")
+        logging.debug(f" >>>>> Page Infos -- Process events: {events} <<<<<< ")
         self._data = dict()
         self._status.code = 200
+        self.__status_message = ""
 
-        # This page defines no event of its own.
-        if len(events) > 0:
+        # The periodic heartbeat of the page: the server knows the single
+        # tab displaying the traces is open. No re-bake.
+        if "trace_heartbeat" in events:
+            swapp_trace.viewer_ping()
+            return False
+
+        if "event_bake" in events:
+            e = events["event_bake"]
+
+            if e == "handle_trace_save":
+                saved = swapp_trace.save()
+                logging.info(f"Journal saved into: {saved}")
+                self.__status_message = MSG_SAVED + saved
+
+            elif e == "handle_trace_clear":
+                swapp_trace.clear()
+
+            else:
+                logging.error(f"Unknown event_bake={e}")
+                self._status.code = 205  # Reset Content
+
+        elif len(events) > 0:
             logging.error(f"Unknown events={events}")
             self._status.code = 205  # Reset Content
 
@@ -142,4 +169,8 @@ class CiteResponseRecipe(swappBaseResponse):
         """
         self.comment("Body content")
         self.__view.update_accessibility()
-        self.__view.populate_tree_content()
+        self.__view.populate_tree_content(
+            swapp_trace.get_header(),
+            swapp_trace.get_records(origin=swappTraceStore.API_ORIGIN),
+            swapp_trace.get_records(origin=swappTraceStore.UI_ORIGIN),
+            self.__status_message)

@@ -11,22 +11,69 @@ package.
 - the root only contains the server process: `main_app.py` (HTTPD server),
   `main_comm.py` (communication socket), `main_settings.py`,
   `main_trace_store.py` and `main_trace_handler.py` (trace collector);
-- `swappcore/` holds the registries and the infrastructure: `swapps.py`
-  (the `WEB_APPLICATIONS` and `WEB_PAGES` registries), `swappinfo.py` and
-  `wpageinfo.py` (their entry classes), `swappsg.py` (the shared globals),
-  `swapputils.py` and `wexc.py`;
+- `swapp_core/` holds the registries and the infrastructure: `swapps.py`
+  (the `WEB_APPLICATIONS` and `WEB_PAGES` registries), `swapp_app_info.py` and
+  `swapp_page_info.py` (their entry classes), `swappsg.py` (the shared globals),
+  `swapp_utils.py` and `swapp_exc.py`;
 - `nodes/` holds the reusable HTML nodes, grouped by role:
   `buttons/`, `dialogs/`, `inputs/`, `layout/`, `feedback/`;
-- `swappbase/` holds the base classes common to every app: `swappbakery.py`,
-  `swappresponse.py`, `swappview.py`, `swapphead.py`;
-- `panels/` holds the composite panels, assembled from nodes and shared
-  across apps;
+- `swapp_base/` holds the base classes common to every app: `swapp_bakery.py`,
+  `swapp_response.py`, `swapp_view.py`, `swapp_head.py`;
+- `panels/` is a leftover and holds no composite panel: `links_panel.py`
+  defines `swappBaseLinksNode`, the base node of the link cards, still used by the
+  Dashboard and the About page, and `annot_param.py` defines
+  `swappAnnotParamDialog`, written for `app_videocued` and unused since;
 - each app is an `app_*` directory, like each wx page is a `page_*` one;
 - `pages/` holds the generic pages;
 - `statics/` and `whakerexa/` hold the front-end resources; `spinoff/`
   discovers the external apps and pages.
 
 Nothing else is ever added to the root.
+
+
+## Work in progress
+
+Some directories hold no implementation yet. Each one holds the design
+document of what is to be written there -- a single `.html` file, finished or
+being written. They are in the tree because their place in the package is
+already decided:
+
+- `app_convert/`, `app_plugins/`, `app_annotate/`: apps to come;
+- `services/deposit/`, `services/files/`, `services/options/`;
+- `app_wkps/` is the only one with code; it is being reworked.
+
+Their unit tests are already written, in `tests/swapp/`. They fail until the
+modules they import exist: a failure there is expected, not a regression.
+
+
+## Naming conventions
+
+The package has a single radical: `swapp` -- SPPAS Web APPlication, as opposed
+to `wxapp`. Everything swapp defines carries it. What comes from the framework
+keeps its own name (`whakerpy`, `whakerexa`), and nothing is ever abbreviated
+from `swapp`.
+
+Names are written to be read: the words of a composed name are separated by an
+`_`, never run together.
+
+- **Directories.** Named after their role: `swapp_core/`, `swapp_base/`,
+  `nodes/`, `pages/`. Apps keep the `app_` prefix -- `app_dashboard/`,
+  `app_setup/` -- so that they group together in a listing.
+- **Modules.** Same rule: `swapp_bakery.py`, `dashboard_maker.py`,
+  `fieldset_license.py`. Two deliberate exceptions: `swapps.py` and
+  `swappsg.py`, which are not two words ("the swapps", and the shared
+  globals); and the leading `h` of `hbutton.py`, `hdialog.py`,
+  `hstatus_node.py`, which says the module defines an `HTMLNode` --
+  `button.py` alone would be too generic to be safe.
+- **Classes.** Radical first, in lower case, as everywhere in SPPAS
+  (`sppasOption`, `sppasParam`): `swappWebData`, `swappBaseView`,
+  `swappWebPageInfo`, `swappHeader`. A spin-off applies its own radical the
+  same way -- `splicsTextCueSView`, in autocs.
+- **Shared globals.** `swapp_settings`, `swapp_trace`, `swapp_wkps`,
+  `swapp_wxstate`, `swapp_notify`, all in `swapp_core/swappsg.py`.
+
+The two registry entry classes are named as a pair: `swapp_app_info.py` holds
+`swappWebApplicationInfo`, `swapp_page_info.py` holds `swappWebPageInfo`.
 
 
 ## Taxonomy: App / Page / Dialog
@@ -64,16 +111,31 @@ no URL and no self-contained content.
 Examples: Agreement, error and information alert dialogs.
 
 
+## Service
+
+Something the apps call, and the reader never reaches: it has no URL of its
+own. A service is defined by what it refuses to know: the deposit holds files
+without knowing what a file is for; the options give what an app lets one set
+without knowing what a single value means -- they build the form, the app
+shows it. That ignorance is deliberate, and it is what lets one service serve
+every app of swapp, and the ones to come.
+
+A service is not decided by the criterion above: it shows no content of its
+own. Each one has its design document in `services/`.
+
+Examples: the deposit, the provision of files, the options.
+
+
 ## Serving mechanism
 
 ### How apps are served
 
 Each app is a module named `app_*`. It declares a `WebData` class, derived
-from `swappWebData` (see `swappbase/swappbakery.py`), which answers two
+from `swappWebData` (see `swapp_base/swapp_bakery.py`), which answers two
 questions: `is_page(page_name)` and `bake_response(page_name)`.
 
 All the `WebData` classes are registered in the `WEB_APPLICATIONS` list of
-`swappcore/swapps.py`. When a page is requested, `main_app.py` iterates over this list
+`swapp_core/swapps.py`. When a page is requested, `main_app.py` iterates over this list
 and asks each entry `is_page()`; the first one that answers `True` bakes
 the response.
 

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.nodes.feedback.hstatusnode.py
+:filename: sppas.ui.swapp.nodes.feedback.hstatus_node.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: A set of nodes to represent the HTTPD response status.
@@ -45,7 +45,7 @@ from whakerpy.htmlmaker import HTMLTree
 from whakerpy.httpd import HTTPDStatus
 from sppas.ui import _
 
-from ...swappcore.swappsg import swapp_settings
+from ...swapp_core.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -56,7 +56,7 @@ MSG_DESCR_410 = _("You can close this tab. [...]")
 # ---------------------------------------------------------------------------
 
 
-class HTMLTreeStatus(HTMLTree):
+class swappHTMLTreeStatus(HTMLTree):
     """An HTMLtree to create a page with a specific status.
 
     """
@@ -69,7 +69,7 @@ class HTMLTreeStatus(HTMLTree):
         :param msg: (str) Optional parameter, a message to display any information
 
         """
-        super(HTMLTreeStatus, self).__init__(f"tree_{status.code}")
+        super(swappHTMLTreeStatus, self).__init__(f"tree_{status.code}")
 
         code_name = HTTPDStatus.HTTPD_STATUS.get(status.code, "")
         self._create_head(code_name)
@@ -125,19 +125,19 @@ class HTMLTreeStatus(HTMLTree):
 # ---------------------------------------------------------------------------
 
 
-class HTMLTreeError410(HTMLTreeStatus):
+class swappHTMLTreeError410(swappHTMLTreeStatus):
     """A node to represent the 410 HTTPD response status.
 
     """
     def __init__(self):
         """Create the HTML410StatusNode node."""
-        super(HTMLTreeError410, self).__init__(
+        super(swappHTMLTreeError410, self).__init__(
             HTTPDStatus(410), MSG_TITLE_410, MSG_DESCR_410)
 
 # ---------------------------------------------------------------------------
 
 
-class HTMLStatusNode(HTMLNode):
+class swappHTMLStatusNode(HTMLNode):
     """A node to represent an HTTPD response status and a message.
 
     Deprecated.
@@ -145,7 +145,7 @@ class HTMLStatusNode(HTMLNode):
     """
 
     def __init__(self, parent_id, identifier="und", code=200, text="", description=""):
-        """Create the HTMLStatusNode node.
+        """Create the swappHTMLStatusNode node.
 
         :param parent_id: (str) Identifier of the parent node
         :param identifier: (str) Identifier of this node
@@ -154,7 +154,7 @@ class HTMLStatusNode(HTMLNode):
         :param description: (str) Optional description text
 
         """
-        super(HTMLStatusNode, self).__init__(parent_id, identifier, "section")
+        super(swappHTMLStatusNode, self).__init__(parent_id, identifier, "section")
 
         # Add the actual content
         self.__create_content(code, text, description)

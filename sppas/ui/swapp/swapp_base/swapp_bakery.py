@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.swappinfo.py
+:filename: sppas.ui.swapp.swapp_base.swapp_bakery.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: This is the SPPAS Web-based application information.
+:summary: Bakery for any SPPAS web-based application.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2026 Brigitte Bigi
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -38,32 +38,55 @@
 
 """
 
-from dataclasses import dataclass
-from typing import Type
+from __future__ import annotations
 
-from sppas.core.coreutils import sppasTypeError
+from whakerpy.webapp import WebSiteData
+from sppas.ui.swapp import swappImagesAccess
 
 # ---------------------------------------------------------------------------
 
 
-@dataclass
-class swappWebApplicationInfo:
-    """Store metadata for a web application.
-
-    :param name: (str) Identifier name used to refer to the application.
-    :param bakery: (type) The class used to represent or launch the
-        application. Typically inherits from a WebSiteData class.
-    :param show: (bool) Indicates whether the app should appear in the GUI.
+class swappWebData(WebSiteData):
+    """Parse the JSON file, store data and create the bakery system.
 
     """
-    name: str
-    bakery: Type
-    show: bool
 
-    def __post_init__(self):
-        if isinstance(self.name, str) is False:
-            raise sppasTypeError(type(self.name).__name__, "string")
-        if isinstance(self.bakery, type) is False and hasattr(self.bakery, "bake_response") is False:
-            raise sppasTypeError(type(self.bakery).__name__, "WebSiteData")
-        if isinstance(self.show, bool) is False:
-            raise sppasTypeError(type(self.show).__name__, "bool")
+    def __init__(self, json_filename: str | None = None):
+        """Create a swappWebData instance.
+
+        """
+        super(swappWebData, self).__init__(json_filename)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def icon() -> str:
+        """Return the page icon name."""
+        return swappImagesAccess.get_logo_filename("sppas-logo-v5")
+
+    @staticmethod
+    def description() -> str:
+        """Return a short description of the application."""
+        return "No description available."
+
+    @staticmethod
+    def name() -> str:
+        """Return a short name of the application."""
+        return "Undefined"
+
+    @staticmethod
+    def id() -> str:
+        """Return an identifier of the application."""
+        return "Undefined"
+
+    @staticmethod
+    def theme_name() -> str:
+        """Return the name of the theme the application brings, if any.
+
+        An application bringing its own theme is shown with it, whatever
+        the theme in force where it was launched from: the theme is its
+        identity. An empty name means the application takes the theme of
+        the page it was launched from.
+
+        """
+        return ""

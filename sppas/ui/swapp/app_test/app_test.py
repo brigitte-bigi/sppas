@@ -43,24 +43,24 @@ import logging
 
 from whakerpy.httpd import BaseResponseRecipe
 
-from ..swappbase.swappbakery import swappWebData
-from .testsmaker import TestsResponseRecipe
+from ..swapp_base.swapp_bakery import swappWebData
+from .tests_maker import swappTestsResponseRecipe
 
 # ---------------------------------------------------------------------------
 
 
-class TestsWebData(swappWebData):
+class swappTestsWebData(swappWebData):
     """Parse the JSON file, store data and create the bakery system.
 
     """
 
     def __init__(self, json_filename: str | None = None) -> None:
-        """Create a TestsWebData instance.
+        """Create a swappTestsWebData instance.
 
         """
-        super(TestsWebData, self).__init__(json_filename)
+        super(swappTestsWebData, self).__init__(json_filename)
         # Filename of the default page. The only one of the Tests application.
-        self._default = TestsResponseRecipe.page()
+        self._default = swappTestsResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ class TestsWebData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        return page_name == TestsResponseRecipe.page()
+        return page_name == swappTestsResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 
@@ -91,8 +91,8 @@ class TestsWebData(swappWebData):
         """
         logging.info(f"Requested page name: {page_name}")
 
-        if page_name == TestsResponseRecipe.page():
-            return TestsResponseRecipe()
+        if page_name == swappTestsResponseRecipe.page():
+            return swappTestsResponseRecipe()
 
         # Any other page name
         return None

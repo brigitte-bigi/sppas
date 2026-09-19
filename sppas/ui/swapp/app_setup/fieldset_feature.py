@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.app_setup.fieldsetfeature.py
+:filename: sppas.ui.swapp.app_setup.fieldset_feature.py
 :author: Brigitte Bigi
 :contributor: Florian Lopitaux
 :contact: contact@sppas.org
@@ -42,7 +42,7 @@
 from sppas.core.coreutils import msg
 from sppas.core.coreutils import info
 
-from .basefieldsetfeaturetype import SetupFeatureTypeFieldset
+from .base_fieldset_feature_type import swappSetupFeatureTypeFieldset
 
 # ---------------------------------------------------------------------------
 
@@ -55,52 +55,52 @@ SPIN_FEATURES = info(517, "install")
 # ---------------------------------------------------------------------------
 
 
-class SetupDepsFieldset(SetupFeatureTypeFieldset):
+class swappSetupDepsFieldset(swappSetupFeatureTypeFieldset):
     """List of features of type 'deps'.
 
     """
 
     def __init__(self, parent, installer, uri: str = ""):
-        super(SetupDepsFieldset, self).__init__(
+        super(swappSetupDepsFieldset, self).__init__(
             parent, "fieldset_deps", installer, "deps", DEPS_FEATURES, uri)
         self._msg = msg("Tools", "install")
 
 # ---------------------------------------------------------------------------
 
 
-class SetupLangFieldset(SetupFeatureTypeFieldset):
+class swappSetupLangFieldset(swappSetupFeatureTypeFieldset):
     """List of features of type 'lang'.
 
     """
 
     def __init__(self, parent, installer, uri: str = ""):
-        super(SetupLangFieldset, self).__init__(
+        super(swappSetupLangFieldset, self).__init__(
             parent, "fieldset_lang", installer, "lang", LANG_FEATURES, uri)
         self._msg = msg("Langs", "install")
 
 # ---------------------------------------------------------------------------
 
 
-class SetupAnnotFieldset(SetupFeatureTypeFieldset):
+class swappSetupAnnotFieldset(swappSetupFeatureTypeFieldset):
     """List of features of type 'annot'.
 
     """
 
     def __init__(self, parent, installer, uri: str = ""):
-        super(SetupAnnotFieldset, self).__init__(
+        super(swappSetupAnnotFieldset, self).__init__(
             parent, "fieldset_annot", installer, "annot", ANNOT_FEATURES, uri)
         self._msg = msg("Models", "install")
 
 # ---------------------------------------------------------------------------
 
 
-class SetupSpinOffFieldset(SetupFeatureTypeFieldset):
+class swappSetupSpinOffFieldset(swappSetupFeatureTypeFieldset):
     """List of features of type 'spin'.
 
     """
 
     def __init__(self, parent, installer, uri: str = ""):
-        super(SetupSpinOffFieldset, self).__init__(
+        super(swappSetupSpinOffFieldset, self).__init__(
             parent, "fieldset_spinoff", installer, "spin", SPIN_FEATURES, uri)
         self._msg = msg("Extras", "install")
 

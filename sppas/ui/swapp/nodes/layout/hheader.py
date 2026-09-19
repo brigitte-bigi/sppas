@@ -45,7 +45,7 @@ from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLHeaderNode
 
 from sppas.ui import _
-from ...swappcore.swapputils import sppasImagesAccess
+from ...swapp_core.swapp_utils import swappImagesAccess
 
 # -----------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.app_setup.fieldsetlicense.py
+:filename: sppas.ui.swapp.app_setup.fieldset_license.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Create a "License" fieldset node of the setup app.
@@ -43,10 +43,10 @@ from whakerpy.htmlmaker import HTMLHr
 
 from sppas.core.config import cfg
 from sppas.core.coreutils import info
-from sppas.ui.swapp.swappcore.wexc import sppasHTMLIncompleteFieldset
-from sppas.ui.swapp.nodes import sppasHTMLCheckboxNode
+from sppas.ui.swapp.swapp_core.swapp_exc import swappHTMLIncompleteFieldset
+from sppas.ui.swapp.nodes import swappHTMLCheckboxNode
 
-from .basefieldset import SetupBaseFieldset
+from .base_fieldset import swappSetupBaseFieldset
 
 # ---------------------------------------------------------------------------
 
@@ -130,7 +130,7 @@ measures that legally restrict others from doing anything the license permits.</
 # ---------------------------------------------------------------------------
 
 
-class SetupLicenseFieldset(SetupBaseFieldset):
+class swappSetupLicenseFieldset(swappSetupBaseFieldset):
     """Terms and conditions fieldset of the setup page.
 
     A checkbox must be checked in order to validate the field.
@@ -138,7 +138,7 @@ class SetupLicenseFieldset(SetupBaseFieldset):
     """
 
     def __init__(self, parent, uri: str = ""):
-        super(SetupLicenseFieldset, self).__init__(parent, "license_field", LEGEND_LICENSE)
+        super(swappSetupLicenseFieldset, self).__init__(parent, "license_field", LEGEND_LICENSE)
         self._msg = MSG_LICENSE
 
         # --- List of licenses
@@ -154,7 +154,7 @@ class SetupLicenseFieldset(SetupBaseFieldset):
         # standard level and out of reach of the Configuration page: an
         # engagement is taken by the user, never by the software.
         AUTHOR_LOG_LEVEL = 1
-        checkbox = sppasHTMLCheckboxNode(self.identifier, "check_license", MSG_ACCEPT_LICENSE, uri=uri)
+        checkbox = swappHTMLCheckboxNode(self.identifier, "check_license", MSG_ACCEPT_LICENSE, uri=uri)
         if cfg.log_level <= AUTHOR_LOG_LEVEL:
             checkbox.check()
         self.append_child(checkbox)
@@ -178,7 +178,7 @@ class SetupLicenseFieldset(SetupBaseFieldset):
 
         """
         if self.__checkbox.is_checked() is False:
-            raise sppasHTMLIncompleteFieldset("Accept License")
+            raise swappHTMLIncompleteFieldset("Accept License")
 
     # -----------------------------------------------------------------------
 

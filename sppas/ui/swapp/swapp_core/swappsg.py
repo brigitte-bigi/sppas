@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.swappsg.py
+:filename: sppas.ui.swapp.swapp_core.swappsg.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary: This is the SPPAS Web-based application global' variables.
@@ -49,14 +49,14 @@ from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommClient
 from sppas.ui.agnostic import sppasCommNotifier
 from sppas.ui.agnostic import sppasCommServerError
-from sppas.ui.swapp.main_settings import sppasWebAppSettings
+from sppas.ui.swapp.main_settings import swappSettings
 from sppas.ui.swapp.main_trace_store import swappTraceStore
 
 # -----------------------------------------------------------------------
 
 
 # Instantiate the application settings
-swapp_settings = sppasWebAppSettings()
+swapp_settings = swappSettings()
 
 # Instantiate the workspaces manager
 swapp_wkps = sppasWkpsManager()
@@ -71,7 +71,7 @@ swapp_trace = swappTraceStore()
 # -----------------------------------------------------------------------
 
 
-class sppasWxAppState:
+class swappWxAppState:
     """Shared state reported by the wx interface interlocutor.
 
     The state is updated by the communication server, from the messages of
@@ -97,7 +97,7 @@ class sppasWxAppState:
     HEARTBEAT_MAX_AGE = 90.
 
     def __init__(self):
-        self.__heartbeat = sppasHeartbeat(sppasWxAppState.HEARTBEAT_MAX_AGE)
+        self.__heartbeat = sppasHeartbeat(swappWxAppState.HEARTBEAT_MAX_AGE)
         self.workspace_name = ""
         # The port the interface is listening to, announced in its HELLO:
         # it is what allows to ask it directly whether it is still there.
@@ -134,7 +134,7 @@ class sppasWxAppState:
 
 
 # Instantiate the shared state of the wx interface
-swapp_wxstate = sppasWxAppState()
+swapp_wxstate = swappWxAppState()
 
 # -----------------------------------------------------------------------
 

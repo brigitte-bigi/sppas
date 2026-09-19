@@ -39,12 +39,12 @@
 
 """
 
-from .dashboardmaker import DashboardResponseRecipe
-from .app_dashboard import DashboardWebData
+from .dashboard_maker import swappDashboardResponseRecipe
+from .app_dashboard import swappDashboardWebData
 
 # -----------------------------------------------------------------------
 
 __all__ = (
-    "DashboardResponseRecipe",
-    "DashboardWebData"
+    "swappDashboardResponseRecipe",
+    "swappDashboardWebData"
 )

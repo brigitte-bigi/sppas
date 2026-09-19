@@ -38,15 +38,15 @@
 
 """
 
-from .swappcore.swapputils import sppasImagesAccess
-from .main_settings import sppasWebAppSettings
-from .swappcore.swappsg import sppasWkpsManager
+from .swapp_core.swapp_utils import swappImagesAccess
+from .main_settings import swappSettings
+from .swapp_core.swappsg import sppasWkpsManager
 from .main_app import sppasWebApp
 
 
 __all__ = (
-    "sppasImagesAccess",
+    "swappImagesAccess",
     "sppasWkpsManager",
-    "sppasWebAppSettings",
+    "swappSettings",
     "sppasWebApp"
 )

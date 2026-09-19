@@ -1,7 +1,7 @@
-from .testsmaker import TestsResponseRecipe
-from .app_test import TestsWebData
+from .tests_maker import swappTestsResponseRecipe
+from .app_test import swappTestsWebData
 
 __all__ = (
-    "TestsWebData",
-    "TestsResponseRecipe"
+    "swappTestsWebData",
+    "swappTestsResponseRecipe"
 )

@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.swappcore.swapps.py
+:filename: sppas.ui.swapp.swapp_core.swapps.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Import the available SPPAS Web-based Applications.
@@ -40,23 +40,23 @@
 
 import logging
 
-from .swappinfo import swappWebApplicationInfo
-from .wpageinfo import swappWebPageInfo
+from .swapp_app_info import swappWebApplicationInfo
+from .swapp_page_info import swappWebPageInfo
 
 # Import all locally developed applications
-from ..app_setup import SetupWebData
-from ..app_dashboard import DashboardWebData
-from ..app_wkps import WkpsWebData
-from ..app_test.app_test import TestsWebData
+from ..app_setup import swappSetupWebData
+from ..app_dashboard import swappDashboardWebData
+from ..app_wkps import swappWkpsWebData
+from ..app_test.app_test import swappTestsWebData
 # Install all installed application -- the spin-offs ones
 from ..spinoff import *
 # Import all locally developed generic pages, and their single provider
 from ..pages import swappPagesData
-from ..pages import AboutResponseRecipe
-from ..pages import CiteResponseRecipe
-from ..pages import ConfigurationResponseRecipe
-from ..pages import FeedbackResponseRecipe
-from ..pages import TraceResponseRecipe
+from ..pages import swappAboutResponseRecipe
+from ..pages import swappCiteResponseRecipe
+from ..pages import swappConfigurationResponseRecipe
+from ..pages import swappFeedbackResponseRecipe
+from ..pages import swappTraceResponseRecipe
 
 # Determine if we're running in debug mode (log level lower than DEBUG)
 DEBUG_MODE = logging.getLogger().getEffectiveLevel() <= logging.DEBUG
@@ -64,10 +64,10 @@ DEBUG_MODE = logging.getLogger().getEffectiveLevel() <= logging.DEBUG
 # List of all known web applications (stable and in development).
 # The 'Dashboard' one is the default in the main_app.
 WEB_APPLICATIONS = [
-    swappWebApplicationInfo('Dashboard', DashboardWebData, True),
-    swappWebApplicationInfo('Setup', SetupWebData, True),
-    swappWebApplicationInfo('Test', TestsWebData, DEBUG_MODE),
-    swappWebApplicationInfo('Wkps', WkpsWebData, DEBUG_MODE),
+    swappWebApplicationInfo('Dashboard', swappDashboardWebData, True),
+    swappWebApplicationInfo('Setup', swappSetupWebData, True),
+    swappWebApplicationInfo('Test', swappTestsWebData, DEBUG_MODE),
+    swappWebApplicationInfo('Wkps', swappWkpsWebData, DEBUG_MODE),
 ]
 
 # Add all discovered spin-off applications
@@ -85,11 +85,11 @@ for cls in SPINOFF_SWAPPS:
 # or False: True to get a link button in the "Find out more" section of
 # the Dashboard, False to be served without a link button.
 WEB_PAGES = [
-    swappWebPageInfo(AboutResponseRecipe, True),
-    swappWebPageInfo(CiteResponseRecipe, True),
-    swappWebPageInfo(ConfigurationResponseRecipe, True),
-    swappWebPageInfo(FeedbackResponseRecipe, True),
-    swappWebPageInfo(TraceResponseRecipe, False),
+    swappWebPageInfo(swappAboutResponseRecipe, True),
+    swappWebPageInfo(swappCiteResponseRecipe, True),
+    swappWebPageInfo(swappConfigurationResponseRecipe, True),
+    swappWebPageInfo(swappFeedbackResponseRecipe, True),
+    swappWebPageInfo(swappTraceResponseRecipe, False),
 ]
 
 # Add all discovered spin-off pages

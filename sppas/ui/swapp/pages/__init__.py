@@ -39,22 +39,22 @@
 
 """
 
-from .aboutmaker import AboutResponseRecipe
-from .citemaker import CiteResponseRecipe
-from .configurationmaker import ConfigurationResponseRecipe
-from .feedbackmaker import FeedbackResponseRecipe
-from .tracemaker import TraceResponseRecipe
-from .helpmaker import HelpResponseRecipe
+from .about_maker import swappAboutResponseRecipe
+from .cite_maker import swappCiteResponseRecipe
+from .configuration_maker import swappConfigurationResponseRecipe
+from .feedback_maker import swappFeedbackResponseRecipe
+from .trace_maker import swappTraceResponseRecipe
+from .help_maker import swappHelpResponseRecipe
 from .pages_data import swappPagesData
 
 # -----------------------------------------------------------------------
 
 __all__ = (
-    "AboutResponseRecipe",
-    "CiteResponseRecipe",
-    "ConfigurationResponseRecipe",
-    "FeedbackResponseRecipe",
-    "TraceResponseRecipe",
-    "HelpResponseRecipe",
+    "swappAboutResponseRecipe",
+    "swappCiteResponseRecipe",
+    "swappConfigurationResponseRecipe",
+    "swappFeedbackResponseRecipe",
+    "swappTraceResponseRecipe",
+    "swappHelpResponseRecipe",
     "swappPagesData"
 )

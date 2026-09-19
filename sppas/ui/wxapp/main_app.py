@@ -63,7 +63,7 @@ from sppas.ui.agnostic import COMM_PROTOCOL_VERSION
 
 from .main_settings import WxAppSettings
 from .main_window import sppasMainWindow
-from .main_comm import sppasWxCommServer
+from .main_comm import wxappCommServer
 from .imgtools import sppasImagesAccess
 
 # ---------------------------------------------------------------------------
@@ -104,7 +104,7 @@ class sppasApp(wx.App):
         # The communication server of this UI: the swapp UI is its client.
         # Its port is the one of the swapp communication server, plus one;
         # it is announced to swapp in the HELLO message.
-        self.__comm_server = sppasWxCommServer(
+        self.__comm_server = wxappCommServer(
             self.settings.shost, self.settings.sport + 1, self)
 
         # The collector of the traces is the swapp server: the python

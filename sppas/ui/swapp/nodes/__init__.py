@@ -38,11 +38,11 @@
 
 """
 
-from .inputs.hcheckbox import sppasHTMLCheckboxNode
-from .buttons.hbutton import sppasHTMLButton
-from .buttons.hbutton import sppasHTMLLink
-from .buttons.hbutton import LinkButtonNode
-from .dialogs.hdialog import sppasHTMLModalDialog
+from .inputs.hcheckbox import swappHTMLCheckboxNode
+from .buttons.hbutton import swappHTMLButton
+from .buttons.hbutton import swappHTMLLink
+from .buttons.hbutton import swappLinkButtonNode
+from .dialogs.hdialog import swappHTMLModalDialog
 from .dialogs.hmessages import swappConfirmDialog
 from .dialogs.hmessages import swappInformationDialog
 from .dialogs.hmessages import swappWarnDialog
@@ -50,17 +50,17 @@ from .dialogs.hmessages import swappErrorDialog
 from .dialogs.hmessages import swappYesNoDialog
 from .layout.hheader import swappHeader
 from .layout.hfooter import swappFooter
-from .feedback.progress import ProgressBar
+from .feedback.progress import swappProgressBar
 
 # ---------------------------------------------------------------------------
 
 
 __all__ = (
-    "sppasHTMLCheckboxNode",
-    "sppasHTMLButton",
-    "sppasHTMLLink",
-    "LinkButtonNode",
-    "sppasHTMLModalDialog",
+    "swappHTMLCheckboxNode",
+    "swappHTMLButton",
+    "swappHTMLLink",
+    "swappLinkButtonNode",
+    "swappHTMLModalDialog",
     "swappConfirmDialog",
     "swappInformationDialog",
     "swappWarnDialog",
@@ -68,5 +68,5 @@ __all__ = (
     "swappYesNoDialog",
     "swappHeader",
     "swappFooter",
-    "ProgressBar"
+    "swappProgressBar"
 )

@@ -1,7 +1,7 @@
-from .app_wkps import FilesResponseRecipe
-from .app_wkps import WkpsWebData
+from .app_wkps import swappFilesResponseRecipe
+from .app_wkps import swappWkpsWebData
 
 __all__ = (
-    "FilesResponseRecipe",
-    "WkpsWebData"
+    "swappFilesResponseRecipe",
+    "swappWkpsWebData"
 )

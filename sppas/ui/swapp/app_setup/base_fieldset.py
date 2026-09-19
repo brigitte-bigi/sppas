@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.swappbase.swappbakery.py
+:filename: sppas.ui.swapp.app_setup.base_fieldset.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: Bakery for any SPPAS web-based application.
+:summary: A base class to create a fieldset node of the setup app.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -38,55 +38,52 @@
 
 """
 
-from __future__ import annotations
+from whakerpy.htmlmaker import HTMLNode
 
-from whakerpy.webapp import WebSiteData
-from sppas.ui.swapp import sppasImagesAccess
-
-# ---------------------------------------------------------------------------
+# -----------------------------------------------------------------------
 
 
-class swappWebData(WebSiteData):
-    """Parse the JSON file, store data and create the bakery system.
+class swappSetupBaseFieldset(HTMLNode):
+    """A base class for any fieldset of the setup page.
 
     """
 
-    def __init__(self, json_filename: str | None = None):
-        """Create a swappWebData instance.
-
-        """
-        super(swappWebData, self).__init__(json_filename)
+    def __init__(self, parent, identifier, legend=None, uri=""):
+        super(swappSetupBaseFieldset, self).__init__(parent, identifier, "fieldset")
+        if identifier is not None:
+            self.set_attribute("id", identifier)
+        self.set_attribute("class", "wizard-fieldset")
+        if legend is not None:
+            legend = HTMLNode(self.identifier, "field_legend", "legend", value="{:s}".format(legend))
+            self.append_child(legend)
+        # A short version of the legend
+        self._msg = ""
+        # The page uri of the fieldset
+        self._uri = uri
 
     # -----------------------------------------------------------------------
 
-    @staticmethod
-    def icon() -> str:
-        """Return the page icon name."""
-        return sppasImagesAccess.get_logo_filename("sppas-logo-v5")
+    def get_msg(self):
+        """Return the title message of the fieldset (str)."""
+        return self._msg
 
-    @staticmethod
-    def description() -> str:
-        """Return a short description of the application."""
-        return "No description available."
+    # -----------------------------------------------------------------------
 
-    @staticmethod
-    def name() -> str:
-        """Return a short name of the application."""
-        return "Undefined"
+    def validate(self):
+        """Raise an exception if the fieldset is not fulfilled or return None.
 
-    @staticmethod
-    def id() -> str:
-        """Return an identifier of the application."""
-        return "Undefined"
-
-    @staticmethod
-    def theme_name() -> str:
-        """Return the name of the theme the application brings, if any.
-
-        An application bringing its own theme is shown with it, whatever
-        the theme in force where it was launched from: the theme is its
-        identity. An empty name means the application takes the theme of
-        the page it was launched from.
+        :raises: IncompleteFieldset
 
         """
-        return ""
+        return None
+
+    # -----------------------------------------------------------------------
+
+    def process_event(self, event):
+        """Process a received event.
+
+        :param event: The received event.
+        :return: (int) Status value (default: 205)
+
+        """
+        return 205

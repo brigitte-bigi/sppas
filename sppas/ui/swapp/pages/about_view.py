@@ -46,9 +46,9 @@ from whakerpy.htmlmaker import TagNode
 from sppas.core.config import sg
 from sppas.core.config import cfg
 from sppas.ui import _
-from sppas.ui.swapp.panels import BaseLinksNode
-from sppas.ui.swapp.swappcore.swapputils import sppasImagesAccess
-from sppas.ui.swapp.swappbase.swappview import swappBaseView
+from sppas.ui.swapp.panels import swappBaseLinksNode
+from sppas.ui.swapp.swapp_core.swapp_utils import swappImagesAccess
+from sppas.ui.swapp.swapp_base.swapp_view import swappBaseView
 
 # ---------------------------------------------------------------------------
 
@@ -95,7 +95,7 @@ BODY_SCRIPT = """
 # ---------------------------------------------------------------------------
 
 
-class AboutView(swappBaseView):
+class swappAboutView(swappBaseView):
     """View class responsible for populating the *about.html* page.
 
     This class represents the **View** component of the "About" page.
@@ -115,7 +115,7 @@ class AboutView(swappBaseView):
 
         """
         if isinstance(tree, HTMLTree) is False:
-            raise TypeError("AboutView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
+            raise TypeError("swappAboutView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
         super().__init__(tree, MSG_HEADER)
 
     # -----------------------------------------------------------------------
@@ -173,12 +173,12 @@ class AboutView(swappBaseView):
         # The information about SPPAS
         _content_section = TagNode(self._htree.body_main.identifier, None, "section")
         self._htree.body_main.append_child(_content_section)
-        AboutView._append_content(_content_section)
+        swappAboutView._append_content(_content_section)
 
         # Then the cards of the places SPPAS is living in, the same panel
         # as the one of the dashboard.
-        _links = BaseLinksNode(self._htree.body_main.identifier, "about_links_section")
-        _links.link_button("web", sppasImagesAccess.get_logo_filename("sppas-logo-v5"), MSG_CARD_WEB,
+        _links = swappBaseLinksNode(self._htree.body_main.identifier, "about_links_section")
+        _links.link_button("web", swappImagesAccess.get_logo_filename("sppas-logo-v5"), MSG_CARD_WEB,
                            link="https://sppas.org/")
         _links.link_button("download", "badge-sourceforge", MSG_CARD_DOWNLOAD,
                            link="https://sourceforge.net/projects/sppas/files/")
@@ -230,19 +230,19 @@ class AboutView(swappBaseView):
         _article2.append_child(_p)
         _p = HTMLNode(_article2.identifier, None, "p", value=MSG_WOULD_YOU_LIKE)
         _article2.append_child(_p)
-        AboutView._append_link(_p, "https://sppas.org/resources.html#contribute", MSG_CREATING_RESOURCES)
+        swappAboutView._append_link(_p, "https://sppas.org/resources.html#contribute", MSG_CREATING_RESOURCES)
 
         # More links block -- was the footer of the dialog
         # ----------------
         _article3 = TagNode(parent.identifier, None, "article")
         parent.append_child(_article3)
         _p_links = TagNode(_article3.identifier, None, "p")
-        AboutView._append_link(_p_links, "https://sppas.org/book_introduction.html#license", MSG_LINK_LICENSE)
-        AboutView._append_link(_p_links, "https://sppas.org/resources.html", MSG_LINK_LANG)
-        AboutView._append_link(_p_links, "https://sppas.org/scripting.html", MSG_LINK_SCRIPT)
+        swappAboutView._append_link(_p_links, "https://sppas.org/book_introduction.html#license", MSG_LINK_LICENSE)
+        swappAboutView._append_link(_p_links, "https://sppas.org/resources.html", MSG_LINK_LANG)
+        swappAboutView._append_link(_p_links, "https://sppas.org/scripting.html", MSG_LINK_SCRIPT)
         # The document of the package, served by this server: it opens in a
         # tab of its own, the page of SPPAS staying where it is.
-        AboutView._append_link(_p_links, "/index.html", MSG_LINK_DOC, external=False)
+        swappAboutView._append_link(_p_links, "/index.html", MSG_LINK_DOC, external=False)
         _article3.append_child(_p_links)
 
     # -----------------------------------------------------------------------

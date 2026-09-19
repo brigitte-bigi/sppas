@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.pages.aboutmaker.py
+:filename: sppas.ui.swapp.pages.feedback_maker.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The web page "About" of SPPAS.
+:summary: The web page "Feedback" of SPPAS.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -46,36 +46,38 @@ from whakerpy.htmlmaker import HTMLTree
 from sppas.core.config import sg
 from sppas.ui import _
 
-from ..swappbase.swappresponse import swappBaseResponse
+from ..swapp_base.swapp_response import swappBaseResponse
+from ..swapp_core.swappsg import swapp_trace
 
-from .about_view import AboutView
-
-# ---------------------------------------------------------------------------
-
-
-MSG_TITLE = f"SPPAS {sg.__release__} About"
-MSG_ABOUT = _("About")
+from .feedback_view import swappFeedbackView
 
 # ---------------------------------------------------------------------------
 
 
-class AboutResponseRecipe(swappBaseResponse):
-    """The about.html HTTPD response bakery.
+MSG_TITLE = f"SPPAS {sg.__release__} Feedback"
+MSG_FEEDBACK = _("Feedback")
 
-    Displays the information about SPPAS: version, update state, author,
-    and how to contribute.
+# ---------------------------------------------------------------------------
+
+
+class swappFeedbackResponseRecipe(swappBaseResponse):
+    """The feedback.html HTTPD response bakery.
+
+    Allows the user to prepare a feedback message and to send it by e-mail
+    from its own e-mail client: the message never leaves the application
+    by itself.
 
     """
 
-    def __init__(self, name: str = "About",
+    def __init__(self, name: str = "Feedback",
                  tree: HTMLTree | None = None,
                  title: str = MSG_TITLE):
-        """Create the ResponseRecipe for the "About" page.
+        """Create the ResponseRecipe for the "Feedback" page.
 
         """
         self.__view = None
 
-        super(AboutResponseRecipe, self).__init__(name, tree, title)
+        super(swappFeedbackResponseRecipe, self).__init__(name, tree, title)
 
     # -----------------------------------------------------------------------
     # OVERRIDE METHODS FROM Whakerpy -- Create the UI
@@ -84,21 +86,21 @@ class AboutResponseRecipe(swappBaseResponse):
     @classmethod
     def page(cls) -> str:
         """Override. Return the HTML page name."""
-        return "about.html"
+        return "feedback.html"
 
     # -----------------------------------------------------------------------
 
     @classmethod
     def name(cls) -> str:
         """Return the short name of the page, displayed in link buttons."""
-        return MSG_ABOUT
+        return MSG_FEEDBACK
 
     # -----------------------------------------------------------------------
 
     @classmethod
     def icon(cls) -> str:
         """Return the name of the image representing the page."""
-        return "link_about"
+        return "link_feedback"
 
     # -----------------------------------------------------------------------
 
@@ -110,7 +112,7 @@ class AboutResponseRecipe(swappBaseResponse):
 
         """
         super().create()
-        self.__view = AboutView(self._htree)
+        self.__view = swappFeedbackView(self._htree)
 
     # -----------------------------------------------------------------------
     # Callbacks
@@ -123,11 +125,11 @@ class AboutResponseRecipe(swappBaseResponse):
         :return: (bool) True if the whole page must be re-created.
 
         """
-        logging.debug(f" >>>>> Page About -- Process events: {events} <<<<<< ")
+        logging.debug(f" >>>>> Page Feedback -- Process events: {events} <<<<<< ")
         self._data = dict()
         self._status.code = 200
 
-        # This page defines no event of its own.
+        # The send action is handled in the browser: no event of its own.
         if len(events) > 0:
             logging.error(f"Unknown events={events}")
             self._status.code = 205  # Reset Content
@@ -142,4 +144,4 @@ class AboutResponseRecipe(swappBaseResponse):
         """
         self.comment("Body content")
         self.__view.update_accessibility()
-        self.__view.populate_tree_content()
+        self.__view.populate_tree_content(swapp_trace.serialize())

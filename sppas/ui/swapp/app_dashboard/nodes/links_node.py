@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.app_dashboard.links_node.py
+:filename: sppas.ui.swapp.app_dashboard.nodes.links_node.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The links section of the SPPAS Dashboard Application.
@@ -41,8 +41,8 @@
 from __future__ import annotations
 
 from sppas.ui import _
-from sppas.ui.swapp.panels import BaseLinksNode
-from sppas.ui.swapp.swappcore.swapputils import sppasImagesAccess
+from sppas.ui.swapp.panels import swappBaseLinksNode
+from sppas.ui.swapp.swapp_core.swapp_utils import swappImagesAccess
 
 # ---------------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ MSG_AWARD = _("Award")
 # ---------------------------------------------------------------------------
 
 
-class LinksNode(BaseLinksNode):
+class swappLinksNode(swappBaseLinksNode):
     """The section with external links of the dashboard application.
 
     """
@@ -69,9 +69,9 @@ class LinksNode(BaseLinksNode):
     ID = "links_section"
 
     def __init__(self, parent_id):
-        super(LinksNode, self).__init__(parent_id, LinksNode.ID)
+        super(swappLinksNode, self).__init__(parent_id, swappLinksNode.ID)
 
-        self.link_button("web", sppasImagesAccess.get_logo_filename("sppas-logo-v5"), MSG_HOME, link="https://sppas.org/")
+        self.link_button("web", swappImagesAccess.get_logo_filename("sppas-logo-v5"), MSG_HOME, link="https://sppas.org/")
         self.link_button("docu", "link_docweb", MSG_DOC, link="https://sppas.org/book.html")
         self.link_button("res", "link_resources", MSG_RSC, link="https://sppas.org/resources.html")
         self.link_button("tuto", "link_tutovideo", MSG_TUTOS, link="https://sppas.org/tutorials.html")
@@ -81,7 +81,7 @@ class LinksNode(BaseLinksNode):
 # ---------------------------------------------------------------------------
 
 
-class AboutsNode(BaseLinksNode):
+class swappAboutsNode(swappBaseLinksNode):
     """The section with the page links of the dashboard application.
 
     The buttons are appended dynamically: each page of the WEB_PAGES
@@ -92,4 +92,4 @@ class AboutsNode(BaseLinksNode):
     ID = "about_section"
 
     def __init__(self, parent_id):
-        super(AboutsNode, self).__init__(parent_id, AboutsNode.ID)
+        super(swappAboutsNode, self).__init__(parent_id, swappAboutsNode.ID)

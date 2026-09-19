@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.app_dashboard.dashboardmaker.py
+:filename: sppas.ui.swapp.app_dashboard.dashboard_maker.py
 :author: Brigitte Bigi
 :contributor: Florian Lopitaux
 :contact: contact@sppas.org
@@ -46,19 +46,19 @@ import logging
 from whakerpy.htmlmaker import HTMLTree
 from sppas.core.config import sg
 
-from ..swappbase.swappresponse import swappBaseResponse
-from ..swappcore.swappinfo import swappWebApplicationInfo
-from ..swappcore.swappsg import swapp_settings
-from ..swappcore.swappsg import swapp_wkps
-from ..swappcore.swappsg import swapp_wxstate
-from ..swappcore.swappsg import swapp_trace
-from ..swappcore.swappsg import request_wx_exit
+from ..swapp_base.swapp_response import swappBaseResponse
+from ..swapp_core.swapp_app_info import swappWebApplicationInfo
+from ..swapp_core.swappsg import swapp_settings
+from ..swapp_core.swappsg import swapp_wkps
+from ..swapp_core.swappsg import swapp_wxstate
+from ..swapp_core.swappsg import swapp_trace
+from ..swapp_core.swappsg import request_wx_exit
 from sppas.ui.agnostic import sppasCommKeys
-from ..nodes.feedback.hstatusnode import HTMLTreeError410
+from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
 
-from .dashboard_view import DashboardView
-from .dashboard_model import DashboardModel
-from .dashboard_controller import DashboardController
+from .dashboard_view import swappDashboardView
+from .dashboard_model import swappDashboardModel
+from .dashboard_controller import swappDashboardController
 
 # ---------------------------------------------------------------------------
 
@@ -68,7 +68,7 @@ MSG_TITLE = f"SPPAS {sg.__release__} Dashboard"
 # -----------------------------------------------------------------------
 
 
-class DashboardResponseRecipe(swappBaseResponse):
+class swappDashboardResponseRecipe(swappBaseResponse):
     """The sppas_dashboard.html HTTPD response bakery.
 
     Allows to launch a web application and the SPPAS wx app.
@@ -82,11 +82,11 @@ class DashboardResponseRecipe(swappBaseResponse):
         """Create the ResponseRecipe for the Dashboard application.
 
         """
-        self.__model = DashboardModel()
+        self.__model = swappDashboardModel()
         self.__view = None
         self.__controller = None
 
-        super(DashboardResponseRecipe, self).__init__(name, tree, title)
+        super(swappDashboardResponseRecipe, self).__init__(name, tree, title)
 
     # -----------------------------------------------------------------------
     # PUBLIC METHODS
@@ -157,8 +157,8 @@ class DashboardResponseRecipe(swappBaseResponse):
         """
         super().create()
         # self.enable_components(['Dialog'])
-        self.__view = DashboardView(self._htree)
-        self.__controller = DashboardController(self.__model, self.__view)
+        self.__view = swappDashboardView(self._htree)
+        self.__controller = swappDashboardController(self.__model, self.__view)
 
     # -----------------------------------------------------------------------
     # Callbacks
@@ -256,7 +256,7 @@ class DashboardResponseRecipe(swappBaseResponse):
         if self._status.code == 410:
             # The 410 is "Gone" response sent when the requested content has been
             # permanently deleted from server, with no forwarding address.
-            self._htree = HTMLTreeError410()
+            self._htree = swappHTMLTreeError410()
 
         elif self._status.code in (200, 205):
             # Fill-in the body_main node depending on the actual state of the model

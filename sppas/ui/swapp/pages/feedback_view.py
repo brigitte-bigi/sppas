@@ -48,8 +48,8 @@ from whakerpy.htmlmaker import TagNode
 from sppas.core.config import sg
 from sppas.core.coreutils import sppasLogFile
 from sppas.ui import _
-from sppas.ui.swapp.swappbase.swappview import swappBaseView
-from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_base.swapp_view import swappBaseView
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -86,7 +86,7 @@ BODY_SCRIPT = f"""
 # ---------------------------------------------------------------------------
 
 
-class FeedbackView(swappBaseView):
+class swappFeedbackView(swappBaseView):
     """View class responsible for populating the *feedback.html* page.
 
     This class represents the **View** component of the "Feedback" page.
@@ -108,7 +108,7 @@ class FeedbackView(swappBaseView):
 
         """
         if isinstance(tree, HTMLTree) is False:
-            raise TypeError("FeedbackView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
+            raise TypeError("swappFeedbackView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
         super().__init__(tree, MSG_HEADER)
 
     # -----------------------------------------------------------------------

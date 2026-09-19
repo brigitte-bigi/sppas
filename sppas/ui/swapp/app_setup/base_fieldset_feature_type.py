@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.app_setup.basefieldsetfeature.py
+:filename: sppas.ui.swapp.app_setup.base_fieldset_feature_type.py
 :author: Brigitte Bigi
 :contributor: Florian Lopitaux
 :contact: contact@sppas.org
@@ -48,9 +48,9 @@ from sppas.core.coreutils import msg
 from sppas.core.coreutils import info
 from sppas.core.preinstall import Installer
 
-from sppas.ui.swapp.nodes import sppasHTMLCheckboxNode
+from sppas.ui.swapp.nodes import swappHTMLCheckboxNode
 
-from .basefieldset import SetupBaseFieldset
+from .base_fieldset import swappSetupBaseFieldset
 
 # ---------------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ INFO_FEATURES = info(504, "install")
 # ---------------------------------------------------------------------------
 
 
-class SetupFeatureTypeFieldset(SetupBaseFieldset):
+class swappSetupFeatureTypeFieldset(swappSetupBaseFieldset):
     """List of features fieldset of the setup page.
 
     """
@@ -77,7 +77,7 @@ class SetupFeatureTypeFieldset(SetupBaseFieldset):
                  legend: str = LEGEND_FEATURES,
                  uri: str = ""
                  ):
-        super(SetupFeatureTypeFieldset, self).__init__(parent_id, fieldset_id, legend, uri)
+        super(swappSetupFeatureTypeFieldset, self).__init__(parent_id, fieldset_id, legend, uri)
 
         self._installer = installer
         self.__feature_type = feature_type
@@ -169,7 +169,7 @@ class SetupFeatureTypeFieldset(SetupBaseFieldset):
         td1 = HTMLNode(tr_node.identifier, None, "td",
                        attributes={"class": "checkable_col"})
         tr_node.append_child(td1)
-        checkable = sppasHTMLCheckboxNode(td1.identifier, "feature_" + fid, fid, self._uri)
+        checkable = swappHTMLCheckboxNode(td1.identifier, "feature_" + fid, fid, self._uri)
 
         # -------------------------------
         # This should not be here because the view should not decide anything!

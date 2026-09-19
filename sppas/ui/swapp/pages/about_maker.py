@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.pages.configurationmaker.py
+:filename: sppas.ui.swapp.pages.about_maker.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The web page "Configuration" of SPPAS.
+:summary: The web page "About" of SPPAS.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -43,47 +43,39 @@ from __future__ import annotations
 import logging
 
 from whakerpy.htmlmaker import HTMLTree
-
 from sppas.core.config import sg
-from sppas.core.config import cfg
-from sppas.core.config import lgs
 from sppas.ui import _
 
-from ..swappbase.swappresponse import swappBaseResponse
+from ..swapp_base.swapp_response import swappBaseResponse
 
-from .configuration_view import ConfigurationView
-
-# ---------------------------------------------------------------------------
-
-
-MSG_TITLE = f"SPPAS {sg.__release__} Configuration"
-MSG_CONFIGURATION = _("Configuration")
-# Les choix sont enregistrés.
-MSG_SAVED = _("The choices are saved.")
+from .about_view import swappAboutView
 
 # ---------------------------------------------------------------------------
 
 
-class ConfigurationResponseRecipe(swappBaseResponse):
-    """The configuration.html HTTPD response bakery.
+MSG_TITLE = f"SPPAS {sg.__release__} About"
+MSG_ABOUT = _("About")
 
-    Displays the choices SPPAS is remembering from one launch to the next
-    one, and writes them back into the configuration of the application.
-    The choices of the accessibility and the installed features are not
-    here: they are handled where they are seen.
+# ---------------------------------------------------------------------------
+
+
+class swappAboutResponseRecipe(swappBaseResponse):
+    """The about.html HTTPD response bakery.
+
+    Displays the information about SPPAS: version, update state, author,
+    and how to contribute.
 
     """
 
-    def __init__(self, name: str = "Configuration",
+    def __init__(self, name: str = "About",
                  tree: HTMLTree | None = None,
                  title: str = MSG_TITLE):
-        """Create the ResponseRecipe for the "Configuration" page.
+        """Create the ResponseRecipe for the "About" page.
 
         """
         self.__view = None
-        self.__status_message = ""
 
-        super(ConfigurationResponseRecipe, self).__init__(name, tree, title)
+        super(swappAboutResponseRecipe, self).__init__(name, tree, title)
 
     # -----------------------------------------------------------------------
     # OVERRIDE METHODS FROM Whakerpy -- Create the UI
@@ -92,21 +84,21 @@ class ConfigurationResponseRecipe(swappBaseResponse):
     @classmethod
     def page(cls) -> str:
         """Override. Return the HTML page name."""
-        return "configuration.html"
+        return "about.html"
 
     # -----------------------------------------------------------------------
 
     @classmethod
     def name(cls) -> str:
         """Return the short name of the page, displayed in link buttons."""
-        return MSG_CONFIGURATION
+        return MSG_ABOUT
 
     # -----------------------------------------------------------------------
 
     @classmethod
     def icon(cls) -> str:
         """Return the name of the image representing the page."""
-        return "link_configuration"
+        return "link_about"
 
     # -----------------------------------------------------------------------
 
@@ -118,7 +110,7 @@ class ConfigurationResponseRecipe(swappBaseResponse):
 
         """
         super().create()
-        self.__view = ConfigurationView(self._htree)
+        self.__view = swappAboutView(self._htree)
 
     # -----------------------------------------------------------------------
     # Callbacks
@@ -131,27 +123,11 @@ class ConfigurationResponseRecipe(swappBaseResponse):
         :return: (bool) True if the whole page must be re-created.
 
         """
-        logging.debug(f" >>>>> Page Configuration -- Process events: {events} <<<<<< ")
+        logging.debug(f" >>>>> Page About -- Process events: {events} <<<<<< ")
         self._data = dict()
         self._status.code = 200
-        self.__status_message = ""
 
-        if "event_bake" in events:
-            if events["event_bake"] == "handle_configuration_save":
-                # A checkbox is absent of the post when it is not checked.
-                cfg.set_interoperability("configuration_interoperability" in events)
-                if "configuration_log_level" in events:
-                    level = int(events["configuration_log_level"])
-                    cfg.set_log_level(level)
-                    # the choice is worth nothing if it waits the next launch
-                    lgs.set_log_level(level)
-                cfg.save()
-                self.__status_message = MSG_SAVED
-            events.pop("event_bake")
-
-        events.pop("configuration_interoperability", None)
-        events.pop("configuration_log_level", None)
-
+        # This page defines no event of its own.
         if len(events) > 0:
             logging.error(f"Unknown events={events}")
             self._status.code = 205  # Reset Content
@@ -166,4 +142,4 @@ class ConfigurationResponseRecipe(swappBaseResponse):
         """
         self.comment("Body content")
         self.__view.update_accessibility()
-        self.__view.populate_tree_content(self.__status_message)
+        self.__view.populate_tree_content()

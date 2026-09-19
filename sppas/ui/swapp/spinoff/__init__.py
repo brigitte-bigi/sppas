@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.spinoff.__init__.py
+:filename: sppas.ui.swapp.spinoff.__init__.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Dynamic loader for external "spin-off" annotations.

@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.app_setup.setupmaker.py
+:filename: sppas.ui.swapp.app_setup.setup_maker.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The web-based application "Setup" of SPPAS.
@@ -48,12 +48,12 @@ from sppas.core.config import lgs
 from sppas.core.coreutils import sppasLogFile
 from sppas.ui import _
 
-from ..swappbase.swappresponse import swappBaseResponse
-from ..nodes.feedback.hstatusnode import HTMLTreeError410
+from ..swapp_base.swapp_response import swappBaseResponse
+from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
 
-from .setup_model import SetupModel
-from .setup_view import SetupView
-from .setup_controller import SetupController
+from .setup_model import swappSetupModel
+from .setup_view import swappSetupView
+from .setup_controller import swappSetupController
 
 # -----------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ MSG_TITLE =  f"SPPAS {sg.__release__} Setup"
 # -----------------------------------------------------------------------
 
 
-class SetupResponseRecipe(swappBaseResponse):
+class swappSetupResponseRecipe(swappBaseResponse):
     """The setup.html HTTPD response bakery.
 
     This application setup allows to install several external programs
@@ -83,13 +83,13 @@ class SetupResponseRecipe(swappBaseResponse):
         - 205 Reset Content
         - 410 Gone
 
-    The SetupResponseRecipe acts as the web adapter for the Setup MVC components.
+    The swappSetupResponseRecipe acts as the web adapter for the Setup MVC components.
 
     It connects the internal application logic (controller, model, and view)
     with the HTTP serving layer. The controller manages the application state
     and event logic independently of any web framework, while the view defines
     how data and UI components are structured in the HTML tree. The
-    SetupResponseRecipe is responsible for translating user events into
+    swappSetupResponseRecipe is responsible for translating user events into
     controller actions, updating the view, and returning the appropriate HTTP
     response (status codes and data payloads). In this architecture, the
     controller never depends on WhakerPy or any other HTTP API, which allows
@@ -100,7 +100,7 @@ class SetupResponseRecipe(swappBaseResponse):
     def __init__(self, name: str = "Setup",
                  tree: HTMLTree | None = None,
                  title: str = MSG_TITLE):
-        """Create a SetupResponseRecipe.
+        """Create a swappSetupResponseRecipe.
 
         :param name: (str) The identifier name of the recipe to create.
         :param tree: (HTMLTree | None) An existing HTML tree to use.
@@ -112,12 +112,12 @@ class SetupResponseRecipe(swappBaseResponse):
         lgs.file_handler(log_report.get_filename(), with_stream=True)
 
         # Create the "base" page content
-        super(SetupResponseRecipe, self).__init__(name, tree, title)
+        super(swappSetupResponseRecipe, self).__init__(name, tree, title)
 
         # Create and initialize all members
-        self.__model = SetupModel()
-        self.__view = SetupView(self._htree)
-        self.__controller = SetupController(self.__model, self.__view, self.page())
+        self.__model = swappSetupModel()
+        self.__view = swappSetupView(self._htree)
+        self.__controller = swappSetupController(self.__model, self.__view, self.page())
 
     # -----------------------------------------------------------------------
     # OVERRIDE METHODS FROM Whakerpy -- Create une UI
@@ -341,7 +341,7 @@ class SetupResponseRecipe(swappBaseResponse):
         if self._status.code == 410:
             # The 410 is "Gone" response sent when the requested content has been
             # permanently deleted from server, with no forwarding address.
-            self._htree = HTMLTreeError410()
+            self._htree = swappHTMLTreeError410()
 
         elif self._status.code in (200, 205):
             self.__controller.update_tree_content(actions=True, install=False)

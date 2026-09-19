@@ -46,8 +46,8 @@ from whakerpy.htmlmaker import TagNode
 from sppas.core.config import sg
 from sppas.core.config import cfg
 from sppas.ui import _
-from sppas.ui.swapp.swappbase.swappview import swappBaseView
-from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_base.swapp_view import swappBaseView
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -94,7 +94,7 @@ MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Configuration")
 # ---------------------------------------------------------------------------
 
 
-class ConfigurationView(swappBaseView):
+class swappConfigurationView(swappBaseView):
     """View class responsible for populating the *configuration.html* page.
 
     This class represents the **View** component of the "Configuration"
@@ -119,7 +119,7 @@ class ConfigurationView(swappBaseView):
 
         """
         if isinstance(tree, HTMLTree) is False:
-            raise TypeError("ConfigurationView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
+            raise TypeError("swappConfigurationView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
         super().__init__(tree, MSG_HEADER)
 
     # -----------------------------------------------------------------------
@@ -132,10 +132,10 @@ class ConfigurationView(swappBaseView):
         :returns: (int) One of LOG_LEVELS
 
         """
-        for level in ConfigurationView.LOG_LEVELS:
+        for level in swappConfigurationView.LOG_LEVELS:
             if int(log_level) <= level:
                 return level
-        return ConfigurationView.LOG_LEVELS[-1]
+        return swappConfigurationView.LOG_LEVELS[-1]
 
     # -----------------------------------------------------------------------
     # Populate the tree
@@ -283,8 +283,8 @@ class ConfigurationView(swappBaseView):
         _group.set_attribute("aria-label", MSG_JOURNAL)
         _fieldset.append_child(_group)
 
-        current = ConfigurationView.level_of(cfg.log_level)
-        for level, message in zip(ConfigurationView.LOG_LEVELS,
+        current = swappConfigurationView.level_of(cfg.log_level)
+        for level, message in zip(swappConfigurationView.LOG_LEVELS,
                                   (MSG_LOG_DEBUG, MSG_LOG_INFO, MSG_LOG_WARNING)):
             ident = "configuration_log_" + str(level)
             _label = TagNode(_group.identifier, None, "label")

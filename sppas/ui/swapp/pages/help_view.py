@@ -45,14 +45,14 @@ import os
 from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
 
-from sppas.ui.swapp.swappbase.swappview import swappBaseView
-from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_base.swapp_view import swappBaseView
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
 
 # The Book is an extra: it is imported by the pages needing it, exactly as
-# the ThemeManager is -- see swappview.py.
+# the ThemeManager is -- see swapp_view.py.
 BODY_SCRIPT = (
     "const Book = (await import(window.WEXA_JS_PATH + '/extras/book.js')).Book;"
     "const book = new Book('main-content');"
@@ -62,7 +62,7 @@ BODY_SCRIPT = (
 # ---------------------------------------------------------------------------
 
 
-class HelpView(swappBaseView):
+class swappHelpView(swappBaseView):
     """View class responsible for populating the help page of any app.
 
     The document of an app is written by hand, as a fragment holding what
@@ -82,7 +82,7 @@ class HelpView(swappBaseView):
 
         """
         if isinstance(tree, HTMLTree) is False:
-            raise TypeError("HelpView: tree must be an instance of HTMLTree. "
+            raise TypeError("swappHelpView: tree must be an instance of HTMLTree. "
                             "Got {}".format(type(tree)))
         # Set before the base view populates the head with it.
         self.__css = css

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.app_test.testsmaker.py
+:filename: sppas.ui.swapp.app_test.tests_maker.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The page "Tests" of the SPPAS swapps.
@@ -53,14 +53,14 @@ from sppas.src.wkps.wio import sppasWJSON
 from sppas.ui.agnostic import sppasCommClient
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic.filechooser.filechooser_mixin import FileChooserMixin
-from sppas.ui.swapp.swappcore.swappsg import swapp_settings
-from sppas.ui.swapp.swappcore.swappsg import swapp_wkps
-from sppas.ui.swapp.swappcore.swappsg import notify_wkp_changed
-from sppas.ui.swapp.swappcore.swappsg import notify_show_page
-from sppas.ui.swapp.swappcore.swappsg import wx_is_running
-from sppas.ui.swapp.swappcore.swapputils import sppasImagesAccess
-from sppas.ui.swapp.nodes import sppasHTMLButton
-from sppas.ui.swapp.swappbase.swappresponse import swappBaseResponse
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_core.swappsg import swapp_wkps
+from sppas.ui.swapp.swapp_core.swappsg import notify_wkp_changed
+from sppas.ui.swapp.swapp_core.swappsg import notify_show_page
+from sppas.ui.swapp.swapp_core.swappsg import wx_is_running
+from sppas.ui.swapp.swapp_core.swapp_utils import swappImagesAccess
+from sppas.ui.swapp.nodes import swappHTMLButton
+from sppas.ui.swapp.swapp_base.swapp_response import swappBaseResponse
 
 # ---------------------------------------------------------------------------
 
@@ -184,7 +184,7 @@ OnLoadManager.addLoadFunction(() => {
 # ---------------------------------------------------------------------------
 
 
-class TestsResponseRecipe(swappBaseResponse):
+class swappTestsResponseRecipe(swappBaseResponse):
 
     def __init__(self, name="Test", tree=None, title= sg.__name__ + " Tests"):
         """Create a HTTPD Response instance with a default response.
@@ -193,7 +193,7 @@ class TestsResponseRecipe(swappBaseResponse):
 
         """
         # Inheritance with a given dynamic HTMLTree.
-        super(TestsResponseRecipe, self).__init__(name, tree, title)
+        super(swappTestsResponseRecipe, self).__init__(name, tree, title)
         self._bake()
 
     # -----------------------------------------------------------------------
@@ -231,11 +231,11 @@ class TestsResponseRecipe(swappBaseResponse):
                        value="Test of swapp")
         self._htree.body_header.append_child(_h1)
 
-        home_button = sppasHTMLButton(self._htree.body_header.identifier, identifier="home_button")
+        home_button = swappHTMLButton(self._htree.body_header.identifier, identifier="home_button")
         home_button.add_attribute("data-href", "/")
         home_button.add_attribute("data-target", "_self")
         home_button.add_attribute("class", "menuitem")
-        home_button.set_icon(sppasImagesAccess.get_logo_filename("sppas-logo-v5"))
+        home_button.set_icon(swappImagesAccess.get_logo_filename("sppas-logo-v5"))
         home_button.set_text(None, "Home")
         self._htree.body_header.append_child(home_button)
 
@@ -259,7 +259,7 @@ class TestsResponseRecipe(swappBaseResponse):
 
         for event_name in events.keys():
             if event_name == "update_text_color":
-                random_color = TestsResponseRecipe.__generate_random_color()
+                random_color = swappTestsResponseRecipe.__generate_random_color()
                 self._data = {"random_color": random_color, "time": round(time.time() * 1000)}
 
             elif event_name == "update_btn_text_event":
@@ -313,7 +313,7 @@ class TestsResponseRecipe(swappBaseResponse):
     def _bake(self):
         """Create the dynamic page content in HTML."""
         self.comment("Body content")
-        text = TestsResponseRecipe.__generate_random_text()
+        text = swappTestsResponseRecipe.__generate_random_text()
         logging.debug(" -> new dynamic content: {:s}".format(text))
 
         # Add element into the main

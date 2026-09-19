@@ -187,7 +187,7 @@ class SPPASAppLauncher:
             from sppas.core.coreutils import sppasPackageFeatureError
             from sppas.core.coreutils import sppasPackageUpdateFeatureError
             from sppas.ui.swapp import sppasWebApp
-            from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+            from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
             # Path to the main JSON configuration for WhakerPy.
             json_filename = os.path.join(swapp_settings.get_relative_path(), "swapp.json")
             if os.path.exists(json_filename) is False:

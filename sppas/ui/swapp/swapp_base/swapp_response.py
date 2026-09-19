@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.swappbase.swappresponse.py
+:filename: sppas.ui.swapp.swapp_base.swapp_response.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: SPPAS Web-Based application ResponseRecipe.
@@ -45,14 +45,14 @@ import os
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.httpd import BaseResponseRecipe
 
-from ..swappcore.swappsg import swapp_settings
-from ..swappcore.swappsg import swapp_wxstate
-from .swapphead import swappHeadNode
-from .swapphead import THEME_NAMES
-from .swapphead import COLOR_NAMES
-from .swapphead import CONTRAST_NAMES
-from ..nodes.feedback.hstatusnode import HTMLTreeError410
-from ..nodes.feedback.exit_dialog import ExitWaitDialog
+from ..swapp_core.swappsg import swapp_settings
+from ..swapp_core.swappsg import swapp_wxstate
+from .swapp_head import swappHeadNode
+from .swapp_head import THEME_NAMES
+from .swapp_head import COLOR_NAMES
+from .swapp_head import CONTRAST_NAMES
+from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
+from ..nodes.feedback.exit_dialog import swappExitWaitDialog
 
 # ---------------------------------------------------------------------------
 
@@ -188,13 +188,13 @@ class swappBaseResponse(BaseResponseRecipe):
         if swapp_wxstate.exit_granted is True:
             if swappBaseResponse.asks_for_a_page(headers) is True:
                 self._status.code = 410
-                return HTMLTreeError410().serialize()
+                return swappHTMLTreeError410().serialize()
 
         # The page is served blocked when an exit is waiting: it is written
         # open, and the boot of the page shows it before anything can be
         # clicked. The footer holding it is built once, so it is the answer
         # which says what it looks like, request after request.
-        dialog = self._htree.body_footer.get_child(ExitWaitDialog.ID)
+        dialog = self._htree.body_footer.get_child(swappExitWaitDialog.ID)
         if dialog is not None:
             if swapp_wxstate.exit_pending is True:
                 dialog.set_attribute("class", "info")

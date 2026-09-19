@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.app_wkps.page_files.filesmaker.py
+:filename: sppas.ui.swapp.app_wkps.page_files.files_maker.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The page "Files" of the SPPAS Web UI.
@@ -45,18 +45,18 @@ from whakerpy.htmlmaker import HTMLComment
 from whakerpy.htmlmaker import HTMLNode
 
 from sppas.ui import _
-from sppas.ui.swapp.swappcore.swappsg import swapp_settings
-from sppas.ui.swapp.swappbase.swappresponse import BaseResponseRecipe
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_base.swapp_response import BaseResponseRecipe
 
-from .col_wkps import WkpsNode
-from .col_files import FilesNode
-from .col_links import AssociateNode
-from .col_refs import ReferencesNode
+from .col_wkps import swappWkpsNode
+from .col_files import swappFilesNode
+from .col_links import swappAssociateNode
+from .col_refs import swappReferencesNode
 
 # ---------------------------------------------------------------------------
 
 
-class FilesResponseRecipe(BaseResponseRecipe):
+class swappFilesResponseRecipe(BaseResponseRecipe):
     """The Recipe to create the Files page of SPPAS Main Web UI.
 
     The page is made of 4 different panels, each one in a column:
@@ -90,7 +90,7 @@ class FilesResponseRecipe(BaseResponseRecipe):
     # -----------------------------------------------------------------------
 
     def __init__(self, name="Files", tree=None, title="Files"):
-        super(FilesResponseRecipe, self).__init__(name, tree)
+        super(swappFilesResponseRecipe, self).__init__(name, tree)
 
     # -----------------------------------------------------------------------
 
@@ -157,19 +157,19 @@ class FilesResponseRecipe(BaseResponseRecipe):
 
         c = HTMLComment(d.identifier, "COLUMN 1: Workspaces")
         d.append_child(c)
-        d.append_child(WkpsNode(d))
+        d.append_child(swappWkpsNode(d))
 
         c = HTMLComment(d.identifier, "COLUMN 2: Files")
         d.append_child(c)
-        d.append_child(FilesNode(d))
+        d.append_child(swappFilesNode(d))
 
         c = HTMLComment(d.identifier, "COLUMN 3: Associate")
         d.append_child(c)
-        d.append_child(AssociateNode(d))
+        d.append_child(swappAssociateNode(d))
 
         c = HTMLComment(d.identifier, "COLUMN 4: References")
         d.append_child(c)
-        d.append_child(ReferencesNode(d))
+        d.append_child(swappReferencesNode(d))
 
     # -----------------------------------------------------------------------
     # Useful method to get direct access to the columns' nodes

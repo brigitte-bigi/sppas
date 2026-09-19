@@ -44,8 +44,8 @@ from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLFooterNode
 
 from sppas.core.config import sg
-from sppas.ui.swapp.swappcore.swappsg import swapp_settings
-from sppas.ui.swapp.swappcore.swapputils import sppasImagesAccess
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_core.swapp_utils import swappImagesAccess
 
 # ---------------------------------------------------------------------------
 
