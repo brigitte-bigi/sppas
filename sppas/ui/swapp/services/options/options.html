@@ -1279,6 +1279,502 @@
 </section>
 
 
+<!-- ====================== UML ==================================== -->
+
+
+<section class="chapter">
+<h1>UML</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 6.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The classes</h2>
+
+		<p>
+			Those which carry the data come from the tables, those which work come from
+			the modules, and two more are what an app holds and what travels between two
+			requests. A name says what the class handles.
+		</p>
+
+		<h3>What carries the data</h3>
+
+		<table>
+			<thead><tr><th>Class</th><th>From</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td><code>OptionSet</code></td><td>OPTION SET, OPTION</td><td>The options an app handed over and, for each of them, the value it arrived with. The two tables are one class: an option of a set has no existence outside that set</td></tr>
+				<tr><td><code>OptionRefusal</code></td><td>REFUSAL</td><td>One option which was given a value it cannot hold, and the value which was expected</td></tr>
+				<tr><td><code>OptionsRecord</code></td><td>&mdash;</td><td>What one request holds: the task it carries, the set, and what is to be shown. It serialises itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
+				<tr><td>none</td><td>&mdash;</td><td><code>sppasOption</code> is an object of SPPAS. It is held by the set, read, and its value changed; no class is written for it here</td></tr>
+			</tbody>
+		</table>
+
+		<h3>What does the work</h3>
+
+		<table>
+			<thead><tr><th>Class</th><th>Module</th><th>What it is alone in knowing</th></tr></thead>
+			<tbody>
+				<tr><td><code>ValueAcceptance</code></td><td>acceptance</td><td>Whether a value suits the kind of an option and its bounds, and what was expected when it does not. Reads nothing, writes nothing, knows no set</td></tr>
+				<tr><td><code>OptionSet</code></td><td>set</td><td>What the page transmits, how a set is rebuilt from it, and the value every option arrived with. The only class which touches an <code>sppasOption</code></td></tr>
+				<tr><td><code>FileForOption</code></td><td>set</td><td>How the provision of files is asked for a file, and for which option. The only tie of this domain to a neighbour</td></tr>
+			</tbody>
+		</table>
+
+		<h3>What shows, and what dispatches</h3>
+
+		<table>
+			<thead><tr><th>Class</th><th>What it does</th></tr></thead>
+			<tbody>
+				<tr><td><code>OptionsView</code></td><td>Builds the container: one line per option, carrying its label, its value, what it takes to change that value, the bounds when there are any, and the refusal when there is one</td></tr>
+				<tr><td><code>OptionsController</code></td><td>Reads the task an app dispatched, rebuilds a record from what the page transmitted, calls the model, and has the view build its tree from that record</td></tr>
+				<tr><td><code>OptionsManager</code></td><td>Builds the view and the controller, gives an app the container to place in its page, says whether an event was this domain's, and gives the set back. It is the only object of this domain an app holds</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			A view builds a tree and does nothing else: it decides nothing, refuses
+			nothing, and reaches neither a disk nor a neighbour. What it shows was decided
+			before it was called, and the texts it shows are the ones the options carry.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 6.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The class diagram</h2>
+
+		<p>
+			<code>/</code> marks what is derived and held by nobody. What the operations
+			promise is the chapter on the contracts; what they are called is a proposal,
+			and one pass renames them all.
+		</p>
+
+		<table>
+			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
+			<tbody>
+				<tr><td><code>OptionSet</code></td><td>options, values on arrival, /changed</td><td>rebuild(data), value_on_arrival_of(key), set_value(key, value), put_back(key), put_all_back(), refusals(), for_app()</td></tr>
+				<tr><td><code>OptionRefusal</code></td><td>option, expected</td><td>&mdash;</td></tr>
+				<tr><td><code>OptionsRecord</code></td><td>task, set, to_be_shown</td><td>serialize(), parse(data)</td></tr>
+				<tr><td><code>ValueAcceptance</code></td><td>&mdash;</td><td>accepts(option, value), what_is_expected(option)</td></tr>
+				<tr><td><code>FileForOption</code></td><td>&mdash;</td><td>ask_for(option), take_in(option, file)</td></tr>
+				<tr><td><code>OptionsView</code></td><td>&mdash;</td><td>populate_tree_content(record)</td></tr>
+				<tr><td><code>OptionsController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
+				<tr><td><code>OptionsManager</code></td><td>&mdash;</td><td>container(), consumes(events), options_for_app()</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<code>OptionSet.set_value()</code> sets and does not judge: whether a value may
+			be set is <code>ValueAcceptance</code>'s answer, and the controller asks it
+			first. A class which decided what it may hold would hold the rules as well as
+			the data, and the rules would then be in two places.
+		</p>
+
+		<p>
+			<code>OptionSet.for_app()</code> gives back the options, every one of them
+			holding the value it holds. It gives back no refusal and no value on arrival:
+			a value which was refused was never set, and what an option arrived with is
+			this domain's own business.
+		</p>
+
+		<h3>What is tied to what</h3>
+
+		<table>
+			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td>holds</td><td><code>OptionsManager</code> 1 &mdash; 1 <code>OptionsView</code>, 1 <code>OptionsController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
+				<tr><td>holds</td><td><code>OptionsController</code> 1 &mdash; 1 <code>OptionsRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
+				<tr><td>holds</td><td><code>OptionsRecord</code> 1 &mdash; 1 <code>OptionSet</code></td><td>A composition: the set lives inside what one request carries</td></tr>
+				<tr><td>holds</td><td><code>OptionSet</code> 1 &mdash; 0..n <code>OptionRefusal</code></td><td>A composition: a refusal exists only inside the set whose option it is about</td></tr>
+				<tr><td>uses</td><td><code>OptionSet</code> &rarr; <code>sppasOption</code></td><td>A dependency, and the only tie of this domain to the objects of SPPAS</td></tr>
+				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>ValueAcceptance</code></td><td>A dependency: it asks before it sets</td></tr>
+				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>FileForOption</code></td><td>A dependency: it asks for a file and takes back what comes</td></tr>
+				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>OptionsView</code></td><td>A dependency: it hands over what to build from</td></tr>
+				<tr><td>uses</td><td><code>OptionsView</code> &rarr; <code>OptionsRecord</code></td><td>A dependency: it is given it and builds from it</td></tr>
+				<tr><td>none</td><td><code>ValueAcceptance</code></td><td>Tied to nothing at all: it answers on a kind, bounds and a value handed to it</td></tr>
+			</tbody>
+		</table>
+
+		<h3>In yUML</h3>
+
+		<p>
+			To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
+			class diagram.
+		</p>
+
+		<pre class="dark"><code>[OptionsManager|container();consumes();options_for_app()]++1-1&gt;[OptionsController|record|handle();populate_view()]
+[OptionsManager]++1-1&gt;[OptionsView|populate_tree_content()]
+[OptionsController]++1-1&gt;[OptionsRecord|task;set;to_be_shown|serialize();parse()]
+[OptionsRecord]++1-1&gt;[OptionSet|options;values on arrival;/changed|rebuild();value_on_arrival_of();set_value();put_back();put_all_back();refusals();for_app()]
+[OptionSet]++1-0..*&gt;[OptionRefusal|option;expected]
+
+[OptionsController]-.-&gt;[ValueAcceptance|accepts();what_is_expected()]
+[OptionsController]-.-&gt;[FileForOption|ask_for();take_in()]
+[OptionsController]-.-&gt;[OptionsView]
+[OptionsView]-.-&gt;[OptionsRecord]
+[OptionSet]-.-&gt;[sppasOption]</code></pre>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 6.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The states</h2>
+
+		<p>
+			One thing has states here, and it is what the person reads on a line.
+		</p>
+
+		<table>
+			<thead><tr><th>State</th><th>When</th><th>What is shown</th></tr></thead>
+			<tbody>
+				<tr><td>as it arrived</td><td>No value was taken in for that option since the set arrived</td><td>The value, and no way back offered</td></tr>
+				<tr><td>changed</td><td>A value was taken in, and it differs from the value on arrival</td><td>The value, and the way back to what it arrived with</td></tr>
+				<tr><td>refused</td><td>A value was given for that option and could not be taken in</td><td>The value the option still holds, and what was expected</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			An option is in one of the three and never in two. <i>Refused</i> is not a
+			state of the value which was refused &mdash; that value is nowhere &mdash; it
+			is a state of the option, and it goes when a value is taken in for it or when
+			the option is put back.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 6.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The sequence, from the set to the set</h2>
+
+		<ol>
+			<li>An app hands its options over and asks for a container to place in its page.</li>
+			<li>The value every option arrived with is written down, and the container is built: one line per option.</li>
+			<li>The person asks what one of them is for, and the description is shown.</li>
+			<li>She gives values, and validates. Every value is verified against the kind and the bounds of its option; those which suit are taken in, and the others come back as refusals beside their options.</li>
+			<li>She corrects what was refused and validates again, as often as she wants.</li>
+			<li>She asks for a file for an option which takes one. The provision of files answers, and what comes back becomes the value of that option.</li>
+			<li>She puts one option back, or all of them, and what they arrived with stands again.</li>
+			<li>The app asks for its options back, and receives them with the values they hold.</li>
+		</ol>
+
+		<p>
+			Steps 3 to 7 happen in any order, any number of times, and none of them has to
+			happen at all. What is not in the list is an order imposed by this domain:
+			there is none.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 6.5 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The error policy</h2>
+
+		<table>
+			<thead><tr><th>Level</th><th>What happens</th><th>What is done</th></tr></thead>
+			<tbody>
+				<tr><td>1</td><td>A value does not suit the kind of its option or its bounds</td><td>That value is not taken in, the others are, and what was expected is said beside that option. Nothing is raised: it is an answer</td></tr>
+				<tr><td>2</td><td>What the page transmits is not a set this domain gave: an option which is not in it, a key which names none</td><td>What cannot be matched is dropped, the rest is taken in, and nothing of the machine is said to anybody</td></tr>
+				<tr><td>3</td><td>The provision of files answers nothing, or answers a failure</td><td>The option keeps the value it held, and the person is told that no file was obtained</td></tr>
+				<tr><td>4</td><td>Whoever runs the machine has to know: an app which hands over something which is not a set of options</td><td>Said where he reads it, and the app is answered that its options could not be taken in</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			What is raised is caught by whatever answers a request, and by nothing below
+			it. A person is never shown what a machine says to itself.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== CONTRACTS ============================== -->
+
+
+<section class="chapter">
+<h1>The contracts</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 7.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>How to read them</h2>
+
+		<p>
+			<i>pre</i> is what has to be true on the way in, and what the operation does
+			not check; <i>post</i> is what the caller can count on without looking.
+		</p>
+
+		<h3>What holds everywhere</h3>
+
+		<ul>
+			<li>Nothing is held between two requests. Every operation is given what it works on, and keeps none of it. RO1</li>
+			<li>What is absent gives back an empty thing &mdash; no refusal, an empty set, an empty description &mdash; and never nothing at all.</li>
+			<li>Only <code>OptionSet</code> touches an <code>sppasOption</code>. No other class of this domain knows that such an object exists.</li>
+			<li>Only <code>FileForOption</code> speaks to the provision of files.</li>
+			<li>Nothing here reads what a value means, and nothing opens a file.</li>
+			<li>What is raised is caught by whatever answers a request, and no class below it writes a catch.</li>
+		</ul>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 7.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Class by class</h2>
+
+		<table>
+			<caption>OptionSet</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Rebuild a set</td><td>pre: what a page transmitted, or the options an app handed over. post: one option per option of the set, each holding the value it holds and the value it arrived with. A set rebuilt twice from one transport is the same set</td></tr>
+				<tr><td>Give the value an option arrived with</td><td>pre: the key names an option of the set. post: the value written when the set arrived, which nothing since has changed</td></tr>
+				<tr><td>Set a value</td><td>pre: the key names an option of the set, and the value was accepted. post: the option holds that value; the value on arrival is untouched; the refusal that option carried, if any, is gone</td></tr>
+				<tr><td>Put an option back</td><td>pre: the key names an option of the set. post: the option holds the value it arrived with, and carries no refusal</td></tr>
+				<tr><td>Put every option back</td><td>pre: none. post: every option holds the value it arrived with, and the set carries no refusal</td></tr>
+				<tr><td>Give the refusals</td><td>pre: none. post: one refusal per option which was given a value it could not hold, at the last validation; empty when there is none</td></tr>
+				<tr><td>Give the set for an app</td><td>pre: none. post: the options, every one holding the value it holds. No refusal, and no value on arrival</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			It sets and it does not judge: what may be set was answered before. It is also
+			the only class which knows that an option is an <code>sppasOption</code>, so it
+			is the only one to be read again the day that object changes.
+		</p>
+
+		<table>
+			<caption>ValueAcceptance</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Accept a value</td><td>pre: an option and a value. post: accepted when the value suits the kind of that option and stands within its bounds; refused otherwise. It judges nothing else: not what the value means, not what it is worth beside another</td></tr>
+				<tr><td>Say what is expected</td><td>pre: an option. post: what a value for that option has to be, said from its kind and its bounds, and said whether or not anything was refused</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			It reads no disk, holds no set and knows no page. Every rule of what is
+			accepted is therefore verified with nothing installed, which makes it the
+			first class to be tested and the last to surprise.
+		</p>
+
+		<table>
+			<caption>FileForOption</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Ask for a file</td><td>pre: an option whose kind takes a file. post: the request is made to the provision of files, carrying which option the file is for. Nothing is opened on any machine</td></tr>
+				<tr><td>Take in the file which came back</td><td>pre: a file, and the option it was asked for. post: that file stands as the value of that option. The file is not opened, and what it holds is not read</td></tr>
+			</tbody>
+		</table>
+
+		<table>
+			<caption>OptionsRecord</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Serialise</td><td>pre: none. post: everything a next request needs in order to rebuild this set, and nothing of the machine</td></tr>
+				<tr><td>Parse</td><td>pre: what a page transmitted. post: the set as it was, or an empty set when nothing was transmitted. Parsed twice, it gives the same set</td></tr>
+			</tbody>
+		</table>
+
+		<table>
+			<caption>OptionsController</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Handle a request</td><td>pre: called once for that request, and never twice. post: the record is rebuilt from what was transmitted, the task is read, and one treatment ran. Every value of a validation was judged, and every value which was accepted was set. Nothing is held after the request</td></tr>
+				<tr><td>Populate the view</td><td>pre: the request was handled. post: the view has the record; nothing is decided here</td></tr>
+			</tbody>
+		</table>
+
+		<table>
+			<caption>OptionsView</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Populate the tree</td><td>pre: a record. post: one line per option of the set, holding the label of that option, the value it holds, what it takes to change that value, its bounds where it has any, and its refusal where it has one. Nothing which the record does not say, and no text this class wrote</td></tr>
+			</tbody>
+		</table>
+
+		<table>
+			<caption>OptionsManager</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Give the container</td><td>pre: an app handed over a set of options. post: a piece of page holding every option of that set and no other, ready to be placed by the app in its own page</td></tr>
+				<tr><td>Consume an event</td><td>pre: an event an app did not recognise. post: true and the event is treated, when the event is this domain's; false and nothing is touched, when it is not</td></tr>
+				<tr><td>Give the options for the app</td><td>pre: none. post: the options the app handed over, every one holding the value it holds</td></tr>
+			</tbody>
+		</table>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 7.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Where each requirement is held</h2>
+
+		<table>
+			<thead><tr><th>No.</th><th>Held by</th></tr></thead>
+			<tbody>
+				<tr><td>[012]</td><td><code>OptionsManager</code>, which builds the container from the set it was handed and from nothing else</td></tr>
+				<tr><td>[021], [022]</td><td><code>OptionsView</code>, which shows the label always and the description on the task which asks for it</td></tr>
+				<tr><td>[023]</td><td><code>OptionsView</code>, which writes no text of its own</td></tr>
+				<tr><td>[031], [032]</td><td><code>OptionsView</code>, one line per option</td></tr>
+				<tr><td>[101]</td><td><code>OptionSet</code>, which changes the value of an option and nothing else of it</td></tr>
+				<tr><td>[102], [103]</td><td><code>OptionsView</code>, which is given the kind and the bounds by the record</td></tr>
+				<tr><td>[104]</td><td><code>OptionSet.set_value()</code></td></tr>
+				<tr><td>[201]</td><td><code>ValueAcceptance</code>, which refuses on the kind and the bounds and on nothing else</td></tr>
+				<tr><td>[202]</td><td><code>OptionsController</code>, which judges every value of a validation, and <code>OptionsView</code>, which shows each refusal beside its option</td></tr>
+				<tr><td>[301], [302]</td><td><code>OptionSet.put_back()</code> and <code>put_all_back()</code></td></tr>
+				<tr><td>[401]</td><td><code>FileForOption</code>, which asks the provision of files</td></tr>
+				<tr><td>[501]</td><td><b>Nobody here.</b> An app hands over its options carrying the values it wants shown, and whether those come from a former setting is that app's decision</td></tr>
+				<tr><td>[601]</td><td><code>OptionSet.for_app()</code>, which gives back every option with the value it holds</td></tr>
+				<tr><td>[701]</td><td><code>OptionsView</code>, which is where the form of the container is decided</td></tr>
+				<tr><td>[1001]</td><td><code>OptionsView</code>, and nothing else of this domain</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>[501] is the only requirement of this dossier held nowhere in it</b>, and it
+			is written down so that nobody looks for it here. [401] is held by one class
+			which asks a neighbour, which is another thing.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== TESTS ================================== -->
+
+
+<section class="chapter">
+<h1>What is tested, and where</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 8.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Without anything installed</h2>
+
+		<p>
+			No disk, no server, no browser, no neighbour. Sixteen tests out of twenty-one
+			run here, which is what the cutting into three modules was for.
+		</p>
+
+		<table>
+			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+			<tbody>
+				<tr><td>TE1</td><td>A value which suits the kind of its option is accepted; one which does not is refused</td><td>[201]</td></tr>
+				<tr><td>TE2</td><td>A value inside the bounds of an option is accepted; the bound itself passes, and one step beyond is refused</td><td>[201]</td></tr>
+				<tr><td>TE3</td><td>An option without bounds accepts every value of its kind</td><td>[201]</td></tr>
+				<tr><td>TE4</td><td>What is expected is said for an option, whether or not anything was refused</td><td>[202]</td></tr>
+				<tr><td>TE5</td><td>Nothing is refused on what a value means: two values which contradict each other are both accepted</td><td>[201], and what this domain does not judge</td></tr>
+				<tr><td>TE6</td><td>A set rebuilt from what a page transmitted holds the same options, the same values and the same values on arrival</td><td>RO1</td></tr>
+				<tr><td>TE7</td><td>A record serialised and parsed twice gives the same set</td><td>RO1</td></tr>
+				<tr><td>TE8</td><td>An empty transport gives an empty set, and nothing is raised</td><td>RO1</td></tr>
+				<tr><td>TE9</td><td>Setting a value changes the value of the option and leaves the value on arrival untouched</td><td>[104]</td></tr>
+				<tr><td>TE10</td><td>Setting a value changes nothing else of the option: not its kind, not its label, not its description</td><td>[101]</td></tr>
+				<tr><td>TE11</td><td>Putting one option back gives it the value it arrived with, and leaves the other options as they were</td><td>[301]</td></tr>
+				<tr><td>TE12</td><td>Putting every option back gives every option the value it arrived with</td><td>[302]</td></tr>
+				<tr><td>TE13</td><td>Putting an option back drops the refusal that option carried</td><td>T04</td></tr>
+				<tr><td>TE14</td><td>A validation where one value out of twenty is refused takes in the nineteen others, and gives one refusal</td><td>T03</td></tr>
+				<tr><td>TE15</td><td>An option whose value was refused holds the value it held before</td><td>T03</td></tr>
+				<tr><td>TE16</td><td>What is given back for an app holds every option with the value it holds, and holds no refusal and no value on arrival</td><td>[601]</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>TE14 and TE15 are the two which say what a validation is.</b> A set is not
+			accepted or refused as a whole, and a refusal erases nothing: written the other
+			way round, this domain would lose nineteen good values to punish one bad one.
+		</p>
+
+		<p>
+			<b>TE5 is written to fail if somebody helps.</b> Two values which make no sense
+			together are both accepted here, because what they mean belongs to the app. The
+			day this test has to be changed, this domain has started to judge.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 8.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>With a view, and with a neighbour</h2>
+
+		<table>
+			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+			<tbody>
+				<tr><td>TE17</td><td>The tree built for a set holds one line per option, carrying the label and the value of that option</td><td>[021], [031]</td></tr>
+				<tr><td>TE18</td><td>The tree holds the description of an option when the record says it was asked for, and holds it otherwise nowhere</td><td>[022]</td></tr>
+				<tr><td>TE19</td><td>The tree holds no text which the options did not carry</td><td>[023]</td></tr>
+				<tr><td>TE20</td><td>The tree holds the refusal of an option beside that option, and none beside the others</td><td>[202]</td></tr>
+				<tr><td>TE21</td><td>The request for a file names the option it is for, and what comes back becomes the value of that option and of no other</td><td>[401]</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			TE21 is the only test which needs the provision of files. What it checks on
+			this side is the tie: which option a file was asked for, and which option gets
+			it. What the neighbour does with the request is tested in the dossier of that
+			neighbour.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 8.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What no test covers, and where they stand</h2>
+
+		<ul>
+			<li><b>[501]</b> &mdash; finding the values of a former setting. It is held nowhere in this domain, so there is nothing here to test.</li>
+			<li><b>What an option means</b>, and whether two values make sense together: the app's, and judged nowhere here.</li>
+			<li><b>What a page transmits when it has been tampered with.</b> The value on arrival which comes back is taken for what it is, and the physical level says why.</li>
+			<li><b>The WCAG rules</b>, which are verified on the page an app builds, and not on a piece of it.</li>
+		</ul>
+
+		<p>
+			The tests stand beside the code, in the folder of this service. Sixteen of the
+			twenty-one need nothing at all.
+		</p>
+
+	</section>
+
+</section>
+
+
 <!-- ====================== ANNEXES ================================ -->
 
 
@@ -1289,6 +1785,50 @@
 <!-- =============================================================== -->
 
 	<section>
+	<h2>Annex: Extension of the option</h2>
+
+		<p>
+			One extension is required by this document, and it is required by [103] and by
+			the whole of what refusing a value means.
+		</p>
+
+		<h3>E1 &mdash; The bounds of an option</h3>
+
+		<p>
+			<b>What it is.</b> A low bound and a high bound, carried by an option whose
+			kind is a number, and written where that option is declared. An option which
+			declares none accepts every value of its kind.
+		</p>
+
+		<p>
+			<b>Why it is needed.</b> <code>sppasOption</code> carries a kind and a value,
+			and nothing which says what values that option accepts. The interface which
+			exists today fills the gap where it stands: the panel of the wx interface
+			offers every whole number between 0 and 2000, and every decimal between the
+			same two at a step of one hundredth &mdash; a threshold in seconds and a
+			number of channels are offered the same range, and neither is right. Bounds
+			written in an interface are bounds which every other interface will have to
+			write again, differently.
+		</p>
+
+		<p>
+			<b>What it costs.</b> Two values on an option, given when it is declared and
+			read when a value is judged. Nothing of what exists changes: an option which
+			declares no bound behaves as every option behaves today.
+		</p>
+
+		<p>
+			<b>What it is not.</b> It says what a value may be, never what it means. An
+			option which accepts every number between one and ten says nothing of what
+			three does, and nothing of what three is worth beside the value of another
+			option.
+		</p>
+
+	</section>
+
+	<!-- ------------------------------------------------------- -->
+
+	<section>
 	<h2>Annex: Legal notices</h2>
 
 	<ul>
@@ -1296,7 +1836,7 @@
 		<li>Document License: GNU Free Documentation License (GFDL) 1.3</li>
 		<li>Copyright (C) 2026 Brigitte Bigi, CNRS</li>
 		<li>Creation Date: 2026-09-17</li>
-		<li>Last update: 2026-09-17</li>
+		<li>Last update: 2026-09-18</li>
 	</ul>
 
 	</section>
