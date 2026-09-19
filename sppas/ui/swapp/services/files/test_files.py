@@ -53,14 +53,14 @@ from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States
 
 from ..deposit.deposit_settings import DepositSettings
-from ..deposit.depositspace import DepositSpace
+from ..deposit.deposit_space import DepositSpace
 
-from .acceptance import DepositAcceptance
-from .feeding import Deposit
-from .place import FilePlace
-from .workspace import WorkspaceFiles
-from .handing import AppExchange
-from .delivery import ResultDelivery
+from .files_acceptance import DepositAcceptance
+from .files_feeding import Deposit
+from .files_place import FilePlace
+from .files_workspace import WorkspaceFiles
+from .files_handing import AppExchange
+from .files_delivery import ResultDelivery
 from .files_record import FilesRecord
 from .files_view import DepositView
 from .files_view import DeliveryView

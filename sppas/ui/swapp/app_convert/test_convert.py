@@ -62,10 +62,10 @@ from sppas.src.anndata import sppasTrsRW
 from sppas.src.anndata.aio.readwrite import FileFormatProperty
 
 from .convert_model import ConvertModel
-from .formats import ModelFormats
-from .remediation import ModelRemediation
-from .conversion import ModelConversion
-from .provision import ModelProvision
+from .convert_formats import ModelFormats
+from .convert_remediation import ModelRemediation
+from .convert_conversion import ModelConversion
+from .convert_provision import ModelProvision
 
 # ---------------------------------------------------------------------------
 

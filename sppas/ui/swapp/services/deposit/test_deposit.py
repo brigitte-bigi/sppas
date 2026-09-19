@@ -51,11 +51,11 @@ import threading
 import time
 
 from .deposit_settings import DepositSettings
-from .acceptance import SpaceAcceptance
-from .place import Place
-from .place import SpaceFolder
-from .address import FileAddress
-from .depositspace import DepositSpace
+from .deposit_acceptance import SpaceAcceptance
+from .deposit_place import Place
+from .deposit_place import SpaceFolder
+from .deposit_address import FileAddress
+from .deposit_space import DepositSpace
 
 # ---------------------------------------------------------------------------
 
