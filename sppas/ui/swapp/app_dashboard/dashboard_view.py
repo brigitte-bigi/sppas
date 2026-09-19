@@ -66,6 +66,8 @@ MSG_APP_NOT_ADDED = _("The application {app} is not added to the Dashboard.")
 MSG_DESCR_WX = _("Launches the graphical interface for speech annotation and analysis.")
 MSG_DESKTOP = _("Desktop")
 MSG_WKP = _("Workspace: ")
+# Shown instead of a name: not translated, and not a name a wkp could have.
+MSG_NO_WKP = "---"
 
 # ---------------------------------------------------------------------------
 
@@ -242,15 +244,20 @@ class swappDashboardView(swappBaseView):
         # The current workspace: a label, the name, and the path on hover.
         # It only concerns the applications, so it belongs to their section.
         # It will become the button opening the "Files" app.
+        _wkp = TagNode(self._htree.body_main.identifier, None, "p")
+        self._htree.body_main.append_child(_wkp)
+        _s = HTMLNode(_wkp.identifier, None, "b", value=MSG_WKP)
+        _wkp.append_child(_s)
+        # No name: no workspace exists, because no wx interface is connected.
+        # The identifier is the one the periodic poll of the JS is looking for.
+        _w_name = MSG_NO_WKP
         if len(wkp_name) > 0:
-            _wkp = TagNode(self._htree.body_main.identifier, None, "p")
-            self._htree.body_main.append_child(_wkp)
-            _s = HTMLNode(_wkp.identifier, None, "b", value=MSG_WKP)
-            _wkp.append_child(_s)
-            _s = HTMLNode(_wkp.identifier, None, "span", value=wkp_name)
-            if len(wkp_path) > 0:
-                _wkp.set_value("title", wkp_path)
-            _wkp.append_child(_s)
+            _w_name = wkp_name
+        _s = HTMLNode(_wkp.identifier, None, "span", value=_w_name)
+        if len(wkp_path) > 0:
+            _wkp.set_value("title", wkp_path)
+        _s.add_attribute("id", "workspace_name")
+        _wkp.append_child(_s)
 
         apps = swappAppsNode(self._htree.body_main.identifier)
         self._htree.body_main.append_child(apps)

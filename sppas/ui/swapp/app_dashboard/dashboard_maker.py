@@ -49,7 +49,6 @@ from sppas.core.config import sg
 from ..swapp_base.swapp_response import swappBaseResponse
 from ..swapp_core.swapp_app_info import swappWebApplicationInfo
 from ..swapp_core.swappsg import swapp_settings
-from ..swapp_core.swappsg import swapp_wkps
 from ..swapp_core.swappsg import swapp_wxstate
 from ..swapp_core.swappsg import swapp_trace
 from ..swapp_core.swappsg import request_wx_exit
@@ -57,6 +56,7 @@ from sppas.ui.agnostic import sppasCommKeys
 from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
 
 from .dashboard_view import swappDashboardView
+from .dashboard_view import MSG_NO_WKP
 from .dashboard_model import swappDashboardModel
 from .dashboard_controller import swappDashboardController
 
@@ -182,11 +182,9 @@ class swappDashboardResponseRecipe(swappBaseResponse):
             wkp_name = swapp_wxstate.workspace_name
             wkp_path = ""
             if len(wkp_name) == 0:
-                wkp_name = swapp_wkps.get_wkp_name()
-                try:
-                    wkp_path = swapp_wkps.get_wkp_filename()
-                except Exception:
-                    wkp_path = ""
+                # No wx connected: no workspace exists. Same answer as the
+                # baked page, so the JS has nothing to decide.
+                wkp_name = MSG_NO_WKP
             self._data["workspace_name"] = wkp_name
             self._data["workspace_path"] = wkp_path
             self._data["trace_alive"] = swapp_trace.viewer_alive()
