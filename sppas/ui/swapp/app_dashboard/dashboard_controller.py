@@ -50,7 +50,6 @@ from sppas.core.config import paths
 from sppas.core.preinstall.installer import quote
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 from sppas.ui.swapp.swapp_core.swappsg import swapp_trace
-from sppas.ui.swapp.swapp_core.swappsg import swapp_wkps
 from sppas.ui.swapp.swapp_core.swappsg import swapp_wxstate
 from sppas.ui.swapp.swapp_core.swappsg import wx_is_running
 
@@ -200,19 +199,13 @@ class swappDashboardController:
         # dialog inviting the user to open it.
         trace_alive = swapp_trace.viewer_alive()
 
-        # The current workspace. The wx interlocutor, when connected, is
-        # the source of truth: its WKP_CHANGED messages report the name of
-        # its current workspace, not an identifier -- swapp does not try
-        # to resolve it against its own local workspace list. Before any
-        # wx connected, the local state is displayed instead.
+        # The current workspace. The wx interlocutor is the only source:
+        # its WKP_CHANGED messages report the name of its current workspace,
+        # not an identifier -- swapp does not try to resolve it against its
+        # own local workspace list. No wx connected, no workspace at all:
+        # the name stays empty and the view says so.
         wkp_name = swapp_wxstate.workspace_name
         wkp_path = ""
-        if len(wkp_name) == 0:
-            wkp_name = swapp_wkps.get_wkp_name()
-            try:
-                wkp_path = swapp_wkps.get_wkp_filename()
-            except Exception:
-                wkp_path = ""
 
         self.__view.populate_tree_content(swapp_settings.license_agreement,
                                           wx_enabled, wx_busy, trace_alive,

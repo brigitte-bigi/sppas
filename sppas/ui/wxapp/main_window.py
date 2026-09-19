@@ -137,6 +137,13 @@ class sppasMainWindow(sppasDialog):
         self._setup_events()
         self.UpdateUI()
 
+        # Announce the workspace this interface starts with: the other UI
+        # is only told of the changes, so a workspace nobody changed yet
+        # would never be reported -- and the other UI would show none.
+        page = self.FindWindow("page_files")
+        if page is not None:
+            self._send_workspace(page.get_data())
+
         # Fix this frame properties
         self.Enable()
         self.Show(False)
@@ -332,7 +339,7 @@ class sppasMainWindow(sppasDialog):
 
     # -----------------------------------------------------------------------
 
-    def _send_workspace(self, wkp):
+    def _send_workspace(self, wkp, name=None):
         """Send the workspace to the communication server of the other UI.
 
         The serialized workspace carries an internal identifier of its own
@@ -345,6 +352,8 @@ class sppasMainWindow(sppasDialog):
         sending starts over when the other UI talks by itself.
 
         :param wkp: (sppasWorkspace)
+        :param name: (str) Name to send instead of the one of the panel.
+            An empty name says this interface has no workspace anymore.
 
         """
         if self.__wkp_listener is False:
@@ -352,8 +361,12 @@ class sppasMainWindow(sppasDialog):
 
         wjson = sppasWJSON()
         wjson.set(wkp)
-        wkpslist = self.FindWindow("wkpslist")
-        wkp_name = wkpslist.get_wkp_name() if wkpslist is not None else ""
+        wkp_name = name
+        if wkp_name is None:
+            wkpslist = self.FindWindow("wkpslist")
+            wkp_name = ""
+            if wkpslist is not None:
+                wkp_name = wkpslist.get_wkp_name()
         settings = wx.GetApp().settings
         client = sppasCommClient(settings.shost, settings.sport)
         value = {"name": wkp_name, "workspace": wjson.serialize()}
@@ -514,6 +527,13 @@ class sppasMainWindow(sppasDialog):
             if nb == -1:
                 # The user cancelled. Can occur only if 'interactive' is True.
                 return False
+
+        # The other UI shows the workspace this one reports: a window which
+        # is closing has none to report. Its silence would only say that it
+        # is gone, not that no workspace is left.
+        page = self.FindWindow("page_files")
+        if page is not None:
+            self._send_workspace(page.get_data(), name="")
 
         # Remember some properties of this window
         wx.GetApp().settings.set("frame_size", self.GetSize())
