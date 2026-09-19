@@ -60,21 +60,66 @@
 <main id="main-content">
 
 
-<!-- ====================== PROBLEM AND SCOPE ====================== -->
+<!-- ====================== USER MANUAL ============================ -->
 
 
 <section class="chapter">
-<h1>Problem and scope</h1>
+<h1>User manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is the help of the person who sets the options of an app: what a
+		line of an option shows, and what is done on it. This service has no page of its
+		own: what is described here is the container an app places in its own.
+	</p>
+
+</section>
+
+
+<!-- ====================== DEVELOPER MANUAL ======================= -->
+
+
+<section class="chapter">
+<h1>Developer manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is for whoever reads or changes the code: how it is organised,
+		what an app has to do to use this service, the events it consumes, and the
+		stylesheets.
+	</p>
+
+</section>
+
+
+
+
+<!-- ====================== MODELLING ============================== -->
+
+
+<section class="chapter">
+<h1>Modelling</h1>
+
+<!-- =============================================================== -->
+
+
+<!-- ====================== PROBLEM AND SCOPE ====================== -->
+
+
+<section class="ssection">
+<h2>Problem and scope</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.1 -->
+	<!-- 3.1 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Description</h2>
+	<section class="subssection">
+	<h3>Description</h3>
 
 		<p>
 			An app of SPPAS does not do one thing: it does what it was told to do. What
@@ -100,16 +145,6 @@
 		</p>
 
 		<p>
-			<b>It exists already, and it is shared already.</b> In the wx interface,
-			<code>sppasOptionsPanel</code> is one class, and its own header says who uses
-			it: <code>page_annotate.annotselect</code> and
-			<code>page_plugins.plug_list</code>. One panel, two pages, no page of its
-			own &mdash; which is what this domain is, written in the words of the
-			interface which exists. What swapp lacks is that panel, and it will lack it
-			the day one of its apps declares an option.
-		</p>
-
-		<p>
 			What an option is made of is established and is not redesigned here:
 			<code>sppasOption</code> carries a key, a type, an un-typed value, a name, a
 			short text and a long description, and its type is one of six &mdash;
@@ -121,16 +156,16 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.2 -->
+	<!-- 3.2 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Defining the needs</h2>
+	<section class="subssection">
+	<h3>Defining the needs</h3>
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Problem statement and objectives</h3>
+		<section>
+		<h4>Problem statement and objectives</h4>
 
 			<p>
 				Setting the options of an app raises a difficulty which is neither
@@ -212,8 +247,8 @@
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Expressing the needs</h3>
+		<section>
+		<h4>Expressing the needs</h4>
 
 			<p>
 				The needs below come from two places: what the apps already declare and
@@ -222,7 +257,7 @@
 				none of them says how it is answered.
 			</p>
 
-			<h4>Deciding with what it takes to decide</h4>
+			<h5>Deciding with what it takes to decide</h5>
 
 			<p>
 				A person who sets an option is rarely the person who declared it. The few
@@ -238,7 +273,7 @@
 				is not changing it, she is replacing it.
 			</p>
 
-			<h4>Giving a value in the form it has</h4>
+			<h5>Giving a value in the form it has</h5>
 
 			<p>
 				An option is typed, and the type is not a detail of storage: it says what
@@ -257,7 +292,7 @@
 				reaches her where she gave the value, and names it.
 			</p>
 
-			<h4>Coming back to the value an option arrived with</h4>
+			<h5>Coming back to the value an option arrived with</h5>
 
 			<p>
 				Options are explored. A person who does not know what a threshold does
@@ -269,7 +304,7 @@
 				can name.
 			</p>
 
-			<h4>An option which designates a file</h4>
+			<h5>An option which designates a file</h5>
 
 			<p>
 				Two of the six kinds of option do not hold a value: they designate a file.
@@ -289,7 +324,7 @@
 				answered there.
 			</p>
 
-			<h4>Setting once, running many times</h4>
+			<h5>Setting once, running many times</h5>
 
 			<p>
 				An app is not run once. Somebody working on a corpus runs the same one on
@@ -306,7 +341,7 @@
 				there is nobody to find it again for, and nothing of hers stays there.
 			</p>
 
-			<h4>Accessibility</h4>
+			<h5>Accessibility</h5>
 
 			<p>
 				Everything above rests on things being perceived: a label, a description,
@@ -328,8 +363,8 @@
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Eliciting the needs</h3>
+		<section>
+		<h4>Eliciting the needs</h4>
 
 			<p>
 				Eliciting the needs means turning them into things this domain names and
@@ -337,7 +372,7 @@
 				person is put in front of, and what each of those things is called here.
 			</p>
 
-			<h4>Concepts manipulated by this domain</h4>
+			<h5>Concepts manipulated by this domain</h5>
 
 			<dl>
 			<dt>Option</dt>
@@ -374,7 +409,7 @@
 			declared. This domain has no page: it has this.</dd>
 			</dl>
 
-			<h4>One line per option, and three things on it</h4>
+			<h5>One line per option, and three things on it</h5>
 
 			<p>
 				The need to decide with what it takes to decide is expressed by a line per
@@ -392,7 +427,7 @@
 				&mdash; changing something she cannot read.
 			</p>
 
-			<h4>What suits each kind</h4>
+			<h5>What suits each kind</h5>
 
 			<table>
 			<thead>
@@ -415,7 +450,7 @@
 				server. What comes back is a file this domain hands on without opening.
 			</p>
 
-			<h4>The value an option arrived with</h4>
+			<h5>The value an option arrived with</h5>
 
 			<p>
 				<b>An option holds one value, and changing it overwrites what was
@@ -437,7 +472,7 @@
 				options, and what they hold when they arrive is what they hold.
 			</p>
 
-			<h4>What is said when a value cannot be used</h4>
+			<h5>What is said when a value cannot be used</h5>
 
 			<p>
 				A refusal names the option it is about, says what was expected, and appears
@@ -454,7 +489,7 @@
 				it the place where every app's knowledge accumulates.
 			</p>
 
-			<h4>Where the options stand when there are many (inferred need)</h4>
+			<h5>Where the options stand when there are many (inferred need)</h5>
 
 			<p>
 				No person has asked for this, and it does not come from an expressed need:
@@ -478,28 +513,28 @@
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Organising the needs</h3>
+		<section>
+		<h4>Organising the needs</h4>
 
-			<h4>[010] The options which are shown</h4>
+			<h5>[010] The options which are shown</h5>
 			<ul class="req">
 			<li>[012] The system shows every option the app declared, and no other option.</li>
 			</ul>
 
-			<h4>[020] What is read of an option</h4>
+			<h5>[020] What is read of an option</h5>
 			<ul class="req">
 			<li>[021] The system shows the short label of every option.</li>
 			<li>[022] The system shows the long description of an option on demand.</li>
 			<li>[023] The label and the description shown are the ones which came with the option.</li>
 			</ul>
 
-			<h4>[030] What is shown of an option</h4>
+			<h5>[030] What is shown of an option</h5>
 			<ul class="req">
 			<li>[031] The system shows the value of every option.</li>
 			<li>[032] The system shows what it takes to change the value of every option.</li>
 			</ul>
 
-			<h4>[100] Giving a value</h4>
+			<h5>[100] Giving a value</h5>
 			<ul class="req">
 			<li>[101] The person can change nothing of an option but its value.</li>
 			<li>[102] The system offers a control suited to the kind of the option.</li>
@@ -507,39 +542,39 @@
 			<li>[104] The system holds the value the person gave, and no other value.</li>
 			</ul>
 
-			<h4>[200] Refusing a value</h4>
+			<h5>[200] Refusing a value</h5>
 			<ul class="req">
 			<li>[201] The system refuses a value only where the value does not match the kind of the option or the bounds of the option.</li>
 			<li>[202] The system signals every refused value as soon as the set is validated, and says for each one which value is expected.</li>
 			</ul>
 
-			<h4>[300] Going back</h4>
+			<h5>[300] Going back</h5>
 			<ul class="req">
 			<li>[301] The person can put an option back to the value it arrived with.</li>
 			<li>[302] The person can put every option back to the value it arrived with, at once.</li>
 			</ul>
 
-			<h4>[400] An option which designates a file</h4>
+			<h5>[400] An option which designates a file</h5>
 			<ul class="req">
 			<li>[401] The person can choose her own file for an option which takes a file, wherever that file stands.</li>
 			</ul>
 
-			<h4>[500] Finding the options again</h4>
+			<h5>[500] Finding the options again</h5>
 			<ul class="req">
 			<li>[501] The person finds the values she gave the time before, without giving them again.</li>
 			</ul>
 
-			<h4>[600] What is really used</h4>
+			<h5>[600] What is really used</h5>
 			<ul class="req">
 			<li>[601] The person obtains a result which matches the values she was shown, those she did not change included.</li>
 			</ul>
 
-			<h4>[700] Finding an option</h4>
+			<h5>[700] Finding an option</h5>
 			<ul class="req">
 			<li>[701] The person can find one option quickly among those of an app.</li>
 			</ul>
 
-			<h4>[1000] Accessibility</h4>
+			<h5>[1000] Accessibility</h5>
 			<ul class="req">
 			<li>[1001] The system holds to the WCAG rules.</li>
 			</ul>
@@ -549,11 +584,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.3 -->
+	<!-- 3.3 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Scope</h2>
+	<section class="subssection">
+	<h3>Scope</h3>
 
 		<p>
 			This document covers what an app lets one set: how it is obtained, how it is
@@ -583,18 +618,18 @@
 <!-- ====================== MODELLING ============================== -->
 
 
-<section class="chapter">
-<h1>Modelling</h1>
+<section class="ssection">
+<h2>Conceptual level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.1 -->
+	<!-- 3.4 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Data dictionary</h2>
+	<section class="subssection">
+	<h3>Data dictionary</h3>
 
 		<p>
 			Two data, and that is all this domain holds of its own.
@@ -622,18 +657,18 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.2 -->
+	<!-- 3.5 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Conceptual model of communication</h2>
+	<section class="subssection">
+	<h3>Conceptual model of communication</h3>
 
 		<p>
 			Three actors border this domain. One is a person, one is what calls it, and
 			one is a neighbouring domain it calls in turn.
 		</p>
 
-		<h3>Actors</h3>
+		<h4>Actors</h4>
 
 		<ul>
 			<li><b>A1. The person</b> &mdash; reads what an option is for, sees the value it holds, changes that value, puts it back to the value it arrived with, and chooses a file where an option takes one.</li>
@@ -641,7 +676,7 @@
 			<li><b>A3. The provision of files</b> &mdash; the neighbouring domain which lets the person designate a file of hers, wherever SPPAS runs.</li>
 		</ul>
 
-		<h3>Flows</h3>
+		<h4>Flows</h4>
 
 		<ul>
 			<li><b>F1. A2 &rarr; domain</b> &mdash; a set of options [012].</li>
@@ -686,11 +721,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.3 -->
+	<!-- 3.6 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Conceptual model of data</h2>
+	<section class="subssection">
+	<h3>Conceptual model of data</h3>
 
 		<p>
 			Three classes. The option is one of them without being modelled: it is an
@@ -698,7 +733,7 @@
 			identity inside a set and the value it had on arrival.
 		</p>
 
-		<h3>The classes of entities</h3>
+		<h4>The classes of entities</h4>
 
 		<table>
 			<thead>
@@ -723,7 +758,7 @@
 			</tbody>
 		</table>
 
-		<h3>The relations</h3>
+		<h4>The relations</h4>
 
 		<table>
 			<thead>
@@ -753,7 +788,7 @@
 			It is written when the set arrives and never afterwards.
 		</p>
 
-		<h3>Computed, and never held</h3>
+		<h4>Computed, and never held</h4>
 
 		<ul>
 			<li>The value an option holds now, which is on the option itself and belongs to SPPAS.</li>
@@ -761,7 +796,7 @@
 			<li>What is handed back to an app, which is the set itself.</li>
 		</ul>
 
-		<h3>What is not modelled, and why</h3>
+		<h4>What is not modelled, and why</h4>
 
 		<ul>
 			<li>The option itself &mdash; its kind, its label, its description, its value. All four are established, read where they are written, and nothing here adds to them.</li>
@@ -772,11 +807,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.4 -->
+	<!-- 3.7 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Conceptual model of treatments</h2>
+	<section class="subssection">
+	<h3>Conceptual model of treatments</h3>
 
 		<p>
 			Eight treatments, and they are all this domain does. Every one of them is
@@ -784,7 +819,7 @@
 			person acts on it, an app asks for it back.
 		</p>
 
-		<h3>The events</h3>
+		<h4>The events</h4>
 
 		<table>
 			<thead>
@@ -802,8 +837,8 @@
 			</tbody>
 		</table>
 
-		<section class="subssection">
-		<h3>T01 &mdash; Take in a set of options</h3>
+		<section>
+		<h4>T01 &mdash; Take in a set of options</h4>
 
 			<p><b>Purpose:</b> that a set of options is ready to be acted upon, and that
 			what every option of it holds is written down before anything changes.</p>
@@ -826,8 +861,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T02 &mdash; Say what an option is for</h3>
+		<section>
+		<h4>T02 &mdash; Say what an option is for</h4>
 
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
@@ -842,8 +877,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T03 &mdash; Take in the values</h3>
+		<section>
+		<h4>T03 &mdash; Take in the values</h4>
 
 			<p><b>Purpose:</b> that the values a person gave become the values of the
 			options, and that she is told which of them could not.</p>
@@ -872,8 +907,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T04 &mdash; Put one option back</h3>
+		<section>
+		<h4>T04 &mdash; Put one option back</h4>
 
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
@@ -891,8 +926,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T05 &mdash; Put every option back</h3>
+		<section>
+		<h4>T05 &mdash; Put every option back</h4>
 
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
@@ -905,8 +940,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T06 &mdash; Obtain a file for an option</h3>
+		<section>
+		<h4>T06 &mdash; Obtain a file for an option</h4>
 
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
@@ -921,8 +956,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T07 &mdash; Take in the file which came back</h3>
+		<section>
+		<h4>T07 &mdash; Take in the file which came back</h4>
 
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
@@ -942,8 +977,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T08 &mdash; Hand the set back</h3>
+		<section>
+		<h4>T08 &mdash; Hand the set back</h4>
 
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
@@ -970,18 +1005,18 @@
 <!-- ====================== ORGANISATIONAL ========================= -->
 
 
-<section class="chapter">
-<h1>Organisational level</h1>
+<section class="ssection">
+<h2>Organisational level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.1 -->
+	<!-- 3.8 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Organisational model of treatments</h2>
+	<section class="subssection">
+	<h3>Organisational model of treatments</h3>
 
 		<p>
 			One procedure per treatment, numbered as it is. One table and not two: what
@@ -1030,11 +1065,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.2 -->
+	<!-- 3.9 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Rules of organisation</h2>
+	<section class="subssection">
+	<h3>Rules of organisation</h3>
 
 		<ul>
 			<li><b>RO1</b> &mdash; The values already given are carried from one request to the next by the page, and nothing of a set is held on the server between two requests.</li>
@@ -1060,18 +1095,18 @@
 <!-- ====================== LOGICAL LEVEL ========================== -->
 
 
-<section class="chapter">
-<h1>Logical level</h1>
+<section class="ssection">
+<h2>Logical level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 4.1 -->
+	<!-- 3.10 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The tables</h2>
+	<section class="subssection">
+	<h3>The tables</h3>
 
 		<p>
 			Each class of entities becomes a table, and its identifier becomes its key.
@@ -1127,18 +1162,18 @@
 <!-- ====================== PHYSICAL LEVEL ========================= -->
 
 
-<section class="chapter">
-<h1>Physical level</h1>
+<section class="ssection">
+<h2>Physical level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 5.1 -->
+	<!-- 3.11 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Where each table stands</h2>
+	<section class="subssection">
+	<h3>Where each table stands</h3>
 
 		<p>
 			Here the machines are named, and not before. <b>There is no database, no file
@@ -1177,11 +1212,11 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 5.2 -->
+	<!-- 3.12 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Operational model of treatments</h2>
+	<section class="subssection">
+	<h3>Operational model of treatments</h3>
 
 		<p>
 			The organisational level said by what and when; this says in what tasks. One
@@ -1229,11 +1264,11 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 5.3 -->
+	<!-- 3.13 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Where the code goes</h2>
+	<section class="subssection">
+	<h3>Where the code goes</h3>
 
 		<p>
 			In <code>sppas/ui/swapp/services/options/</code>: in the family folder of the
@@ -1282,18 +1317,18 @@
 <!-- ====================== UML ==================================== -->
 
 
-<section class="chapter">
-<h1>UML</h1>
+<section class="ssection">
+<h2>UML</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.1 -->
+	<!-- 3.14 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The classes</h2>
+	<section class="subssection">
+	<h3>The classes</h3>
 
 		<p>
 			Those which carry the data come from the tables, those which work come from
@@ -1301,7 +1336,7 @@
 			requests. A name says what the class handles.
 		</p>
 
-		<h3>What carries the data</h3>
+		<h4>What carries the data</h4>
 
 		<table>
 			<thead><tr><th>Class</th><th>From</th><th>What it is</th></tr></thead>
@@ -1313,7 +1348,7 @@
 			</tbody>
 		</table>
 
-		<h3>What does the work</h3>
+		<h4>What does the work</h4>
 
 		<table>
 			<thead><tr><th>Class</th><th>Module</th><th>What it is alone in knowing</th></tr></thead>
@@ -1324,7 +1359,7 @@
 			</tbody>
 		</table>
 
-		<h3>What shows, and what dispatches</h3>
+		<h4>What shows, and what dispatches</h4>
 
 		<table>
 			<thead><tr><th>Class</th><th>What it does</th></tr></thead>
@@ -1344,11 +1379,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.2 -->
+	<!-- 3.15 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The class diagram</h2>
+	<section class="subssection">
+	<h3>The class diagram</h3>
 
 		<p>
 			<code>/</code> marks what is derived and held by nobody. What the operations
@@ -1384,7 +1419,7 @@
 			this domain's own business.
 		</p>
 
-		<h3>What is tied to what</h3>
+		<h4>What is tied to what</h4>
 
 		<table>
 			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
@@ -1402,7 +1437,7 @@
 			</tbody>
 		</table>
 
-		<h3>In yUML</h3>
+		<h4>In yUML</h4>
 
 		<p>
 			To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
@@ -1424,11 +1459,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.3 -->
+	<!-- 3.16 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The states</h2>
+	<section class="subssection">
+	<h3>The states</h3>
 
 		<p>
 			One thing has states here, and it is what the person reads on a line.
@@ -1453,11 +1488,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.4 -->
+	<!-- 3.17 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The sequence, from the set to the set</h2>
+	<section class="subssection">
+	<h3>The sequence, from the set to the set</h3>
 
 		<ol>
 			<li>An app hands its options over and asks for a container to place in its page.</li>
@@ -1479,11 +1514,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.5 -->
+	<!-- 3.18 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The error policy</h2>
+	<section class="subssection">
+	<h3>The error policy</h3>
 
 		<table>
 			<thead><tr><th>Level</th><th>What happens</th><th>What is done</th></tr></thead>
@@ -1508,25 +1543,25 @@
 <!-- ====================== CONTRACTS ============================== -->
 
 
-<section class="chapter">
-<h1>The contracts</h1>
+<section class="ssection">
+<h2>The contracts</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.1 -->
+	<!-- 3.19 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>How to read them</h2>
+	<section class="subssection">
+	<h3>How to read them</h3>
 
 		<p>
 			<i>pre</i> is what has to be true on the way in, and what the operation does
 			not check; <i>post</i> is what the caller can count on without looking.
 		</p>
 
-		<h3>What holds everywhere</h3>
+		<h4>What holds everywhere</h4>
 
 		<ul>
 			<li>Nothing is held between two requests. Every operation is given what it works on, and keeps none of it. RO1</li>
@@ -1540,11 +1575,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.2 -->
+	<!-- 3.20 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Class by class</h2>
+	<section class="subssection">
+	<h3>Class by class</h3>
 
 		<table>
 			<caption>OptionSet</caption>
@@ -1629,11 +1664,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.3 -->
+	<!-- 3.21 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Where each requirement is held</h2>
+	<section class="subssection">
+	<h3>Where each requirement is held</h3>
 
 		<table>
 			<thead><tr><th>No.</th><th>Held by</th></tr></thead>
@@ -1670,18 +1705,18 @@
 <!-- ====================== TESTS ================================== -->
 
 
-<section class="chapter">
-<h1>What is tested, and where</h1>
+<section class="ssection">
+<h2>What is tested, and where</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 8.1 -->
+	<!-- 3.22 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Without anything installed</h2>
+	<section class="subssection">
+	<h3>Without anything installed</h3>
 
 		<p>
 			No disk, no server, no browser, no neighbour. Sixteen tests out of twenty-one
@@ -1725,11 +1760,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 8.2 -->
+	<!-- 3.23 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>With a view, and with a neighbour</h2>
+	<section class="subssection">
+	<h3>With a view, and with a neighbour</h3>
 
 		<table>
 			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
@@ -1752,11 +1787,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 8.3 -->
+	<!-- 3.24 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What no test covers, and where they stand</h2>
+	<section class="subssection">
+	<h3>What no test covers, and where they stand</h3>
 
 		<ul>
 			<li><b>[501]</b> &mdash; finding the values of a former setting. It is held nowhere in this domain, so there is nothing here to test.</li>
@@ -1766,11 +1801,15 @@
 		</ul>
 
 		<p>
-			The tests stand beside the code, in the folder of this service. Sixteen of the
-			twenty-one need nothing at all.
+			The tests stand where the project puts its own: in <code>tests/swapp/</code>,
+			which follows the shape of the sources. Sixteen of the twenty-one need nothing
+			at all.
 		</p>
 
 	</section>
+
+</section>
+
 
 </section>
 

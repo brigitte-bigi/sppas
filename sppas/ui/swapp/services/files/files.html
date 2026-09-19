@@ -60,21 +60,67 @@
 <main id="main-content">
 
 
-<!-- ====================== PROBLEM AND SCOPE ====================== -->
+<!-- ====================== USER MANUAL ============================ -->
 
 
 <section class="chapter">
-<h1>Problem and scope</h1>
+<h1>User manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is the help of the person who gives files and gets back what was
+		produced: what the two containers show, and what is done on them. This service
+		has no page of its own: what is described here is what an app places in
+		its own.
+	</p>
+
+</section>
+
+
+<!-- ====================== DEVELOPER MANUAL ======================= -->
+
+
+<section class="chapter">
+<h1>Developer manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is for whoever reads or changes the code: how it is organised,
+		what an app has to do to use this service, the events it consumes, and the
+		stylesheets.
+	</p>
+
+</section>
+
+
+
+
+<!-- ====================== MODELLING ============================== -->
+
+
+<section class="chapter">
+<h1>Modelling</h1>
+
+<!-- =============================================================== -->
+
+
+<!-- ====================== PROBLEM AND SCOPE ====================== -->
+
+
+<section class="ssection">
+<h2>Problem and scope</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.1 -->
+	<!-- 3.1 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Description</h2>
+	<section class="subssection">
+	<h3>Description</h3>
 
 		<p>
 			The apps of swapp process files. They do not choose them: the files come
@@ -100,11 +146,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.2 -->
+	<!-- 3.2 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Needs</h2>
+	<section class="subssection">
+	<h3>Defining the needs</h3>
 
 		<p>
 			The needs are those of the person. They name no technique: the means of
@@ -144,11 +190,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.3 -->
+	<!-- 3.3 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Scope</h2>
+	<section class="subssection">
+	<h3>Scope</h3>
 
 		<p>
 			This document covers the provision of files to an app, and the return to the
@@ -180,18 +226,18 @@
 <!-- ====================== MODELLING ============================== -->
 
 
-<section class="chapter">
-<h1>Modelling</h1>
+<section class="ssection">
+<h2>Conceptual level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.1 -->
+	<!-- 3.4 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Data dictionary</h2>
+	<section class="subssection">
+	<h3>Data dictionary</h3>
 
 		<p>
 			Six things are handled, and they are all that is handled. The person and the
@@ -240,11 +286,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.2 -->
+	<!-- 3.5 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Conceptual model of communication</h2>
+	<section class="subssection">
+	<h3>Conceptual model of communication</h3>
 
 		<p>
 			The domain studied does two things: it gives an app the files it is to treat,
@@ -254,7 +300,7 @@
 			where she feeds what she gives, and the one where she reaches what was made.
 		</p>
 
-		<h3>Actors</h3>
+		<h4>Actors</h4>
 
 		<ul>
 			<li><b>A1. The person</b> — she gives her files, says which of them are to be treated, asks for an app, and gets back what was produced.</li>
@@ -263,7 +309,7 @@
 			<li><b>A4. The deposit API</b> — an API, and no face: it gives a bounded and perishable place where a file may stand when it is not on the machine of the person, says what it accepts, gives an address at which one of them is reached, and forgets what is out of date without being asked.</li>
 		</ul>
 
-		<h3>Flows</h3>
+		<h4>Flows</h4>
 
 		<ul>
 			<li><b>F1. A1 &rarr; domain</b> — her files, and which of them are to be treated (B2, B5).</li>
@@ -299,11 +345,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.3 -->
+	<!-- 3.6 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Conceptual model of data</h2>
+	<section class="subssection">
+	<h3>Conceptual model of data</h3>
 
 		<p>
 			Four classes. The workspace is one of them without being modelled here: its
@@ -313,7 +359,7 @@
 			document adds nothing to it.
 		</p>
 
-		<h3>The classes of entities</h3>
+		<h4>The classes of entities</h4>
 
 		<table>
 			<thead>
@@ -351,7 +397,7 @@
 			word which is still to be fixed.
 		</p>
 
-		<h3>The relations</h3>
+		<h4>The relations</h4>
 
 		<table>
 			<thead>
@@ -394,7 +440,7 @@
 			written as two classes for want of it.
 		</p>
 
-		<h3>Computed, and never held</h3>
+		<h4>Computed, and never held</h4>
 
 		<ul>
 			<li>The volume of a deposit, which is the sum of the sizes of its copies, and which is compared to what the deposit API accepts (C4).</li>
@@ -403,7 +449,7 @@
 			<li>What is handed to an app, which is made from the workspace when an app asks and is never kept (T03).</li>
 		</ul>
 
-		<h3>What the keys do not hold</h3>
+		<h4>What the keys do not hold</h4>
 
 		<ul>
 			<li>Two copies of one deposit never bear the same name: a file whose name is already taken is not deposited, and what was refused is said (F10). C12</li>
@@ -412,7 +458,7 @@
 			<li>Only a deposit is added to a workspace: what is delivered to the person is added to none.</li>
 		</ul>
 
-		<h3>What is not modelled, and why</h3>
+		<h4>What is not modelled, and why</h4>
 
 		<ul>
 			<li>The state and checked (D2, D3), which the workspace carries at its three levels. This domain asks for the checking (T02) and reads it (T03); it does not hold it.</li>
@@ -425,11 +471,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.4 -->
+	<!-- 3.7 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Conceptual model of treatments</h2>
+	<section class="subssection">
+	<h3>Conceptual model of treatments</h3>
 
 		<p>
 			Eleven treatments, and they are all that the domain does. They say what is
@@ -449,7 +495,7 @@
 			and it is the deposit API which sees to that.
 		</p>
 
-		<h3>The events</h3>
+		<h4>The events</h4>
 
 		<table>
 			<thead>
@@ -478,8 +524,8 @@
 			domain has to know is that a place does not last.
 		</p>
 
-		<section class="subssection">
-		<h3>T01 — Make a file reachable</h3>
+		<section>
+		<h4>T01 — Make a file reachable</h4>
 
 			<p><b>Purpose:</b> that a file given by the person exists where an app will read it.</p>
 
@@ -504,8 +550,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T02 — Make the files known, and check those to be treated</h3>
+		<section>
+		<h4>T02 — Make the files known, and check those to be treated</h4>
 
 			<p><b>Purpose:</b> that the workspace knows the files, and that those to be treated are checked in it.</p>
 
@@ -533,8 +579,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T03 — Hand to an app the files it is to treat</h3>
+		<section>
+		<h4>T03 — Hand to an app the files it is to treat</h4>
 
 			<p><b>Purpose:</b> to give an app what it needs in order to work.</p>
 
@@ -564,8 +610,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T04 — Add the produced files to the workspace</h3>
+		<section>
+		<h4>T04 — Add the produced files to the workspace</h4>
 
 			<p><b>Purpose:</b> that the files produced by an app are known to the workspace and checked.</p>
 
@@ -598,8 +644,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T05 — Make the produced files reachable by the person</h3>
+		<section>
+		<h4>T05 — Make the produced files reachable by the person</h4>
 
 			<p><b>Purpose:</b> that the person gets back what was produced without knowing where it was written.</p>
 
@@ -621,8 +667,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T07 — Announce what is accepted</h3>
+		<section>
+		<h4>T07 — Announce what is accepted</h4>
 
 			<p><b>Purpose:</b> that the person knows what she may give, before she gives.</p>
 
@@ -646,8 +692,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T08 — Take a file into what is to be given</h3>
+		<section>
+		<h4>T08 — Take a file into what is to be given</h4>
 
 			<p><b>Purpose:</b> that what the person is about to give is known to be acceptable before anything travels.</p>
 
@@ -677,8 +723,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T09 — Take a file back out of what is to be given</h3>
+		<section>
+		<h4>T09 — Take a file back out of what is to be given</h4>
 
 			<p><b>Purpose:</b> that the person can correct what she is about to give, before she gives it.</p>
 
@@ -697,8 +743,8 @@
 			</p>
 		</section>
 
-		<section class="subssection">
-		<h3>T10 — Lock a file for the app which takes it</h3>
+		<section>
+		<h4>T10 — Lock a file for the app which takes it</h4>
 
 			<p><b>Purpose:</b> that a file an app is working on is known to be in use, and is not given to another.</p>
 
@@ -727,8 +773,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T11 — Give a file back</h3>
+		<section>
+		<h4>T11 — Give a file back</h4>
 
 			<p><b>Purpose:</b> that a file an app has done with is available again.</p>
 
@@ -747,8 +793,8 @@
 			</p>
 		</section>
 
-		<section class="subssection">
-		<h3>T12 — Release what an app still holds</h3>
+		<section>
+		<h4>T12 — Release what an app still holds</h4>
 
 			<p><b>Purpose:</b> that nothing stays locked for an app which has finished.</p>
 
@@ -777,18 +823,18 @@
 <!-- ====================== ORGANISATIONAL LEVEL =================== -->
 
 
-<section class="chapter">
-<h1>Organisational level</h1>
+<section class="ssection">
+<h2>Organisational level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.1 -->
+	<!-- 3.8 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Organisational model of treatments</h2>
+	<section class="subssection">
+	<h3>Organisational model of treatments</h3>
 
 		<p>
 			One procedure per treatment, numbered as it is, and each one triggered by one
@@ -812,7 +858,7 @@
 			table. The third is the other.
 		</p>
 
-		<h3>When the files are already reachable</h3>
+		<h4>When the files are already reachable</h4>
 
 		<table>
 			<thead>
@@ -846,7 +892,7 @@
 			else, and it is served by the short path alone.
 		</p>
 
-		<h3>When the files are not reachable</h3>
+		<h4>When the files are not reachable</h4>
 
 		<table>
 			<thead>
@@ -867,7 +913,7 @@
 			</tbody>
 		</table>
 
-		<h3>What the two tables say</h3>
+		<h4>What the two tables say</h4>
 
 		<p>
 			PF3, PF4, PF10, PF11 and PF12 are the same procedure in both, word for word:
@@ -906,11 +952,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.2 -->
+	<!-- 3.9 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>When files are asked for</h2>
+	<section class="subssection">
+	<h3>When files are asked for</h3>
 
 		<p>
 			A person clicks on an app. The app is entered, and it asks the domain for the
@@ -951,11 +997,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.3 -->
+	<!-- 3.10 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The short path</h2>
+	<section class="subssection">
+	<h3>The short path</h3>
 
 		<p>
 			Locally, T02 has two operators, and they do not merge. The short path adds a
@@ -997,11 +1043,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.4 -->
+	<!-- 3.11 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Rules of organisation</h2>
+	<section class="subssection">
+	<h3>Rules of organisation</h3>
 
 		<ul>
 			<li><b>RO1</b> — The checking is done by the domain, and never by an app which treats files: in the short path, or in what manages the workspaces.</li>
@@ -1023,18 +1069,18 @@
 <!-- ====================== CONSTRAINTS ============================ -->
 
 
-<section class="chapter">
-<h1>Constraints</h1>
+<section class="ssection">
+<h2>Constraints</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 4.1 -->
+	<!-- 3.12 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What the code holds to</h2>
+	<section class="subssection">
+	<h3>What the code holds to</h3>
 
 		<p>
 			These follow from no need on their own: they are what the code has to hold to
@@ -1095,18 +1141,18 @@
 <!-- ====================== LOGICAL LEVEL ========================== -->
 
 
-<section class="chapter">
-<h1>Logical level</h1>
+<section class="ssection">
+<h2>Logical level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 5.1 -->
+	<!-- 3.13 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The tables</h2>
+	<section class="subssection">
+	<h3>The tables</h3>
 
 		<p>
 			Each class of entities becomes a table, and its identifier becomes its key.
@@ -1165,18 +1211,18 @@
 <!-- ====================== PHYSICAL LEVEL ========================= -->
 
 
-<section class="chapter">
-<h1>Physical level</h1>
+<section class="ssection">
+<h2>Physical level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.1 -->
+	<!-- 3.14 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Where each table stands</h2>
+	<section class="subssection">
+	<h3>Where each table stands</h3>
 
 		<p>
 			Here the machines are named, and not before. There is no database: the tables
@@ -1251,11 +1297,11 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.2 -->
+	<!-- 3.15 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Where the code goes</h2>
+	<section class="subssection">
+	<h3>Where the code goes</h3>
 
 		<p>
 			One module per kind of knowledge, and every procedure has one module and one
@@ -1314,11 +1360,11 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.3 -->
+	<!-- 3.16 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The architecture of the code</h2>
+	<section class="subssection">
+	<h3>Implementation model: MVC</h3>
 
 		<p>
 			An app holds the page and receives the request: it is the only one which can,
@@ -1334,7 +1380,7 @@
 			never knows a place.
 		</p>
 
-		<h3>Three kinds of class, and what each may do</h3>
+		<h4>Three kinds of class, and what each may do</h4>
 
 		<table>
 			<thead><tr><th>Kind</th><th>What it does</th><th>What it may not do</th></tr></thead>
@@ -1363,7 +1409,7 @@
 			requests would gain nothing from a second dispatch.
 		</p>
 
-		<h3>What assembles, and what an app holds</h3>
+		<h4>What assembles, and what an app holds</h4>
 
 		<p>
 			An app is assembled by its maker: it builds the fixed part of the page, then
@@ -1380,7 +1426,7 @@
 			manager instead. What is behind the manager is never named outside it.
 		</p>
 
-		<h3>How an app knows a task is ours</h3>
+		<h4>How an app knows a task is ours</h4>
 
 		<p>
 			By asking, and by no convention of names. An app receives the events of a
@@ -1395,7 +1441,7 @@
 			gains a second service adds one line and nothing else.
 		</p>
 
-		<h3>Which of the two views</h3>
+		<h4>Which of the two views</h4>
 
 		<p>
 			The record says what is known, and the view follows from that and not from the
@@ -1404,7 +1450,7 @@
 			of an app which has several pages — the state of what is known chooses.
 		</p>
 
-		<h3>What a view owes the next request</h3>
+		<h4>What a view owes the next request</h4>
 
 		<p>
 			A record serialises itself for transport and parses itself back. What a view
@@ -1414,7 +1460,7 @@
 			see her list vanish without having touched it.
 		</p>
 
-		<h3>The first request</h3>
+		<h4>The first request</h4>
 
 		<p>
 			There is no record. The controller makes one at its default values — nothing
@@ -1428,7 +1474,7 @@
 			one would show a person a state she never composed.
 		</p>
 
-		<h3>The record</h3>
+		<h4>The record</h4>
 
 		<p>
 			What one request holds is an object, and it has a name: the record. It carries
@@ -1444,7 +1490,7 @@
 			convenience of the code: it is the promise that nothing of her is held.
 		</p>
 
-		<h3>A request, in order</h3>
+		<h4>A request, in order</h4>
 
 		<ol>
 			<li>The app receives the request and reads the event it carries. It belongs to this domain, so it dispatches it.</li>
@@ -1474,18 +1520,18 @@
 <!-- ====================== UML ==================================== -->
 
 
-<section class="chapter">
-<h1>UML</h1>
+<section class="ssection">
+<h2>UML</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.1 -->
+	<!-- 3.17 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The classes</h2>
+	<section class="subssection">
+	<h3>The classes</h3>
 
 		<p>
 			Those which carry the data come from the tables, one per table which needs
@@ -1494,7 +1540,7 @@
 			nothing of how the application happens to be arranged.
 		</p>
 
-		<h3>What carries the data</h3>
+		<h4>What carries the data</h4>
 
 		<table>
 			<thead><tr><th>Class</th><th>From</th><th>What it is</th></tr></thead>
@@ -1507,7 +1553,7 @@
 			</tbody>
 		</table>
 
-		<h3>What does the work</h3>
+		<h4>What does the work</h4>
 
 		<table>
 			<thead><tr><th>Class</th><th>Module</th><th>What it is alone in knowing</th></tr></thead>
@@ -1527,7 +1573,7 @@
 			none of them. It is the controller which rebuilds it.
 		</p>
 
-		<h3>What shows, and what dispatches</h3>
+		<h4>What shows, and what dispatches</h4>
 
 		<table>
 			<thead><tr><th>Class</th><th>What it does</th></tr></thead>
@@ -1548,11 +1594,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.2 -->
+	<!-- 3.18 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The class diagram</h2>
+	<section class="subssection">
+	<h3>The class diagram</h3>
 
 		<p>
 			<code>/</code> marks what is derived and held by nobody. What the operations
@@ -1586,7 +1632,7 @@
 			rules as well as the data, and the rules would then be in two places.
 		</p>
 
-		<h3>What is tied to what</h3>
+		<h4>What is tied to what</h4>
 
 		<table>
 			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
@@ -1622,7 +1668,7 @@
 			tested on its own.
 		</p>
 
-		<h3>In yUML</h3>
+		<h4>In yUML</h4>
 
 		<p>
 			To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
@@ -1664,11 +1710,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.3 -->
+	<!-- 3.19 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The states</h2>
+	<section class="subssection">
+	<h3>The states</h3>
 
 		<table>
 			<caption>A deposit</caption>
@@ -1703,11 +1749,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.4 -->
+	<!-- 3.20 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The sequence, when an app asks</h2>
+	<section class="subssection">
+	<h3>The sequence, when an app asks</h3>
 
 		<ol>
 			<li>The app asks for the files it is to treat.</li>
@@ -1733,11 +1779,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.5 -->
+	<!-- 3.21 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The error policy</h2>
+	<section class="subssection">
+	<h3>The error policy</h3>
 
 		<table>
 			<thead><tr><th>Level</th><th>What happens</th><th>What is done</th></tr></thead>
@@ -1762,18 +1808,18 @@
 <!-- ====================== CONTRACTS ============================== -->
 
 
-<section class="chapter">
-<h1>The contracts</h1>
+<section class="ssection">
+<h2>The contracts</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 8.1 -->
+	<!-- 3.22 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>How to read them</h2>
+	<section class="subssection">
+	<h3>How to read them</h3>
 
 		<p>
 			<i>pre</i> is what has to be true on the way in, and what the operation does
@@ -1783,7 +1829,7 @@
 			here as the level above named them.
 		</p>
 
-		<h3>What holds everywhere</h3>
+		<h4>What holds everywhere</h4>
 
 		<ul>
 			<li>What is absent gives back an empty thing — an empty name, an empty list, a volume of zero — and never nothing at all.</li>
@@ -1795,11 +1841,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 8.2 -->
+	<!-- 3.23 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Class by class</h2>
+	<section class="subssection">
+	<h3>Class by class</h3>
 
 		<table>
 			<caption>acceptance</caption>
@@ -1976,18 +2022,18 @@
 <!-- ====================== TESTS ================================== -->
 
 
-<section class="chapter">
-<h1>What is tested, and where</h1>
+<section class="ssection">
+<h2>What is tested, and where</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 9.1 -->
+	<!-- 3.24 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Without a disk</h2>
+	<section class="subssection">
+	<h3>Without a disk</h3>
 
 		<p>
 			On a machine where nothing is installed: no place, no API, no workspace, no
@@ -2040,11 +2086,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 9.2 -->
+	<!-- 3.25 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>With a disk</h2>
+	<section class="subssection">
+	<h3>With a disk</h3>
 
 		<table>
 			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
@@ -2064,11 +2110,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 9.3 -->
+	<!-- 3.26 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>With the domain of the workspaces</h2>
+	<section class="subssection">
+	<h3>With the domain of the workspaces</h3>
 
 		<table>
 			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
@@ -2087,11 +2133,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 9.4 -->
+	<!-- 3.27 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What no test covers, and where they stand</h2>
+	<section class="subssection">
+	<h3>What no test covers, and where they stand</h3>
 
 		<ul>
 			<li>What an app does with what it received: it is the app's, and this domain is answerable only for what it handed and for what came back.</li>
@@ -2107,7 +2153,8 @@
 		</p>
 
 		<p>
-			They stand beside the code, in the folder of this service.
+			They stand where the project puts its own: in <code>tests/swapp/</code>, which
+			follows the shape of the sources.
 		</p>
 
 	</section>
@@ -2118,18 +2165,18 @@
 <!-- ====================== DECISIONS ============================== -->
 
 
-<section class="chapter">
-<h1>The decisions of the tool</h1>
+<section class="ssection">
+<h2>The decisions of the tool</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 10.1 -->
+	<!-- 3.28 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What is decided here</h2>
+	<section class="subssection">
+	<h3>What is decided here</h3>
 
 		<p>
 			The bounds of a place and how long it lasts are not decided here: they are the
@@ -2154,11 +2201,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 10.2 -->
+	<!-- 3.29 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Decided elsewhere</h2>
+	<section class="subssection">
+	<h3>Decided elsewhere</h3>
 
 		<p>
 			Two decisions of the tool are written where they are read, and are named here
@@ -2176,18 +2223,18 @@
 <!-- ====================== SET ASIDE ============================== -->
 
 
-<section class="chapter">
-<h1>What was set aside</h1>
+<section class="ssection">
+<h2>What was set aside</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 11.1 -->
+	<!-- 3.30 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Considered, and decided against</h2>
+	<section class="subssection">
+	<h3>Considered, and decided against</h3>
 
 		<p>
 			These are not missing. Each was written, weighed, and left out for the reason
@@ -2236,11 +2283,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 11.2 -->
+	<!-- 3.31 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Left open</h2>
+	<section class="subssection">
+	<h3>Left open</h3>
 
 		<p>
 			These are neither decided nor dropped. They are known, and they wait.
@@ -2251,6 +2298,9 @@
 		</ul>
 
 	</section>
+
+</section>
+
 
 </section>
 

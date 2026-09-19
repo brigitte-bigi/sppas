@@ -60,21 +60,66 @@
 <main id="main-content">
 
 
-<!-- ====================== PROBLEM AND SCOPE ====================== -->
+<!-- ====================== USER MANUAL ============================ -->
 
 
 <section class="chapter">
-<h1>Problem and scope</h1>
+<h1>User manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This domain has no face and no person reaches it, so this chapter says where
+		to look instead: what a person sees of a deposit is shown by whoever calls this
+		one, and is described in the dossier of that caller.
+	</p>
+
+</section>
+
+
+<!-- ====================== DEVELOPER MANUAL ======================= -->
+
+
+<section class="chapter">
+<h1>Developer manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is for whoever reads or changes the code: how it is organised,
+		what a caller has to do to use it, and what it asks of the front of the
+		machine.
+	</p>
+
+</section>
+
+
+
+
+<!-- ====================== MODELLING ============================== -->
+
+
+<section class="chapter">
+<h1>Modelling</h1>
+
+<!-- =============================================================== -->
+
+
+<!-- ====================== PROBLEM AND SCOPE ====================== -->
+
+
+<section class="ssection">
+<h2>Problem and scope</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.1 -->
+	<!-- 3.1 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Description</h2>
+	<section class="subssection">
+	<h3>Description</h3>
 
 		<p>
 			SPPAS reads files where it runs, and the files of a person are not always
@@ -110,11 +155,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.2 -->
+	<!-- 3.2 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What is required of it</h2>
+	<section class="subssection">
+	<h3>Defining the needs</h3>
 
 		<p>
 			It has no needs of a person to serve: a person never reaches it. What follows
@@ -134,11 +179,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.3 -->
+	<!-- 3.3 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Scope</h2>
+	<section class="subssection">
+	<h3>Scope</h3>
 
 		<p>
 			This document covers a place: what it accepts, how it is obtained, what
@@ -159,18 +204,18 @@
 <!-- ====================== MODELLING ============================== -->
 
 
-<section class="chapter">
-<h1>Modelling</h1>
+<section class="ssection">
+<h2>Conceptual level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.1 -->
+	<!-- 3.4 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Data dictionary</h2>
+	<section class="subssection">
+	<h3>Data dictionary</h3>
 
 		<p>
 			Three things are handled, and they are all that is handled.
@@ -196,11 +241,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.2 -->
+	<!-- 3.5 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Conceptual model of communication</h2>
+	<section class="subssection">
+	<h3>Conceptual model of communication</h3>
 
 		<p>
 			This domain gives a place, takes files into it, gives an address at which one
@@ -208,14 +253,14 @@
 			a person: a person never acts here.
 		</p>
 
-		<h3>Actors</h3>
+		<h4>Actors</h4>
 
 		<ul>
 			<li><b>A1. A caller</b> &mdash; a domain which has files standing nowhere it can read them, and which knows what they are for. It asks what is accepted, asks for a place, puts files there, and asks for an address. Two are known: the domain of the provision of files of swapp, and the app of the spin-off Auto-CS.</li>
 			<li><b>A2. Whoever holds an address</b> &mdash; it asks at an address for what that address names. It knows the address and nothing else, and it did not necessarily ask for the place: the machine of a person to whom the address was given is one of them, the caller itself is another.</li>
 		</ul>
 
-		<h3>Flows</h3>
+		<h4>Flows</h4>
 
 		<ul>
 			<li><b>F1. A1 &rarr; domain</b> &mdash; what is accepted? asked before anything is sent (R2).</li>
@@ -245,17 +290,17 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.3 -->
+	<!-- 3.6 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Conceptual model of data</h2>
+	<section class="subssection">
+	<h3>Conceptual model of data</h3>
 
 		<p>
 			Two classes, and the second exists only inside the first.
 		</p>
 
-		<h3>The classes of entities</h3>
+		<h4>The classes of entities</h4>
 
 		<table>
 			<thead>
@@ -275,7 +320,7 @@
 			</tbody>
 		</table>
 
-		<h3>The relations</h3>
+		<h4>The relations</h4>
 
 		<table>
 			<thead>
@@ -299,7 +344,7 @@
 			while it holds nothing, until its duration runs out.
 		</p>
 
-		<h3>Computed, and never held</h3>
+		<h4>Computed, and never held</h4>
 
 		<ul>
 			<li>The address at which a file is reached, which is a place, a name, a moment, and a signature made from a secret held where the space stands. It is verified by being computed again, nothing of it being written down anywhere (R4).</li>
@@ -320,7 +365,7 @@
 			what C3 forbids.
 		</p>
 
-		<h3>What the keys do not hold</h3>
+		<h4>What the keys do not hold</h4>
 
 		<ul>
 			<li>A file is written under the name it was given, and under no other: nothing here renames (C7).</li>
@@ -328,7 +373,7 @@
 			<li>The space holds at most its number of places at a time (C6).</li>
 		</ul>
 
-		<h3>What is not modelled, and why</h3>
+		<h4>What is not modelled, and why</h4>
 
 		<ul>
 			<li>The bounds and the duration: they are values (D1 to D4), and a value which moves is not a rule.</li>
@@ -339,11 +384,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.4 -->
+	<!-- 3.7 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Conceptual model of treatments</h2>
+	<section class="subssection">
+	<h3>Conceptual model of treatments</h3>
 
 		<p>
 			Six treatments, and they are all that the domain does. Five answer a caller
@@ -352,7 +397,7 @@
 			and on the state of the space, and never on a second request.
 		</p>
 
-		<h3>The events</h3>
+		<h4>The events</h4>
 
 		<table>
 			<thead>
@@ -375,8 +420,8 @@
 			the requests, C2 saying it already, for want of that chapter.
 		</p>
 
-		<section class="subssection">
-		<h3>T01 &mdash; Say what is accepted</h3>
+		<section>
+		<h4>T01 &mdash; Say what is accepted</h4>
 
 			<p><b>Purpose:</b> that a caller knows what may be sent before it sends anything.</p>
 
@@ -396,8 +441,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T02 &mdash; Give a place</h3>
+		<section>
+		<h4>T02 &mdash; Give a place</h4>
 
 			<p><b>Purpose:</b> that a caller has somewhere of its own to put files.</p>
 
@@ -424,8 +469,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T03 &mdash; Put a file in a place</h3>
+		<section>
+		<h4>T03 &mdash; Put a file in a place</h4>
 
 			<p><b>Purpose:</b> that a file stands in a place, under the name it was given.</p>
 
@@ -456,8 +501,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T04 &mdash; Give an address</h3>
+		<section>
+		<h4>T04 &mdash; Give an address</h4>
 
 			<p><b>Purpose:</b> that a file of a place can be reached from outside the machine.</p>
 
@@ -482,8 +527,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T05 &mdash; Serve what an address names</h3>
+		<section>
+		<h4>T05 &mdash; Serve what an address names</h4>
 
 			<p><b>Purpose:</b> that what an address names is given to whoever holds it.</p>
 
@@ -515,8 +560,8 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>T06 &mdash; Forget what is out of date</h3>
+		<section>
+		<h4>T06 &mdash; Forget what is out of date</h4>
 
 			<p><b>Purpose:</b> that nothing stays beyond the duration, and that no caller has to ask for it.</p>
 
@@ -542,11 +587,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.5 -->
+	<!-- 3.8 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What it offers</h2>
+	<section class="subssection">
+	<h3>What it offers</h3>
 
 		<table>
 			<thead><tr><th>Operation</th><th>What it promises</th></tr></thead>
@@ -573,18 +618,18 @@
 <!-- ====================== ORGANISATIONAL ========================= -->
 
 
-<section class="chapter">
-<h1>Organisational level</h1>
+<section class="ssection">
+<h2>Organisational level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.1 -->
+	<!-- 3.9 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Organisational model of treatments</h2>
+	<section class="subssection">
+	<h3>Organisational model of treatments</h3>
 
 		<p>
 			One procedure per treatment, numbered as it is, and each one triggered by one
@@ -637,11 +682,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.2 -->
+	<!-- 3.10 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What the forgetting does not reach</h2>
+	<section class="subssection">
+	<h3>What the forgetting does not reach</h3>
 
 		<p>
 			Nothing here holds a clock, so the forgetting happens when something else does.
@@ -690,11 +735,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.3 -->
+	<!-- 3.11 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Rules of organisation</h2>
+	<section class="subssection">
+	<h3>Rules of organisation</h3>
 
 		<ul>
 			<li><b>RO1</b> &mdash; A caller calls this domain where it stands: the space and whoever asks for a place are on one machine. Nothing of what is asked and answered from F1 to F8 travels.</li>
@@ -714,18 +759,18 @@
 <!-- ====================== CONSTRAINTS ============================ -->
 
 
-<section class="chapter">
-<h1>Constraints</h1>
+<section class="ssection">
+<h2>Constraints</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 4.1 -->
+	<!-- 3.12 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What the code holds to</h2>
+	<section class="subssection">
+	<h3>What the code holds to</h3>
 
 		<table>
 			<thead><tr><th>No.</th><th>Constraint</th><th>Imposed by</th></tr></thead>
@@ -751,18 +796,18 @@
 <!-- ====================== LOGICAL LEVEL ========================== -->
 
 
-<section class="chapter">
-<h1>Logical level</h1>
+<section class="ssection">
+<h2>Logical level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 5.1 -->
+	<!-- 3.13 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The tables</h2>
+	<section class="subssection">
+	<h3>The tables</h3>
 
 		<p>
 			Each class of entities becomes a table, and its identifier becomes its key.
@@ -843,18 +888,18 @@
 <!-- ====================== PHYSICAL LEVEL ========================= -->
 
 
-<section class="chapter">
-<h1>Physical level</h1>
+<section class="ssection">
+<h2>Physical level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.1 -->
+	<!-- 3.14 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Where each table stands</h2>
+	<section class="subssection">
+	<h3>Where each table stands</h3>
 
 		<p>
 			Here the machine is named, and not before. There is no database: one disk bears
@@ -939,11 +984,11 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.2 -->
+	<!-- 3.15 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Operational model of treatments</h2>
+	<section class="subssection">
+	<h3>Operational model of treatments</h3>
 
 		<p>
 			The organisational level said by what and when; this says in what tasks, and
@@ -989,7 +1034,7 @@
 			</tbody>
 		</table>
 
-		<h3>The sweep is the first task of every procedure</h3>
+		<h4>The sweep is the first task of every procedure</h4>
 
 		<p>
 			It is written in every row, PF6 excepted, which is that task and nothing else.
@@ -999,7 +1044,7 @@
 			is the cheapest moment there is to find the space in the state PF2 will count.
 		</p>
 
-		<h3>Two tasks are a making which the name refuses</h3>
+		<h4>Two tasks are a making which the name refuses</h4>
 
 		<p>
 			A name which is taken is not verified and then written: it is one task which
@@ -1021,7 +1066,7 @@
 			is refused, and another name is drawn. Nothing has to be looked up beforehand.
 		</p>
 
-		<h3>The writing of the bytes is not one task</h3>
+		<h4>The writing of the bytes is not one task</h4>
 
 		<p>
 			A request which dies in the middle of it leaves a file which stands under its
@@ -1036,7 +1081,7 @@
 			which learns that it failed. A caller which is told nothing put nothing.
 		</p>
 
-		<h3>What two requests do to each other</h3>
+		<h4>What two requests do to each other</h4>
 
 		<p>
 			Between the moment PF5 reads that a place is of this hour and the moment it
@@ -1056,11 +1101,11 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.3 -->
+	<!-- 3.16 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Where the code goes</h2>
+	<section class="subssection">
+	<h3>Where the code goes</h3>
 
 		<p>
 			In <code>sppas/ui/swapp/services/deposit/</code>: in the family folder of the
@@ -1109,11 +1154,11 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.4 -->
+	<!-- 3.17 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The architecture of the code</h2>
+	<section class="subssection">
+	<h3>The architecture of the code</h3>
 
 		<p>
 			No manager, no view, no controller. Those are the shapes of an app, which
@@ -1155,18 +1200,18 @@
 <!-- ====================== UML ==================================== -->
 
 
-<section class="chapter">
-<h1>UML</h1>
+<section class="ssection">
+<h2>UML</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.1 -->
+	<!-- 3.18 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The classes</h2>
+	<section class="subssection">
+	<h3>The classes</h3>
 
 		<p>
 			Those which carry the data come from the tables, one per table. Those which
@@ -1174,7 +1219,7 @@
 			and nothing of how it is arranged.
 		</p>
 
-		<h3>What carries the data</h3>
+		<h4>What carries the data</h4>
 
 		<table>
 			<thead><tr><th>Class</th><th>From</th><th>What it is</th></tr></thead>
@@ -1184,7 +1229,7 @@
 			</tbody>
 		</table>
 
-		<h3>What does the work</h3>
+		<h4>What does the work</h4>
 
 		<table>
 			<thead><tr><th>Class</th><th>Module</th><th>What it is alone in knowing</th></tr></thead>
@@ -1214,11 +1259,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.2 -->
+	<!-- 3.19 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The class diagram</h2>
+	<section class="subssection">
+	<h3>The class diagram</h3>
 
 		<p>
 			<code>/</code> marks what is derived and held by nobody. What the operations
@@ -1258,7 +1303,7 @@
 			changes one of the two would keep the old shape.
 		</p>
 
-		<h3>What is tied to what</h3>
+		<h4>What is tied to what</h4>
 
 		<table>
 			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
@@ -1286,7 +1331,7 @@
 			know nothing of each other.
 		</p>
 
-		<h3>In yUML</h3>
+		<h4>In yUML</h4>
 
 		<p>
 			To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
@@ -1309,13 +1354,13 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.3 -->
+	<!-- 3.20 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The sequences</h2>
+	<section class="subssection">
+	<h3>The sequences</h3>
 
-		<h3>When a caller deposits</h3>
+		<h4>When a caller deposits</h4>
 
 		<ol>
 			<li>It asks what is accepted, and is answered a size, a volume and a number.</li>
@@ -1325,7 +1370,7 @@
 			<li>It asks for the address of one of them, and is given one which authorises reaching it. Or the place is gone, and there is no address.</li>
 		</ol>
 
-		<h3>When a request arrives at an address</h3>
+		<h4>When a request arrives at an address</h4>
 
 		<ol>
 			<li>The front of the machine verifies what authorises the address, and lets nothing through without it.</li>
@@ -1344,11 +1389,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.4 -->
+	<!-- 3.21 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The error policy</h2>
+	<section class="subssection">
+	<h3>The error policy</h3>
 
 		<table>
 			<thead><tr><th>Level</th><th>What happens</th><th>What is done</th></tr></thead>
@@ -1373,18 +1418,18 @@
 <!-- ====================== CONTRACTS ============================== -->
 
 
-<section class="chapter">
-<h1>The contracts</h1>
+<section class="ssection">
+<h2>The contracts</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 8.1 -->
+	<!-- 3.22 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>How to read them</h2>
+	<section class="subssection">
+	<h3>How to read them</h3>
 
 		<p>
 			<i>pre</i> is what has to be true on the way in, and what the operation does not
@@ -1393,7 +1438,7 @@
 			invented before the code is a name nobody will use.
 		</p>
 
-		<h3>What holds everywhere</h3>
+		<h4>What holds everywhere</h4>
 
 		<ul>
 			<li>The forgetting has run before any operation of the façade answers. No caller asks for it, and no operation is answered on a place which has outlived its duration.</li>
@@ -1407,11 +1452,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 8.2 -->
+	<!-- 3.23 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Class by class</h2>
+	<section class="subssection">
+	<h3>Class by class</h3>
 
 		<table>
 			<caption>DepositSpace</caption>
@@ -1499,11 +1544,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 8.3 -->
+	<!-- 3.24 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Where each constraint is held</h2>
+	<section class="subssection">
+	<h3>Where each constraint is held</h3>
 
 		<p>
 			One place each, and a constraint held in two would be a constraint held in
@@ -1534,18 +1579,18 @@
 <!-- ====================== TESTS ================================== -->
 
 
-<section class="chapter">
-<h1>What is tested, and where</h1>
+<section class="ssection">
+<h2>What is tested, and where</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 9.1 -->
+	<!-- 3.25 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Without a disk</h2>
+	<section class="subssection">
+	<h3>Without a disk</h3>
 
 		<p>
 			Nothing is installed, nothing is written, nothing waits.
@@ -1581,11 +1626,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 9.2 -->
+	<!-- 3.26 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>With a disk</h2>
+	<section class="subssection">
+	<h3>With a disk</h3>
 
 		<p>
 			On a space of its own, made for the test and deleted with it.
@@ -1627,11 +1672,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 9.3 -->
+	<!-- 3.27 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What only two at once show</h2>
+	<section class="subssection">
+	<h3>What only two at once show</h3>
 
 		<p>
 			Three things cannot be seen by one request, and they are exactly the three the
@@ -1656,11 +1701,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 9.4 -->
+	<!-- 3.28 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What no test covers, and where they stand</h2>
+	<section class="subssection">
+	<h3>What no test covers, and where they stand</h3>
 
 		<ul>
 			<li><b>A file left short</b> by a request which died in the middle of writing it. Nothing looks for it, by decision: the place dies at its hour with what it holds, and a test would have to assert the absence of a thing nothing is asked to detect.</li>
@@ -1670,8 +1715,8 @@
 		</ul>
 
 		<p>
-			The tests stand beside the code, in the folder of this service, and none of them
-			needs a server, a browser or a person. Nine need nothing at all, ten need a
+			The tests stand where the project puts its own, in <code>tests/swapp/</code>,
+			and none of them needs a server, a browser or a person. Nine need nothing at all, ten need a
 			disk, three need two things running at once &mdash; which is what the cutting
 			into three modules was for.
 		</p>
@@ -1684,18 +1729,18 @@
 <!-- ====================== DECISIONS ============================== -->
 
 
-<section class="chapter">
-<h1>The decisions of the tool</h1>
+<section class="ssection">
+<h2>The decisions of the tool</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 10.1 -->
+	<!-- 3.29 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The four values</h2>
+	<section class="subssection">
+	<h3>The four values</h3>
 
 		<p>
 			What the levels above do not determine, written here alone: a value written
@@ -1741,18 +1786,18 @@
 <!-- ====================== NOT WRITTEN ============================ -->
 
 
-<section class="chapter">
-<h1>What is not written yet</h1>
+<section class="ssection">
+<h2>What is not written yet</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 11.1 -->
+	<!-- 3.30 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What this dossier owes</h2>
+	<section class="subssection">
+	<h3>What this dossier owes</h3>
 
 		<p>
 			The levels are written, the classes are drawn, what they promise is said, and
@@ -1771,6 +1816,9 @@
 		</p>
 
 	</section>
+
+</section>
+
 
 </section>
 
