@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>B. Bigi - Annotate</title>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../statics/icons/sppas5.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../whakerexa/wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="../whakerexa/wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../whakerexa/wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../whakerexa/wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --toc-width: 18rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<header id="header-content">
+
+	<a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+
+	<h1>Annotate - an app of SPPAS</h1>
+	<h2>Brigitte Bigi</h2>
+
+</header>
+
+
+
+<nav class="nav-wexa top" aria-label="Accessibilité">
+	<button id="btn-css-theme" class="menuitem" type="button"
+			aria-label="Switch CSS theme" title="Switch CSS theme"
+			onclick="window.themes && window.themes.next()">
+	</button>
+	<button id="btn-contrast" class="menuitem accessibility"
+			aria-label="contrast" aria-pressed="false"
+			onclick="Wexa.accessibility.switchContrastScheme()"></button>
+	<button id="btn-color" class="menuitem accessibility"
+			aria-label="color" aria-pressed="false"
+			onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+
+
+<nav class="book-toc" aria-label="Table of contents">
+	<h1>Annotate - an app of SPPAS</h1>
+	<ul id="toc"></ul>
+</nav>
+
+
+
+<main id="main-content">
+
+
+<!-- ====================== USER MANUAL ============================ -->
+
+
+<section class="chapter">
+<h1>User manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is the help of the person who annotates:
+		what the page shows, how an annotation is chosen and set, what is done to the
+		files, and what is read of what came of it.
+	</p>
+
+</section>
+
+
+<!-- ====================== DEVELOPER MANUAL ======================= -->
+
+
+<section class="chapter">
+<h1>Developer manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is for whoever reads or changes the code:
+		how it is organised, what the page is made of, the events it answers, and the
+		stylesheets.
+	</p>
+
+</section>
+
+
+<!-- ====================== MODELLING ============================== -->
+
+
+<section class="chapter">
+<h1>Modelling</h1>
+
+<!-- =============================================================== -->
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Problem and scope</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Description</h3>
+
+			<p>
+				SPPAS annotates: it takes files of a person and writes, beside them, what
+				it found in them &mdash; the words, the sounds, the syllables, what was
+				said at the same time as something else. What it can find is not one thing
+				but a score of them, each written by somebody, each with its own language,
+				its own settings and its own needs.
+			</p>
+
+			<p>
+				This application is what stands between a person and those annotations. It
+				shows what can be run, lets one be chosen and set, runs the chosen ones on
+				the files she chose, says what came of each, and keeps what it said so that
+				it can be read again. It annotates nothing itself.
+			</p>
+
+			<p>
+				Three neighbours answer for what it does not: the files are the provision
+				of files', the settings of an annotation are the service of the options',
+				and what an annotation does is the domain of the annotations'. What is left
+				is the annotations as a set &mdash; which are offered, which were chosen,
+				what they were run with, and what came of the run.
+			</p>
+
+			<p>
+				<b>The annotations are not independent of one another.</b> The phonetization
+				needs the text normalization, the alignment needs the phonetization, the
+				time group analysis needs the syllabification. Every annotation declares
+				what it requires, so the order exists and is written down; what does not
+				exist is anywhere a person can see it. A score of annotations offered as a
+				flat list is a list one gets lost in, and it is the same list whether one
+				knows it holds three chains or twenty unrelated things.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Defining the needs</h3>
+
+			<p>
+				The needs are those of the person who annotates. None of them says by what
+				it is answered.
+			</p>
+
+			<ul>
+				<li><b>B1</b> &mdash; To choose, among the annotations which are offered, the ones to run.</li>
+				<li><b>B2</b> &mdash; To find one's way among the annotations which are offered.</li>
+				<li><b>B3</b> &mdash; To know what an annotation does before choosing it, and on which published work it rests.</li>
+				<li><b>B4</b> &mdash; To choose the language of the annotations, and another one for an annotation which does not speak the same.</li>
+				<li><b>B5</b> &mdash; To give an annotation the values it expects, before it is run.</li>
+				<li><b>B6</b> &mdash; To choose the extension of every kind of file which is produced.</li>
+				<li><b>B7</b> &mdash; To run every annotation which was chosen at one go, on the files which were chosen.</li>
+				<li><b>B8</b> &mdash; To follow what happens while it happens.</li>
+				<li><b>B9</b> &mdash; To read what happened, annotation by annotation and file by file.</li>
+				<li><b>B10</b> &mdash; To read the report of a run: at the end of that run, and afterwards.</li>
+				<li><b>B11</b> &mdash; To delete the reports which are of no use any more.</li>
+				<li><b>B12</b> &mdash; To obtain one file holding everything which was annotated, to open it in Praat.</li>
+				<li><b>B13</b> &mdash; To see what an annotation needs, and to be shown the annotations arranged so that it shows.</li>
+			</ul>
+
+			<p>
+				<b>B2 is where the difficulty is.</b> Every annotation has a type, and a
+				type says how many files it takes and whose: one file on its own, two files
+				of one speaker, or two files of two speakers. That is a real thing to know
+				and it is not a way of finding an annotation: one of the three types holds
+				a score of annotations, so knowing the type shortens nothing. A type says
+				what an annotation takes, and B2 asks where it stands among the others.
+			</p>
+
+			<p>
+				<b>There is no annotation without a type.</b> A declaration which names
+				none does not leave the question open: it says the first of the three, one
+				file on its own. That is not a detail of the reading &mdash; it decides
+				what an annotation takes, and therefore where it is offered. A declaration
+				which forgets the field says that the annotation takes one file and is
+				offered everywhere, and it says it as firmly as one which writes it. C16
+			</p>
+
+			<p>
+				<b>B13 is the one which was not expressed, and the one which is worth the
+				work.</b> It is inferred from B2: what orders a list of a score of lines is
+				already declared, and showing it turns that list into a handful of chains.
+				Where an annotation stands in its chain says what it is for better than its
+				description does. It is the one need of this list which nothing answers
+				anywhere.
+			</p>
+
+			<p>
+				B13 asks for two things and they are not the same: <b>seeing</b> what one
+				annotation needs, which is reading one declaration; and <b>being shown</b>
+				the annotations arranged by what they need, which is reading all of them.
+				The first can be answered without the second. Whether both are answered is
+				not decided here, and it is written down so that the decision is taken and
+				not avoided.
+			</p>
+
+			<p>
+				What an annotation requires is only what comes before it. An annotation
+				declares what it needs and never what will be made of it: what follows an
+				annotation is read on the others, and is not something that annotation says
+				of itself.
+			</p>
+
+			<p>
+				Three needs are answered elsewhere and are named here because the person
+				has them: the files which are annotated are the provision of files' (B7),
+				the values an annotation expects are the service of the options' (B5), and
+				what is made of a produced file afterwards belongs to whoever reads it.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Scope</h3>
+
+			<p>
+				This document covers a set of annotations: how they are shown, how they are
+				chosen, what they are run with, how they are run, and what is read of what
+				came of it.
+			</p>
+
+			<p>
+				What is not covered: what an annotation does and how, which is the domain
+				of the annotations'; which files are annotated, which is the provision of
+				files'; and the values an annotation expects, which the service of the
+				options shows and sets.
+			</p>
+
+			<p>
+				<code>sppasParam</code>, <code>annotationParam</code>,
+				<code>sppasAnnotationsManager</code> and <code>sppasAnnReport</code> are
+				read and not modelled. Their functioning is established, and this document
+				names them as it names a neighbour.
+			</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Conceptual level</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Data dictionary</h3>
+
+			<p>Four data, and they all belong to one run.</p>
+
+			<ul>
+				<li><b>D1. A run</b> &mdash; the annotations which were chosen, what they were chosen with, the files they were run on, and the moment it started.</li>
+				<li><b>D2. A choice</b> &mdash; one annotation which is to be run, and the language it is to be run in.</li>
+				<li><b>D3. A result</b> &mdash; what came of one annotation of one run: on how many files it succeeded, and what it said.</li>
+				<li><b>D4. A report</b> &mdash; what a run wrote of itself, kept so that it can be read again. It is written line by line while the run goes, every line saying what was done and how it went, and it ends with what every annotation did.</li>
+			</ul>
+
+			<p>
+				The annotations themselves are not among them. What each declares &mdash;
+				its name, what it does, what it requires, its type, its languages, its
+				options, the work it rests on &mdash; is written in the domain of the
+				annotations and read from there.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Conceptual model of communication</h3>
+
+			<p>
+				Four actors border this application: a person, and three neighbouring
+				domains it calls. It writes into none of the three.
+			</p>
+
+			<h4>Actors</h4>
+
+			<ul>
+				<li><b>A1. The person</b> &mdash; reads what is offered, chooses annotations, chooses a language and an extension, sets an annotation, starts a run, follows it, and reads what came of it.</li>
+				<li><b>A2. The domain of the annotations</b> &mdash; holds what every annotation declares of itself, runs an annotation on files, and writes what it did.</li>
+				<li><b>A3. The provision of files</b> &mdash; gives the files a run works on, and makes what was produced reachable among the files of the person.</li>
+				<li><b>A4. The service of the options</b> &mdash; shows the options an annotation declares and gives back what was set on them.</li>
+			</ul>
+
+			<h4>Flows</h4>
+
+			<ul>
+				<li><b>F1. A2 &rarr; app</b> &mdash; the annotations which are offered, and what each declares of itself [B1, B3].</li>
+				<li><b>F2. app &rarr; A1</b> &mdash; what is offered: for every annotation, its name, what it does, the work it rests on or how far it is from being finished, the languages it speaks, and whether it can be chosen at all [B1, B3].</li>
+				<li><b>F3. A1 &rarr; app</b> &mdash; an annotation chosen, or a choice taken back [B1].</li>
+				<li><b>F4. A1 &rarr; app</b> &mdash; the language of the run, or the language of one annotation [B4].</li>
+				<li><b>F5. A1 &rarr; app</b> &mdash; the extension of one kind of file to be written [B6].</li>
+				<li><b>F6. app &rarr; A4</b> &mdash; the options one annotation declares, to be set [B5].</li>
+				<li><b>F7. A4 &rarr; app</b> &mdash; those options, with the values which were set [B5].</li>
+				<li><b>F8. A3 &rarr; app</b> &mdash; a workspace holding the files to be annotated, and them only [B7].</li>
+				<li><b>F9. A1 &rarr; app</b> &mdash; start the run [B7].</li>
+				<li><b>F10. app &rarr; A2</b> &mdash; one annotation to run, the workspace, the language, the values and the extensions [B7].</li>
+				<li><b>F11. A2 &rarr; app</b> &mdash; what that annotation did, and on how many files it succeeded.</li>
+				<li><b>F12. app &rarr; A1</b> &mdash; which annotation is running, and how many remain [B8].</li>
+				<li><b>F13. app &rarr; A1</b> &mdash; what came of the run, annotation by annotation and file by file [B9].</li>
+				<li><b>F14. app &rarr; A3</b> &mdash; the files which were written, to be made known [B7].</li>
+				<li><b>F15. app &rarr; A1</b> &mdash; the reports of the runs which came before [B10].</li>
+				<li><b>F16. A1 &rarr; app</b> &mdash; the reports to delete [B11].</li>
+			</ul>
+
+			<p>
+				<b>F10 carries one annotation and not a list.</b> The domain of the
+				annotations is asked for one thing at a time, and what orders them is this
+				application: an annotation which needs another to have run before it is run
+				after it, and that order is not the neighbour's to keep.
+			</p>
+
+			<p>
+				<b>F10 carries a workspace, and not what an annotation reads.</b> What an
+				annotation reads is found from two things, and neither of them is this
+				application's: what is checked in that workspace and what stands beside it;
+				and the patterns and the extensions that annotation declares. Where an
+				annotation takes two files which belong together, what says they belong
+				together is the workspace as well.
+			</p>
+
+			<p>
+				This application chooses no file, pairs no file and looks for none. It
+				gives what was chosen, and what is read of it is settled between the
+				workspace and the declaration.
+			</p>
+
+			<p>
+				<b>Nothing goes from this application to A2 but a request to run.</b> What
+				an annotation declares is read and never written: a language chosen for one
+				annotation is held here, for the time of the run, and the declaration is
+				what it was.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Conceptual model of data</h3>
+
+			<p>
+				Five classes. The annotation is one of them without being modelled: it
+				belongs to the domain of the annotations, and appears here with its
+				identifier and no property.
+			</p>
+
+			<h4>The classes of entities</h4>
+
+			<table>
+				<thead>
+					<tr><th>Class</th><th>Properties</th><th>What it is</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>ANNOTATION</td><td># annotation</td><td>One annotation which is offered. What it declares is read where it is written</td></tr>
+					<tr><td>RUN</td><td># run, moment, language, one file or several</td><td>One set of annotations started at one moment on one set of files (D1)</td></tr>
+					<tr><td>EXTENSION</td><td># run, # kind, extension</td><td>The extension the files of one kind will be written with</td></tr>
+					<tr><td>CHOICE</td><td># run, # annotation, language</td><td>One annotation which is to be run in that run, and the language it is to be run in (D2)</td></tr>
+					<tr><td>RESULT</td><td># run, # annotation, how many succeeded, what was said</td><td>What came of one annotation of one run (D3)</td></tr>
+					<tr><td>REPORT</td><td># report, moment, run</td><td>What a run wrote of itself, kept so that it can be read again (D4)</td></tr>
+				</tbody>
+			</table>
+
+			<h4>The relations</h4>
+
+			<table>
+				<thead>
+					<tr><th>No.</th><th>Verb</th><th>Leg 1</th><th>Leg 2</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>R1</td><td>is to be run in</td><td>CHOICE (1,1)</td><td>RUN (1,n)</td></tr>
+					<tr><td>R2</td><td>chooses</td><td>CHOICE (1,1)</td><td>ANNOTATION (0,n)</td></tr>
+					<tr><td>R3</td><td>reports on</td><td>RESULT (1,1)</td><td>CHOICE (0,1)</td></tr>
+					<tr><td>R4</td><td>was written by</td><td>REPORT (1,1)</td><td>RUN (0,1)</td></tr>
+					<tr><td>R5</td><td>is written with</td><td>EXTENSION (1,1)</td><td>RUN (1,n)</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				R1 is an aggregation: a choice exists only inside the run it was made for.
+				R1 and R2 together identify a choice, and that is what says an annotation is
+				chosen once in a run and not twice.
+			</p>
+
+			<p>
+				R3 reads (0,1) on the side of the choice: an annotation which was chosen has
+				one result or none, and none is what a run which has not reached it yet
+				holds. A result which exists is a result which is final: this application
+				does not run an annotation twice in one run.
+			</p>
+
+			<p>
+				<b>The language is on the choice and not on the annotation.</b> One language
+				is chosen for the run and every choice takes it; a choice may hold another,
+				and holds it for that run alone. An annotation which does not speak the
+				language of the run is not silently run in another: it is the person who
+				says which one, on that annotation.
+			</p>
+
+			<h4>Computed, and never held</h4>
+
+			<ul>
+				<li>Which annotations are offered, which is what the domain of the annotations declares.</li>
+				<li>What an annotation requires, and therefore the order the chosen ones are run in: read from the declarations, and never written here [B13].</li>
+				<li>Which annotations a run has left to run, which is what it chose against the results it holds.</li>
+				<li>That a run is over, which is one result per choice.</li>
+				<li><b>The languages an annotation speaks</b>, which are not a list it declares: it declares where its resources stand and how they are named, and the languages are what is found there. They are read on the machine where SPPAS runs, and a machine which holds fewer resources offers fewer languages.</li>
+			</ul>
+
+			<h4>What is not modelled, and why</h4>
+
+			<ul>
+				<li>What an annotation declares of itself &mdash; its name, what it does, its type, its languages, its options, the work it rests on, how far it is from being finished, and what it requires. All of it is established, read where it is written, and nothing here adds to it.</li>
+				<li><b>The work an annotation rests on</b>, which is a set of publications, each with a name of its own and where it is to be read. An annotation declares them or declares none, and this application shows what it declares and holds nothing of it.</li>
+				<li><b>How far an annotation is from being finished</b>, which is a number an annotation declares of itself. It is shown where an annotation names no publication, because an annotation which is still being made has nothing published to point at yet.</li>
+				<li>The files a run works on and the files it wrote, which are the provision of files'. This application holds their identity for the time of the run.</li>
+				<li>The values an annotation expects, which the service of the options shows and sets. What is held here is that they were set, and for which annotation.</li>
+				<li>What a report says, which is written by the domain of the annotations. This application knows where a report stands and when it was written, and does not read it.</li>
+			</ul>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Conceptual model of treatments</h3>
+
+			<p>
+				Ten treatments. Eight answer a person who asked; two answer the one before
+				them.
+			</p>
+
+			<h4>The events</h4>
+
+			<table>
+				<thead>
+					<tr><th>No.</th><th>Event</th><th>Kind</th><th>Comes from</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>E1</td><td>The person asks to see what is offered</td><td>external</td><td>The person (A1)</td></tr>
+					<tr><td>E2</td><td>The person chooses an annotation, or takes a choice back</td><td>external</td><td>F3</td></tr>
+					<tr><td>E3</td><td>The person chooses a language</td><td>external</td><td>F4</td></tr>
+					<tr><td>E4</td><td>The person chooses the extension of one kind of file</td><td>external</td><td>F5</td></tr>
+					<tr><td>E5</td><td>The person asks to set an annotation</td><td>external</td><td>The person (A1)</td></tr>
+					<tr><td>E6</td><td>The person starts the run</td><td>external</td><td>F9</td></tr>
+					<tr><td>E7</td><td>An annotation of the run has been run</td><td>internal</td><td>T06</td></tr>
+					<tr><td>E8</td><td>Every annotation of the run has been run</td><td>internal</td><td>T06</td></tr>
+					<tr><td>E9</td><td>The person asks to read a report</td><td>external</td><td>The person (A1)</td></tr>
+					<tr><td>E10</td><td>The person asks to delete reports</td><td>external</td><td>F16</td></tr>
+				</tbody>
+			</table>
+
+			<section>
+			<h4>T01 &mdash; Show what is offered</h4>
+
+				<table>
+					<thead><tr><th>What</th><th>Says</th></tr></thead>
+					<tbody>
+						<tr><td>Synchronisation</td><td>E1</td></tr>
+						<tr><td>Actions</td><td>Read what the domain of the annotations declares; read, of every annotation, what it requires</td></tr>
+						<tr><td>Result</td><td>What is offered, every annotation with its name, what it does, the publications it rests on or how far it is from being finished, and the languages it speaks (F2). Always</td></tr>
+					</tbody>
+				</table>
+
+				<p>
+					What is shown of an annotation is what that annotation declares, and
+					nothing this application wrote. What it requires is read here and shown
+					or not, and that is the whole of B13.
+				</p>
+
+				<p>
+					<b>What is offered is not always all of it.</b> An annotation which takes
+					two files which belong together is offered where something says that two
+					files belong together, and not elsewhere. What is read of an annotation
+					to know it is its type, and it is read here with the rest &mdash;
+					including where the declaration names none, which says one file on its
+					own. C16
+				</p>
+
+			</section>
+
+			<section>
+			<h4>T02 &mdash; Choose an annotation</h4>
+
+				<table>
+					<thead><tr><th>What</th><th>Says</th></tr></thead>
+					<tbody>
+						<tr><td>Synchronisation</td><td>E2</td></tr>
+						<tr><td>Actions</td><td>Hold that the annotation is to be run, with the language of the run; or hold that it is not</td></tr>
+						<tr><td>Result</td><td>What is chosen (F2). Always</td></tr>
+					</tbody>
+				</table>
+
+				<p>
+					An annotation which requires another is chosen all the same: nothing is
+					chosen in its place and nothing is refused. What is done with what it
+					requires is decided at the run, and not here.
+				</p>
+
+				<p>
+					<b>The reason is the way people work.</b> One annotation is run, what it
+					wrote is corrected by hand in the editor, and the next one is run on the
+					corrected version. Choosing what an annotation requires in its place
+					would make that impossible: the chain would run to the end on what was
+					not corrected, which is the opposite of what is wanted.
+				</p>
+
+			</section>
+
+			<section>
+			<h4>T03 &mdash; Choose a language</h4>
+
+				<table>
+					<thead><tr><th>What</th><th>Says</th></tr></thead>
+					<tbody>
+						<tr><td>Synchronisation</td><td>E3</td></tr>
+						<tr><td>Actions</td><td>Hold the language, for the run or for one annotation</td></tr>
+						<tr><td>Result</td><td>The language of the run, and of every annotation which speaks it (F2). When the language is that of the run</td></tr>
+						<tr><td>Result</td><td>The language of that annotation (F2). When it is that of one annotation</td></tr>
+					</tbody>
+				</table>
+
+				<p>
+					<b>An annotation which does not speak the language of the run loses the
+					one it had.</b> It is not run in another, it is not unchosen, and it is
+					not refused: it is left with no language, and the person is the one who
+					gives it another on that annotation. An annotation which needs no
+					language resource is not concerned at all.
+				</p>
+
+			</section>
+
+			<section>
+			<h4>T04 &mdash; Choose an extension</h4>
+
+				<table>
+					<thead><tr><th>What</th><th>Says</th></tr></thead>
+					<tbody>
+						<tr><td>Synchronisation</td><td>E4</td></tr>
+						<tr><td>Actions</td><td>Hold the extension of one kind of file which will be written</td></tr>
+						<tr><td>Result</td><td>The extension of that kind (F2). Always</td></tr>
+					</tbody>
+				</table>
+
+				<p>
+					<b>An annotation does not write one kind of file.</b> What is written is
+					annotations, measures or tables, and it may be a sound, an image or a
+					video as well. There is one extension per kind of file which may be
+					written, and choosing one says nothing of the others.
+				</p>
+
+			</section>
+
+			<section>
+			<h4>T05 &mdash; Set an annotation</h4>
+
+				<table>
+					<thead><tr><th>What</th><th>Says</th></tr></thead>
+					<tbody>
+						<tr><td>Synchronisation</td><td>E5</td></tr>
+						<tr><td>Actions</td><td>Hand the options that annotation declares to the service of the options (F6); take back what was set (F7)</td></tr>
+						<tr><td>Result</td><td>The options of that annotation hold the values which were set. Always</td></tr>
+					</tbody>
+				</table>
+
+				<p>Nothing is judged here: what a value may be is that service's to answer,
+				and what it means is the annotation's.</p>
+
+			</section>
+
+			<section>
+			<h4>T06 &mdash; Run the annotations which were chosen</h4>
+
+				<p><b>Purpose:</b> that every annotation which was chosen is run on the
+				files which were chosen, and that what came of each of them is known.</p>
+
+				<table>
+					<thead><tr><th>What</th><th>Says</th></tr></thead>
+					<tbody>
+						<tr><td>Synchronisation</td><td>E6, and at least one annotation chosen and files which are not none</td></tr>
+						<tr><td>Actions</td><td>Write the run, its moment, its language and its extension; then, for every annotation chosen: ask the domain of the annotations to run it, and take back what it did</td></tr>
+						<tr><td>Result</td><td>Which annotation is running, and how many remain (F12). For every annotation, before it is run</td></tr>
+						<tr><td>Result</td><td>E7, an annotation has been run. For every annotation, whatever came of it</td></tr>
+						<tr><td>Result</td><td>E8, every annotation has been run. When the last one has</td></tr>
+					</tbody>
+				</table>
+
+				<p>
+					<b>A run is a series and not an operation.</b> The annotations are run one
+					after another, and one which fails is one with a result: the run goes on
+					to the next, and there is no moment at which a run is undone. What was
+					written before the failure was written.
+				</p>
+
+				<p>
+					<b>The order is this application's.</b> An annotation which requires
+					another is run after it when both were chosen; when what it requires was
+					not chosen, it is run all the same, and what it finds is what is already
+					beside the files.
+				</p>
+
+			</section>
+
+			<section>
+			<h4>T07 &mdash; Say what came of one annotation</h4>
+
+				<table>
+					<thead><tr><th>What</th><th>Says</th></tr></thead>
+					<tbody>
+						<tr><td>Synchronisation</td><td>E7</td></tr>
+						<tr><td>Actions</td><td>Make the result of that annotation: on how many files it succeeded, and what it said</td></tr>
+						<tr><td>Result</td><td>The result of that annotation (F13). Always</td></tr>
+					</tbody>
+				</table>
+
+				<p>What an annotation said is given as it said it. This application does not
+				shorten it and does not decide that it means a success: what it says of its
+				own is on how many files the annotation succeeded.</p>
+
+			</section>
+
+			<section>
+			<h4>T08 &mdash; Close the run</h4>
+
+				<table>
+					<thead><tr><th>What</th><th>Says</th></tr></thead>
+					<tbody>
+						<tr><td>Synchronisation</td><td>E8</td></tr>
+						<tr><td>Actions</td><td>Gather what was written into one file when one was asked for; write the report of the run; give the files which were written and the report to the provision of files</td></tr>
+						<tr><td>Result</td><td>The files which were written, and the report with them (F14). Always: a run which wrote no file wrote a report</td></tr>
+						<tr><td>Result</td><td>The report, shown (F13). Always</td></tr>
+					</tbody>
+				</table>
+
+				<p>
+					It runs at the end and not at every annotation: what a run writes is not
+					finished until it has finished, and a file gathered halfway would gather
+					half of it.
+				</p>
+
+				<p>
+					<b>The report goes where the files go.</b> It is handed to the provision
+					of files with them, it is reached the same way they are, and it lasts as
+					long as they do. It is shown at the end of the run as well, because that
+					is when it is read.
+				</p>
+
+			</section>
+
+			<section>
+			<h4>T09 &mdash; Read a report</h4>
+
+				<table>
+					<thead><tr><th>What</th><th>Says</th></tr></thead>
+					<tbody>
+						<tr><td>Synchronisation</td><td>E9</td></tr>
+						<tr><td>Actions</td><td>Give what that report holds</td></tr>
+						<tr><td>Result</td><td>The report (F15). When it is there</td></tr>
+						<tr><td>Result</td><td>That it is not there (F15). Otherwise</td></tr>
+					</tbody>
+				</table>
+
+				<p>A report of a run which came before is read as the report of the run
+				which has just happened: they are the same thing, and one of them is only
+				older.</p>
+
+				<p>
+					<b>A report is read and not interpreted, and its lines carry their own
+					state.</b> Every line says how what it is about went &mdash; done, refused,
+					worth a warning, worth saying, or passed over &mdash; and it is the line
+					which says it, not this application. What is shown of a report is what it
+					holds, and what that state is used for is to show it as what it is.
+				</p>
+
+			</section>
+
+			<section>
+			<h4>T10 &mdash; Delete reports</h4>
+
+				<table>
+					<thead><tr><th>What</th><th>Says</th></tr></thead>
+					<tbody>
+						<tr><td>Synchronisation</td><td>E10</td></tr>
+						<tr><td>Actions</td><td>Delete the reports which were named</td></tr>
+						<tr><td>Result</td><td>The reports which are left (F15). Always</td></tr>
+					</tbody>
+				</table>
+
+				<p>What a report was written about is not deleted with it. The files an
+				annotation wrote are the person's, and they were hers the moment they
+				appeared.</p>
+
+				<p>
+					A report is one run, and one run is one report: the reports are told
+					apart by the moment they were written, and a report which is deleted is
+					deleted alone.
+				</p>
+
+			</section>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Organisational level</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Organisational model of treatments</h3>
+
+			<p>
+				One procedure per treatment, numbered as it is. One table and not two:
+				nothing here is done in one context of execution and not in the other, and
+				an annotation is run the same way whether the machine is the one of the
+				person or a server she reaches.
+			</p>
+
+			<table>
+				<thead>
+					<tr><th>PF</th><th>What it does</th><th>Triggered by</th><th>In charge</th><th>Where</th><th>When</th><th>Nature</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>PF1 (T01)</td><td>Shows what is offered</td><td>E1</td><td>the app</td><td>the server</td><td>when the person asks</td><td>conversational</td></tr>
+					<tr><td>PF2 (T02)</td><td>Chooses an annotation</td><td>E2</td><td>the person</td><td>the browser, then the server</td><td>each time she chooses or takes back</td><td>conversational</td></tr>
+					<tr><td>PF3 (T03)</td><td>Chooses a language</td><td>E3</td><td>the person</td><td>the browser, then the server</td><td>each time she chooses one</td><td>conversational</td></tr>
+					<tr><td>PF4 (T04)</td><td>Chooses an extension</td><td>E4</td><td>the person</td><td>the browser, then the server</td><td>each time she chooses one</td><td>conversational</td></tr>
+					<tr><td>PF5 (T05)</td><td>Sets an annotation</td><td>E5</td><td>the service of the options</td><td>the server</td><td>before a run, as often as she wants</td><td>conversational</td></tr>
+					<tr><td>PF6 (T06)</td><td>Runs the annotations which were chosen</td><td>E6</td><td>the domain of the annotations</td><td>the server</td><td>when she starts the run</td><td>automated</td></tr>
+					<tr><td>PF7 (T07)</td><td>Says what came of one annotation</td><td>E7</td><td>the app</td><td>the server</td><td>as soon as an annotation has been run</td><td>automated</td></tr>
+					<tr><td>PF8 (T08)</td><td>Closes the run</td><td>E8</td><td>the app, then the provision of files</td><td>the server</td><td>when the last annotation has been run</td><td>automated</td></tr>
+					<tr><td>PF9 (T09)</td><td>Reads a report</td><td>E9</td><td>the app</td><td>the server</td><td>when she asks</td><td>conversational</td></tr>
+					<tr><td>PF10 (T10)</td><td>Deletes reports</td><td>E10</td><td>the app</td><td>the server</td><td>when she asks</td><td>conversational</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>Everything is decided on the server.</b> What the browser holds is the
+				gesture &mdash; the annotation ticked, the language picked, the extension
+				picked &mdash; and the choices already made, which it carries from one
+				request to the next. It decides nothing, because what an annotation is,
+				which languages it speaks and what it requires are declared where the
+				annotations are and read nowhere else. RO2
+			</p>
+
+			<p>
+				<b>The table holds for both contexts of execution, and no procedure is
+				missing from either.</b> Where SPPAS runs on the machine of the person, the
+				server of this table is that machine and one person is alone on it. Where
+				SPPAS answers from a server, several persons are on it at once: each has her
+				own run, her own choices and her own reports, and what the machine can carry
+				at one time is not the same thing as what one person may start. RO3, RO9
+			</p>
+
+			<p>
+				<b>PF8, PF9 and PF10 do not differ between the two contexts.</b> A run
+				writes one report, it is handed over with the files and shown at the end,
+				and it is read again or deleted as any of them is. What changes from one
+				machine to another is how long the provision of files holds what it was
+				given, and that is that domain's question and not this one's. RO7, RO10
+			</p>
+
+			<p>
+				<b>The first is what PF1 offers.</b> An annotation takes one file on its
+				own, or two files of one speaker, or two files of two speakers. The last two
+				take files which belong together, and what says that two files belong
+				together is a workspace. Where SPPAS answers from a server there is none of
+				hers, so only the annotations of the first kind are offered there: the
+				others are not refused at the run, they are not offered at all. RO8
+			</p>
+
+			<p>
+				<b>An annotation offers the languages whose resources are on that
+				machine.</b> A declaration says where its resources stand and how they are
+				named; which languages there are is found by looking there. The same
+				annotation therefore offers three languages on one machine and eight on
+				another, and it offers none where nothing was installed for it. What a
+				server offers is what whoever runs it installed, and this application reads
+				it the same way in both contexts: it asks, it does not look itself. C17
+			</p>
+
+			<p>
+				<b>Showing what an annotation requires costs nothing more.</b> What is
+				declared is read when the list is shown, and it is read then anyway: the
+				name, what it does and the languages come from the same declaration.
+				Answering B13 adds a reading of one field, and no request. What it may add
+				is the arranging of the list, which is a matter of what is shown and not of
+				when it is read.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>How a run which lasts is followed</h3>
+
+			<p>
+				A run is a score of annotations on a set of files, and it lasts as long as
+				that takes. The request which starts it cannot hold the answer for minutes,
+				and nothing of what happens reaches a page which is not asking.
+			</p>
+
+			<p>
+				<b>A run is therefore started by one request and followed by others which
+				ask where it stands.</b> It is what the setting up of SPPAS does with the
+				installation of its features and what the app of the plugins does with a
+				run of one: a thread advances it, something holds where it stands, and later
+				requests read that. There is no reason for a third way.
+			</p>
+
+			<p>
+				What those later requests obtain is what F12 and F13 carry: the annotation
+				which is running, how many remain, and the results of the annotations which
+				are done. A run which is over answers that it is over, and answers it as
+				long as the person is reading it.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Rules of organisation</h3>
+
+			<ul>
+				<li><b>RO1</b> &mdash; A run outlives the request which started it. It is advanced by a thread of the process where SPPAS runs, and it is the one thing this application holds between two requests.</li>
+				<li><b>RO2</b> &mdash; What was chosen &mdash; the annotations, the languages, the extension &mdash; is carried from one request to the next by the page, and nothing of it is held on the server between two requests.</li>
+				<li><b>RO3</b> &mdash; One run at a time for one person. A second run started while one is going is refused, and the refusal says which one is still going.</li>
+				<li><b>RO4</b> &mdash; The order in which the chosen annotations are run is worked out once, when the run starts, from what each of them declares. It is not asked of the person and it is not asked of the neighbour.</li>
+				<li><b>RO5</b> &mdash; The options of an annotation are set before a run and read once, when that run starts. An annotation set during a run is set for the next one.</li>
+				<li><b>RO6</b> &mdash; This application reads nothing into what an annotation said. It shows that text and takes the number of files from the annotation itself.</li>
+				<li><b>RO7</b> &mdash; The report of a run is given to the provision of files with the files that run wrote: it is reached as they are and lasts as long as they do. It is shown at the end of the run in both contexts of execution.</li>
+				<li><b>RO10</b> &mdash; One run writes one report, in both contexts of execution and in the same way. Where a report stands, how it is reached and how long it lasts are the provision of files' to answer, and this application asks it the same question wherever it runs.</li>
+				<li><b>RO8</b> &mdash; Every procedure is the same in both contexts of execution, and none is missing from either. What differs is what is offered: where SPPAS answers from a server, only the annotations which take one file on their own are offered.</li>
+				<li><b>RO9</b> &mdash; Where SPPAS runs on the machine of the person, one run at a time is one run on that machine. Where it answers from a server, several persons run at once, and what bounds the number of runs the machine takes at one time is the business of whoever runs it.</li>
+			</ul>
+
+			<p>
+				RO3 is not a limit of the machine: two runs on one set of files would write
+				the same files at the same moment, and the person could not tell which run
+				produced what. RO4 is what makes one run enough &mdash; the chosen
+				annotations are run in the order they require, so there is nothing to gain
+				by starting a second.
+			</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Constraints</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>What the code holds to</h3>
+
+			<table>
+				<thead><tr><th>No.</th><th>Constraint</th><th>Imposed by</th></tr></thead>
+				<tbody>
+					<tr><td>C1</td><td>An annotation is chosen at most once in a run.</td><td>R1 with R2</td></tr>
+					<tr><td>C2</td><td>Choosing an annotation chooses no other.</td><td>T02, and the way people work</td></tr>
+					<tr><td>C3</td><td>An annotation which does not speak the language of the run is left with no language: it is neither run in another nor unchosen.</td><td>T03, B4</td></tr>
+					<tr><td>C4</td><td>The chosen annotations are run in an order which respects what each of them requires.</td><td>RO4</td></tr>
+					<tr><td>C5</td><td>An annotation whose requirement was not chosen is run all the same.</td><td>C2, T06</td></tr>
+					<tr><td>C6</td><td>The failure of one annotation never stops a run.</td><td>T06, B9</td></tr>
+					<tr><td>C7</td><td>What an annotation said is not read: whether it succeeded is the number of files it gives, never the text it wrote.</td><td>RO6, B9</td></tr>
+					<tr><td>C8</td><td>One run at a time for one person.</td><td>RO3</td></tr>
+					<tr><td>C9</td><td>The values an annotation is run with are those it held when the run started.</td><td>RO5</td></tr>
+					<tr><td>C10</td><td>A run works on the workspace it was given, and on nothing else.</td><td>B7</td></tr>
+					<tr><td>C11</td><td>One file gathering everything is written only where it was asked for.</td><td>B12</td></tr>
+					<tr><td>C12</td><td>A report is one of the files a run gives back: it is reached as they are and lasts as long as they do.</td><td>RO7</td></tr>
+					<tr><td>C13</td><td>Deleting a report deletes nothing of what the run wrote.</td><td>T10, B11</td></tr>
+					<tr><td>C14</td><td>What is shown of an annotation is what that annotation declares, and nothing this application wrote.</td><td>T01, B3</td></tr>
+					<tr><td>C15</td><td>What an annotation requires is read and never written here.</td><td>B13</td></tr>
+					<tr><td>C16</td><td>Every annotation has a type. One which declares none takes one file on its own.</td><td>The declaration, where the absence of the field is a value</td></tr>
+					<tr><td>C17</td><td>The languages offered for an annotation are those whose resources stand on the machine where SPPAS runs.</td><td>A declaration names where its resources are, not which languages there are</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>C2 and C5 are the same decision seen twice.</b> Nothing is chosen for
+				the person, so an annotation may be run without what it requires having
+				been run just before: it then works on what is already beside the files,
+				which is what somebody who corrected by hand wants. Written otherwise, a
+				chain would run to its end on what was not corrected.
+			</p>
+
+			<p>
+				<b>C4 does not contradict them.</b> The order is imposed on what was
+				chosen and on nothing else: it says that the phonetization runs before the
+				alignment when both were chosen, never that choosing the second chooses the
+				first.
+			</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.5 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Logical level</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The tables</h3>
+
+			<p>
+				Each class of entities becomes a table, and its identifier becomes its key.
+			</p>
+
+			<table>
+				<thead><tr><th>Table</th><th>Columns</th><th>Comes from</th></tr></thead>
+				<tbody>
+					<tr><td>ANNOTATION</td><td><u>annotation</u></td><td>The class ANNOTATION</td></tr>
+					<tr><td>RUN</td><td><u>run</u>, moment, language, one file or several</td><td>The class RUN</td></tr>
+					<tr><td>EXTENSION</td><td><u>run</u>, <u>kind</u>, extension</td><td>The class EXTENSION, and R5</td></tr>
+					<tr><td>CHOICE</td><td><u>run</u>, <u>annotation</u>, language</td><td>The class CHOICE, and R1 with R2</td></tr>
+					<tr><td>RESULT</td><td><u>run</u>, <u>annotation</u>, how many succeeded, what was said</td><td>The class RESULT, and R3</td></tr>
+					<tr><td>REPORT</td><td><u>report</u>, moment, run</td><td>The class REPORT, and R4</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				R1 and R2 both have their low cardinality on the side of the choice, which
+				is (1,1): the table takes both keys, and the two together identify it. That
+				is C1 written as a key rather than as a rule: one run holds one annotation
+				at most once.
+			</p>
+
+			<p>
+				R3 reads (0,1) on the side of the choice, so the result takes the key of
+				the choice and there is nothing else to say: a choice has one result or
+				none, and the key is what forbids two.
+			</p>
+
+			<p>
+				<b>The report is not keyed by its run, and that is not an oversight.</b> A
+				report is read long after the run which wrote it, and a run does not last:
+				keyed by the run, a report would stop being reachable the moment its run
+				was gone. It is keyed by itself, carries the moment it was written, and
+				names its run where that run can still be named &mdash; which is why R4
+				reads (0,1) on the side of the run.
+			</p>
+
+			<p>
+				<b>EXTENSION is a table because a run writes more than one kind of
+				file.</b> An annotation writes annotations, and some write a sound or an
+				image as well: there is one extension per kind, which is as many values as
+				there are kinds. Written as a column of the run, they would be one string
+				nobody can read back kind by kind.
+			</p>
+
+			<p>
+				ANNOTATION is a key and nothing else. The table exists so that a choice and
+				a result may name what they are about; what an annotation is made of is
+				written in the domain which holds it.
+			</p>
+
+			<h4>Computed, and never held</h4>
+
+			<ul>
+				<li>Everything an annotation declares: its name, what it does, its type, its languages, its options, the work it rests on, and what it requires.</li>
+				<li>The order the chosen annotations are run in, which follows from what they require.</li>
+				<li>How many annotations a run has left, which is its choices against its results.</li>
+				<li>That a run is over, which is one result per choice.</li>
+			</ul>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.6 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Physical level</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Where each table stands</h3>
+
+			<p>
+				Here the machines are named, and not before. One table stands in a
+				neighbouring domain, one stands on a disk, and the three others change
+				place when the run starts.
+			</p>
+
+			<table>
+				<thead><tr><th>Table</th><th>Before the run</th><th>From the run on</th><th>What the person sees</th></tr></thead>
+				<tbody>
+					<tr><td>ANNOTATION</td><td>The domain of the annotations, read at every request</td><td>The same</td><td>What is offered</td></tr>
+					<tr><td>RUN</td><td>Nowhere: there is no run yet</td><td>The process where SPPAS runs</td><td>What is running, and since when</td></tr>
+					<tr><td>CHOICE</td><td>What the page transmits</td><td>The process, written into the run when it starts</td><td>What she chose</td></tr>
+					<tr><td>EXTENSION</td><td>The same</td><td>The same</td><td>One extension per kind of file</td></tr>
+					<tr><td>RESULT</td><td>Nowhere</td><td>The process, added as each annotation is done</td><td>One line per annotation which is done</td></tr>
+					<tr><td>REPORT</td><td>A file, given to the provision of files with what the run wrote</td><td>The same, written while the run goes and closed with it</td><td>What a run wrote of itself, at the end of the run and by what it was given to reach it</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>The choices change place when the run starts, and that is the whole
+				arrangement.</b> While the person chooses, nothing is held on the server:
+				the page carries what was chosen and gives it back at every request. The
+				moment the run starts, what was chosen is written into the run, and the run
+				is held by the process &mdash; because a thread cannot read a page, and
+				because what a run was started with must not change under it. RO1, RO2, C9
+			</p>
+
+			<p>
+				<b>The report is the one thing which stays.</b> It is a file, written where
+				SPPAS keeps what it writes about itself, and it is not deleted with the
+				run: a run lasts as long as the process and a report lasts until somebody
+				deletes it. That is what B10 and B11 rest on, and it is why the report is
+				not keyed by its run.
+			</p>
+
+			<p>
+				<b>A run gives back what it produced, and the report is one of it.</b> One
+				run, one report: it is handed to the provision of files with the files the
+				run wrote, it is reached as they are, and it lasts as long as they do.
+				Where that is, is that domain's answer and not this one's. C12, RO10
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Operational model of treatments</h3>
+
+			<p>
+				The organisational level said by what and when; this says in what tasks,
+				and what among them cannot be half done. One request is one unit: what was
+				chosen is rebuilt from what the page transmitted, the one thing which was
+				asked is done, and what is to be shown is sent back.
+			</p>
+
+			<table>
+				<thead><tr><th>PF</th><th>The tasks, in order</th><th>What cannot be half done</th></tr></thead>
+				<tbody>
+					<tr><td>PF1</td><td>Read what the domain of the annotations declares; read, of each, what it requires; build what is to be shown</td><td>Nothing: nothing is written</td></tr>
+					<tr><td>PF2, PF3, PF4</td><td>Rebuild what was chosen; hold the choice, the language or the extension</td><td>Nothing</td></tr>
+					<tr><td>PF5</td><td>Rebuild; hand the options over; take back the values</td><td>Nothing</td></tr>
+					<tr><td>PF6</td><td>Rebuild; verify one annotation was chosen and the files are not none; work out the order; make the run and write what was chosen and the extensions into it; then, for every annotation in that order: ask the domain of the annotations to run it, and take back what it did</td><td>The making of the run, which finds a run of that person or makes one. Not the run itself</td></tr>
+					<tr><td>PF7</td><td>Add the result of that annotation to the run</td><td>The result of one annotation</td></tr>
+					<tr><td>PF8</td><td>Gather into one file where it was asked for; write the report; give the files which were written to the provision of files</td><td>Nothing of this application's</td></tr>
+					<tr><td>PF9, PF10</td><td>Read a report; delete the reports which were named</td><td>The deletion of one report</td></tr>
+				</tbody>
+			</table>
+
+			<h4>One annotation is the unit, and the run is not</h4>
+
+			<p>
+				A result is added when the annotation it is about is done, and a run holds
+				the annotations which are done and says nothing of the others. There is no
+				moment at which a run is half made and has to be undone: what was written
+				beside the files was written, and an annotation which failed leaves the
+				files as they were before it.
+			</p>
+
+			<p>
+				<b>A run which stops is not repaired.</b> A process which is killed, an
+				annotation which never returns: the run holds the results it had and no
+				more come. What tells a run which stopped from a run which is slow is the
+				thread which advances it, and nothing else is needed.
+			</p>
+
+			<h4>The order is worked out once</h4>
+
+			<p>
+				Before the first annotation is started, the chosen ones are put in an order
+				which respects what each of them requires. It is read from the declarations,
+				it is worked out once, and it does not change while the run goes. An
+				annotation which requires one which was not chosen takes its place in that
+				order all the same: what it requires is not there to wait for.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Where the code goes</h3>
+
+			<p>
+				In <code>sppas/ui/swapp/app_annotate/</code>, cut as every application of
+				swapp is cut: one module for the model, one for the view, one for what
+				dispatches, one for what answers the URL, and one module per part of the page.
+			</p>
+
+			<table>
+				<thead><tr><th>Module</th><th>What it does</th><th>Procedure</th></tr></thead>
+				<tbody>
+					<tr><td><code>annotate_model</code></td><td>Holds what the domain of the annotations offers and what is set on it, reads what an annotation requires, starts a run and says where it stands, and knows where the reports are. The only module of this application which speaks to that domain and to the two services</td><td>PF1, PF5, PF6, PF7, PF8, PF9, PF10</td></tr>
+					<tr><td><code>annotate_view</code></td><td>Builds the page and holds its parts</td><td>The view of every procedure</td></tr>
+					<tr><td><code>annotate_controller</code></td><td>Reads the task a request carries, calls what has to be called, and has the view build its tree</td><td>Every procedure</td></tr>
+					<tr><td><code>annotate_maker</code></td><td>Answers the URL, builds the view and what dispatches, and bakes the tree</td><td>Every procedure</td></tr>
+					<tr><td><code>annotaction</code>, <code>annotselect</code>, <code>annotlog</code></td><td>One part of the page each: what is set and what starts a run, with the reports beside it; the annotations of one type; where a run stands and the report it gave</td><td>The view of PF1, PF5, PF6, PF7, PF8, PF9, PF10</td></tr>
+				</tbody>
+			</table>
+
+			<p>What each one promises, which is the reason for the cutting:</p>
+
+			<ul>
+				<li>The <b>model</b> is the only one which calls the domain of the annotations and the two services, so it is the only one to be read again the day one of them changes. It relays what it reads and adds one thing: the order the annotations are run in.</li>
+				<li>The <b>view</b> decides nothing, and shows what an annotation declares as it declares it.</li>
+				<li>What <b>dispatches</b> holds nothing between two requests: what has to survive is what the page carries.</li>
+				<li>The <b>parts of the page</b> know the page and nothing else. None of them reads a file, a thread or a declaration.</li>
+			</ul>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Implementation model: MVC</h3>
+
+			<p>
+				The model holds what the annotations offer, what is set on them, the run
+				which is going and the reports which were written; it exposes neither the
+				domain of the annotations nor the two services to the rest of the application.
+				The controller is called once per request, reads the task it carries, and
+				holds nothing afterwards. The view renders and collects, and takes no
+				decision. Three components, three class diagrams.
+			</p>
+
+			<p>
+				<b>The page is one page.</b> What the interface which exists today shows one
+				panel at a time, this one holds as sections of a single page, shown and hidden
+				where they stand. Nothing is asked of the server to go from one to another,
+				and which one is under the eye is carried by nobody.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The classes of the model</h3>
+
+			<p>
+				<code>/</code> marks what is derived and held by nobody. What the operations
+				promise is the chapter on the contracts.
+			</p>
+
+			<table>
+				<thead><tr><th>Class</th><th>From</th><th>Attributes</th><th>Operations</th></tr></thead>
+				<tbody>
+					<tr><td><code>AnnotateModel</code></td><td>ANNOTATION, CHOICE, EXTENSION, REPORT</td><td>param, manager, log, thread, run</td><td>parameters(), requires(id), sequence(chosen), set_workspace(workspace), start(), is_running(), the_run(), reports(), read_report(id), delete_reports(ids)</td></tr>
+					<tr><td><code>AnnotateRun</code></td><td>RUN</td><td>run, moment, parameters, sequence, /remaining, /over</td><td>add(result), remaining(), is_over(), serialize(), parse(data)</td></tr>
+					<tr><td><code>AnnotationResult</code></td><td>RESULT</td><td>annotation, succeeded, what was said</td><td>&mdash;</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>One class, and the classes of the core under it.</b> What is offered and
+				what each annotation declares, which are activated, the language of each, the
+				extension of every kind of file, the workspace and the name of the report:
+				<code>sppasParam</code> holds all of it, and it is what the domain of the
+				annotations is run with. Running them is <code>sppasAnnotationsManager</code>.
+				Naming a report so that no run overwrites another&#39;s is
+				<code>sppasLogFile</code>, and what a report holds is written by
+				<code>sppasAnnReport</code>, line by line, with the state each line carries. A
+				class of this application holding any of that under another name would be a
+				second truth.
+			</p>
+
+			<p>
+				<b>What the model adds is the order.</b> <code>sequence()</code> is given what
+				was chosen, reads what each one requires, and gives back the list in which
+				they are run. It is the only knowledge of this application which is in no
+				class of the core, and it is where B13 is answered &mdash; the same answer
+				which, read the other way, arranges what is shown.
+			</p>
+
+			<h4>What is tied to what</h4>
+
+			<table>
+				<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+				<tbody>
+					<tr><td>holds</td><td><code>AnnotateModel</code> 1 &mdash; 0..1 <code>AnnotateRun</code></td><td>A composition: the run exists inside what advances it, and goes with the process</td></tr>
+					<tr><td>holds</td><td><code>AnnotateRun</code> 1 &mdash; 0..n <code>AnnotationResult</code></td><td>A composition: a result exists only inside the run it belongs to</td></tr>
+					<tr><td>uses</td><td><code>AnnotateModel</code> &rarr; <code>sppasParam</code>, <code>sppasAnnotationsManager</code>, <code>sppasLogFile</code></td><td>A dependency, and the only tie of this application to the domain of the annotations</td></tr>
+					<tr><td>uses</td><td><code>AnnotateModel</code> &rarr; the provision of files, the service of the options</td><td>A dependency, and the only tie to the two services</td></tr>
+				</tbody>
+			</table>
+
+			<h4>In yUML</h4>
+
+			<p>To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
+			class diagram.</p>
+
+			<pre class="dark"><code>[AnnotateModel|param;manager;log;thread;run|parameters();requires();sequence();set_workspace();start();is_running();the_run();reports();read_report();delete_reports()]++1-0..1&gt;[AnnotateRun|run;moment;parameters;sequence;/remaining;/over|add();remaining();is_over();serialize();parse()]
+[AnnotateRun]++1-0..*&gt;[AnnotationResult|annotation;succeeded;what was said]
+
+[AnnotateModel]-.-&gt;[sppasParam]
+[AnnotateModel]-.-&gt;[sppasAnnotationsManager]
+[AnnotateModel]-.-&gt;[sppasLogFile]</code></pre>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The classes of the view</h3>
+
+			<p>
+				The parts of the page are those of the interface which exists today, and they
+				bear its names: what is set and what starts a run, the reports beside it, one
+				list per type of annotation, one row per annotation, and where a run stands
+				with the report it gave.
+			</p>
+
+			<p>
+				<b>What is set and what was written stand side by side, and the person says
+				how much of each she wants to see.</b> A group of three choices &mdash; the
+				left alone, both, the right alone &mdash; governs the two panels, as it does
+				on the page of the journal: two half-width panels are unreadable on a narrow
+				window, and someone who is starting a run has no use for the reports of the
+				ones before. The group is made of radio buttons, so that reaching it with a
+				keyboard and hearing which one holds come from the buttons themselves and not
+				from a script. Both is what a page opens on.
+			</p>
+
+			<table>
+				<thead><tr><th>Class</th><th>Operations</th><th>What it shows</th></tr></thead>
+				<tbody>
+					<tr><td><code>AnnotateView</code></td><td>populate_tree_content(record)</td><td>The page, and the sections it holds</td></tr>
+					<tr><td><code>ActionAnnotatePanel</code></td><td>&mdash;</td><td>On the left: the language, one extension per kind of file which may be written, whether one file is wanted, the way to each list of annotations, and what starts a run</td></tr>
+					<tr><td><code>ReportsPanel</code></td><td>&mdash;</td><td>On the right: the reports which were written, one to read, and those to delete</td></tr>
+					<tr><td><code>AnnotationsPanel</code></td><td>&mdash;</td><td>The annotations of one type, one row each. One of these sections per type</td></tr>
+					<tr><td><code>EnableAnnotation</code></td><td>&mdash;</td><td>One annotation: whether it is chosen, what it says of itself, the work it rests on or how far it is from being finished, the languages it speaks, what it requires, and what sets its options</td></tr>
+					<tr><td><code>LogAnnotatePanel</code></td><td>&mdash;</td><td>A run as it advances: which annotation, how many remain, the results already there, then the report and the files which were given back</td></tr>
+				</tbody>
+			</table>
+
+			<h4>What is tied to what</h4>
+
+			<table>
+				<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+				<tbody>
+					<tr><td>holds</td><td><code>AnnotateView</code> 1 &mdash; 1 <code>ActionAnnotatePanel</code>, 1 <code>ReportsPanel</code>, 1 <code>LogAnnotatePanel</code></td><td>A composition: a section exists inside the page it is a part of</td></tr>
+					<tr><td>holds</td><td><code>AnnotateView</code> 1 &mdash; 0..n <code>AnnotationsPanel</code></td><td>A composition: one section per type of annotation the domain declares, and no section for a type which offers nothing</td></tr>
+					<tr><td>holds</td><td><code>AnnotationsPanel</code> 1 &mdash; 0..n <code>EnableAnnotation</code></td><td>A composition: one row per annotation of that type</td></tr>
+					<tr><td>uses</td><td><code>AnnotateView</code> &rarr; <code>AnnotateRecord</code></td><td>A dependency: it is given what is to be shown and reads nothing else</td></tr>
+				</tbody>
+			</table>
+
+			<h4>In yUML</h4>
+
+			<pre class="dark"><code>[AnnotateView|populate_tree_content()]++1-1&gt;[ActionAnnotatePanel]
+[AnnotateView]++1-1&gt;[ReportsPanel]
+[AnnotateView]++1-0..*&gt;[AnnotationsPanel]
+[AnnotateView]++1-1&gt;[LogAnnotatePanel]
+[AnnotationsPanel]++1-0..*&gt;[EnableAnnotation]
+
+[AnnotateView]-.-&gt;[AnnotateRecord]</code></pre>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The classes of the controller</h3>
+
+			<table>
+				<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
+				<tbody>
+					<tr><td><code>AnnotateController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
+					<tr><td><code>AnnotateRecord</code></td><td>task, run, to_be_shown</td><td>serialize(), parse(data)</td></tr>
+					<tr><td><code>AnnotateResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				What a request holds is the task it carries, the run it follows and what is to
+				be shown. Which section is under the eye is not among them: the page shows and
+				hides them where they stand.
+			</p>
+
+			<h4>What is tied to what</h4>
+
+			<table>
+				<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+				<tbody>
+					<tr><td>holds</td><td><code>AnnotateResponseRecipe</code> 1 &mdash; 1 <code>AnnotateView</code>, 1 <code>AnnotateController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
+					<tr><td>holds</td><td><code>AnnotateController</code> 1 &mdash; 1 <code>AnnotateRecord</code></td><td>A composition: one record per request, kept by nobody</td></tr>
+					<tr><td>uses</td><td><code>AnnotateController</code> &rarr; <code>AnnotateModel</code></td><td>A dependency: it reads, it starts a run, it asks where one stands, and it asks for the reports</td></tr>
+					<tr><td>uses</td><td><code>AnnotateController</code> &rarr; <code>AnnotateView</code></td><td>A dependency: it has the page built from the record</td></tr>
+				</tbody>
+			</table>
+
+			<h4>In yUML</h4>
+
+			<pre class="dark"><code>[AnnotateResponseRecipe|bake();_process_events()]++1-1&gt;[AnnotateController|record|handle();populate_view()]
+[AnnotateResponseRecipe]++1-1&gt;[AnnotateView]
+[AnnotateController]++1-1&gt;[AnnotateRecord|task;run;to_be_shown|serialize();parse()]
+
+[AnnotateController]-.-&gt;[AnnotateModel]
+[AnnotateController]-.-&gt;[AnnotateView]</code></pre>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The states</h3>
+
+			<table>
+				<caption>An annotation, in a run being prepared</caption>
+				<thead><tr><th>State</th><th>When</th><th>What is shown</th></tr></thead>
+				<tbody>
+					<tr><td>cannot be chosen</td><td>It declares nothing to run, or what it needs is not there</td><td>Its line, shown as not choosable, and nothing which chooses it</td></tr>
+					<tr><td>not chosen</td><td>Nothing was said of it</td><td>Its line, and what chooses it</td></tr>
+					<tr><td>chosen</td><td>It is to be run</td><td>Its line, that it is chosen, and the language it will run in</td></tr>
+					<tr><td>chosen, and what it requires is not</td><td>It is to be run, and what it requires is not</td><td>The same, and that what it requires is not chosen</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<i>Chosen, and what it requires is not</i> is neither a refusal nor a
+				warning about a mistake: it is a statement of fact, because running an
+				annotation on what was corrected by hand is a way of working and not an
+				error. C2, C5
+			</p>
+
+			<p>
+				<i>Cannot be chosen</i> is another thing altogether: an annotation which
+				declares nothing to run is declared and cannot run, and choosing it would
+				be choosing nothing. It is shown, because hiding it would make a person
+				look for it &mdash; and it is shown as not choosable, which is a thing the
+				line has to carry and not the absence of a button. An absent button reads
+				as a page which forgot something.
+			</p>
+
+			<table>
+				<caption>A run</caption>
+				<thead><tr><th>State</th><th>When</th></tr></thead>
+				<tbody>
+					<tr><td>running</td><td>It holds fewer results than it holds choices</td></tr>
+					<tr><td>over</td><td>It holds one result per choice</td></tr>
+					<tr><td>stopped</td><td>It holds fewer results than choices, and the thread which advanced it is no longer alive</td></tr>
+				</tbody>
+			</table>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The sequence, from the page to the report</h3>
+
+			<ol>
+				<li>The page is asked for. What is offered is read, with what each annotation requires, and shown.</li>
+				<li>The person chooses annotations, a language, an extension for a kind of file. Each is one request, and each carries back everything chosen so far.</li>
+				<li>She sets one of them: its options are handed to the service which shows them, and what was set comes back.</li>
+				<li>She starts the run. The files she chose are read, the chosen annotations are put in an order which respects what they require, and the run is made with all of it &mdash; the order, the language, the extensions &mdash; written into it.</li>
+				<li>The first annotation of the order is run on the files; what it said is added to the run as its result.</li>
+				<li>Her page asks where the run stands, and is answered: this annotation, so many remaining, and the results already there.</li>
+				<li>Steps 5 and 6 happen again, at their own pace, until every chosen annotation has a result.</li>
+				<li>What was written is gathered into one file where that was asked for, the report is written, and the files are given to the provision of files.</li>
+				<li>She reads the report, then or another day.</li>
+			</ol>
+
+			<p>
+				Steps 1 to 3 happen in any order and any number of times. Step 4 happens
+				once per run and is refused while a run of that person is still going. RO3
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The error policy</h3>
+
+			<table>
+				<thead><tr><th>Level</th><th>What happens</th><th>What is done</th></tr></thead>
+				<tbody>
+					<tr><td>1</td><td>What was asked cannot be done now: no annotation chosen, no file chosen, a run already going</td><td>Nothing is started, and what is missing or what stands in the way is said. Nothing is raised</td></tr>
+					<tr><td>2</td><td>One annotation is concerned: it failed, or succeeded on fewer files than it was given</td><td>That annotation has its result, what it said stands beside it, and the run goes on to the next</td></tr>
+					<tr><td>3</td><td>A report cannot be read or cannot be deleted</td><td>It is said in the words of what was attempted, and the other reports are untouched</td></tr>
+					<tr><td>4</td><td>Whoever runs the machine has to know: a run which cannot be made, the domain of the annotations which cannot be read</td><td>Said where he reads it, and the person is told that the run could not be started</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				What is raised is caught by whatever answers a request, and by nothing
+				below it. What an annotation writes about its own difficulties is not an
+				error of this application: it is what that annotation said, and it is shown
+				as such.
+			</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.7 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The contracts</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>How to read them</h3>
+
+			<p>
+				<i>pre</i> is what has to be true on the way in, and what the operation does
+				not check; <i>post</i> is what the caller can count on without looking.
+			</p>
+
+			<h4>What holds everywhere</h4>
+
+			<ul>
+				<li>Only <code>AnnotateModel</code> speaks to the domain of the annotations and to the two services.</li>
+				<li>Nothing is read into what an annotation said. Whether it succeeded is the number of files it gives. RO6, C7</li>
+				<li>Nothing of a run is written on a disk. A run belongs to the process which holds it and goes with it; the report is what stays.</li>
+				<li>What is absent gives back an empty thing &mdash; no annotation, no result, no report &mdash; and never nothing at all.</li>
+				<li>What is raised is caught by whatever answers a request, and no class below it writes a catch.</li>
+			</ul>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Class by class</h3>
+
+			<table>
+				<caption>AnnotateModel</caption>
+				<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+				<tbody>
+					<tr><td>Give the parameters</td><td>pre: none. post: the parameters of the set of annotations, as the domain of the annotations makes them: every annotation which is offered with what it declares, none activated, and the extensions each kind of file is written with. Nothing is read of an annotation beyond its declaration. C14</td></tr>
+					<tr><td>Say what an annotation requires</td><td>pre: an identifier. post: what that annotation declares it requires, as it declares it; empty when it requires nothing. It is read and never written. C15</td></tr>
+					<tr><td>Put in order</td><td>pre: the annotations which were chosen. post: those annotations and no others, each standing after every chosen annotation it requires. An annotation whose requirement was not chosen keeps its place all the same. C4, C5</td></tr>
+					<tr><td>Take the files</td><td>pre: none. post: the workspace the provision of files gives, holding the files to be annotated and them only, is what the run will be made on; nothing of it is altered here. C10</td></tr>
+					<tr><td>Start a run</td><td>pre: a workspace which is not empty, and at least one annotation activated. post: the run exists, holding its moment, the parameters it was started with, the order its annotations are run in and no result yet; and a thread advances it. When a run of that person is already going, nothing is started and the refusal says so. C8</td></tr>
+					<tr><td>Say whether a run is going</td><td>pre: none. post: true while the thread which advances the run is alive, false afterwards. It is what tells a run which stopped from a run which is slow</td></tr>
+					<tr><td>Give the run</td><td>pre: none. post: the run with the results it holds now, and which annotation is running. Answered while it goes, and answered after it is over. A run read twice in a row gives what it had each time, and never less</td></tr>
+					<tr><td>Give the reports</td><td>pre: none. post: the reports which were written, with the moment each was written; empty when there are none. C12</td></tr>
+					<tr><td>Read one report</td><td>pre: an identifier. post: what that report holds, as it was written, every line with the state that line carries; nothing at all when it is not there. It is not read for a meaning</td></tr>
+					<tr><td>Delete reports</td><td>pre: the identifiers of reports. post: those reports are gone and the others are untouched. What the runs wrote beside the files is untouched. C13</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				What an annotation is, which languages it speaks, whether it can be chosen at
+				all and what it is set with are read on the parameters, which hold them
+				already; and running them is the business of the domain of the annotations.
+				Putting them in order is the one operation here which rests on nothing
+				installed: what was chosen comes back, in another order, nothing added and
+				nothing removed.
+			</p>
+
+			<p>
+				What a run was started with does not change while it goes: an annotation set
+				again, a language picked again, a file added, change the next run and not
+				this one. C9
+			</p>
+
+			<table>
+				<caption>AnnotateRun, AnnotationResult</caption>
+				<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+				<tbody>
+					<tr><td>Add a result</td><td>pre: the result of one annotation of this run. post: the run holds it; what it held before is untouched, and the order the results were added in is kept. An annotation has at most one result. C1</td></tr>
+					<tr><td>Say how many remain</td><td>pre: none. post: the annotations of the run, less the results it holds</td></tr>
+					<tr><td>Say whether a run is over</td><td>pre: none. post: true when the run holds one result per annotation it was started with</td></tr>
+					<tr><td>Serialise, parse</td><td>pre: none. post: everything a page needs to show a run, and nothing of the machine. A run parsed twice gives the same run</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>Writing a report is not an operation of this application.</b> A run is
+				given the name of the report it is to write, and <code>sppasLogFile</code>
+				gives a name no report bore before; what the run then writes under it,
+				<code>sppasAnnReport</code> writes, line by line, with the state each line
+				carries. This application asks for the name, hands it to the run, and
+				afterwards lists, reads and deletes. C12 and C13 hold on names, not on
+				lines.
+			</p>
+
+			<table>
+				<caption>AnnotateController, AnnotateView</caption>
+				<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+				<tbody>
+					<tr><td>Handle a request</td><td>pre: called once for that request, and never twice. post: the record is rebuilt from what was transmitted, the task is read, and one treatment ran &mdash; or none ran and what stood in the way is said. Nothing of a record is held after the request</td></tr>
+					<tr><td>Populate the tree</td><td>pre: a record. post: what the record says and nothing more &mdash; no annotation it invented, no result it counted, no text it wrote. C14</td></tr>
+					<tr><td><code>EnableAnnotation</code></td><td>post: the annotation it stands for, with what it declares, whether it is chosen, the language it will run in, and what it requires; and, when a requirement of it is not chosen, that it is not. One way in for every publication it names, and how far it is from being finished where it names none</td></tr>
+					<tr><td><code>LogAnnotatePanel</code></td><td>post: which annotation is running and how many remain; nothing at all when no run is going</td></tr>
+				</tbody>
+			</table>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Where each need is held</h3>
+
+			<table>
+				<thead><tr><th>No.</th><th>Held by</th></tr></thead>
+				<tbody>
+					<tr><td>B1</td><td><code>EnableAnnotation</code>, one per annotation, which shows what the parameters hold and says whether it is chosen</td></tr>
+					<tr><td>B2</td><td><code>AnnotationsPanel</code>, one section per type, and <code>AnnotateModel.sequence()</code> read the other way: what orders a run is what arranges the list</td></tr>
+					<tr><td>B3</td><td><code>EnableAnnotation</code>, which shows what an annotation declares and writes nothing of its own</td></tr>
+					<tr><td>B4</td><td>The parameters, which carry what is set on every annotation, and <code>AnnotateRun</code>, which holds those a run was started with</td></tr>
+					<tr><td>B5</td><td><code>AnnotateModel</code>, which hands the options to the service of the options and takes the values back</td></tr>
+					<tr><td>B6</td><td><code>ActionAnnotatePanel</code>, and the parameters, which carry one extension per kind of file</td></tr>
+					<tr><td>B7</td><td><code>AnnotateModel.start()</code>, which runs every chosen annotation on the workspace the provision of files gave</td></tr>
+					<tr><td>B8</td><td><code>AnnotateModel.the_run()</code>, shown by <code>LogAnnotatePanel</code></td></tr>
+					<tr><td>B9</td><td><code>LogAnnotatePanel</code>, which is given one result per annotation which is done</td></tr>
+					<tr><td>B10</td><td><code>AnnotateModel.reports()</code> and <code>read_report()</code>, shown by <code>ReportsPanel</code></td></tr>
+					<tr><td>B11</td><td><code>AnnotateModel.delete_reports()</code></td></tr>
+					<tr><td>B12</td><td><b>The domain of the annotations</b>, which gathers what was written into one file when it was asked to. This application asks and holds nothing of it</td></tr>
+					<tr><td>B13</td><td><code>AnnotateModel.requires()</code>, shown by <code>EnableAnnotation</code>; and <code>AnnotateModel.sequence()</code>, which is the same knowledge used to arrange</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>B13 is held in two places and it is one thing.</b> What an annotation
+				requires is read once and used twice: shown on the line of that annotation,
+				and given to what puts a run in order. Written as two pieces of knowledge
+				it would be two, and one of them would drift.
+			</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.8 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What is tested, and where</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Without anything installed</h3>
+
+			<p>
+				The one thing this application does which nothing else does is to put the
+				chosen annotations in an order. It is given everything it needs and reads
+				nothing, so it is tested with nothing at all.
+			</p>
+
+			<table>
+				<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+				<tbody>
+					<tr><td>TE1</td><td>What comes back is what was chosen: not one annotation added, not one removed</td><td>The contract of the order</td></tr>
+					<tr><td>TE2</td><td>An annotation stands after every chosen annotation it requires</td><td>C4</td></tr>
+					<tr><td>TE3</td><td>An annotation whose requirement was not chosen is in the list all the same</td><td>C5</td></tr>
+					<tr><td>TE4</td><td>A chain of three is put in its order whatever order it was given in, the reverse included</td><td>C4</td></tr>
+					<tr><td>TE5</td><td>A requirement which names no annotation of the set changes nothing of the order</td><td>C4, and what the declarations hold</td></tr>
+					<tr><td>TE6</td><td>The same set given twice gives the same order</td><td>The contract of the order</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>TE5 is written because the declarations are not all sound.</b> One of
+				them names a requirement which no annotation bears. What is put in order
+				must not depend on that being repaired, and must not hold an annotation
+				back for something which does not exist.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>With the annotations, and without a run</h3>
+
+			<table>
+				<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+				<tbody>
+					<tr><td>TE7</td><td>Every annotation the domain of the annotations declares is given, and no other</td><td>B1</td></tr>
+					<tr><td>TE8</td><td>What is given of an annotation is what it declares: its name, what it does, its type, the publications it rests on or how far it is from being finished</td><td>C14, B3</td></tr>
+					<tr><td>TE9</td><td>An annotation which declares nothing to run cannot be chosen, and is given all the same</td><td>The states</td></tr>
+					<tr><td>TE10</td><td>An annotation which declares no type takes one file on its own</td><td>C16</td></tr>
+					<tr><td>TE11</td><td>The languages of an annotation are those whose resources stand on the machine; one which declares no resource speaks none</td><td>C17</td></tr>
+					<tr><td>TE12</td><td>Choosing a language which an annotation does not speak leaves that annotation with no language, and neither unchooses it nor refuses it</td><td>C3</td></tr>
+					<tr><td>TE13</td><td>What an annotation requires is read from its declaration, and one which declares none requires nothing</td><td>C15, B13</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>TE13 fails until the field is read.</b> It is written that way on
+				purpose: what an annotation requires is declared and never loaded, and this
+				test is what says whether the extension of the annex was made.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>With a run which really happens</h3>
+
+			<p>
+				These need annotations to run, and the ones they run are written for the
+				tests: one which writes a file, one which fails, one which takes its time.
+				What is tested is this application, never an annotation of SPPAS.
+			</p>
+
+			<table>
+				<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+				<tbody>
+					<tr><td>TE14</td><td>The annotations are run in the order which was worked out, and each of them once</td><td>C1, C4</td></tr>
+					<tr><td>TE15</td><td>An annotation which fails has a result, and those after it have theirs</td><td>C6</td></tr>
+					<tr><td>TE16</td><td>A result holds what its annotation said and on how many files it succeeded, and the first is not read to obtain the second</td><td>C7</td></tr>
+					<tr><td>TE17</td><td>A second run started while one is going is refused, and the refusal says which one is going</td><td>C8</td></tr>
+					<tr><td>TE18</td><td>An annotation set again while the run goes does not change what that run is running with</td><td>C9</td></tr>
+					<tr><td>TE19</td><td>A run whose thread died before the last annotation is neither going nor over, and holds the results it had</td><td>The states</td></tr>
+					<tr><td>TE20</td><td>When the run is over, the files which were written and the report are given to the provision of files, once and not at every annotation</td><td>T08</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>TE16 is C7 made checkable.</b> An annotation which says nothing and
+				succeeds on every file, and one which says a great deal and succeeds on
+				none, are both read the same way: the number comes from the annotation and
+				never from its words.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>What no test covers, and where they stand</h3>
+
+			<ul>
+				<li><b>What an annotation does.</b> It belongs to the domain of the annotations and is tested there; this application is answerable for what it started, in which order, and with what.</li>
+				<li><b>The two services</b>, which have their own dossiers and their own tests. What is checked here is the tie: which files were asked for, and what was given back.</li>
+				<li><b>Where a report stands and how long it lasts</b>, which the provision of files answers.</li>
+				<li><b>The WCAG rules</b>, which are verified on the page and not on a fragment of it.</li>
+			</ul>
+
+			<p>
+				The tests stand where the project puts its own, in <code>tests/swapp/</code>.
+				Six of the twenty need nothing at all, and they are the six which check the
+				one thing this application does alone.
+			</p>
+
+		</section>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== ANNEXES ================================ -->
+
+
+<section class="chapter nonumber">
+
+<h1>Annexes</h1>
+
+<!-- =============================================================== -->
+
+	<section>
+	<h2>Annex: Extension of the declaration of an annotation</h2>
+
+		<p>
+			One extension is required by this document, and it is required by B13 alone.
+		</p>
+
+		<h3>E1 &mdash; What an annotation requires, read</h3>
+
+		<p>
+			<b>What it is.</b> The identifier of the annotation which has to have run
+			before, carried by the declaration of an annotation and read with the rest of
+			it.
+		</p>
+
+		<p>
+			<b>Why it is needed.</b> The field is already written in the declarations
+			&mdash; the phonetization says it requires the text normalization, the
+			alignment says it requires the phonetization, the time group analysis says it
+			requires the syllabification &mdash; and what reads a declaration does not
+			read it. It reads the identifier, the name, the description, the type, the
+			interface to run, the references, the degree of development, the options and
+			the resources, and it passes over that one field. B13 asks for a value which
+			is written and never loaded.
+		</p>
+
+		<p>
+			<b>What it costs.</b> One field read where the others are read. Nothing of
+			what exists changes, and an annotation which declares nothing there requires
+			nothing, which is what most of them say already.
+		</p>
+
+		<p>
+			<b>What it is not.</b> It says what has to have run before, and never what
+			will be made of an annotation afterwards: what follows one is read on the
+			others.
+		</p>
+
+		<p>
+			<b>What is written there is not all sound.</b> One declaration names a
+			requirement which no annotation bears, and one writes a requirement with a
+			mark in front of it which no other has. Both are read the day the field is
+			read, and neither is settled here.
+		</p>
+
+	</section>
+
+	<!-- ------------------------------------------------------- -->
+
+	<section>
+	<h2>Annex: Legal notices</h2>
+
+	<ul>
+		<li>Author: Brigitte Bigi</li>
+		<li>Document License: GNU Free Documentation License (GFDL) 1.3</li>
+		<li>Copyright (C) 2026 Brigitte Bigi, CNRS</li>
+		<li>Creation Date: 2026-09-19</li>
+		<li>Last update: 2026-09-19</li>
+	</ul>
+
+	</section>
+
+</section>
+
+</main>
+
+
+
+<script>
+	function bootPage(wexa) {
+		const book = new wexa.Book("main-content");
+		book.fillTable();
+	}
+</script>
+
+<script src="../whakerexa/wexa_statics/js/wexa.loader.js"
+        data-base="../whakerexa/wexa_statics/"
+        data-extras="js/extras/book.js"
+        data-default="wexa_theme"></script>
+
+</body>
+</html>
