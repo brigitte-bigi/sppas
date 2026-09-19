@@ -1897,11 +1897,11 @@
 			navigation, take no functional decision and perform no linguistic
 			treatment.</p>
 
-			<p>Convert has one applicative view, <code>ViewConvert</code>, whose content
+			<p>Convert has one applicative view, <code>ConvertView</code>, whose content
 			varies with the data the controller transmits. It is built from five
-			fragments, each with a defined scope.</p>
+			panels, each with a defined scope.</p>
 
-			<p>The shape of these fragments follows from an observation about the users:
+			<p>The shape of these panels follows from an observation about the users:
 			they do not choose a destination format. They know it already — they are
 			moving to Elan, to Praat, to subtitles — and they come to Convert to reach it.
 			The properties of formats are therefore not there to help decide which format
@@ -1909,15 +1909,15 @@
 			The two are not served by the same presentation, and conflating them is what
 			makes a matrix of formats by properties both indispensable and unreadable.</p>
 
-			<p><code>FragmentFormats</code> presents the formats that can be written, and
+			<p><code>FormatsPanel</code> presents the formats that can be written, and
 			lets one of them be selected or cancelled. It is a list of extensions, grouped
 			where grouping is possible: the extensions of one piece of software together,
 			the subtitle formats together, the rest as they come. The grouping is
 			heterogeneous by nature — Praat holds three extensions, some formats hold no
 			software at all — and it exists only to let the user find what they came for.
-			This fragment carries no property.</p>
+			This panel carries no property.</p>
 
-			<p><code>FragmentDestination</code> presents what the selected format holds,
+			<p><code>DestinationPanel</code> presents what the selected format holds,
 			and is where the export options are answered. It is an
 			<code>aside</code>: consulting it is not leaving the list. It shows every
 			property, always, in the same order, whatever the format selected. What varies
@@ -1933,7 +1933,7 @@
 			— several tiers, media, metadata — and others are specificities that exist
 			almost nowhere but in SPPAS. The latter are made discreet, not absent.</p>
 
-			<p><code>FragmentCompare</code> presents the full matrix of formats by
+			<p><code>ComparePanel</code> presents the full matrix of formats by
 			properties, as a <code>details</code> element the user unfolds. This is the
 			one place where formats are compared to one another, which is a legitimate
 			thing to want and a poor way to choose a destination. Unfolded in place rather
@@ -1941,9 +1941,9 @@
 			page stays where it is. Given the room a details element affords, the matrix
 			can here be what it never is when it drives the choice — readable.</p>
 
-			<p><code>FragmentGeneral</code> presents the general options.</p>
+			<p><code>GeneralPanel</code> presents the general options.</p>
 
-			<p><code>FragmentResults</code> presents the result of every file of the
+			<p><code>ResultsPanel</code> presents the result of every file of the
 			batch: its status, the remarks attached to it, and the cause of a refusal. It
 			exists only once a conversion has run. One file of the batch may produce
 			several converted files: the report is not a line per input file.</p>
@@ -1976,95 +1976,34 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>The classes, by role</h3>
-
-		<p>Those which carry the data come from the tables; those which work come from
-		the modules and from the MVC stated above. The names of the working classes are
-		the ones that section fixed, and nothing is renamed here.</p>
-
-		<h4>Model: what carries the data</h4>
-
-		<table>
-		<thead><tr><th scope="col">Class</th><th scope="col">From</th><th scope="col">What it is</th></tr></thead>
-		<tbody>
-		  <tr><td><code>Format</code></td><td>FORMAT, SUPPORTS</td><td>An extension, the software which reads it, and what it holds. Read from the API and kept by nobody</td></tr>
-		  <tr><td><code>Option</code></td><td>OPTION, ANSWER, PROPERTY</td><td>A question, the answers it offers, the answer which holds when none is given, and whether answering alters the annotations. It is read from the file which holds the correspondence</td></tr>
-		  <tr><td><code>Conversion</code></td><td>CONVERSION, CHOICE</td><td>What was decided: the destination, the two general options, and one answer per option. It is rebuilt at every request and held between none</td></tr>
-		  <tr><td><code>FileResult</code></td><td>RESULT, REMARK</td><td>What happened to one file: a status, the remarks attached to it, and the cause of a refusal</td></tr>
-		  <tr><td><code>ConvertRecord</code></td><td>&mdash;</td><td>What one request holds: the task it carries, the conversion it was given, and what is to be shown. It serialises itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
-		  <tr><td>none</td><td>BATCH</td><td>The files are exposed by the provision of files, which names them already</td></tr>
-		</tbody>
-		</table>
-
-		<p><b><code>ConvertRecord</code> is the class RO8 asks for and which no section
-		named.</b> The view serialises the state at each action and the controller
-		rebuilds it: between the two there is an object, and it is better named than
-		implied. It is what makes the two contexts of execution one implementation.</p>
-
-		<h4>Model: what does the work</h4>
-
-		<table>
-		<thead><tr><th scope="col">Class</th><th scope="col">Module</th><th scope="col">What it is alone in knowing</th></tr></thead>
-		<tbody>
-		  <tr><td><code>ConvertModel</code></td><td>&mdash;</td><td>The façade. It is what the controller sees, and it sees nothing behind it</td></tr>
-		  <tr><td><code>ModelFormats</code></td><td>formats</td><td>What a format holds, and what a destination raises as options and as structural loss. Reads no file</td></tr>
-		  <tr><td><code>ModelRemediation</code></td><td>remediation</td><td>How annotations are transformed, chained and verified again. Reads and writes no file</td></tr>
-		  <tr><td><code>ModelConversion</code></td><td>conversion</td><td>How a file is read, written, retried once and given a result. The only class which meets a typed cause</td></tr>
-		  <tr><td><code>ModelProvision</code></td><td>provision</td><td>How the provision of files is spoken to: the batch it exposes, and by what a produced file is reached</td></tr>
-		  <tr><td><code>ConvertController</code></td><td>decisions</td><td>What a request transmits, which task it carries, what a decision which changed invalidates, and what the settings say</td></tr>
-		  <tr><td><code>ViewConvert</code></td><td>presentation</td><td>What is shown, in five fragments, and nothing of what it means</td></tr>
-		</tbody>
-		</table>
-
-		<p>The four sub-models are what the façade holds, and the fourth is
-		<code>ModelProvision</code>: the batch and the way a produced file is reached are
-		asked of a neighbour, and one class is what asks it.</p>
-
-		<p>The five fragments &mdash; <code>FragmentFormats</code>,
-		<code>FragmentDestination</code>, <code>FragmentCompare</code>,
-		<code>FragmentGeneral</code>, <code>FragmentResults</code> &mdash; are classes of
-		the view and build each their own part of <code>body &gt; main</code>. They
-		decide nothing, count nothing and refuse nothing.</p>
-
-		<h4>View, and what assembles</h4>
-
-		<p>The response of WhakerPy handles the URL, builds the view and the controller,
-		calls the controller once for that request, and bakes the tree it was given. It
-		is named here <code>ConvertResponseRecipe</code>, and it is the only object of
-		this application anything outside it holds. <b>The controller assembles
-		nothing</b>: it is built, it is called once, and it is dropped.</p>
-
-	</section>
-
-	<!-- ----------------------------------------------------------- -->
-	<!-- 3.14 -->
-	<!-- ----------------------------------------------------------- -->
-
-	<section class="subssection">
-	<h3>The class diagram</h3>
+	<h3>The classes of the model</h3>
 
 		<p><code>/</code> marks what is derived and held by nobody. What the operations
-		promise is the chapter on the contracts; what they are called is a proposal, and
-		one pass renames them all.</p>
+		promise is the chapter on the contracts.</p>
 
 		<table>
-		<thead><tr><th scope="col">Class</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
+		<thead><tr><th scope="col">Class</th><th scope="col">From</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 		<tbody>
-		  <tr><td><code>Format</code></td><td>extension, software, properties</td><td>holds(property), can_be_written()</td></tr>
-		  <tr><td><code>Option</code></td><td>option, question, answers, default answer, alters</td><td>answers_allowed_by(format), default_for(settings)</td></tr>
-		  <tr><td><code>Conversion</code></td><td>destination, override, heuristic, answers, /what is missing</td><td>answer_of(option), what_is_missing(batch), invalidates()</td></tr>
-		  <tr><td><code>FileResult</code></td><td>file, status, cause, remarks</td><td>&mdash;</td></tr>
-		  <tr><td><code>ConvertRecord</code></td><td>task, conversion, to_be_shown</td><td>serialize(), parse(data)</td></tr>
-		  <tr><td><code>ConvertModel</code></td><td>&mdash;</td><td>writable_formats(), options_of(destination), structural_loss_of(destination), convert(batch, conversion)</td></tr>
-		  <tr><td><code>ModelFormats</code></td><td>&mdash;</td><td>writable_formats(), properties_of(format), options_of(format), structural_loss_of(format)</td></tr>
-		  <tr><td><code>ModelRemediation</code></td><td>&mdash;</td><td>remediate(content, properties, answers), what_was_transformed()</td></tr>
-		  <tr><td><code>ModelConversion</code></td><td>&mdash;</td><td>convert(batch, destination, answers, general_options), convert_one(file, …)</td></tr>
-		  <tr><td><code>ModelProvision</code></td><td>&mdash;</td><td>batch(), reached_by(file)</td></tr>
-		  <tr><td><code>ConvertController</code></td><td>record</td><td>handle(request_data), populate_view()</td></tr>
-		  <tr><td><code>ViewConvert</code></td><td>&mdash;</td><td>populate_tree_content(record)</td></tr>
-		  <tr><td><code>ConvertResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
+		  <tr><td><code>ConvertModel</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>writable_formats(), options_of(destination), structural_loss_of(destination), convert(batch, conversion)</td></tr>
+		  <tr><td><code>ModelFormats</code></td><td>module <i>formats</i></td><td>&mdash;</td><td>writable_formats(), properties_of(format), options_of(format), structural_loss_of(format)</td></tr>
+		  <tr><td><code>ModelRemediation</code></td><td>module <i>remediation</i></td><td>&mdash;</td><td>remediate(content, properties, answers), what_was_transformed()</td></tr>
+		  <tr><td><code>ModelConversion</code></td><td>module <i>conversion</i></td><td>&mdash;</td><td>convert(batch, destination, answers, general_options), convert_one(file, &hellip;)</td></tr>
+		  <tr><td><code>ModelProvision</code></td><td>module <i>provision</i></td><td>&mdash;</td><td>batch(), reached_by(file)</td></tr>
+		  <tr><td><code>Format</code></td><td>FORMAT, SUPPORTS</td><td>extension, software, properties</td><td>holds(property), can_be_written()</td></tr>
+		  <tr><td><code>Option</code></td><td>OPTION, ANSWER, PROPERTY</td><td>option, question, answers, default answer, alters</td><td>answers_allowed_by(format), default_for(settings)</td></tr>
+		  <tr><td><code>Conversion</code></td><td>CONVERSION, CHOICE</td><td>destination, override, heuristic, answers, /what is missing</td><td>answer_of(option), what_is_missing(batch), invalidates()</td></tr>
+		  <tr><td><code>FileResult</code></td><td>RESULT, REMARK</td><td>file, status, cause, remarks</td><td>&mdash;</td></tr>
+		  <tr><td>none</td><td>BATCH</td><td colspan="2">The files are exposed by the provision of files, which names them already</td></tr>
 		</tbody>
 		</table>
+
+		<p><code>Format</code> is read from the API and kept by nobody.
+		<code>Option</code> is read from the file which holds the correspondence.
+		<code>Conversion</code> is what was decided &mdash; the destination, the two
+		general options, and one answer per option &mdash; rebuilt at every request and
+		held between none. The four sub-models are what the fa&ccedil;ade holds, and the
+		fourth is <code>ModelProvision</code>: the batch and the way a produced file is
+		reached are asked of a neighbour, and one class is what asks it.</p>
 
 		<p><code>Conversion.what_is_missing()</code> is given the batch and does not hold
 		it: what is missing is a destination or a batch which is not empty [031], and
@@ -2075,19 +2014,20 @@
 		never sees a file, a path or a batch, which is what lets the business logic of
 		this application be tested with nothing installed.</p>
 
+		<p><b>What the core of SPPAS already holds is not held again here.</b> Which
+		formats can be written and what each one supports is
+		<code>sppasFiles.OUT_FORMATS</code> and <code>FileFormatProperty</code>; reading
+		and writing annotated files is <code>sppasTrsRW</code>. What this application
+		adds is the correspondence between a property a destination does not hold, the
+		question it raises and the answers available &mdash; which is data &mdash; and
+		the transformations those answers require, which nothing of the core performs.</p>
+
 		<h4>What is tied to what</h4>
 
 		<table>
 		<thead><tr><th scope="col">Tie</th><th scope="col">Legs</th><th scope="col">What it is</th></tr></thead>
 		<tbody>
-		  <tr><td>holds</td><td><code>ConvertResponseRecipe</code> 1 &mdash; 1 <code>ViewConvert</code>, 1 <code>ConvertController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
-		  <tr><td>holds</td><td><code>ConvertController</code> 1 &mdash; 1 <code>ConvertRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
-		  <tr><td>holds</td><td><code>ConvertRecord</code> 1 &mdash; 1 <code>Conversion</code></td><td>A composition: what was decided lives inside what one request carries</td></tr>
-		  <tr><td>holds</td><td><code>ConvertModel</code> 1 &mdash; 1 each of the four sub-models</td><td>A composition: the façade makes them, and nothing else reaches them</td></tr>
-		  <tr><td>holds</td><td><code>ViewConvert</code> 1 &mdash; 1 each of the five fragments</td><td>A composition: a fragment builds one part of one page and exists for it</td></tr>
-		  <tr><td>uses</td><td><code>ConvertController</code> &rarr; <code>ConvertModel</code></td><td>A dependency: it calls the façade, once per request</td></tr>
-		  <tr><td>uses</td><td><code>ConvertController</code> &rarr; <code>ViewConvert</code></td><td>A dependency: it hands it what to build from</td></tr>
-		  <tr><td>uses</td><td><code>ViewConvert</code> &rarr; <code>ConvertRecord</code></td><td>A dependency: it is given it and builds from it</td></tr>
+		  <tr><td>holds</td><td><code>ConvertModel</code> 1 &mdash; 1 each of the four sub-models</td><td>A composition: the fa&ccedil;ade makes them, and nothing else reaches them</td></tr>
 		  <tr><td>uses</td><td><code>ModelFormats</code> &rarr; <code>Format</code>, <code>Option</code></td><td>A dependency: it makes them from the API and from the correspondence, and keeps none</td></tr>
 		  <tr><td>uses</td><td><code>ModelConversion</code> &rarr; <code>ModelRemediation</code>, <code>FileResult</code></td><td>A dependency: it asks for a content and gives back a result</td></tr>
 		  <tr><td>uses</td><td><code>ModelConversion</code> &rarr; the API of SPPAS</td><td>A dependency, and the only tie of this application to what reads and writes files</td></tr>
@@ -2101,21 +2041,7 @@
 		<p>To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
 		class diagram.</p>
 
-		<pre class="dark"><code>[ConvertResponseRecipe|bake();_process_events()]++1-1&gt;[ConvertController|record|handle();populate_view()]
-[ConvertResponseRecipe]++1-1&gt;[ViewConvert|populate_tree_content()]
-[ConvertController]++1-1&gt;[ConvertRecord|task;conversion;to_be_shown|serialize();parse()]
-[ConvertRecord]++1-1&gt;[Conversion|destination;override;heuristic;answers;/missing|answer_of();what_is_missing();invalidates()]
-[ConvertController]-.-&gt;[ConvertModel]
-[ConvertController]-.-&gt;[ViewConvert]
-[ViewConvert]-.-&gt;[ConvertRecord]
-
-[ViewConvert]++1-1&gt;[FragmentFormats]
-[ViewConvert]++1-1&gt;[FragmentDestination]
-[ViewConvert]++1-1&gt;[FragmentCompare]
-[ViewConvert]++1-1&gt;[FragmentGeneral]
-[ViewConvert]++1-1&gt;[FragmentResults]
-
-[ConvertModel|writable_formats();options_of();structural_loss_of();convert()]++1-1&gt;[ModelFormats|writable_formats();properties_of();options_of();structural_loss_of()]
+		<pre class="dark"><code>[ConvertModel|writable_formats();options_of();structural_loss_of();convert()]++1-1&gt;[ModelFormats|writable_formats();properties_of();options_of();structural_loss_of()]
 [ConvertModel]++1-1&gt;[ModelRemediation|remediate();what_was_transformed()]
 [ConvertModel]++1-1&gt;[ModelConversion|convert();convert_one()]
 [ConvertModel]++1-1&gt;[ModelProvision|batch();reached_by()]
@@ -2123,12 +2049,115 @@
 [ModelFormats]-.-&gt;[Format|extension;software;properties|holds();can_be_written()]
 [ModelFormats]-.-&gt;[Option|option;question;answers;default;alters|answers_allowed_by();default_for()]
 [ModelConversion]-.-&gt;[ModelRemediation]
-[ModelConversion]-.-&gt;[FileResult|file;status;cause;remarks]</code></pre>
+[ModelConversion]-.-&gt;[FileResult|file;status;cause;remarks]
+[ModelConversion]-.-&gt;[sppasTrsRW]
+[ModelFormats]-.-&gt;[FileFormatProperty]</code></pre>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.14 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The classes of the view</h3>
+
+		<table>
+		<thead><tr><th scope="col">Class</th><th scope="col">Operations</th><th scope="col">What it shows</th></tr></thead>
+		<tbody>
+		  <tr><td><code>ConvertView</code></td><td>populate_tree_content(record)</td><td>The page, and the panels it holds. It is the module <i>presentation</i>: what is shown, and nothing of what it means</td></tr>
+		  <tr><td><code>FormatsPanel</code></td><td>&mdash;</td><td>The formats which can be written, grouped so that one is found</td></tr>
+		  <tr><td><code>DestinationPanel</code></td><td>&mdash;</td><td>What the chosen format holds and what it does not, and the question every property which is not held raises</td></tr>
+		  <tr><td><code>ComparePanel</code></td><td>&mdash;</td><td>The formats by properties, one against another</td></tr>
+		  <tr><td><code>GeneralPanel</code></td><td>&mdash;</td><td>What holds for the whole conversion</td></tr>
+		  <tr><td><code>ResultsPanel</code></td><td>&mdash;</td><td>What came of every file of the batch: its status, its remarks, the cause of a refusal, and the way to what was written</td></tr>
+		</tbody>
+		</table>
+
+		<p>The five panels build each their own part of <code>body &gt; main</code>.
+		They decide nothing, count nothing and refuse nothing.</p>
+
+		<h4>What is tied to what</h4>
+
+		<table>
+		<thead><tr><th scope="col">Tie</th><th scope="col">Legs</th><th scope="col">What it is</th></tr></thead>
+		<tbody>
+		  <tr><td>holds</td><td><code>ConvertView</code> 1 &mdash; 1 each of the five panels</td><td>A composition: a panel builds one part of one page and exists for it</td></tr>
+		  <tr><td>uses</td><td><code>ConvertView</code> &rarr; <code>ConvertRecord</code></td><td>A dependency: it is given it and builds from it</td></tr>
+		</tbody>
+		</table>
+
+		<h4>In yUML</h4>
+
+		<pre class="dark"><code>[ConvertView|populate_tree_content()]++1-1&gt;[FormatsPanel]
+[ConvertView]++1-1&gt;[DestinationPanel]
+[ConvertView]++1-1&gt;[ComparePanel]
+[ConvertView]++1-1&gt;[GeneralPanel]
+[ConvertView]++1-1&gt;[ResultsPanel]
+
+[ConvertView]-.-&gt;[ConvertRecord]</code></pre>
 
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
 	<!-- 3.15 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The classes of the controller</h3>
+
+		<table>
+		<thead><tr><th scope="col">Class</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
+		<tbody>
+		  <tr><td><code>ConvertController</code></td><td>record</td><td>handle(request_data), populate_view()</td></tr>
+		  <tr><td><code>ConvertRecord</code></td><td>task, conversion, to_be_shown</td><td>serialize(), parse(data)</td></tr>
+		  <tr><td><code>ConvertResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
+		</tbody>
+		</table>
+
+		<p><code>ConvertController</code> is the module <i>decisions</i>: what a request
+		transmits, which task it carries, what a decision which changed invalidates, and
+		what the settings say.</p>
+
+		<p><b><code>ConvertRecord</code> is the class RO8 asks for and which no section
+		named.</b> The view serialises the state at each action and the controller
+		rebuilds it: between the two there is an object, and it is better named than
+		implied. It comes from no table. It is what makes the two contexts of execution
+		one implementation.</p>
+
+		<p>The response of WhakerPy handles the URL, builds the view and the controller,
+		calls the controller once for that request, and bakes the tree it was given. It
+		is named here <code>ConvertResponseRecipe</code>, and it is the only object of
+		this application anything outside it holds. <b>The controller assembles
+		nothing</b>: it is built, it is called once, and it is dropped.</p>
+
+		<h4>What is tied to what</h4>
+
+		<table>
+		<thead><tr><th scope="col">Tie</th><th scope="col">Legs</th><th scope="col">What it is</th></tr></thead>
+		<tbody>
+		  <tr><td>holds</td><td><code>ConvertResponseRecipe</code> 1 &mdash; 1 <code>ConvertView</code>, 1 <code>ConvertController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
+		  <tr><td>holds</td><td><code>ConvertController</code> 1 &mdash; 1 <code>ConvertRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
+		  <tr><td>holds</td><td><code>ConvertRecord</code> 1 &mdash; 1 <code>Conversion</code></td><td>A composition: what was decided lives inside what one request carries</td></tr>
+		  <tr><td>uses</td><td><code>ConvertController</code> &rarr; <code>ConvertModel</code></td><td>A dependency: it calls the fa&ccedil;ade, once per request</td></tr>
+		  <tr><td>uses</td><td><code>ConvertController</code> &rarr; <code>ConvertView</code></td><td>A dependency: it hands it what to build from</td></tr>
+		</tbody>
+		</table>
+
+		<h4>In yUML</h4>
+
+		<pre class="dark"><code>[ConvertResponseRecipe|bake();_process_events()]++1-1&gt;[ConvertController|record|handle();populate_view()]
+[ConvertResponseRecipe]++1-1&gt;[ConvertView]
+[ConvertController]++1-1&gt;[ConvertRecord|task;conversion;to_be_shown|serialize();parse()]
+[ConvertRecord]++1-1&gt;[Conversion|destination;override;heuristic;answers;/missing|answer_of();what_is_missing();invalidates()]
+
+[ConvertController]-.-&gt;[ConvertModel]
+[ConvertController]-.-&gt;[ConvertView]</code></pre>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.16 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2169,7 +2198,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.16 -->
+	<!-- 3.17 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2206,7 +2235,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.17 -->
+	<!-- 3.18 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2240,7 +2269,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.18 -->
+	<!-- 3.19 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2272,7 +2301,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.19 -->
+	<!-- 3.20 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2367,15 +2396,15 @@
 		A decision is never refused because another is missing.</p>
 
 		<table>
-		<caption>ViewConvert and its fragments</caption>
+		<caption>ConvertView and its panels</caption>
 		<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 		<tbody>
 		  <tr><td>Populate the tree</td><td>pre: a record. post: a tree holding what that record says and nothing more — no refusal it invented, no total it counted. It reaches no disk and no neighbour</td></tr>
-		  <tr><td><code>FragmentFormats</code></td><td>post: the formats which can be written, grouped so that one is found, and carrying no property</td></tr>
-		  <tr><td><code>FragmentDestination</code></td><td>post: every property, always, in the same order, whatever the destination; what varies is the state of each line, which is one of three</td></tr>
-		  <tr><td><code>FragmentCompare</code></td><td>post: the matrix of formats by properties, unfolded in place; it decides nothing and the page stays where it is</td></tr>
-		  <tr><td><code>FragmentGeneral</code></td><td>post: the two general options, false when nothing was transmitted. C10</td></tr>
-		  <tr><td><code>FragmentResults</code></td><td>post: one entry per file of the batch, with its status, its remarks and its cause; it exists only once a conversion has run, and it is not one line per file produced. C19</td></tr>
+		  <tr><td><code>FormatsPanel</code></td><td>post: the formats which can be written, grouped so that one is found, and carrying no property</td></tr>
+		  <tr><td><code>DestinationPanel</code></td><td>post: every property, always, in the same order, whatever the destination; what varies is the state of each line, which is one of three</td></tr>
+		  <tr><td><code>ComparePanel</code></td><td>post: the matrix of formats by properties, unfolded in place; it decides nothing and the page stays where it is</td></tr>
+		  <tr><td><code>GeneralPanel</code></td><td>post: the two general options, false when nothing was transmitted. C10</td></tr>
+		  <tr><td><code>ResultsPanel</code></td><td>post: one entry per file of the batch, with its status, its remarks and its cause; it exists only once a conversion has run, and it is not one line per file produced. C19</td></tr>
 		</tbody>
 		</table>
 
@@ -2390,7 +2419,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.20 -->
+	<!-- 3.21 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2420,7 +2449,7 @@
 		  <tr><td>C16</td><td><code>ModelConversion</code>, converting one file</td></tr>
 		  <tr><td>C17</td><td><code>ModelConversion</code>, converting one file</td></tr>
 		  <tr><td>C18</td><td><code>ModelConversion</code>, which names the cause; the view shows it as it was given and writes none of its own</td></tr>
-		  <tr><td>C19</td><td><code>FragmentResults</code></td></tr>
+		  <tr><td>C19</td><td><code>ResultsPanel</code></td></tr>
 		  <tr><td>C20</td><td><code>Conversion</code>, which is given the setting as a default and never writes it</td></tr>
 		  <tr><td>C21</td><td><code>ConvertRecord</code>, and <code>ConvertController</code>, which keeps nothing after the request</td></tr>
 		  <tr><td>C22</td><td><code>ModelProvision</code>, which is given a way to reach a file and never a path. It is held by what that operation is not given: nothing else of this application ever sees one, so there is nowhere for it to be broken</td></tr>
@@ -2450,14 +2479,14 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.21 -->
+	<!-- 3.22 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
 	<h3>The models</h3>
 
 		<p>Twenty-five tests for the four sub-models and the façade. The controller, the
-		view and its fragments are not covered here and are owed.</p>
+		view and its panels are not covered here and are owed.</p>
 
 		<h4>ModelRemediation, with nothing installed</h4>
 
@@ -2543,14 +2572,14 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.22 -->
+	<!-- 3.23 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
 	<h3>What no test covers, and where they stand</h3>
 
 		<ul>
-		<li><b>The controller, the view and its fragments.</b> They are owed, and they
+		<li><b>The controller, the view and its panels.</b> They are owed, and they
 		are what will check that a decision which changed invalidates what was derived
 		from it, that a record parsed twice gives the same conversion, and that a view
 		shows what its record says and nothing more.</li>
@@ -2790,7 +2819,7 @@
 
 		<div class="flex-panel">
 
-			<!-- ---------- FragmentFormats ---------- -->
+			<!-- ---------- FormatsPanel ---------- -->
 
 			<section class="flex-item" aria-labelledby="mk-fmt-h">
 
@@ -2836,7 +2865,7 @@
 
 			</section>
 
-			<!-- ---------- FragmentDestination ---------- -->
+			<!-- ---------- DestinationPanel ---------- -->
 
 			<aside class="flex-item" aria-labelledby="mk-dst-h">
 
@@ -2933,7 +2962,7 @@
 
 		</div>
 
-		<!-- ---------- FragmentCompare ---------- -->
+		<!-- ---------- ComparePanel ---------- -->
 
 		<details>
 		<summary>Compare the formats</summary>
@@ -2980,7 +3009,7 @@
 
 		</details>
 
-		<!-- ---------- FragmentGeneral ---------- -->
+		<!-- ---------- GeneralPanel ---------- -->
 
 		<section aria-labelledby="mk-gen-h">
 
@@ -3010,7 +3039,7 @@
 
 		</section>
 
-		<!-- ---------- FragmentResults ---------- -->
+		<!-- ---------- ResultsPanel ---------- -->
 
 		<section aria-labelledby="mk-res-h">
 

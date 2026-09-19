@@ -1211,35 +1211,34 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>The classes</h3>
+	<h3>The classes of the model</h3>
 
 		<p>
-			Those which carry the data come from the tables, one per table. Those which
-			work come from the modules, one per module. A name says what the class handles
-			and nothing of how it is arranged.
+			<code>/</code> marks what is derived and held by nobody. What the operations
+			promise is the chapter on the contracts. There is one diagram and not three:
+			this domain has no view and no controller, and <i>The architecture of the
+			code</i> says why.
 		</p>
 
-		<h4>What carries the data</h4>
-
 		<table>
-			<thead><tr><th>Class</th><th>From</th><th>What it is</th></tr></thead>
+			<thead><tr><th>Class</th><th>From</th><th>Attributes</th><th>Operations</th></tr></thead>
 			<tbody>
-				<tr><td><code>Place</code></td><td>PLACE</td><td>A name, and the moment which is read from that name. It touches nothing: it is not where a place is made, listed or deleted</td></tr>
-				<tr><td><code>PlacedFile</code></td><td>FILE</td><td>A name inside a place. Its size and its content stand on the disk, and are read by the one class which reads a disk</td></tr>
+				<tr><td><code>Place</code></td><td>PLACE</td><td>name, /moment</td><td>a_name_for(moment), moment(), is_of_this_hour()</td></tr>
+				<tr><td><code>PlacedFile</code></td><td>FILE</td><td>place, name</td><td>&mdash;</td></tr>
+				<tr><td><code>DepositSpace</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>what_is_accepted(), ask_for_a_place(), put(), address_of(), serve(), forget()</td></tr>
+				<tr><td><code>SpaceAcceptance</code></td><td>module <i>acceptance</i></td><td>&mdash;</td><td>what_is_accepted(), accepts_size(), accepts_volume(), accepts_one_more_place()</td></tr>
+				<tr><td><code>SpaceFolder</code></td><td>module <i>place</i></td><td>&mdash;</td><td>make_a_place(), places(), delete(), make_a_file(), files(), volume(), read()</td></tr>
+				<tr><td><code>FileAddress</code></td><td>module <i>address</i></td><td>&mdash;</td><td>address_of(), what_it_names()</td></tr>
 			</tbody>
 		</table>
 
-		<h4>What does the work</h4>
-
-		<table>
-			<thead><tr><th>Class</th><th>Module</th><th>What it is alone in knowing</th></tr></thead>
-			<tbody>
-				<tr><td><code>DepositSpace</code></td><td>&mdash;</td><td>The façade. It is what a caller holds, and the only object of this domain anything outside it ever sees. It is also where the tasks of one procedure are put in order</td></tr>
-				<tr><td><code>SpaceAcceptance</code></td><td>acceptance</td><td>The four values, and whether a size, a volume or a number passes them. Reads nothing, writes nothing, touches no disk</td></tr>
-				<tr><td><code>SpaceFolder</code></td><td>place</td><td>That a place is a folder and a file is a file in it: where the space stands, how a place is made, listed, read and deleted</td></tr>
-				<tr><td><code>FileAddress</code></td><td>address</td><td>What an address is made of, and what authorises it. The only class which meets the front of the machine</td></tr>
-			</tbody>
-		</table>
+		<p>
+			<code>Place</code> touches nothing: it is not where a place is made, listed or
+			deleted. <code>PlacedFile</code> is a name inside a place, and its size and its
+			content stand on the disk, read by the one class which reads a disk.
+			<code>DepositSpace</code> is what a caller holds, and the only object of this
+			domain anything outside it ever sees.
+		</p>
 
 		<p>
 			<b>No view, no controller, no record.</b> Those are what an app has because it
@@ -1248,40 +1247,13 @@
 		</p>
 
 		<p>
-			<b>The façade puts the tasks in order, and that is not a formality.</b> Judging
+			<b>The fa&ccedil;ade puts the tasks in order, and that is not a formality.</b> Judging
 			a size is <code>SpaceAcceptance</code>'s, summing a volume is
 			<code>SpaceFolder</code>'s, and what says that the one comes before the other is
-			the façade. Written otherwise, one of the two would have to call the other, and
+			the fa&ccedil;ade. Written otherwise, one of the two would have to call the other, and
 			the promise that one class alone touches a disk would be false. The operational
 			model is what this order comes from.
 		</p>
-
-	</section>
-
-	<!-- ----------------------------------------------------------- -->
-	<!-- 3.19 -->
-	<!-- ----------------------------------------------------------- -->
-
-	<section class="subssection">
-	<h3>The class diagram</h3>
-
-		<p>
-			<code>/</code> marks what is derived and held by nobody. What the operations
-			promise is the chapter on the contracts; what they are called is a proposal,
-			and one pass renames them all.
-		</p>
-
-		<table>
-			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
-			<tbody>
-				<tr><td><code>Place</code></td><td>name, /moment</td><td>a_name_for(moment), moment(), is_of_this_hour()</td></tr>
-				<tr><td><code>PlacedFile</code></td><td>place, name</td><td>&mdash;</td></tr>
-				<tr><td><code>DepositSpace</code></td><td>&mdash;</td><td>what_is_accepted(), ask_for_a_place(), put(), address_of(), serve(), forget()</td></tr>
-				<tr><td><code>SpaceAcceptance</code></td><td>&mdash;</td><td>what_is_accepted(), accepts_size(), accepts_volume(), accepts_one_more_place()</td></tr>
-				<tr><td><code>SpaceFolder</code></td><td>&mdash;</td><td>make_a_place(), places(), delete(), make_a_file(), files(), volume(), read()</td></tr>
-				<tr><td><code>FileAddress</code></td><td>&mdash;</td><td>address_of(), what_it_names()</td></tr>
-			</tbody>
-		</table>
 
 		<p>
 			<code>SpaceFolder.make_a_place()</code> and
@@ -1354,7 +1326,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.20 -->
+	<!-- 3.19 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1389,7 +1361,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.21 -->
+	<!-- 3.20 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1425,7 +1397,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.22 -->
+	<!-- 3.21 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1452,7 +1424,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.23 -->
+	<!-- 3.22 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1544,7 +1516,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.24 -->
+	<!-- 3.23 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1586,7 +1558,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.25 -->
+	<!-- 3.24 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1626,7 +1598,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.26 -->
+	<!-- 3.25 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1672,7 +1644,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.27 -->
+	<!-- 3.26 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1701,7 +1673,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.28 -->
+	<!-- 3.27 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1736,7 +1708,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.29 -->
+	<!-- 3.28 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1793,7 +1765,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.30 -->
+	<!-- 3.29 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">

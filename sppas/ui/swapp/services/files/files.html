@@ -1531,39 +1531,25 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>The classes</h3>
+	<h3>The classes of the model</h3>
 
 		<p>
-			Those which carry the data come from the tables, one per table which needs
-			one. Those which work come from the modules, one per module. A name says what
-			the class handles — files, and the means by which they are exchanged — and
-			nothing of how the application happens to be arranged.
+			<code>/</code> marks what is derived and held by nobody. What the operations
+			promise is the chapter on the contracts.
 		</p>
 
-		<h4>What carries the data</h4>
-
 		<table>
-			<thead><tr><th>Class</th><th>From</th><th>What it is</th></tr></thead>
+			<thead><tr><th>Class</th><th>From</th><th>Attributes</th><th>Operations</th></tr></thead>
 			<tbody>
-				<tr><td><code>Deposit</code></td><td>DEPOSIT</td><td>What is to be given, then what was given: the files fed into it, and the place the API gave it</td></tr>
-				<tr><td><code>DepositedFile</code></td><td>COPY</td><td>One file of a deposit: a name, a size, and a content which arrives only when the deposit is given</td></tr>
-				<tr><td><code>FilesRecord</code></td><td>—</td><td>What one request holds: the task it carries, what has been fed so far, and what is to be shown. It serialises itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
-				<tr><td>none</td><td>FILE</td><td>A file in place is named by the domain of the workspaces, which has a class for it already</td></tr>
-				<tr><td>none</td><td>WORKSPACE</td><td>Its own domain's</td></tr>
-			</tbody>
-		</table>
-
-		<h4>What does the work</h4>
-
-		<table>
-			<thead><tr><th>Class</th><th>Module</th><th>What it is alone in knowing</th></tr></thead>
-			<tbody>
-				<tr><td><code>FileProvision</code></td><td>—</td><td>The façade. It is what an app and what answers a request see, and neither of them knows what is behind it</td></tr>
-				<tr><td><code>DepositAcceptance</code></td><td>acceptance</td><td>What may be deposited, and how many deposits the space takes. Reads nothing, writes nothing, knows no workspace</td></tr>
-				<tr><td><code>FilePlace</code></td><td>place</td><td>How the deposit API is called: a place asked for, copies put there, an address obtained</td></tr>
-				<tr><td><code>WorkspaceFiles</code></td><td>workspace</td><td>How the domain of the workspaces is spoken to</td></tr>
-				<tr><td><code>AppExchange</code></td><td>handing</td><td>What an app receives, and what comes back from it</td></tr>
-				<tr><td><code>ResultDelivery</code></td><td>delivery</td><td>How a produced file is reached by the person</td></tr>
+				<tr><td><code>FileProvision</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>what_is_accepted(), feed(), take_back(), give(), files_for_app(), produced(), finished()</td></tr>
+				<tr><td><code>DepositAcceptance</code></td><td>module <i>acceptance</i></td><td>&mdash;</td><td>what_is_accepted(), accepts(), accepts_volume(), accepts_one_more_deposit(), accepts_content()</td></tr>
+				<tr><td><code>FilePlace</code></td><td>module <i>place</i></td><td>&mdash;</td><td>what_is_accepted(), ask_for_a_place(), put(), address_of()</td></tr>
+				<tr><td><code>WorkspaceAccess</code></td><td>module <i>workspace</i></td><td>&mdash;</td><td>make_workspace(), make_known(), check(), checked_files(), lock(), release(), write_produced()</td></tr>
+				<tr><td><code>FilesForApp</code></td><td>module <i>handing</i></td><td>&mdash;</td><td>for_app(), back_from_app()</td></tr>
+				<tr><td><code>ResultDelivery</code></td><td>module <i>delivery</i></td><td>&mdash;</td><td>address_of(), serve()</td></tr>
+				<tr><td><code>Deposit</code></td><td>DEPOSIT</td><td>place, files, /volume</td><td>feed(), take_back(), volume()</td></tr>
+				<tr><td><code>DepositedFile</code></td><td>COPY</td><td>name, size, content</td><td>&mdash;</td></tr>
+				<tr><td>none</td><td>FILE, WORKSPACE</td><td colspan="2">A file in place is named by the domain of the workspaces, which has a class for it already, and a workspace is that domain&#39;s own</td></tr>
 			</tbody>
 		</table>
 
@@ -1573,90 +1559,24 @@
 			none of them. It is the controller which rebuilds it.
 		</p>
 
-		<h4>What shows, and what dispatches</h4>
-
-		<table>
-			<thead><tr><th>Class</th><th>What it does</th></tr></thead>
-			<tbody>
-				<tr><td><code>DepositView</code></td><td>Builds the tree of what a person feeds: what is accepted, the button, the list, the volume against the bound, what gives</td></tr>
-				<tr><td><code>DeliveryView</code></td><td>Builds the tree of what was produced: the files grouped by root, their addresses, the hour at which they go, and whether the app has finished</td></tr>
-				<tr><td><code>FilesManager</code></td><td>Builds the model, the two views and the controller, and answers an app: the files it is to treat, whether an event was for this domain, and a tree to put in a page. It is the only object of this domain an app holds</td></tr>
-				<tr><td><code>FilesController</code></td><td>Reads the task the app dispatched, rebuilds a record from what the page transmitted, calls the façade, and has a view populate its tree from that record</td></tr>
-			</tbody>
-		</table>
-
 		<p>
-			A view builds a tree and does nothing else — it decides nothing, counts
-			nothing, refuses nothing, and reaches neither a disk nor a neighbour. What it
-			shows was decided before it was called.
+			<b>A workspace and the files it holds are not written again here.</b> They are
+			<code>sppasWorkspace</code> and the classes of that domain, which name a file
+			and hold its state already. This domain asks them and sets them; a class of its
+			own carrying the same thing would be a second truth.
 		</p>
-
-	</section>
-
-	<!-- ----------------------------------------------------------- -->
-	<!-- 3.18 -->
-	<!-- ----------------------------------------------------------- -->
-
-	<section class="subssection">
-	<h3>The class diagram</h3>
-
-		<p>
-			<code>/</code> marks what is derived and held by nobody. What the operations
-			promise is the chapter on the contracts; what they are called is a proposal,
-			and one pass renames them all.
-		</p>
-
-		<table>
-			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
-			<tbody>
-				<tr><td><code>Deposit</code></td><td>place, files, /volume</td><td>feed(), take_back(), volume()</td></tr>
-				<tr><td><code>DepositedFile</code></td><td>name, size, content</td><td>—</td></tr>
-				<tr><td><code>FileProvision</code></td><td>—</td><td>what_is_accepted(), feed(), take_back(), give(), files_for_app(), produced(), finished()</td></tr>
-				<tr><td><code>DepositAcceptance</code></td><td>—</td><td>what_is_accepted(), accepts(), accepts_volume(), accepts_one_more_deposit(), accepts_content()</td></tr>
-				<tr><td><code>FilePlace</code></td><td>—</td><td>what_is_accepted(), ask_for_a_place(), put(), address_of()</td></tr>
-				<tr><td><code>WorkspaceFiles</code></td><td>—</td><td>make_workspace(), make_known(), check(), checked_files(), lock(), release(), write_produced()</td></tr>
-				<tr><td><code>AppExchange</code></td><td>—</td><td>for_app(), back_from_app()</td></tr>
-				<tr><td><code>ResultDelivery</code></td><td>—</td><td>address_of(), serve()</td></tr>
-				<tr><td><code>FilesManager</code></td><td>—</td><td>files_for_app(), consumes(events), populate_view()</td></tr>
-				<tr><td><code>FilesController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
-				<tr><td><code>FilesRecord</code></td><td>task, fed, to_be_shown</td><td>serialize(), parse(data)</td></tr>
-				<tr><td><code>DepositView</code></td><td>—</td><td>populate_tree_content(record)</td></tr>
-				<tr><td><code>DeliveryView</code></td><td>—</td><td>populate_tree_content(record)</td></tr>
-			</tbody>
-		</table>
 
 		<p>
 			<code>Deposit.feed()</code> adds and counts; it does not accept. Whether a
-			file may be fed in is <code>DepositAcceptance</code>'s answer, and the façade
+			file may be fed in is <code>DepositAcceptance</code>'s answer, and the fa&ccedil;ade
 			asks it first. A data class which decided what it may hold would hold the
 			rules as well as the data, and the rules would then be in two places.
 		</p>
 
-		<h4>What is tied to what</h4>
-
-		<table>
-			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
-			<tbody>
-				<tr><td>holds</td><td><code>FileProvision</code> 1 &mdash; 1 each of the five others</td><td>A composition: the façade makes them, and they go when it goes</td></tr>
-				<tr><td>holds</td><td><code>Deposit</code> 1 &mdash; 1..n <code>DepositedFile</code></td><td>A composition: a file of a deposit exists only inside it</td></tr>
-				<tr><td>uses</td><td><code>FilePlace</code> &rarr; <code>Deposit</code></td><td>A dependency: it writes them and forgets them, and keeps none</td></tr>
-				<tr><td>uses</td><td><code>AppExchange</code> &rarr; <code>WorkspaceFiles</code></td><td>A dependency: it asks for what is checked, and for the workspace it will hand over</td></tr>
-				<tr><td>uses</td><td><code>WorkspaceFiles</code> &rarr; <code>sppasWorkspace</code></td><td>A dependency, and the only tie of this domain to the neighbouring one</td></tr>
-				<tr><td>uses</td><td><code>ResultDelivery</code> &rarr; <code>FilePlace</code></td><td>A dependency: what an app produced is a sibling of what it read, so it stands in the folder of the deposit</td></tr>
-				<tr><td>holds</td><td><code>FilesManager</code> 1 &mdash; 1 the façade, the two views, the controller</td><td>A composition: it builds them, and they go when it goes. It is what the rule « the controller assembles nothing » leans on</td></tr>
-				<tr><td>holds</td><td><code>FilesController</code> 1 &mdash; 1 <code>FilesRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
-				<tr><td>uses</td><td>the two views &rarr; <code>FilesRecord</code></td><td>A dependency: they are given it and build from it</td></tr>
-				<tr><td>uses</td><td><code>FilesController</code> &rarr; <code>FileProvision</code></td><td>A dependency: it calls the façade, once per request</td></tr>
-				<tr><td>uses</td><td><code>FilesController</code> &rarr; the two views</td><td>A dependency: it hands them what to build from, and reads nothing back but HTML</td></tr>
-				<tr><td>none</td><td><code>DepositAcceptance</code></td><td>Tied to nothing at all: it answers on names and numbers handed to it</td></tr>
-				<tr><td>none</td><td>the two views</td><td>Tied to nothing: they are given a state and give back HTML</td></tr>
-			</tbody>
-		</table>
-
 		<p>
-			<code>AppExchange</code> does not speak to the domain of the workspaces, and
+			<code>FilesForApp</code> does not speak to the domain of the workspaces, and
 			that is deliberate: the promise that one class alone speaks to it would be
-			false the moment two did. It asks <code>WorkspaceFiles</code> for the files
+			false the moment two did. It asks <code>WorkspaceAccess</code> for the files
 			which are checked and for a workspace holding them, and it holds the rule that
 			the one of the person never leaves.
 		</p>
@@ -1668,6 +1588,21 @@
 			tested on its own.
 		</p>
 
+		<h4>What is tied to what</h4>
+
+		<table>
+			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td>holds</td><td><code>FileProvision</code> 1 &mdash; 1 each of the five others</td><td>A composition: the fa&ccedil;ade makes them, and they go when it goes</td></tr>
+				<tr><td>holds</td><td><code>Deposit</code> 1 &mdash; 1..n <code>DepositedFile</code></td><td>A composition: a file of a deposit exists only inside it</td></tr>
+				<tr><td>uses</td><td><code>FilePlace</code> &rarr; <code>Deposit</code></td><td>A dependency: it writes them and forgets them, and keeps none</td></tr>
+				<tr><td>uses</td><td><code>FilesForApp</code> &rarr; <code>WorkspaceAccess</code></td><td>A dependency: it asks for what is checked, and for the workspace it will hand over</td></tr>
+				<tr><td>uses</td><td><code>WorkspaceAccess</code> &rarr; <code>sppasWorkspace</code></td><td>A dependency, and the only tie of this domain to the neighbouring one</td></tr>
+				<tr><td>uses</td><td><code>ResultDelivery</code> &rarr; <code>FilePlace</code></td><td>A dependency: what an app produced is a sibling of what it read, so it stands in the folder of the deposit</td></tr>
+				<tr><td>none</td><td><code>DepositAcceptance</code></td><td>Tied to nothing at all: it answers on names and numbers handed to it</td></tr>
+			</tbody>
+		</table>
+
 		<h4>In yUML</h4>
 
 		<p>
@@ -1675,42 +1610,121 @@
 			class diagram.
 		</p>
 
-		<pre class="dark"><code>[FileProvision|what_is_accepted();feed();take_back();give();files_for_app();produced();finished()]
-
-[FileProvision]++1-1&gt;[DepositAcceptance|what_is_accepted();accepts();accepts_volume();accepts_one_more_deposit();accepts_content()]
+		<pre class="dark"><code>[FileProvision|what_is_accepted();feed();take_back();give();files_for_app();produced();finished()]++1-1&gt;[DepositAcceptance|what_is_accepted();accepts();accepts_volume();accepts_one_more_deposit();accepts_content()]
 [FileProvision]++1-1&gt;[FilePlace|what_is_accepted();ask_for_a_place();put();address_of()]
-[FileProvision]++1-1&gt;[WorkspaceFiles|make_workspace();make_known();check();checked_files();lock();release();write_produced()]
-[FileProvision]++1-1&gt;[AppExchange|for_app();back_from_app()]
+[FileProvision]++1-1&gt;[WorkspaceAccess|make_workspace();make_known();check();checked_files();lock();release();write_produced()]
+[FileProvision]++1-1&gt;[FilesForApp|for_app();back_from_app()]
 [FileProvision]++1-1&gt;[ResultDelivery|address_of();serve()]
 
 [Deposit|place;files;/volume|feed();take_back();volume()]++1-1..*&gt;[DepositedFile|name;size;content]
 
-[FilesManager|files_for_app();consumes();populate_view()]++1-1&gt;[FileProvision]
-[FilesManager]++1-1&gt;[FilesController|handle();populate_view()]
-[FilesManager]++1-1&gt;[DepositView|populate_tree_content()]
-[FilesManager]++1-1&gt;[DeliveryView|populate_tree_content()]
-[FilesController]++1-1&gt;[FilesRecord|task;fed;to_be_shown|serialize();parse()]
-[DepositView]-.-&gt;[FilesRecord]
-[DeliveryView]-.-&gt;[FilesRecord]
-
-[FilesController]-.-&gt;[FileProvision]
-
 [FilePlace]-.-&gt;[Deposit]
-[AppExchange]-.-&gt;[WorkspaceFiles]
-[WorkspaceFiles]-.-&gt;[sppasWorkspace]
+[FilesForApp]-.-&gt;[WorkspaceAccess]
+[WorkspaceAccess]-.-&gt;[sppasWorkspace]
 [ResultDelivery]-.-&gt;[FilePlace]
 
-[sppasWorkspace]-[note:class of the neighbouring domain. Only WorkspaceFiles speaks to it]
-[FilesController]-[note:called once per request. Holds nothing between two, and assembles nothing]
-[FilesRecord]-[note:what one request holds. It travels with the page, which is what keeps nothing of a person on the machine]
-[DepositView]-[note:builds a tree and nothing else. Decides nothing, counts nothing, refuses nothing]
+[sppasWorkspace]-[note:class of the neighbouring domain. Only WorkspaceAccess speaks to it]
 [Deposit]-[note:volume is the sum of the sizes and is not held. place is what the API gave. content is absent until the person gives]
 [ResultDelivery]-[note:a produced file is a sibling of the one it was made from. Same path, same root, so it stands in the folder of the deposit]</code></pre>
 
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
+	<!-- 3.18 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The classes of the view</h3>
+
+		<table>
+			<thead><tr><th>Class</th><th>Operations</th><th>What it shows</th></tr></thead>
+			<tbody>
+				<tr><td><code>DepositView</code></td><td>populate_tree_content(record)</td><td>What a person feeds: what is accepted, the button, the list, the volume against the bound, and what gives</td></tr>
+				<tr><td><code>DeliveryView</code></td><td>populate_tree_content(record)</td><td>What was produced: the files grouped by root, their addresses, the hour at which they go, and whether the app has finished</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			A view builds a tree and does nothing else &mdash; it decides nothing, counts
+			nothing, refuses nothing, and reaches neither a disk nor a neighbour. What it
+			shows was decided before it was called. There are two and not one because what
+			a person gives and what she takes back are asked for at different moments, by
+			different apps, and one of them without the other.
+		</p>
+
+		<h4>What is tied to what</h4>
+
+		<table>
+			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td>uses</td><td>the two views &rarr; <code>FilesRecord</code></td><td>A dependency: they are given it and build from it</td></tr>
+				<tr><td>none</td><td>the two views</td><td>Tied to nothing else: they are given a state and give back HTML</td></tr>
+			</tbody>
+		</table>
+
+		<h4>In yUML</h4>
+
+		<pre class="dark"><code>[DepositView|populate_tree_content()]-.-&gt;[FilesRecord]
+[DeliveryView|populate_tree_content()]-.-&gt;[FilesRecord]
+
+[DepositView]-[note:builds a tree and nothing else. Decides nothing, counts nothing, refuses nothing]</code></pre>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
 	<!-- 3.19 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The classes of the controller</h3>
+
+		<table>
+			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
+			<tbody>
+				<tr><td><code>FilesController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
+				<tr><td><code>FilesRecord</code></td><td>task, fed, to_be_shown</td><td>serialize(), parse(data)</td></tr>
+				<tr><td colspan="3">A record comes from no table: it is what one request holds, it serialises itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
+				<tr><td><code>FilesManager</code></td><td>&mdash;</td><td>files_for_app(), consumes(events), populate_view()</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<code>FilesManager</code> is what an app holds, and the only object of this
+			domain it holds. Where an application of swapp is reached by a URL and answers
+			with a page, this domain is reached by the app which placed its tree: what
+			answers is the app's response and not one of its own, and this class is where
+			that difference stands.
+		</p>
+
+		<h4>What is tied to what</h4>
+
+		<table>
+			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td>holds</td><td><code>FilesManager</code> 1 &mdash; 1 the fa&ccedil;ade, the two views, the controller</td><td>A composition: it builds them, and they go when it goes. It is what the rule &laquo; the controller assembles nothing &raquo; leans on</td></tr>
+				<tr><td>holds</td><td><code>FilesController</code> 1 &mdash; 1 <code>FilesRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
+				<tr><td>uses</td><td><code>FilesController</code> &rarr; <code>FileProvision</code></td><td>A dependency: it calls the fa&ccedil;ade, once per request</td></tr>
+				<tr><td>uses</td><td><code>FilesController</code> &rarr; the two views</td><td>A dependency: it hands them what to build from, and reads nothing back but HTML</td></tr>
+			</tbody>
+		</table>
+
+		<h4>In yUML</h4>
+
+		<pre class="dark"><code>[FilesManager|files_for_app();consumes();populate_view()]++1-1&gt;[FileProvision]
+[FilesManager]++1-1&gt;[FilesController|record|handle();populate_view()]
+[FilesManager]++1-1&gt;[DepositView]
+[FilesManager]++1-1&gt;[DeliveryView]
+[FilesController]++1-1&gt;[FilesRecord|task;fed;to_be_shown|serialize();parse()]
+
+[FilesController]-.-&gt;[FileProvision]
+
+[FilesController]-[note:called once per request. Holds nothing between two, and assembles nothing]
+[FilesRecord]-[note:what one request holds. It travels with the page, which is what keeps nothing of a person on the machine]</code></pre>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.20 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1749,7 +1763,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.20 -->
+	<!-- 3.21 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1779,7 +1793,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.21 -->
+	<!-- 3.22 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1815,7 +1829,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.22 -->
+	<!-- 3.23 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1841,7 +1855,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.23 -->
+	<!-- 3.24 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2029,7 +2043,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.24 -->
+	<!-- 3.25 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2086,7 +2100,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.25 -->
+	<!-- 3.26 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2110,7 +2124,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.26 -->
+	<!-- 3.27 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2133,7 +2147,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.27 -->
+	<!-- 3.28 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2172,7 +2186,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.28 -->
+	<!-- 3.29 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2201,7 +2215,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.29 -->
+	<!-- 3.30 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2230,7 +2244,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.30 -->
+	<!-- 3.31 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -2283,7 +2297,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.31 -->
+	<!-- 3.32 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">

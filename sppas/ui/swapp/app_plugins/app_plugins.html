@@ -1213,8 +1213,9 @@
 	<h3>Where the code goes</h3>
 
 		<p>
-			In <code>sppas/ui/swapp/app_plugins/</code>. One module per kind of knowledge,
-			and every procedure has one module and one only.
+			In <code>sppas/ui/swapp/app_plugins/</code>, cut as every application of swapp
+			is cut: one module for the model, one for the view, one for what dispatches,
+			one for what answers the URL, and one module per part of the page.
 		</p>
 
 		<table>
@@ -1222,10 +1223,11 @@
 				<tr><th>Module</th><th>What it does</th><th>Procedure</th></tr>
 			</thead>
 			<tbody>
-				<tr><td>plugins</td><td>Speaks to the domain of the plugins: what is installed, what each declares, install, remove, start on one file. The only module which knows that domain</td><td>PF1, PF2, PF3, and what PF5 asks of it</td></tr>
-				<tr><td>run</td><td>Starts a run in a thread, advances it file by file, adds the results and what appeared, and answers where it stands. The only module which knows that a run is a thread</td><td>PF5, PF6</td></tr>
-				<tr><td>exchange</td><td>Asks the provision of files for the files of a run and gives back what was produced; hands the options of a plugin to the service which sets them</td><td>PF4, PF7, and what PF5 is given</td></tr>
-				<tr><td>presentation</td><td>Builds the page: the plugins, the run as it advances, the results file by file</td><td>The view of every procedure</td></tr>
+				<tr><td><code>plugins_model</code></td><td>Holds what is installed and what each plugin declares, installs and removes, starts a run and says where it stands, and asks the two services for the files of a run and for the options of a plugin. The only module of this application which speaks to the domain of the plugins</td><td>PF1, PF2, PF3, PF4, PF5, PF6, PF7</td></tr>
+				<tr><td><code>plugins_view</code></td><td>Builds the page and holds its parts</td><td>The view of every procedure</td></tr>
+				<tr><td><code>plugins_controller</code></td><td>Reads the task a request carries, calls what has to be called, and has the view build its tree</td><td>Every procedure</td></tr>
+				<tr><td><code>plugins_maker</code></td><td>Answers the URL, builds the view and what dispatches, and bakes the tree</td><td>Every procedure</td></tr>
+				<tr><td><code>plugslist</code></td><td>The parts of the page: the plugins one under another, one plugin, and a run with what came of each file</td><td>The view of PF1, PF5, PF6</td></tr>
 			</tbody>
 		</table>
 
@@ -1234,10 +1236,10 @@
 		</p>
 
 		<ul>
-			<li>The <b>plugins</b> module is the only one which calls the domain of the plugins, so it is the only one to be read again the day that domain changes. It reads nothing of what a plugin says beyond relaying it.</li>
-			<li>The <b>run</b> module is the only one which knows that a run is a thread and something which holds where it stands. The day a run outlives the process, it is the only one to be read again.</li>
-			<li><b>Exchange</b> is the only one which speaks to the two services. It holds no file and no value: it asks, and gives back what it was given.</li>
-			<li><b>Presentation</b> decides nothing, and shows what a plugin said as that plugin said it.</li>
+			<li>The <b>model</b> is the only one which calls the domain of the plugins and the two services, so it is the only one to be read again the day one of them changes. It reads nothing of what a plugin says beyond relaying it, and it is the only one which knows that a run is a thread.</li>
+			<li>The <b>view</b> decides nothing, and shows what a plugin said as that plugin said it.</li>
+			<li>What <b>dispatches</b> holds nothing between two requests: what has to survive is what the page carries.</li>
+			<li>The <b>parts of the page</b> know the page and nothing else. None of them reads a file, a thread or a declaration.</li>
 		</ul>
 
 		<p>
@@ -1256,65 +1258,11 @@
 	<h3>Implementation model: MVC</h3>
 
 		<p>
-			The model knows the plugins, the runs and what came of them, and exposes
-			neither the domain of the plugins nor the two services to the rest of the
-			application. The controller is called once per request, reads the task it
-			carries, and holds nothing afterwards. The view renders and collects, and
-			takes no decision.
-		</p>
-
-		<h4>Model: what carries the data</h4>
-
-		<table>
-			<thead><tr><th>Class</th><th>From</th><th>What it is</th></tr></thead>
-			<tbody>
-				<tr><td><code>PluginRun</code></td><td>RUN, VALUE</td><td>One run: which plugin, the moment it started, the values it was started with, the files it was given, and the results it holds so far</td></tr>
-				<tr><td><code>FileResult</code></td><td>RESULT, PRODUCED</td><td>What came of one file: whether the plugin ran on it, what the plugin said, and the files which appeared</td></tr>
-				<tr><td><code>PluginsRecord</code></td><td>&mdash;</td><td>What one request holds: the task it carries, which plugin it is about, which run is being followed, and what is to be shown</td></tr>
-				<tr><td>none</td><td>PLUGIN</td><td>A plugin is an <code>sppasPluginParam</code>, held by the domain of the plugins. It is read and never written here</td></tr>
-			</tbody>
-		</table>
-
-		<h4>Model: what does the work</h4>
-
-		<table>
-			<thead><tr><th>Class</th><th>Module</th><th>What it is alone in knowing</th></tr></thead>
-			<tbody>
-				<tr><td><code>InstalledPlugins</code></td><td>plugins</td><td>How the domain of the plugins is spoken to: what is installed, what each declares, installing, removing, starting one on one file</td></tr>
-				<tr><td><code>PluginExecution</code></td><td>run</td><td>How a run is started and advanced: a thread, the plugin started once per file, the result added as each file is done, and whether that thread is still alive</td></tr>
-				<tr><td><code>PluginExchange</code></td><td>exchange</td><td>How the two services are asked: the files of a run and what it produced, and the options of a plugin</td></tr>
-			</tbody>
-		</table>
-
-		<p>
-			<b><code>PluginExecution</code> is the one class of these four dossiers which
-			is not answering a request.</b> A run lasts longer than the request which
-			started it, so something has to advance it while nobody is asking: a thread,
-			started as the setting up of SPPAS starts the installation of its features.
-			It adds to the run and reads nothing back; what it has done is read by the
-			requests which ask where the run stands, and whether it is still alive is the
-			answer to whether the run is still going.
-		</p>
-
-		<h4>View, and what dispatches</h4>
-
-		<table>
-			<thead><tr><th>Class</th><th>What it does</th></tr></thead>
-			<tbody>
-				<tr><td><code>PluginsView</code></td><td>Builds the page from four fragments</td></tr>
-				<tr><td><code>FragmentCards</code></td><td>One card per installed plugin: its icon, what it says of itself in one sentence, what starts it, and that it cannot be started here when it cannot</td></tr>
-				<tr><td><code>FragmentAbout</code></td><td>What is consulted once: the version, and what the plugin says of itself at length</td></tr>
-				<tr><td><code>FragmentRun</code></td><td>A run as it advances: which plugin, which file, how many remain</td></tr>
-				<tr><td><code>FragmentResults</code></td><td>One line per file which is done: what was said about it, and what appeared</td></tr>
-				<tr><td><code>PluginsController</code></td><td>Reads the task the request carries, rebuilds a record, calls what has to be called, and has the view build its tree</td></tr>
-				<tr><td><code>PluginsResponseRecipe</code></td><td>Handles the URL, builds the view and the controller, calls the controller once, and bakes the tree it was given</td></tr>
-			</tbody>
-		</table>
-
-		<p>
-			Installing and removing are not on a card: they are not what one does to a
-			plugin but what one does to the list, and they stand in the menu of the page.
-			Where SPPAS answers from a server, they are not there at all. RO1
+			The model holds the plugins, the run which is going and what came of it, and
+			exposes neither the domain of the plugins nor the two services to the rest of
+			the application. The controller is called once per request, reads the task it
+			carries, and holds nothing afterwards. The view renders and collects, and takes
+			no decision. Three components, three class diagrams.
 		</p>
 
 	</section>
@@ -1324,41 +1272,47 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>The class diagram</h3>
+	<h3>The classes of the model</h3>
 
 		<p>
 			<code>/</code> marks what is derived and held by nobody. What the operations
-			promise is the chapter on the contracts; what they are called is a proposal,
-			and one pass renames them all.
+			promise is the chapter on the contracts.
 		</p>
 
 		<table>
-			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
+			<thead><tr><th>Class</th><th>From</th><th>Attributes</th><th>Operations</th></tr></thead>
 			<tbody>
-				<tr><td><code>PluginRun</code></td><td>run, plugin, moment, values, files, results, /remaining, /over</td><td>add(result), remaining(), is_over(), serialize(), parse(data)</td></tr>
-				<tr><td><code>FileResult</code></td><td>file, done, what was said, produced</td><td>&mdash;</td></tr>
-				<tr><td><code>PluginsRecord</code></td><td>task, plugin, run, to_be_shown</td><td>serialize(), parse(data)</td></tr>
-				<tr><td><code>InstalledPlugins</code></td><td>&mdash;</td><td>all(), one(id), can_run_here(id), install(archive), remove(id), start(id, file, values)</td></tr>
-				<tr><td><code>PluginExecution</code></td><td>run, thread</td><td>start(run), is_running(), where_it_stands(), the_run()</td></tr>
-				<tr><td><code>PluginExchange</code></td><td>&mdash;</td><td>files_for(run), produced(files), options_of(plugin), values_set()</td></tr>
-				<tr><td><code>PluginsView</code></td><td>&mdash;</td><td>populate_tree_content(record)</td></tr>
-				<tr><td><code>PluginsController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
-				<tr><td><code>PluginsResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
+				<tr><td><code>PluginsModel</code></td><td>PLUGIN</td><td>manager, thread, run</td><td>plugins(), one(id), can_run_here(id), install(archive), remove(id), files_for(run), options_of(id), values_set(), start(run), is_running(), the_run()</td></tr>
+				<tr><td><code>PluginRun</code></td><td>RUN, VALUE</td><td>run, plugin, moment, values, files, /remaining, /over</td><td>add(result), remaining(), is_over(), serialize(), parse(data)</td></tr>
+				<tr><td><code>FileResult</code></td><td>RESULT, PRODUCED</td><td>file, done, what was said, produced</td><td>&mdash;</td></tr>
 			</tbody>
 		</table>
 
 		<p>
-			<code>InstalledPlugins.start()</code> starts a plugin on <b>one</b> file and
-			gives back what it said. It does not know what a run is, and it is not what
-			loops: a class which held both would be the only one to be read again the day
-			either changes.
+			<b>One class, and the class of the core under it.</b> What is installed, what
+			each plugin declares, putting one in and taking one out, and starting one on
+			files: <code>sppasPluginsManager</code> holds all of it, and a plugin is an
+			<code>sppasPluginParam</code>. A class of this application holding any of that
+			under another name would be a second truth.
 		</p>
 
 		<p>
-			<code>PluginExecution.is_running()</code> is what RO7 leans on, and it is one
-			question asked of a thread: a second run started while one is going finds it
-			alive and is refused. It is also what tells a run which stopped from a run
-			which is slow.
+			<b>The run is started one file at a time.</b> The domain of the plugins is
+			given a plugin and a list of files, and gives back one text for the whole list.
+			It is given one file at a time here, for the reason the operational model gives:
+			the result of one file is the unit, and a run which stops has done what it did
+			file by file. What appeared for a file is what the files of the person gained
+			for it, which is how the interface which exists today finds it as well.
+		</p>
+
+		<p>
+			<b>Nothing of the core carries the run.</b> <code>sppasPluginsManager</code>
+			descends from a thread but defines nothing of one and is never started as one:
+			the thread which advances a run is this model&#39;s own, started as the setting
+			up of SPPAS starts the installation of its features. Whether that thread is
+			alive is what RO7 leans on &mdash; a second run started while one is going finds
+			it alive and is refused &mdash; and it is also what tells a run which stopped
+			from a run which is slow.
 		</p>
 
 		<h4>What is tied to what</h4>
@@ -1366,16 +1320,10 @@
 		<table>
 			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
 			<tbody>
-				<tr><td>holds</td><td><code>PluginsResponseRecipe</code> 1 &mdash; 1 <code>PluginsView</code>, 1 <code>PluginsController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
-				<tr><td>holds</td><td><code>PluginsView</code> 1 &mdash; 1 each of the four fragments</td><td>A composition: a fragment builds one part of one page</td></tr>
-				<tr><td>holds</td><td><code>PluginsController</code> 1 &mdash; 1 <code>PluginsRecord</code></td><td>A composition: one record per request, kept by nobody</td></tr>
+				<tr><td>holds</td><td><code>PluginsModel</code> 1 &mdash; 0..1 <code>PluginRun</code></td><td>A composition: the run exists inside what advances it, and goes with the process</td></tr>
 				<tr><td>holds</td><td><code>PluginRun</code> 1 &mdash; 0..n <code>FileResult</code></td><td>A composition: a result exists only inside the run it belongs to</td></tr>
-				<tr><td>holds</td><td><code>PluginExecution</code> 1 &mdash; 1 <code>PluginRun</code></td><td>A composition: the run exists inside what advances it, and goes with the process</td></tr>
-				<tr><td>uses</td><td><code>PluginExecution</code> &rarr; <code>InstalledPlugins</code></td><td>A dependency: it starts the plugin on one file and takes back what it said</td></tr>
-				<tr><td>uses</td><td><code>PluginsController</code> &rarr; <code>InstalledPlugins</code>, <code>PluginExecution</code>, <code>PluginExchange</code></td><td>A dependency: it reads, it starts a run, it asks where one stands, and it asks the neighbours</td></tr>
-				<tr><td>uses</td><td><code>InstalledPlugins</code> &rarr; <code>sppasPluginsManager</code></td><td>A dependency, and the only tie of this application to the domain of the plugins</td></tr>
-				<tr><td>uses</td><td><code>PluginExchange</code> &rarr; the provision of files, the service of the options</td><td>A dependency, and the only tie to the two services</td></tr>
-				<tr><td>uses</td><td><code>PluginsView</code> &rarr; <code>PluginsRecord</code></td><td>A dependency: it is given it and builds from it</td></tr>
+				<tr><td>uses</td><td><code>PluginsModel</code> &rarr; <code>sppasPluginsManager</code></td><td>A dependency, and the only tie of this application to the domain of the plugins</td></tr>
+				<tr><td>uses</td><td><code>PluginsModel</code> &rarr; the provision of files, the service of the options</td><td>A dependency, and the only tie to the two services</td></tr>
 			</tbody>
 		</table>
 
@@ -1386,30 +1334,104 @@
 			class diagram.
 		</p>
 
-		<pre class="dark"><code>[PluginsResponseRecipe|bake();_process_events()]++1-1&gt;[PluginsController|record|handle();populate_view()]
-[PluginsResponseRecipe]++1-1&gt;[PluginsView|populate_tree_content()]
-[PluginsController]++1-1&gt;[PluginsRecord|task;plugin;run;to_be_shown|serialize();parse()]
+		<pre class="dark"><code>[PluginsModel|manager;thread;run|plugins();one();can_run_here();install();remove();files_for();options_of();values_set();start();is_running();the_run()]++1-0..1&gt;[PluginRun|run;plugin;moment;values;files;/remaining;/over|add();remaining();is_over();serialize();parse()]
+[PluginRun]++1-0..*&gt;[FileResult|file;done;what was said;produced]
 
-[PluginsView]++1-1&gt;[FragmentCards]
-[PluginsView]++1-1&gt;[FragmentAbout]
-[PluginsView]++1-1&gt;[FragmentRun]
-[PluginsView]++1-1&gt;[FragmentResults]
-
-[PluginRun|run;plugin;moment;values;files;/remaining;/over|add();remaining();is_over();serialize();parse()]++1-0..*&gt;[FileResult|file;done;what was said;produced]
-
-[PluginsController]-.-&gt;[InstalledPlugins|all();one();can_run_here();install();remove();start()]
-[PluginsController]-.-&gt;[PluginExecution|run;thread|start();is_running();where_it_stands();the_run()]
-[PluginsController]-.-&gt;[PluginExchange|files_for();produced();options_of();values_set()]
-[PluginsView]-.-&gt;[PluginsRecord]
-
-[PluginExecution]-.-&gt;[InstalledPlugins]
-[PluginExecution]++1-1&gt;[PluginRun]
-[InstalledPlugins]-.-&gt;[sppasPluginsManager]</code></pre>
+[PluginsModel]-.-&gt;[sppasPluginsManager]</code></pre>
 
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
 	<!-- 3.15 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The classes of the view</h3>
+
+		<p>
+			The parts of the page are those of the interface which exists today, and they
+			bear its names: the plugins one under another, one plugin with what it says of
+			itself, and what a run gave.
+		</p>
+
+		<table>
+			<thead><tr><th>Class</th><th>Operations</th><th>What it shows</th></tr></thead>
+			<tbody>
+				<tr><td><code>PluginsView</code></td><td>populate_tree_content(record)</td><td>The page, and the sections it holds</td></tr>
+				<tr><td><code>PluginsList</code></td><td>&mdash;</td><td>The installed plugins, one under another, and what puts one in or takes one out where that is offered</td></tr>
+				<tr><td><code>PluginDescription</code></td><td>&mdash;</td><td>One plugin: its icon, what it says of itself in one sentence, what starts it, and that it cannot be started here when it cannot; and, asked for, its version and what it says of itself at length</td></tr>
+				<tr><td><code>PluginRunPanel</code></td><td>&mdash;</td><td>A run as it advances: which plugin, which file, how many remain; then one line per file which is done, with what was said about it and what appeared</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			Putting a plugin in and taking one out are not on a plugin: they are not what
+			one does to a plugin but what one does to the list, and they stand in the menu
+			of the page. Where SPPAS answers from a server, they are not there at all. RO1
+		</p>
+
+		<h4>What is tied to what</h4>
+
+		<table>
+			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td>holds</td><td><code>PluginsView</code> 1 &mdash; 1 <code>PluginsList</code>, 1 <code>PluginRunPanel</code></td><td>A composition: a section exists inside the page it is a part of</td></tr>
+				<tr><td>holds</td><td><code>PluginsList</code> 1 &mdash; 0..n <code>PluginDescription</code></td><td>A composition: one per installed plugin, and none where nothing is installed</td></tr>
+				<tr><td>uses</td><td><code>PluginsView</code> &rarr; <code>PluginsRecord</code></td><td>A dependency: it is given what is to be shown and reads nothing else</td></tr>
+			</tbody>
+		</table>
+
+		<h4>In yUML</h4>
+
+		<pre class="dark"><code>[PluginsView|populate_tree_content()]++1-1&gt;[PluginsList]
+[PluginsView]++1-1&gt;[PluginRunPanel]
+[PluginsList]++1-0..*&gt;[PluginDescription]
+
+[PluginsView]-.-&gt;[PluginsRecord]</code></pre>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.16 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The classes of the controller</h3>
+
+		<table>
+			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
+			<tbody>
+				<tr><td><code>PluginsController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
+				<tr><td><code>PluginsRecord</code></td><td>task, plugin, run, to_be_shown</td><td>serialize(), parse(data)</td></tr>
+				<tr><td><code>PluginsResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
+			</tbody>
+		</table>
+
+		<h4>What is tied to what</h4>
+
+		<table>
+			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td>holds</td><td><code>PluginsResponseRecipe</code> 1 &mdash; 1 <code>PluginsView</code>, 1 <code>PluginsController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
+				<tr><td>holds</td><td><code>PluginsController</code> 1 &mdash; 1 <code>PluginsRecord</code></td><td>A composition: one record per request, kept by nobody</td></tr>
+				<tr><td>uses</td><td><code>PluginsController</code> &rarr; <code>PluginsModel</code></td><td>A dependency: it reads, it starts a run, it asks where one stands, and it asks the neighbours through it</td></tr>
+				<tr><td>uses</td><td><code>PluginsController</code> &rarr; <code>PluginsView</code></td><td>A dependency: it has the page built from the record</td></tr>
+			</tbody>
+		</table>
+
+		<h4>In yUML</h4>
+
+		<pre class="dark"><code>[PluginsResponseRecipe|bake();_process_events()]++1-1&gt;[PluginsController|record|handle();populate_view()]
+[PluginsResponseRecipe]++1-1&gt;[PluginsView]
+[PluginsController]++1-1&gt;[PluginsRecord|task;plugin;run;to_be_shown|serialize();parse()]
+
+[PluginsController]-.-&gt;[PluginsModel]
+[PluginsController]-.-&gt;[PluginsView]</code></pre>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.17 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1443,7 +1465,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.16 -->
+	<!-- 3.18 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1469,7 +1491,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.17 -->
+	<!-- 3.19 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1506,7 +1528,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.18 -->
+	<!-- 3.20 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1520,7 +1542,7 @@
 		<h4>What holds everywhere</h4>
 
 		<ul>
-			<li>Only <code>InstalledPlugins</code> speaks to the domain of the plugins, and only <code>PluginExchange</code> speaks to the two services. No other class of this application knows that either exists.</li>
+			<li>Only <code>PluginsModel</code> speaks to the domain of the plugins and to the two services. No other class of this application knows that either exists.</li>
 			<li>What a plugin said is relayed as it was said: never shortened, never translated, and never read for a meaning. RO3</li>
 			<li>Nothing of a run is written on a disk. A run belongs to the process which holds it and goes with it.</li>
 			<li>What is absent gives back an empty thing &mdash; no plugin, no result, no produced file &mdash; and never nothing at all.</li>
@@ -1530,14 +1552,14 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.19 -->
+	<!-- 3.21 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
 	<h3>Class by class</h3>
 
 		<table>
-			<caption>InstalledPlugins</caption>
+			<caption>PluginsModel</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
 				<tr><td>Give every plugin</td><td>pre: none. post: the plugins the domain of the plugins holds, each with what it declares of itself; empty when none is installed. Nothing is read of a plugin beyond what it declares</td></tr>
@@ -1545,18 +1567,13 @@
 				<tr><td>Say whether a plugin can run here</td><td>pre: a plugin. post: true when the command that plugin declares for this system names something this machine has; false otherwise. Nothing is started to find out</td></tr>
 				<tr><td>Install an archive</td><td>pre: where SPPAS runs on the machine of the person [025]. post: the plugin stands among the installed ones, or nothing was installed and what stood in the way is named. Nothing of the archive is verified here: the other domain refuses</td></tr>
 				<tr><td>Remove a plugin</td><td>pre: the same, and an identifier. post: that plugin is no longer among the installed ones, or nothing changed and what stood in the way is named. What that plugin produced is not removed</td></tr>
-				<tr><td>Start a plugin on one file</td><td>pre: a plugin which can run here, one file, and the values it is to be started with. post: what the plugin said, as it said it, and whether it ran at all. One file, never two</td></tr>
-			</tbody>
-		</table>
-
-		<table>
-			<caption>PluginExecution</caption>
-			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
-			<tbody>
-				<tr><td>Start a run</td><td>pre: a plugin which can run here, files which are not none, and the values as they stand. post: the run exists, holding its moment, its plugin, its values and its files, and holding no result yet; and a thread advances it. When a run of that person is already going, nothing is started and the refusal says so</td></tr>
+				<tr><td>Give the files of a run</td><td>pre: none. post: the files the person chose, as the provision of files exposes them; empty when she chose none. Nothing of them is altered</td></tr>
+				<tr><td>Give the options of a plugin to be set</td><td>pre: a plugin. post: the options that plugin declares are handed to the service of the options, with the values they hold</td></tr>
+				<tr><td>Take back the values</td><td>pre: the options were set. post: the values which were set, as that service gives them. Nothing of them is judged here</td></tr>
+				<tr><td>Start a run</td><td>pre: a plugin which can run here, files which are not none, and the values as they stand. post: the run exists, holding its moment, its plugin, its values and its files, and holding no result yet; and a thread advances it, one file at a time. When a run of that person is already going, nothing is started and the refusal says so</td></tr>
 				<tr><td>Say whether a run is going</td><td>pre: none. post: true while the thread which advances the run is alive, false afterwards. It is what tells a run which stopped from a run which is slow</td></tr>
-				<tr><td>Say where a run stands</td><td>pre: none. post: which file is being treated and how many remain. Answered while the run goes, and answered after it is over</td></tr>
-				<tr><td>Give the run</td><td>pre: none. post: the run with the results it holds now. A run read twice in a row gives what it had each time, and never less</td></tr>
+				<tr><td>Give the run</td><td>pre: none. post: the run with the results it holds now, which file is being treated and how many remain. Answered while the run goes, and answered after it is over. A run read twice in a row gives what it had each time, and never less</td></tr>
+				<tr><td>Give back what was produced</td><td>pre: the files which appeared. post: they are known among the files of the person, and reachable as her own. This application holds none of them</td></tr>
 			</tbody>
 		</table>
 
@@ -1579,17 +1596,6 @@
 		</table>
 
 		<table>
-			<caption>PluginExchange</caption>
-			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
-			<tbody>
-				<tr><td>Give the files of a run</td><td>pre: none. post: the files the person chose, as the provision of files exposes them; empty when she chose none. Nothing of them is altered</td></tr>
-				<tr><td>Give back what was produced</td><td>pre: the files which appeared. post: they are known among the files of the person, and reachable as her own. This application holds none of them</td></tr>
-				<tr><td>Give the options of a plugin to be set</td><td>pre: a plugin. post: the options that plugin declares are handed to the service of the options, with the values they hold</td></tr>
-				<tr><td>Take back the values</td><td>pre: the options were set. post: the values which were set, as that service gives them. Nothing of them is judged here</td></tr>
-			</tbody>
-		</table>
-
-		<table>
 			<caption>PluginsController</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
@@ -1599,21 +1605,21 @@
 		</table>
 
 		<table>
-			<caption>PluginsView and its fragments</caption>
+			<caption>PluginsView and its parts</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
 				<tr><td>Populate the tree</td><td>pre: a record. post: what the record says and nothing more &mdash; no plugin it invented, no result it counted, no text it wrote</td></tr>
-				<tr><td><code>FragmentCards</code></td><td>post: one card per installed plugin, carrying its icon, what it says of itself in one sentence, and what starts it; and, for a plugin which cannot run here, that it cannot, before anybody tries</td></tr>
-				<tr><td><code>FragmentAbout</code></td><td>post: the version of one plugin and what it says of itself at length, when the record says it was asked for</td></tr>
-				<tr><td><code>FragmentRun</code></td><td>post: which plugin is running, which file is being treated, and how many remain; nothing at all when no run is going</td></tr>
-				<tr><td><code>FragmentResults</code></td><td>post: one line per file which is done, with what the plugin said about it and the files which appeared. A file which is not done has no line</td></tr>
+				<tr><td><code>PluginsList</code></td><td>post: one <code>PluginDescription</code> per installed plugin, in the order the domain of the plugins gives them, and none at all when nothing is installed</td></tr>
+				<tr><td><code>PluginDescription</code></td><td>post: the icon of that plugin, what it says of itself in one sentence, and what starts it; that it cannot be started here, for a plugin which cannot run here, before anybody tries; and its version with what it says of itself at length, when the record says that was asked for</td></tr>
+				<tr><td><code>PluginRunPanel</code></td><td>post: which plugin is running, which file is being treated, and how many remain; nothing at all when no run is going</td></tr>
+				<tr><td>the same, a run being over</td><td>post: one line per file which is done, with what the plugin said about it and the files which appeared. A file which is not done has no line</td></tr>
 			</tbody>
 		</table>
 
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.20 -->
+	<!-- 3.22 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1622,20 +1628,20 @@
 		<table>
 			<thead><tr><th>No.</th><th>Held by</th></tr></thead>
 			<tbody>
-				<tr><td>[011], [012], [013]</td><td><code>FragmentCards</code>, which shows what <code>InstalledPlugins</code> read and writes nothing of its own</td></tr>
-				<tr><td>[021], [022], [024]</td><td><code>InstalledPlugins</code>, which hands the archive over and asks for the removal</td></tr>
-				<tr><td>[023]</td><td><code>InstalledPlugins</code>, which names what the other domain refused</td></tr>
+				<tr><td>[011], [012], [013]</td><td><code>PluginDescription</code>, which shows what <code>PluginsModel</code> read and writes nothing of its own</td></tr>
+				<tr><td>[021], [022], [024]</td><td><code>PluginsModel</code>, which hands the archive over and asks for the removal</td></tr>
+				<tr><td>[023]</td><td><code>PluginsModel</code>, which names what the other domain refused</td></tr>
 				<tr><td>[025]</td><td>The menu of the page, which does not carry those two actions where SPPAS answers from a server</td></tr>
-				<tr><td>[031], [032]</td><td><code>InstalledPlugins.can_run_here()</code>, read by <code>FragmentCards</code></td></tr>
-				<tr><td>[101], [102]</td><td><code>PluginExchange</code>, which gives the files the person chose, and <code>PluginExecution</code>, which starts the plugin on those and no others</td></tr>
-				<tr><td>[103]</td><td><code>FragmentRun</code>, which is given the files before the run starts</td></tr>
-				<tr><td>[201], [202]</td><td><code>PluginExchange</code>, which hands the options over and takes the values back</td></tr>
+				<tr><td>[031], [032]</td><td><code>PluginsModel.can_run_here()</code>, read by <code>PluginDescription</code></td></tr>
+				<tr><td>[101], [102]</td><td><code>PluginsModel</code>, which gives the files the person chose, and <code>PluginsModel</code>, which starts the plugin on those and no others</td></tr>
+				<tr><td>[103]</td><td><code>PluginRunPanel</code>, which is given the files before the run starts</td></tr>
+				<tr><td>[201], [202]</td><td><code>PluginsModel</code>, which hands the options over and takes the values back</td></tr>
 				<tr><td>[203]</td><td><b>Nobody here.</b> The service of the options is handed the options as the plugin holds them, and that domain says where the values of a former run come from</td></tr>
-				<tr><td>[301]</td><td><code>PluginExecution.start()</code>, which is called by nothing but a request of the person</td></tr>
-				<tr><td>[302], [304]</td><td><code>PluginExecution</code>, which starts the plugin once per file and adds a result whatever came of it</td></tr>
-				<tr><td>[303]</td><td><code>PluginExecution.where_it_stands()</code>, shown by <code>FragmentRun</code></td></tr>
-				<tr><td>[401], [402], [403]</td><td><code>FragmentResults</code>, which is given one result per file which is done</td></tr>
-				<tr><td>[501], [502]</td><td><code>PluginExchange</code>, which gives what appeared to the provision of files</td></tr>
+				<tr><td>[301]</td><td><code>PluginsModel.start()</code>, which is called by nothing but a request of the person</td></tr>
+				<tr><td>[302], [304]</td><td><code>PluginsModel</code>, which starts the plugin once per file and adds a result whatever came of it</td></tr>
+				<tr><td>[303]</td><td><code>PluginsModel.the_run()</code>, shown by <code>PluginRunPanel</code></td></tr>
+				<tr><td>[401], [402], [403]</td><td><code>PluginRunPanel</code>, which is given one result per file which is done</td></tr>
+				<tr><td>[501], [502]</td><td><code>PluginsModel</code>, which gives what appeared to the provision of files</td></tr>
 				<tr><td>[1001]</td><td><code>PluginsView</code>, and nothing else of this application</td></tr>
 			</tbody>
 		</table>
@@ -1660,7 +1666,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.21 -->
+	<!-- 3.23 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1698,7 +1704,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.22 -->
+	<!-- 3.24 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1736,7 +1742,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.23 -->
+	<!-- 3.25 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
