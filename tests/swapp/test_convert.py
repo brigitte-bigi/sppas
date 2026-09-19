@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.app_convert.test_convert.py
+:filename: tests.swapp.test_convert.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Unittests of the models of Convert.
@@ -61,11 +61,11 @@ from sppas.src.anndata import sppasInterval
 from sppas.src.anndata import sppasTrsRW
 from sppas.src.anndata.aio.readwrite import FileFormatProperty
 
-from .convert_model import ConvertModel
-from .convert_formats import ModelFormats
-from .convert_remediation import ModelRemediation
-from .convert_conversion import ModelConversion
-from .convert_provision import ModelProvision
+from sppas.ui.swapp.app_convert.convert_model import sppasConvertModel
+from sppas.ui.swapp.app_convert.convert_formats import sppasModelFormats
+from sppas.ui.swapp.app_convert.convert_remediation import sppasModelRemediation
+from sppas.ui.swapp.app_convert.convert_conversion import sppasModelConversion
+from sppas.ui.swapp.app_convert.convert_provision import sppasModelProvision
 
 # ---------------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ class TestModelRemediation(unittest.TestCase):
     """TE1 to TE6. A content in, a content out: nothing is installed."""
 
     def setUp(self):
-        self.remediation = ModelRemediation()
+        self.remediation = sppasModelRemediation()
         self.holds_all = {"multi_tiers": True, "point": True, "interval": True,
                           "alt_tag": True, "tag_types": True,
                           "tag_geometry": True, "empty_tier": True,
@@ -242,7 +242,7 @@ class TestModelFormats(unittest.TestCase):
     """TE7 to TE13. The API, and no file of the user."""
 
     def setUp(self):
-        self.formats = ModelFormats()
+        self.formats = sppasModelFormats()
 
     # -----------------------------------------------------------------------
 
@@ -362,7 +362,7 @@ class TestModelConversion(unittest.TestCase):
 
     def setUp(self):
         self.root = tempfile.mkdtemp(prefix="test_convert_")
-        self.conversion = ModelConversion()
+        self.conversion = sppasModelConversion()
         self.destination = a_writable_format(True, "multi_tiers_support")
         self.batch = list()
         for name in ("a", "b", "c"):
@@ -514,7 +514,7 @@ class TestModelProvision(unittest.TestCase):
             path = os.path.join(self.root, name)
             sppasTrsRW(path).write(one_tier())
             self.files.append(path)
-        self.provision = ModelProvision(self.files)
+        self.provision = sppasModelProvision(self.files)
 
     def tearDown(self):
         shutil.rmtree(self.root, ignore_errors=True)
@@ -527,7 +527,7 @@ class TestModelProvision(unittest.TestCase):
 
         """
         self.assertEqual(self.files, self.provision.batch())
-        self.assertEqual(list(), ModelProvision(list()).batch())
+        self.assertEqual(list(), sppasModelProvision(list()).batch())
 
         got = self.provision.batch()
         got.append("something of my own")
@@ -555,7 +555,7 @@ class TestConvertModel(unittest.TestCase):
 
     def setUp(self):
         self.root = tempfile.mkdtemp(prefix="test_convert_")
-        self.model = ConvertModel()
+        self.model = sppasConvertModel()
         self.destination = a_writable_format(True, "multi_tiers_support")
         self.path = os.path.join(self.root, "a.xra")
         sppasTrsRW(self.path).write(one_tier())

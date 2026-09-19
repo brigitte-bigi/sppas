@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.services.files.test_files.py
+:filename: tests.swapp.test_files.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Unittests of the provision of files, and of giving them back.
@@ -52,18 +52,18 @@ import tempfile
 from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States
 
-from ..deposit.deposit_settings import DepositSettings
-from ..deposit.deposit_space import DepositSpace
+from sppas.ui.swapp.services.deposit.deposit_settings import sppasDepositSettings
+from sppas.ui.swapp.services.deposit.deposit_space import sppasDepositSpace
 
-from .files_acceptance import DepositAcceptance
-from .files_feeding import Deposit
-from .files_place import FilePlace
-from .files_workspace import WorkspaceFiles
-from .files_handing import AppExchange
-from .files_delivery import ResultDelivery
-from .files_record import FilesRecord
-from .files_view import DepositView
-from .files_view import DeliveryView
+from sppas.ui.swapp.services.files.files_acceptance import sppasDepositAcceptance
+from sppas.ui.swapp.services.files.files_feeding import sppasDeposit
+from sppas.ui.swapp.services.files.files_place import sppasFilePlace
+from sppas.ui.swapp.services.files.files_workspace import sppasWorkspaceFiles
+from sppas.ui.swapp.services.files.files_handing import sppasAppExchange
+from sppas.ui.swapp.services.files.files_delivery import sppasResultDelivery
+from sppas.ui.swapp.services.files.files_record import sppasFilesRecord
+from sppas.ui.swapp.services.files.files_view import sppasDepositView
+from sppas.ui.swapp.services.files.files_view import sppasDeliveryView
 
 # ---------------------------------------------------------------------------
 
@@ -83,7 +83,7 @@ class TestDepositAcceptance(unittest.TestCase):
     """TE1 to TE7. It reads nothing: no place, no API, no workspace."""
 
     def setUp(self):
-        self.acceptance = DepositAcceptance()
+        self.acceptance = sppasDepositAcceptance()
 
     # -----------------------------------------------------------------------
 
@@ -95,7 +95,7 @@ class TestDepositAcceptance(unittest.TestCase):
         said = self.acceptance.what_is_accepted()
         self.assertTrue(len(said) > 0)
 
-        deposit = Deposit()
+        deposit = sppasDeposit()
         deposit.feed("a.wav", 1024)
         self.assertEqual(said, self.acceptance.what_is_accepted())
 
@@ -106,7 +106,7 @@ class TestDepositAcceptance(unittest.TestCase):
         reason is given with the refusal. C12
 
         """
-        deposit = Deposit()
+        deposit = sppasDeposit()
         deposit.feed("a.wav", 1024)
 
         accepted, reason = self.acceptance.accepts("a.wav", deposit)
@@ -124,7 +124,7 @@ class TestDepositAcceptance(unittest.TestCase):
         name. C10
 
         """
-        deposit = Deposit()
+        deposit = sppasDeposit()
         for name in ("a.exe", "a.zip", "a.unknown", "a"):
             accepted, reason = self.acceptance.accepts(name, deposit)
             self.assertFalse(accepted)
@@ -190,7 +190,7 @@ class TestDeposit(unittest.TestCase):
     """TE8 to TE11. What is fed, before anything has travelled."""
 
     def setUp(self):
-        self.deposit = Deposit()
+        self.deposit = sppasDeposit()
 
     # -----------------------------------------------------------------------
 
@@ -253,10 +253,10 @@ class TestViews(unittest.TestCase):
         invented, no total it counted. D1
 
         """
-        record = FilesRecord()
+        record = sppasFilesRecord()
         record.fed = [("a.wav", 1024), ("b.TextGrid", 512)]
 
-        view = DepositView()
+        view = sppasDepositView()
         view.populate_tree_content(record)
         shown = text_of(view)
 
@@ -271,9 +271,9 @@ class TestViews(unittest.TestCase):
         or invented a refusal is caught here. D1
 
         """
-        record = FilesRecord()
+        record = sppasFilesRecord()
 
-        for view in (DepositView(), DeliveryView()):
+        for view in (sppasDepositView(), sppasDeliveryView()):
             view.populate_tree_content(record)
             shown = text_of(view)
             self.assertNotIn("a.wav", shown)
@@ -300,8 +300,8 @@ class TestAppExchange(unittest.TestCase):
         self.wkp.set_object_state(States().CHECKED, self.wkp.get_object(self.names[0]))
         self.wkp.set_object_state(States().CHECKED, self.wkp.get_object(self.names[1]))
 
-        self.workspace = WorkspaceFiles(self.wkp)
-        self.exchange = AppExchange(self.workspace)
+        self.workspace = sppasWorkspaceFiles(self.wkp)
+        self.exchange = sppasAppExchange(self.workspace)
 
     def tearDown(self):
         shutil.rmtree(self.root, ignore_errors=True)
@@ -349,10 +349,10 @@ class TestFilePlace(unittest.TestCase):
     """TE16 and TE17. The only class which calls the deposit API."""
 
     def setUp(self):
-        self.settings = DepositSettings()
+        self.settings = sppasDepositSettings()
         self.settings.space = tempfile.mkdtemp(prefix="test_files_")
-        self.api = DepositSpace(self.settings)
-        self.place = FilePlace(self.api)
+        self.api = sppasDepositSpace(self.settings)
+        self.place = sppasFilePlace(self.api)
 
     def tearDown(self):
         shutil.rmtree(self.settings.space, ignore_errors=True)
@@ -400,11 +400,11 @@ class TestResultDelivery(unittest.TestCase):
     """TE18 and TE19. What an address reaches, and what it does not."""
 
     def setUp(self):
-        self.settings = DepositSettings()
+        self.settings = sppasDepositSettings()
         self.settings.space = tempfile.mkdtemp(prefix="test_files_")
-        self.api = DepositSpace(self.settings)
-        self.place = FilePlace(self.api)
-        self.delivery = ResultDelivery(self.place)
+        self.api = sppasDepositSpace(self.settings)
+        self.place = sppasFilePlace(self.api)
+        self.delivery = sppasResultDelivery(self.place)
 
         self.given = self.place.ask_for_a_place()
         self.place.put(self.given, "a-phon.TextGrid", b"produced")
@@ -452,10 +452,10 @@ class TestWorkspaceFiles(unittest.TestCase):
                 fp.write("")
             self.names.append(path)
 
-        self.workspace = WorkspaceFiles(self.wkp)
+        self.workspace = sppasWorkspaceFiles(self.wkp)
         self.workspace.make_known(self.names)
         self.workspace.check(self.names)
-        self.exchange = AppExchange(self.workspace)
+        self.exchange = sppasAppExchange(self.workspace)
 
     def tearDown(self):
         shutil.rmtree(self.root, ignore_errors=True)

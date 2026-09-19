@@ -65,16 +65,59 @@
 
 <section class="chapter">
 <h1>User manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is the help of the person who converts files: what the page
+		shows, what is decided on it, and what happens once a conversion has run.
+	</p>
+
+</section>
+
+
+<!-- ====================== DEVELOPER MANUAL ======================= -->
+
+
+<section class="chapter">
+<h1>Developer manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is for whoever reads or changes the code: how it is organised,
+		what the page is made of, the events it answers, and the stylesheets.
+	</p>
+
+</section>
+
+
+
+
+<!-- ====================== MODELLING ============================== -->
+
+
+<section class="chapter">
+<h1>Modelling</h1>
+
+<!-- =============================================================== -->
+
+
+<!-- ====================== PROBLEM AND SCOPE ====================== -->
+
+
+<section class="ssection">
+<h2>Problem and scope</h2>
 	
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.1 -->
+	<!-- 3.1 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Description</h2>
+	<section class="subssection">
+	<h3>Description</h3>
 
 		<p>
 			Annotated speech corpora circulate between tools. A corpus is transcribed in one software, 
@@ -131,16 +174,16 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.2 -->
+	<!-- 3.2 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Defining the requirements</h2>
+	<section class="subssection">
+	<h3>Defining the needs</h3>
 				
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Problem statement and objectives</h3>
+		<section>
+		<h4>Problem statement and objectives</h4>
 
 			<p>
 				Converting annotation files raises a difficulty that is neither technical nor linguistic,
@@ -195,10 +238,10 @@
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Expressing the requirements</h3>
+		<section>
+		<h4>Expressing the needs</h4>
 
-			<h4>Choosing a destination in full knowledge</h4>
+			<h5>Choosing a destination in full knowledge</h5>
 			
 			<p>
 				A user selects a destination format because a tool downstream requires it, not because 
@@ -213,7 +256,7 @@
 				but understanding them must not require technical expertise.
 			</p>
 			
-			<h4>Stating export options before reading anything</h4>
+			<h5>Stating export options before reading anything</h5>
 			
 			<p>
 				When a destination cannot hold what a source expresses, something must be decided. 
@@ -225,7 +268,7 @@
 				of any particular file.
 			</p>
 
-			<h4>Delimiting the set of files to convert</h4>
+			<h5>Delimiting the set of files to convert</h5>
 			
 			<p>
 				The files to be converted come from the working context, not from the tool: in a 
@@ -236,7 +279,7 @@
 				constraints, an occasional use being bounded by what a service can reasonably receive.
 			</p>
 
-			<h4>Reporting each file individually</h4>
+			<h5>Reporting each file individually</h5>
 			
 			<p>
 				A batch is not an operation, but a series of operations sharing the same decisions. 
@@ -248,7 +291,7 @@
 				verifiable.
 			</p>
 
-			<h4>Reaching the converted files</h4>
+			<h5>Reaching the converted files</h5>
 			
 			<p>
 				A conversion that produces files the user cannot find has not converted anything. 
@@ -258,7 +301,7 @@
 				where the tool put it.
 			</p>
 			
-			<h4>Accessibility</h4>
+			<h5>Accessibility</h5>
 			
 			<p>
 				Everything above rests on information being exposed: supported properties, 
@@ -276,18 +319,18 @@
 
 <!-- ====================== REF MANUAL ============================ -->
 
-<section class="chapter">
-<h1>Modelling</h1>
+<section class="ssection">
+<h2>Conceptual level</h2>
 	
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.1 -->
+	<!-- 3.3 -->
 	<!-- ----------------------------------------------------------- -->
 	
-	<section class="ssection">
-	<h2>Requirements</h2>
+	<section class="subssection">
+	<h3>Requirements</h3>
 
 		<p>
 		The previous sections state what users need and why; this section states what the
@@ -303,8 +346,8 @@
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Concepts manipulated by the application</h3>
+		<section>
+		<h4>Concepts manipulated by the application</h4>
 
 			<p>The data dictionary of this application. Thirteen concepts, and the model
 			below names no other.</p>
@@ -369,8 +412,8 @@
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Deriving the options from the destination format</h3>
+		<section>
+		<h4>Deriving the options from the destination format</h4>
 
 			<p>The correspondence between an unsupported property, the question it raises,
 			and the answers available for it is data of the model, not code. Adding a
@@ -385,7 +428,7 @@
 			transforms the content, or the number of files produced. The first kind is
 			decided once; the second, property by property.</p>
 
-			<h4>Preservation: one decision</h4>
+			<h5>Preservation: one decision</h5>
 
 			<p>Where the destination cannot hold metadata, controlled vocabularies or
 			media declarations, the user is not asked where to put them, but whether to
@@ -435,7 +478,7 @@
 			vocabularies. Offering three answers for each of three properties would ask
 			nine questions no one has.</p>
 
-			<h4>Structure: one decision per property</h4>
+			<h5>Structure: one decision per property</h5>
 
 			<p>The remaining options alter the annotations or the shape of the result.
 			They are decided individually, because answering one says nothing of the
@@ -496,7 +539,7 @@
 			<span class="api-ok">[API-OK]</span>. The tier is named
 			<code>DoNotEdit</code>; see the annex for what it holds.</p>
 
-			<h4>Properties raising no question</h4>
+			<h5>Properties raising no question</h5>
 
 			<p>The remaining unsupported properties raise no question, because nothing can
 			be fabricated and no transformation preserves the content:</p>
@@ -517,7 +560,7 @@
 				batch.</li>
 			</ul>
 
-			<h4>Extensions of the API required by this section</h4>
+			<h5>Extensions of the API required by this section</h5>
 
 			<p>None: the three extensions this section was stating are available
 			<span class="api-ok">[API-OK]</span>. They are
@@ -530,8 +573,8 @@
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3 id="chaining">Remediation chaining</h3>
+		<section>
+		<h4 id="chaining">Remediation chaining</h4>
 
 			<p>Remediations are not independent, and their order is not neutral. Removing
 			empty tiers can leave a file with no tier, which the destination may refuse.
@@ -549,8 +592,8 @@
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Conversion of one file</h3>
+		<section>
+		<h4>Conversion of one file</h4>
 
 			<p>Anticipation comes first; the typed exceptions of the API act as a safety
 			net for what anticipation did not catch.</p>
@@ -580,10 +623,10 @@
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Requirements as specified</h3>
+		<section>
+		<h4>Organising the needs</h4>
 
-			<h4>[010] Starting a conversion</h4>
+			<h5>[010] Starting a conversion</h5>
 			<ul class="req">
 			<li>[011] The user can initiate a conversion of a set of annotation
 			files.</li>
@@ -591,20 +634,20 @@
 			batch.</li>
 			</ul>
 
-			<h4>[020] Understanding the process</h4>
+			<h5>[020] Understanding the process</h5>
 			<ul class="req">
 			<li>[021] The user can identify what is required before a conversion can
 			run.</li>
 			<li>[022] The system states which decisions are missing.</li>
 			</ul>
 
-			<h4>[030] Controlled progression</h4>
+			<h5>[030] Controlled progression</h5>
 			<ul class="req">
 			<li>[031] The system allows a conversion to run only if a destination format
 			is selected and the batch is not empty.</li>
 			</ul>
 
-			<h4>[100] Destination format</h4>
+			<h5>[100] Destination format</h5>
 			<ul class="req">
 			<li>[101] The user can select one destination format.</li>
 			<li>[102] The system restricts the choice to the formats it is able to
@@ -617,14 +660,14 @@
 			<li>[106] The user can cancel the current selection.</li>
 			</ul>
 
-			<h4>[200] Batch</h4>
+			<h5>[200] Batch</h5>
 			<ul class="req">
 			<li>[201] The user delimits the set of files to convert.</li>
 			<li>[202] The system operates on that set and does not alter it.</li>
 			<li>[203] The system reports when the set is empty.</li>
 			</ul>
 
-			<h4>[300] Export options</h4>
+			<h5>[300] Export options</h5>
 			<ul class="req">
 			<li>[301] The system derives the options from the properties of the selected
 			destination format.</li>
@@ -643,7 +686,7 @@
 			change it for this conversion without altering the settings.</li>
 			</ul>
 
-			<h4>[400] General options</h4>
+			<h5>[400] General options</h5>
 			<ul class="req">
 			<li>[401] The user can allow or forbid overriding an existing output
 			file.</li>
@@ -651,14 +694,14 @@
 			whose extension is unknown.</li>
 			</ul>
 
-			<h4>[500] Announcing structural loss</h4>
+			<h5>[500] Announcing structural loss</h5>
 			<ul class="req">
 			<li>[501] The system announces, once for the batch, what the destination
 			format cannot hold.</li>
 			<li>[502] The system does not report structural loss per file.</li>
 			</ul>
 
-			<h4>[600] Converting</h4>
+			<h5>[600] Converting</h5>
 			<ul class="req">
 			<li>[601] The system reads each file of the batch.</li>
 			<li>[602] The system applies the chosen remediations before writing.</li>
@@ -670,7 +713,7 @@
 			<li>[606] The failure of one file never interrupts the batch.</li>
 			</ul>
 
-			<h4>[700] Reporting</h4>
+			<h5>[700] Reporting</h5>
 			<ul class="req">
 			<li>[701] The system reports a status for every file of the batch.</li>
 			<li>[702] The system reports the remarks attached to a file.</li>
@@ -679,20 +722,20 @@
 			the internals of the format.</li>
 			</ul>
 
-			<h4>[800] Reaching the results</h4>
+			<h5>[800] Reaching the results</h5>
 			<ul class="req">
 			<li>[801] The system makes the converted files reachable to the user.</li>
 			<li>[802] The system makes them reachable without the user knowing where
 			they were written.</li>
 			</ul>
 
-			<h4>[900] Restarting</h4>
+			<h5>[900] Restarting</h5>
 			<ul class="req">
 			<li>[901] The user can start a new conversion.</li>
 			<li>[902] The system resets the decisions without resetting the batch.</li>
 			</ul>
 
-			<h4>[1000] UX and accessibility</h4>
+			<h5>[1000] UX and accessibility</h5>
 			<ul class="req">
 			<li>[1001] The system provides text alternatives to any graphical encoding of
 			a property.</li>
@@ -708,11 +751,11 @@
 	
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 2.2 -->
+	<!-- 3.4 -->
 	<!-- ----------------------------------------------------------- -->
 	
-	<section class="ssection">
-	<h2>Conceptual model</h2>
+	<section class="subssection">
+	<h3>Conceptual model</h3>
 
 		<p>Convert holds no persistent data. Everything it manipulates belongs to one
 		conversion in progress, and is derived from a small number of user decisions.
@@ -722,13 +765,13 @@
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Conceptual model of communication</h3>
+		<section>
+		<h4>Conceptual model of communication</h4>
 
 			<p>Four actors border Convert, and only one of them is a person. Three are
 			neighbouring systems, and Convert writes into none of them.</p>
 
-			<h4>Actors</h4>
+			<h5>Actors</h5>
 
 			<ul>
 			<li><b>A1. The user</b> — she chooses a destination format, answers the
@@ -745,7 +788,7 @@
 			preservation option and nothing more.</li>
 			</ul>
 
-			<h4>Flows</h4>
+			<h5>Flows</h5>
 
 			<ul>
 			<li><b>F1. A1 &rarr; Convert</b> — the destination chosen, or its cancellation [101], [106].</li>
@@ -781,15 +824,15 @@
 
 		<!-- ------------------------------------------------------- -->
 
-		<section class="subssection">
-		<h3>Conceptual model of data</h3>
+		<section>
+		<h4>Conceptual model of data</h4>
 
 			<p>Nine classes. Three of them are the knowledge of formats, which is data of
 			the model and not code; three belong to one conversion in progress; three
 			belong to what it produced. Nothing here survives a conversion but the first
 			three.</p>
 
-			<h4>The classes of entities</h4>
+			<h5>The classes of entities</h5>
 
 			<table>
 			<thead>
@@ -808,7 +851,7 @@
 			</tbody>
 			</table>
 
-			<h4>The relations</h4>
+			<h5>The relations</h5>
 
 			<table>
 			<thead>
@@ -845,7 +888,7 @@
 			domain knows of a file is its identity, which is what it takes to give it a
 			result.</p>
 
-			<h4>Computed, and never held</h4>
+			<h5>Computed, and never held</h5>
 
 			<ul>
 			<li>The properties of the destination, which are R1 read for one format.</li>
@@ -857,7 +900,7 @@
 			<li>The files produced, which stand where the API wrote them: one file of the batch may produce several, and none of them is held here.</li>
 			</ul>
 
-			<h4>What one conversion carries, in the words the code will use</h4>
+			<h5>What one conversion carries, in the words the code will use</h5>
 
 			<ul>
 			<li><code>destination</code> — one format, among those that can be written.</li>
@@ -880,7 +923,7 @@
 			<li><code>(batch ∧ destination ∧ answers ∧ general_options) → results</code></li>
 			</ul>
 
-			<h4>What is not modelled, and why</h4>
+			<h5>What is not modelled, and why</h5>
 
 			<ul>
 			<li>The annotations themselves, which are the API's: this domain reads them, transforms them through a remediation, and writes them back, holding none.</li>
@@ -891,15 +934,15 @@
 
 		</section>
 
-		<section class="subssection">
-		<h3>Conceptual model of treatments</h3>
+		<section>
+		<h4>Conceptual model of treatments</h4>
 
 			<p>Eight treatments. Six are the decisions and the conversion; two were
 			brought out by writing the events, three requirements having had no treatment
 			to stand in. Each one says on which event it runs, what it does, and under
 			which condition each of its results is emitted.</p>
 
-			<h4>The events</h4>
+			<h5>The events</h5>
 
 			<table>
 			<thead>
@@ -931,7 +974,7 @@
 			condition on its synchronisation, and that condition is read on the data it
 			already holds, not on a second event.</p>
 
-			<h4>T01 — Set the destination format</h4>
+			<h5>T01 — Set the destination format</h5>
 			<ul class="mct">
 			<li><strong>Event</strong>: E1 or E2.</li>
 			<li><strong>Purpose</strong>: define the format into which the batch is to
@@ -954,7 +997,7 @@
 			<li><strong>Emission</strong>: <code>destination</code> and E8, when a format is chosen and it is one the system can write; <code>destination</code> undefined and E10, when it is cancelled; F7, always; E10, always.</li>
 			</ul>
 
-			<h4>T02 — Derive the options and the structural loss</h4>
+			<h5>T02 — Derive the options and the structural loss</h5>
 			<ul class="mct">
 			<li><strong>Event</strong>: E8.</li>
 			<li><strong>Purpose</strong>: state what the destination cannot hold, and
@@ -981,7 +1024,7 @@
 			<li><strong>Emission</strong>: <code>properties</code>, <code>options</code> and E9, always; F3, when at least one option is raised; F6, when the destination does not support a property no option covers.</li>
 			</ul>
 
-			<h4>T03 — Answer the options</h4>
+			<h5>T03 — Answer the options</h5>
 			<ul class="mct">
 			<li><strong>Event</strong>: E3, the options being known (E9).</li>
 			<li><strong>Purpose</strong>: decide how annotations are to be written when
@@ -1004,7 +1047,7 @@
 			<li><strong>Emission</strong>: <code>answers</code>, always; E10, always. Nothing is emitted for an option left unanswered: its default is what holds [304].</li>
 			</ul>
 
-			<h4>T04 — Set the general options</h4>
+			<h5>T04 — Set the general options</h5>
 			<ul class="mct">
 			<li><strong>Event</strong>: E4.</li>
 			<li><strong>Purpose</strong>: decide what does not depend on the
@@ -1027,7 +1070,7 @@
 			<li><strong>Emission</strong>: <code>general_options</code>, always; E10, always.</li>
 			</ul>
 
-			<h4>T05 — Delimit the batch</h4>
+			<h5>T05 — Delimit the batch</h5>
 			<ul class="mct">
 			<li><strong>Event</strong>: E5.</li>
 			<li><strong>Purpose</strong>: define the set of files to convert.</li>
@@ -1048,7 +1091,7 @@
 			<li><strong>Emission</strong>: <code>batch</code>, always; E10, always; F7 saying the set is empty, when it is [203].</li>
 			</ul>
 
-			<h4>T06 — Produce the results</h4>
+			<h5>T06 — Produce the results</h5>
 			<ul class="mct">
 			<li><strong>Event</strong>: E6, and a destination defined and a batch which is not empty [031].</li>
 			<li><strong>Purpose</strong>: write the annotations of every file of the
@@ -1089,7 +1132,7 @@
 			<li><strong>Emission</strong>: One result per file, always; F10, always; E11, always. Nothing is emitted before the whole batch has been treated: a file which fails emits its result and never interrupts the others [606].</li>
 			</ul>
 
-			<h4>T07 — Start a new conversion</h4>
+			<h5>T07 — Start a new conversion</h5>
 			<ul class="mct">
 			<li><strong>Event</strong>: E7.</li>
 			<li><strong>Purpose</strong>: take the decisions back to what they were
@@ -1113,7 +1156,7 @@
 			</li>
 			</ul>
 
-			<h4>T08 — Make the converted files reachable</h4>
+			<h5>T08 — Make the converted files reachable</h5>
 			<ul class="mct">
 			<li><strong>Event</strong>: E11.</li>
 			<li><strong>Purpose</strong>: that the user reaches what was produced
@@ -1148,17 +1191,17 @@
 <!-- ====================== ORGANISATIONAL ========================= -->
 
 
-<section class="chapter">
-<h1>Organisational level</h1>
+<section class="ssection">
+<h2>Organisational level</h2>
 
 <!-- =============================================================== -->
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.1 -->
+	<!-- 3.5 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Organisational model of treatments</h2>
+	<section class="subssection">
+	<h3>Organisational model of treatments</h3>
 
 		<p>One procedure per treatment, numbered as it is. There are two contexts of
 		execution and one organisation: what differs between the local server and uwsgi
@@ -1202,13 +1245,13 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.2 -->
+	<!-- 3.6 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What the user acts on</h2>
+	<section class="subssection">
+	<h3>What the user acts on</h3>
 
-		<h3>Client-side triggers</h3>
+		<h4>Client-side triggers</h4>
 
 		<ul>
 		<li>Selecting the destination format</li>
@@ -1224,7 +1267,7 @@
 		properties and options is data of the model, and the client holds no knowledge
 		of formats.</p>
 
-		<h3>Navigation</h3>
+		<h4>Navigation</h4>
 
 		<p>Convert is a single page. The conversion is not a pathway in the sense
 		TextCueS gives that word: there are no successive steps, but decisions taken
@@ -1243,11 +1286,11 @@
 		</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.3 -->
+	<!-- 3.7 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Rules of organisation</h2>
+	<section class="subssection">
+	<h3>Rules of organisation</h3>
 
 		<ul>
 		<li><b>RO1</b> — The client holds no knowledge of formats. Every derivation is a
@@ -1288,18 +1331,18 @@
 <!-- ====================== CONSTRAINTS ============================ -->
 
 
-<section class="chapter">
-<h1>Constraints</h1>
+<section class="ssection">
+<h2>Constraints</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 4.1 -->
+	<!-- 3.8 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What the code holds to</h2>
+	<section class="subssection">
+	<h3>What the code holds to</h3>
 
 		<p>Gathered from the rules of the treatments and from the requirements they
 		answer, and written here once so that each of them has one place and one only.
@@ -1361,18 +1404,18 @@
 <!-- ====================== LOGICAL LEVEL ========================== -->
 
 
-<section class="chapter">
-<h1>Logical level</h1>
+<section class="ssection">
+<h2>Logical level</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 4.1 -->
+	<!-- 3.9 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The tables</h2>
+	<section class="subssection">
+	<h3>The tables</h3>
 
 		<p>Each class of entities becomes a table, and its identifier becomes its key.
 		Ten tables: five are the knowledge of formats and are permanent, five belong to
@@ -1434,17 +1477,17 @@
 <!-- ====================== PHYSICAL LEVEL ========================= -->
 
 
-<section class="chapter">
-<h1>Physical level</h1>
+<section class="ssection">
+<h2>Physical level</h2>
 
 <!-- =============================================================== -->
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 5.1 -->
+	<!-- 3.10 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Where each table stands</h2>
+	<section class="subssection">
+	<h3>Where each table stands</h3>
 
 		<p>Here the machines are named, and not before. There is no database: three
 		tables stand in the API of SPPAS, two in a file of this application, and five
@@ -1488,11 +1531,11 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 5.2 -->
+	<!-- 3.11 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Operational model of treatments</h2>
+	<section class="subssection">
+	<h3>Operational model of treatments</h3>
 
 		<p>The organisational level said by what and when; this says in what tasks, and
 		what among them cannot be half done.</p>
@@ -1517,7 +1560,7 @@
 		</tbody>
 		</table>
 
-		<h3>One file is one unit, and the batch is not</h3>
+		<h4>One file is one unit, and the batch is not</h4>
 
 		<p>The failure of one file never interrupts the others [606], so nothing here
 		holds for the batch as a whole: there is no moment at which a conversion is
@@ -1531,7 +1574,7 @@
 		may replace it. That is a consequence of writing where the user asked, and not a
 		fault of the model.</p>
 
-		<h3>The chain of remediations ends</h3>
+		<h4>The chain of remediations ends</h4>
 
 		<p>A remediation produces a new content which is verified again, so the chain is
 		a loop, and a loop needs a reason to stop. It is this: <b>a remediation is
@@ -1543,7 +1586,7 @@
 		ask for each other in turn. With it, the chain is as long as the number of
 		options and no longer.</p>
 
-		<h3>The second write is not a second chance</h3>
+		<h4>The second write is not a second chance</h4>
 
 		<p>Anticipation comes first and the typed exceptions are a safety net. The second
 		write happens only on a typed cause for which a remediation exists, and there is
@@ -1555,11 +1598,11 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 5.3 -->
+	<!-- 3.12 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Where the code goes</h2>
+	<section class="subssection">
+	<h3>Where the code goes</h3>
 
 		<p>In <code>sppas/ui/swapp/app_convert/</code>. One module per kind of knowledge,
 		and every procedure has one module and one only. The separation this application
@@ -1621,8 +1664,8 @@
 
 		<!-- ------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The batch is provided, not constituted</h2>
+	<section class="subssection">
+	<h3>The batch is provided, not constituted</h3>
 
 			<p>Convert does not select files. It receives a batch from its execution
 			context and does not alter it. In a local session, that context is the SPPAS
@@ -1657,8 +1700,8 @@
 
 		<!-- ------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Implementation model: MVC</h2>
+	<section class="subssection">
+	<h3>Implementation model: MVC</h3>
 
 			<ul>
 				<li><strong>Model</strong>: knows the formats, performs T02 and T06, and
@@ -1685,7 +1728,7 @@
 			application with several would have to dispatch, which is not the case
 			here.</p>
 
-			<h4>Model</h4>
+			<h5>Model</h5>
 
 			<p>The model is the functional core. It holds the knowledge of formats and the
 			transformation of annotations, and exposes neither to the rest of the
@@ -1727,7 +1770,7 @@
 			annotations, the conversion of files and the dependency on a neighbour evolve
 			separately, behind one stable façade.</p>
 
-			<h4>Controller</h4>
+			<h5>Controller</h5>
 
 			<p>The controller is called once per request, in a stateless context. It
 			initialises an empty state, then rebuilds the current state exclusively from
@@ -1844,7 +1887,7 @@
 			<code>ConvertController</code>, exposing one entry point
 			<code>handle(request_data)</code>.</p>
 
-			<h4>Views</h4>
+			<h5>Views</h5>
 
 			<p>As in TextCueS, the WhakerPy response builds the whole HTML tree and the
 			structural elements common to the application — head, header, nav, footer —
@@ -1926,30 +1969,20 @@
 			here.</p>
 
 		</section>
-	</section>
-
-
-<!-- ====================== UML ==================================== -->
-
-
-<section class="chapter">
-<h1>UML</h1>
-
-<!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.1 -->
+	<!-- 3.13 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The classes</h2>
+	<section class="subssection">
+	<h3>The classes, by role</h3>
 
 		<p>Those which carry the data come from the tables; those which work come from
 		the modules and from the MVC stated above. The names of the working classes are
 		the ones that section fixed, and nothing is renamed here.</p>
 
-		<h3>What carries the data</h3>
+		<h4>Model: what carries the data</h4>
 
 		<table>
 		<thead><tr><th scope="col">Class</th><th scope="col">From</th><th scope="col">What it is</th></tr></thead>
@@ -1968,7 +2001,7 @@
 		rebuilds it: between the two there is an object, and it is better named than
 		implied. It is what makes the two contexts of execution one implementation.</p>
 
-		<h3>What does the work</h3>
+		<h4>Model: what does the work</h4>
 
 		<table>
 		<thead><tr><th scope="col">Class</th><th scope="col">Module</th><th scope="col">What it is alone in knowing</th></tr></thead>
@@ -1993,7 +2026,7 @@
 		the view and build each their own part of <code>body &gt; main</code>. They
 		decide nothing, count nothing and refuse nothing.</p>
 
-		<h3>What assembles</h3>
+		<h4>View, and what assembles</h4>
 
 		<p>The response of WhakerPy handles the URL, builds the view and the controller,
 		calls the controller once for that request, and bakes the tree it was given. It
@@ -2004,11 +2037,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.2 -->
+	<!-- 3.14 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The class diagram</h2>
+	<section class="subssection">
+	<h3>The class diagram</h3>
 
 		<p><code>/</code> marks what is derived and held by nobody. What the operations
 		promise is the chapter on the contracts; what they are called is a proposal, and
@@ -2042,7 +2075,7 @@
 		never sees a file, a path or a batch, which is what lets the business logic of
 		this application be tested with nothing installed.</p>
 
-		<h3>What is tied to what</h3>
+		<h4>What is tied to what</h4>
 
 		<table>
 		<thead><tr><th scope="col">Tie</th><th scope="col">Legs</th><th scope="col">What it is</th></tr></thead>
@@ -2063,7 +2096,7 @@
 		</tbody>
 		</table>
 
-		<h3>In yUML</h3>
+		<h4>In yUML</h4>
 
 		<p>To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
 		class diagram.</p>
@@ -2095,11 +2128,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.3 -->
+	<!-- 3.15 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The states</h2>
+	<section class="subssection">
+	<h3>The states</h3>
 
 		<p>Two things have states in this application, and they are the two the user
 		reads.</p>
@@ -2136,11 +2169,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.4 -->
+	<!-- 3.16 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The sequence, from the first request to the results</h2>
+	<section class="subssection">
+	<h3>The sequence, from the first request to the results</h3>
 
 		<ol>
 		<li>The page is asked for. The formats which can be written are read, and no
@@ -2173,11 +2206,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 6.5 -->
+	<!-- 3.17 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The error policy</h2>
+	<section class="subssection">
+	<h3>The error policy</h3>
 
 		<table>
 		<thead><tr><th scope="col">Level</th><th scope="col">What happens</th><th scope="col">What is done</th></tr></thead>
@@ -2200,25 +2233,25 @@
 <!-- ====================== CONTRACTS ============================== -->
 
 
-<section class="chapter">
-<h1>The contracts</h1>
+<section class="ssection">
+<h2>The contracts</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.1 -->
+	<!-- 3.18 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>How to read them</h2>
+	<section class="subssection">
+	<h3>How to read them</h3>
 
 		<p><i>pre</i> is what has to be true on the way in, and what the operation does
 		not check; <i>post</i> is what the caller can count on without looking. The
 		treatments state their preconditions for one treatment; these state them for one
 		operation, and the two say the same thing at two levels.</p>
 
-		<h3>What holds everywhere</h3>
+		<h4>What holds everywhere</h4>
 
 		<ul>
 		<li>What is absent gives back an empty thing — an empty list, no destination, no
@@ -2239,11 +2272,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.2 -->
+	<!-- 3.19 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Class by class</h2>
+	<section class="subssection">
+	<h3>Class by class</h3>
 
 		<table>
 		<caption>ConvertModel</caption>
@@ -2357,11 +2390,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 7.3 -->
+	<!-- 3.20 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>Where each constraint is held</h2>
+	<section class="subssection">
+	<h3>Where each constraint is held</h3>
 
 		<p>One place each. A constraint held in two would be a constraint held in
 		neither.</p>
@@ -2410,23 +2443,23 @@
 <!-- ====================== TESTS ================================== -->
 
 
-<section class="chapter">
-<h1>What is tested, and where</h1>
+<section class="ssection">
+<h2>What is tested, and where</h2>
 
 <!-- =============================================================== -->
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 8.1 -->
+	<!-- 3.21 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>The models</h2>
+	<section class="subssection">
+	<h3>The models</h3>
 
 		<p>Twenty-five tests for the four sub-models and the façade. The controller, the
 		view and its fragments are not covered here and are owed.</p>
 
-		<h3>ModelRemediation, with nothing installed</h3>
+		<h4>ModelRemediation, with nothing installed</h4>
 
 		<p>It is given a content and gives back a content: no file, no path, no batch,
 		and no API to read a format with. It is the business logic of this application,
@@ -2448,7 +2481,7 @@
 		conceptual model asks for it: it was the operational level which found that a
 		chain needs a reason to stop, and this is that reason checked.</p>
 
-		<h3>ModelFormats, with the API and no file</h3>
+		<h4>ModelFormats, with the API and no file</h4>
 
 		<table>
 		<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
@@ -2467,7 +2500,7 @@
 		option appears; nothing else in the test changes. The day that assertion has to
 		be rewritten, the correspondence has become code again.</p>
 
-		<h3>ModelConversion, with a disk</h3>
+		<h4>ModelConversion, with a disk</h4>
 
 		<table>
 		<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
@@ -2487,7 +2520,7 @@
 		purpose: C23 is a renouncement, and a renouncement which is not tested becomes,
 		six months later, a bug somebody fixes.</p>
 
-		<h3>ModelProvision, against the neighbour</h3>
+		<h4>ModelProvision, against the neighbour</h4>
 
 		<table>
 		<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
@@ -2497,7 +2530,7 @@
 		</tbody>
 		</table>
 
-		<h3>ConvertModel, the façade</h3>
+		<h4>ConvertModel, the façade</h4>
 
 		<table>
 		<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
@@ -2510,11 +2543,11 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 8.2 -->
+	<!-- 3.22 -->
 	<!-- ----------------------------------------------------------- -->
 
-	<section class="ssection">
-	<h2>What no test covers, and where they stand</h2>
+	<section class="subssection">
+	<h3>What no test covers, and where they stand</h3>
 
 		<ul>
 		<li><b>The controller, the view and its fragments.</b> They are owed, and they
@@ -2533,9 +2566,13 @@
 		count possible, and the count is what says whether the cutting was worth
 		anything.</p>
 
-		<p>They stand beside the code, in the folder of this application.</p>
+		<p>They stand where the project puts its own: in <code>tests/swapp/</code>,
+		which follows the shape of the sources.</p>
 
 	</section>
+
+</section>
+
 
 </section>
 

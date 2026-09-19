@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.services.options.test_options.py
+:filename: tests.swapp.test_options.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Unittests of what an app lets one set.
@@ -48,11 +48,11 @@ import unittest
 
 from sppas.src.structs.baseoption import sppasOption
 
-from .options_acceptance import ValueAcceptance
-from .options_set import OptionSet
-from .options_file import FileForOption
-from .options_record import OptionsRecord
-from .options_view import OptionsView
+from sppas.ui.swapp.services.options.options_acceptance import sppasValueAcceptance
+from sppas.ui.swapp.services.options.options_set import sppasOptionSet
+from sppas.ui.swapp.services.options.options_file import sppasFileForOption
+from sppas.ui.swapp.services.options.options_record import sppasOptionsRecord
+from sppas.ui.swapp.services.options.options_view import sppasOptionsView
 
 # ---------------------------------------------------------------------------
 
@@ -72,9 +72,9 @@ def an_option(key: str, kind: str, value, text: str = "", description: str = "",
     return option
 
 
-def a_set() -> OptionSet:
+def a_set() -> sppasOptionSet:
     """Give a set of four options, one of each kind which is tested."""
-    return OptionSet([
+    return sppasOptionSet([
         an_option("keep", "bool", "True", "Keep what cannot be written",
                   "What the destination cannot hold is written as comments."),
         an_option("window", "int", "5", "Window", "In number of frames.",
@@ -98,7 +98,7 @@ class TestValueAcceptance(unittest.TestCase):
     """TE1 to TE5. Nothing is installed: a kind, bounds, and a value."""
 
     def setUp(self):
-        self.acceptance = ValueAcceptance()
+        self.acceptance = sppasValueAcceptance()
 
     # -----------------------------------------------------------------------
 
@@ -193,7 +193,7 @@ class TestOptionSet(unittest.TestCase):
 
         """
         self.options.set_value("window", "8")
-        rebuilt = OptionSet.rebuild(self.options.serialize())
+        rebuilt = sppasOptionSet.rebuild(self.options.serialize())
 
         self.assertEqual([o.get_key() for o in self.options.for_app()],
                          [o.get_key() for o in rebuilt.for_app()])
@@ -207,13 +207,13 @@ class TestOptionSet(unittest.TestCase):
         what was given. RO1
 
         """
-        record = OptionsRecord()
+        record = sppasOptionsRecord()
         record.set = self.options
         record.set.set_value("name", "bbb")
 
         transported = record.serialize()
-        once = OptionsRecord.parse(transported)
-        twice = OptionsRecord.parse(transported)
+        once = sppasOptionsRecord.parse(transported)
+        twice = sppasOptionsRecord.parse(transported)
 
         self.assertEqual("bbb", once.set.value_of("name"))
         self.assertEqual(once.set.serialize(), twice.set.serialize())
@@ -222,7 +222,7 @@ class TestOptionSet(unittest.TestCase):
 
     def test_te8_an_empty_transport(self):
         """TE8. It gives an empty set, and nothing is raised. RO1"""
-        empty = OptionsRecord.parse(dict())
+        empty = sppasOptionsRecord.parse(dict())
         self.assertEqual(list(), empty.set.for_app())
         self.assertEqual(list(), empty.set.refusals())
 
@@ -303,7 +303,7 @@ class TestOptionSet(unittest.TestCase):
         set is not accepted or refused as a whole. T03
 
         """
-        options = OptionSet([an_option("o%d" % i, "int", "0", bounds=(0, 10))
+        options = sppasOptionSet([an_option("o%d" % i, "int", "0", bounds=(0, 10))
                              for i in range(20)])
         given = {"o%d" % i: str(i % 10) for i in range(20)}
         given["o7"] = "99"
@@ -356,9 +356,9 @@ class TestOptionsView(unittest.TestCase):
 
     def setUp(self):
         self.options = a_set()
-        self.record = OptionsRecord()
+        self.record = sppasOptionsRecord()
         self.record.set = self.options
-        self.view = OptionsView()
+        self.view = sppasOptionsView()
 
     # -----------------------------------------------------------------------
 
@@ -384,7 +384,7 @@ class TestOptionsView(unittest.TestCase):
         self.assertNotIn(told, text_of(self.view))
 
         self.record.to_be_shown = "keep"
-        other = OptionsView()
+        other = sppasOptionsView()
         other.populate_tree_content(self.record)
         self.assertIn(told, text_of(other))
 
@@ -392,9 +392,9 @@ class TestOptionsView(unittest.TestCase):
 
     def test_te19_no_text_the_options_did_not_carry(self):
         """TE19. A view writes none of its own. [023]"""
-        options = OptionSet([an_option("k", "str", "v", "Label of the option",
+        options = sppasOptionSet([an_option("k", "str", "v", "Label of the option",
                                        "Description of the option")])
-        record = OptionsRecord()
+        record = sppasOptionsRecord()
         record.set = options
         record.to_be_shown = "k"
 
@@ -414,7 +414,7 @@ class TestOptionsView(unittest.TestCase):
         self.view.populate_tree_content(self.record)
         shown = text_of(self.view)
 
-        expected = ValueAcceptance().what_is_expected(
+        expected = sppasValueAcceptance().what_is_expected(
             [o for o in self.options.for_app() if o.get_key() == "window"][0])
         self.assertIn(expected, shown)
         self.assertEqual(1, shown.count(expected))
@@ -427,7 +427,7 @@ class TestFileForOption(unittest.TestCase):
 
     def setUp(self):
         self.options = a_set()
-        self.for_option = FileForOption()
+        self.for_option = sppasFileForOption()
 
     # -----------------------------------------------------------------------
 
@@ -440,7 +440,7 @@ class TestFileForOption(unittest.TestCase):
             an_option("alphabet", "filename", ""))
         self.assertEqual("alphabet", asked.option)
 
-        options = OptionSet([an_option("alphabet", "filename", ""),
+        options = sppasOptionSet([an_option("alphabet", "filename", ""),
                              an_option("other", "filename", "")])
         self.for_option.take_in(options, "alphabet", "sampa-to-ipa.csv")
 

@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>B. Bigi - Plugins</title>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../statics/icons/sppas5.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../whakerexa/wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="../whakerexa/wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../whakerexa/wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../whakerexa/wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --toc-width: 18rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<header id="header-content">
+
+	<a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+
+	<h1>Plugins - an app of SPPAS</h1>
+	<h2>Brigitte Bigi</h2>
+
+</header>
+
+
+
+<nav class="nav-wexa top" aria-label="Accessibilité">
+	<button id="btn-css-theme" class="menuitem" type="button"
+			aria-label="Switch CSS theme" title="Switch CSS theme"
+			onclick="window.themes && window.themes.next()">
+	</button>
+	<button id="btn-contrast" class="menuitem accessibility"
+			aria-label="contrast" aria-pressed="false"
+			onclick="Wexa.accessibility.switchContrastScheme()"></button>
+	<button id="btn-color" class="menuitem accessibility"
+			aria-label="color" aria-pressed="false"
+			onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+
+
+<nav class="book-toc" aria-label="Table of contents">
+	<h1>Plugins - an app of SPPAS</h1>
+	<ul id="toc"></ul>
+</nav>
+
+
+
+<main id="main-content">
+
+
+<!-- ====================== USER MANUAL ============================ -->
+
+
+<section class="chapter">
+<h1>User manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is the help of the person who uses plugins: what the page shows,
+		how a plugin is installed, set and started, and what is read of a run.
+	</p>
+
+</section>
+
+
+<!-- ====================== DEVELOPER MANUAL ======================= -->
+
+
+<section class="chapter">
+<h1>Developer manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is for whoever reads or changes the code: how it is organised,
+		what the page is made of, the events it answers, and the stylesheets.
+	</p>
+
+</section>
+
+
+
+
+<!-- ====================== MODELLING ============================== -->
+
+
+<section class="chapter">
+<h1>Modelling</h1>
+
+<!-- =============================================================== -->
+
+
+<!-- ====================== PROBLEM AND SCOPE ====================== -->
+
+
+<section class="ssection">
+<h2>Problem and scope</h2>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Description</h3>
+
+		<p>
+			SPPAS does what it was written to do, and a plugin is how it does something
+			else. A plugin is a program somebody wrote outside SPPAS, declared by a file
+			which says what it is called, what it is for, what it can be set with, and
+			which command line runs it. SPPAS installs it, shows it, sets it, runs it on
+			files, and puts what it produced back among the files of the person. It never
+			looks inside it.
+		</p>
+
+		<p>
+			That is what makes plugins worth having, and it is also what makes them
+			delicate. A plugin extends SPPAS without SPPAS being touched: a laboratory
+			writes the tool its own work needs, and hands it over as an archive. But what
+			is handed over is a program, it runs on the machine of whoever installs it,
+			and nothing of SPPAS reads what it does before it does it.
+		</p>
+
+		<p>
+			This application is what stands between a person and those programs. It shows
+			what is installed and what each one claims to do, it installs and removes
+			them, it lets their options be set, it runs one of them on the files she
+			chose, and it says what happened to each of those files. It runs nothing of
+			its own, and it decides nothing of what a plugin does.
+		</p>
+
+		<p>
+			Two services answer for what this application does not: the files it runs a
+			plugin on are provided by the provision of files, and the options of a plugin
+			are shown and set by the service which serves options. What is left is the
+			plugins themselves &mdash; which ones are there, what they are, and what one
+			run of one of them did.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Defining the needs</h3>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section>
+		<h4>Problem statement and objectives</h4>
+
+			<p>
+				Running a plugin raises a difficulty which is not technical: the person is
+				asked to run a program she did not write, on files which are hers, and to
+				judge beforehand whether that is a good idea. She is given a name, a
+				sentence of description and a version number, and the thing itself is a
+				command line she never sees. What it will read, what it will write and
+				where, and what it will leave behind are not written anywhere she looks.
+			</p>
+
+			<p>
+				The central problem addressed by this application is thus:
+			</p>
+
+			<blockquote role="region" aria-label="Key Idea" class="info">
+				<p>how to let a person use a tool written outside SPPAS as if it were part
+				of it &mdash; knowing what she is installing, what she is running, on what,
+				and what came of it.</p>
+			</blockquote>
+
+			<p>
+				The difficulty is sharpened by three conditions. A plugin is opaque by
+				design: what it declares of itself is all there is, and this application
+				cannot add to it. A run is long and mute: one command is started for every
+				file, and nothing is known of its progress but the file it is on. And what
+				a plugin produces is not announced: the files which appear after a run are
+				found by looking at what was not there before.
+			</p>
+
+			<p>The objectives follow:</p>
+
+			<ul>
+				<li>to show what is installed, and what each plugin says of itself, before anything is run;</li>
+				<li>to let a plugin be installed from an archive and removed, and to say what stands in the way when either cannot be done;</li>
+				<li>to let the options of a plugin be set before a run, and to keep them from one run to the next;</li>
+				<li>to run one plugin on the files the person chose, and on no others;</li>
+				<li>to say what happened, file by file, and not as one block of text;</li>
+				<li>to make what was produced reachable among her own files;</li>
+				<li>to guarantee accessibility, of the interface and of what it exposes.</li>
+			</ul>
+
+			<p>
+				This application does not judge a plugin, does not read what it does, and
+				does not repair what it produced. It aims at one thing: that running a
+				program written elsewhere be a decision taken in the open rather than a
+				button pressed in the dark.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section>
+		<h4>Expressing the needs</h4>
+
+			<p>
+				The needs below are those of the person who uses plugins: a researcher, a
+				student, someone who was handed an archive by a colleague and told that it
+				does what she needs. None of them is a need of a machine, and none of them
+				says how it is answered.
+			</p>
+
+			<h5>Knowing what a plugin is before anything else</h5>
+
+			<p>
+				A plugin arrives with a name, a description and a version, written by
+				whoever made it, and that is everything there is. The need is that those
+				three be shown where the decision is taken &mdash; which plugin to install,
+				which one to run &mdash; and not hidden one click away. A description which
+				has to be looked for is a description which is not read, and a person who
+				did not read it runs a program she knows nothing about.
+			</p>
+
+			<h5>Installing, and being able to undo it</h5>
+
+			<p>
+				A plugin is handed over as an archive and has to be brought in. The need is
+				that bringing it in be one gesture, and that it be reversible: a plugin
+				which turns out to be the wrong one, or which was installed twice, has to
+				be removable without the person having to know where it was put. What
+				stands in the way &mdash; an archive which is not one, a plugin already
+				there &mdash; has to be said in those words, and not as the failure of an
+				operation she cannot name.
+			</p>
+
+			<p>
+				<b>This need is hers where SPPAS runs on her machine, and nowhere else.</b>
+				Where SPPAS answers from a server, installing a plugin would be installing
+				a program on a machine which is not hers and on which she is not alone, and
+				removing one would be removing it for everybody. What is offered there is
+				what whoever runs that server installed. Every other need below holds in
+				both cases; this one is the exception, and it is the only one.
+			</p>
+
+			<h5>Choosing what it runs on</h5>
+
+			<p>
+				A plugin is run on files, and those files are the person's. The need is
+				that she says which ones, that the plugin gets those and no others, and
+				that she can see what she is about to submit before she submits it. A run
+				on the wrong files is not an error which can be undone: the plugin has
+				already written.
+			</p>
+
+			<h5>Setting a plugin before running it</h5>
+
+			<p>
+				A plugin declares what it can be set with, and the same plugin run with two
+				settings does two different things. The need is that those settings be
+				available where the plugin is run, that they be intelligible without the
+				documentation of the plugin, and that what was set once not have to be set
+				again at the next run.
+			</p>
+
+			<h5>Knowing what happened, file by file</h5>
+
+			<p>
+				A run is a series of runs, one per file, and they do not all go the same
+				way. What a person needs after a run is not the output of a program: it is
+				to know, for each of her files, whether something was done, whether
+				something was produced, and whether something went wrong. A single block of
+				text holding the output of twenty runs one after the other is a text
+				nobody reads, and it is where a failure on the third file goes unnoticed.
+			</p>
+
+			<h5>Following a run which lasts</h5>
+
+			<p>
+				A plugin on twenty files takes as long as twenty runs of that plugin. The
+				need is to know that it is working and where it stands &mdash; which file,
+				how many are left &mdash; and to be able to tell a long run from one which
+				is stuck.
+			</p>
+
+			<h5>Finding what was produced</h5>
+
+			<p>
+				A plugin writes files, and it writes them where it chooses. The need is
+				that what appeared be found among her own files, ready for what she does
+				next, without her having to look for it and without her having to know
+				where the plugin put it.
+			</p>
+
+			<h5>Accessibility</h5>
+
+			<p>
+				Everything above rests on things being read: a description, a state, a
+				result, a cause. Contrast, legibility, text alternatives, keyboard and
+				screen-reader operation, and a stable terminology are the conditions under
+				which this application does anything at all, and not qualities added to
+				it.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section>
+		<h4>Eliciting the needs</h4>
+
+			<p>
+				Eliciting the needs means turning them into things this application names
+				and shows. What follows is what the person is put in front of, and what
+				each of those things is called here.
+			</p>
+
+			<h5>Concepts manipulated by this application</h5>
+
+			<dl>
+			<dt>Plugin</dt>
+			<dd>A program declared by what it says of itself: an identity, a name, a
+			description, a version, an icon, the options it accepts, and the command which
+			runs it. What it does is not declared and is not known here.</dd>
+
+			<dt>Archive</dt>
+			<dd>What a plugin is handed over as, and the only way one comes in.</dd>
+
+			<dt>Run</dt>
+			<dd>One plugin, the files it was given, and the options as they stood when it
+			started. A run is a series: the plugin is started once per file.</dd>
+
+			<dt>Result</dt>
+			<dd>What happened to one file of a run: whether the plugin ran on it, what it
+			said about it, and whether it failed.</dd>
+
+			<dt>Produced file</dt>
+			<dd>A file which appeared because a run happened. It belongs to the person,
+			not to the plugin which wrote it.</dd>
+			</dl>
+
+			<p>
+				Two things this application manipulates are named elsewhere and not here:
+				the files a run works on, which the provision of files exposes, and the
+				options of a plugin, which the service of the options shows and sets.
+			</p>
+
+			<h5>One card per plugin, and what it carries</h5>
+
+			<p>
+				The need to know a plugin before anything else is expressed by a card per
+				installed plugin, carrying <b>its icon</b>, <b>what it says of itself in
+				one sentence</b>, and <b>what starts it</b>. What has to be read before
+				running is on the card and not one click away: a description which has to
+				be opened is a description which is not read.
+			</p>
+
+			<p>
+				What is consulted once stands behind a button which says so: the version,
+				and what the plugin says of itself at length. It is not hidden, it is
+				elsewhere, and the difference is that nobody needs it twice.
+			</p>
+
+			<p>
+				The card is not chosen for itself. It is the shape swapp already uses where
+				it shows things one chooses among, and a person who knows one page of SPPAS
+				knows this one. Installing and removing are not on a card &mdash; they are
+				not what one does to a plugin, they are what one does to the list &mdash;
+				and they stand in the menu.
+			</p>
+
+			<h5>A run, and what is seen of it</h5>
+
+			<p>
+				The need to follow a run which lasts is expressed by what a run shows of
+				itself while it happens: which file is being treated, and how many remain.
+				A run which shows nothing cannot be told from a run which is stuck, and a
+				person who cannot tell the two apart stops the first.
+			</p>
+
+			<p>
+				The need to know what happened is expressed by one result per file, and
+				never by the output of the plugin as it came. What a plugin said about one
+				file stands beside that file, and a file which made the plugin fail is a
+				line among the others, not the end of the list.
+			</p>
+
+			<h5>What is said when something cannot be done</h5>
+
+			<p>
+				An archive which is not one, a plugin which is already installed, a plugin
+				which cannot be removed: each of them is said in the words of what the
+				person was trying to do, and not as the failure of an operation she cannot
+				name. What a plugin says when it fails on a file is given as it came,
+				because it is the plugin speaking and not this application.
+			</p>
+
+			<h5>A plugin which cannot run here (inferred need)</h5>
+
+			<p>
+				No person has asked for this, and it does not come from an expressed need:
+				it comes from what a plugin declares. The command which runs it is declared
+				once per system &mdash; one for Windows, one for macOS, one for Linux
+				&mdash; and what that command names has to exist on the machine where
+				SPPAS runs. A plugin can therefore be installed, listed, described, set,
+				and be unable to run.
+			</p>
+
+			<p>
+				It is expressed here as a state of a plugin, and not as an error of a run:
+				a plugin which cannot run on this machine says so where it is listed, and
+				before anybody tries. What is verified, and how far, is not decided by this
+				chapter.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section>
+		<h4>Organising the needs</h4>
+
+			<p>
+				The needs above, written as what the person can do and what the system does
+				in answer. Nothing here is new: every line follows from a paragraph of the
+				two sections before it.
+			</p>
+
+			<h5>[010] Seeing what is installed</h5>
+			<ul class="req">
+			<li>[011] The person sees every plugin which is installed, and no other.</li>
+			<li>[012] The system shows, for every plugin, its name, what it says of itself, and its version.</li>
+			<li>[013] The system shows of a plugin what that plugin declares, and writes nothing of its own.</li>
+			</ul>
+
+			<h5>[020] Installing and removing a plugin</h5>
+			<ul class="req">
+			<li>[021] The person can install a plugin from an archive, where SPPAS runs on her machine.</li>
+			<li>[022] The person can remove a plugin which is installed, where SPPAS runs on her machine.</li>
+			<li>[023] The system says what stands in the way when a plugin cannot be installed, in the words of what was attempted.</li>
+			<li>[024] The system removes a plugin without the person having to know where that plugin stood.</li>
+			<li>[025] Where SPPAS runs on a server, the system installs and removes nothing: what is offered there is what whoever runs that server installed.</li>
+			</ul>
+
+			<h5>[030] Knowing that a plugin can run here</h5>
+			<ul class="req">
+			<li>[031] The person sees, where a plugin is listed, that this plugin cannot be run on this machine.</li>
+			<li>[032] The system says it before a run is started, and not as the failure of one.</li>
+			</ul>
+
+			<h5>[100] Choosing what a run works on</h5>
+			<ul class="req">
+			<li>[101] The person chooses the files a plugin is to run on.</li>
+			<li>[102] The system runs the plugin on those files, and on no others.</li>
+			<li>[103] The person sees how many files a run will work on before starting it.</li>
+			</ul>
+
+			<h5>[200] Setting a plugin</h5>
+			<ul class="req">
+			<li>[201] The person can set the options a plugin declares, before running it.</li>
+			<li>[202] The system runs the plugin with the values which were set.</li>
+			<li>[203] The person finds the values of the previous run, without setting them again.</li>
+			</ul>
+
+			<h5>[300] Running a plugin</h5>
+			<ul class="req">
+			<li>[301] The person starts a run, and a run starts only when she does.</li>
+			<li>[302] The system starts the plugin once per file of the run.</li>
+			<li>[303] The person sees which file is being treated and how many remain.</li>
+			<li>[304] The failure of one file never stops a run.</li>
+			</ul>
+
+			<h5>[400] Knowing what happened</h5>
+			<ul class="req">
+			<li>[401] The person sees what happened to every file of a run.</li>
+			<li>[402] The system gives one result per file: whether the plugin ran on it, what was produced, and what went wrong.</li>
+			<li>[403] The system shows what the plugin said about a file beside that file, and as the plugin said it.</li>
+			</ul>
+
+			<h5>[500] Finding what was produced</h5>
+			<ul class="req">
+			<li>[501] The person finds what a run produced among her own files.</li>
+			<li>[502] The system makes those files known without the person having to know where the plugin wrote them.</li>
+			</ul>
+
+			<h5>[1000] Accessibility</h5>
+			<ul class="req">
+			<li>[1001] The system holds to the WCAG rules.</li>
+			</ul>
+
+		</section>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== MODELLING ============================== -->
+
+
+<section class="ssection">
+<h2>Conceptual level</h2>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Data dictionary</h3>
+
+		<p>
+			Three data, and they all belong to one run. What a plugin is, and which ones
+			are installed, is held by the domain of the plugins and read from there.
+		</p>
+
+		<ul>
+			<li><b>D1. A run</b> &mdash; one plugin, the files it was given, and the moment it was started.</li>
+			<li><b>D2. A result</b> &mdash; what happened to one file of a run: whether the plugin ran on it, what the plugin said about it, and whether it failed.</li>
+			<li><b>D3. A produced file</b> &mdash; a file which appeared because a run happened. There may be several for one file, and there may be none.</li>
+		</ul>
+
+		<p>
+			<code>sppasPluginParam</code> and <code>sppasPluginsManager</code> are not
+			among them. What a plugin declares of itself, where it stands, how it is
+			installed and how it is started are established, read where they are written,
+			and this document adds nothing to them.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Conceptual model of communication</h3>
+
+		<p>
+			Four actors border this application: a person, and three neighbouring domains
+			it calls. It writes into none of the three.
+		</p>
+
+		<h4>Actors</h4>
+
+		<ul>
+			<li><b>A1. The person</b> &mdash; sees what is installed, installs and removes, sets a plugin, starts a run, follows it, and reads what happened to each of her files.</li>
+			<li><b>A2. The domain of the plugins</b> &mdash; holds what is installed, says what each plugin declares of itself, installs one from an archive, removes one, and starts one on a file.</li>
+			<li><b>A3. The provision of files</b> &mdash; gives the files a run works on, and makes what was produced reachable among the files of the person.</li>
+			<li><b>A4. The service of the options</b> &mdash; shows the options a plugin declares and gives back what was set on them.</li>
+		</ul>
+
+		<h4>Flows</h4>
+
+		<ul>
+			<li><b>F1. A2 &rarr; app</b> &mdash; the plugins which are installed, and what each of them declares of itself [012].</li>
+			<li><b>F2. app &rarr; A1</b> &mdash; one line per plugin: its name, what it says of itself, its version [011], [012].</li>
+			<li><b>F3. app &rarr; A1</b> &mdash; that a plugin cannot be run on this machine [031].</li>
+			<li><b>F4. A1 &rarr; app</b> &mdash; an archive to install [021].</li>
+			<li><b>F5. app &rarr; A2</b> &mdash; the archive, to be installed.</li>
+			<li><b>F6. A2 &rarr; app</b> &mdash; the plugin which was installed, or what stood in the way.</li>
+			<li><b>F7. A1 &rarr; app</b> &mdash; the plugin to remove [022].</li>
+			<li><b>F8. app &rarr; A2</b> &mdash; the plugin to remove, and what came of it.</li>
+			<li><b>F9. app &rarr; A4</b> &mdash; the options a plugin declares, to be set.</li>
+			<li><b>F10. A4 &rarr; app</b> &mdash; those options, with the values which were set [202].</li>
+			<li><b>F11. A3 &rarr; app</b> &mdash; the files the run is to work on [101].</li>
+			<li><b>F12. app &rarr; A1</b> &mdash; how many files the run will work on [103].</li>
+			<li><b>F13. A1 &rarr; app</b> &mdash; start the run [301].</li>
+			<li><b>F14. app &rarr; A2</b> &mdash; a plugin to start, on one file, with the values which were set [302].</li>
+			<li><b>F15. A2 &rarr; app</b> &mdash; what the plugin said about that file, and whether it failed.</li>
+			<li><b>F16. app &rarr; A1</b> &mdash; which file is being treated, and how many remain [303].</li>
+			<li><b>F17. app &rarr; A1</b> &mdash; one result per file: what was done, what was produced, what went wrong [401], [402], [403].</li>
+			<li><b>F18. app &rarr; A3</b> &mdash; the files which were produced, to be made known [501].</li>
+		</ul>
+
+		<p>
+			<b>Nothing goes from this application to a plugin but a file and the values
+			which were set.</b> What a plugin does with them is its own, and what it says
+			comes back as it said it: this application relays and does not interpret.
+		</p>
+
+		<p>
+			<b>F11 and F18 are the same neighbour at the two ends of a run.</b> The files
+			a plugin works on and the files it produced are both the person's, and both
+			are known by the domain which knows her files. This application holds neither.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.5 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Conceptual model of data</h3>
+
+		<p>
+			Four classes. The plugin is one of them without being modelled: it belongs to
+			the domain of the plugins, and it appears here with its identifier and no
+			property.
+		</p>
+
+		<h4>The classes of entities</h4>
+
+		<table>
+			<thead>
+				<tr><th>Class</th><th>Properties</th><th>What it is</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>PLUGIN</td>
+					<td># plugin</td>
+					<td>One plugin which is installed. What it is called, what it declares and how it is started are read where they are written</td>
+				</tr>
+				<tr>
+					<td>RUN</td>
+					<td># run, moment, values set</td>
+					<td>One plugin started on a set of files at one moment, with the values the options held then (D1)</td>
+				</tr>
+				<tr>
+					<td>RESULT</td>
+					<td># run, # file, done, what was said</td>
+					<td>What happened to one file of one run (D2). A file which the plugin could not be started on has a result too</td>
+				</tr>
+				<tr>
+					<td>PRODUCED</td>
+					<td># run, # file, # produced</td>
+					<td>A file which appeared because that file was treated (D3)</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h4>The relations</h4>
+
+		<table>
+			<thead>
+				<tr><th>No.</th><th>Verb</th><th>Leg 1</th><th>Leg 2</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>R1</td><td>starts</td><td>RUN (1,1)</td><td>PLUGIN (0,n)</td></tr>
+				<tr><td>R2</td><td>reports on</td><td>RESULT (1,1)</td><td>RUN (1,n)</td></tr>
+				<tr><td>R3</td><td>came of</td><td>PRODUCED (1,1)</td><td>RESULT (0,n)</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			R2 and R3 are aggregations: a result exists only inside the run it belongs to,
+			and a produced file only inside the result it came of. A run which has no
+			result has not started, and a result with no produced file is a file the
+			plugin read and did not write for.
+		</p>
+
+		<p>
+			<b>R1 reads (1,1) on the side of the run:</b> a run is one plugin and never
+			two. Running two plugins on one set of files is two runs, each with its own
+			results, and there is no moment at which they are one thing.
+		</p>
+
+		<p>
+			<b>The values set belong to the run and not to the plugin.</b> They are what
+			the options held when the run started: a plugin set differently an hour later
+			does not change what a run did, and a result read a week afterwards is read
+			beside the values it was obtained with.
+		</p>
+
+		<h4>Computed, and never held</h4>
+
+		<ul>
+			<li>How many files a run will work on, and how many remain, which are read from the files it was given.</li>
+			<li>That a plugin cannot be run on this machine, which is read from what that plugin declares.</li>
+			<li>Whether a run is over, which is one result per file of it.</li>
+		</ul>
+
+		<h4>What is not modelled, and why</h4>
+
+		<ul>
+			<li>What a plugin declares of itself, where it stands, and how it is started: the domain of the plugins', and read from there.</li>
+			<li>The files a run works on, which are the provision of files'. This application holds their identity for the time of the run, and nothing else.</li>
+			<li>The options of a plugin, which the service of the options shows and sets. What is held here is the values, and only as they stood when a run started.</li>
+			<li>What a plugin does, and what it means: nothing of it is knowable here.</li>
+		</ul>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.6 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Conceptual model of treatments</h3>
+
+		<p>
+			Seven treatments. Six answer a person who asked; the seventh answers the one
+			before it.
+		</p>
+
+		<h4>The events</h4>
+
+		<table>
+			<thead>
+				<tr><th>No.</th><th>Event</th><th>Kind</th><th>Comes from</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>E1</td><td>The person asks to see what is installed</td><td>external</td><td>The person (A1)</td></tr>
+				<tr><td>E2</td><td>The person gives an archive to install</td><td>external</td><td>F4</td></tr>
+				<tr><td>E3</td><td>The person asks to remove a plugin</td><td>external</td><td>F7</td></tr>
+				<tr><td>E4</td><td>The person asks to set a plugin</td><td>external</td><td>The person (A1)</td></tr>
+				<tr><td>E5</td><td>The person starts a run</td><td>external</td><td>F13</td></tr>
+				<tr><td>E6</td><td>A file of the run has been treated</td><td>internal</td><td>T05</td></tr>
+				<tr><td>E7</td><td>Every file of the run has been treated</td><td>internal</td><td>T05</td></tr>
+			</tbody>
+		</table>
+
+		<section>
+		<h4>T01 &mdash; Show what is installed</h4>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E1</td></tr>
+					<tr><td>Actions</td><td>Read what the domain of the plugins holds; read, of every plugin, whether it can be started on this machine</td></tr>
+					<tr><td>Result</td><td>One line per plugin (F2). Always</td></tr>
+					<tr><td>Result</td><td>That a plugin cannot be run here (F3). For every plugin whose command names what this machine does not have</td></tr>
+				</tbody>
+			</table>
+
+			<p>What is shown of a plugin is what that plugin declares, and nothing else.</p>
+
+		</section>
+
+		<section>
+		<h4>T02 &mdash; Install a plugin</h4>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E2</td></tr>
+					<tr><td>Actions</td><td>Give the archive to the domain of the plugins</td></tr>
+					<tr><td>Result</td><td>The plugin stands among the installed ones (F2). When it was installed</td></tr>
+					<tr><td>Result</td><td>What stood in the way, said in the words of what was attempted (F2). When the archive is not one, or when that plugin is already there</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				This application verifies nothing of the archive itself: what an archive has
+				to be is the other domain's to say, and it says it by refusing.
+			</p>
+
+		</section>
+
+		<section>
+		<h4>T03 &mdash; Remove a plugin</h4>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E3</td></tr>
+					<tr><td>Actions</td><td>Ask the domain of the plugins to remove it</td></tr>
+					<tr><td>Result</td><td>The plugin is no longer among the installed ones (F2). When it was removed</td></tr>
+					<tr><td>Result</td><td>What stood in the way (F2). Otherwise</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				What a removed plugin produced is not removed with it: those files are the
+				person's, and they were hers the moment they appeared.
+			</p>
+
+		</section>
+
+		<section>
+		<h4>T04 &mdash; Set a plugin</h4>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E4</td></tr>
+					<tr><td>Actions</td><td>Hand the options that plugin declares to the service of the options (F9); take back what was set (F10)</td></tr>
+					<tr><td>Result</td><td>The options of that plugin hold the values which were set. Always</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				Nothing is judged here: what a value may be is the service of the options'
+				to answer, and what it means is the plugin's.
+			</p>
+
+		</section>
+
+		<section>
+		<h4>T05 &mdash; Run a plugin on the files</h4>
+
+			<p><b>Purpose:</b> that a plugin is started on every file the person gave, and
+			that what came of each of them is known.</p>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E5, and a plugin which can be run here and files which are not none</td></tr>
+					<tr><td>Actions</td><td>Write the moment the run started and the values the options hold; then, for every file: start the plugin on that file, and take back what it said</td></tr>
+					<tr><td>Result</td><td>Which file is being treated and how many remain (F16). For every file, before it is treated</td></tr>
+					<tr><td>Result</td><td>E6, a file has been treated. For every file, whatever came of it</td></tr>
+					<tr><td>Result</td><td>E7, every file has been treated. When the last one has</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				<b>A run is a series and not an operation.</b> The plugin is started once
+				per file, and a file which makes it fail is a file with a result: the run
+				goes on to the next one, and what failed is said where that file is said.
+				There is no moment at which a run is undone.
+			</p>
+
+			<p>
+				The values are read once, when the run starts. A plugin set while a run is
+				happening is set for the next one.
+			</p>
+
+		</section>
+
+		<section>
+		<h4>T06 &mdash; Say what came of one file</h4>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E6</td></tr>
+					<tr><td>Actions</td><td>Make the result of that file: whether the plugin ran on it, what it said about it, and which files appeared</td></tr>
+					<tr><td>Result</td><td>The result of that file (F17). Always</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				What the plugin said is given as it said it. This application does not
+				shorten it, does not translate it, and does not decide that it means
+				success: what it can say of its own is whether the plugin ran at all.
+			</p>
+
+		</section>
+
+		<section>
+		<h4>T07 &mdash; Make what was produced reachable</h4>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E7</td></tr>
+					<tr><td>Actions</td><td>Give the files which appeared to the provision of files, to be made known among the files of the person</td></tr>
+					<tr><td>Result</td><td>The files which were produced (F18). When at least one appeared</td></tr>
+					<tr><td>Result</td><td>Nothing at all. When none did</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				It runs at the end of a run and not at every file: what a plugin writes
+				while it is working is not finished until it has finished.
+			</p>
+
+		</section>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== ORGANISATIONAL ========================= -->
+
+
+<section class="ssection">
+<h2>Organisational level</h2>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.7 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Organisational model of treatments</h3>
+
+		<p>
+			One procedure per treatment, numbered as it is. There are two tables, and the
+			reason is [025]: where SPPAS answers from a server, two procedures have
+			nothing to do at all.
+		</p>
+
+		<h4>Where SPPAS runs on the machine of the person</h4>
+
+		<table>
+			<thead>
+				<tr><th>PF</th><th>What it does</th><th>Triggered by</th><th>In charge</th><th>Where</th><th>When</th><th>Nature</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>PF1 (T01)</td><td>Shows what is installed</td><td>E1</td><td>the app</td><td>her machine</td><td>when she asks</td><td>conversational</td></tr>
+				<tr><td>PF2 (T02)</td><td>Installs a plugin</td><td>E2</td><td>the domain of the plugins</td><td>her machine</td><td>when she gives an archive</td><td>conversational</td></tr>
+				<tr><td>PF3 (T03)</td><td>Removes a plugin</td><td>E3</td><td>the domain of the plugins</td><td>her machine</td><td>when she asks</td><td>conversational</td></tr>
+				<tr><td>PF4 (T04)</td><td>Sets a plugin</td><td>E4</td><td>the service of the options</td><td>her machine</td><td>before a run, as often as she wants</td><td>conversational</td></tr>
+				<tr><td>PF5 (T05)</td><td>Runs a plugin on the files</td><td>E5</td><td>the domain of the plugins</td><td>her machine</td><td>when she starts a run</td><td>automated</td></tr>
+				<tr><td>PF6 (T06)</td><td>Says what came of one file</td><td>E6</td><td>the app</td><td>her machine</td><td>as soon as a file has been treated</td><td>automated</td></tr>
+				<tr><td>PF7 (T07)</td><td>Makes what was produced reachable</td><td>E7</td><td>the provision of files</td><td>her machine</td><td>when the run is over</td><td>automated</td></tr>
+			</tbody>
+		</table>
+
+		<h4>Where SPPAS answers from a server</h4>
+
+		<table>
+			<thead>
+				<tr><th>PF</th><th>What it does</th><th>Triggered by</th><th>In charge</th><th>Where</th><th>When</th><th>Nature</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>PF1 (T01)</td><td>Shows what is installed</td><td>E1</td><td>the app</td><td>the server</td><td>when she asks</td><td>conversational</td></tr>
+				<tr><td>PF2 (T02)</td><td>Installs a plugin</td><td>E2</td><td>&mdash;</td><td>&mdash;</td><td>never</td><td>none</td></tr>
+				<tr><td>PF3 (T03)</td><td>Removes a plugin</td><td>E3</td><td>&mdash;</td><td>&mdash;</td><td>never</td><td>none</td></tr>
+				<tr><td>PF4 (T04)</td><td>Sets a plugin</td><td>E4</td><td>the service of the options</td><td>the server</td><td>before a run, as often as she wants</td><td>conversational</td></tr>
+				<tr><td>PF5 (T05)</td><td>Runs a plugin on the files</td><td>E5</td><td>the domain of the plugins</td><td>the server</td><td>when she starts a run</td><td>automated</td></tr>
+				<tr><td>PF6 (T06)</td><td>Says what came of one file</td><td>E6</td><td>the app</td><td>the server</td><td>as soon as a file has been treated</td><td>automated</td></tr>
+				<tr><td>PF7 (T07)</td><td>Makes what was produced reachable</td><td>E7</td><td>the provision of files</td><td>the server</td><td>when the run is over</td><td>automated</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>PF2 and PF3 have nothing to do, and the two empty rows are the whole
+			difference.</b> What is offered on a server is what whoever runs that server
+			installed, and a person who reaches SPPAS from a browser is not that one. The
+			five other procedures are the same word for word: a run is a run, and what it
+			says of itself does not depend on the machine it happens on. RO1
+		</p>
+
+		<h4>How a run which lasts is followed</h4>
+
+		<p>
+			A run is started once and lasts as long as the files require. On her machine,
+			what follows it is the interface itself, which is there for the whole run. On
+			a server, nothing is: the request which started the run cannot hold the answer
+			for minutes, and nothing of what happens reaches a page which is not asking.
+		</p>
+
+		<p>
+			<b>A run is therefore started by one request and followed by others which ask
+			where it stands.</b> It is what the dashboard of swapp already does to know
+			whether the interface it watches is alive. The consequence is stated plainly:
+			<b>a run outlives the request which started it, and it is the one thing this
+			application holds between two requests.</b> RO2
+		</p>
+
+		<p>
+			What those later requests obtain is what F16 and F17 carry: the file being
+			treated, how many remain, and the results of the files which are done. A run
+			which is over answers that it is over, and answers it as long as the person is
+			reading it.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.8 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Rules of organisation</h3>
+
+		<ul>
+			<li><b>RO1</b> &mdash; Installing and removing a plugin happen where SPPAS runs on the machine of the person, and nowhere else [025].</li>
+			<li><b>RO2</b> &mdash; A run outlives the request which started it. It is advanced by a thread of the process which runs SPPAS, and it is the one thing this application holds between two requests. It lasts as long as that process and no longer.</li>
+			<li><b>RO3</b> &mdash; What a plugin said is relayed as it was said. This application does not shorten it, does not translate it, and reads nothing into it.</li>
+			<li><b>RO4</b> &mdash; The files a run works on and the files it produced are the provision of files', at both ends. This application holds their identity for the time of the run.</li>
+			<li><b>RO5</b> &mdash; The options of a plugin are set before a run and read once, when that run starts. A plugin set during a run is set for the next one.</li>
+			<li><b>RO6</b> &mdash; The options are shown in a container this application places in its own page. Setting a plugin is not leaving the list of plugins.</li>
+			<li><b>RO7</b> &mdash; One run at a time for one person. A second run started while one is happening is refused, and the refusal says which run is still going.</li>
+		</ul>
+
+		<p>
+			RO7 is not a limit of the machine: a plugin which writes and a plugin which
+			reads the same files at the same moment would leave results nobody can read,
+			and the person could not tell which run produced what.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== LOGICAL LEVEL ========================== -->
+
+
+<section class="ssection">
+<h2>Logical level</h2>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.9 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The tables</h3>
+
+		<p>
+			Each class of entities becomes a table, and its identifier becomes its key.
+			There are five and not four: one property of the run holds several things, and
+			a property which holds several things is not a column.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>Table</th><th>Columns</th><th>Comes from</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>PLUGIN</td><td><u>plugin</u></td><td>The class PLUGIN</td></tr>
+				<tr><td>RUN</td><td><u>run</u>, moment, plugin</td><td>The class RUN, and R1</td></tr>
+				<tr><td>VALUE</td><td><u>run</u>, <u>option</u>, value</td><td>The values the run was started with</td></tr>
+				<tr><td>RESULT</td><td><u>run</u>, <u>file</u>, done, what was said</td><td>The class RESULT, and R2</td></tr>
+				<tr><td>PRODUCED</td><td><u>run</u>, <u>file</u>, <u>produced</u></td><td>The class PRODUCED, and R3</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>VALUE is what the conceptual model wrote as one property of the run.</b> A
+			run is started with the values of every option the plugin declares, which is
+			as many values as there are options: they become a table of their own, keyed
+			by the run and by the option. Written as a column, they would be one string
+			nobody can read back option by option.
+		</p>
+
+		<p>
+			R2 and R3 are aggregations: the aggregated table takes the key of the
+			aggregating one. A result is named by the run it belongs to and the file it is
+			about, and those two together identify it: one file of one run has one result.
+			A produced file is named inside the result it came of.
+		</p>
+
+		<p>
+			R1 has its low cardinality on the side of the run, which is (1,1): the table
+			takes the key of the plugin, and it is never empty. A run without a plugin is
+			not a run.
+		</p>
+
+		<p>
+			PLUGIN is a key and nothing else. The table exists so that a run may name what
+			it started; what a plugin is made of is written in the domain which holds it.
+		</p>
+
+		<h4>Computed, and never held</h4>
+
+		<ul>
+			<li>How many files of a run remain, which is what it was given against the results it holds.</li>
+			<li>That a run is over, which is one result for every file it was given.</li>
+			<li>That a plugin cannot be started on this machine, which is read from what that plugin declares.</li>
+		</ul>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== PHYSICAL LEVEL ========================= -->
+
+
+<section class="ssection">
+<h2>Physical level</h2>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.10 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Where each table stands</h3>
+
+		<p>
+			Here the machines are named, and not before. One table stands in a
+			neighbouring domain; the four others stand in the process which runs SPPAS,
+			held by what advances the run.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>Table</th><th>Where it stands</th><th>While a run lasts</th><th>What the person sees</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>PLUGIN</td><td>The domain of the plugins, on the machine where SPPAS runs</td><td>Its own</td><td>One line per plugin</td></tr>
+				<tr><td>RUN</td><td>The process which runs SPPAS, made when the run starts</td><td>It is what later requests read</td><td>Which plugin is running, and since when</td></tr>
+				<tr><td>VALUE</td><td>The same, made with the run</td><td>Read again by nobody until the run is over</td><td>What the plugin was run with</td></tr>
+				<tr><td>RESULT</td><td>The same, added as each file is treated</td><td>It is what grows</td><td>One line per file which is done</td></tr>
+				<tr><td>PRODUCED</td><td>The same, added with the result it came of</td><td>The same</td><td>What appeared, among her own files</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>A run stands in the process, and it is advanced by a thread of it.</b> This
+			is what the setting up of SPPAS already does with the installation of its
+			features: the model starts a thread, hands it something which holds where it
+			stands, and answers later requests by reading that. A run of a plugin is the
+			same thing with another long task, and there is no reason for this application
+			to invent a second way.
+		</p>
+
+		<p>
+			Nothing is written on a disk, nothing is given a lifetime, and nothing sweeps
+			anything: a run belongs to the process which holds it and goes when that
+			process goes. A server which is restarted has no runs, and the person is told
+			that the one she was following is not there any more.
+		</p>
+
+		<p>
+			The thread is a daemon: it does not hold the application alive, and killing
+			the application kills it. What a plugin had already produced for the files
+			which were done stays where the plugin wrote it, and is the person's.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.11 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Operational model of treatments</h3>
+
+		<p>
+			The organisational level said by what and when; this says in what tasks, and
+			what among them cannot be half done.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>PF</th><th>The tasks, in order</th><th>What cannot be half done</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>PF1</td><td>Read what the domain of the plugins holds; read, of each plugin, whether its command names something this machine has</td><td>Nothing: nothing is written</td></tr>
+				<tr><td>PF2</td><td>Hand the archive to the domain of the plugins; read what came back</td><td>The installation itself, which that domain does or refuses</td></tr>
+				<tr><td>PF3</td><td>Ask the domain of the plugins to remove; read what came back</td><td>The removal itself, which is that domain's</td></tr>
+				<tr><td>PF4</td><td>Hand the options to the service of the options; take back the values</td><td>Nothing</td></tr>
+				<tr><td>PF5</td><td>Write the run, its moment and its values; then, for every file: start the plugin, take back what it said, write the result and what appeared</td><td>The result of one file, with the files which came of it. Not the run</td></tr>
+				<tr><td>PF6</td><td>Read the run and give what it holds</td><td>Nothing: nothing is written</td></tr>
+				<tr><td>PF7</td><td>Give the files which appeared to the provision of files</td><td>Nothing of this application's</td></tr>
+			</tbody>
+		</table>
+
+		<h4>The result of one file is the unit, and the run is not</h4>
+
+		<p>
+			A result is written with the files which came of it, or neither is. Between
+			two results, nothing is owed: a run holds the files which are done and says
+			nothing of the others, which is exactly what a person reading it has to be
+			told.
+		</p>
+
+		<p>
+			<b>A run which stops is not repaired.</b> A plugin which never returns, a
+			thread which died, an application which was killed: the run holds the results
+			it had, and no more come. What was produced for the files which were done is
+			the person's and stays hers.
+		</p>
+
+		<p>
+			<b>What tells a run which stopped from a run which is slow is the thread
+			itself.</b> A run whose thread is no longer alive and which holds fewer
+			results than it was given files has stopped, and says so. Nothing else is
+			needed, and nothing else is written: the same question is asked the same way
+			where the features of SPPAS are installed.
+		</p>
+
+		<h4>Two runs at once</h4>
+
+		<p>
+			RO7 says one run at a time for one person, and the operational level says what
+			holds it: a run is made before the first file is started, and a request which
+			would start a second one finds the first still alive and is refused. It is
+			what the installation of the features answers to the same question, in the
+			same words.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.12 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Where the code goes</h3>
+
+		<p>
+			In <code>sppas/ui/swapp/app_plugins/</code>. One module per kind of knowledge,
+			and every procedure has one module and one only.
+		</p>
+
+		<table>
+			<thead>
+				<tr><th>Module</th><th>What it does</th><th>Procedure</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>plugins</td><td>Speaks to the domain of the plugins: what is installed, what each declares, install, remove, start on one file. The only module which knows that domain</td><td>PF1, PF2, PF3, and what PF5 asks of it</td></tr>
+				<tr><td>run</td><td>Starts a run in a thread, advances it file by file, adds the results and what appeared, and answers where it stands. The only module which knows that a run is a thread</td><td>PF5, PF6</td></tr>
+				<tr><td>exchange</td><td>Asks the provision of files for the files of a run and gives back what was produced; hands the options of a plugin to the service which sets them</td><td>PF4, PF7, and what PF5 is given</td></tr>
+				<tr><td>presentation</td><td>Builds the page: the plugins, the run as it advances, the results file by file</td><td>The view of every procedure</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			What each one promises, which is the reason for the cutting:
+		</p>
+
+		<ul>
+			<li>The <b>plugins</b> module is the only one which calls the domain of the plugins, so it is the only one to be read again the day that domain changes. It reads nothing of what a plugin says beyond relaying it.</li>
+			<li>The <b>run</b> module is the only one which knows that a run is a thread and something which holds where it stands. The day a run outlives the process, it is the only one to be read again.</li>
+			<li><b>Exchange</b> is the only one which speaks to the two services. It holds no file and no value: it asks, and gives back what it was given.</li>
+			<li><b>Presentation</b> decides nothing, and shows what a plugin said as that plugin said it.</li>
+		</ul>
+
+		<p>
+			No module here knows what a plugin does. There is nowhere for that knowledge
+			to be held, and the first chapter says why there could not be.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.13 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Implementation model: MVC</h3>
+
+		<p>
+			The model knows the plugins, the runs and what came of them, and exposes
+			neither the domain of the plugins nor the two services to the rest of the
+			application. The controller is called once per request, reads the task it
+			carries, and holds nothing afterwards. The view renders and collects, and
+			takes no decision.
+		</p>
+
+		<h4>Model: what carries the data</h4>
+
+		<table>
+			<thead><tr><th>Class</th><th>From</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td><code>PluginRun</code></td><td>RUN, VALUE</td><td>One run: which plugin, the moment it started, the values it was started with, the files it was given, and the results it holds so far</td></tr>
+				<tr><td><code>FileResult</code></td><td>RESULT, PRODUCED</td><td>What came of one file: whether the plugin ran on it, what the plugin said, and the files which appeared</td></tr>
+				<tr><td><code>PluginsRecord</code></td><td>&mdash;</td><td>What one request holds: the task it carries, which plugin it is about, which run is being followed, and what is to be shown</td></tr>
+				<tr><td>none</td><td>PLUGIN</td><td>A plugin is an <code>sppasPluginParam</code>, held by the domain of the plugins. It is read and never written here</td></tr>
+			</tbody>
+		</table>
+
+		<h4>Model: what does the work</h4>
+
+		<table>
+			<thead><tr><th>Class</th><th>Module</th><th>What it is alone in knowing</th></tr></thead>
+			<tbody>
+				<tr><td><code>InstalledPlugins</code></td><td>plugins</td><td>How the domain of the plugins is spoken to: what is installed, what each declares, installing, removing, starting one on one file</td></tr>
+				<tr><td><code>PluginExecution</code></td><td>run</td><td>How a run is started and advanced: a thread, the plugin started once per file, the result added as each file is done, and whether that thread is still alive</td></tr>
+				<tr><td><code>PluginExchange</code></td><td>exchange</td><td>How the two services are asked: the files of a run and what it produced, and the options of a plugin</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b><code>PluginExecution</code> is the one class of these four dossiers which
+			is not answering a request.</b> A run lasts longer than the request which
+			started it, so something has to advance it while nobody is asking: a thread,
+			started as the setting up of SPPAS starts the installation of its features.
+			It adds to the run and reads nothing back; what it has done is read by the
+			requests which ask where the run stands, and whether it is still alive is the
+			answer to whether the run is still going.
+		</p>
+
+		<h4>View, and what dispatches</h4>
+
+		<table>
+			<thead><tr><th>Class</th><th>What it does</th></tr></thead>
+			<tbody>
+				<tr><td><code>PluginsView</code></td><td>Builds the page from four fragments</td></tr>
+				<tr><td><code>FragmentCards</code></td><td>One card per installed plugin: its icon, what it says of itself in one sentence, what starts it, and that it cannot be started here when it cannot</td></tr>
+				<tr><td><code>FragmentAbout</code></td><td>What is consulted once: the version, and what the plugin says of itself at length</td></tr>
+				<tr><td><code>FragmentRun</code></td><td>A run as it advances: which plugin, which file, how many remain</td></tr>
+				<tr><td><code>FragmentResults</code></td><td>One line per file which is done: what was said about it, and what appeared</td></tr>
+				<tr><td><code>PluginsController</code></td><td>Reads the task the request carries, rebuilds a record, calls what has to be called, and has the view build its tree</td></tr>
+				<tr><td><code>PluginsResponseRecipe</code></td><td>Handles the URL, builds the view and the controller, calls the controller once, and bakes the tree it was given</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			Installing and removing are not on a card: they are not what one does to a
+			plugin but what one does to the list, and they stand in the menu of the page.
+			Where SPPAS answers from a server, they are not there at all. RO1
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.14 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The class diagram</h3>
+
+		<p>
+			<code>/</code> marks what is derived and held by nobody. What the operations
+			promise is the chapter on the contracts; what they are called is a proposal,
+			and one pass renames them all.
+		</p>
+
+		<table>
+			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
+			<tbody>
+				<tr><td><code>PluginRun</code></td><td>run, plugin, moment, values, files, results, /remaining, /over</td><td>add(result), remaining(), is_over(), serialize(), parse(data)</td></tr>
+				<tr><td><code>FileResult</code></td><td>file, done, what was said, produced</td><td>&mdash;</td></tr>
+				<tr><td><code>PluginsRecord</code></td><td>task, plugin, run, to_be_shown</td><td>serialize(), parse(data)</td></tr>
+				<tr><td><code>InstalledPlugins</code></td><td>&mdash;</td><td>all(), one(id), can_run_here(id), install(archive), remove(id), start(id, file, values)</td></tr>
+				<tr><td><code>PluginExecution</code></td><td>run, thread</td><td>start(run), is_running(), where_it_stands(), the_run()</td></tr>
+				<tr><td><code>PluginExchange</code></td><td>&mdash;</td><td>files_for(run), produced(files), options_of(plugin), values_set()</td></tr>
+				<tr><td><code>PluginsView</code></td><td>&mdash;</td><td>populate_tree_content(record)</td></tr>
+				<tr><td><code>PluginsController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
+				<tr><td><code>PluginsResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<code>InstalledPlugins.start()</code> starts a plugin on <b>one</b> file and
+			gives back what it said. It does not know what a run is, and it is not what
+			loops: a class which held both would be the only one to be read again the day
+			either changes.
+		</p>
+
+		<p>
+			<code>PluginExecution.is_running()</code> is what RO7 leans on, and it is one
+			question asked of a thread: a second run started while one is going finds it
+			alive and is refused. It is also what tells a run which stopped from a run
+			which is slow.
+		</p>
+
+		<h4>What is tied to what</h4>
+
+		<table>
+			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td>holds</td><td><code>PluginsResponseRecipe</code> 1 &mdash; 1 <code>PluginsView</code>, 1 <code>PluginsController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
+				<tr><td>holds</td><td><code>PluginsView</code> 1 &mdash; 1 each of the four fragments</td><td>A composition: a fragment builds one part of one page</td></tr>
+				<tr><td>holds</td><td><code>PluginsController</code> 1 &mdash; 1 <code>PluginsRecord</code></td><td>A composition: one record per request, kept by nobody</td></tr>
+				<tr><td>holds</td><td><code>PluginRun</code> 1 &mdash; 0..n <code>FileResult</code></td><td>A composition: a result exists only inside the run it belongs to</td></tr>
+				<tr><td>holds</td><td><code>PluginExecution</code> 1 &mdash; 1 <code>PluginRun</code></td><td>A composition: the run exists inside what advances it, and goes with the process</td></tr>
+				<tr><td>uses</td><td><code>PluginExecution</code> &rarr; <code>InstalledPlugins</code></td><td>A dependency: it starts the plugin on one file and takes back what it said</td></tr>
+				<tr><td>uses</td><td><code>PluginsController</code> &rarr; <code>InstalledPlugins</code>, <code>PluginExecution</code>, <code>PluginExchange</code></td><td>A dependency: it reads, it starts a run, it asks where one stands, and it asks the neighbours</td></tr>
+				<tr><td>uses</td><td><code>InstalledPlugins</code> &rarr; <code>sppasPluginsManager</code></td><td>A dependency, and the only tie of this application to the domain of the plugins</td></tr>
+				<tr><td>uses</td><td><code>PluginExchange</code> &rarr; the provision of files, the service of the options</td><td>A dependency, and the only tie to the two services</td></tr>
+				<tr><td>uses</td><td><code>PluginsView</code> &rarr; <code>PluginsRecord</code></td><td>A dependency: it is given it and builds from it</td></tr>
+			</tbody>
+		</table>
+
+		<h4>In yUML</h4>
+
+		<p>
+			To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
+			class diagram.
+		</p>
+
+		<pre class="dark"><code>[PluginsResponseRecipe|bake();_process_events()]++1-1&gt;[PluginsController|record|handle();populate_view()]
+[PluginsResponseRecipe]++1-1&gt;[PluginsView|populate_tree_content()]
+[PluginsController]++1-1&gt;[PluginsRecord|task;plugin;run;to_be_shown|serialize();parse()]
+
+[PluginsView]++1-1&gt;[FragmentCards]
+[PluginsView]++1-1&gt;[FragmentAbout]
+[PluginsView]++1-1&gt;[FragmentRun]
+[PluginsView]++1-1&gt;[FragmentResults]
+
+[PluginRun|run;plugin;moment;values;files;/remaining;/over|add();remaining();is_over();serialize();parse()]++1-0..*&gt;[FileResult|file;done;what was said;produced]
+
+[PluginsController]-.-&gt;[InstalledPlugins|all();one();can_run_here();install();remove();start()]
+[PluginsController]-.-&gt;[PluginExecution|run;thread|start();is_running();where_it_stands();the_run()]
+[PluginsController]-.-&gt;[PluginExchange|files_for();produced();options_of();values_set()]
+[PluginsView]-.-&gt;[PluginsRecord]
+
+[PluginExecution]-.-&gt;[InstalledPlugins]
+[PluginExecution]++1-1&gt;[PluginRun]
+[InstalledPlugins]-.-&gt;[sppasPluginsManager]</code></pre>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.15 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The states</h3>
+
+		<table>
+			<caption>A plugin, on this machine</caption>
+			<thead><tr><th>State</th><th>When</th><th>What is shown</th></tr></thead>
+			<tbody>
+				<tr><td>ready</td><td>Its command names something this machine has</td><td>The card, and what starts it</td></tr>
+				<tr><td>cannot run here</td><td>It does not</td><td>The card, and that it cannot be started here, before anybody tries [031]</td></tr>
+			</tbody>
+		</table>
+
+		<table>
+			<caption>A run</caption>
+			<thead><tr><th>State</th><th>When</th><th>What is shown</th></tr></thead>
+			<tbody>
+				<tr><td>running</td><td>It holds fewer results than it was given files</td><td>Which file, how many remain, and the results so far</td></tr>
+				<tr><td>over</td><td>It holds one result per file it was given</td><td>Every result, and what was produced</td></tr>
+				<tr><td>stopped</td><td>It holds fewer results than files, and the thread which advanced it is no longer alive</td><td>The results it holds, and that it will get no more</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<i>Running</i> and <i>stopped</i> hold the same data, and what tells them
+			apart is not in the data: it is whether the thread which advances the run is
+			alive. A run is in one of the three and never in two.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.16 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The sequence, from the page to the produced files</h3>
+
+		<ol>
+			<li>The page is asked for. What is installed is read, and one card is built per plugin; a plugin which cannot be started here says so.</li>
+			<li>The person opens what a plugin says of itself at length, and closes it. Nothing else happens.</li>
+			<li>She sets the plugin: its options are handed to the service which shows them, and what was set comes back.</li>
+			<li>She asks to run it. The files she chose are read from the provision of files, and she is told how many there are.</li>
+			<li>She starts the run. The run is written with its moment and its values, before the first file is started.</li>
+			<li>The plugin is started on the first file; what it said is written as the result of that file, with the files which appeared.</li>
+			<li>Her page asks where the run stands, and is answered: this file, so many remaining, and the results already written.</li>
+			<li>Steps 6 and 7 happen again, at their own pace, until every file has a result.</li>
+			<li>What was produced is given to the provision of files, and is found among her own files.</li>
+		</ol>
+
+		<p>
+			Steps 1 to 4 happen in any order and any number of times. Step 5 happens once
+			per run, and refuses while a run of that person is still going. RO7
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.17 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The error policy</h3>
+
+		<table>
+			<thead><tr><th>Level</th><th>What happens</th><th>What is done</th></tr></thead>
+			<tbody>
+				<tr><td>1</td><td>What was asked cannot be done now: no file was chosen, a run is already going, the plugin cannot be started here</td><td>Nothing is started, and what is missing or what stands in the way is said. Nothing is raised</td></tr>
+				<tr><td>2</td><td>One file is concerned: the plugin failed on it, or said something which is not a success</td><td>That file has its result, what the plugin said stands beside it, and the run goes on to the next file</td></tr>
+				<tr><td>3</td><td>The archive cannot be installed, or the plugin cannot be removed</td><td>What the domain of the plugins refused is said in the words of what was attempted, and nothing of the list changes</td></tr>
+				<tr><td>4</td><td>Whoever runs the machine has to know: a run which cannot be written, a plugin which cannot be read</td><td>Said where he reads it, and the person is told that the run could not be started</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			What is raised is caught by whatever answers a request, and by nothing below
+			it. What a plugin writes on its own error output is not an error of this
+			application: it is what that plugin said, and it is shown as such.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== CONTRACTS ============================== -->
+
+
+<section class="ssection">
+<h2>The contracts</h2>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.18 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>How to read them</h3>
+
+		<p>
+			<i>pre</i> is what has to be true on the way in, and what the operation does
+			not check; <i>post</i> is what the caller can count on without looking.
+		</p>
+
+		<h4>What holds everywhere</h4>
+
+		<ul>
+			<li>Only <code>InstalledPlugins</code> speaks to the domain of the plugins, and only <code>PluginExchange</code> speaks to the two services. No other class of this application knows that either exists.</li>
+			<li>What a plugin said is relayed as it was said: never shortened, never translated, and never read for a meaning. RO3</li>
+			<li>Nothing of a run is written on a disk. A run belongs to the process which holds it and goes with it.</li>
+			<li>What is absent gives back an empty thing &mdash; no plugin, no result, no produced file &mdash; and never nothing at all.</li>
+			<li>What is raised is caught by whatever answers a request, and no class below it writes a catch.</li>
+		</ul>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.19 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Class by class</h3>
+
+		<table>
+			<caption>InstalledPlugins</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Give every plugin</td><td>pre: none. post: the plugins the domain of the plugins holds, each with what it declares of itself; empty when none is installed. Nothing is read of a plugin beyond what it declares</td></tr>
+				<tr><td>Give one plugin</td><td>pre: an identifier. post: that plugin, or nothing at all when no plugin bears that identifier</td></tr>
+				<tr><td>Say whether a plugin can run here</td><td>pre: a plugin. post: true when the command that plugin declares for this system names something this machine has; false otherwise. Nothing is started to find out</td></tr>
+				<tr><td>Install an archive</td><td>pre: where SPPAS runs on the machine of the person [025]. post: the plugin stands among the installed ones, or nothing was installed and what stood in the way is named. Nothing of the archive is verified here: the other domain refuses</td></tr>
+				<tr><td>Remove a plugin</td><td>pre: the same, and an identifier. post: that plugin is no longer among the installed ones, or nothing changed and what stood in the way is named. What that plugin produced is not removed</td></tr>
+				<tr><td>Start a plugin on one file</td><td>pre: a plugin which can run here, one file, and the values it is to be started with. post: what the plugin said, as it said it, and whether it ran at all. One file, never two</td></tr>
+			</tbody>
+		</table>
+
+		<table>
+			<caption>PluginExecution</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Start a run</td><td>pre: a plugin which can run here, files which are not none, and the values as they stand. post: the run exists, holding its moment, its plugin, its values and its files, and holding no result yet; and a thread advances it. When a run of that person is already going, nothing is started and the refusal says so</td></tr>
+				<tr><td>Say whether a run is going</td><td>pre: none. post: true while the thread which advances the run is alive, false afterwards. It is what tells a run which stopped from a run which is slow</td></tr>
+				<tr><td>Say where a run stands</td><td>pre: none. post: which file is being treated and how many remain. Answered while the run goes, and answered after it is over</td></tr>
+				<tr><td>Give the run</td><td>pre: none. post: the run with the results it holds now. A run read twice in a row gives what it had each time, and never less</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			The run is advanced by a thread which is a daemon: it holds nothing alive, and
+			an application which is killed kills it. A run whose thread is gone and which
+			holds fewer results than files has stopped, and says so rather than being
+			repaired.
+		</p>
+
+		<table>
+			<caption>PluginRun, FileResult</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Add a result</td><td>pre: the result of one file of this run. post: the run holds it, with the files which came of it; what it held before is untouched, and the order the results were added in is kept</td></tr>
+				<tr><td>Say how many remain</td><td>pre: none. post: the files the run was given, less the results it holds</td></tr>
+				<tr><td>Say whether a run is over</td><td>pre: none. post: true when the run holds one result per file it was given</td></tr>
+				<tr><td>Serialise, parse</td><td>pre: none. post: everything a page needs to show a run, and nothing of the machine. A run parsed twice gives the same run</td></tr>
+			</tbody>
+		</table>
+
+		<table>
+			<caption>PluginExchange</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Give the files of a run</td><td>pre: none. post: the files the person chose, as the provision of files exposes them; empty when she chose none. Nothing of them is altered</td></tr>
+				<tr><td>Give back what was produced</td><td>pre: the files which appeared. post: they are known among the files of the person, and reachable as her own. This application holds none of them</td></tr>
+				<tr><td>Give the options of a plugin to be set</td><td>pre: a plugin. post: the options that plugin declares are handed to the service of the options, with the values they hold</td></tr>
+				<tr><td>Take back the values</td><td>pre: the options were set. post: the values which were set, as that service gives them. Nothing of them is judged here</td></tr>
+			</tbody>
+		</table>
+
+		<table>
+			<caption>PluginsController</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Handle a request</td><td>pre: called once for that request, and never twice. post: the record is rebuilt from what was transmitted, the task is read, and one treatment ran &mdash; or none ran and what stood in the way is said. Nothing of a record is held after the request</td></tr>
+				<tr><td>Populate the view</td><td>pre: the request was handled. post: the view has the record; nothing is decided here</td></tr>
+			</tbody>
+		</table>
+
+		<table>
+			<caption>PluginsView and its fragments</caption>
+			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
+			<tbody>
+				<tr><td>Populate the tree</td><td>pre: a record. post: what the record says and nothing more &mdash; no plugin it invented, no result it counted, no text it wrote</td></tr>
+				<tr><td><code>FragmentCards</code></td><td>post: one card per installed plugin, carrying its icon, what it says of itself in one sentence, and what starts it; and, for a plugin which cannot run here, that it cannot, before anybody tries</td></tr>
+				<tr><td><code>FragmentAbout</code></td><td>post: the version of one plugin and what it says of itself at length, when the record says it was asked for</td></tr>
+				<tr><td><code>FragmentRun</code></td><td>post: which plugin is running, which file is being treated, and how many remain; nothing at all when no run is going</td></tr>
+				<tr><td><code>FragmentResults</code></td><td>post: one line per file which is done, with what the plugin said about it and the files which appeared. A file which is not done has no line</td></tr>
+			</tbody>
+		</table>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.20 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Where each requirement is held</h3>
+
+		<table>
+			<thead><tr><th>No.</th><th>Held by</th></tr></thead>
+			<tbody>
+				<tr><td>[011], [012], [013]</td><td><code>FragmentCards</code>, which shows what <code>InstalledPlugins</code> read and writes nothing of its own</td></tr>
+				<tr><td>[021], [022], [024]</td><td><code>InstalledPlugins</code>, which hands the archive over and asks for the removal</td></tr>
+				<tr><td>[023]</td><td><code>InstalledPlugins</code>, which names what the other domain refused</td></tr>
+				<tr><td>[025]</td><td>The menu of the page, which does not carry those two actions where SPPAS answers from a server</td></tr>
+				<tr><td>[031], [032]</td><td><code>InstalledPlugins.can_run_here()</code>, read by <code>FragmentCards</code></td></tr>
+				<tr><td>[101], [102]</td><td><code>PluginExchange</code>, which gives the files the person chose, and <code>PluginExecution</code>, which starts the plugin on those and no others</td></tr>
+				<tr><td>[103]</td><td><code>FragmentRun</code>, which is given the files before the run starts</td></tr>
+				<tr><td>[201], [202]</td><td><code>PluginExchange</code>, which hands the options over and takes the values back</td></tr>
+				<tr><td>[203]</td><td><b>Nobody here.</b> The service of the options is handed the options as the plugin holds them, and that domain says where the values of a former run come from</td></tr>
+				<tr><td>[301]</td><td><code>PluginExecution.start()</code>, which is called by nothing but a request of the person</td></tr>
+				<tr><td>[302], [304]</td><td><code>PluginExecution</code>, which starts the plugin once per file and adds a result whatever came of it</td></tr>
+				<tr><td>[303]</td><td><code>PluginExecution.where_it_stands()</code>, shown by <code>FragmentRun</code></td></tr>
+				<tr><td>[401], [402], [403]</td><td><code>FragmentResults</code>, which is given one result per file which is done</td></tr>
+				<tr><td>[501], [502]</td><td><code>PluginExchange</code>, which gives what appeared to the provision of files</td></tr>
+				<tr><td>[1001]</td><td><code>PluginsView</code>, and nothing else of this application</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>[203] is the only requirement held nowhere in this application</b>, and it
+			is written down so that nobody looks for it here.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== TESTS ================================== -->
+
+
+<section class="ssection">
+<h2>What is tested, and where</h2>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.21 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Without a plugin, and without a run</h3>
+
+		<p>
+			A run started here starts a program, so what can be tested without starting
+			one is tested without starting one. These need a plugin which is installed and
+			nothing else.
+		</p>
+
+		<p>
+			<b>Installing, removing and starting a plugin are the business of the domain
+			of the plugins, and are tested there.</b> What is checked here is what this
+			application does with what that domain answered: TE4 to TE6 assert on the
+			plugins which are given and on what is named, and never on what was unzipped
+			or deleted.
+		</p>
+
+		<table>
+			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+			<tbody>
+				<tr><td>TE1</td><td>Every plugin the domain of the plugins holds is given, and no other</td><td>[011]</td></tr>
+				<tr><td>TE2</td><td>What is given of a plugin is what that plugin declares: its name, what it says of itself, its version, its icon</td><td>[012], [013]</td></tr>
+				<tr><td>TE3</td><td>A plugin whose command names something this machine does not have is said not to run here, and nothing is started to find out</td><td>[031], [032]</td></tr>
+				<tr><td>TE4</td><td>What the domain of the plugins refuses to install is relayed as a refusal: the plugins which are given are what they were, and what stood in the way is named</td><td>[023]</td></tr>
+				<tr><td>TE5</td><td>What that domain installed is relayed: the plugin is among those which are given, with what it declares of itself</td><td>[021]</td></tr>
+				<tr><td>TE6</td><td>What that domain removed is relayed: the plugin is no longer among those which are given, and nothing else went with it</td><td>[022], [024]</td></tr>
+				<tr><td>TE7</td><td>A run holds, after one result is added, that result and what came of it; and the results keep the order they were added in</td><td>T06</td></tr>
+				<tr><td>TE8</td><td>A run which holds one result per file it was given is over; one which holds fewer is not</td><td>The states</td></tr>
+				<tr><td>TE9</td><td>A run parsed twice gives the same run</td><td>The contract of the record</td></tr>
+			</tbody>
+		</table>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.22 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>With a run which really happens</h3>
+
+		<p>
+			These need a plugin to start, and the plugin they start is written for the
+			tests: one which writes a file, one which fails, one which says nothing, one
+			which takes its time. What is tested is this application, never a plugin of
+			the person.
+		</p>
+
+		<table>
+			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
+			<tbody>
+				<tr><td>TE10</td><td>A run starts the plugin once per file, and on the files it was given and no others</td><td>[102], [302]</td></tr>
+				<tr><td>TE11</td><td>A file on which the plugin fails has a result, and the files after it have theirs</td><td>[304]</td></tr>
+				<tr><td>TE12</td><td>What the plugin said about a file is held as it said it, byte for byte</td><td>[403], RO3</td></tr>
+				<tr><td>TE13</td><td>The files which appeared for one file are held in the result of that file, and in no other</td><td>[402]</td></tr>
+				<tr><td>TE14</td><td>While the run goes, what it says of itself names the file being treated and how many remain</td><td>[303]</td></tr>
+				<tr><td>TE15</td><td>A second run started while one is going is refused, and the refusal says that one is going</td><td>RO7</td></tr>
+				<tr><td>TE16</td><td>A run whose thread is over and which holds one result per file is over; the same run is not said to be going</td><td>The states</td></tr>
+				<tr><td>TE17</td><td>A run whose thread died before the last file is neither going nor over: it stopped, and it holds the results it had</td><td>The states</td></tr>
+				<tr><td>TE18</td><td>The values a run was started with are the ones the plugin was started with, even if the options are set again while the run goes</td><td>RO5</td></tr>
+				<tr><td>TE19</td><td>What was produced is given to the provision of files once, when the run is over, and not at every file</td><td>T07</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<b>TE17 is the one which needs a thread to die.</b> It is written because a
+			run which stopped and a run which is slow hold the same data, and because the
+			only thing which tells them apart is outside the data.
+		</p>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.23 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>What no test covers, and where they stand</h3>
+
+		<ul>
+			<li><b>What a plugin does.</b> It is a program written elsewhere; this application is answerable for what it started it on and for what it said of it.</li>
+			<li><b>[203]</b> &mdash; finding the values of a former run. It is held nowhere in this application.</li>
+			<li><b>The two services</b>, which have their own dossiers and their own tests. What is checked here is the tie: which files were asked for, and which files were given back.</li>
+			<li><b>The WCAG rules</b>, which are verified on the page and not on a fragment of it.</li>
+		</ul>
+
+		<p>
+			The tests stand where the project puts its own, in <code>tests/swapp/</code>.
+			Nine of the nineteen need no run at all.
+		</p>
+
+	</section>
+
+</section>
+
+
+</section>
+
+
+<!-- ====================== ANNEXES ================================ -->
+
+
+<section class="chapter nonumber">
+
+<h1>Annexes</h1>
+
+<!-- =============================================================== -->
+
+	<section>
+	<h2>Annex: Legal notices</h2>
+
+	<ul>
+		<li>Author: Brigitte Bigi</li>
+		<li>Document License: GNU Free Documentation License (GFDL) 1.3</li>
+		<li>Copyright (C) 2026 Brigitte Bigi, CNRS</li>
+		<li>Creation Date: 2026-09-19</li>
+		<li>Last update: 2026-09-19</li>
+	</ul>
+
+	</section>
+
+</section>
+
+</main>
+
+
+
+<script>
+	function bootPage(wexa) {
+		const book = new wexa.Book("main-content");
+		book.fillTable();
+	}
+</script>
+
+<script src="../whakerexa/wexa_statics/js/wexa.loader.js"
+        data-base="../whakerexa/wexa_statics/"
+        data-extras="js/extras/book.js"
+        data-default="wexa_theme"></script>
+
+</body>
+</html>
