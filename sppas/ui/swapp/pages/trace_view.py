@@ -48,9 +48,9 @@ from whakerpy.htmlmaker import TagNode
 from sppas.core.config import cfg
 from sppas.core.config import sg
 from sppas.ui import _
-from sppas.ui.swapp.swappbase.swappview import swappBaseView
-from sppas.ui.swapp.swappcore.swappsg import swapp_settings
-from sppas.ui.swapp.swappcore.swapputils import sppasImagesAccess
+from sppas.ui.swapp.swapp_base.swapp_view import swappBaseView
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_core.swapp_utils import swappImagesAccess
 from sppas.ui.swapp.main_trace_store import swappTraceStore
 
 # ---------------------------------------------------------------------------
@@ -67,7 +67,7 @@ MSG_VIEW_LEFT = _("Left")
 MSG_VIEW_BOTH = _("Both")
 MSG_VIEW_RIGHT = _("Right")
 MSG_VIEW_LABEL = _("Panels to display")
-# Same strings as the real 410 response (hstatusnode.py): the heartbeat
+# Same strings as the real 410 response (hstatus_node.py): the heartbeat
 # can only detect the server is gone from client-side JavaScript, with no
 # server left to bake the real page -- this reproduces its message.
 MSG_SESSION_ENDED = _("Session ended")
@@ -102,7 +102,7 @@ BODY_SCRIPT = f"""
 # ---------------------------------------------------------------------------
 
 
-class TraceView(swappBaseView):
+class swappTraceView(swappBaseView):
     """View class responsible for populating the *journal.html* page.
 
     This class represents the **View** component of the "Traces" page.
@@ -125,7 +125,7 @@ class TraceView(swappBaseView):
 
         """
         if isinstance(tree, HTMLTree) is False:
-            raise TypeError("TraceView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
+            raise TypeError("swappTraceView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
         super().__init__(tree, MSG_HEADER)
 
     # -----------------------------------------------------------------------

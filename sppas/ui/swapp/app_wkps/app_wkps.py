@@ -44,10 +44,10 @@ import logging
 from whakerpy.httpd import BaseResponseRecipe
 
 from sppas.ui import _
-from sppas.ui.swapp import sppasImagesAccess
-from ..swappbase.swappbakery import swappWebData
+from sppas.ui.swapp import swappImagesAccess
+from ..swapp_base.swapp_bakery import swappWebData
 
-from .page_files.filesmaker import FilesResponseRecipe
+from .page_files.files_maker import swappFilesResponseRecipe
 
 # ---------------------------------------------------------------------------
 
@@ -57,18 +57,18 @@ MSG_DESCR = _("Organizes the files of SPPAS into workspaces.")
 # ---------------------------------------------------------------------------
 
 
-class WkpsWebData(swappWebData):
+class swappWkpsWebData(swappWebData):
     """Parse the JSON file, store data and create the bakery system.
 
     """
 
     def __init__(self, json_filename: str | None = None) -> None:
-        """Create a WkpsWebData instance.
+        """Create a swappWkpsWebData instance.
 
         """
-        super(WkpsWebData, self).__init__(json_filename)
+        super(swappWkpsWebData, self).__init__(json_filename)
         # Filename of the default page. The only one of this application.
-        self._default = FilesResponseRecipe.page()
+        self._default = swappFilesResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 
@@ -85,7 +85,7 @@ class WkpsWebData(swappWebData):
     @staticmethod
     def icon() -> str:
         """Return the page icon name."""
-        return sppasImagesAccess.get_image_filename("app_wkps")
+        return swappImagesAccess.get_image_filename("app_wkps")
 
     # -----------------------------------------------------------------------
 
@@ -96,7 +96,7 @@ class WkpsWebData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        return page_name == FilesResponseRecipe.page()
+        return page_name == swappFilesResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 
@@ -110,8 +110,8 @@ class WkpsWebData(swappWebData):
         """
         logging.info(f"Requested page name: {page_name}")
 
-        if page_name == FilesResponseRecipe.page():
-            return FilesResponseRecipe()
+        if page_name == swappFilesResponseRecipe.page():
+            return swappFilesResponseRecipe()
 
         # Any other page name
         return None

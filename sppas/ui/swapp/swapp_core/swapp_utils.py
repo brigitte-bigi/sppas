@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.swapputils.py
+:filename: sppas.ui.swapp.swapp_core.swapp_utils.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Utilities for SPPAS Web-based applications.
@@ -46,7 +46,7 @@ from .swappsg import swapp_settings
 # ---------------------------------------------------------------------------
 
 
-class sppasImagesAccess:
+class swappImagesAccess:
     """Provide some access to image and icons of SPPAS web-based apps.
 
     Notice that os.path.join() is not used; "/" is used instead, because it

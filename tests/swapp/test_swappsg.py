@@ -42,8 +42,8 @@ import unittest
 
 from sppas.ui.agnostic import sppasCommKeys
 
-from sppas.ui.swapp.swappcore.swappsg import swapp_notify
-from sppas.ui.swapp.swappcore.swappsg import notify_show_page
+from sppas.ui.swapp.swapp_core.swappsg import swapp_notify
+from sppas.ui.swapp.swapp_core.swappsg import notify_show_page
 
 # ---------------------------------------------------------------------------
 

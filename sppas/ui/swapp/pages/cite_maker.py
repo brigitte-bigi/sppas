@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.pages.helpmaker.py
+:filename: sppas.ui.swapp.pages.cite_maker.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: SPPAS Web-Based application ResponseRecipe of the help page of an app.
+:summary: The web page "How to cite" of SPPAS.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -43,47 +43,62 @@ from __future__ import annotations
 import logging
 
 from whakerpy.htmlmaker import HTMLTree
+from sppas.core.config import sg
+from sppas.ui import _
 
-from ..swappbase.swappresponse import swappBaseResponse
+from ..swapp_base.swapp_response import swappBaseResponse
 
-from .help_view import HelpView
+from .cite_view import swappCiteView
 
 # ---------------------------------------------------------------------------
 
 
-class HelpResponseRecipe(swappBaseResponse):
-    """The response bakery of the document of an app.
+MSG_TITLE = f"SPPAS {sg.__release__} How to cite"
+MSG_CITE = _("How to cite")
 
-    One recipe for all of them: an app differs only by the document it
-    declares. The document holds both the user manual and the conceptual
-    folder of the app, written by hand and served as it is.
+# ---------------------------------------------------------------------------
+
+
+class swappCiteResponseRecipe(swappBaseResponse):
+    """The cite.html HTTPD response bakery.
+
+    Displays the reference to be cited when SPPAS is used, and a link to
+    the list of all specific publications.
 
     """
 
-    def __init__(self, document: str, page: str, title: str, css: str = "",
-                 tree: HTMLTree | None = None):
-        """Create the ResponseRecipe for the document of an app.
-
-        :param document: (str) Path of the document, relative to swapp
-        :param page: (str) Name of the page serving the document
-        :param title: (str) Title of the documented app
-        :param css: (str) Filename of the stylesheet of the documented app
+    def __init__(self, name: str = "Cite",
+                 tree: HTMLTree | None = None,
+                 title: str = MSG_TITLE):
+        """Create the ResponseRecipe for the "How to cite" page.
 
         """
         self.__view = None
-        self.__document = document
-        self.__page = page
-        self.__css = css
 
-        super(HelpResponseRecipe, self).__init__(page, tree, title)
+        super(swappCiteResponseRecipe, self).__init__(name, tree, title)
 
     # -----------------------------------------------------------------------
     # OVERRIDE METHODS FROM Whakerpy -- Create the UI
     # -----------------------------------------------------------------------
 
-    def page(self) -> str:
+    @classmethod
+    def page(cls) -> str:
         """Override. Return the HTML page name."""
-        return self.__page
+        return "cite.html"
+
+    # -----------------------------------------------------------------------
+
+    @classmethod
+    def name(cls) -> str:
+        """Return the short name of the page, displayed in link buttons."""
+        return MSG_CITE
+
+    # -----------------------------------------------------------------------
+
+    @classmethod
+    def icon(cls) -> str:
+        """Return the name of the image representing the page."""
+        return "link_publis"
 
     # -----------------------------------------------------------------------
 
@@ -95,7 +110,7 @@ class HelpResponseRecipe(swappBaseResponse):
 
         """
         super().create()
-        self.__view = HelpView(self._htree, self._title, self.__css)
+        self.__view = swappCiteView(self._htree)
 
     # -----------------------------------------------------------------------
     # Callbacks
@@ -108,7 +123,7 @@ class HelpResponseRecipe(swappBaseResponse):
         :return: (bool) True if the whole page must be re-created.
 
         """
-        logging.debug(f" >>>>> Page Help -- Process events: {events} <<<<<< ")
+        logging.debug(f" >>>>> Page How to cite -- Process events: {events} <<<<<< ")
         self._data = dict()
         self._status.code = 200
 
@@ -127,9 +142,4 @@ class HelpResponseRecipe(swappBaseResponse):
         """
         self.comment("Body content")
         self.__view.update_accessibility()
-
-        self._status.code, msg = self.__view.populate_tree_content(self.__document)
-        if self._status.code != 200:
-            logging.error(msg)
-            p = self._htree.element("p")
-            p.set_value(msg)
+        self.__view.populate_tree_content()

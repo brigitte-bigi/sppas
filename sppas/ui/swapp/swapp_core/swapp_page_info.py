@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.wpageinfo.py
+:filename: sppas.ui.swapp.swapp_core.swapp_page_info.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: This is the SPPAS Web-based page information.

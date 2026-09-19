@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.pages.tracemaker.py
+:filename: sppas.ui.swapp.pages.configuration_maker.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The web page "Traces" of SPPAS.
+:summary: The web page "Configuration" of SPPAS.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -43,45 +43,47 @@ from __future__ import annotations
 import logging
 
 from whakerpy.htmlmaker import HTMLTree
+
 from sppas.core.config import sg
+from sppas.core.config import cfg
+from sppas.core.config import lgs
 from sppas.ui import _
 
-from ..swappbase.swappresponse import swappBaseResponse
-from ..main_trace_store import swappTraceStore
-from ..swappcore.swappsg import swapp_trace
+from ..swapp_base.swapp_response import swappBaseResponse
 
-from .trace_view import TraceView
+from .configuration_view import swappConfigurationView
 
 # ---------------------------------------------------------------------------
 
 
-MSG_TITLE = f"SPPAS {sg.__release__} Journal"
-MSG_JOURNAL = _("Journal")
-MSG_SAVED = _("Saved into: ")
+MSG_TITLE = f"SPPAS {sg.__release__} Configuration"
+MSG_CONFIGURATION = _("Configuration")
+# Les choix sont enregistrés.
+MSG_SAVED = _("The choices are saved.")
 
 # ---------------------------------------------------------------------------
 
 
-class TraceResponseRecipe(swappBaseResponse):
-    """The journal.html HTTPD response bakery.
+class swappConfigurationResponseRecipe(swappBaseResponse):
+    """The configuration.html HTTPD response bakery.
 
-    Displays the content of the shared trace store: what SPPAS did, and
-    why, whatever the component which did it. It replaces the former wx
-    log window, with the same actions: save into a log file, and clear.
+    Displays the choices SPPAS is remembering from one launch to the next
+    one, and writes them back into the configuration of the application.
+    The choices of the accessibility and the installed features are not
+    here: they are handled where they are seen.
 
     """
 
-    def __init__(self, name: str = "Traces",
+    def __init__(self, name: str = "Configuration",
                  tree: HTMLTree | None = None,
                  title: str = MSG_TITLE):
-        """Create the ResponseRecipe for the "Traces" page.
+        """Create the ResponseRecipe for the "Configuration" page.
 
         """
         self.__view = None
-        # The status of the last action, displayed once in the next bake.
         self.__status_message = ""
 
-        super(TraceResponseRecipe, self).__init__(name, tree, title)
+        super(swappConfigurationResponseRecipe, self).__init__(name, tree, title)
 
     # -----------------------------------------------------------------------
     # OVERRIDE METHODS FROM Whakerpy -- Create the UI
@@ -90,21 +92,21 @@ class TraceResponseRecipe(swappBaseResponse):
     @classmethod
     def page(cls) -> str:
         """Override. Return the HTML page name."""
-        return "journal.html"
+        return "configuration.html"
 
     # -----------------------------------------------------------------------
 
     @classmethod
     def name(cls) -> str:
         """Return the short name of the page, displayed in link buttons."""
-        return MSG_JOURNAL
+        return MSG_CONFIGURATION
 
     # -----------------------------------------------------------------------
 
     @classmethod
     def icon(cls) -> str:
         """Return the name of the image representing the page."""
-        return "view_log"
+        return "link_configuration"
 
     # -----------------------------------------------------------------------
 
@@ -116,7 +118,7 @@ class TraceResponseRecipe(swappBaseResponse):
 
         """
         super().create()
-        self.__view = TraceView(self._htree)
+        self.__view = swappConfigurationView(self._htree)
 
     # -----------------------------------------------------------------------
     # Callbacks
@@ -129,33 +131,28 @@ class TraceResponseRecipe(swappBaseResponse):
         :return: (bool) True if the whole page must be re-created.
 
         """
-        logging.debug(f" >>>>> Page Infos -- Process events: {events} <<<<<< ")
+        logging.debug(f" >>>>> Page Configuration -- Process events: {events} <<<<<< ")
         self._data = dict()
         self._status.code = 200
         self.__status_message = ""
 
-        # The periodic heartbeat of the page: the server knows the single
-        # tab displaying the traces is open. No re-bake.
-        if "trace_heartbeat" in events:
-            swapp_trace.viewer_ping()
-            return False
-
         if "event_bake" in events:
-            e = events["event_bake"]
+            if events["event_bake"] == "handle_configuration_save":
+                # A checkbox is absent of the post when it is not checked.
+                cfg.set_interoperability("configuration_interoperability" in events)
+                if "configuration_log_level" in events:
+                    level = int(events["configuration_log_level"])
+                    cfg.set_log_level(level)
+                    # the choice is worth nothing if it waits the next launch
+                    lgs.set_log_level(level)
+                cfg.save()
+                self.__status_message = MSG_SAVED
+            events.pop("event_bake")
 
-            if e == "handle_trace_save":
-                saved = swapp_trace.save()
-                logging.info(f"Journal saved into: {saved}")
-                self.__status_message = MSG_SAVED + saved
+        events.pop("configuration_interoperability", None)
+        events.pop("configuration_log_level", None)
 
-            elif e == "handle_trace_clear":
-                swapp_trace.clear()
-
-            else:
-                logging.error(f"Unknown event_bake={e}")
-                self._status.code = 205  # Reset Content
-
-        elif len(events) > 0:
+        if len(events) > 0:
             logging.error(f"Unknown events={events}")
             self._status.code = 205  # Reset Content
 
@@ -169,8 +166,4 @@ class TraceResponseRecipe(swappBaseResponse):
         """
         self.comment("Body content")
         self.__view.update_accessibility()
-        self.__view.populate_tree_content(
-            swapp_trace.get_header(),
-            swapp_trace.get_records(origin=swappTraceStore.API_ORIGIN),
-            swapp_trace.get_records(origin=swappTraceStore.UI_ORIGIN),
-            self.__status_message)
+        self.__view.populate_tree_content(self.__status_message)

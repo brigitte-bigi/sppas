@@ -385,14 +385,14 @@
 		</p>
 
 		<ul>
-			<li><code>app_dashboard.py</code> -- <code>DashboardWebData</code>, which parses the
+			<li><code>app_dashboard.py</code> -- <code>swappDashboardWebData</code>, which parses the
 				JSON configuration and answers which page it can bake.</li>
-			<li><code>dashboardmaker.py</code> -- <code>DashboardResponseRecipe</code>, the bakery
+			<li><code>dashboard_maker.py</code> -- <code>swappDashboardResponseRecipe</code>, the bakery
 				of <code>dashboard.html</code>: it receives the events and decides whether the page is
 				created again.</li>
-			<li><code>dashboard_controller.py</code> -- <code>DashboardController</code>, which
+			<li><code>dashboard_controller.py</code> -- <code>swappDashboardController</code>, which
 				holds the answers to the events and fills the view from the model.</li>
-			<li><code>dashboard_view.py</code> -- <code>DashboardView</code>, which builds the HTML
+			<li><code>dashboard_view.py</code> -- <code>swappDashboardView</code>, which builds the HTML
 				tree and nothing else.</li>
 			<li><code>nodes/</code> -- the cards of the applications, the buttons of the links, and
 				the dialogs.</li>
@@ -414,7 +414,7 @@
 			<p>
 				The cards are not written in the page: they come from two registries. The
 				applications are declared in <code>WEB_APPLICATIONS</code>, the pages in
-				<code>WEB_PAGES</code>, as a list of <code>WebPageInfo(recipe, show)</code>. A page
+				<code>WEB_PAGES</code>, as a list of <code>swappWebPageInfo(recipe, show)</code>. A page
 				declared with <code>show=True</code> gets its link in the section of information.
 				A spin-off adds its own entries through <code>SWAPP_PAGES</code>.
 			</p>
@@ -430,10 +430,10 @@
 		<h3>The nodes</h3>
 
 			<p>
-				<code>AppsNode.create_app_card()</code> builds a card: an <code>article</code>
+				<code>swappAppsNode.create_app_card()</code> builds a card: an <code>article</code>
 				holding the picture, the title, the description and the launching button. The links
-				of the two other sections are built by <code>LinksNode</code> and
-				<code>AboutsNode</code>: an <code>a</code> element carrying the classes
+				of the two other sections are built by <code>swappLinksNode</code> and
+				<code>swappAboutsNode</code>: an <code>a</code> element carrying the classes
 				<code>card</code> and <code>link-button</code> -- a link, not a button, since it
 				leads somewhere instead of doing something.
 			</p>

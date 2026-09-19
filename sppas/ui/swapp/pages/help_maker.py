@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.pages.feedbackmaker.py
+:filename: sppas.ui.swapp.pages.help_maker.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The web page "Feedback" of SPPAS.
+:summary: SPPAS Web-Based application ResponseRecipe of the help page of an app.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -43,64 +43,47 @@ from __future__ import annotations
 import logging
 
 from whakerpy.htmlmaker import HTMLTree
-from sppas.core.config import sg
-from sppas.ui import _
 
-from ..swappbase.swappresponse import swappBaseResponse
-from ..swappcore.swappsg import swapp_trace
+from ..swapp_base.swapp_response import swappBaseResponse
 
-from .feedback_view import FeedbackView
+from .help_view import swappHelpView
 
 # ---------------------------------------------------------------------------
 
 
-MSG_TITLE = f"SPPAS {sg.__release__} Feedback"
-MSG_FEEDBACK = _("Feedback")
+class swappHelpResponseRecipe(swappBaseResponse):
+    """The response bakery of the document of an app.
 
-# ---------------------------------------------------------------------------
-
-
-class FeedbackResponseRecipe(swappBaseResponse):
-    """The feedback.html HTTPD response bakery.
-
-    Allows the user to prepare a feedback message and to send it by e-mail
-    from its own e-mail client: the message never leaves the application
-    by itself.
+    One recipe for all of them: an app differs only by the document it
+    declares. The document holds both the user manual and the conceptual
+    folder of the app, written by hand and served as it is.
 
     """
 
-    def __init__(self, name: str = "Feedback",
-                 tree: HTMLTree | None = None,
-                 title: str = MSG_TITLE):
-        """Create the ResponseRecipe for the "Feedback" page.
+    def __init__(self, document: str, page: str, title: str, css: str = "",
+                 tree: HTMLTree | None = None):
+        """Create the ResponseRecipe for the document of an app.
+
+        :param document: (str) Path of the document, relative to swapp
+        :param page: (str) Name of the page serving the document
+        :param title: (str) Title of the documented app
+        :param css: (str) Filename of the stylesheet of the documented app
 
         """
         self.__view = None
+        self.__document = document
+        self.__page = page
+        self.__css = css
 
-        super(FeedbackResponseRecipe, self).__init__(name, tree, title)
+        super(swappHelpResponseRecipe, self).__init__(page, tree, title)
 
     # -----------------------------------------------------------------------
     # OVERRIDE METHODS FROM Whakerpy -- Create the UI
     # -----------------------------------------------------------------------
 
-    @classmethod
-    def page(cls) -> str:
+    def page(self) -> str:
         """Override. Return the HTML page name."""
-        return "feedback.html"
-
-    # -----------------------------------------------------------------------
-
-    @classmethod
-    def name(cls) -> str:
-        """Return the short name of the page, displayed in link buttons."""
-        return MSG_FEEDBACK
-
-    # -----------------------------------------------------------------------
-
-    @classmethod
-    def icon(cls) -> str:
-        """Return the name of the image representing the page."""
-        return "link_feedback"
+        return self.__page
 
     # -----------------------------------------------------------------------
 
@@ -112,7 +95,7 @@ class FeedbackResponseRecipe(swappBaseResponse):
 
         """
         super().create()
-        self.__view = FeedbackView(self._htree)
+        self.__view = swappHelpView(self._htree, self._title, self.__css)
 
     # -----------------------------------------------------------------------
     # Callbacks
@@ -125,11 +108,11 @@ class FeedbackResponseRecipe(swappBaseResponse):
         :return: (bool) True if the whole page must be re-created.
 
         """
-        logging.debug(f" >>>>> Page Feedback -- Process events: {events} <<<<<< ")
+        logging.debug(f" >>>>> Page Help -- Process events: {events} <<<<<< ")
         self._data = dict()
         self._status.code = 200
 
-        # The send action is handled in the browser: no event of its own.
+        # This page defines no event of its own.
         if len(events) > 0:
             logging.error(f"Unknown events={events}")
             self._status.code = 205  # Reset Content
@@ -144,4 +127,9 @@ class FeedbackResponseRecipe(swappBaseResponse):
         """
         self.comment("Body content")
         self.__view.update_accessibility()
-        self.__view.populate_tree_content(swapp_trace.serialize())
+
+        self._status.code, msg = self.__view.populate_tree_content(self.__document)
+        if self._status.code != 200:
+            logging.error(msg)
+            p = self._htree.element("p")
+            p.set_value(msg)

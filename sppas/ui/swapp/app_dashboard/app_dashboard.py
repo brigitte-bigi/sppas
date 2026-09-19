@@ -46,10 +46,10 @@ from whakerpy.httpd import BaseResponseRecipe
 from sppas.core.config import sg
 from sppas.ui import _
 
-from ..swappbase.swappbakery import swappWebData
-from ..pages import HelpResponseRecipe
+from ..swapp_base.swapp_bakery import swappWebData
+from ..pages import swappHelpResponseRecipe
 
-from .dashboardmaker import DashboardResponseRecipe
+from .dashboard_maker import swappDashboardResponseRecipe
 
 # ---------------------------------------------------------------------------
 
@@ -59,18 +59,18 @@ MSG_HELP_TITLE = f"SPPAS {sg.__release__} » " + _("Dashboard") + " » " + _("He
 # ---------------------------------------------------------------------------
 
 
-class DashboardWebData(swappWebData):
+class swappDashboardWebData(swappWebData):
     """Parse the JSON file, store data and create the bakery system.
 
     """
 
     def __init__(self, json_filename: str | None = None) -> None:
-        """Create a DashboardWebData instance.
+        """Create a swappDashboardWebData instance.
 
         """
-        super(DashboardWebData, self).__init__(json_filename)
+        super(swappDashboardWebData, self).__init__(json_filename)
         # Filename of the default page. The only one of the Dashboard application.
-        self._default = DashboardResponseRecipe.page()
+        self._default = swappDashboardResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 
@@ -81,8 +81,8 @@ class DashboardWebData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        return page_name in (DashboardResponseRecipe.page(),
-                             DashboardResponseRecipe.help_page())
+        return page_name in (swappDashboardResponseRecipe.page(),
+                             swappDashboardResponseRecipe.help_page())
 
     # -----------------------------------------------------------------------
 
@@ -96,12 +96,12 @@ class DashboardWebData(swappWebData):
         """
         logging.info(f"Requested page name: {page_name}")
 
-        if page_name == DashboardResponseRecipe.page():
-            return DashboardResponseRecipe()
+        if page_name == swappDashboardResponseRecipe.page():
+            return swappDashboardResponseRecipe()
 
-        if page_name == DashboardResponseRecipe.help_page():
-            return HelpResponseRecipe(DashboardResponseRecipe.help_document(),
-                                      DashboardResponseRecipe.help_page(),
+        if page_name == swappDashboardResponseRecipe.help_page():
+            return swappHelpResponseRecipe(swappDashboardResponseRecipe.help_document(),
+                                      swappDashboardResponseRecipe.help_page(),
                                       MSG_HELP_TITLE,
                                       "app_dashboard.css")
 

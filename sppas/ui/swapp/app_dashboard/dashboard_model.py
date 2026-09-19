@@ -42,13 +42,13 @@
 from __future__ import annotations
 import logging
 
-from ..swappcore.swappinfo import swappWebApplicationInfo
-from ..swappcore.wpageinfo import swappWebPageInfo
+from ..swapp_core.swapp_app_info import swappWebApplicationInfo
+from ..swapp_core.swapp_page_info import swappWebPageInfo
 
 # ---------------------------------------------------------------------------
 
 
-class DashboardModel:
+class swappDashboardModel:
     """Manage the list of web applications displayed in the Dashboard.
 
     This class represents the *Model* component of the MVC architecture.
@@ -56,7 +56,7 @@ class DashboardModel:
     provides controlled access to them through explicit methods.
 
     :example:
-        >>> model = DashboardModel()
+        >>> model = swappDashboardModel()
         >>> model.append(swappWebApplicationInfo('Setup', SetupBakery, True))
         True
 

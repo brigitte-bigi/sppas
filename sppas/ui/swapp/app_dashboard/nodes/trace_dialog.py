@@ -51,7 +51,7 @@ MSG_OPEN = _("Open the Journal")
 # ---------------------------------------------------------------------------
 
 
-class TraceInfoDialog(HTMLNode):
+class swappTraceInfoDialog(HTMLNode):
     """A dialog inviting the user to open -- and keep -- the Journal tab.
 
     The dialog replaces the permanent log window of the wx interface: it
@@ -64,7 +64,7 @@ class TraceInfoDialog(HTMLNode):
     ID = "trace_dialog"
 
     def __init__(self, parent_id):
-        super(TraceInfoDialog, self).__init__(parent_id, TraceInfoDialog.ID, "dialog")
+        super(swappTraceInfoDialog, self).__init__(parent_id, swappTraceInfoDialog.ID, "dialog")
         self.add_attribute("id", self.identifier)
         self.add_attribute("role", "alertdialog")
         self.add_attribute("aria-labelledby", "trace_dialog_p")

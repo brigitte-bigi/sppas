@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.swappbase.swapphead.py
+:filename: sppas.ui.swapp.swapp_base.swapp_head.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: SPPAS Web-Based application ResponseRecipe.
@@ -44,7 +44,7 @@ from __future__ import annotations
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import HTMLHeadNode
 
-from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.app_setup.fieldsetinstall.py
+:filename: sppas.ui.swapp.app_setup.fieldset_install.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Create an "Install" fieldset node of the setup app.
@@ -45,9 +45,9 @@ from whakerpy.htmlmaker import HTMLHr
 from sppas.core.coreutils import msg
 from sppas.core.coreutils import info
 
-from ..nodes import ProgressBar
+from ..nodes import swappProgressBar
 
-from .basefieldset import SetupBaseFieldset
+from .base_fieldset import swappSetupBaseFieldset
 
 # ---------------------------------------------------------------------------
 
@@ -62,13 +62,13 @@ INFO_SEE_LOGS = info(512, "install")
 # ---------------------------------------------------------------------------
 
 
-class SetupInstallFieldset(SetupBaseFieldset):
+class swappSetupInstallFieldset(swappSetupBaseFieldset):
     """Completed fieldset of the setup page.
 
     """
 
     def __init__(self, parent):
-        super(SetupInstallFieldset, self).__init__(parent, "install_field", LEGEND_COMPLETED)
+        super(swappSetupInstallFieldset, self).__init__(parent, "install_field", LEGEND_COMPLETED)
         self._msg = MSG_COMPLETED
         self.__progress = None
 
@@ -80,7 +80,7 @@ class SetupInstallFieldset(SetupBaseFieldset):
         :return: (sppasBaseProgress)
 
         """
-        self.__progress = ProgressBar(self.identifier)
+        self.__progress = swappProgressBar(self.identifier)
         self.__progress.set_header("")
         self.__progress.set_text("")
         self.append_child(self.__progress.get_node())

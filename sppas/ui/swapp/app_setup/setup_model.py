@@ -50,10 +50,10 @@ from sppas.core.preinstall import sppasInstallerDeps
 # ---------------------------------------------------------------------------
 
 
-class SetupModel:
+class swappSetupModel:
 
     def __init__(self):
-        """Initialize the SetupModel.
+        """Initialize the swappSetupModel.
 
         The installer is None until reset() is invoked.
 

@@ -48,16 +48,16 @@ from sppas.ui.agnostic import sppasCommClient
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommServerError
 
-from .swappcore.swappsg import swapp_wkps
-from .swappcore.swappsg import swapp_wxstate
-from .swappcore.swappsg import swapp_trace
-from .swappcore.swappsg import notify_wkp_changed
+from .swapp_core.swappsg import swapp_wkps
+from .swapp_core.swappsg import swapp_wxstate
+from .swapp_core.swappsg import swapp_trace
+from .swapp_core.swappsg import notify_wkp_changed
 from .main_trace_store import swappTraceStore
 
 # ---------------------------------------------------------------------------
 
 
-class sppasWappCommServer(sppasCommServer):
+class swappCommServer(sppasCommServer):
     """The interlocutor of the wx UI, on the swapp side.
 
     Receive the messages the wx UI sends on the socket. The HELLO message
@@ -74,7 +74,7 @@ class sppasWappCommServer(sppasCommServer):
         :param port: (int) Port number
 
         """
-        super(sppasWappCommServer, self).__init__(host, port)
+        super(swappCommServer, self).__init__(host, port)
         # The interlocutor declared by the last received HELLO, or None.
         # Keys: "source" (str), "version" (int), "port" (int).
         self.__interlocutor = None
@@ -189,7 +189,7 @@ class sppasWappCommServer(sppasCommServer):
                     value.get("created"))
             return self.format_message(sppasCommKeys.ACK, "Trace stored.")
 
-        return super(sppasWappCommServer, self)._prepare_response(key, value)
+        return super(swappCommServer, self)._prepare_response(key, value)
 
     # -----------------------------------------------------------------------
 

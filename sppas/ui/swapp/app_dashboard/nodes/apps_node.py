@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.app_dashboard.apps_node.py
+:filename: sppas.ui.swapp.app_dashboard.nodes.apps_node.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The apps section of the SPPAS Dashboard Application.
@@ -43,7 +43,7 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import EmptyNode
 
 from sppas.ui import _
-from sppas.ui.swapp.nodes import LinkButtonNode
+from sppas.ui.swapp.nodes import swappLinkButtonNode
 
 # ---------------------------------------------------------------------------
 
@@ -53,7 +53,7 @@ MSG_LAUNCH = _("Launch")
 # ---------------------------------------------------------------------------
 
 
-class AppsNode(HTMLNode):
+class swappAppsNode(HTMLNode):
     """The list of the applications of the dashboard application.
 
     A list, because the Dashboard offers a choice between applications.
@@ -67,7 +67,7 @@ class AppsNode(HTMLNode):
     # -----------------------------------------------------------------------
 
     def __init__(self, parent_id):
-        super(AppsNode, self).__init__(parent_id, AppsNode.ID, "ul")
+        super(swappAppsNode, self).__init__(parent_id, swappAppsNode.ID, "ul")
         self.add_attribute("id", self.identifier)
         self.add_attribute("class", "cards-panel")
         self.add_attribute("class", "apps-panel")
@@ -142,7 +142,7 @@ class AppsNode(HTMLNode):
         else:
             if link.endswith(".html"):
                 # The link is handled by the dashboard manager to propagate contrast&theme.
-                _b = LinkButtonNode(content.identifier, ident + "_button", link)
+                _b = swappLinkButtonNode(content.identifier, ident + "_button", link)
                 _b.set_value(MSG_LAUNCH)
                 _b.add_attribute("class", "action-button app-button")
                 # Overrides role. It's a link, but it acts like a button (launch an app).

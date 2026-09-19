@@ -46,8 +46,8 @@ from whakerpy.htmlmaker import EmptyNode
 
 from sppas.core.config import sg
 from sppas.ui import _
-from sppas.ui.swapp import sppasImagesAccess
-from sppas.ui.swapp.swappbase.swappview import swappBaseView
+from sppas.ui.swapp import swappImagesAccess
+from sppas.ui.swapp.swapp_base.swapp_view import swappBaseView
 
 # ---------------------------------------------------------------------------
 
@@ -74,7 +74,7 @@ BODY_SCRIPT = """
 # ---------------------------------------------------------------------------
 
 
-class CiteView(swappBaseView):
+class swappCiteView(swappBaseView):
     """View class responsible for populating the *cite.html* page.
 
     This class represents the **View** component of the "How to cite" page.
@@ -93,7 +93,7 @@ class CiteView(swappBaseView):
 
         """
         if isinstance(tree, HTMLTree) is False:
-            raise TypeError("CiteView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
+            raise TypeError("swappCiteView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
         super().__init__(tree, MSG_HEADER)
 
         # The SPPAS way of organizing an illustration with its content.
@@ -158,7 +158,7 @@ class CiteView(swappBaseView):
         _a.set_attribute("href", "https://hal.science/hal-01417876")
         self._htree.body_main.append_child(_a)
         _logo = EmptyNode(_a.identifier, None, "img")
-        _logo.set_attribute("src", sppasImagesAccess.get_image_filename("article_reference"))
+        _logo.set_attribute("src", swappImagesAccess.get_image_filename("article_reference"))
         _logo.set_attribute("alt", "Capture article")
         _a.append_child(_logo)
 

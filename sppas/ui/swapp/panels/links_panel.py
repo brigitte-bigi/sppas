@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.app_dashboard.links_node.py
+:filename: sppas.ui.swapp.panels.links_panel.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The links section of the SPPAS Dashboard Application.
@@ -42,16 +42,16 @@
 from __future__ import annotations
 from whakerpy.htmlmaker import HTMLNode
 
-from sppas.ui.swapp.nodes import sppasHTMLButton
-from sppas.ui.swapp.nodes import sppasHTMLLink
+from sppas.ui.swapp.nodes import swappHTMLButton
+from sppas.ui.swapp.nodes import swappHTMLLink
 
 # ---------------------------------------------------------------------------
 
 
-class BaseLinksNode(HTMLNode):
+class swappBaseLinksNode(HTMLNode):
 
     def __init__(self, parent_id, identifier: str):
-        super(BaseLinksNode, self).__init__(parent_id, identifier, "section")
+        super(swappBaseLinksNode, self).__init__(parent_id, identifier, "section")
         self.add_attribute("id", self.identifier)
         self.add_attribute("class", "cards-panel")
         self.add_attribute("class", "links-panel")
@@ -61,10 +61,10 @@ class BaseLinksNode(HTMLNode):
     def link_button(self, ident, icon_name, text, link):
         """A card leading to a page: a link, on which the ident is on the span text.
 
-        :return: (sppasHTMLLink)
+        :return: (swappHTMLLink)
 
         """
-        link_node = sppasHTMLLink(self.identifier, identifier=ident+"_button")
+        link_node = swappHTMLLink(self.identifier, identifier=ident+"_button")
 
         # - design
         link_node.remove_attribute("class")  # just in case...
@@ -97,7 +97,7 @@ class BaseLinksNode(HTMLNode):
         The link is followed by goToLink() of Whakerexa, which preserves
         the accessibility parameters when navigating to the page.
 
-        :return: (sppasHTMLLink)
+        :return: (swappHTMLLink)
 
         """
         button_node = self.link_button(ident, icon_name, text, link)
@@ -111,10 +111,10 @@ class BaseLinksNode(HTMLNode):
 
 		<button name="about-button" onclick="Wexa.dialog.open('about_dialog', true)">Open About</button>
 
-        :return: (sppasHTMLButton)
+        :return: (swappHTMLButton)
 
         """
-        button_node = sppasHTMLButton(self.identifier, identifier=ident+"_button")
+        button_node = swappHTMLButton(self.identifier, identifier=ident+"_button")
         button_node.add_attribute("onclick", f"Wexa.dialog.open('{dialog_name}', true)")
 
         # - design

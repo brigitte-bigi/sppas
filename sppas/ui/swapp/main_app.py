@@ -51,14 +51,14 @@ from sppas.core.coreutils import sppasKeyError
 from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommServerError
-from sppas.ui.swapp.swappcore.swappsg import swapp_settings
-from sppas.ui.swapp.swappcore.swappsg import swapp_notify
-from sppas.ui.swapp.swappcore.swappsg import swapp_trace
-from sppas.ui.swapp.swappcore.swappsg import swapp_wxstate
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_core.swappsg import swapp_notify
+from sppas.ui.swapp.swapp_core.swappsg import swapp_trace
+from sppas.ui.swapp.swapp_core.swappsg import swapp_wxstate
 from .main_trace_handler import swappTraceHandler
-from .main_comm import sppasWappCommServer
+from .main_comm import swappCommServer
 
-from .swappcore.swapps import *
+from .swapp_core.swapps import *
 
 # ---------------------------------------------------------------------------
 
@@ -244,7 +244,7 @@ class sppasWebApp:
         self.__server.create_pages(_app.name)
 
         # Create a socket to communicate with the apps
-        self.__socket = sppasWappCommServer(swapp_settings.shost, swapp_settings.sport)
+        self.__socket = swappCommServer(swapp_settings.shost, swapp_settings.sport)
 
         # Any application event -- e.g. the shared workspace changed -- is
         # pushed to the interlocutor registered on this socket, if any.

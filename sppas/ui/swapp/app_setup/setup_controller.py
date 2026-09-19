@@ -40,24 +40,24 @@
 
 from __future__ import annotations
 
-from .fieldsets import SetupFieldsets
+from .fieldsets import swappSetupFieldsets
 
 # ---------------------------------------------------------------------------
 
 
-class SetupController:
+class swappSetupController:
 
     def __init__(self, model, view, page_name: str = "setup.html"):
         """Initialize the controller with a model and a view.
 
-        :param model: (SetupModel) The model managing the applications.
-        :param view: (SetupView) The view managing the HTML structure.
+        :param model: (swappSetupModel) The model managing the applications.
+        :param view: (swappSetupView) The view managing the HTML structure.
         :param page_name: (str) Name of the HTML page this controller is managing
 
         """
         self.__model = model
         self.__view = view
-        self.__fieldsets = SetupFieldsets(self.__model.installer, page_name)
+        self.__fieldsets = swappSetupFieldsets(self.__model.installer, page_name)
 
         # Assign the fieldsets to the view
         self.__view.set_fieldsets(self.__fieldsets)
@@ -74,7 +74,7 @@ class SetupController:
         self.__model.reset()
 
         # The wizard pages are fieldset tags
-        self.__fieldsets = SetupFieldsets(self.__model.installer, page_name)
+        self.__fieldsets = swappSetupFieldsets(self.__model.installer, page_name)
 
         # Assign the fieldsets to the view
         self.__view.set_fieldsets(self.__fieldsets)

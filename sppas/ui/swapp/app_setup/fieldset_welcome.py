@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.app_setup.fieldsetwelcome.py
+:filename: sppas.ui.swapp.app_setup.fieldset_welcome.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Create a "Welcome" fieldset node of the setup app.
@@ -45,12 +45,12 @@ from whakerpy.htmlmaker import HTMLNode
 from sppas.core.config import sg
 from sppas.core.config import cfg
 from sppas.core.coreutils import info
-from sppas.ui.swapp.swappcore.wexc import sppasHTMLIncompleteFieldset
-from sppas.ui.swapp.nodes import sppasHTMLCheckboxNode
+from sppas.ui.swapp.swapp_core.swapp_exc import swappHTMLIncompleteFieldset
+from sppas.ui.swapp.nodes import swappHTMLCheckboxNode
 
-from ..swappcore.swappsg import swapp_settings
+from ..swapp_core.swappsg import swapp_settings
 
-from .basefieldset import SetupBaseFieldset
+from .base_fieldset import swappSetupBaseFieldset
 
 # ---------------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ MSG_ACCEPT_PROD = info(559, "install")
 # ---------------------------------------------------------------------------
 
 
-class SetupHomeFieldset(SetupBaseFieldset):
+class swappSetupHomeFieldset(swappSetupBaseFieldset):
     """Welcome fieldset of the setup page.
 
     """
@@ -78,7 +78,7 @@ class SetupHomeFieldset(SetupBaseFieldset):
 
         """
         field_title = LEGEND_WELCOME + " " + str(sg.__version__)
-        super(SetupHomeFieldset, self).__init__(parent, "home_field", field_title, uri=uri)
+        super(swappSetupHomeFieldset, self).__init__(parent, "home_field", field_title, uri=uri)
 
         self._msg = MSG_WELCOME
         self.__create_content()
@@ -122,11 +122,11 @@ class SetupHomeFieldset(SetupBaseFieldset):
         # engagement is taken by the user, never by the software, and this is
         # what makes the tests bearable for the one who writes them.
         AUTHOR_LOG_LEVEL = 1
-        box = sppasHTMLCheckboxNode(self.identifier, "check_ref", MSG_ACCEPT_REF, self._uri)
+        box = swappHTMLCheckboxNode(self.identifier, "check_ref", MSG_ACCEPT_REF, self._uri)
         self.append_child(box)
         if cfg.log_level <= AUTHOR_LOG_LEVEL:
             box.check()
-        box = sppasHTMLCheckboxNode(self.identifier, "check_prod", MSG_ACCEPT_PROD, self._uri)
+        box = swappHTMLCheckboxNode(self.identifier, "check_prod", MSG_ACCEPT_PROD, self._uri)
         self.append_child(box)
         if cfg.log_level <= AUTHOR_LOG_LEVEL:
             box.check()
@@ -149,7 +149,7 @@ class SetupHomeFieldset(SetupBaseFieldset):
         """
         if self.__checkbox_ref.is_checked() is False or self.__checkbox_prod.is_checked() is False:
             logging.error("Checkbox validation failed.")
-            raise sppasHTMLIncompleteFieldset("Accept citation")
+            raise swappHTMLIncompleteFieldset("Accept citation")
 
     # -----------------------------------------------------------------------
 

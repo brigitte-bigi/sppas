@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.app_dashboard.agree_node.py
+:filename: sppas.ui.swapp.app_dashboard.nodes.agree_node.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The agreement dialog of the SPPAS Dashboard Application.
@@ -51,7 +51,7 @@ MSG_AGREE = _("I agree")
 # ---------------------------------------------------------------------------
 
 
-class AgreementDialog(HTMLNode):
+class swappAgreementDialog(HTMLNode):
     """A dialog for the user to accept the license requirements.
 
     """
@@ -59,7 +59,7 @@ class AgreementDialog(HTMLNode):
     ID = "agreement_dialog"
 
     def __init__(self, parent_id):
-        super(AgreementDialog, self).__init__(parent_id, AgreementDialog.ID, "dialog")
+        super(swappAgreementDialog, self).__init__(parent_id, swappAgreementDialog.ID, "dialog")
         self.add_attribute("id", self.identifier)
         self.add_attribute("role", "alertdialog")
         self.add_attribute("aria-labelledby", "agree_p")

@@ -38,13 +38,13 @@
 
 """
 
-from .annot_param import AnnotParamDialog
-from .links_panel import BaseLinksNode
+from .annot_param import swappAnnotParamDialog
+from .links_panel import swappBaseLinksNode
 
 # ---------------------------------------------------------------------------
 
 
 __all__ = (
-    "AnnotParamDialog",
-    "BaseLinksNode",
+    "swappAnnotParamDialog",
+    "swappBaseLinksNode",
 )

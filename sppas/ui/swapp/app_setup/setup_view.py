@@ -44,12 +44,12 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import TagNode
 from sppas.core.config import sg
 
-from ..swappbase.swappview import swappBaseView
-from ..swappcore.swappsg import swapp_settings
+from ..swapp_base.swapp_view import swappBaseView
+from ..swapp_core.swappsg import swapp_settings
 
-from .basefieldset import SetupBaseFieldset
-from .fieldsets import SetupFieldsets
-from .actions_node import SetupActionsNode
+from .base_fieldset import swappSetupBaseFieldset
+from .fieldsets import swappSetupFieldsets
+from .actions_node import swappSetupActionsNode
 
 # ---------------------------------------------------------------------------
 
@@ -65,14 +65,14 @@ BODY_SCRIPT = f"""
 # ---------------------------------------------------------------------------
 
 
-class SetupView(swappBaseView):
+class swappSetupView(swappBaseView):
     """View class responsible for populating the *setup.html* page.
 
     This class represents the **View** component of the MVC pattern for the
     SPPAS Setup web application. It receives an existing :class:`HTMLTree`
     instance and fills it with all static and semi-static visual content.
 
-    The :class:`SetupView` does not manage user events nor business logic;
+    The :class:`swappSetupView` does not manage user events nor business logic;
     it focuses solely on defining the HTML structure and resources required
     for rendering the Setup interface.
 
@@ -98,15 +98,15 @@ class SetupView(swappBaseView):
     # Getters / Setters
     # -----------------------------------------------------------------------
 
-    def set_fieldsets(self, fieldsets: SetupFieldsets) -> None:
+    def set_fieldsets(self, fieldsets: swappSetupFieldsets) -> None:
         """Set a new fieldset and update the tree consequently.
 
-        :param fieldsets: (list) An instance of :class:`SetupFieldsets`
-        :raises: TypeError: fieldsets is not an instance of SetupFieldsets
+        :param fieldsets: (list) An instance of :class:`swappSetupFieldsets`
+        :raises: TypeError: fieldsets is not an instance of swappSetupFieldsets
 
         """
-        if isinstance(fieldsets, SetupFieldsets) is False:
-            raise TypeError("SetupView: fieldsets must be an instance of SetupFieldsets. Got {}".format(type(fieldsets)))
+        if isinstance(fieldsets, swappSetupFieldsets) is False:
+            raise TypeError("swappSetupView: fieldsets must be an instance of swappSetupFieldsets. Got {}".format(type(fieldsets)))
         self.__fieldsets = fieldsets
 
         # Re-create nodes making use of fieldsets
@@ -177,7 +177,7 @@ class SetupView(swappBaseView):
         """Update the breadcrumb of the header by highlighting the given n-th fieldset.
 
         :param cur_idx: (int) Index of the currently enabled fieldset
-        :raises: TypeError: if current is not a SetupBaseFieldset
+        :raises: TypeError: if current is not a swappSetupBaseFieldset
 
         """
         # Delete the existing children
@@ -197,12 +197,12 @@ class SetupView(swappBaseView):
     # -----------------------------------------------------------------------
 
     def update_tree_content(self,
-                            current_fieldset: SetupBaseFieldset,
+                            current_fieldset: swappSetupBaseFieldset,
                             actions: bool = True,
                             install: bool = True):
         """Update the tree content depending on the actual fieldset.
 
-        :param current_fieldset: (SetupBaseFieldset) The currently enabled fieldset
+        :param current_fieldset: (swappSetupBaseFieldset) The currently enabled fieldset
         :param actions: (bool) Whether the actions bar should be appended
         :param install: (bool) Whether the button "Install" is displayed or not
 
@@ -219,7 +219,7 @@ class SetupView(swappBaseView):
 
         # The action buttons to enable/disable or change its buttons,
         # and to associate the right fieldset index.
-        action_nav = SetupActionsNode(self._htree.body_main.identifier,
+        action_nav = swappSetupActionsNode(self._htree.body_main.identifier,
                                       self.__fieldsets,
                                       current_fieldset,
                                       install)

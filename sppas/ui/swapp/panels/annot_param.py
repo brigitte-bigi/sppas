@@ -84,13 +84,13 @@ function validate_options() {
 # -----------------------------------------------------------------------
 
 
-class AnnotParamDialog(HTMLNode):
+class swappAnnotParamDialog(HTMLNode):
 
     REQUIRED = ["dialog.css", "dialog.js"]
 
 
     def __init__(self, annotation: str, parent_id: str):
-        super(AnnotParamDialog, self).__init__(parent_id, f"{annotation}-options", "dialog", attributes={
+        super(swappAnnotParamDialog, self).__init__(parent_id, f"{annotation}-options", "dialog", attributes={
             'id': f"{annotation}-options"
         })
 

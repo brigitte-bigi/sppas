@@ -48,16 +48,16 @@ from sppas.core.config import sppasExecProcess
 from sppas.core.config import cfg
 from sppas.core.config import paths
 from sppas.core.preinstall.installer import quote
-from sppas.ui.swapp.swappcore.swappsg import swapp_settings
-from sppas.ui.swapp.swappcore.swappsg import swapp_trace
-from sppas.ui.swapp.swappcore.swappsg import swapp_wkps
-from sppas.ui.swapp.swappcore.swappsg import swapp_wxstate
-from sppas.ui.swapp.swappcore.swappsg import wx_is_running
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_core.swappsg import swapp_trace
+from sppas.ui.swapp.swapp_core.swappsg import swapp_wkps
+from sppas.ui.swapp.swapp_core.swappsg import swapp_wxstate
+from sppas.ui.swapp.swapp_core.swappsg import wx_is_running
 
 # ---------------------------------------------------------------------------
 
 
-class DashboardController:
+class swappDashboardController:
     """Controller for the SPPAS Dashboard application.
 
     This class represents the *Controller* component in the MVC pattern.
@@ -70,8 +70,8 @@ class DashboardController:
     def __init__(self, model, view):
         """Initialize the controller with a model and a view.
 
-        :param model: (DashboardModel) The model managing the applications.
-        :param view: (DashboardView) The view managing the HTML structure.
+        :param model: (swappDashboardModel) The model managing the applications.
+        :param view: (swappDashboardView) The view managing the HTML structure.
 
         """
         self.__model = model
@@ -244,7 +244,7 @@ class DashboardController:
             # list of devel apps section:
             # h2 = HTMLNode(self._htree.body_main.identifier, None, "h2", value=MSG_APPS_DEVEL)
             # self._htree.body_main.append_child(h2)
-            # ln = AppsNode(self._htree.body_main.identifier)
+            # ln = swappAppsNode(self._htree.body_main.identifier)
             # self._htree.body_main.append_child(ln)
 
         for recipe in self.__model.get_page_recipes():

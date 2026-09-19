@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.wappsg.py
+:filename: sppas.core.config.heartbeat.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary: The last sign of life of something announcing itself.

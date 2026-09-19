@@ -50,7 +50,7 @@ from whakerpy.htmlmaker import HTMLNode
 # ---------------------------------------------------------------------------
 
 
-class sppasHTMLCheckboxNode(HTMLNode):
+class swappHTMLCheckboxNode(HTMLNode):
     """A customized checkbox.
 
     Requires a javascript management of checkboxes and the css "focusable".
@@ -84,7 +84,7 @@ class sppasHTMLCheckboxNode(HTMLNode):
         :param uri: (str) URI of the checkbox, i.e., the page name.
 
         """
-        super(sppasHTMLCheckboxNode, self).__init__(parent_id, identifier, "label")
+        super(swappHTMLCheckboxNode, self).__init__(parent_id, identifier, "label")
         check_input_id = self.identifier + "_input"
         self.add_attribute("for", check_input_id)
         self.add_attribute("class", "focusable")

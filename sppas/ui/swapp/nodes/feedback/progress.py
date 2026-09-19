@@ -48,7 +48,7 @@ from sppas.core.coreutils import sppasBaseProgress
 # ---------------------------------------------------------------------------
 
 
-class ProgressBar(sppasBaseProgress):
+class swappProgressBar(sppasBaseProgress):
     """Represent a dynamic progress bar section in the SPPAS web interface.
 
     This class implements a progress component fully compatible with
@@ -63,10 +63,10 @@ class ProgressBar(sppasBaseProgress):
             <progress id="percent_progress" max="100" value="0"></progress>
         </section>
 
-    This ProgressBar component defines only the static HTML structure of a progress bar.
+    This swappProgressBar component defines only the static HTML structure of a progress bar.
     It does not instantiate or reference any JavaScript module. The visual behavior
     and updates are managed by the client-side code of the active web page, which
-    is responsible for creating and starting a JS ProgressBar instance.
+    is responsible for creating and starting a JS swappProgressBar instance.
 
     Server side: builds <section> and <progress> nodes only.
     Client side: controls animation and updates.
@@ -84,10 +84,10 @@ class ProgressBar(sppasBaseProgress):
         :param parent_identifier: (str) Identifier of the parent HTML node.
 
         """
-        super(ProgressBar, self).__init__()
+        super(swappProgressBar, self).__init__()
 
         # The node contains an optional header, the progres and a text
-        self.__node = HTMLNode(parent_identifier, ProgressBar.ID, "section")
+        self.__node = HTMLNode(parent_identifier, swappProgressBar.ID, "section")
         self.__node.add_attribute("id", self.__node.identifier)
 
         # Create the <progress> element

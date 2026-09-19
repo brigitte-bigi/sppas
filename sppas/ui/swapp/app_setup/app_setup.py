@@ -44,10 +44,10 @@ import logging
 from whakerpy.httpd import BaseResponseRecipe
 
 from sppas.ui import _
-from sppas.ui.swapp import sppasImagesAccess
-from ..swappbase.swappbakery import swappWebData
+from sppas.ui.swapp import swappImagesAccess
+from ..swapp_base.swapp_bakery import swappWebData
 
-from .setupmaker import SetupResponseRecipe
+from .setup_maker import swappSetupResponseRecipe
 
 # ---------------------------------------------------------------------------
 
@@ -57,18 +57,18 @@ MSG_DESCR = _("Installs additional components to enhance SPPAS features.")
 # ---------------------------------------------------------------------------
 
 
-class SetupWebData(swappWebData):
+class swappSetupWebData(swappWebData):
     """Parse the JSON file, store data and create the bakery system.
 
     """
 
     def __init__(self, json_filename: str | None = None) -> None:
-        """Create a SetupWebData instance.
+        """Create a swappSetupWebData instance.
 
         """
-        super(SetupWebData, self).__init__(json_filename)
+        super(swappSetupWebData, self).__init__(json_filename)
         # Filename of the default page. The only one of the Tests application.
-        self._default = SetupResponseRecipe.page()
+        self._default = swappSetupResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 
@@ -85,7 +85,7 @@ class SetupWebData(swappWebData):
     @staticmethod
     def icon() -> str:
         """Return the page icon name."""
-        return sppasImagesAccess.get_image_filename("app_setup")
+        return swappImagesAccess.get_image_filename("app_setup")
 
     # -----------------------------------------------------------------------
 
@@ -96,7 +96,7 @@ class SetupWebData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        return page_name == SetupResponseRecipe.page()
+        return page_name == swappSetupResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 
@@ -110,8 +110,8 @@ class SetupWebData(swappWebData):
         """
         logging.info(f"Requested page name: {page_name}")
 
-        if page_name == SetupResponseRecipe.page():
-            return SetupResponseRecipe()
+        if page_name == swappSetupResponseRecipe.page():
+            return swappSetupResponseRecipe()
 
         # Any other page name
         return None

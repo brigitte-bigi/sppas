@@ -41,7 +41,7 @@
 from whakerpy.htmlmaker import HTMLNode
 
 from sppas.ui import _
-from ..buttons.hbutton import sppasHTMLButton
+from ..buttons.hbutton import swappHTMLButton
 
 # ----------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ MSG_ACTION_SAVE = _("Save")
 # -----------------------------------------------------------------------
 
 
-class sppasHTMLModalDialog(HTMLNode):
+class swappHTMLModalDialog(HTMLNode):
     """Represent a generic modal dialog tree root element.
 
     The dialog can be customized thanks to the following child nodes:
@@ -71,7 +71,7 @@ class sppasHTMLModalDialog(HTMLNode):
         """Create an HTML node with <div> element and its content.
 
         """
-        super(sppasHTMLModalDialog, self).__init__(parent, identifier, "div")
+        super(swappHTMLModalDialog, self).__init__(parent, identifier, "div")
         self.add_attribute("id", self.identifier)
         self.add_attribute("name", self.identifier)
 
@@ -123,7 +123,7 @@ class sppasHTMLModalDialog(HTMLNode):
 
         :param name: (str) One of: okay, cancel, close, yes, no, save.
         :param onclick: (str) JS
-        :return: (sppasHTMLButton)
+        :return: (swappHTMLButton)
         :raises: ValueError if name is unknown
 
         <button onclick="whatever();" id="df3ea8c9" name="df3ea8c9"
@@ -138,7 +138,7 @@ class sppasHTMLModalDialog(HTMLNode):
         if name in ("okay", "yes", "no", "save"):
             attributes["type"] = "submit"
 
-        button_node = sppasHTMLButton(self.action_node.identifier, None, attributes)
+        button_node = swappHTMLButton(self.action_node.identifier, None, attributes)
         if name == "cancel":
             button_node.add_attribute("data-icon", "cancel")
             button_node.set_text("cancel_action_button", MSG_ACTION_CANCEL)

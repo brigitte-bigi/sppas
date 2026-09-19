@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.app_setup.actions_nodes.py
+:filename: sppas.ui.swapp.app_setup.actions_node.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: A node to represent the action toolbar of the Setup app.
@@ -42,7 +42,7 @@ from __future__ import annotations
 from whakerpy.htmlmaker import HTMLNode
 
 from sppas.core.coreutils import msg
-from sppas.ui.swapp import sppasImagesAccess
+from sppas.ui.swapp import swappImagesAccess
 
 # -----------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ MSG_ACTION_EXIT = msg('Exit', "ui")
 # -----------------------------------------------------------------------
 
 
-class SetupActionsNode(HTMLNode):
+class swappSetupActionsNode(HTMLNode):
     """Append an action bar which allows browsing through fieldsets.
 
     """
@@ -67,11 +67,11 @@ class SetupActionsNode(HTMLNode):
 
         :param parent_id: (str) Identifier
         :param fieldsets: (list of setup fieldsets)
-        :param current: (SetupBaseFieldset) The currently enabled fieldset
+        :param current: (swappSetupBaseFieldset) The currently enabled fieldset
         :param install: (bool) Whether the button "Install" is displayed or not
 
         """
-        super(SetupActionsNode, self).__init__(
+        super(swappSetupActionsNode, self).__init__(
             parent_id, "actions_section", "section",
             attributes={"class": "panel actions-panel width_70 center",
                         "id": "actions_section"})

@@ -43,10 +43,10 @@ import logging
 
 from whakerpy.httpd import BaseResponseRecipe
 
-from ..swappbase.swappbakery import swappWebData
-from ..swappcore.wpageinfo import swappWebPageInfo
+from ..swapp_base.swapp_bakery import swappWebData
+from ..swapp_core.swapp_page_info import swappWebPageInfo
 
-from .citemaker import CiteResponseRecipe
+from .cite_maker import swappCiteResponseRecipe
 
 # ---------------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ class swappPagesData(swappWebData):
         for page_info in pages:
             if isinstance(page_info, swappWebPageInfo) is True:
                 self.__pages.append(page_info)
-        self._default = CiteResponseRecipe.page()
+        self._default = swappCiteResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 

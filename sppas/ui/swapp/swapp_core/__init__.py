@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.swapputils.py
-:author:   Brigitte Bigi
-:contact:  contact@sppas.org
-:summary: Utilities for SPPAS Web-based applications.
+:filename: sppas.ui.swapp.swapp_core.__init__.py
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: The registries and the infrastructure of the swapp package.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2023 Brigitte Bigi
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -36,29 +36,9 @@
 
     -------------------------------------------------------------------------
 
+The modules of this package are imported with their explicit paths, for
+example `from sppas.ui.swapp.swapp_core.swappsg import swapp_settings`: this
+package imports nothing, to never create a circular import with the apps
+the `swapps.py` registries refer to.
+
 """
-
-from sppas.core.coreutils import error
-
-# -----------------------------------------------------------------------
-
-
-class sppasHTMLIncompleteFieldset(ValueError):
-    """:ERROR 0977:.
-
-    The input field '{:s}' is not completed.
-
-    """
-
-    def __init__(self, field_name):
-        self._status = 977
-        self.parameter = error(self._status) + \
-                         (error(self._status, "globals")).format(field_name)
-
-    def __str__(self):
-        return repr(self.parameter)
-
-    def get_status(self):
-        return self._status
-
-    status = property(get_status, None)

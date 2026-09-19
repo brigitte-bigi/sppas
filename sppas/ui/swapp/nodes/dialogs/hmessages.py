@@ -43,7 +43,7 @@ from whakerpy.htmlmaker import HTMLNode
 
 from sppas.ui import _
 
-from .hdialog import sppasHTMLModalDialog
+from .hdialog import swappHTMLModalDialog
 
 # ----------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ MSG_MESSAGE = _("Message")
 # -----------------------------------------------------------------------
 
 
-class swappBaseMessageDialog(sppasHTMLModalDialog):
+class swappBaseMessageDialog(swappHTMLModalDialog):
     """Represent a modal dialog tree root element to display a message.
 
     """

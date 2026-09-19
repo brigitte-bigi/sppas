@@ -48,7 +48,7 @@ from sppas.core.config import paths
 # ---------------------------------------------------------------------------
 
 
-class sppasWebAppSettings:
+class swappSettings:
     """Manage the web-based application global settings.
 
     """

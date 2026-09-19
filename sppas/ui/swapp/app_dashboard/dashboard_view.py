@@ -45,15 +45,15 @@ from whakerpy.htmlmaker import HTMLNode
 
 from sppas.core.config import sg
 from sppas.ui import _
-from sppas.ui.swapp import sppasImagesAccess
-from sppas.ui.swapp.swappbase.swappview import swappBaseView
-from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+from sppas.ui.swapp import swappImagesAccess
+from sppas.ui.swapp.swapp_base.swapp_view import swappBaseView
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 
-from .nodes.agree_node import AgreementDialog
-from .nodes.trace_dialog import TraceInfoDialog
-from .nodes.links_node import LinksNode
-from .nodes.links_node import AboutsNode
-from .nodes.apps_node import AppsNode
+from .nodes.agree_node import swappAgreementDialog
+from .nodes.trace_dialog import swappTraceInfoDialog
+from .nodes.links_node import swappLinksNode
+from .nodes.links_node import swappAboutsNode
+from .nodes.apps_node import swappAppsNode
 
 # ---------------------------------------------------------------------------
 
@@ -82,14 +82,14 @@ BODY_SCRIPT = f"""
 # ---------------------------------------------------------------------------
 
 
-class DashboardView(swappBaseView):
+class swappDashboardView(swappBaseView):
     """View class responsible for populating the *dashboard.html* page.
 
     This class represents the **View** component of the MVC pattern for the
     SPPAS Dashboard web application. It receives an existing :class:`HTMLTree`
     instance and fills it with all static and semi-static visual content.
 
-    The :class:`DashboardView` does not manage user events nor business logic;
+    The :class:`swappDashboardView` does not manage user events nor business logic;
     it focuses solely on defining the HTML structure and resources required
     for rendering the Dashboard interface.
 
@@ -111,7 +111,7 @@ class DashboardView(swappBaseView):
 
         """
         if isinstance(tree, HTMLTree) is False:
-            raise TypeError("DashboardView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
+            raise TypeError("swappDashboardView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
         super().__init__(tree, MSG_HEADER)
 
     # -----------------------------------------------------------------------
@@ -131,7 +131,7 @@ class DashboardView(swappBaseView):
         :param theme_name: (str) The theme the application brings, if any.
 
         """
-        apps_node = self._htree.body_main.get_child(AppsNode.ID)
+        apps_node = self._htree.body_main.get_child(swappAppsNode.ID)
         apps_node.create_app_card(ident, name, icon_name, text, link, enable,
                                   theme_name=theme_name)
 
@@ -145,7 +145,7 @@ class DashboardView(swappBaseView):
         :param link: (str) Link to the page
 
         """
-        about_node = self._htree.body_main.get_child(AboutsNode.ID)
+        about_node = self._htree.body_main.get_child(swappAboutsNode.ID)
         ident = link.split(".")[0]
         about_node.page_button(ident, icon_name, name, link)
 
@@ -222,12 +222,12 @@ class DashboardView(swappBaseView):
         """
         # Create the new ones
         if agreement is False:
-            wn = AgreementDialog(self._htree.body_main.identifier)
+            wn = swappAgreementDialog(self._htree.body_main.identifier)
             self._htree.body_main.append_child(wn)
         else:
             # Always baked, so the periodic poll can show or hide it live,
             # without reloading the page -- see dashboard_manager.js.
-            wn = TraceInfoDialog(self._htree.body_main.identifier)
+            wn = swappTraceInfoDialog(self._htree.body_main.identifier)
             if trace_alive is True:
                 wn.add_attribute("class", "hidden-alert")
             self._htree.body_main.append_child(wn)
@@ -252,14 +252,14 @@ class DashboardView(swappBaseView):
                 _wkp.set_value("title", wkp_path)
             _wkp.append_child(_s)
 
-        apps = AppsNode(self._htree.body_main.identifier)
+        apps = swappAppsNode(self._htree.body_main.identifier)
         self._htree.body_main.append_child(apps)
 
         # Add the wx interface app, at first then other APPS
         # ----------------------------------------------------
         # Named "Desktop", not "SPPAS": SPPAS 5 is the whole product, this
         # card launches one specific component of it -- the wx interface.
-        icon = sppasImagesAccess.get_logo_filename("sppas_logo_v3")
+        icon = swappImagesAccess.get_logo_filename("sppas_logo_v3")
         apps.create_app_card(
             "desktop",
             MSG_DESKTOP,
@@ -275,12 +275,12 @@ class DashboardView(swappBaseView):
         # Other links and infos
         h2 = HTMLNode(self._htree.body_main.identifier, None, "h2", value=MSG_ABOUT)
         self._htree.body_main.append_child(h2)
-        ln = AboutsNode(self._htree.body_main.identifier)
+        ln = swappAboutsNode(self._htree.body_main.identifier)
         self._htree.body_main.append_child(ln)
 
         # List of recommended links section
         h2 = HTMLNode(self._htree.body_main.identifier, None, "h2", value=MSG_LINKS)
         self._htree.body_main.append_child(h2)
-        ln = LinksNode(self._htree.body_main.identifier)
+        ln = swappLinksNode(self._htree.body_main.identifier)
         self._htree.body_main.append_child(ln)
 

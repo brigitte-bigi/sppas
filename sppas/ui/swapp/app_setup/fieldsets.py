@@ -41,19 +41,19 @@
 from __future__ import annotations
 from whakerpy.htmlmaker import HTMLNode
 
-from .basefieldset import SetupBaseFieldset
-from .fieldsetwelcome import SetupHomeFieldset
-from .fieldsetlicense import SetupLicenseFieldset
-from .fieldsetfeature import SetupDepsFieldset
-from .fieldsetfeature import SetupLangFieldset
-from .fieldsetfeature import SetupAnnotFieldset
-from .fieldsetfeature import SetupSpinOffFieldset
-from .fieldsetinstall import SetupInstallFieldset
+from .base_fieldset import swappSetupBaseFieldset
+from .fieldset_welcome import swappSetupHomeFieldset
+from .fieldset_license import swappSetupLicenseFieldset
+from .fieldset_feature import swappSetupDepsFieldset
+from .fieldset_feature import swappSetupLangFieldset
+from .fieldset_feature import swappSetupAnnotFieldset
+from .fieldset_feature import swappSetupSpinOffFieldset
+from .fieldset_install import swappSetupInstallFieldset
 
 # ---------------------------------------------------------------------------
 
 
-class SetupFieldsets:
+class swappSetupFieldsets:
     """Create all fieldset node instances for the Setup HTML tree.
 
     """
@@ -65,13 +65,13 @@ class SetupFieldsets:
         self._installer = installer
 
         self.__fields = list()
-        self.__fields.append(SetupHomeFieldset(None, uri))
-        self.__fields.append(SetupLicenseFieldset(None, uri))
-        self.__fields.append(SetupDepsFieldset(None, self._installer, "deps"))
-        self.__fields.append(SetupLangFieldset(None, self._installer, "lang"))
-        self.__fields.append(SetupAnnotFieldset(None, self._installer, "annot"))
-        self.__fields.append(SetupSpinOffFieldset(None, self._installer, "spin"))
-        self.__fields.append(SetupInstallFieldset(None))
+        self.__fields.append(swappSetupHomeFieldset(None, uri))
+        self.__fields.append(swappSetupLicenseFieldset(None, uri))
+        self.__fields.append(swappSetupDepsFieldset(None, self._installer, "deps"))
+        self.__fields.append(swappSetupLangFieldset(None, self._installer, "lang"))
+        self.__fields.append(swappSetupAnnotFieldset(None, self._installer, "annot"))
+        self.__fields.append(swappSetupSpinOffFieldset(None, self._installer, "spin"))
+        self.__fields.append(swappSetupInstallFieldset(None))
 
         self.__keys = tuple([f.identifier for f in self.__fields])
         self.__current = 0
@@ -90,7 +90,7 @@ class SetupFieldsets:
 
     # -----------------------------------------------------------------------
 
-    def get_index(self, field: SetupBaseFieldset) -> int:
+    def get_index(self, field: swappSetupBaseFieldset) -> int:
         """Return the index of the given field.
 
         :param field: (HTMLNode)

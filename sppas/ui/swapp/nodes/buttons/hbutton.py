@@ -43,12 +43,12 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLButtonNode
 
-from ...swappcore.swapputils import sppasImagesAccess
+from ...swapp_core.swapp_utils import swappImagesAccess
 
 # ---------------------------------------------------------------------------
 
 
-class sppasHTMLButton(HTMLButtonNode):
+class swappHTMLButton(HTMLButtonNode):
     """Represent a button element.
 
     Overridden for an easier icon access and CSS properties added:
@@ -60,7 +60,7 @@ class sppasHTMLButton(HTMLButtonNode):
         """Create an input node. Default type is 'text'.
 
         """
-        super(sppasHTMLButton, self).__init__(parent, identifier, attributes=attributes)
+        super(swappHTMLButton, self).__init__(parent, identifier, attributes=attributes)
 
     # -----------------------------------------------------------------------
 
@@ -73,14 +73,14 @@ class sppasHTMLButton(HTMLButtonNode):
         :param attributes: (dict).
 
         """
-        icon = sppasImagesAccess.get_image_filename(name=icon_name)
+        icon = swappImagesAccess.get_image_filename(name=icon_name)
         node = HTMLButtonNode.set_icon(self, icon, attributes)
         return node
 
 # ---------------------------------------------------------------------------
 
 
-class sppasHTMLLink(HTMLNode):
+class swappHTMLLink(HTMLNode):
     """Represent a link element carrying the content of a button.
 
     A card of the Dashboard leads to a page: it is a link, and it holds
@@ -92,7 +92,7 @@ class sppasHTMLLink(HTMLNode):
         """Create a link node.
 
         """
-        super(sppasHTMLLink, self).__init__(parent, identifier, "a", attributes=attributes)
+        super(swappHTMLLink, self).__init__(parent, identifier, "a", attributes=attributes)
 
         if "id" not in attributes:
             self.add_attribute("id", self.identifier)
@@ -106,7 +106,7 @@ class sppasHTMLLink(HTMLNode):
         :param attributes: (dict).
 
         """
-        icon = sppasImagesAccess.get_image_filename(name=icon_name)
+        icon = swappImagesAccess.get_image_filename(name=icon_name)
         node = EmptyNode(self.identifier, None, "img")
         node.set_attribute("src", icon)
         node.set_attribute("alt", "")
@@ -136,13 +136,13 @@ class sppasHTMLLink(HTMLNode):
 # ---------------------------------------------------------------------------
 
 
-class LinkButtonNode(HTMLNode):
+class swappLinkButtonNode(HTMLNode):
 
     def __init__(self, parent_id, identifier: str, target_page: str):
         """Create a button to redirect to target page with data-href attribute.
 
         """
-        super(LinkButtonNode, self).__init__(parent_id, identifier, "button")
+        super(swappLinkButtonNode, self).__init__(parent_id, identifier, "button")
         self.add_attribute("id", identifier)
         self.add_attribute("name", identifier)
         self.add_attribute("role", "link")

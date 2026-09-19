@@ -1,7 +1,7 @@
-from .setupmaker import SetupResponseRecipe
-from .app_setup import SetupWebData
+from .setup_maker import swappSetupResponseRecipe
+from .app_setup import swappSetupWebData
 
 __all__ = (
-    "SetupResponseRecipe",
-    "SetupWebData"
+    "swappSetupResponseRecipe",
+    "swappSetupWebData"
 )

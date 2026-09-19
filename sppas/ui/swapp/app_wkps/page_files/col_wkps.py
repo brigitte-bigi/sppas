@@ -46,8 +46,8 @@ from whakerpy.htmlmaker import HTMLRadioBox
 from whakerpy.htmlmaker import HTMLInputText
 
 from sppas.ui import _
-from sppas.ui.swapp.swappcore.swappsg import swapp_wkps
-from sppas.ui.swapp.nodes import sppasHTMLButton
+from sppas.ui.swapp.swapp_core.swappsg import swapp_wkps
+from sppas.ui.swapp.nodes import swappHTMLButton
 from sppas.ui.swapp.nodes import swappConfirmDialog
 
 # ---------------------------------------------------------------------------
@@ -68,7 +68,7 @@ WKP_SWITCH_DISABLED = _("The current workspace contains locked files. You need t
 # ---------------------------------------------------------------------------
 
 
-class WkpsNode(HTMLNode):
+class swappWkpsNode(HTMLNode):
     """The column with workspaces of the page files.
 
     The identity of the node is 'column_files_wkps', and the name of each
@@ -77,7 +77,7 @@ class WkpsNode(HTMLNode):
     """
 
     def __init__(self, parent):
-        super(WkpsNode, self).__init__(parent.identifier, "column_files_wkps", "div")
+        super(swappWkpsNode, self).__init__(parent.identifier, "column_files_wkps", "div")
         self.add_attribute("class", self.identifier)
 
         # The HTML to design the UI
@@ -264,7 +264,7 @@ class WkpsNode(HTMLNode):
         attributes["class"] = "wkps_wkpbar_item"
         attributes["onclick"] = "document.getElementById('"+dlg.identifier+"').style.display='block';"
         attributes["title"] = tooltip
-        button_node = sppasHTMLButton(parent.identifier, None, attributes)
+        button_node = swappHTMLButton(parent.identifier, None, attributes)
         button_node.set_icon("workspace_rename")
         button_node.set_text("wkp_rename_button", WKP_ACT_RENAME)
         button_node.set_attribute("disabled", None)
@@ -309,7 +309,7 @@ class WkpsNode(HTMLNode):
         attributes["class"] = class_name
         attributes["onclick"] = onclick
         attributes["title"] = tooltip
-        button_node = sppasHTMLButton(form.identifier, None, attributes)
+        button_node = swappHTMLButton(form.identifier, None, attributes)
         button_node.set_icon(icon_name)
         button_node.set_text(None, text)
         form.append_child(button_node)

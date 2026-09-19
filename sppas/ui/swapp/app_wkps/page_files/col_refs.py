@@ -46,7 +46,7 @@ from sppas.ui import _
 # ---------------------------------------------------------------------------
 
 
-class ReferencesNode(HTMLNode):
+class swappReferencesNode(HTMLNode):
     """The column with the list of references of the page files.
 
     The identity of the node is 'column_files_refs', and the name of each
@@ -55,7 +55,7 @@ class ReferencesNode(HTMLNode):
     """
 
     def __init__(self, parent):
-        super(ReferencesNode, self).__init__(parent.identifier, "column_files_refs", "div")
+        super(swappReferencesNode, self).__init__(parent.identifier, "column_files_refs", "div")
         self.add_attribute("class", self.identifier)
 
         # A toolbar with action buttons

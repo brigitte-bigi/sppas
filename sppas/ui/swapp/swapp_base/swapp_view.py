@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.swappbase.swappview.py
+:filename: sppas.ui.swapp.swapp_base.swapp_view.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: SPPAS Web-Based application Base View of the MVC paradigm.
@@ -48,14 +48,14 @@ from sppas.core.config import get_language
 
 from sppas.ui import _
 
-from ..swappcore.swapputils import sppasImagesAccess
-from ..nodes.buttons.hbutton import sppasHTMLButton
-from ..swappcore.swappsg import swapp_settings
-from ..swappcore.swappsg import swapp_wxstate
+from ..swapp_core.swapp_utils import swappImagesAccess
+from ..nodes.buttons.hbutton import swappHTMLButton
+from ..swapp_core.swappsg import swapp_settings
+from ..swapp_core.swappsg import swapp_wxstate
 from ..nodes.layout.hheader import swappHeader
 from ..nodes.layout.hfooter import swappFooter
-from ..nodes.feedback.exit_dialog import ExitWaitDialog
-from .swapphead import THEME_NAME
+from ..nodes.feedback.exit_dialog import swappExitWaitDialog
+from .swapp_head import THEME_NAME
 
 # ---------------------------------------------------------------------------
 
@@ -352,7 +352,7 @@ class swappBaseView:
         # open when an exit is already waiting: a page which would arrive
         # closed leaves the reader free to click until the next poll.
         self._htree.body_footer.append_child(
-            ExitWaitDialog(self._htree.body_footer.identifier))
+            swappExitWaitDialog(self._htree.body_footer.identifier))
 
     # -----------------------------------------------------------------------
 
@@ -473,17 +473,17 @@ class swappBaseView:
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def append_sppas_link_button(parent: HTMLNode) -> sppasHTMLButton:
+    def append_sppas_link_button(parent: HTMLNode) -> swappHTMLButton:
         """Create and append the sppas link button.
 
         :param parent: (HTMLNode) the parent HTML node to append the buttons in
-        :return: (sppasHTMLButton) the sppas link button node
+        :return: (swappHTMLButton) the sppas link button node
 
         """
-        _button = sppasHTMLButton(parent.identifier, identifier="link-sppas_button")
+        _button = swappHTMLButton(parent.identifier, identifier="link-sppas_button")
         _button.add_attribute("data-href", sg.__url__)
         _button.add_attribute("class", "menuitem")
-        ic = _button.set_icon(sppasImagesAccess.get_logo_filename("sppas-logo-v5"))
+        ic = _button.set_icon(swappImagesAccess.get_logo_filename("sppas-logo-v5"))
         ic.add_attribute("alt", "")
         _button.set_text(None, MSG_WEB)
         parent.append_child(_button)
@@ -578,7 +578,7 @@ class swappBaseView:
         The page opens in its named tab: whatever the app the button is
         clicked from, the single "sppas_infos" tab is reused and reloaded.
         The loader registers it with handleLinksWithParameters(), through
-        its data-links attribute -- see swapphead.py.
+        its data-links attribute -- see swapp_head.py.
 
         :param parent: (HTMLNode) the parent HTML node to append the button in
         :return: (HTMLNode) the trace link button node
@@ -606,7 +606,7 @@ class swappBaseView:
 
         The page opens in a new tab: the user sends a feedback without
         leaving the current app. The loader registers it, through its
-        data-links attribute -- see swapphead.py.
+        data-links attribute -- see swapp_head.py.
 
         :param parent: (HTMLNode) the parent HTML node to append the button in
         :return: (HTMLNode) the feedback link button node

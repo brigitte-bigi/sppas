@@ -45,7 +45,7 @@ from sppas.ui import _
 # ---------------------------------------------------------------------------
 
 
-class AssociateNode(HTMLNode):
+class swappAssociateNode(HTMLNode):
     """The column with the associate toolbar of the page files.
 
     The identity of the node is 'column_files_links', and the name of each
@@ -54,7 +54,7 @@ class AssociateNode(HTMLNode):
     """
 
     def __init__(self, parent):
-        super(AssociateNode, self).__init__(parent.identifier, "column_files_links", "div")
+        super(swappAssociateNode, self).__init__(parent.identifier, "column_files_links", "div")
         self.add_attribute("class", self.identifier)
 
         # A toolbar with action buttons

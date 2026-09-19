@@ -49,7 +49,7 @@ from .events import sppasCommMessageEvent
 # ---------------------------------------------------------------------------
 
 
-class sppasWxCommServer(sppasCommServer):
+class wxappCommServer(sppasCommServer):
     """The interlocutor of the swapp UI, on the wx side.
 
     Receive the messages the swapp UI sends on the socket, and propagate
@@ -69,7 +69,7 @@ class sppasWxCommServer(sppasCommServer):
         :param app: (wx.App) The application owning the top window
 
         """
-        super(sppasWxCommServer, self).__init__(host, port)
+        super(wxappCommServer, self).__init__(host, port)
         self.__app = app
 
     # -----------------------------------------------------------------------
@@ -88,7 +88,7 @@ class sppasWxCommServer(sppasCommServer):
 
         """
         if key in (sppasCommKeys.PING, sppasCommKeys.HELLO):
-            return super(sppasWxCommServer, self)._prepare_response(key, value)
+            return super(wxappCommServer, self)._prepare_response(key, value)
 
         window = self.__app.GetTopWindow()
         if window is None:
