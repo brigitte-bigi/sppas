@@ -1311,6 +1311,31 @@
 
 	</section>
 
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.14 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>Implementation model: MVC</h3>
+
+		<p>
+			The model holds the set, the value every option arrived with and the rules of
+			what a value may be, and it exposes neither the objects of SPPAS nor the
+			provision of files to the rest of the domain. The controller is called once per
+			request, reads the task the app dispatched, and holds nothing afterwards. The
+			view renders and collects, and takes no decision. Three components, three class
+			diagrams.
+		</p>
+
+		<p>
+			<b>What answers is not a response of this domain.</b> An app is reached by a
+			URL and answers with a page; this domain is reached by the app which placed its
+			container in that page. There is therefore no recipe to bake a tree here, and
+			one class stands where an app would have one: the manager, which an app holds.
+		</p>
+
+	</section>
+
 </section>
 
 
@@ -1324,86 +1349,40 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.14 -->
-	<!-- ----------------------------------------------------------- -->
-
-	<section class="subssection">
-	<h3>The classes</h3>
-
-		<p>
-			Those which carry the data come from the tables, those which work come from
-			the modules, and two more are what an app holds and what travels between two
-			requests. A name says what the class handles.
-		</p>
-
-		<h4>What carries the data</h4>
-
-		<table>
-			<thead><tr><th>Class</th><th>From</th><th>What it is</th></tr></thead>
-			<tbody>
-				<tr><td><code>OptionSet</code></td><td>OPTION SET, OPTION</td><td>The options an app handed over and, for each of them, the value it arrived with. The two tables are one class: an option of a set has no existence outside that set</td></tr>
-				<tr><td><code>OptionRefusal</code></td><td>REFUSAL</td><td>One option which was given a value it cannot hold, and the value which was expected</td></tr>
-				<tr><td><code>OptionsRecord</code></td><td>&mdash;</td><td>What one request holds: the task it carries, the set, and what is to be shown. It serialises itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
-				<tr><td>none</td><td>&mdash;</td><td><code>sppasOption</code> is an object of SPPAS. It is held by the set, read, and its value changed; no class is written for it here</td></tr>
-			</tbody>
-		</table>
-
-		<h4>What does the work</h4>
-
-		<table>
-			<thead><tr><th>Class</th><th>Module</th><th>What it is alone in knowing</th></tr></thead>
-			<tbody>
-				<tr><td><code>ValueAcceptance</code></td><td>acceptance</td><td>Whether a value suits the kind of an option and its bounds, and what was expected when it does not. Reads nothing, writes nothing, knows no set</td></tr>
-				<tr><td><code>OptionSet</code></td><td>set</td><td>What the page transmits, how a set is rebuilt from it, and the value every option arrived with. The only class which touches an <code>sppasOption</code></td></tr>
-				<tr><td><code>FileForOption</code></td><td>set</td><td>How the provision of files is asked for a file, and for which option. The only tie of this domain to a neighbour</td></tr>
-			</tbody>
-		</table>
-
-		<h4>What shows, and what dispatches</h4>
-
-		<table>
-			<thead><tr><th>Class</th><th>What it does</th></tr></thead>
-			<tbody>
-				<tr><td><code>OptionsView</code></td><td>Builds the container: one line per option, carrying its label, its value, what it takes to change that value, the bounds when there are any, and the refusal when there is one</td></tr>
-				<tr><td><code>OptionsController</code></td><td>Reads the task an app dispatched, rebuilds a record from what the page transmitted, calls the model, and has the view build its tree from that record</td></tr>
-				<tr><td><code>OptionsManager</code></td><td>Builds the view and the controller, gives an app the container to place in its page, says whether an event was this domain's, and gives the set back. It is the only object of this domain an app holds</td></tr>
-			</tbody>
-		</table>
-
-		<p>
-			A view builds a tree and does nothing else: it decides nothing, refuses
-			nothing, and reaches neither a disk nor a neighbour. What it shows was decided
-			before it was called, and the texts it shows are the ones the options carry.
-		</p>
-
-	</section>
-
-	<!-- ----------------------------------------------------------- -->
 	<!-- 3.15 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>The class diagram</h3>
+	<h3>The classes of the model</h3>
 
 		<p>
 			<code>/</code> marks what is derived and held by nobody. What the operations
-			promise is the chapter on the contracts; what they are called is a proposal,
-			and one pass renames them all.
+			promise is the chapter on the contracts.
 		</p>
 
 		<table>
-			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
+			<thead><tr><th>Class</th><th>From</th><th>Attributes</th><th>Operations</th></tr></thead>
 			<tbody>
-				<tr><td><code>OptionSet</code></td><td>options, values on arrival, /changed</td><td>rebuild(data), value_on_arrival_of(key), set_value(key, value), put_back(key), put_all_back(), refusals(), for_app()</td></tr>
-				<tr><td><code>OptionRefusal</code></td><td>option, expected</td><td>&mdash;</td></tr>
-				<tr><td><code>OptionsRecord</code></td><td>task, set, to_be_shown</td><td>serialize(), parse(data)</td></tr>
-				<tr><td><code>ValueAcceptance</code></td><td>&mdash;</td><td>accepts(option, value), what_is_expected(option)</td></tr>
-				<tr><td><code>FileForOption</code></td><td>&mdash;</td><td>ask_for(option), take_in(option, file)</td></tr>
-				<tr><td><code>OptionsView</code></td><td>&mdash;</td><td>populate_tree_content(record)</td></tr>
-				<tr><td><code>OptionsController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
-				<tr><td><code>OptionsManager</code></td><td>&mdash;</td><td>container(), consumes(events), options_for_app()</td></tr>
+				<tr><td><code>OptionSet</code></td><td>OPTION SET, OPTION; module <i>set</i></td><td>options, values on arrival, /changed</td><td>rebuild(data), value_on_arrival_of(key), set_value(key, value), put_back(key), put_all_back(), refusals(), for_app()</td></tr>
+				<tr><td><code>OptionRefusal</code></td><td>REFUSAL</td><td>option, expected</td><td>&mdash;</td></tr>
+				<tr><td><code>ValueAcceptance</code></td><td>module <i>acceptance</i></td><td>&mdash;</td><td>accepts(option, value), what_is_expected(option)</td></tr>
+				<tr><td><code>FileForOption</code></td><td>module <i>set</i></td><td>&mdash;</td><td>ask_for(option), take_in(option, file)</td></tr>
 			</tbody>
 		</table>
+
+		<p>
+			OPTION SET and OPTION are one class and not two: an option of a set has no
+			existence outside that set. <code>OptionSet</code> is the only class which
+			touches an <code>sppasOption</code>, and <code>FileForOption</code> the only
+			tie of this domain to a neighbour.
+		</p>
+
+		<p>
+			<b>An option is an <code>sppasOption</code>, and nothing here is written for
+			one.</b> Its key, its kind, its value, its name and the text it carries are held
+			by that object, which this domain holds, reads and sets. A class of this domain
+			carrying the same thing under another name would be a second truth.
+		</p>
 
 		<p>
 			<code>OptionSet.set_value()</code> sets and does not judge: whether a value may
@@ -1424,15 +1403,9 @@
 		<table>
 			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
 			<tbody>
-				<tr><td>holds</td><td><code>OptionsManager</code> 1 &mdash; 1 <code>OptionsView</code>, 1 <code>OptionsController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
-				<tr><td>holds</td><td><code>OptionsController</code> 1 &mdash; 1 <code>OptionsRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
-				<tr><td>holds</td><td><code>OptionsRecord</code> 1 &mdash; 1 <code>OptionSet</code></td><td>A composition: the set lives inside what one request carries</td></tr>
 				<tr><td>holds</td><td><code>OptionSet</code> 1 &mdash; 0..n <code>OptionRefusal</code></td><td>A composition: a refusal exists only inside the set whose option it is about</td></tr>
 				<tr><td>uses</td><td><code>OptionSet</code> &rarr; <code>sppasOption</code></td><td>A dependency, and the only tie of this domain to the objects of SPPAS</td></tr>
-				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>ValueAcceptance</code></td><td>A dependency: it asks before it sets</td></tr>
-				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>FileForOption</code></td><td>A dependency: it asks for a file and takes back what comes</td></tr>
-				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>OptionsView</code></td><td>A dependency: it hands over what to build from</td></tr>
-				<tr><td>uses</td><td><code>OptionsView</code> &rarr; <code>OptionsRecord</code></td><td>A dependency: it is given it and builds from it</td></tr>
+				<tr><td>uses</td><td><code>FileForOption</code> &rarr; the provision of files</td><td>A dependency, and the only tie of this domain to a neighbour</td></tr>
 				<tr><td>none</td><td><code>ValueAcceptance</code></td><td>Tied to nothing at all: it answers on a kind, bounds and a value handed to it</td></tr>
 			</tbody>
 		</table>
@@ -1444,22 +1417,105 @@
 			class diagram.
 		</p>
 
-		<pre class="dark"><code>[OptionsManager|container();consumes();options_for_app()]++1-1&gt;[OptionsController|record|handle();populate_view()]
-[OptionsManager]++1-1&gt;[OptionsView|populate_tree_content()]
-[OptionsController]++1-1&gt;[OptionsRecord|task;set;to_be_shown|serialize();parse()]
-[OptionsRecord]++1-1&gt;[OptionSet|options;values on arrival;/changed|rebuild();value_on_arrival_of();set_value();put_back();put_all_back();refusals();for_app()]
-[OptionSet]++1-0..*&gt;[OptionRefusal|option;expected]
+		<pre class="dark"><code>[OptionSet|options;values on arrival;/changed|rebuild();value_on_arrival_of();set_value();put_back();put_all_back();refusals();for_app()]++1-0..*&gt;[OptionRefusal|option;expected]
 
-[OptionsController]-.-&gt;[ValueAcceptance|accepts();what_is_expected()]
-[OptionsController]-.-&gt;[FileForOption|ask_for();take_in()]
-[OptionsController]-.-&gt;[OptionsView]
-[OptionsView]-.-&gt;[OptionsRecord]
-[OptionSet]-.-&gt;[sppasOption]</code></pre>
+[OptionSet]-.-&gt;[sppasOption]
+[ValueAcceptance|accepts();what_is_expected()]
+[FileForOption|ask_for();take_in()]</code></pre>
 
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
 	<!-- 3.16 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The classes of the view</h3>
+
+		<table>
+			<thead><tr><th>Class</th><th>Operations</th><th>What it shows</th></tr></thead>
+			<tbody>
+				<tr><td><code>OptionsView</code></td><td>populate_tree_content(record)</td><td>The container: one line per option, carrying its label, its value, what it takes to change that value, the bounds when there are any, and the refusal when there is one</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			A view builds a tree and does nothing else: it decides nothing, refuses
+			nothing, and reaches neither a disk nor a neighbour. What it shows was decided
+			before it was called, and the texts it shows are the ones the options carry.
+			There is one part and not several: what this domain shows is one container, and
+			the page it stands in belongs to the app which placed it.
+		</p>
+
+		<h4>What is tied to what</h4>
+
+		<table>
+			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td>uses</td><td><code>OptionsView</code> &rarr; <code>OptionsRecord</code></td><td>A dependency: it is given it and builds from it</td></tr>
+			</tbody>
+		</table>
+
+		<h4>In yUML</h4>
+
+		<pre class="dark"><code>[OptionsView|populate_tree_content()]-.-&gt;[OptionsRecord]</code></pre>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.17 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="subssection">
+	<h3>The classes of the controller</h3>
+
+		<table>
+			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
+			<tbody>
+				<tr><td><code>OptionsController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
+				<tr><td><code>OptionsRecord</code></td><td>task, set, to_be_shown</td><td>serialize(), parse(data)</td></tr>
+				<tr><td colspan="3">A record comes from no table: it is what one request holds, it serialises itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
+				<tr><td><code>OptionsManager</code></td><td>&mdash;</td><td>container(), consumes(events), options_for_app()</td></tr>
+			</tbody>
+		</table>
+
+		<p>
+			<code>OptionsManager</code> is what an app holds, and the only object of this
+			domain it holds. Where an application of swapp is reached by a URL and answers
+			with a page, this domain is reached by the app which placed its container: what
+			answers is not a response of its own but the app's, and this class is where that
+			difference stands.
+		</p>
+
+		<h4>What is tied to what</h4>
+
+		<table>
+			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td>holds</td><td><code>OptionsManager</code> 1 &mdash; 1 <code>OptionsView</code>, 1 <code>OptionsController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
+				<tr><td>holds</td><td><code>OptionsController</code> 1 &mdash; 1 <code>OptionsRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
+				<tr><td>holds</td><td><code>OptionsRecord</code> 1 &mdash; 1 <code>OptionSet</code></td><td>A composition: the set lives inside what one request carries</td></tr>
+				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>ValueAcceptance</code></td><td>A dependency: it asks before it sets</td></tr>
+				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>FileForOption</code></td><td>A dependency: it asks for a file and takes back what comes</td></tr>
+				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>OptionsView</code></td><td>A dependency: it hands over what to build from</td></tr>
+			</tbody>
+		</table>
+
+		<h4>In yUML</h4>
+
+		<pre class="dark"><code>[OptionsManager|container();consumes();options_for_app()]++1-1&gt;[OptionsController|record|handle();populate_view()]
+[OptionsManager]++1-1&gt;[OptionsView]
+[OptionsController]++1-1&gt;[OptionsRecord|task;set;to_be_shown|serialize();parse()]
+[OptionsRecord]++1-1&gt;[OptionSet]
+
+[OptionsController]-.-&gt;[ValueAcceptance]
+[OptionsController]-.-&gt;[FileForOption]
+[OptionsController]-.-&gt;[OptionsView]</code></pre>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.18 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1488,7 +1544,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.17 -->
+	<!-- 3.19 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1514,7 +1570,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.18 -->
+	<!-- 3.20 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1550,7 +1606,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.19 -->
+	<!-- 3.21 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1575,7 +1631,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.20 -->
+	<!-- 3.22 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1664,7 +1720,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.21 -->
+	<!-- 3.23 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1712,7 +1768,7 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.22 -->
+	<!-- 3.24 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1760,7 +1816,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.23 -->
+	<!-- 3.25 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
@@ -1787,7 +1843,7 @@
 	</section>
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 3.24 -->
+	<!-- 3.26 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
