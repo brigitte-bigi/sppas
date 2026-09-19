@@ -75,7 +75,7 @@ current_package = __name__
 # Store the defined spin-off SWAPP_CLASS
 SPINOFF_SWAPPS = []
 
-# Store the declared spin-off SWAPP_PAGES -- a list of WebPageInfo objects
+# Store the declared spin-off SWAPP_PAGES -- a list of swappWebPageInfo objects
 SPINOFF_PAGES = []
 
 # Iterate through all modules in this directory (excluding __init__.py and sub-packages)

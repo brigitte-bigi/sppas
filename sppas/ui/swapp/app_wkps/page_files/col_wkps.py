@@ -46,7 +46,7 @@ from whakerpy.htmlmaker import HTMLRadioBox
 from whakerpy.htmlmaker import HTMLInputText
 
 from sppas.ui import _
-from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
+from sppas.ui.swapp.swappcore.swappsg import swapp_wkps
 from sppas.ui.swapp.nodes import sppasHTMLButton
 from sppas.ui.swapp.nodes import swappConfirmDialog
 
@@ -118,15 +118,15 @@ class WkpsNode(HTMLNode):
         :param new_name: (str)
 
         """
-        current_name = wapp_wkps.get_wkp_name()
+        current_name = swapp_wkps.get_wkp_name()
         if current_name == new_name:
             logging.error("The given new name is the same than the existing one.")
             return False
 
         try:
-            wapp_wkps.rename(new_name)
+            swapp_wkps.rename(new_name)
             form_list = self._wkps_list.get_child("wkps_listitem_form")
-            wkp_node = form_list.get_nidx_child(wapp_wkps.get_wkp_current_index())
+            wkp_node = form_list.get_nidx_child(swapp_wkps.get_wkp_current_index())
             # get the span text and set its new value
             span_node = wkp_node.get_nidx_child(1)  # 0=input, 1=span
             span_node.set_value(new_name)
@@ -148,22 +148,22 @@ class WkpsNode(HTMLNode):
 
         """
         # Can't switch if locked files. Files must be closed first.
-        if wapp_wkps.data.has_locked_files():
+        if swapp_wkps.data.has_locked_files():
             logging.error(WKP_SWITCH_DISABLED)
             return False
 
         # Save the currently displayed data (they correspond to the previous wkp)
-        if wapp_wkps.get_wkp_current_index() == 0 and wapp_wkps.data.is_empty() is False:
+        if swapp_wkps.get_wkp_current_index() == 0 and swapp_wkps.data.is_empty() is False:
             # User must confirm to really switch
             # response = Confirm(WKP_MSG_CONFIRM, WKP_MSG_CONFIRM_SWITCH)
             logging.error("Switch to another workspace needs to be confirmed.")
             return False
 
         # The user really intended to switch to. Update the current data.
-        if wapp_wkps.get_wkp_current_index() > 0:
+        if swapp_wkps.get_wkp_current_index() > 0:
             # the 'Blank' workspace can't be saved... the others can
             try:
-                wapp_wkps.save(wapp_wkps.data)
+                swapp_wkps.save(swapp_wkps.data)
             except Exception as e:
                 logging.error(str(e))
                 # User must confirm to really switch
@@ -173,11 +173,11 @@ class WkpsNode(HTMLNode):
 
         try:
             # Change the index
-            wkp_index = wapp_wkps.get_wkp_index(dest_name)
+            wkp_index = swapp_wkps.get_wkp_index(dest_name)
             # Load the data of the workspace from its file
-            wapp_wkps.switch_to(wkp_index)
+            swapp_wkps.switch_to(wkp_index)
             # The "Files" & "Refs" columns need to be fully re-created (and our listitems)
-            logging.info("Current workspace: {:s}".format(wapp_wkps.get_wkp_name()))
+            logging.info("Current workspace: {:s}".format(swapp_wkps.get_wkp_name()))
             return True
         except Exception as e:
             import traceback
@@ -254,7 +254,7 @@ class WkpsNode(HTMLNode):
         # Create a popup modal dialog to fix the new name. Not displayed.
         dlg = swappConfirmDialog(parent.identifier, WKP_MSG_ASK_NAME)
         name_node = HTMLInputText(dlg.content_node.identifier, "wkps_rename")
-        name_node.set_attribute("placeholder", wapp_wkps.get_wkp_name())
+        name_node.set_attribute("placeholder", swapp_wkps.get_wkp_name())
         dlg.content_node.append_child(name_node)
 
         # Create the "Rename" button, which is used to display the popup.
@@ -281,11 +281,11 @@ class WkpsNode(HTMLNode):
         """
         box = HTMLRadioBox(parent.identifier, "wkps_listitem_form")
         box.add_attribute("class", "buttonbox_vertical")
-        for i in range(wapp_wkps.get_size()):
+        for i in range(swapp_wkps.get_size()):
             box.append_input(
-                "wkps_listitem", wapp_wkps.get_wkp_name(i),
+                "wkps_listitem", swapp_wkps.get_wkp_name(i),
                 text=None,
-                checked=(i == wapp_wkps.get_wkp_current_index()))
+                checked=(i == swapp_wkps.get_wkp_current_index()))
         parent.append_child(box)
 
     # -----------------------------------------------------------------------

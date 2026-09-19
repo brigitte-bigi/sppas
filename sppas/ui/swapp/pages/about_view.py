@@ -47,8 +47,8 @@ from sppas.core.config import sg
 from sppas.core.config import cfg
 from sppas.ui import _
 from sppas.ui.swapp.panels import BaseLinksNode
-from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
-from sppas.ui.swapp.wappbase.wappview import swappBaseView
+from sppas.ui.swapp.swappcore.swapputils import sppasImagesAccess
+from sppas.ui.swapp.swappbase.swappview import swappBaseView
 
 # ---------------------------------------------------------------------------
 

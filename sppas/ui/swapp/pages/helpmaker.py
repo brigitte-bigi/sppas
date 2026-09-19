@@ -44,7 +44,7 @@ import logging
 
 from whakerpy.htmlmaker import HTMLTree
 
-from ..wappbase.wappresponse import swappBaseResponse
+from ..swappbase.swappresponse import swappBaseResponse
 
 from .help_view import HelpView
 

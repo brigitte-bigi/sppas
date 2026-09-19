@@ -48,11 +48,11 @@ from sppas.core.config import sppasExecProcess
 from sppas.core.config import cfg
 from sppas.core.config import paths
 from sppas.core.preinstall.installer import quote
-from sppas.ui.swapp.wappcore.wappsg import wapp_settings
-from sppas.ui.swapp.wappcore.wappsg import wapp_trace
-from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
-from sppas.ui.swapp.wappcore.wappsg import wapp_wxstate
-from sppas.ui.swapp.wappcore.wappsg import wx_is_running
+from sppas.ui.swapp.swappcore.swappsg import swapp_settings
+from sppas.ui.swapp.swappcore.swappsg import swapp_trace
+from sppas.ui.swapp.swappcore.swappsg import swapp_wkps
+from sppas.ui.swapp.swappcore.swappsg import swapp_wxstate
+from sppas.ui.swapp.swappcore.swappsg import wx_is_running
 
 # ---------------------------------------------------------------------------
 
@@ -87,14 +87,14 @@ class DashboardController:
         :return: (bool) True if the licence agreement is accepted, False otherwise.
 
         """
-        return wapp_settings.license_agreement
+        return swapp_settings.license_agreement
 
     # -----------------------------------------------------------------------
 
     def append_app(self, app) -> None:
         """Append a single web application to the model.
 
-        :param app: (WebApplicationInfo) The application descriptor to append.
+        :param app: (swappWebApplicationInfo) The application descriptor to append.
 
         """
         self.__model.append(app)
@@ -104,7 +104,7 @@ class DashboardController:
     def append_apps(self, apps: list) -> None:
         """Append a list of web applications to the model.
 
-        :param apps: (list) List of WebApplicationInfo objects to append.
+        :param apps: (list) List of swappWebApplicationInfo objects to append.
 
         """
         self.__model.append_all(apps)
@@ -114,7 +114,7 @@ class DashboardController:
     def append_pages(self, pages: list) -> None:
         """Append a list of web pages to the model.
 
-        :param pages: (list) List of WebPageInfo objects.
+        :param pages: (list) List of swappWebPageInfo objects.
 
         """
         self.__model.append_pages(pages)
@@ -128,7 +128,7 @@ class DashboardController:
         :return: (bool) True if the page has to be refreshed.
 
         """
-        wapp_settings.license_agreement = True
+        swapp_settings.license_agreement = True
         logging.info("Licence agreement is satisfied.")
         return False
 
@@ -170,7 +170,7 @@ class DashboardController:
             # path: a crash sends no BYE, so the shared state would keep
             # saying that wx is running and the launch button would stay
             # disabled until the web server itself is restarted.
-            wapp_wxstate.running = False
+            swapp_wxstate.running = False
 
         return ""
 
@@ -195,26 +195,26 @@ class DashboardController:
         wx_busy = self.__wx_running is True or wx_is_running() is True
         logging.debug(f"Dashboard wx card state: feature={wx_enabled}, "
                       f"subprocess_running={self.__wx_running}, "
-                      f"socket_running={wapp_wxstate.running}")
+                      f"socket_running={swapp_wxstate.running}")
         # The Journal tab sends a heartbeat: absent, the view bakes the
         # dialog inviting the user to open it.
-        trace_alive = wapp_trace.viewer_alive()
+        trace_alive = swapp_trace.viewer_alive()
 
         # The current workspace. The wx interlocutor, when connected, is
         # the source of truth: its WKP_CHANGED messages report the name of
         # its current workspace, not an identifier -- swapp does not try
         # to resolve it against its own local workspace list. Before any
         # wx connected, the local state is displayed instead.
-        wkp_name = wapp_wxstate.workspace_name
+        wkp_name = swapp_wxstate.workspace_name
         wkp_path = ""
         if len(wkp_name) == 0:
-            wkp_name = wapp_wkps.get_wkp_name()
+            wkp_name = swapp_wkps.get_wkp_name()
             try:
-                wkp_path = wapp_wkps.get_wkp_filename()
+                wkp_path = swapp_wkps.get_wkp_filename()
             except Exception:
                 wkp_path = ""
 
-        self.__view.populate_tree_content(wapp_settings.license_agreement,
+        self.__view.populate_tree_content(swapp_settings.license_agreement,
                                           wx_enabled, wx_busy, trace_alive,
                                           wkp_name, wkp_path)
 

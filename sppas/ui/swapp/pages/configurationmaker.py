@@ -49,7 +49,7 @@ from sppas.core.config import cfg
 from sppas.core.config import lgs
 from sppas.ui import _
 
-from ..wappbase.wappresponse import swappBaseResponse
+from ..swappbase.swappresponse import swappBaseResponse
 
 from .configuration_view import ConfigurationView
 

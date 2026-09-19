@@ -48,8 +48,8 @@ from .dialogs.hmessages import swappInformationDialog
 from .dialogs.hmessages import swappWarnDialog
 from .dialogs.hmessages import swappErrorDialog
 from .dialogs.hmessages import swappYesNoDialog
-from .layout.hheader import SwappHeader
-from .layout.hfooter import SwappFooter
+from .layout.hheader import swappHeader
+from .layout.hfooter import swappFooter
 from .feedback.progress import ProgressBar
 
 # ---------------------------------------------------------------------------
@@ -66,7 +66,7 @@ __all__ = (
     "swappWarnDialog",
     "swappErrorDialog",
     "swappYesNoDialog",
-    "SwappHeader",
-    "SwappFooter",
+    "swappHeader",
+    "swappFooter",
     "ProgressBar"
 )

@@ -46,9 +46,9 @@ from whakerpy.htmlmaker import HTMLTree
 from sppas.core.config import sg
 from sppas.ui import _
 
-from ..wappbase.wappresponse import swappBaseResponse
+from ..swappbase.swappresponse import swappBaseResponse
 from ..main_trace_store import swappTraceStore
-from ..wappcore.wappsg import wapp_trace
+from ..swappcore.swappsg import swapp_trace
 
 from .trace_view import TraceView
 
@@ -137,19 +137,19 @@ class TraceResponseRecipe(swappBaseResponse):
         # The periodic heartbeat of the page: the server knows the single
         # tab displaying the traces is open. No re-bake.
         if "trace_heartbeat" in events:
-            wapp_trace.viewer_ping()
+            swapp_trace.viewer_ping()
             return False
 
         if "event_bake" in events:
             e = events["event_bake"]
 
             if e == "handle_trace_save":
-                saved = wapp_trace.save()
+                saved = swapp_trace.save()
                 logging.info(f"Journal saved into: {saved}")
                 self.__status_message = MSG_SAVED + saved
 
             elif e == "handle_trace_clear":
-                wapp_trace.clear()
+                swapp_trace.clear()
 
             else:
                 logging.error(f"Unknown event_bake={e}")
@@ -170,7 +170,7 @@ class TraceResponseRecipe(swappBaseResponse):
         self.comment("Body content")
         self.__view.update_accessibility()
         self.__view.populate_tree_content(
-            wapp_trace.get_header(),
-            wapp_trace.get_records(origin=swappTraceStore.API_ORIGIN),
-            wapp_trace.get_records(origin=swappTraceStore.UI_ORIGIN),
+            swapp_trace.get_header(),
+            swapp_trace.get_records(origin=swappTraceStore.API_ORIGIN),
+            swapp_trace.get_records(origin=swappTraceStore.UI_ORIGIN),
             self.__status_message)

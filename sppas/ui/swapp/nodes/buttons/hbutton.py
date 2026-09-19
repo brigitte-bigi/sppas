@@ -43,7 +43,7 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLButtonNode
 
-from ...wappcore.wapputils import sppasImagesAccess
+from ...swappcore.swapputils import sppasImagesAccess
 
 # ---------------------------------------------------------------------------
 

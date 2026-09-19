@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.wappbase.wappview.py
+:filename: sppas.ui.swapp.swappbase.swappview.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: SPPAS Web-Based application Base View of the MVC paradigm.
@@ -48,14 +48,14 @@ from sppas.core.config import get_language
 
 from sppas.ui import _
 
-from ..wappcore.wapputils import sppasImagesAccess
+from ..swappcore.swapputils import sppasImagesAccess
 from ..nodes.buttons.hbutton import sppasHTMLButton
-from ..wappcore.wappsg import wapp_settings
-from ..wappcore.wappsg import wapp_wxstate
-from ..nodes.layout.hheader import SwappHeader
-from ..nodes.layout.hfooter import SwappFooter
+from ..swappcore.swappsg import swapp_settings
+from ..swappcore.swappsg import swapp_wxstate
+from ..nodes.layout.hheader import swappHeader
+from ..nodes.layout.hfooter import swappFooter
 from ..nodes.feedback.exit_dialog import ExitWaitDialog
-from .wapphead import THEME_NAME
+from .swapphead import THEME_NAME
 
 # ---------------------------------------------------------------------------
 
@@ -77,8 +77,8 @@ MSG_INFORMATION = _("Information")
 
 # Must be appended to the HTMLTree before sppas.js
 JS_INIT = (
-    f"window.WEXA_JS_PATH = '/{wapp_settings.wexa_statics}js';"
-    f"window.SPPAS_DEFAULT_PAGE = '{wapp_settings.default_page()}';"
+    f"window.WEXA_JS_PATH = '/{swapp_settings.wexa_statics}js';"
+    f"window.SPPAS_DEFAULT_PAGE = '{swapp_settings.default_page()}';"
     # The namespace is written before the framework is there: its logger
     # reads the level by itself when it starts, and no page asks for it.
     "window.Wexa = window.Wexa || {};"
@@ -259,16 +259,16 @@ class swappBaseView:
         """
         # The favicon: the same for all the pages and apps, on purpose. The
         # SPPAS tab of the browser keeps one constant identity.
-        self._htree.head.link(rel="logo icon", href=wapp_settings.icons + "sppas5.ico")
+        self._htree.head.link(rel="logo icon", href=swapp_settings.icons + "sppas5.ico")
 
         # CSS SWAPP links. The theme carries the id the ThemeManager swaps the
         # href of: without it, a second link is created and themes accumulate.
-        self._htree.head.link("stylesheet", wapp_settings.css + "main_swapp.css", link_type="text/css")
-        self._htree.head.link("stylesheet", wapp_settings.css + "main_swapp_identity.css", link_type="text/css")
+        self._htree.head.link("stylesheet", swapp_settings.css + "main_swapp.css", link_type="text/css")
+        self._htree.head.link("stylesheet", swapp_settings.css + "main_swapp_identity.css", link_type="text/css")
         theme_css = HTMLNode(self._htree.head.identifier, None, "link")
         theme_css.add_attribute("id", "wexa-theme")
         theme_css.add_attribute("rel", "stylesheet")
-        theme_css.add_attribute("href", wapp_settings.css + "main_swapp_theme.css")
+        theme_css.add_attribute("href", swapp_settings.css + "main_swapp_theme.css")
         theme_css.add_attribute("type", "text/css")
         self._htree.head.append_child(theme_css)
         # Application CSS
@@ -278,7 +278,7 @@ class swappBaseView:
         script = HTMLNode(self._htree.head.identifier, None, "script", value=JS_INIT)
         self._htree.head.append_child(script)
         script = HTMLNode(self._htree.head.identifier, None, "script")
-        script.add_attribute("src", wapp_settings.js + "sppas.js")
+        script.add_attribute("src", swapp_settings.js + "sppas.js")
         script.add_attribute("type", "module")
         self._htree.head.append_child(script)
 
@@ -297,11 +297,11 @@ class swappBaseView:
     def populate_body_header(self, title, *args, **kwargs):
         """Populate the `<header>` section of the page.
 
-        Replaces the current header with a :class:`SwappHeader` instance and
+        Replaces the current header with a :class:`swappHeader` instance and
         delegates additional customization to `_populate_body_header()`.
 
         """
-        self._htree.body_header = SwappHeader(self._htree.identifier, title)
+        self._htree.body_header = swappHeader(self._htree.identifier, title)
         self._populate_body_header(*args, **kwargs)
 
     # -----------------------------------------------------------------------
@@ -339,11 +339,11 @@ class swappBaseView:
     def populate_body_footer(self, *args, **kwargs):
         """Populate the `<footer>` section of the page.
 
-        Replaces the footer with a :class:`SwappFooter` instance and invokes
+        Replaces the footer with a :class:`swappFooter` instance and invokes
         `_populate_body_footer()` for further customization.
 
         """
-        self._htree.body_footer = SwappFooter(self._htree.identifier)
+        self._htree.body_footer = swappFooter(self._htree.identifier)
         self._populate_body_footer(*args, **kwargs)
 
         # The same on every page: SPPAS closes as a whole, and any page can
@@ -506,13 +506,13 @@ class swappBaseView:
         :return: (HTMLNode) the home link button node
 
         """
-        href = wapp_settings.default_page()
+        href = swapp_settings.default_page()
 
         # A page an application brought its own theme to gives the global one
         # back when the reader leaves it: the link names the theme chosen for
         # SPPAS, and what a link names wins over what an address names.
         if self._htree.head.get_default_theme() != THEME_NAME:
-            theme = wapp_settings.accessibility_theme
+            theme = swapp_settings.accessibility_theme
             if len(theme) == 0:
                 theme = THEME_NAME
             href += "?wexa_theme=" + theme
@@ -578,7 +578,7 @@ class swappBaseView:
         The page opens in its named tab: whatever the app the button is
         clicked from, the single "sppas_infos" tab is reused and reloaded.
         The loader registers it with handleLinksWithParameters(), through
-        its data-links attribute -- see wapphead.py.
+        its data-links attribute -- see swapphead.py.
 
         :param parent: (HTMLNode) the parent HTML node to append the button in
         :return: (HTMLNode) the trace link button node
@@ -606,7 +606,7 @@ class swappBaseView:
 
         The page opens in a new tab: the user sends a feedback without
         leaving the current app. The loader registers it, through its
-        data-links attribute -- see wapphead.py.
+        data-links attribute -- see swapphead.py.
 
         :param parent: (HTMLNode) the parent HTML node to append the button in
         :return: (HTMLNode) the feedback link button node
@@ -703,7 +703,7 @@ class swappBaseView:
         """To be overridden by children.
 
         """
-        self._htree.head.link("stylesheet", wapp_settings.css + "app_setup.css", link_type="text/css")
+        self._htree.head.link("stylesheet", swapp_settings.css + "app_setup.css", link_type="text/css")
 
     # -----------------------------------------------------------------------
 

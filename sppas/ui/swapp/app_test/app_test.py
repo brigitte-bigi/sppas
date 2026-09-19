@@ -43,7 +43,7 @@ import logging
 
 from whakerpy.httpd import BaseResponseRecipe
 
-from ..wappbase.wappbakery import swappWebData
+from ..swappbase.swappbakery import swappWebData
 from .testsmaker import TestsResponseRecipe
 
 # ---------------------------------------------------------------------------

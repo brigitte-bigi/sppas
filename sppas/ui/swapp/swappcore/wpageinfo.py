@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.wappcore.__init__.py
+:filename: sppas.ui.swapp.wpageinfo.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The registries and the infrastructure of the swapp package.
+:summary: This is the SPPAS Web-based page information.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -36,9 +36,32 @@
 
     -------------------------------------------------------------------------
 
-The modules of this package are imported with their explicit paths, for
-example `from sppas.ui.swapp.wappcore.wappsg import wapp_settings`: this
-package imports nothing, to never create a circular import with the apps
-the `wapps.py` registries refer to.
-
 """
+
+from dataclasses import dataclass
+from typing import Type
+
+from sppas.core.coreutils import sppasTypeError
+
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class swappWebPageInfo:
+    """Store metadata for a generic web page.
+
+    :param recipe: (type) The ResponseRecipe class which bakes the page.
+        It describes its page with the page(), name() and icon() class
+        methods. Typically inherits from a BaseResponseRecipe class.
+    :param show: (bool) Indicates whether the page gets a link button in
+        the "Find out more" section of the Dashboard.
+
+    """
+    recipe: Type
+    show: bool
+
+    def __post_init__(self):
+        if isinstance(self.recipe, type) is False and hasattr(self.recipe, "page") is False:
+            raise sppasTypeError(type(self.recipe).__name__, "BaseResponseRecipe")
+        if isinstance(self.show, bool) is False:
+            raise sppasTypeError(type(self.show).__name__, "bool")

@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.wpageinfo.py
+:filename: sppas.ui.swapp.swappbase.swappbakery.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: This is the SPPAS Web-based page information.
+:summary: Bakery for any SPPAS web-based application.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -38,30 +38,55 @@
 
 """
 
-from dataclasses import dataclass
-from typing import Type
+from __future__ import annotations
 
-from sppas.core.coreutils import sppasTypeError
+from whakerpy.webapp import WebSiteData
+from sppas.ui.swapp import sppasImagesAccess
 
 # ---------------------------------------------------------------------------
 
 
-@dataclass
-class WebPageInfo:
-    """Store metadata for a generic web page.
-
-    :param recipe: (type) The ResponseRecipe class which bakes the page.
-        It describes its page with the page(), name() and icon() class
-        methods. Typically inherits from a BaseResponseRecipe class.
-    :param show: (bool) Indicates whether the page gets a link button in
-        the "Find out more" section of the Dashboard.
+class swappWebData(WebSiteData):
+    """Parse the JSON file, store data and create the bakery system.
 
     """
-    recipe: Type
-    show: bool
 
-    def __post_init__(self):
-        if isinstance(self.recipe, type) is False and hasattr(self.recipe, "page") is False:
-            raise sppasTypeError(type(self.recipe).__name__, "BaseResponseRecipe")
-        if isinstance(self.show, bool) is False:
-            raise sppasTypeError(type(self.show).__name__, "bool")
+    def __init__(self, json_filename: str | None = None):
+        """Create a swappWebData instance.
+
+        """
+        super(swappWebData, self).__init__(json_filename)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def icon() -> str:
+        """Return the page icon name."""
+        return sppasImagesAccess.get_logo_filename("sppas-logo-v5")
+
+    @staticmethod
+    def description() -> str:
+        """Return a short description of the application."""
+        return "No description available."
+
+    @staticmethod
+    def name() -> str:
+        """Return a short name of the application."""
+        return "Undefined"
+
+    @staticmethod
+    def id() -> str:
+        """Return an identifier of the application."""
+        return "Undefined"
+
+    @staticmethod
+    def theme_name() -> str:
+        """Return the name of the theme the application brings, if any.
+
+        An application bringing its own theme is shown with it, whatever
+        the theme in force where it was launched from: the theme is its
+        identity. An empty name means the application takes the theme of
+        the page it was launched from.
+
+        """
+        return ""

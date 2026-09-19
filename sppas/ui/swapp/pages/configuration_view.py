@@ -46,8 +46,8 @@ from whakerpy.htmlmaker import TagNode
 from sppas.core.config import sg
 from sppas.core.config import cfg
 from sppas.ui import _
-from sppas.ui.swapp.wappbase.wappview import swappBaseView
-from sppas.ui.swapp.wappcore.wappsg import wapp_settings
+from sppas.ui.swapp.swappbase.swappview import swappBaseView
+from sppas.ui.swapp.swappcore.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -149,7 +149,7 @@ class ConfigurationView(swappBaseView):
 
         """
         self._htree.head.link("stylesheet",
-                              wapp_settings.wexa_statics + "css/togglegroup.css",
+                              swapp_settings.wexa_statics + "css/togglegroup.css",
                               link_type="text/css")
 
     # -----------------------------------------------------------------------

@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.__init__.py
-:author:   Brigitte Bigi
-:contact:  contact@sppas.org
-:summary:  This is the SPPAS Web-based application package.
+:filename: sppas.ui.swapp.swappbase.__init__.py
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: The base classes common to every SPPAS web-based application.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2026 Brigitte Bigi
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -38,15 +38,17 @@
 
 """
 
-from .swappcore.swapputils import sppasImagesAccess
-from .main_settings import sppasWebAppSettings
-from .swappcore.swappsg import sppasWkpsManager
-from .main_app import sppasWebApp
+from .swappview import swappBaseView
+from .swappbakery import swappWebData
+from .swappresponse import swappBaseResponse
+from .swapphead import swappHeadNode
+
+# ---------------------------------------------------------------------------
 
 
 __all__ = (
-    "sppasImagesAccess",
-    "sppasWkpsManager",
-    "sppasWebAppSettings",
-    "sppasWebApp"
+    "swappBaseView",
+    "swappWebData",
+    "swappBaseResponse",
+    "swappHeadNode"
 )

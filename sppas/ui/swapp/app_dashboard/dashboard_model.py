@@ -42,8 +42,8 @@
 from __future__ import annotations
 import logging
 
-from ..wappcore.wappinfo import WebApplicationInfo
-from ..wappcore.wpageinfo import WebPageInfo
+from ..swappcore.swappinfo import swappWebApplicationInfo
+from ..swappcore.wpageinfo import swappWebPageInfo
 
 # ---------------------------------------------------------------------------
 
@@ -52,12 +52,12 @@ class DashboardModel:
     """Manage the list of web applications displayed in the Dashboard.
 
     This class represents the *Model* component of the MVC architecture.
-    It maintains a collection of :class:`WebApplicationInfo` instances and
+    It maintains a collection of :class:`swappWebApplicationInfo` instances and
     provides controlled access to them through explicit methods.
 
     :example:
         >>> model = DashboardModel()
-        >>> model.append(WebApplicationInfo('Setup', SetupBakery, True))
+        >>> model.append(swappWebApplicationInfo('Setup', SetupBakery, True))
         True
 
     """
@@ -69,7 +69,7 @@ class DashboardModel:
 
     # -----------------------------------------------------------------------
 
-    def get_bakery_by_name(self, name: str) -> WebApplicationInfo | None:
+    def get_bakery_by_name(self, name: str) -> swappWebApplicationInfo | None:
         """Return the application matching the given name."""
         for app in self.__bakeries:
             if app.name == name:
@@ -91,20 +91,20 @@ class DashboardModel:
 
     # -----------------------------------------------------------------------
 
-    def append(self, application: WebApplicationInfo) -> bool:
+    def append(self, application: swappWebApplicationInfo) -> bool:
         """Add a web application to the model.
 
         The method ensures the given application is valid, visible,
         and not already registered before adding it.
 
-        :param application: (WebApplicationInfo) Application descriptor.
+        :param application: (swappWebApplicationInfo) Application descriptor.
         :return: (bool) True if the application was successfully added,
                  False otherwise.
 
         """
         # All the reasons not to add the app:
         # bad instance, invisible app, already defined
-        if isinstance(application, WebApplicationInfo) is False:
+        if isinstance(application, swappWebApplicationInfo) is False:
             return False
         if application.show is False:
             return False
@@ -120,11 +120,11 @@ class DashboardModel:
     def append_all(self, applications: list) -> None:
         """Append a list of applications to the model.
 
-        :param applications: (list) List of WebApplicationInfo objects.
+        :param applications: (list) List of swappWebApplicationInfo objects.
 
         """
         for web_app in applications:
-            if isinstance(web_app, WebApplicationInfo) is True and web_app.show is False:
+            if isinstance(web_app, swappWebApplicationInfo) is True and web_app.show is False:
                 continue
             success = self.append(web_app)
             if success is False:
@@ -145,13 +145,13 @@ class DashboardModel:
         Like append() does with the applications, the method filters with
         the "show" member: the pages declared with False are not stored.
 
-        :param pages: (list) List of WebPageInfo objects.
+        :param pages: (list) List of swappWebPageInfo objects.
 
         """
         for page_info in pages:
-            if isinstance(page_info, WebPageInfo) is False:
+            if isinstance(page_info, swappWebPageInfo) is False:
                 logging.error("The page {page} is not added to the Dashboard: "
-                              "not a WebPageInfo.".format(page=str(page_info)))
+                              "not a swappWebPageInfo.".format(page=str(page_info)))
                 continue
             if page_info.show is False:
                 continue
