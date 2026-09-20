@@ -170,13 +170,14 @@ class sppasAppConfig(object):
 
         The name carries the environment: the name of its directory, and a
         short digest of its full path -- two environments named alike are
-        still told apart.
+        still told apart. It begins with a dot, like every other file SPPAS
+        leaves among the files of the user: they are its own, not theirs.
 
         """
         prefix = os.path.abspath(sys.prefix)
         digest = hashlib.sha1(prefix.encode("utf-8")).hexdigest()[:8]
-        name = "{:s}-{:s}{:s}".format(os.path.basename(prefix), digest,
-                                      sppasAppConfig.APP_CONFIG_FILENAME)
+        name = ".{:s}-{:s}{:s}".format(os.path.basename(prefix), digest,
+                                       sppasAppConfig.APP_CONFIG_FILENAME)
 
         return os.path.join(paths.ext_dir, name)
 
