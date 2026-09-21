@@ -17,7 +17,7 @@
 [project]
     name = "sppas"
     # The version must be PEP 440 compliant
-    version = "5.0.5"
+    version = "5.1.0"
     authors = [
         {name="Brigitte Bigi", email="contact@sppas.org"},
     ]
@@ -147,10 +147,8 @@
 # x = coverage.config.HandyConfigParser(False)
 # x.read("pyproject.toml")
 
-[tool.pytest.ini_options]
-    minversion = "7.3"
-    addopts = "-ra -q"
-    testpaths = ["tests"]
+# Tests are run with unittest -- not with pytest:
+#     python -m unittest discover -s tests/<package> -t . -v
 
 [tool.coverage.report]
     fail_under = 5
