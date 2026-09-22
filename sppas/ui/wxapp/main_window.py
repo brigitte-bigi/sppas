@@ -131,6 +131,10 @@ class sppasMainWindow(sppasDialog):
         # The other UI answered the last time a workspace was sent to it.
         self.__wkp_listener = True
 
+        # This window announced it has no workspace anymore: it is closing,
+        # and it does not report anything after that.
+        self.__closing = False
+
         # Fix this frame content
         self._pages = list()
         self._create_content()
@@ -351,11 +355,17 @@ class sppasMainWindow(sppasDialog):
         that no one is there, and every click would pay for it again. The
         sending starts over when the other UI talks by itself.
 
+        Nothing is sent anymore once the empty name was announced: a window
+        which is closing has nothing left to report.
+
         :param wkp: (sppasWorkspace)
         :param name: (str) Name to send instead of the one of the panel.
             An empty name says this interface has no workspace anymore.
 
         """
+        if self.__closing is True:
+            return
+
         if self.__wkp_listener is False:
             return
 
@@ -534,6 +544,12 @@ class sppasMainWindow(sppasDialog):
         page = self.FindWindow("page_files")
         if page is not None:
             self._send_workspace(page.get_data(), name="")
+
+        # Nothing is reported any more. Closing the files of the editor posts
+        # a change of data, and that event is delivered after this method
+        # returns: its workspace would arrive after the empty name, and the
+        # other UI would show the workspace of a window which is gone.
+        self.__closing = True
 
         # Remember some properties of this window
         wx.GetApp().settings.set("frame_size", self.GetSize())
