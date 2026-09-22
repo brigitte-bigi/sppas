@@ -33,7 +33,7 @@
                 <button id="btn-css-theme" class="menuitem print-off" type="button" aria-label="Switch CSS theme" title="Switch CSS theme" onclick="window.themes && window.themes.next()"></button>
             </nav>
         
-    <h1>sppas 5.0.5</h1>
+    <h1>sppas 5.1.0</h1>
         <p><img class="small-logo" src="../sppas/ui/swapp/statics/logos/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
@@ -287,7 +287,8 @@ leaves no file of its own in it.</p>
 
 <p>The name carries the environment: the name of its directory, and a
 short digest of its full path -- two environments named alike are
-still told apart.</p>
+still told apart. It begins with a dot, like every other file SPPAS
+leaves among the files of the user: they are its own, not theirs.</p>
 
     </article>
 
@@ -309,12 +310,13 @@ View Source
 
 <span class="sd">        The name carries the environment: the name of its directory, and a</span>
 <span class="sd">        short digest of its full path -- two environments named alike are</span>
-<span class="sd">        still told apart.</span>
+<span class="sd">        still told apart. It begins with a dot, like every other file SPPAS</span>
+<span class="sd">        leaves among the files of the user: they are its own, not theirs.</span>
 
 <span class="sd">        """</span>
     <span class="n">prefix</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
     <span class="n">digest</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">prefix</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">8</span><span class="p">]</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{:s}</span><span class="s1">-</span><span class="si">{:s}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">prefix</span><span class="p">),</span> <span class="n">digest</span><span class="p">,</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">APP_CONFIG_FILENAME</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'.</span><span class="si">{:s}</span><span class="s1">-</span><span class="si">{:s}{:s}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">prefix</span><span class="p">),</span> <span class="n">digest</span><span class="p">,</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">APP_CONFIG_FILENAME</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">ext_dir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 </code></pre></div>
 
