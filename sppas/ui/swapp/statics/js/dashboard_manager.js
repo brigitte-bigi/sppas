@@ -89,9 +89,9 @@ export default class DashboardManager extends BaseManager {
 
         WexaLogger.debug("Attach Dashboard listeners")
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.attachDashboardListeners());
+            document.addEventListener('DOMContentLoaded', () => this.#attachListeners());
         } else {
-            this.attachDashboardListeners();
+            this.#attachListeners();
         }
     }
 
@@ -102,7 +102,7 @@ export default class DashboardManager extends BaseManager {
      *
      * @returns {void}
      */
-    attachDashboardListeners() {
+    #attachListeners() {
         const container = document.getElementById('main-content');
         if (!container) return;
 

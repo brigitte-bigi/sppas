@@ -83,13 +83,13 @@ export default class SetupManager extends BaseManager {
         WexaLogger.debug('Attach Setup listeners');
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
-                this.attachSetupListeners();
-                this.attachCheckboxListeners();
+                this.#attachListeners();
+                this.#attachCheckboxListeners();
                 this.#resumeProgressPolling();
             });
         } else {
-            this.attachSetupListeners();
-            this.attachCheckboxListeners();
+            this.#attachListeners();
+            this.#attachCheckboxListeners();
             this.#resumeProgressPolling();
         }
     }
@@ -136,7 +136,7 @@ export default class SetupManager extends BaseManager {
      *
      * @returns {void}
      */
-    attachSetupListeners() {
+    #attachListeners() {
         const container = document.getElementById('main-content');
         if (!container) return;
 
@@ -154,7 +154,7 @@ export default class SetupManager extends BaseManager {
      *
      * @returns {void}
      */
-    attachCheckboxListeners() {
+    #attachCheckboxListeners() {
         const container = document.getElementById('main-content');
         if (!container) return;
 
@@ -282,8 +282,8 @@ export default class SetupManager extends BaseManager {
                         start_progress = true;
                     }
                 }
-                this.attachSetupListeners();
-                this.attachCheckboxListeners();
+                this.#attachListeners();
+                this.#attachCheckboxListeners();
             }
         }
         if (start_progress) {

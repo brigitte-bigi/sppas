@@ -68,19 +68,34 @@ const { RequestManager } = await import(`${wexa_statics_js}/transport/request.js
  */
 export default class TraceManager {
 
+    /** How long the page waits between two signs of life. */
+    #heartbeatInterval;
+
+    /** What posts a sign of life to the server. */
+    #requestManager;
+
+    /** How many signs of life went unanswered in a row. */
+    #failedHeartbeats;
+
+    /** How many of them in a row mean the server is gone. */
+    #maxFailedHeartbeats;
+
+    /** What sends the signs of life, until it is cleared. */
+    #heartbeatTimer;
+
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
 
     constructor() {
         // Milliseconds between two heartbeats.
-        this.heartbeatInterval = 15000;
-        this.requestManager = new RequestManager();
+        this.#heartbeatInterval = 15000;
+        this.#requestManager = new RequestManager();
         // Reset to 0 by any successful heartbeat; a run of failures means
         // the server itself is gone, not a single dropped request.
-        this.failedHeartbeats = 0;
-        this.maxFailedHeartbeats = 2;
-        this.heartbeatTimer = null;
+        this.#failedHeartbeats = 0;
+        this.#maxFailedHeartbeats = 2;
+        this.#heartbeatTimer = null;
     }
 
     // ------------------------------------------------------------------------
@@ -112,7 +127,7 @@ export default class TraceManager {
      * @returns {void}
      */
     #onLoad() {
-        this.startHeartbeat();
+        this.#startHeartbeat();
         this.#attachPanelToggle();
     }
 
@@ -170,9 +185,9 @@ export default class TraceManager {
      *
      * @returns {void}
      */
-    startHeartbeat() {
-        this.sendHeartbeat();
-        this.heartbeatTimer = setInterval(() => this.sendHeartbeat(), this.heartbeatInterval);
+    #startHeartbeat() {
+        this.#sendHeartbeat();
+        this.#heartbeatTimer = setInterval(() => this.#sendHeartbeat(), this.#heartbeatInterval);
     }
 
     // ------------------------------------------------------------------------
@@ -191,22 +206,22 @@ export default class TraceManager {
      * @returns {Promise<void>} Resolves when the heartbeat has been sent,
      * or when its failure has been handled.
      */
-    async sendHeartbeat() {
+    async #sendHeartbeat() {
         const pageUri = window.location.pathname.substring(1);
         // RequestManager catches its own network errors and resolves with
         // the Error object instead of rejecting: a failure is read from
         // the returned value, not from a thrown exception.
-        const response = await this.requestManager.sendPostRequest(
+        const response = await this.#requestManager.sendPostRequest(
             {trace_heartbeat: true}, "application/json", pageUri);
 
         if (response instanceof Error) {
-            this.failedHeartbeats += 1;
+            this.#failedHeartbeats += 1;
             WexaLogger.debug(`TraceManager: heartbeat not sent: ${response}`);
-            if (this.failedHeartbeats >= this.maxFailedHeartbeats) {
+            if (this.#failedHeartbeats >= this.#maxFailedHeartbeats) {
                 this.#showSessionEnded();
             }
         } else {
-            this.failedHeartbeats = 0;
+            this.#failedHeartbeats = 0;
         }
     }
 
@@ -226,7 +241,7 @@ export default class TraceManager {
      * @returns {void}
      */
     #showSessionEnded() {
-        clearInterval(this.heartbeatTimer);
+        clearInterval(this.#heartbeatTimer);
 
         const main = document.getElementById('main-content');
         if (main === null) {

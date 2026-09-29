@@ -63,16 +63,31 @@ const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
  */
 export default class FeedbackManager {
 
+    /** The control which copies the message and opens the mail client. */
+    #sendButton;
+
+    /** What the person wrote. */
+    #messageInput;
+
+    /** The technical information of the system alone. */
+    #systemInfoBlock;
+
+    /** The whole report, system information and trace. */
+    #fullReportBlock;
+
+    /** Where the page says what happened, in line. */
+    #statusParagraph;
+
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
 
     constructor() {
-        this.sendButton = null;
-        this.messageInput = null;
-        this.systemInfoBlock = null;
-        this.fullReportBlock = null;
-        this.statusParagraph = null;
+        this.#sendButton = null;
+        this.#messageInput = null;
+        this.#systemInfoBlock = null;
+        this.#fullReportBlock = null;
+        this.#statusParagraph = null;
     }
 
     // ------------------------------------------------------------------------
@@ -89,9 +104,9 @@ export default class FeedbackManager {
     handleFeedbackManagerOnLoad() {
         WexaLogger.debug('Attach Feedback listeners');
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.attachFeedbackListeners());
+            document.addEventListener('DOMContentLoaded', () => this.#attachListeners());
         } else {
-            this.attachFeedbackListeners();
+            this.#attachListeners();
         }
     }
 
@@ -102,16 +117,16 @@ export default class FeedbackManager {
      *
      * @returns {void}
      */
-    attachFeedbackListeners() {
-        this.sendButton = document.getElementById('feedback_send_button');
-        this.messageInput = document.getElementById('feedback_message');
-        this.systemInfoBlock = document.getElementById('feedback_sysinfo');
-        this.fullReportBlock = document.getElementById('feedback_fullreport');
-        this.statusParagraph = document.getElementById('feedback_status');
+    #attachListeners() {
+        this.#sendButton = document.getElementById('feedback_send_button');
+        this.#messageInput = document.getElementById('feedback_message');
+        this.#systemInfoBlock = document.getElementById('feedback_sysinfo');
+        this.#fullReportBlock = document.getElementById('feedback_fullreport');
+        this.#statusParagraph = document.getElementById('feedback_status');
 
-        if (this.sendButton === null || this.messageInput === null ||
-                this.systemInfoBlock === null || this.fullReportBlock === null ||
-                this.statusParagraph === null) {
+        if (this.#sendButton === null || this.#messageInput === null ||
+                this.#systemInfoBlock === null || this.#fullReportBlock === null ||
+                this.#statusParagraph === null) {
             console.error('FeedbackManager: an element of the feedback form was not found.');
             return;
         }
@@ -125,7 +140,7 @@ export default class FeedbackManager {
             radio.addEventListener('change', () => this.#onReportChoiceChanged());
         }
 
-        this.sendButton.addEventListener('click', () => this.#onSendActivated());
+        this.#sendButton.addEventListener('click', () => this.#onSendActivated());
     }
 
     // ------------------------------------------------------------------------
@@ -144,9 +159,9 @@ export default class FeedbackManager {
             return null;
         }
         if (selected.value === 'full') {
-            return this.fullReportBlock;
+            return this.#fullReportBlock;
         }
-        return this.systemInfoBlock;
+        return this.#systemInfoBlock;
     }
 
     // ------------------------------------------------------------------------
@@ -162,8 +177,8 @@ export default class FeedbackManager {
         if (selectedBlock === null) {
             return;
         }
-        this.systemInfoBlock.classList.add('hidden');
-        this.fullReportBlock.classList.add('hidden');
+        this.#systemInfoBlock.classList.add('hidden');
+        this.#fullReportBlock.classList.add('hidden');
         selectedBlock.classList.remove('hidden');
     }
 
@@ -179,9 +194,9 @@ export default class FeedbackManager {
      * @returns {Promise<void>}
      */
     async #onSendActivated() {
-        const userText = this.messageInput.value.trim();
+        const userText = this.#messageInput.value.trim();
         if (userText.length === 0) {
-            this.statusParagraph.textContent = this.sendButton.getAttribute('data-msg-empty');
+            this.#statusParagraph.textContent = this.#sendButton.getAttribute('data-msg-empty');
             return;
         }
 
@@ -194,15 +209,15 @@ export default class FeedbackManager {
 
         try {
             await navigator.clipboard.writeText(wholeMessage);
-            this.statusParagraph.textContent = this.sendButton.getAttribute('data-msg-copied');
+            this.#statusParagraph.textContent = this.#sendButton.getAttribute('data-msg-copied');
         } catch (error) {
             console.error('FeedbackManager: the clipboard is not available.', error);
-            this.statusParagraph.textContent = this.sendButton.getAttribute('data-msg-error');
+            this.#statusParagraph.textContent = this.#sendButton.getAttribute('data-msg-error');
             return;
         }
 
-        const to = this.sendButton.getAttribute('data-to');
-        const subject = this.sendButton.getAttribute('data-subject');
+        const to = this.#sendButton.getAttribute('data-to');
+        const subject = this.#sendButton.getAttribute('data-subject');
         window.location.href = 'mailto:' + to +
             '?subject=' + encodeURIComponent(subject);
     }
