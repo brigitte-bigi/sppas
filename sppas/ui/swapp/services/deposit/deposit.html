@@ -1225,9 +1225,9 @@
 			<tbody>
 				<tr><td><code>Place</code></td><td>PLACE</td><td>name, /moment</td><td>a_name_for(moment), moment(), is_of_this_hour()</td></tr>
 				<tr><td><code>PlacedFile</code></td><td>FILE</td><td>place, name</td><td>&mdash;</td></tr>
-				<tr><td><code>DepositSpace</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>what_is_accepted(), ask_for_a_place(), put(), address_of(), serve(), forget()</td></tr>
+				<tr><td><code>DepositSpace</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>what_is_accepted(), ask_for_a_place(), put(), address_of(), path_of(), serve(), forget()</td></tr>
 				<tr><td><code>SpaceAcceptance</code></td><td>module <i>acceptance</i></td><td>&mdash;</td><td>what_is_accepted(), accepts_size(), accepts_volume(), accepts_one_more_place()</td></tr>
-				<tr><td><code>SpaceFolder</code></td><td>module <i>place</i></td><td>&mdash;</td><td>make_a_place(), places(), delete(), make_a_file(), files(), volume(), read()</td></tr>
+				<tr><td><code>SpaceFolder</code></td><td>module <i>place</i></td><td>&mdash;</td><td>make_a_place(), places(), delete(), make_a_file(), files(), volume(), read(), filename_of()</td></tr>
 				<tr><td><code>FileAddress</code></td><td>module <i>address</i></td><td>&mdash;</td><td>address_of(), what_it_names()</td></tr>
 			</tbody>
 		</table>
@@ -1310,10 +1310,10 @@
 			class diagram.
 		</p>
 
-		<pre class="dark"><code>[DepositSpace|what_is_accepted();ask_for_a_place();put();address_of();serve();forget()]
+		<pre class="dark"><code>[DepositSpace|what_is_accepted();ask_for_a_place();put();address_of();path_of();serve();forget()]
 
 [DepositSpace]++1-1&gt;[SpaceAcceptance|what_is_accepted();accepts_size();accepts_volume();accepts_one_more_place()]
-[DepositSpace]++1-1&gt;[SpaceFolder|make_a_place();places();delete();make_a_file();files();volume();read()]
+[DepositSpace]++1-1&gt;[SpaceFolder|make_a_place();places();delete();make_a_file();files();volume();read();filename_of()]
 [DepositSpace]++1-1&gt;[FileAddress|address_of();what_it_names()]
 
 [Place|name;/moment|a_name_for();moment();is_of_this_hour()]++1-0..*&gt;[PlacedFile|place;name]
@@ -1439,6 +1439,7 @@
 				<tr><td>Put a file in a place</td><td>pre: the place was given by this domain, and the bytes are those of the file. post: the file stands there under the name it was given, holding those bytes &mdash; or nothing of it stands, and the reason is said: the place is not of this hour, the size, the volume, or the name is taken. Nothing is renamed and nothing is overwritten</td></tr>
 				<tr><td>Ask for an address</td><td>pre: none. post: an address which leads to that file and to nothing else of the machine, and which authorises reaching it for at least as long as the place lasts &mdash; or no address at all, when the place is not of this hour or holds no file of that name</td></tr>
 				<tr><td>Serve what an address names</td><td>pre: what authorises the address has been verified by the front of the machine. post: the bytes of the file, or nothing at all &mdash; and nothing at all is one answer for the four cases which give it, with no reason said</td></tr>
+				<tr><td>Say where a file of a place stands</td><td>pre: none. post: the name of that file on the machine, with its path &mdash; or nothing at all when the place is out of date or holds no file of that name. It is what a caller which has to read a file where it was written is given, and no other name of the machine is ever answered</td></tr>
 				<tr><td>Forget what is out of date</td><td>pre: none. post: no place whose duration has run out stands in the space, nor anything it held. It answers nobody, and no caller calls it</td></tr>
 			</tbody>
 		</table>
@@ -1477,6 +1478,7 @@
 				<tr><td>Give the files of a place</td><td>pre: none. post: the names standing in it, which may be none</td></tr>
 				<tr><td>Give the volume of a place</td><td>pre: none. post: the sum of the sizes of what stands in it; zero when nothing does, and zero when the place is not there</td></tr>
 				<tr><td>Read a file</td><td>pre: the file stands in the place. post: its bytes, as they are on the disk. It judges nothing of them and says nothing of what they are</td></tr>
+				<tr><td>Give the name of a file of a place</td><td>pre: none. post: the name that file stands under on the machine, with its path; nothing at all when the place or the name names nothing of the space. It opens nothing and verifies nothing of what stands there</td></tr>
 			</tbody>
 		</table>
 

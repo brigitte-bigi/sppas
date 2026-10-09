@@ -522,6 +522,9 @@
 			</tbody>
 			</table>
 
+			<p><b>Note</b> &mdash; The version being implemented offers no option of
+			remediation: a file is read and handed to the writer as it is.</p>
+
 			<p><code>alt_tag</code> belongs here and not to preservation: discarding the
 			alternatives of a label, however poorly scored, alters the annotation. What is
 			written is no longer what was annotated, and that is a decision only the user
@@ -630,8 +633,8 @@
 			<ul class="req">
 			<li>[011] The user can initiate a conversion of a set of annotation
 			files.</li>
-			<li>[012] The system initialises a conversion with no destination and no
-			batch.</li>
+			<li>[012] The system initialises a conversion with the default format of the
+			annotated files of SPPAS as destination, and no batch.</li>
 			</ul>
 
 			<h5>[020] Understanding the process</h5>
@@ -657,7 +660,8 @@
 			<li>[104] The system presents this information in a form comparable at a
 			glance and intelligible without knowledge of file internals.</li>
 			<li>[105] The user can select at most one destination format at a time.</li>
-			<li>[106] The user can cancel the current selection.</li>
+			<li>[106] The system always holds one destination: choosing another format
+			replaces it.</li>
 			</ul>
 
 			<h5>[200] Batch</h5>
@@ -732,7 +736,7 @@
 			<h5>[900] Restarting</h5>
 			<ul class="req">
 			<li>[901] The user can start a new conversion.</li>
-			<li>[902] The system resets the decisions without resetting the batch.</li>
+			<li>[902] The system resets the decisions, and the provision of files starts over.</li>
 			</ul>
 
 			<h5>[1000] UX and accessibility</h5>
@@ -777,21 +781,23 @@
 			<li><b>A1. The user</b> — she chooses a destination format, answers the
 			options it raises, sets the general options, runs the conversion, reads what
 			happened to each file, reaches what was produced, and starts again.</li>
-			<li><b>A2. The provider of files</b> — it exposes a set of files, possibly
-			empty, in both contexts of execution. It is the domain of the provision of
-			files, and the batch is what it exposes.</li>
+			<li><b>A2. The provider of files</b> — it hands Convert a workspace holding
+			the files to be treated, possibly empty, in both contexts of execution, and
+			it is told what Convert takes, gives back and produced. It is the domain of
+			the provision of files, and the batch is what it hands.</li>
 			<li><b>A3. The API of SPPAS</b> — it says which formats can be written and
 			what each of them holds, it reads annotations, it writes them, and it names
 			the cause when it will not.</li>
 			<li><b>A4. The settings of SPPAS</b> — they hold
 			<code>interoperability</code>, which is the default answer of the
-			preservation option and nothing more.</li>
+			preservation option, and the default format of the annotated files, which
+			is the destination a conversion starts with.</li>
 			</ul>
 
 			<h5>Flows</h5>
 
 			<ul>
-			<li><b>F1. A1 &rarr; Convert</b> — the destination chosen, or its cancellation [101], [106].</li>
+			<li><b>F1. A1 &rarr; Convert</b> — the destination chosen [101], [106].</li>
 			<li><b>F2. Convert &rarr; A1</b> — the formats which can be written, and what each of them holds, comparable at a glance [102], [103], [104].</li>
 			<li><b>F3. Convert &rarr; A1</b> — the options that destination raises, the answers each offers, and the answer which holds if none is given [301], [302], [307], [308].</li>
 			<li><b>F4. A1 &rarr; Convert</b> — one answer for one option [303].</li>
@@ -802,19 +808,21 @@
 			<li><b>F9. A1 &rarr; Convert</b> — start a new conversion [901].</li>
 			<li><b>F10. Convert &rarr; A1</b> — a status for every file, the remarks attached to it, and the cause of a refusal, stated in terms of her data [701] to [704].</li>
 			<li><b>F11. Convert &rarr; A1</b> — the converted files, reached without her knowing where they were written [801], [802].</li>
-			<li><b>F12. A2 &rarr; Convert</b> — the batch: a set of files, possibly empty [201].</li>
+			<li><b>F12. A2 &rarr; Convert</b> — the batch: the workspace holding the files to be treated, possibly empty, <code>files_for_app()</code>; and that the person said it is ready, <code>is_ready()</code> [201].</li>
 			<li><b>F13. Convert &rarr; A3</b> — which formats can be written, and what each of them holds.</li>
 			<li><b>F14. Convert &rarr; A3</b> — a file to read, and whether its format may be detected [402].</li>
 			<li><b>F15. A3 &rarr; Convert</b> — the annotations of that file, or a typed cause.</li>
 			<li><b>F16. Convert &rarr; A3</b> — the annotations to write, in the destination format [604].</li>
 			<li><b>F17. A3 &rarr; Convert</b> — written, or a typed cause [605].</li>
-			<li><b>F18. A4 &rarr; Convert</b> — the value of <code>interoperability</code> [308].</li>
+			<li><b>F18. A4 &rarr; Convert</b> — the value of <code>interoperability</code> [308], and the default format of the annotated files [012].</li>
+			<li><b>F19. Convert &rarr; A2</b> — the files it takes and gives back while it converts, <code>lock()</code> and <code>release()</code>; what it produced, in the workspace it was handed, <code>produced()</code>; and that it has finished [801], [802].</li>
 			</ul>
 
-			<p><b>Two flows do not exist, and each of them is a requirement.</b> Nothing
-			goes from Convert to A2: the batch is read and never altered [202]. Nothing
-			goes from Convert to A4: the answer is stated on the page and changed for one
-			conversion, and the settings do not move [308].</p>
+			<p><b>One flow does not exist, and it is a requirement.</b> Nothing goes
+			from Convert to A4: the answer is stated on the page and changed for one
+			conversion, and the settings do not move [308]. What goes to A2 is said of the
+			workspace made for Convert, and never of the one of the person, which never
+			leaves that domain: the batch is never altered all the same [202].</p>
 
 			<p>A3 is the only neighbour which is written to, and what is written there is
 			a file, never a state: Convert relies on the reading and writing capabilities
@@ -896,7 +904,7 @@
 			<li>The structural loss, which is what the destination does not support and no option covers (D9). It depends on the destination alone, and is the same for every file of the batch.</li>
 			<li>The answer which holds for an option, which is the choice when there is one and the default otherwise [304].</li>
 			<li>The effective default of the preservation option, which is <code>interoperability</code> read from A4 [308].</li>
-			<li>What is still missing before a conversion can run, which is a destination and a batch which is not empty [031].</li>
+			<li>What is still missing before a conversion can run, which is a batch which is not empty [031].</li>
 			<li>The files produced, which stand where the API wrote them: one file of the batch may produce several, and none of them is held here.</li>
 			</ul>
 
@@ -950,7 +958,6 @@
 			</thead>
 			<tbody>
 			  <tr><td>E1</td><td>The user chooses a destination format</td><td>external</td><td>F1</td></tr>
-			  <tr><td>E2</td><td>The user cancels the destination</td><td>external</td><td>F1</td></tr>
 			  <tr><td>E3</td><td>The user answers an option</td><td>external</td><td>F4</td></tr>
 			  <tr><td>E4</td><td>The user sets a general option</td><td>external</td><td>F5</td></tr>
 			  <tr><td>E5</td><td>The batch is exposed</td><td>external</td><td>F12</td></tr>
@@ -976,7 +983,7 @@
 
 			<h5>T01 — Set the destination format</h5>
 			<ul class="mct">
-			<li><strong>Event</strong>: E1 or E2.</li>
+			<li><strong>Event</strong>: E1.</li>
 			<li><strong>Purpose</strong>: define the format into which the batch is to
 			be converted.</li>
 			<li><strong>Inputs</strong>: user choice (one format).</li>
@@ -988,13 +995,12 @@
 			  <ul>
 				<li>the format must be one the system is able to write;</li>
 				<li>at most one destination is defined at a time;</li>
-				<li>the destination may be cancelled, leaving it undefined;</li>
 				<li>any change of destination invalidates <code>properties</code>,
 				<code>options</code>, <code>answers</code>,
 				<code>structural_loss</code> and <code>results</code>.</li>
 			  </ul>
 			</li>
-			<li><strong>Emission</strong>: <code>destination</code> and E8, when a format is chosen and it is one the system can write; <code>destination</code> undefined and E10, when it is cancelled; F7, always; E10, always.</li>
+			<li><strong>Emission</strong>: <code>destination</code> and E8, when a format is chosen and it is one the system can write; F7, always; E10, always.</li>
 			</ul>
 
 			<h5>T02 — Derive the options and the structural loss</h5>
@@ -1072,16 +1078,17 @@
 
 			<h5>T05 — Delimit the batch</h5>
 			<ul class="mct">
-			<li><strong>Event</strong>: E5.</li>
+			<li><strong>Event</strong>: E5, which is the person saying the workspace is ready (<code>is_ready()</code>).</li>
 			<li><strong>Purpose</strong>: define the set of files to convert.</li>
-			<li><strong>Inputs</strong>: the working context.</li>
+			<li><strong>Inputs</strong>: the workspace the provision of files hands, <code>files_for_app()</code>.</li>
 			<li><strong>Outputs</strong>: <code>batch</code>.</li>
 			<li><strong>Preconditions</strong>: none.</li>
 			<li><strong>Postconditions</strong>: <code>batch</code> is available to
 			T06.</li>
 			<li><strong>Rules</strong>:
 			  <ul>
-				<li>the batch is delimited by the user, not by the system;</li>
+				<li>the batch is delimited by the user, not by the system: it is the
+				files she checked, in the container of the provision of files;</li>
 				<li>the system does not alter the batch;</li>
 				<li>the batch is heterogeneous in format and unknown in content;</li>
 				<li>the batch may be empty, which forbids T06;</li>
@@ -1126,6 +1133,15 @@
 				<li>what <code>destination</code> cannot hold is not remarked per file:
 				it belongs to <code>structural_loss</code>, announced once;</li>
 				<li>one file may produce several converted files;</li>
+				<li>the batch is the workspace <code>files_for_app()</code> hands at this
+				request; its files are locked while they are converted,
+				<code>lock()</code>, and released once each has its result,
+				<code>release()</code>;</li>
+				<li>a converted file is written beside the file it was made from, same
+				path and same root, as the provision of files requires of every app, and
+				it is added to the workspace which was handed;</li>
+				<li>that workspace is given back, <code>produced()</code>, and that the
+				batch has been treated is said, <code>finished</code>;</li>
 				<li>this treatment does not alter the batch.</li>
 			  </ul>
 			</li>
@@ -1136,20 +1152,21 @@
 			<ul class="mct">
 			<li><strong>Event</strong>: E7.</li>
 			<li><strong>Purpose</strong>: take the decisions back to what they were
-			before any were taken, without taking the batch away.</li>
+			before any were taken.</li>
 			<li><strong>Inputs</strong>: user choice.</li>
 			<li><strong>Outputs</strong>: <code>destination</code>,
 			<code>options</code>, <code>answers</code>, <code>general_options</code>,
-			<code>structural_loss</code> and <code>results</code>, all undefined.</li>
+			<code>structural_loss</code> and <code>results</code>, all undefined, and the
+			destination back to the default format of the annotated files.</li>
 			<li><strong>Preconditions</strong>: none.</li>
 			<li><strong>Postconditions</strong>: the conversion is in the state T01
 			finds it in at the beginning [012].</li>
 			<li><strong>Emission</strong>: F2, always; F7, always; E10, always.</li>
 			<li><strong>Rules</strong>:
 			  <ul>
-				<li>the batch is not reset: it was not decided here, and it is not this
-				application which delimits it [902];</li>
 				<li>the general options are decisions and are reset with the others;</li>
+				<li>the provision of files is asked to start over,
+				<code>start_over()</code>;</li>
 				<li>nothing of what was written on disk is undone: a new conversion is a
 				new set of decisions, not the undoing of a conversion which ran.</li>
 			  </ul>
@@ -1161,22 +1178,23 @@
 			<li><strong>Event</strong>: E11.</li>
 			<li><strong>Purpose</strong>: that the user reaches what was produced
 			without knowing where it was written.</li>
-			<li><strong>Inputs</strong>: <code>results</code>, and the files the API
-			wrote.</li>
-			<li><strong>Outputs</strong>: the way each produced file is reached.</li>
+			<li><strong>Inputs</strong>: the workspace which was handed, holding what
+			was produced.</li>
+			<li><strong>Outputs</strong>: what was produced, given back to the provision
+			of files.</li>
 			<li><strong>Preconditions</strong>: the batch has been converted.</li>
 			<li><strong>Postconditions</strong>: every file which was written is
-			reachable, and the user was told where none of them stands [801],
-			[802].</li>
-			<li><strong>Emission</strong>: F11, for every file which was written; nothing
-			at all for a file which was refused or skipped.</li>
+			reachable through the provision of files, and this application said where
+			none of them stands [801], [802].</li>
+			<li><strong>Emission</strong>: F11 and F19, for every file which was written;
+			nothing at all for a file which was refused or skipped.</li>
 			<li><strong>Rules</strong>:
 			  <ul>
 				<li>one file of the batch may have produced several files, and each of
-				them is reached;</li>
-				<li>this application does not say where a file stands: where it was
-				written is the business of what provided the files, and reaching it is
-				asked of that one [802];</li>
+				them is given back;</li>
+				<li>this application does not say where a file stands: it gives what it
+				produced back to the provision of files, <code>produced()</code>, and that
+				service shows it [802];</li>
 				<li>this treatment writes nothing and moves nothing.</li>
 			  </ul>
 			</li>
@@ -1213,7 +1231,7 @@
 		  <tr><th scope="col">PF</th><th scope="col">What it does</th><th scope="col">Triggered by</th><th scope="col">In charge</th><th scope="col">Where</th><th scope="col">When</th><th scope="col">Nature</th></tr>
 		</thead>
 		<tbody>
-		  <tr><td>PF1 (T01)</td><td>Sets the destination format, or cancels it</td><td>E1, E2</td><td>the user, and the server which restricts the choice</td><td>the browser, then the server</td><td>whenever she chooses or cancels</td><td>conversational</td></tr>
+		  <tr><td>PF1 (T01)</td><td>Sets the destination format</td><td>E1</td><td>the user, and the server which restricts the choice</td><td>the browser, then the server</td><td>whenever she chooses or cancels</td><td>conversational</td></tr>
 		  <tr><td>PF2 (T02)</td><td>Derives the options and the structural loss</td><td>E8</td><td>the server</td><td>the server</td><td>as soon as a destination is defined</td><td>automated</td></tr>
 		  <tr><td>PF3 (T03)</td><td>Answers an option</td><td>E3</td><td>the user</td><td>the browser, then the server</td><td>whenever she answers one</td><td>conversational</td></tr>
 		  <tr><td>PF4 (T04)</td><td>Sets a general option</td><td>E4</td><td>the user</td><td>the browser, then the server</td><td>whenever she sets one</td><td>conversational</td></tr>
@@ -1255,7 +1273,6 @@
 
 		<ul>
 		<li>Selecting the destination format</li>
-		<li>Cancelling the selected destination format</li>
 		<li>Answering an export option</li>
 		<li>Setting a general option</li>
 		<li>Requesting the conversion to run (triggers T06)</li>
@@ -1269,8 +1286,7 @@
 
 		<h4>Navigation</h4>
 
-		<p>Convert is a single page. The conversion is not a pathway in the sense
-		TextCueS gives that word: there are no successive steps, but decisions taken
+		<p>Convert is a single page. The conversion is not a pathway: there are no successive steps, but decisions taken
 		in any order, and one operation which requires them. The page shows the
 		formats, the options derived from the selected one, the general options, and
 		the results once the conversion has run.</p>
@@ -1278,7 +1294,7 @@
 		<p>From the page:</p>
 
 		<ul>
-		<li>one can select and cancel a destination without leaving it;</li>
+		<li>one can select a destination without leaving it;</li>
 		<li>one can run a conversion, which replaces the results shown;</li>
 		<li>one can start a new conversion, which resets the decisions.</li>
 		</ul>
@@ -1354,7 +1370,7 @@
 		  <tr><th scope="col">No.</th><th scope="col">Constraint</th><th scope="col">Imposed by</th></tr>
 		</thead>
 		<tbody>
-		  <tr><td>C1</td><td>At most one destination is defined at a time, and it may be cancelled, leaving none.</td><td>[105], [106], T01</td></tr>
+		  <tr><td>C1</td><td>One destination is defined at a time, and there is always one: the default format of the annotated files, until another is chosen.</td><td>[012], [105], [106], T01</td></tr>
 		  <tr><td>C2</td><td>A destination is one of the formats the system is able to write.</td><td>[102], T01</td></tr>
 		  <tr><td>C3</td><td>A decision which changes invalidates everything derived from it, which is then neither reused nor shown.</td><td>T01, T03, T04, T05, and E10</td></tr>
 		  <tr><td>C4</td><td>The correspondence between an unsupported property, the question it raises and the answers available is data of the model, never code.</td><td>T02, and what adding a property to the API must cost</td></tr>
@@ -1374,8 +1390,8 @@
 		  <tr><td>C18</td><td>A cause is stated in terms of the user's data, and never of the internals of a format.</td><td>[704], T06</td></tr>
 		  <tr><td>C19</td><td>One file of the batch may produce several converted files, and the report is not one line per file of the batch.</td><td>T06, T08</td></tr>
 		  <tr><td>C20</td><td>The setting <code>interoperability</code> is read and never written: the answer which holds is carried by the page, for one conversion.</td><td>[308], RO7</td></tr>
-		  <tr><td>C21</td><td>Nothing of a conversion is held on the server between two requests.</td><td>RO8, and a context where nothing is kept for a given user</td></tr>
-		  <tr><td>C22</td><td>Where a converted file stands is not said by this application.</td><td>[802], T08</td></tr>
+		  <tr><td>C21</td><td>Nothing of a conversion is held on the server between two requests. The manager of the provision of files is held by the response, as that service requires, and holds nothing of a conversion.</td><td>RO8, and a context where nothing is kept for a given user</td></tr>
+		  <tr><td>C22</td><td>Where a converted file stands is shown by the provision of files, not by this application.</td><td>[802], T08</td></tr>
 		  <tr><td>C23</td><td>What a failed write left on the disk is not removed here.</td><td>The API, which writes; and C13, nothing being undone for the batch</td></tr>
 		</tbody>
 		</table>
@@ -1554,9 +1570,9 @@
 		  <tr><td>PF1</td><td>Rebuild; read the writable formats from the API; verify the format chosen is one of them; hold it</td><td>Nothing: nothing is written</td></tr>
 		  <tr><td>PF2</td><td>Rebuild; read the properties of the destination; read the correspondence; raise the options and restrict their answers; gather what no option covers</td><td>Nothing: nothing is written</td></tr>
 		  <tr><td>PF3, PF4</td><td>Rebuild; hold the answer or the general option</td><td>Nothing</td></tr>
-		  <tr><td>PF6</td><td>Rebuild; verify a destination and a batch which is not empty; then, file by file: read, anticipate, write, and at most one second write</td><td>The result of one file. Not the batch, and not the writing itself</td></tr>
+		  <tr><td>PF6</td><td>Rebuild; ask the provision of files for the batch, and verify a destination and a batch which is not empty; lock the batch; then, file by file: read, anticipate, write, and at most one second write; release the batch, give back what was produced, and say it has finished</td><td>The result of one file. Not the batch, and not the writing itself</td></tr>
 		  <tr><td>PF7</td><td>Rebuild nothing: answer the page in the state T01 finds at the beginning</td><td>Nothing</td></tr>
-		  <tr><td>PF8</td><td>Ask the provider of files for the way each produced file is reached</td><td>Nothing</td></tr>
+		  <tr><td>PF8</td><td>Give what was produced back to the provision of files, in the workspace it handed</td><td>Nothing</td></tr>
 		</tbody>
 		</table>
 
@@ -1616,7 +1632,7 @@
 		  <tr><td>formats</td><td>Knows which formats can be written and what each holds, and derives from a destination the options, their answers and the structural loss. Reads no file</td><td>PF1, PF2</td></tr>
 		  <tr><td>remediation</td><td>Transforms annotations in memory: applies what the answers require, verifies the result again, chains, and says which transformation touched what. Reads and writes no file</td><td>What PF6 asks of it</td></tr>
 		  <tr><td>conversion</td><td>Reads a file, calls the remediation, writes, retries once, and produces the result of that file</td><td>PF6</td></tr>
-		  <tr><td>provision</td><td>Reads the batch the provision of files exposes, and asks it by what each produced file is reached. Alters nothing of it</td><td>PF5, PF8</td></tr>
+		  <tr><td>provision</td><td>Reads the batch the provision of files hands, says what it locks and releases, gives back what was produced, and says when it has finished. Alters nothing of the batch</td><td>PF5, PF6, PF8</td></tr>
 		  <tr><td>decisions</td><td>Rebuilds a conversion from what the page transmitted, holds what was decided, reads the settings, and says what is still missing</td><td>PF3, PF4, PF7, and the beginning of every other</td></tr>
 		  <tr><td>presentation</td><td>Renders the state, collects the decisions, triggers the events</td><td>The view of every procedure</td></tr>
 		</tbody>
@@ -1628,7 +1644,7 @@
 		<li>The <b>formats</b> module is the only one which knows what a format holds, and it holds it as data. The day the API gains a property, it is the only one to read again &mdash; and what is read again is a file, not a branch.</li>
 		<li><b>Remediation</b> touches no disk: it is given a content and gives back a content. It is where the business logic of this application lies, and it is what can be tested with no file at all.</li>
 		<li>The <b>conversion</b> module is the only one which reads and writes files, so it is the only one which meets a typed cause, and the only one to read again the day the API raises another.</li>
-		<li><b>Provision</b> is the only one which speaks to the neighbouring domain. It is given a batch and a way to reach a file, never a path, so there is nowhere here for the place of a converted file to be known.</li>
+		<li><b>Provision</b> is the only one which calls the provision of files on files. It is given the manager of that service by the response, which keeps for itself the operations of the page; where a converted file stands is shown by that service, so it is known nowhere here.</li>
 		<li><b>Decisions</b> is the only one which knows what the page transmits. It holds no state of its own between two requests, and it is where the invalidation is done: what was derived from a decision which changed is not rebuilt.</li>
 		<li><b>Presentation</b> decides nothing. What it shows was decided before it was called, and the JavaScript it carries renders and nothing else.</li>
 		</ul>
@@ -1693,8 +1709,8 @@
 			checked elsewhere, so no file selection belongs here [202]; and what it
 			produces is given back to that same service, which is what makes it reachable
 			without the user knowing where it stands [801], [802]. T05 still states a
-			provided batch and not a constituted one, and T08 asks rather than
-			answers.</p>
+			provided batch and not a constituted one, and T08 gives back rather than
+			asks.</p>
 
 		</section>
 
@@ -1705,8 +1721,9 @@
 
 			<ul>
 				<li><strong>Model</strong>: knows the formats, performs T02 and T06, and
-				is the only one which speaks to the provision of files — for the batch
-				(T05) and for reaching what was produced (T08). It is a façade over the
+				is the only one which calls the provision of files on files — for the
+				batch (T05), for what it holds while it converts (T06), and for giving
+				back what was produced (T08). It is a façade over the
 				SPPAS reading and writing capabilities.</li>
 				<li><strong>Controller</strong>: identifies the task requested, checks its
 				preconditions, chooses the treatment to run, invalidates the derived data,
@@ -1757,14 +1774,20 @@
 			reads, calls <code>ModelRemediation</code>, writes, retries once after
 			remediating a typed failure, and produces the result of that file: its status,
 			its remarks, the cause of a refusal. It never interrupts the batch, and one
-			file may produce several converted files.</p>
+			file may produce several converted files. The batch it is given is the
+			workspace <code>ModelProvision.batch()</code> gives: it reads the files checked
+			in it, and adds there every file it wrote.</p>
 
-			<p><code>ModelProvision</code> is the only class which speaks to the
-			provision of files. It exposes the batch that domain holds, and asks it by
-			what each produced file is reached (T08). It is given a way to reach a file
-			and never a path: where a converted file stands is not said by this
-			application C22. It alters nothing of the batch C11, and it is the only place
-			to be read again the day that domain changes.</p>
+			<p><code>ModelProvision</code> is the only class which calls the provision of
+			files on files. It is given the manager of that service, which the response
+			holds: it reads the batch, <code>files_for_app()</code>; it says what it
+			takes and gives back while the batch is converted, <code>lock()</code> and
+			<code>release()</code>; it gives back what was produced,
+			<code>produced()</code>; and it says when the batch has been treated,
+			<code>finished</code>. Where a converted file stands is shown by that service
+			and not by this application C22. It alters nothing of the batch C11, and it is
+			the only place to be read again the day the operations of that domain on files
+			change.</p>
 
 			<p>This structure lets the knowledge of formats, the transformation of
 			annotations, the conversion of files and the dependency on a neighbour evolve
@@ -1799,7 +1822,7 @@
 			<ul class="req">
 			<li><strong>start</strong> — transmitted: nothing. Preconditions: none.
 			Triggers: none. Produces: the page in its initial state, with the writable
-			formats and no destination.</li>
+			formats and the default format of the annotated files as destination.</li>
 			<li><strong>destination</strong> — transmitted: the destination.
 			Preconditions: the format can be written. Triggers: T02. Produces: the
 			options, their answers, the structural loss.</li>
@@ -1815,8 +1838,8 @@
 			every option answered, defaults applying to those left unanswered. Triggers:
 			T06. Produces: the results.</li>
 			<li><strong>reset</strong> — transmitted: nothing. Preconditions: none.
-			Triggers: none. Produces: the page in its initial state. The batch is not
-			reset: it belongs to the context, not to Convert.</li>
+			Triggers: none. Produces: the page in its initial state. The provision of files
+			starts over.</li>
 			</ul>
 
 			<h5>Default answers</h5>
@@ -1889,7 +1912,7 @@
 
 			<h5>Views</h5>
 
-			<p>As in TextCueS, the WhakerPy response builds the whole HTML tree and the
+			<p>The WhakerPy response builds the whole HTML tree and the
 			structural elements common to the application — head, header, nav, footer —
 			are factored there. The Convert views build only the content of
 			<code>body &gt; main</code>, and of <code>body &gt; script</code> where
@@ -1910,7 +1933,7 @@
 			makes a matrix of formats by properties both indispensable and unreadable.</p>
 
 			<p><code>FormatsPanel</code> presents the formats that can be written, and
-			lets one of them be selected or cancelled. It is a list of extensions, grouped
+			lets one of them be selected. It is a list of extensions, grouped
 			where grouping is possible: the extensions of one piece of software together,
 			the subtitle formats together, the rest as they come. The grouping is
 			heterogeneous by nature — Praat holds three extensions, some formats hold no
@@ -1947,6 +1970,11 @@
 			batch: its status, the remarks attached to it, and the cause of a refusal. It
 			exists only once a conversion has run. One file of the batch may produce
 			several converted files: the report is not a line per input file.</p>
+
+			<p>The container of the provision of files stands in the page as well. It is
+			not a panel of Convert: the response places it under the node it chose, and
+			it is where the person designates the files of the batch, says they are
+			ready, and reaches what was produced.</p>
 
 			<p>JavaScript is interface support. It handles local interactions — selecting
 			a format, answering an option, refreshing the aside once a destination is
@@ -1988,7 +2016,7 @@
 		  <tr><td><code>ModelFormats</code></td><td>module <i>formats</i></td><td>&mdash;</td><td>writable_formats(), properties_of(format), options_of(format), structural_loss_of(format)</td></tr>
 		  <tr><td><code>ModelRemediation</code></td><td>module <i>remediation</i></td><td>&mdash;</td><td>remediate(content, properties, answers), what_was_transformed()</td></tr>
 		  <tr><td><code>ModelConversion</code></td><td>module <i>conversion</i></td><td>&mdash;</td><td>convert(batch, destination, answers, general_options), convert_one(file, &hellip;)</td></tr>
-		  <tr><td><code>ModelProvision</code></td><td>module <i>provision</i></td><td>&mdash;</td><td>batch(), reached_by(file)</td></tr>
+		  <tr><td><code>ModelProvision</code></td><td>module <i>provision</i></td><td>&mdash;</td><td>batch(), lock(names), release(names), produced(workspace), finished()</td></tr>
 		  <tr><td><code>Format</code></td><td>FORMAT, SUPPORTS</td><td>extension, software, properties</td><td>holds(property), can_be_written()</td></tr>
 		  <tr><td><code>Option</code></td><td>OPTION, ANSWER, PROPERTY</td><td>option, question, answers, default answer, alters</td><td>answers_allowed_by(format), default_for(settings)</td></tr>
 		  <tr><td><code>Conversion</code></td><td>CONVERSION, CHOICE</td><td>destination, override, heuristic, answers, /what is missing</td><td>answer_of(option), what_is_missing(batch), invalidates()</td></tr>
@@ -2002,11 +2030,11 @@
 		<code>Conversion</code> is what was decided &mdash; the destination, the two
 		general options, and one answer per option &mdash; rebuilt at every request and
 		held between none. The four sub-models are what the fa&ccedil;ade holds, and the
-		fourth is <code>ModelProvision</code>: the batch and the way a produced file is
-		reached are asked of a neighbour, and one class is what asks it.</p>
+		fourth is <code>ModelProvision</code>: the batch is asked of a neighbour, what
+		was produced is given back to it, and one class is what does it.</p>
 
 		<p><code>Conversion.what_is_missing()</code> is given the batch and does not hold
-		it: what is missing is a destination or a batch which is not empty [031], and
+		it: what is missing is a batch which is not empty [031], and
 		the batch belongs to a neighbour. A class which held it would hold what it is
 		forbidden to alter.</p>
 
@@ -2031,6 +2059,7 @@
 		  <tr><td>uses</td><td><code>ModelFormats</code> &rarr; <code>Format</code>, <code>Option</code></td><td>A dependency: it makes them from the API and from the correspondence, and keeps none</td></tr>
 		  <tr><td>uses</td><td><code>ModelConversion</code> &rarr; <code>ModelRemediation</code>, <code>FileResult</code></td><td>A dependency: it asks for a content and gives back a result</td></tr>
 		  <tr><td>uses</td><td><code>ModelConversion</code> &rarr; the API of SPPAS</td><td>A dependency, and the only tie of this application to what reads and writes files</td></tr>
+		  <tr><td>uses</td><td><code>ModelConversion</code> &rarr; <code>sppasWorkspace</code></td><td>A dependency: the batch is a workspace; it reads the files checked in it and adds there what it wrote</td></tr>
 		  <tr><td>uses</td><td><code>ModelProvision</code> &rarr; the provision of files</td><td>A dependency, and the only tie of this application to that domain</td></tr>
 		  <tr><td>none</td><td><code>ModelRemediation</code></td><td>Tied to no file and to no neighbour: a content in, a content out</td></tr>
 		</tbody>
@@ -2044,13 +2073,14 @@
 		<pre class="dark"><code>[ConvertModel|writable_formats();options_of();structural_loss_of();convert()]++1-1&gt;[ModelFormats|writable_formats();properties_of();options_of();structural_loss_of()]
 [ConvertModel]++1-1&gt;[ModelRemediation|remediate();what_was_transformed()]
 [ConvertModel]++1-1&gt;[ModelConversion|convert();convert_one()]
-[ConvertModel]++1-1&gt;[ModelProvision|batch();reached_by()]
+[ConvertModel]++1-1&gt;[ModelProvision|batch();lock();release();produced();finished()]
 
 [ModelFormats]-.-&gt;[Format|extension;software;properties|holds();can_be_written()]
 [ModelFormats]-.-&gt;[Option|option;question;answers;default;alters|answers_allowed_by();default_for()]
 [ModelConversion]-.-&gt;[ModelRemediation]
 [ModelConversion]-.-&gt;[FileResult|file;status;cause;remarks]
 [ModelConversion]-.-&gt;[sppasTrsRW]
+[ModelConversion]-.-&gt;[sppasWorkspace]
 [ModelFormats]-.-&gt;[FileFormatProperty]</code></pre>
 
 	</section>
@@ -2070,7 +2100,7 @@
 		  <tr><td><code>DestinationPanel</code></td><td>&mdash;</td><td>What the chosen format holds and what it does not, and the question every property which is not held raises</td></tr>
 		  <tr><td><code>ComparePanel</code></td><td>&mdash;</td><td>The formats by properties, one against another</td></tr>
 		  <tr><td><code>GeneralPanel</code></td><td>&mdash;</td><td>What holds for the whole conversion</td></tr>
-		  <tr><td><code>ResultsPanel</code></td><td>&mdash;</td><td>What came of every file of the batch: its status, its remarks, the cause of a refusal, and the way to what was written</td></tr>
+		  <tr><td><code>ResultsPanel</code></td><td>&mdash;</td><td>What came of every file of the batch: its status, its remarks, the cause of a refusal. What was written is shown by the provision of files</td></tr>
 		</tbody>
 		</table>
 
@@ -2131,12 +2161,24 @@
 		this application anything outside it holds. <b>The controller assembles
 		nothing</b>: it is built, it is called once, and it is dropped.</p>
 
+		<p>The response holds as well the manager of the provision of files, which that
+		service requires an app to hold between two requests. It answers the tasks of
+		this application first, and offers what it does not recognise to the manager,
+		<code>consumes()</code>; it places its container in the page,
+		<code>populate_view()</code> then <code>container()</code>; and it asks it
+		whether the person said the workspace is ready, <code>is_ready()</code>; and it
+		asks it to start over when she starts a new conversion,
+		<code>start_over()</code>. The
+		operations on files it hands over to the fa&ccedil;ade, which gives them to
+		<code>ModelProvision</code>.</p>
+
 		<h4>What is tied to what</h4>
 
 		<table>
 		<thead><tr><th scope="col">Tie</th><th scope="col">Legs</th><th scope="col">What it is</th></tr></thead>
 		<tbody>
 		  <tr><td>holds</td><td><code>ConvertResponseRecipe</code> 1 &mdash; 1 <code>ConvertView</code>, 1 <code>ConvertController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
+		  <tr><td>holds</td><td><code>ConvertResponseRecipe</code> 1 &mdash; 1 the manager of the provision of files</td><td>Held between two requests, as that service requires; it holds nothing of a conversion. C21</td></tr>
 		  <tr><td>holds</td><td><code>ConvertController</code> 1 &mdash; 1 <code>ConvertRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
 		  <tr><td>holds</td><td><code>ConvertRecord</code> 1 &mdash; 1 <code>Conversion</code></td><td>A composition: what was decided lives inside what one request carries</td></tr>
 		  <tr><td>uses</td><td><code>ConvertController</code> &rarr; <code>ConvertModel</code></td><td>A dependency: it calls the fa&ccedil;ade, once per request</td></tr>
@@ -2205,8 +2247,8 @@
 	<h3>The sequence, from the first request to the results</h3>
 
 		<ol>
-		<li>The page is asked for. The formats which can be written are read, and no
-		destination is defined [012].</li>
+		<li>The page is asked for. The formats which can be written are read, and the
+		destination is the default format of the annotated files [012].</li>
 		<li>The batch is read from the provision of files. It is empty, and what is
 		missing is said [203].</li>
 		<li>The user chooses a destination. The request carries it; the controller
@@ -2225,7 +2267,7 @@
 		<li>The results replace what was shown: a status for each file, its remarks, and
 		the cause of each refusal, in the words of her data.</li>
 		<li>What was produced is reached, without her being told where it stands.</li>
-		<li>She starts again: the decisions are gone and the batch is not.</li>
+		<li>She starts again: the decisions are gone, and she designates a new batch.</li>
 		</ol>
 
 		<p>Steps 3 to 6 happen in any order, and any of them may happen twice. There is
@@ -2244,7 +2286,7 @@
 		<table>
 		<thead><tr><th scope="col">Level</th><th scope="col">What happens</th><th scope="col">What is done</th></tr></thead>
 		<tbody>
-		  <tr><td>1</td><td>A decision is missing: no destination, an empty batch</td><td>No treatment runs, and which decision is missing is said [022]. It is not an error and nothing is raised</td></tr>
+		  <tr><td>1</td><td>A decision is missing: an empty batch</td><td>No treatment runs, and which decision is missing is said [022]. It is not an error and nothing is raised</td></tr>
 		  <tr><td>2</td><td>One file is concerned: what it holds exceeds the destination, or its output exists and may not be replaced</td><td>That file is refused or skipped, the others are converted, and the cause is stated in terms of her data and not of the internals of a format [704]</td></tr>
 		  <tr><td>3</td><td>Whoever runs the machine has to know: a file which cannot be read at all, a folder which cannot be written</td><td>Said where he reads it, and the file carries a refusal like any other so that the batch goes on</td></tr>
 		</tbody>
@@ -2314,7 +2356,7 @@
 		  <tr><td>Give the formats which can be written</td><td>pre: none. post: every format the system is able to write, with what each of them holds, and never one it cannot write. It reads no file of the user. C2</td></tr>
 		  <tr><td>Give the options of a destination</td><td>pre: the destination is a format which can be written. post: one option per unsupported property an option covers, with the answers that destination allows and the answer which holds if none is given. No file is read. C5, C7, C8</td></tr>
 		  <tr><td>Give the structural loss of a destination</td><td>pre: the same. post: the unsupported properties no option covers; it depends on the destination alone, and is the same for every file. C6</td></tr>
-		  <tr><td>Convert</td><td>pre: a destination, a batch which is not empty, and one answer standing for every option. post: one result per file of the batch, each holding a status, the remarks attached to it and the cause of a refusal; the batch is what it was. C11, C12</td></tr>
+		  <tr><td>Convert</td><td>pre: a destination, a batch &mdash; the workspace the provision of files handed &mdash; which is not empty, and one answer standing for every option. post: one result per file of the batch, each holding a status, the remarks attached to it and the cause of a refusal; no file of the batch was removed or rewritten, and what was added to the workspace is what was produced. C11, C12</td></tr>
 		</tbody>
 		</table>
 
@@ -2349,7 +2391,7 @@
 		<caption>ModelConversion</caption>
 		<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 		<tbody>
-		  <tr><td>Convert a batch</td><td>pre: the preconditions of the conversion are verified. post: one result per file, in the order of the batch; the failure of one is a result and never an interruption; nothing of the batch is altered. C11, C13</td></tr>
+		  <tr><td>Convert a batch</td><td>pre: the preconditions of the conversion are verified. post: one result per file, in the order of the batch; the failure of one is a result and never an interruption; no file of the batch is removed or rewritten, and what it wrote is added to the workspace it was given. C11, C13</td></tr>
 		  <tr><td>Convert one file</td><td>pre: a file of the batch. post: written, written with remarks, refused with a cause, or skipped — one of the four and no other; at most two writes were attempted; the cause is stated in terms of the user's data. C16, C17, C18</td></tr>
 		</tbody>
 		</table>
@@ -2362,21 +2404,22 @@
 		<caption>ModelProvision</caption>
 		<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 		<tbody>
-		  <tr><td>Give the batch</td><td>pre: none. post: the set of files that domain exposes, possibly empty; read at every request and altered by nothing here. C11</td></tr>
-		  <tr><td>Say by what a file is reached</td><td>pre: the file was produced by the conversion. post: the way it is reached, as that domain gives it — never a path, and never a place of the machine. C22</td></tr>
+		  <tr><td>Give the batch</td><td>pre: none. post: the workspace the provision of files hands, holding the files to be treated and them only, possibly empty; read when the conversion runs, and the workspace of the person never reached. C11</td></tr>
+		  <tr><td>Lock and release</td><td>pre: files of the batch. post: they are locked while they are converted, and released once each has its result; none is still locked once the batch has been treated</td></tr>
+		  <tr><td>Give back what was produced</td><td>pre: the batch has been converted. post: what was written is in the workspace which was handed, that workspace is given back, and that the batch has been treated is said. C22</td></tr>
 		</tbody>
 		</table>
 
-		<p>It is the only class which speaks to that domain, so it is the only one to be
-		read again the day it changes. It is also where C22 stands: nothing here is ever
-		given a path, so no code of this application can show one.</p>
+		<p>It is the only class which calls that domain on files, so it is the only one
+		to be read again the day those operations change. It is also where C22 stands:
+		what was produced is given back, and that service shows where it stands.</p>
 
 		<table>
 		<caption>Conversion, ConvertRecord</caption>
 		<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 		<tbody>
 		  <tr><td>Give the answer of an option</td><td>pre: none. post: the answer which was chosen, or the default of that option; never nothing. C8</td></tr>
-		  <tr><td>Say what is missing</td><td>pre: a batch is given to it. post: a destination when none is defined, the batch when it is empty, nothing when the conversion may run. It holds no batch: what it is forbidden to alter, it does not keep. C12</td></tr>
+		  <tr><td>Say what is missing</td><td>pre: a batch is given to it. post: the batch when it is empty, nothing when the conversion may run. It holds no batch: what it is forbidden to alter, it does not keep. C12</td></tr>
 		  <tr><td>Say what a change invalidates</td><td>pre: none. post: a change of destination invalidates the properties, the options, the answers, the structural loss and the results; a change of an answer, of a general option or of the batch invalidates the results. C3</td></tr>
 		  <tr><td>Serialise a record</td><td>pre: none. post: everything a next request needs in order to rebuild this conversion, and nothing of the machine</td></tr>
 		  <tr><td>Parse a record</td><td>pre: what a page transmitted. post: the conversion as it was, or an empty conversion when nothing was transmitted. Parsed twice, it gives the same conversion. C21</td></tr>
@@ -2412,7 +2455,8 @@
 		<caption>ConvertResponseRecipe</caption>
 		<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 		<tbody>
-		  <tr><td>Bake</td><td>pre: a request, carrying a task or carrying none. post: the tree of the page, or the payload of an update. The view and the controller were built, the controller was called once, and neither of them outlives the request</td></tr>
+		  <tr><td>Answer the events</td><td>pre: the events of a request. post: the tasks of this application are answered first; the rest is offered to the provision of files, and when it says the workspace is ready, what is still missing is said again</td></tr>
+		  <tr><td>Bake</td><td>pre: a request, carrying a task or carrying none. post: the tree of the page, or the payload of an update, holding the container of the provision of files. The view and the controller were built, the controller was called once, and neither of them outlives the request</td></tr>
 		</tbody>
 		</table>
 
@@ -2431,7 +2475,7 @@
 		<table>
 		<thead><tr><th scope="col">No.</th><th scope="col">Held by</th></tr></thead>
 		<tbody>
-		  <tr><td>C1</td><td><code>Conversion</code>, which holds one destination or none</td></tr>
+		  <tr><td>C1</td><td><code>Conversion</code>, which holds one destination, and always one</td></tr>
 		  <tr><td>C2</td><td><code>ModelFormats</code>, which is what says a format can be written; the façade reads it before holding a destination</td></tr>
 		  <tr><td>C3</td><td><code>Conversion</code>, which says what a change invalidates, and <code>ConvertController</code>, which rebuilds only what was transmitted</td></tr>
 		  <tr><td>C4</td><td><code>ModelFormats</code>, reading the file which holds the correspondence</td></tr>
@@ -2452,14 +2496,14 @@
 		  <tr><td>C19</td><td><code>ResultsPanel</code></td></tr>
 		  <tr><td>C20</td><td><code>Conversion</code>, which is given the setting as a default and never writes it</td></tr>
 		  <tr><td>C21</td><td><code>ConvertRecord</code>, and <code>ConvertController</code>, which keeps nothing after the request</td></tr>
-		  <tr><td>C22</td><td><code>ModelProvision</code>, which is given a way to reach a file and never a path. It is held by what that operation is not given: nothing else of this application ever sees one, so there is nowhere for it to be broken</td></tr>
+		  <tr><td>C22</td><td><code>ModelProvision</code>, which gives what was produced back to the provision of files; nothing of this application shows where it stands</td></tr>
 		  <tr><td>C23</td><td><code>ModelConversion</code>, which removes nothing</td></tr>
 		</tbody>
 		</table>
 
-		<p><b>C22 is held by what one operation is not given</b>, which is the
-		strongest way to hold a rule: no code can break it, because no code is handed
-		what it would take to break it. Every one of the twenty-three names exactly one
+		<p><b>C22 is held by giving back</b>: what was produced is handed to the
+		provision of files, which shows it, and no code of this application has to say
+		where it stands. Every one of the twenty-three names exactly one
 		place, C11 excepted, which names two &mdash; and they are two halves of one thing:
 		one class reads the batch, another writes nothing into it, and neither can do the
 		other's half.</p>
@@ -2485,7 +2529,7 @@
 	<section class="subssection">
 	<h3>The models</h3>
 
-		<p>Twenty-five tests for the four sub-models and the façade. The controller, the
+		<p>Twenty-seven tests for the four sub-models and the façade. The controller, the
 		view and its panels are not covered here and are owed.</p>
 
 		<h4>ModelRemediation, with nothing installed</h4>
@@ -2536,7 +2580,7 @@
 		<tbody>
 		  <tr><td>TE14</td><td>One result per file of the batch, in the order of the batch</td><td>T06</td></tr>
 		  <tr><td>TE15</td><td>The failure of one file never interrupts the others: the files after it have their results</td><td>C13</td></tr>
-		  <tr><td>TE16</td><td>The batch is what it was: not one file added, removed or rewritten</td><td>C11</td></tr>
+		  <tr><td>TE16</td><td>Not one file of the batch removed or rewritten; what was added to the workspace handed is what was produced, and nothing else</td><td>C11</td></tr>
 		  <tr><td>TE17</td><td>A file whose output exists is skipped; with <code>override</code> it is written</td><td>C17</td></tr>
 		  <tr><td>TE18</td><td>A write which fails on a typed cause is attempted once more, and never a third time</td><td>C16</td></tr>
 		  <tr><td>TE19</td><td>A refused file carries a cause, and that cause names what was in her file and not what is in the format</td><td>C18</td></tr>
@@ -2554,8 +2598,10 @@
 		<table>
 		<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
 		<tbody>
-		  <tr><td>TE22</td><td>The batch is what that domain exposes, empty when it exposes nothing, and nothing is written into it</td><td>C11</td></tr>
-		  <tr><td>TE23</td><td>What is given for a produced file is a way to reach it, and never a path of the machine</td><td>C22</td></tr>
+		  <tr><td>TE22</td><td>The batch is the workspace the provision of files hands, empty when nothing is checked, and the workspace of the person has not moved</td><td>C11</td></tr>
+		  <tr><td>TE23</td><td>What was produced is given back to the provision of files, in the workspace it handed, and this application shows no path of the machine</td><td>C22</td></tr>
+		  <tr><td>TE26</td><td>The files of the batch are locked while they are converted, and none is still locked once the batch has been treated</td><td>T06</td></tr>
+		  <tr><td>TE27</td><td>That the batch has been treated is said once, whatever the results</td><td>T06</td></tr>
 		</tbody>
 		</table>
 
@@ -2590,7 +2636,7 @@
 		markup and not against an assertion.</li>
 		</ul>
 
-		<p>Thirteen of the twenty-five need nothing but the API, six need a disk, two
+		<p>Thirteen of the twenty-seven need nothing but the API, six need a disk, four
 		need the neighbouring domain. The cutting into sub-models is what makes that
 		count possible, and the count is what says whether the cutting was worth
 		anything.</p>
@@ -3019,7 +3065,7 @@
 
 		<p>
 		<label class="switch" for="mk-o1">
-			<input type="checkbox" id="mk-o1">
+			<input type="checkbox" id="mk-o1" aria-label="Replace an output file that already exists">
 			<span class="switch-slider round switch-no-text"></span>
 		</label>
 		Replace an output file that already exists
@@ -3027,7 +3073,7 @@
 
 		<p>
 		<label class="switch" for="mk-o2">
-			<input type="checkbox" id="mk-o2">
+			<input type="checkbox" id="mk-o2" aria-label="Guess the format of a file whose extension is unknown">
 			<span class="switch-slider round switch-no-text"></span>
 		</label>
 		Guess the format of a file whose extension is unknown
@@ -3080,7 +3126,7 @@
 		</tbody>
 		</table>
 
-		<p><button type="button" class="apply-button">Convert something else</button></p>
+		<p><button type="button" class="apply-button">Start over</button></p>
 
 		</section>
 

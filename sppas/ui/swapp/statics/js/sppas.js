@@ -43,5 +43,6 @@ import SetupManager from './setup_manager.js';
 import DashboardManager from './dashboard_manager.js';
 import FeedbackManager from './feedback_manager.js';
 import TraceManager from './trace_manager.js';
+import ConvertManager from './convert_manager.js';
 
-export { SetupManager, DashboardManager, FeedbackManager, TraceManager };
+export { SetupManager, DashboardManager, FeedbackManager, TraceManager, ConvertManager };

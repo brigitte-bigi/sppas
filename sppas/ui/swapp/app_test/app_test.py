@@ -45,6 +45,7 @@ from whakerpy.httpd import BaseResponseRecipe
 
 from ..swapp_base.swapp_bakery import swappWebData
 from .tests_maker import swappTestsResponseRecipe
+from .tests_model import swappTestsModel
 
 # ---------------------------------------------------------------------------
 
@@ -73,11 +74,16 @@ class swappTestsWebData(swappWebData):
     def is_page(self, page_name: str) -> bool:
         """Override. Return true if the given page name can be baked.
 
+        The index, and the page of every test it knows.
+
         :param page_name: The name of the page to check.
         :return: (bool) True if the given page name can be baked.
 
         """
-        return page_name == swappTestsResponseRecipe.page()
+        if page_name == swappTestsResponseRecipe.page():
+            return True
+
+        return swappTestsModel().is_page(page_name)
 
     # -----------------------------------------------------------------------
 
@@ -93,6 +99,10 @@ class swappTestsWebData(swappWebData):
 
         if page_name == swappTestsResponseRecipe.page():
             return swappTestsResponseRecipe()
+
+        recipe = swappTestsModel().recipe_of(page_name)
+        if recipe is not None:
+            return recipe()
 
         # Any other page name
         return None

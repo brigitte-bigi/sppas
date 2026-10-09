@@ -50,12 +50,12 @@ import tempfile
 import threading
 import time
 
-from sppas.ui.swapp.services.deposit.deposit_settings import sppasDepositSettings
-from sppas.ui.swapp.services.deposit.deposit_acceptance import sppasSpaceAcceptance
-from sppas.ui.swapp.services.deposit.deposit_place import sppasPlace
-from sppas.ui.swapp.services.deposit.deposit_place import sppasSpaceFolder
-from sppas.ui.swapp.services.deposit.deposit_address import sppasFileAddress
-from sppas.ui.swapp.services.deposit.deposit_space import sppasDepositSpace
+from sppas.ui.swapp.services.deposit.deposit_settings import swappDepositSettings
+from sppas.ui.swapp.services.deposit.deposit_acceptance import swappSpaceAcceptance
+from sppas.ui.swapp.services.deposit.deposit_place import swappPlace
+from sppas.ui.swapp.services.deposit.deposit_place import swappSpaceFolder
+from sppas.ui.swapp.services.deposit.deposit_address import swappFileAddress
+from sppas.ui.swapp.services.deposit.deposit_space import swappDepositSpace
 
 # ---------------------------------------------------------------------------
 
@@ -68,8 +68,8 @@ class TestSpaceAcceptance(unittest.TestCase):
     """TE1 to TE4. It reads no disk: nothing is installed here."""
 
     def setUp(self):
-        self.settings = sppasDepositSettings()
-        self.acceptance = sppasSpaceAcceptance(self.settings)
+        self.settings = swappDepositSettings()
+        self.acceptance = swappSpaceAcceptance(self.settings)
 
     # -----------------------------------------------------------------------
 
@@ -84,10 +84,10 @@ class TestSpaceAcceptance(unittest.TestCase):
         self.assertEqual(self.settings.place_volume, volume)
         self.assertEqual(self.settings.places, places)
 
-        other = sppasDepositSettings()
+        other = swappDepositSettings()
         other.file_size = self.settings.file_size // 2
         self.assertEqual(other.file_size,
-                         sppasSpaceAcceptance(other).what_is_accepted()[0])
+                         swappSpaceAcceptance(other).what_is_accepted()[0])
 
     # -----------------------------------------------------------------------
 
@@ -128,7 +128,7 @@ class TestPlace(unittest.TestCase):
     """TE5 and TE6. No place is ever made here, and no clock is faked."""
 
     def setUp(self):
-        self.settings = sppasDepositSettings()
+        self.settings = swappDepositSettings()
 
     # -----------------------------------------------------------------------
 
@@ -140,14 +140,14 @@ class TestPlace(unittest.TestCase):
         """
         duration = self.settings.duration
 
-        young = sppasPlace(sppasPlace.a_name_for(time.time() - MINUTE), self.settings)
+        young = swappPlace(swappPlace.a_name_for(time.time() - MINUTE), self.settings)
         self.assertTrue(young.is_of_this_hour())
         self.assertAlmostEqual(time.time() - MINUTE, young.moment(), delta=1.)
 
-        edge = sppasPlace(sppasPlace.a_name_for(time.time() - duration + MINUTE), self.settings)
+        edge = swappPlace(swappPlace.a_name_for(time.time() - duration + MINUTE), self.settings)
         self.assertTrue(edge.is_of_this_hour())
 
-        old = sppasPlace(sppasPlace.a_name_for(time.time() - duration - MINUTE), self.settings)
+        old = swappPlace(swappPlace.a_name_for(time.time() - duration - MINUTE), self.settings)
         self.assertFalse(old.is_of_this_hour())
 
     # -----------------------------------------------------------------------
@@ -155,7 +155,7 @@ class TestPlace(unittest.TestCase):
     def test_te6_a_name_this_domain_never_made(self):
         """TE6. It carries no moment, and it is not of this hour. C1"""
         for name in ("", "..", "a_folder", "1234", "/etc"):
-            place = sppasPlace(name, self.settings)
+            place = swappPlace(name, self.settings)
             self.assertEqual(0., place.moment())
             self.assertFalse(place.is_of_this_hour())
 
@@ -167,7 +167,7 @@ class TestPlace(unittest.TestCase):
 
         """
         moment = time.time()
-        self.assertNotEqual(sppasPlace.a_name_for(moment), sppasPlace.a_name_for(moment))
+        self.assertNotEqual(swappPlace.a_name_for(moment), swappPlace.a_name_for(moment))
 
 # ---------------------------------------------------------------------------
 
@@ -176,9 +176,9 @@ class TestFileAddress(unittest.TestCase):
     """TE7 to TE9. It touches no disk: nothing is written here either."""
 
     def setUp(self):
-        self.settings = sppasDepositSettings()
-        self.address = sppasFileAddress(self.settings)
-        self.place = sppasPlace.a_name_for(time.time())
+        self.settings = swappDepositSettings()
+        self.address = swappFileAddress(self.settings)
+        self.place = swappPlace.a_name_for(time.time())
 
     # -----------------------------------------------------------------------
 
@@ -230,9 +230,9 @@ class TestSpaceFolder(unittest.TestCase):
     """TE10 to TE15. On a space of its own, deleted with the test."""
 
     def setUp(self):
-        self.settings = sppasDepositSettings()
+        self.settings = swappDepositSettings()
         self.settings.space = tempfile.mkdtemp(prefix="test_deposit_")
-        self.folder = sppasSpaceFolder(self.settings)
+        self.folder = swappSpaceFolder(self.settings)
 
     def tearDown(self):
         shutil.rmtree(self.settings.space, ignore_errors=True)
@@ -246,7 +246,7 @@ class TestSpaceFolder(unittest.TestCase):
         """
         self.assertEqual(list(), self.folder.places())
 
-        name = self.folder.make_a_place(sppasPlace.a_name_for(time.time()))
+        name = self.folder.make_a_place(swappPlace.a_name_for(time.time()))
         self.assertTrue(len(name) > 0)
         self.assertEqual([name], self.folder.places())
         self.assertEqual(list(), self.folder.files(name))
@@ -263,7 +263,7 @@ class TestSpaceFolder(unittest.TestCase):
         """
         self.assertEqual(0, self.folder.volume("no_such_place"))
 
-        name = self.folder.make_a_place(sppasPlace.a_name_for(time.time()))
+        name = self.folder.make_a_place(swappPlace.a_name_for(time.time()))
         self.assertEqual(0, self.folder.volume(name))
 
         self.folder.make_a_file(name, "a.wav", b"12345")
@@ -278,7 +278,7 @@ class TestSpaceFolder(unittest.TestCase):
         judges what the bytes say. C7
 
         """
-        name = self.folder.make_a_place(sppasPlace.a_name_for(time.time()))
+        name = self.folder.make_a_place(swappPlace.a_name_for(time.time()))
         content = bytes(range(256)) * 8
         self.folder.make_a_file(name, "a.bin", content)
 
@@ -293,7 +293,7 @@ class TestSpaceFolder(unittest.TestCase):
         level, seen on a disk. R1, T06
 
         """
-        name = self.folder.make_a_place(sppasPlace.a_name_for(time.time()))
+        name = self.folder.make_a_place(swappPlace.a_name_for(time.time()))
         self.folder.make_a_file(name, "a.wav", b"12345")
         self.folder.make_a_file(name, "b.wav", b"12345")
 
@@ -314,7 +314,7 @@ class TestSpaceFolder(unittest.TestCase):
         is what it was: not the bytes of the second, not a mixture. C8
 
         """
-        name = self.folder.make_a_place(sppasPlace.a_name_for(time.time()))
+        name = self.folder.make_a_place(swappPlace.a_name_for(time.time()))
         self.assertTrue(self.folder.make_a_file(name, "a.wav", b"first"))
 
         self.assertFalse(self.folder.make_a_file(name, "a.wav", b"second-and-longer"))
@@ -326,7 +326,7 @@ class TestSpaceFolder(unittest.TestCase):
 
     def test_te15_a_place_whose_name_is_taken(self):
         """TE15. Nothing is made, and the place which was there is untouched. C8"""
-        name = self.folder.make_a_place(sppasPlace.a_name_for(time.time()))
+        name = self.folder.make_a_place(swappPlace.a_name_for(time.time()))
         self.folder.make_a_file(name, "a.wav", b"first")
 
         self.assertEqual("", self.folder.make_a_place(name))
@@ -342,10 +342,10 @@ class TestDepositSpace(unittest.TestCase):
     """TE16 to TE19. The façade, which is an order of tasks."""
 
     def setUp(self):
-        self.settings = sppasDepositSettings()
+        self.settings = swappDepositSettings()
         self.settings.space = tempfile.mkdtemp(prefix="test_deposit_")
-        self.space = sppasDepositSpace(self.settings)
-        self.folder = sppasSpaceFolder(self.settings)
+        self.space = swappDepositSpace(self.settings)
+        self.folder = swappSpaceFolder(self.settings)
 
     def tearDown(self):
         shutil.rmtree(self.settings.space, ignore_errors=True)
@@ -354,7 +354,7 @@ class TestDepositSpace(unittest.TestCase):
 
     def an_old_place(self):
         """Make on the disk a place which has outlived its duration."""
-        name = sppasPlace.a_name_for(time.time() - self.settings.duration - MINUTE)
+        name = swappPlace.a_name_for(time.time() - self.settings.duration - MINUTE)
         return self.folder.make_a_place(name)
 
     # -----------------------------------------------------------------------
@@ -453,10 +453,10 @@ class TestTwoAtOnce(unittest.TestCase):
     """TE20 to TE22. What one request cannot show."""
 
     def setUp(self):
-        self.settings = sppasDepositSettings()
+        self.settings = swappDepositSettings()
         self.settings.space = tempfile.mkdtemp(prefix="test_deposit_")
-        self.space = sppasDepositSpace(self.settings)
-        self.folder = sppasSpaceFolder(self.settings)
+        self.space = swappDepositSpace(self.settings)
+        self.folder = swappSpaceFolder(self.settings)
 
     def tearDown(self):
         shutil.rmtree(self.settings.space, ignore_errors=True)
@@ -515,7 +515,7 @@ class TestTwoAtOnce(unittest.TestCase):
         """
         self.settings.places = 3
         while len(self.folder.places()) < self.settings.places - 1:
-            self.folder.make_a_place(sppasPlace.a_name_for(time.time()))
+            self.folder.make_a_place(swappPlace.a_name_for(time.time()))
 
         answers = self.together(self.space.ask_for_a_place,
                                 self.space.ask_for_a_place)

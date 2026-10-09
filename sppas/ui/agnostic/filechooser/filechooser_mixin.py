@@ -42,6 +42,7 @@ from __future__ import annotations
 import subprocess
 import json
 import os
+import sys
 
 class FileChooserMixin:
     """Mixin to provide file/folder selection dialogs via a subprocess.
@@ -82,7 +83,7 @@ class FileChooserMixin:
         :return: (str|list) Selected path(s) as str or list or error
 
         """
-        args = ["python", self.FILECHOOSER_WORKER, mode]
+        args = [sys.executable, self.FILECHOOSER_WORKER, mode]
 
         if title is not None:
             args += ["--title", title]

@@ -37,9 +37,9 @@
 
     -------------------------------------------------------------------------
 
-    TE1 to TE25 of the dossier "Convert - an app of SPPAS": the four
+    TE1 to TE27 of the dossier "Convert - an app of SPPAS": the four
     sub-models and the façade. Six need nothing but the API, twelve need it,
-    six need a disk, two need the provision of files. The controller, the view
+    six need a disk, four need the provision of files. The controller, the view
     and its fragments are owed.
 
 """
@@ -60,12 +60,19 @@ from sppas.src.anndata import sppasPoint
 from sppas.src.anndata import sppasInterval
 from sppas.src.anndata import sppasTrsRW
 from sppas.src.anndata.aio.readwrite import FileFormatProperty
+from sppas.src.wkps import sppasWorkspace
+from sppas.src.wkps import States
 
-from sppas.ui.swapp.app_convert.convert_model import sppasConvertModel
-from sppas.ui.swapp.app_convert.convert_formats import sppasModelFormats
-from sppas.ui.swapp.app_convert.convert_remediation import sppasModelRemediation
-from sppas.ui.swapp.app_convert.convert_conversion import sppasModelConversion
-from sppas.ui.swapp.app_convert.convert_provision import sppasModelProvision
+from whakerpy.htmlmaker import HTMLTree
+
+from sppas.ui.swapp.app_convert.convert_model import swappConvertModel
+from sppas.ui.swapp.app_convert.convert_formats import swappModelFormats
+from sppas.ui.swapp.app_convert.convert_remediation import swappModelRemediation
+from sppas.ui.swapp.app_convert.convert_conversion import swappModelConversion
+from sppas.ui.swapp.app_convert.convert_provision import swappModelProvision
+from sppas.ui.swapp.services.files import swappFilesManager
+from sppas.ui.swapp.services.files import swappWorkspaceFiles
+from sppas.ui.swapp.services.files.files_view import MSG_FINISHED
 
 # ---------------------------------------------------------------------------
 
@@ -103,6 +110,35 @@ def one_tier(name: str = "tier", points: bool = False) -> sppasTranscription:
     return trs
 
 
+def a_batch(paths: list) -> sppasWorkspace:
+    """Give a batch: a workspace in which the given files are known and checked.
+
+    :param paths: (list of str) Names of the files, with their path
+    :return: (sppasWorkspace)
+
+    """
+    wkp = sppasWorkspace()
+    for path in paths:
+        wkp.add_file(path)
+        wkp.set_object_state(States().CHECKED, wkp.get_object(path))
+    return wkp
+
+
+def names_in(wkp: sppasWorkspace) -> list:
+    """Give the names of the files of a workspace, in the order it holds them.
+
+    :param wkp: (sppasWorkspace) Workspace to be read
+    :return: (list of str) Names of the files, with their path
+
+    """
+    names = list()
+    for path in wkp.get_paths():
+        for root in path:
+            for one in root:
+                names.append(one.get_id())
+    return names
+
+
 def several_tiers(how_many: int = 3) -> sppasTranscription:
     """Give a transcription holding several tiers."""
     trs = one_tier("first")
@@ -120,7 +156,7 @@ class TestModelRemediation(unittest.TestCase):
     """TE1 to TE6. A content in, a content out: nothing is installed."""
 
     def setUp(self):
-        self.remediation = sppasModelRemediation()
+        self.remediation = swappModelRemediation()
         self.holds_all = {"multi_tiers": True, "point": True, "interval": True,
                           "alt_tag": True, "tag_types": True,
                           "tag_geometry": True, "empty_tier": True,
@@ -242,7 +278,7 @@ class TestModelFormats(unittest.TestCase):
     """TE7 to TE13. The API, and no file of the user."""
 
     def setUp(self):
-        self.formats = sppasModelFormats()
+        self.formats = swappModelFormats()
 
     # -----------------------------------------------------------------------
 
@@ -362,13 +398,14 @@ class TestModelConversion(unittest.TestCase):
 
     def setUp(self):
         self.root = tempfile.mkdtemp(prefix="test_convert_")
-        self.conversion = sppasModelConversion()
+        self.conversion = swappModelConversion()
         self.destination = a_writable_format(True, "multi_tiers_support")
-        self.batch = list()
+        self.paths = list()
         for name in ("a", "b", "c"):
             path = os.path.join(self.root, name + ".xra")
             sppasTrsRW(path).write(one_tier())
-            self.batch.append(path)
+            self.paths.append(path)
+        self.batch = a_batch(self.paths)
 
     def tearDown(self):
         shutil.rmtree(self.root, ignore_errors=True)
@@ -377,11 +414,14 @@ class TestModelConversion(unittest.TestCase):
 
     def test_te14_one_result_per_file_in_the_order_of_the_batch(self):
         """TE14. One, and in that order. T06"""
+        expected = names_in(self.batch)
         results = self.conversion.convert(self.batch, self.destination,
                                           dict(), dict())
 
-        self.assertEqual(len(self.batch), len(results))
-        self.assertEqual(self.batch, [r.file for r in results])
+        converted = list()
+        for result in results:
+            converted.append(result.file)
+        self.assertEqual(expected, converted)
 
     # -----------------------------------------------------------------------
 
@@ -390,44 +430,60 @@ class TestModelConversion(unittest.TestCase):
         broken = os.path.join(self.root, "broken.xra")
         with open(broken, "w") as fp:
             fp.write("this is not a transcription")
-        batch = [self.batch[0], broken, self.batch[1]]
+        batch = a_batch([self.paths[0], broken, self.paths[1]])
 
         results = self.conversion.convert(batch, self.destination,
                                           dict(), dict())
 
         self.assertEqual(3, len(results))
-        self.assertEqual("refused", results[1].status)
-        self.assertIn(results[2].status, ("written", "written with remarks"))
+        statuses = dict()
+        for result in results:
+            statuses[result.file] = result.status
+        self.assertEqual("refused", statuses[broken])
+        self.assertIn(statuses[self.paths[0]], ("written", "written with remarks"))
+        self.assertIn(statuses[self.paths[1]], ("written", "written with remarks"))
 
     # -----------------------------------------------------------------------
 
-    def test_te16_the_batch_is_what_it_was(self):
-        """TE16. Not one file added, removed or rewritten. C11"""
-        before = {path: os.path.getmtime(path) for path in self.batch}
-        given = list(self.batch)
+    def test_te16_no_file_of_the_batch_removed_or_rewritten(self):
+        """TE16. What was added to the workspace handed is what was produced,
+        and nothing else. C11
+
+        """
+        before = dict()
+        for path in self.paths:
+            before[path] = os.path.getmtime(path)
 
         self.conversion.convert(self.batch, self.destination, dict(), dict())
 
-        self.assertEqual(given, self.batch)
-        for path, moment in before.items():
+        for path in before:
             self.assertTrue(os.path.exists(path))
-            self.assertEqual(moment, os.path.getmtime(path))
+            self.assertEqual(before[path], os.path.getmtime(path))
+
+        added = list()
+        for name in names_in(self.batch):
+            if name not in self.paths:
+                added.append(name)
+        produced = list()
+        for path in self.paths:
+            produced.append(os.path.splitext(path)[0] + self.destination)
+        self.assertEqual(sorted(produced), sorted(added))
 
     # -----------------------------------------------------------------------
 
     def test_te17_a_file_whose_output_exists(self):
         """TE17. Skipped, unless override allows replacing it. C17"""
-        output = os.path.splitext(self.batch[0])[0] + self.destination
+        output = os.path.splitext(self.paths[0])[0] + self.destination
         with open(output, "w") as fp:
             fp.write("what was there before")
 
-        results = self.conversion.convert([self.batch[0]], self.destination,
+        results = self.conversion.convert(a_batch([self.paths[0]]), self.destination,
                                           dict(), {"override": False})
         self.assertEqual("skipped", results[0].status)
         with open(output) as fp:
             self.assertEqual("what was there before", fp.read())
 
-        results = self.conversion.convert([self.batch[0]], self.destination,
+        results = self.conversion.convert(a_batch([self.paths[0]]), self.destination,
                                           dict(), {"override": True})
         self.assertIn(results[0].status, ("written", "written with remarks"))
 
@@ -441,9 +497,8 @@ class TestModelConversion(unittest.TestCase):
 
         with patch.object(sppasTrsRW, "write",
                           side_effect=sppasTrsRW.write, autospec=True) as wrote:
-            self.conversion.convert_one(path, destination,
-                                        {"multi_tiers": "one file per tier"},
-                                        dict())
+            self.conversion.convert(a_batch([path]), destination,
+                                    {"multi_tiers": "one file per tier"}, dict())
             self.assertLessEqual(wrote.call_count, 2)
 
     # -----------------------------------------------------------------------
@@ -457,13 +512,13 @@ class TestModelConversion(unittest.TestCase):
         path = os.path.join(self.root, "points.xra")
         sppasTrsRW(path).write(one_tier(points=True))
 
-        result = self.conversion.convert_one(path, destination,
-                                             {"point": "skip the tier"}, dict())
+        results = self.conversion.convert(a_batch([path]), destination,
+                                          {"point": "skip the tier"}, dict())
 
-        self.assertEqual("refused", result.status)
-        self.assertTrue(len(result.cause) > 0)
-        self.assertNotIn("Error", result.cause)
-        self.assertNotIn("Aio", result.cause)
+        self.assertEqual("refused", results[0].status)
+        self.assertTrue(len(results[0].cause) > 0)
+        self.assertNotIn("Error", results[0].cause)
+        self.assertNotIn("Aio", results[0].cause)
 
     # -----------------------------------------------------------------------
 
@@ -473,13 +528,13 @@ class TestModelConversion(unittest.TestCase):
         somebody fixes. C23
 
         """
-        output = os.path.splitext(self.batch[0])[0] + self.destination
+        output = os.path.splitext(self.paths[0])[0] + self.destination
         with open(output, "w") as fp:
             fp.write("half of something")
 
         with patch.object(sppasTrsRW, "write", side_effect=IOError("no room")):
-            self.conversion.convert_one(self.batch[0], self.destination,
-                                        dict(), {"override": True})
+            self.conversion.convert(a_batch([self.paths[0]]), self.destination,
+                                    dict(), {"override": True})
 
         self.assertTrue(os.path.exists(output))
         with open(output) as fp:
@@ -493,59 +548,115 @@ class TestModelConversion(unittest.TestCase):
         path = os.path.join(self.root, "several.xra")
         sppasTrsRW(path).write(several_tiers(3))
 
-        result = self.conversion.convert_one(
-            path, destination, {"multi_tiers": "one file per tier"}, dict())
+        results = self.conversion.convert(
+            a_batch([path]), destination, {"multi_tiers": "one file per tier"}, dict())
 
-        self.assertIn(result.status, ("written", "written with remarks"))
-        produced = [name for name in os.listdir(self.root)
-                    if name.endswith(destination)]
+        self.assertEqual(1, len(results))
+        self.assertIn(results[0].status, ("written", "written with remarks"))
+        produced = list()
+        for name in os.listdir(self.root):
+            if name.endswith(destination) is True:
+                produced.append(name)
         self.assertEqual(3, len(produced))
 
 # ---------------------------------------------------------------------------
 
 
 class TestModelProvision(unittest.TestCase):
-    """TE22 and TE23. Against the neighbouring domain."""
+    """TE22, TE23, TE26 and TE27. Against the provision of files."""
 
     def setUp(self):
         self.root = tempfile.mkdtemp(prefix="test_convert_")
+        self.parent = HTMLTree("test_convert").body_main.identifier
+        self.person = swappWorkspaceFiles()
+        self.manager = swappFilesManager(self.parent, self.person)
         self.files = list()
         for name in ("a.xra", "b.xra"):
             path = os.path.join(self.root, name)
             sppasTrsRW(path).write(one_tier())
+            self.manager.consumes({"designate": path})
             self.files.append(path)
-        self.provision = sppasModelProvision(self.files)
+        self.provision = swappModelProvision(self.manager)
 
     def tearDown(self):
         shutil.rmtree(self.root, ignore_errors=True)
 
     # -----------------------------------------------------------------------
 
-    def test_te22_the_batch_is_what_that_domain_exposes(self):
-        """TE22. Empty when it exposes nothing, and nothing is written into
-        it. C11
+    @staticmethod
+    def names_of(workspace) -> list:
+        """Give the names of every file of a workspace, sorted.
+
+        :param workspace: (sppasWorkspace) Workspace to be read
+        :return: (list of str) Names of the files, with their path
 
         """
-        self.assertEqual(self.files, self.provision.batch())
-        self.assertEqual(list(), sppasModelProvision(list()).batch())
+        names = list()
+        for path in workspace.get_paths():
+            for root in path:
+                for one in root:
+                    names.append(one.get_id())
 
-        got = self.provision.batch()
-        got.append("something of my own")
-        self.assertEqual(self.files, self.provision.batch())
+        return sorted(names)
 
     # -----------------------------------------------------------------------
 
-    def test_te23_a_way_to_reach_a_file_and_never_a_path(self):
-        """TE23. Where a converted file stands is not said by this
-        application: there is nowhere here for it to be known. C22
+    def test_te22_the_batch_is_the_workspace_the_provision_hands(self):
+        """TE22. Empty when nothing is checked, and the workspace of the
+        person has not moved. C11
 
         """
-        reached = self.provision.reached_by(self.files[0])
+        batch = self.provision.batch()
+        self.assertEqual(sorted(self.files), TestModelProvision.names_of(batch))
 
-        self.assertTrue(len(reached) > 0)
-        self.assertNotIn(self.root, reached)
-        self.assertNotIn(os.sep + "tmp", reached)
-        self.assertFalse(os.path.isabs(reached))
+        nothing = swappModelProvision(swappFilesManager(self.parent))
+        self.assertEqual(list(), TestModelProvision.names_of(nothing.batch()))
+
+        batch.remove_file(self.files[0])
+        self.assertEqual(sorted(self.files),
+                         TestModelProvision.names_of(self.person.workspace()))
+
+    # -----------------------------------------------------------------------
+
+    def test_te23_what_was_produced_is_given_back(self):
+        """TE23. In the workspace it handed: the provision of files knows it
+        afterwards, and hands it as a file to be treated. C22
+
+        """
+        batch = self.provision.batch()
+        produced = os.path.join(self.root, "a.TextGrid")
+        sppasTrsRW(produced).write(one_tier())
+        batch.add_file(produced)
+
+        self.provision.produced(batch)
+
+        self.assertIn(produced, TestModelProvision.names_of(self.manager.files_for_app()))
+
+    # -----------------------------------------------------------------------
+
+    def test_te26_the_batch_is_locked_while_it_is_converted(self):
+        """TE26. And none of its files is still locked once the batch has
+        been treated. T06
+
+        """
+        self.provision.lock(self.files)
+        self.assertEqual(2, len(self.person.locked_files()))
+
+        self.provision.release(self.files)
+        self.assertEqual(0, len(self.person.locked_files()))
+
+        self.provision.lock(self.files)
+        self.provision.finished()
+        self.assertEqual(0, len(self.person.locked_files()))
+
+    # -----------------------------------------------------------------------
+
+    def test_te27_that_the_batch_has_been_treated_is_said(self):
+        """TE27. Whatever the results: nothing was produced here. T06"""
+        self.provision.finished()
+        self.manager.populate_view()
+
+        self.assertIn(MSG_FINISHED, self.manager.container().serialize())
 
 # ---------------------------------------------------------------------------
 
@@ -555,7 +666,8 @@ class TestConvertModel(unittest.TestCase):
 
     def setUp(self):
         self.root = tempfile.mkdtemp(prefix="test_convert_")
-        self.model = sppasConvertModel()
+        parent = HTMLTree("test_convert").body_main.identifier
+        self.model = swappConvertModel(swappFilesManager(parent))
         self.destination = a_writable_format(True, "multi_tiers_support")
         self.path = os.path.join(self.root, "a.xra")
         sppasTrsRW(self.path).write(one_tier())
@@ -571,12 +683,12 @@ class TestConvertModel(unittest.TestCase):
 
         """
         with self.assertRaises(ValueError):
-            self.model.convert(list(), self.destination, dict(), dict())
+            self.model.convert(sppasWorkspace(), self.destination, dict(), dict())
 
         with self.assertRaises(ValueError):
-            self.model.convert([self.path], "", dict(), dict())
+            self.model.convert(a_batch([self.path]), "", dict(), dict())
 
-        results = self.model.convert([self.path], self.destination,
+        results = self.model.convert(a_batch([self.path]), self.destination,
                                      dict(), dict())
         self.assertEqual(1, len(results))
 

@@ -14,11 +14,14 @@
     <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/menu.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/layout.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../../whakerexa/wexa_statics/css/extras/book.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../../statics/css/main_swapp.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../../statics/css/main_swapp_theme.css" type="text/css" media="all" />
 
     <style>
         :root {
             --toc-width: 18rem;
         }
+
     </style>
 </head>
 
@@ -69,7 +72,7 @@
 <!-- =============================================================== -->
 
 	<p>
-		<b>Not written yet.</b> This chapter is the help of the person who gives files and gets back what was
+		<b>Not written yet.</b> This chapter is the help of the person who sends files and gets back what was
 		produced: what the two containers show, and what is done on them. This service
 		has no page of its own: what is described here is what an app places in
 		its own.
@@ -87,10 +90,171 @@
 <!-- =============================================================== -->
 
 	<p>
-		<b>Not written yet.</b> This chapter is for whoever reads or changes the code: how it is organised,
-		what an app has to do to use this service, the events it consumes, and the
-		stylesheets.
+		This chapter is for whoever reads or changes the code. What the code is
+		for, and why it is cut this way, is the chapter on the modelling; what
+		follows is what a developer has to know to use it, and what is refused to
+		him.
 	</p>
+
+
+<!-- =============================================================== -->
+
+
+<section class="ssection">
+<h2>How the code is organised</h2>
+
+	<p>
+		In <code>sppas/ui/swapp/services/files/</code>, one module per kind of
+		knowledge, named <code>files_&lt;name&gt;.py</code>. Each class carries the
+		radical of the package.
+	</p>
+
+	<table>
+		<thead><tr><th>Module</th><th>Class</th><th>What it is alone in knowing</th></tr></thead>
+		<tbody>
+			<tr><td>files_feeding</td><td><code>swappDataFeeding</code>, <code>swappDataFiles</code></td><td>What a name, a size and a content are, and what a volume is made of</td></tr>
+			<tr><td>files_acceptance</td><td><code>swappDepositAcceptance</code></td><td>What SPPAS reads, and how a refusal is said</td></tr>
+			<tr><td>files_place</td><td><code>swappFilePlace</code></td><td>The deposit API. The only one which calls it</td></tr>
+			<tr><td>files_chooser</td><td><code>swappFileChooser</code></td><td>The file chooser of SPPAS. The only one which opens a dialog</td></tr>
+			<tr><td>files_workspace</td><td><code>swappWorkspaceFiles</code></td><td>The domain of the workspaces. The only one which speaks to it</td></tr>
+			<tr><td>files_handing</td><td><code>swappAppExchange</code></td><td>What is given to an app, and what is read of what comes back</td></tr>
+			<tr><td>files_delivery</td><td><code>swappResultDelivery</code></td><td>The address of a produced file</td></tr>
+			<tr><td>files_provision</td><td><code>swappFileProvision</code></td><td>The order of the tasks of one request</td></tr>
+			<tr><td>files_record</td><td><code>swappFilesRecord</code></td><td>What one request carries, and how it travels</td></tr>
+			<tr><td>files_view</td><td><code>swappDepositView</code>, <code>swappDeliveryView</code></td><td>The HTML. The only ones which build a node</td></tr>
+			<tr><td>files_controller</td><td><code>swappFilesController</code></td><td>The names of the tasks</td></tr>
+			<tr><td>files_manager</td><td><code>swappFilesManager</code></td><td>Nothing: it builds the others and hands them over</td></tr>
+		</tbody>
+	</table>
+
+	<p>
+		<b>The third column is what says where a change goes.</b> The day the
+		deposit API changes, one file is read again; the day the workspaces change,
+		another one; the day the page changes, a third. A module which knew two of
+		those things would be read again for both.
+	</p>
+
+</section>
+
+
+<!-- =============================================================== -->
+
+
+<section class="ssection">
+<h2>What an app has to do</h2>
+
+	<p>
+		An app holds one object of this service, <code>swappFilesManager</code>, and
+		nothing else of it is ever named outside.
+	</p>
+
+	<ol>
+		<li><b>Build it</b>, with the identifier of the node it will append the container to &mdash; the identifier, and not the node: a node of WhakerPy carries the identifier of its parent, and one built under another is refused. It takes as well the workspace it works on, when the app holds one.</li>
+		<li><b>Offer it what was not recognised</b>: <code>consumes(events)</code> answers true when the request was of this service, false when it was not. Nothing is changed in that second case.</li>
+		<li><b>Ask whether the person has said the workspace is ready</b>: <code>is_ready()</code>, after <code>consumes()</code>. When it is, ask for the files: <code>files_for_app()</code>.</li>
+		<li><b>Have it build</b>: <code>populate_view()</code>, then <code>container()</code>, which is appended where the app chose. In that order: the container is what the last request made.</li>
+		<li><b>Ask for the files</b> when the app is about to work: <code>files_for_app()</code>. And give back what was produced: <code>produced(workspace)</code>.</li>
+		<li><b>Say what it is holding</b>: <code>lock(names)</code> when it takes files to work on them, <code>release(names)</code> when it has done with them. What it still holds when it says it has finished is released without it asking. A lock is what keeps the other interface from taking a file being treated, so an app which does not say it is holding one is an app which lets that happen.</li>
+		<li><b>Start over</b> when the person asks for it: <code>start_over()</code>. The container shows the deposit again, and the files are known to a new workspace, holding none.</li>
+	</ol>
+
+	<p>
+		<b>The events are handed over whole.</b> An app which filtered them would
+		take away the hidden fields the page carries back, and the person would see
+		her list vanish without having touched it.
+	</p>
+
+	<p>
+		<b>Three things an app never does</b>, and they are the promises of this
+		service: it does not hold the workspace of the person &mdash; what it
+		receives is made for it, and what it damages is its own; it does not write
+		in that workspace, this service doing it on the word of the app; and it
+		does not build the markup of the container, or a test would pass where the
+		app fails.
+	</p>
+
+</section>
+
+
+<!-- =============================================================== -->
+
+
+<section class="ssection">
+<h2>The events it consumes</h2>
+
+	<p>
+		One name and one value, in the dictionary a request carries. Six names are
+		answered, under the key <code>task</code>, and no other:
+	</p>
+
+	<table>
+		<thead><tr><th>Task</th><th>What comes with it</th><th>What it does</th></tr></thead>
+		<tbody>
+			<tr><td><code>designate</code></td><td><code>path</code>, where the files stand already; <code>name</code> and <code>size</code> where they have to be brought</td><td>Makes the file known and checked, or takes it into what is to be sent</td></tr>
+			<tr><td><code>take_back</code></td><td><code>name</code></td><td>Takes the file out of the workspace, or out of what is to be sent</td></tr>
+			<tr><td><code>send</code></td><td><code>contents</code>, the bytes by name</td><td>Asks for a place, writes the copies, makes them known and checked</td></tr>
+			<tr><td><code>ready</code></td><td>&mdash;</td><td>Says the workspace is ready (E7): nothing is sent, nothing is asked of the deposit API</td></tr>
+			<tr><td><code>produced</code></td><td>&mdash;</td><td>Shows what an app gave back</td></tr>
+			<tr><td><code>finished</code></td><td>&mdash;</td><td>Releases what an app still held</td></tr>
+		</tbody>
+	</table>
+
+	<p>
+		<b>The record comes back in those same events</b>, as the hidden fields the
+		view wrote: the task, the workspace, and what was fed. A request which
+		carries none of the six names is a first request, whatever else it carries.
+	</p>
+
+</section>
+
+
+<!-- =============================================================== -->
+
+
+<section class="ssection">
+<h2>The stylesheets</h2>
+
+	<p>
+		The views write no style of their own and no string of their own: they name
+		classes, and what renders them is the page the container stands in.
+	</p>
+
+	<p>
+		What they name, and nothing else: <code>dropzone</code>,
+		<code>dropzone-list</code>, <code>dropzone-name</code>,
+		<code>dropzone-size</code>, <code>file-status</code> with
+		<code>file-status-ok</code> and <code>file-status-error</code>,
+		<code>apply-button</code>, <code>cta-button</code>, and the
+		<code>aria-invalid</code> attribute on a file which was refused.
+	</p>
+
+	<p>
+		Nothing is said here of what renders them.
+	</p>
+
+</section>
+
+
+<!-- =============================================================== -->
+
+
+<section class="ssection">
+<h2>The tests</h2>
+
+	<p>
+		In <code>tests/swapp/test_files.py</code>, numbered as the chapter on the
+		tests numbers them. Fifteen of them need nothing installed: what is
+		accepted, what is counted, the two views, and the door. The others need a
+		disk, the deposit API, or the domain of the workspaces.
+	</p>
+
+	<p>
+		<b>The one to keep first</b> is TE15: everything in what was handed to an
+		app is changed, emptied and added to, and the workspace of the person has
+		not moved. Every other promise of this service rests on it.
+	</p>
+
+</section>
 
 </section>
 
@@ -140,7 +304,7 @@
 		<p>
 			An app asks for what it needs and treats what it receives, and it says for
 			itself whether what it received is enough. What it asks for, and what the
-			person gives, is the whole of the question.
+			person sends, is the whole of the question.
 		</p>
 
 	</section>
@@ -159,17 +323,18 @@
 
 		<ul>
 			<li><b>B1</b> — To have an app work on the checked files of the workspace, without checking them again in every app.</li>
-			<li><b>B2</b> — To give files to SPPAS, and to check among them those an app is to treat.</li>
-			<li><b>B5</b> — To have SPPAS read the files she gives it, whether or not it runs on her machine.</li>
-			<li><b>B6</b> — To know that nothing of what was given is kept.</li>
+			<li><b>B2</b> — To send files to SPPAS, and to check among them those an app is to treat.</li>
+			<li><b>B5</b> — To have SPPAS read the files she sends it, whether or not it runs on her machine.</li>
+			<li><b>B6</b> — To know that nothing of what was sent is kept.</li>
 			<li><b>B7</b> — To know what quantity of files SPPAS accepts.</li>
 			<li><b>B8</b> — To know what size of file SPPAS accepts.</li>
 			<li><b>B9</b> — To find what an app produced among her own files, ready for the next thing she does with them.</li>
 			<li><b>B11</b> — To know which files SPPAS accepts.</li>
 			<li><b>B12</b> — To get back the files which were produced, or where they are.</li>
 			<li><b>B13</b> — To see which files were grouped together, and what they produced.</li>
-			<li><b>B14</b> — To correct what one has fed, before giving it.</li>
+			<li><b>B14</b> — To correct what one has fed, before sending it.</li>
 			<li><b>B15</b> — To know where one stands against what is accepted, while feeding.</li>
+			<li><b>B16</b> — To know what became of each file she sent, and why, when an app made nothing of it.</li>
 		</ul>
 
 		<p>
@@ -276,8 +441,8 @@
 				an original, and it perishes because it stands there too.
 			</li>
 			<li>
-				<b>D6. The deposit</b> — the copies given at one time. It exists while it is
-				fed, and it knows the place the deposit API gave it once it is given. It
+				<b>D6. The deposit</b> — the copies sent at one time. It exists while it is
+				fed, and it knows the place the deposit API gave it once it is sent. It
 				is what a total volume is counted on, and what tells two copies of one name
 				apart. This is the word the code does not carry yet.
 			</li>
@@ -297,13 +462,13 @@
 			and it gives the person back what that app produced. Nothing else. Four actors
 			border it, two of which are neighbours it calls. The interfaces through which
 			the person acts are not actors: they are what this document designs — the one
-			where she feeds what she gives, and the one where she reaches what was made.
+			where she feeds what she sends, and the one where she reaches what was made.
 		</p>
 
 		<h4>Actors</h4>
 
 		<ul>
-			<li><b>A1. The person</b> — she gives her files, says which of them are to be treated, asks for an app, and gets back what was produced.</li>
+			<li><b>A1. The person</b> — she sends her files, says which of them are to be treated, asks for an app, and gets back what was produced.</li>
 			<li><b>A2. An app</b> — it asks for what it needs in order to work, judges whether what it received suffices it, and produces files.</li>
 			<li><b>A3. The domain of the workspaces</b> — the neighbouring system which holds the files that are known and their states.</li>
 			<li><b>A4. The deposit API</b> — an API, and no face: it gives a bounded and perishable place where a file may stand when it is not on the machine of the person, says what it accepts, gives an address at which one of them is reached, and forgets what is out of date without being asked.</li>
@@ -314,11 +479,11 @@
 		<ul>
 			<li><b>F1. A1 &rarr; domain</b> — her files, and which of them are to be treated (B2, B5).</li>
 			<li><b>F2. A2 &rarr; domain</b> — the request for the files it is to treat (B1).</li>
-			<li><b>F3. domain &rarr; A1</b> — what is accepted, before anything is given, and that nothing is kept (B6, B7, B8, B11).</li>
+			<li><b>F3. domain &rarr; A1</b> — what is accepted, before anything is sent, and that nothing is kept (B6, B7, B8, B11).</li>
 			<li><b>F4. domain &rarr; A3</b> — the files to be known, their checking, and the states this domain sets on them (B2).</li>
 			<li><b>F5. A3 &rarr; domain</b> — the workspace and the states of its files (B1).</li>
 			<li><b>F6. domain &rarr; A2</b> — a workspace holding the files to be treated, and them only (B1).</li>
-			<li><b>F7. A2 &rarr; domain</b> — what it has produced, in the workspace it was given, as often as it has something to give back (B12).</li>
+			<li><b>F7. A2 &rarr; domain</b> — what it has produced, in the workspace it was given, as often as it has something to give back; and, for a file it made nothing of, the cause it states (B12, B16).</li>
 			<li><b>F8. A2 &rarr; domain</b> — the treatment is over.</li>
 			<li><b>F9. domain &rarr; A3</b> — the files produced, added and checked (B9).</li>
 			<li><b>F10. domain &rarr; A1</b> — the files produced, reached where they are or at an address, and what was grouped with what (B12, B13).</li>
@@ -337,8 +502,8 @@
 		<p>
 			The deposit API has no face, and that is what makes the two interfaces this domain's. A
 			place knows neither workspace, nor root, nor app: it holds bytes and forgets
-			them. What the person is shown — what may be given, what was refused and why,
-			which produced file goes with which given one — is knowledge of this domain,
+			them. What the person is shown — what may be sent, what was refused and why,
+			which produced file goes with which sent one — is knowledge of this domain,
 			so the containers where she reads it are of this domain too.
 		</p>
 
@@ -379,7 +544,7 @@
 				<tr>
 					<td>DEPOSIT</td>
 					<td># deposit, place</td>
-					<td>The copies given at one time. It exists while it is fed, and it holds the place the deposit API gave it once it is given</td>
+					<td>The copies sent at one time. It exists while it is fed, and it holds the place the deposit API gave it once it is sent</td>
 				</tr>
 				<tr>
 					<td>WORKSPACE</td>
@@ -391,7 +556,7 @@
 
 		<p>
 			A copy is in its deposit from the moment the file is taken in, and before the
-			deposit is given it carries a name and a size and no content: that is what the
+			deposit is sent it carries a name and a size and no content: that is what the
 			verifications of T08 are made on. The dossier has no word for a file
 			designated and not yet duplicated, and none is invented here: it is the
 			word which is still to be fixed.
@@ -462,7 +627,7 @@
 
 		<ul>
 			<li>The state and checked (D2, D3), which the workspace carries at its three levels. This domain asks for the checking (T02) and reads it (T03); it does not hold it.</li>
-			<li>The bounds and the duration, which belong to the deposit API; and the extensions, which are SPPAS's (C4, C10).</li>
+			<li>The bounds and the duration, which belong to the deposit API; and the extensions, which are SPPAS's (C4).</li>
 			<li>What names a place and what authorises reaching it, which are the deposit API's and are never read here.</li>
 			<li>What was not deposited, and why (F10): said to the person, and not kept (B6).</li>
 			<li>The apps, which are actors (A2): an app asks this domain for what it needs and treats what it receives, so nothing of them is held here.</li>
@@ -487,8 +652,8 @@
 
 		<p>
 			The chain runs thus: an app asks, and either it receives the workspace or
-			there is none and files are asked for; the person is told what she may give,
-			she composes what she gives and gives it, the files are made reachable and
+			there is none and files are asked for; the person is told what she may send,
+			she composes what she sends and sends it, the files are made reachable and
 			made known, and the app is
 			answered. When it has finished, what it produced is made known and made
 			reachable by the person. What was made only to be handed over does not last,
@@ -504,13 +669,13 @@
 			<tbody>
 				<tr><td>E1</td><td>An app asks for the files it is to treat</td><td>external</td><td>An app (A2)</td></tr>
 				<tr><td>E2</td><td>An app asks for files</td><td>external</td><td>An app (A2)</td></tr>
-				<tr><td>E3</td><td>The person gives what she has composed, and says which of them are to be treated</td><td>external</td><td>F1</td></tr>
+				<tr><td>E3</td><td>The person sends what she has composed, and says which of them are to be treated</td><td>external</td><td>F1</td></tr>
 				<tr><td>E4</td><td>An app gives back what it has produced</td><td>external</td><td>F8</td></tr>
 				<tr><td>E5</td><td>There is no workspace</td><td>internal</td><td>T03</td></tr>
-				<tr><td>E6</td><td>The files given are reachable</td><td>internal</td><td>T01</td></tr>
+				<tr><td>E6</td><td>The files sent are reachable</td><td>internal</td><td>T01</td></tr>
 				<tr><td>E7</td><td>The workspace is ready</td><td>internal</td><td>T02</td></tr>
 				<tr><td>E8</td><td>Files have been produced</td><td>internal</td><td>T04</td></tr>
-								<tr><td>E10</td><td>The person designates a file, to be given</td><td>external</td><td>F1</td></tr>
+								<tr><td>E10</td><td>The person designates a file, to be sent</td><td>external</td><td>F1</td></tr>
 				<tr><td>E11</td><td>The person takes back a file she designated</td><td>external</td><td>F1</td></tr>
 				<tr><td>E12</td><td>An app takes a file it was given, to work on it</td><td>external</td><td>An app (A2)</td></tr>
 				<tr><td>E13</td><td>An app gives a file back</td><td>external</td><td>An app (A2)</td></tr>
@@ -527,17 +692,17 @@
 		<section>
 		<h4>T01 — Make a file reachable</h4>
 
-			<p><b>Purpose:</b> that a file given by the person exists where an app will read it.</p>
+			<p><b>Purpose:</b> that a file sent by the person exists where an app will read it.</p>
 
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
 					<tr><td>Synchronisation</td><td>E3</td></tr>
-					<tr><td>Actions</td><td>Make reachable, where an app will read it, every file of what is given which is not; verify its type on its bytes</td></tr>
+					<tr><td>Actions</td><td>Make reachable, where an app will read it, every file of what is sent which is not; verify its type on its bytes</td></tr>
 					<tr><td>Result</td><td>One copy for every file which was not reachable. When its type is accepted</td></tr>
 					<tr><td>Result</td><td>What was not deposited, and why (F10). When a type is refused</td></tr>
-					<tr><td>Result</td><td>E6, the files given are reachable. When at least one of them is</td></tr>
-					<tr><td>Result</td><td>That nothing can be deposited now, and when to come back (F10). When the deposit API refuses a place — and nothing of what was given is deposited</td></tr>
+					<tr><td>Result</td><td>E6, the files sent are reachable. When at least one of them is</td></tr>
+					<tr><td>Result</td><td>That nothing can be deposited now, and when to come back (F10). When the deposit API refuses a place — and nothing of what was sent is deposited</td></tr>
 				</tbody>
 			</table>
 
@@ -619,13 +784,23 @@
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
 					<tr><td>Synchronisation</td><td>E4</td></tr>
-					<tr><td>Actions</td><td>Take from what the app gives back the files it produced, write them into the workspace with the grouping they carry, and check them</td></tr>
+					<tr><td>Actions</td><td>Take from what the app gives back the files it produced, write them into the workspace with the grouping they carry, and check them; take as well, for a file it made nothing of, the cause it states</td></tr>
 					<tr><td>Result</td><td>The files produced, added and checked (F7). Always</td></tr>
 					<tr><td>Result</td><td>E8, files have been produced. When the app produced any</td></tr>
 				</tbody>
 			</table>
 
 			<p>Adding them does not uncheck what was treated. The app never wrote in the workspace of the person: it never held it. RO9</p>
+
+			<p>
+				<b>The cause is relayed, and never composed here.</b> Why an app made
+				nothing of a file is the app's to say: it alone knows what it needed
+				and what it found in that file. This domain carries that sentence to
+				the delivery, with the file it concerns, and writes none of its own
+				&mdash; as acceptance relays the refusal of the deposit API rather
+				than inventing one. A file an app said nothing of is a file this
+				domain says nothing of either. B16
+			</p>
 
 			<p>
 				An app gives back as often as it has something to give back, and nothing
@@ -670,13 +845,13 @@
 		<section>
 		<h4>T07 — Announce what is accepted</h4>
 
-			<p><b>Purpose:</b> that the person knows what she may give, before she gives.</p>
+			<p><b>Purpose:</b> that the person knows what she may send, before she sends.</p>
 
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
 					<tr><td>Synchronisation</td><td>E2 OR E5</td></tr>
-					<tr><td>Actions</td><td>Say the bounds, the extensions which are accepted, and that nothing of what is given is kept</td></tr>
+					<tr><td>Actions</td><td>Say the bounds, the extensions which are accepted, and that nothing of what is sent is kept</td></tr>
 					<tr><td>Result</td><td>The announcement (F3). Always</td></tr>
 					<tr><td>Result</td><td>That nothing can be deposited now, and when to come back (F3). When the deposit API says it has no place</td></tr>
 				</tbody>
@@ -687,22 +862,22 @@
 			<p>
 				Neither the bounds nor the hour to come back are decided here: they are asked
 				of the deposit API and said as they were given. What is of this domain is
-				that the person is told before she gives, and not after.
+				that the person is told before she sends, and not after.
 			</p>
 
 		</section>
 
 		<section>
-		<h4>T08 — Take a file into what is to be given</h4>
+		<h4>T08 — Take a file into what is to be sent</h4>
 
-			<p><b>Purpose:</b> that what the person is about to give is known to be acceptable before anything travels.</p>
+			<p><b>Purpose:</b> that what the person is about to send is known to be acceptable before anything travels.</p>
 
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
 					<tr><td>Synchronisation</td><td>E10</td></tr>
-					<tr><td>Actions</td><td>Read the name and the size of the file designated; verify that the name is not already taken, that the size does not exceed what the machine accepts, and that the volume of what is to be given stays within its bound; take it in</td></tr>
-					<tr><td>Result</td><td>The file is in what is to be given, and the volume it now makes. When the three verifications pass</td></tr>
+					<tr><td>Actions</td><td>Read the name and the size of the file designated; verify that the name is not already taken, that the size does not exceed what the machine accepts, and that the volume of what is to be sent stays within its bound; take it in</td></tr>
+					<tr><td>Result</td><td>The file is in what is to be sent, and the volume it now makes. When the three verifications pass</td></tr>
 					<tr><td>Result</td><td>What was not taken in, and why (F10). When one of them fails</td></tr>
 				</tbody>
 			</table>
@@ -724,16 +899,16 @@
 		</section>
 
 		<section>
-		<h4>T09 — Take a file back out of what is to be given</h4>
+		<h4>T09 — Take a file back out of what is to be sent</h4>
 
-			<p><b>Purpose:</b> that the person can correct what she is about to give, before she gives it.</p>
+			<p><b>Purpose:</b> that the person can correct what she is about to send, before she sends it.</p>
 
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
 					<tr><td>Synchronisation</td><td>E11</td></tr>
-					<tr><td>Actions</td><td>Take it out of what is to be given</td></tr>
-					<tr><td>Result</td><td>What is to be given, without it, and the volume it now makes. Always</td></tr>
+					<tr><td>Actions</td><td>Take it out of what is to be sent</td></tr>
+					<tr><td>Result</td><td>What is to be sent, without it, and the volume it now makes. Always</td></tr>
 				</tbody>
 			</table>
 
@@ -871,11 +1046,12 @@
 				<tr><td>PF4 (T04)</td><td>Writes the produced files into the workspace</td><td>E4</td><td>the domain, on the word of the app</td><td>the same machine</td><td>each time an app gives something back</td><td>automated</td></tr>
 				<tr><td>PF5 (T05)</td><td>Makes the produced files reachable by the person</td><td>E8</td><td>—</td><td>—</td><td>never</td><td>none</td></tr>
 				<tr><td>PF7 (T07)</td><td>Announces what is accepted</td><td>E2 or E5</td><td>—</td><td>—</td><td>never</td><td>none</td></tr>
-				<tr><td>PF8 (T08)</td><td>Takes a file into what is to be given</td><td>E10</td><td>the short path, or what manages the workspaces</td><td>the same machine</td><td>when the person designates a file</td><td>conversational</td></tr>
+				<tr><td>PF8 (T08)</td><td>Takes a file into what is to be sent</td><td>E10</td><td>the short path, or what manages the workspaces</td><td>the same machine</td><td>when the person designates a file</td><td>conversational</td></tr>
 				<tr><td>PF9 (T09)</td><td>Takes a file back out</td><td>E11</td><td>the same</td><td>the same machine</td><td>when the person takes one back</td><td>conversational</td></tr>
 				<tr><td>PF10 (T10)</td><td>Locks a file for the app which takes it</td><td>E12</td><td>the domain, on the word of the app</td><td>the same machine</td><td>each time an app takes a file</td><td>automated</td></tr>
 				<tr><td>PF11 (T11)</td><td>Gives a file back</td><td>E13</td><td>the domain, on the word of the app</td><td>the same machine</td><td>each time an app gives one back</td><td>automated</td></tr>
 				<tr><td>PF12 (T12)</td><td>Releases what an app still holds</td><td>E14</td><td>the domain, on the word of the app</td><td>the same machine</td><td>when an app has finished</td><td>automated</td></tr>
+				<tr><td>PF13</td><td>Gives back to whoever holds the workspace what was worked on</td><td>E14</td><td>the domain, on the word of the app</td><td>the same machine</td><td>when an app has finished</td><td>automated</td></tr>
 			</tbody>
 		</table>
 
@@ -905,11 +1081,12 @@
 				<tr><td>PF4 (T04)</td><td>Writes the produced files into the workspace</td><td>E4</td><td>the domain, on the word of the app</td><td>the server</td><td>each time an app gives something back</td><td>automated</td></tr>
 				<tr><td>PF5 (T05)</td><td>Makes the produced files reachable by the person</td><td>E8</td><td>the interface of delivery</td><td>the server, then the machine of the person</td><td>each time files have been produced, then when she follows an address</td><td>automated, then conversational</td></tr>
 				<tr><td>PF7 (T07)</td><td>Announces what is accepted</td><td>E2 or E5</td><td>the interface of deposit</td><td>the machine of the person</td><td>before she gives anything</td><td>automated</td></tr>
-				<tr><td>PF8 (T08)</td><td>Takes a file into what is to be given</td><td>E10</td><td>the domain, on the request of the person</td><td>the browser of the person, then the server</td><td>when the person designates a file</td><td>conversational</td></tr>
+				<tr><td>PF8 (T08)</td><td>Takes a file into what is to be sent</td><td>E10</td><td>the domain, on the request of the person</td><td>the browser of the person, then the server</td><td>when the person designates a file</td><td>conversational</td></tr>
 				<tr><td>PF9 (T09)</td><td>Takes a file back out</td><td>E11</td><td>the domain, on the request of the person</td><td>the browser of the person, then the server</td><td>when she takes one back</td><td>conversational</td></tr>
 				<tr><td>PF10 (T10)</td><td>Locks a file for the app which takes it</td><td>E12</td><td>the domain, on the word of the app</td><td>the server</td><td>each time an app takes a file</td><td>automated</td></tr>
 				<tr><td>PF11 (T11)</td><td>Gives a file back</td><td>E13</td><td>the domain, on the word of the app</td><td>the server</td><td>each time an app gives one back</td><td>automated</td></tr>
 				<tr><td>PF12 (T12)</td><td>Releases what an app still holds</td><td>E14</td><td>the domain, on the word of the app</td><td>the server</td><td>when an app has finished</td><td>automated</td></tr>
+				<tr><td>PF13</td><td>Gives back to whoever holds the workspace what was worked on</td><td>E14</td><td>&mdash;</td><td>&mdash;</td><td>never</td><td>none</td></tr>
 			</tbody>
 		</table>
 
@@ -927,20 +1104,106 @@
 			handles is in her browser — the button, the file, its name and its size — and
 			what decides is on the server, SPPAS being alone in knowing what it reads.
 			What travels to be verified is a name and a size; the content stays where it
-			is until she gives. RO8
-		</p>
-
-		<p>
-			PF8 and PF9 are already served, in the first table, by <code>page_files</code>
-			of the wx interface, which will one day become <code>app_wkps</code>. What that
-			page does is not modelled here: the code exists, and it is handled. The short
-			path does the poor version of it, which is what it is for.
+			is until she sends. RO8
 		</p>
 
 		<p>
 			The resources differ for one procedure only, PF1: where files have to be
 			brought it works on the contents which travelled and on the bounds; where they
 			are in place there is nothing to bring.
+		</p>
+
+		<h4>Giving the workspace back</h4>
+
+		<p>
+			One thing only writes the workspace, and what works on it otherwise works on
+			a copy until it has finished. What one request carries is that copy: it is
+			made when the copy is asked for, it is carried from one request to the next,
+			and nothing of it is written where the workspace is held. An announcement of
+			whoever holds it, made while a person is composing, does not touch it &mdash;
+			which is what makes the two of them harmless to each other.
+		</p>
+
+		<p>
+			<b>So a copy is given back</b>, and PF13 is that procedure. It is triggered
+			by E14, the app having finished, and it reports on the workspace which is
+			held what an app is allowed to do to a copy: add a file, check one, uncheck
+			one. Nothing else is reported. What an app did which it may not do &mdash;
+			take a file out, set a state this domain does not set &mdash; stays in the
+			copy and reaches nothing: a copy is where the damage an app does stops, and
+			reporting it would undo that. F4 and F9 say the reporting at the conceptual
+			level, and say it of no moment in particular.
+		</p>
+
+		<p>
+			<b>Once, and at the end.</b> A copy given back at every request would put
+			two states against each other at every gesture of the person, and one given
+			back before the app has finished is no longer a copy: what is given back is
+			what was worked on, whole, when there is nothing left to work on.
+		</p>
+
+		<p>
+			<b>It has an object in one case out of the three</b>, and that is why it is
+			empty in the second table. Where the files had to be brought, nothing on the
+			machine holds a workspace: what one request carries is the whole of it, which
+			B6 asks, and there is nobody to report to. Where they were in place and a
+			workspace is held, that workspace is what is reported on. Where they were in
+			place and none was held, T02 made one, and what was made is carried by the
+			request like the rest.
+		</p>
+
+		<p>
+			<b>What is worked on is one thing in the three cases all the same.</b> The
+			copy a request carries is the same object, made the same way, wherever the
+			files came from &mdash; so there is one thing to write and not three, and PF13
+			is the one procedure which looks at where it is: it asks whether a workspace
+			is held, and does nothing when none is.
+		</p>
+
+		<p>
+			<b>No treatment of the conceptual level carries it.</b> F4 and F9 are flows
+			of that level and this procedure realises them, but the rule above &mdash;
+			one procedure per treatment, numbered as it is &mdash; is not held by PF13,
+			which is numbered alone. Either a treatment is to be named for it, or that
+			rule admits a procedure which is a moment rather than a treatment.
+		</p>
+
+		<h4>The lock, and who sees it</h4>
+
+		<p>
+			<b>PF10 and PF11 set the state on the copy and on the workspace which is
+			held, at once.</b> A lock is of use to whoever does not hold it: one which
+			stayed in the copy would be seen by nobody, and the other interface could
+			take a file an app is treating. It is the one state which does not wait for
+			PF13, and the reason is in what a lock is for.
+		</p>
+
+		<p>
+			It is also the one state PF13 never reports, and the two say the same thing:
+			a lock is posted while the work goes on, and when the work is over T12 has
+			already lifted it. What is reported at the end is what an app added, checked
+			and unchecked &mdash; never what it was holding.
+		</p>
+
+		<p>
+			Only a file the workspace which is held knows already is set: a file it does
+			not know stands in a copy alone, nothing can take it there, and a state is no
+			reason to make it known.
+		</p>
+
+		<p>
+			<b>A lock nobody holds is lifted.</b> An app which dies says nothing, so T12
+			is never triggered for it and its locks would stay: RO10 lifts them at the
+			moment an app asks for the files to treat, which is the moment they would do
+			harm. It is the same principle as RO5 &mdash; what is out of date goes at the
+			next request, nobody having asked for it.
+		</p>
+
+		<p>
+			<b>The day one interface is left, none of this goes away.</b> A single
+			application running at a time makes the lock useless to anyone but the
+			service itself, and it will then cost one report which serves nothing. What
+			it buys until that day is that the two interfaces cannot take the same file.
 		</p>
 
 		<p>
@@ -1057,7 +1320,8 @@
 			<li><b>RO5</b> — The deletion of the copies which are out of date is done by the server at every request, nobody having asked for it.</li>
 			<li><b>RO6</b> — Two questions decide what there is to do, and they are independent: whether the files are already reachable, and whether a workspace exists. The first is answered by the interface the person gives through — the short path gives paths, the interface of deposit gives contents; the second is answered by looking.</li>
 			<li><b>RO7</b> — An interface of the domain requires no place of its own, and does not require the person to leave what she is doing. Where it is shown belongs to whoever assembles the software, and changes nothing of whose it is.</li>
-			<li><b>RO8</b> — Remotely, the contents travel at the moment the person gives, and not before: nothing of what she composed is kept on the server until then. What travels while she feeds is a name and a size, which is what it takes to accept or refuse a file. In how many goes the contents travel, and under what wrapping, is not of this level.</li>
+			<li><b>RO8</b> — Remotely, the contents travel at the moment the person sends, and not before: nothing of what she composed is kept on the server until then. What travels while she feeds is a name and a size, which is what it takes to accept or refuse a file. In how many goes the contents travel, and under what wrapping, is not of this level.</li>
+			<li><b>RO10</b> — A file which is locked and which no app holds is released when an app asks for the files to treat. An app which dies says nothing, and a lock which waited for it to speak would never be lifted.</li>
 			<li><b>RO9</b> — No app which treats files receives the workspace of the person: what it receives is made for it, and holds the files it is to treat and nothing else. What manages the workspaces is not one of them — it belongs to that domain, and holds what is its own.</li>
 		</ul>
 
@@ -1107,7 +1371,7 @@
 			B7 and B8 are named nowhere below, and that is not an oversight: they are
 			needs to know what quantity and what size are accepted, and the announcement
 			serves them (T07, F3). A need to know is never what imposes a bound. The same
-			holds of B11, which C10 answers for the announcing, and not for the refusing.
+			holds of B11, which the announcement answers (T07).
 		</p>
 
 		<table>
@@ -1119,18 +1383,17 @@
 				<tr><td>C5</td><td>The choice of the files gives paths where SPPAS runs on the machine of the person, and contents otherwise. It is what says whether a file has to be brought.</td><td>T01, and the two interfaces which offer the choice</td></tr>
 				<tr><td>C6</td><td>No setting says which case one is in: whether a workspace exists is read, and whether the files are reachable follows from what the interface gives — a path or a content.</td><td>RO6, C5</td></tr>
 				<tr><td>C7</td><td>A deposit does not rename the files.</td><td>B12, and the workspace being made with the names which were deposited</td></tr>
-				<tr><td>C8</td><td>Only the files whose extension SPPAS reads are deposited.</td><td>Whoever runs SPPAS on the machine</td></tr>
 				<tr><td>C9</td><td>The type of a deposited file is verified on its bytes and not on its name: an executable or a script is not deposited.</td><td>Whoever runs SPPAS on the machine</td></tr>
-				<tr><td>C10</td><td>The domain announces the extensions it accepts; what it does not accept is not deposited.</td><td>B11, C8, C9, F3</td></tr>
 				<tr><td>C12</td><td>A file whose name is already taken is not deposited: the first of the name stays, the others are refused.</td><td>The root: the workspace is made with the names which were deposited, and two files of one name would fall in one root</td></tr>
 				<tr><td>C14</td><td>A file an app produced is a sibling of the one it was made from: same path, same root, the extension the person asked for. Remotely, that is the folder of the deposit.</td><td>The apps, every one of which writes there — the workspace giving the notion of sibling files, not the obligation</td></tr>
+				<tr><td>C15</td><td>Where the files stand already, nothing of the deposit API is built, reached or required: the local use works when that domain is absent.</td><td>The first table of the organisational model: PF1, PF5 and PF7 never</td></tr>
 			</tbody>
 		</table>
 
 		<p>
 			Not one of these constraints carries a number, and none of the bounds of the
 			place is written here any more. What they are worth is the deposit API's to
-			say, and this domain's to relay before the person gives anything.
+			say, and this domain's to relay before the person sends anything.
 		</p>
 
 	</section>
@@ -1249,8 +1512,8 @@
 				</tr>
 				<tr>
 					<td>DEPOSIT</td>
-					<td>The place the API gave, holding its copies. It is asked for only at the moment the person gives</td>
-					<td>Before she gives, what is to be given is held where she stands; from the deposit on, the place and what it holds</td>
+					<td>The place the API gave, holding its copies. It is asked for only at the moment the person sends</td>
+					<td>Before she sends, what is to be sent is held where she stands; from the deposit on, the place and what it holds</td>
 					<td>Nothing of the place. While she feeds, the volume she has fed</td>
 				</tr>
 				<tr>
@@ -1272,7 +1535,7 @@
 			feeds it, what she has fed is held where she is, the volume is counted there,
 			and nothing is written — RO8 says so, and nothing here may say otherwise. The
 			place is asked of the API, and the copies written in it, at the moment she
-			gives.
+			sends.
 		</p>
 
 		<p>
@@ -1285,6 +1548,25 @@
 			Two files of one name, deposited twice, stand side by side without meeting,
 			because two deposits are two places. Within one deposit they cannot meet, C12
 			seeing to it.
+		</p>
+
+		<p>
+			<b>What is worked on is what one request carries, in the three cases.</b>
+			Nothing of a workspace is held on the server between two requests: where the
+			files had to be brought there is nothing to hold, which B6 asks, and where
+			they were in place the one thing which holds the workspace is not this
+			domain. So there is one thing to write and not one per case, and the copy
+			travels with the request which works on it.
+		</p>
+
+		<p>
+			<b>Who holds it on the machine is not this domain's to choose, and the way
+			to reach it is not its to invent.</b> Another interface holds a workspace
+			when it runs; the server knows whether it answers, and what it last
+			announced, because that is kept in one place for every application of swapp.
+			Giving a copy back goes through that same place: PF13 asks it. A service which opened a
+			way of its own would be a second one to maintain, and the day the
+			conversation changes there would be two places to read again.
 		</p>
 
 		<p>
@@ -1316,12 +1598,27 @@
 			<tbody>
 				<tr><td>place</td><td>Asks the API for a place, puts the copies there, asks it for an address. The only one which calls it</td><td>PF1, PF5</td></tr>
 				<tr><td>acceptance</td><td>Knows what SPPAS reads, and relays what the API accepts. It says both, and refuses</td><td>PF7, and what PF1 and PF8 ask of it</td></tr>
-				<tr><td>feeding</td><td>Holds what is to be given, feeds it, takes back from it, and counts the volume</td><td>PF8, PF9</td></tr>
+				<tr><td>feeding</td><td>Holds what is to be sent, feeds it, takes back from it, and counts the volume</td><td>PF8, PF9</td></tr>
+				<tr><td>chooser</td><td>Asks the person for files of the machine SPPAS runs on, and gives their path. The only one which opens a dialog</td><td>PF8, where the files stand already</td></tr>
 				<tr><td>workspace</td><td>Makes files known and checks them, locks and releases, and writes what an app produced</td><td>PF2, PF4, PF10, PF11</td></tr>
 				<tr><td>handing</td><td>Makes the workspace an app receives, and gives it</td><td>PF3</td></tr>
 				<tr><td>delivery</td><td>Makes the address of a produced file, and serves it when it is followed</td><td>PF5</td></tr>
+				<tr><td>provision</td><td>The fa&ccedil;ade: it puts the tasks of a request in order and calls what does them</td><td>None of its own: it is the order of every other</td></tr>
+				<tr><td>record</td><td>What one request holds, serialised for the page and parsed back from it</td><td>None of its own: every procedure passes through it</td></tr>
+				<tr><td>view</td><td>The two views, each building its tree from a record</td><td>What PF2, PF5, PF7, PF8 and PF9 show</td></tr>
+				<tr><td>controller</td><td>Reads the task, rebuilds the record, calls the fa&ccedil;ade once, has a view populate its tree</td><td>None of its own</td></tr>
+				<tr><td>manager</td><td>The entry class: builds the model, the two views and the controller, and answers an app</td><td>None of its own</td></tr>
 			</tbody>
 		</table>
+
+		<p>
+			A module named here is one file, <code>files_&lt;name&gt;.py</code>, and the
+			classes it holds carry the prefix of the project: the tests name eight of
+			them that way already, from <code>files_acceptance.py</code> to
+			<code>files_view.py</code>. The four last carry no procedure of their own,
+			which is why the organisational level never named them: they are how a
+			request is read and answered, not what it does.
+		</p>
 
 		<p>
 			What each one promises, which is the reason for the cutting:
@@ -1353,7 +1650,8 @@
 		<p>
 			Where the files are already reachable, three modules have nothing to do — the
 			place, acceptance and the delivery. They carry exactly the three procedures
-			the organisational model leaves empty there.
+			the organisational model leaves empty there. They are therefore not built,
+			and the deposit API they lean on is neither reached nor required. C15
 		</p>
 
 	</section>
@@ -1409,6 +1707,50 @@
 			requests would gain nothing from a second dispatch.
 		</p>
 
+		<h4>What a view builds</h4>
+
+		<p>
+			A tree is made of the nodes of WhakerPy and of nothing else. An app of
+			swapp holds an <code>HTMLTree</code>, and its view fills the named nodes of
+			that tree — the head, the header, the main, the footer, the script — with
+			<code>HTMLNode</code> and <code>TagNode</code>.
+		</p>
+
+		<p>
+			<b>This domain holds no tree of that kind.</b> An <code>HTMLTree</code> is a
+			page; a page belongs to whoever answers a request, and this domain answers
+			none. A view here holds <b>one node</b>, and
+			<code>populate_tree_content(record)</code> builds the children of it.
+		</p>
+
+		<p>
+			<b>That node is built under the identifier the app gives</b>, which is the
+			identifier of the node the app chose in its page. A node of WhakerPy carries
+			the identifier of its parent — every node of every view of swapp is made
+			that way — and without it the app cannot <code>append_child()</code> what it
+			asked for. So the app names the place by giving its identifier, the view
+			builds its node under it, and the app appends that node where it said. That
+			is what &laquo;&nbsp;a container an app places in its page&nbsp;&raquo;
+			means, and it is the whole of what this domain knows of that page. RO7
+		</p>
+
+		<p>
+			<b>What a node gives back is its HTML, by <code>serialize()</code></b>,
+			which is WhakerPy's and is this domain's to call and not to write. An app
+			which bakes a page serializes its tree; an app which answers one piece of a
+			page without baking it again serializes that one node. <b>A view of this domain answers
+			<code>serialize()</code> with the HTML of its node</b>, so that what it
+			built is read without anything outside it knowing which node it holds.
+		</p>
+
+		<p>
+			Both answers of an app to a request exist, therefore, and they are the
+			same content: a page which is baked whole, or one node of it serialized
+			alone and sent as data. What this domain answers is the page, as <i>A
+			request, in order</i> says; the day one task answers its node alone,
+			nothing of the design moves but that.
+		</p>
+
 		<h4>What assembles, and what an app holds</h4>
 
 		<p>
@@ -1441,13 +1783,129 @@
 			gains a second service adds one line and nothing else.
 		</p>
 
+		<h4>What an event is</h4>
+
+		<p>
+			A name and a value, and a request carries a handful of them in one
+			dictionary. That is what the apps are given —
+			<code>_process_events(events)</code>, the key being the name and the value
+			the value — and it makes no difference whether the person sent a form or
+			followed a link: what a query carries is read into the same dictionary as
+			what a body carries.
+		</p>
+
+		<p>
+			<b>The names are those of the fields which were sent</b>, so the task is a
+			name like any other: the control which validates carries it, and what the
+			person filled in stands beside it, and so does what the page transmitted.
+			Nothing here numbers the events and nothing names them in a vocabulary of
+			its own, the rule above saying why.
+		</p>
+
+		<p>
+			<b>Consuming an event is answering that it was for this domain.</b> An app
+			offers what it did not recognise; the manager answers true when it took it
+			and false when it did not, and nothing else is given back — what is to be
+			shown is read from the record afterwards. An event which nobody consumed is
+			the app's to answer.
+		</p>
+
+		<h4>The tasks, and what is to be shown</h4>
+
+		<p>
+			<b>Six tasks are read, and no other name is answered:</b>
+			<i>designate</i> a file, <i>take_back</i> one, <i>send</i> what was fed,
+			the workspace is <i>ready</i>, here is what an app <i>produced</i>, and an app has <i>finished</i>. A
+			request carrying none of them is a first request, whatever else it carries.
+		</p>
+
+		<p>
+			<b>What is to be shown is named as well</b>, the views being given a state
+			and deciding nothing: <i>accepted</i>, what may be sent, in a few words;
+			<i>refused</i>, one reason per file, by name; <i>no_place</i>, when to come
+			back, and the control which sends is then not built at all;
+			<i>produced</i>, the files an app made, by root; <i>reachable_until</i>, the
+			hour they go at; <i>finished</i>, whether the app has done. A view shows
+			what is there and nothing else.
+		</p>
+
+		<p>
+			A file which was refused is shown in the list beside those which were taken
+			in, marked as refused and counting in no volume: what the person has to
+			correct is where she put it, and not in a message somewhere else.
+		</p>
+
+		<h4>What the controller is given</h4>
+
+		<p>
+			That dictionary, as the app received it, and nothing else. It is what
+			<code>handle(data)</code> takes: the record is rebuilt from the entries the
+			page transmitted, the task is read from the entry which names it, and what
+			the person gave is read from its own entry.
+		</p>
+
+		<p>
+			<b>What is not understood is dropped, and what is absent takes its default
+			value.</b> A dictionary carrying no entry of this domain leaves a record at
+			its default values, which is a first request. That is the contract of the
+			record and not a courtesy of the controller: it is a page which sends this
+			dictionary, and a page is not a place this domain holds.
+		</p>
+
 		<h4>Which of the two views</h4>
 
 		<p>
 			The record says what is known, and the view follows from that and not from the
-			task: what has been fed and not yet given is shown as a deposit; what an app
+			task: what has been fed and not yet sent is shown as a deposit; what an app
 			has produced is shown as a delivery. It is the same mechanism as the pathway
 			of an app which has several pages — the state of what is known chooses.
+		</p>
+
+		<p>
+			<b>The record carries the answer to the second question as well</b> &mdash;
+			whether a workspace holds the files to be treated. The organisational
+			level says that question is answered by looking; what looks is the one
+			module which reads the workspaces, and what the record carries is its
+			answer. A view which counted a list to tell the two apart would be a view
+			which decides, and a workspace with no file in it would then be taken for
+			one to be used.
+		</p>
+
+		<p>
+			The record says one thing more, and it bears on the deposit alone:
+			whether the files the person designates stand already where SPPAS
+			reads them. <b>It is one entry of its own</b>, and it is said by the
+			app which places the container, which is the one offering the
+			interface she gives through. It is never read from anything else:
+			a view which looked at what the record holds &mdash; a workspace, a
+			list &mdash; to tell the two cases apart would be a view which
+			decides, and at the first request, before she has designated
+			anything, it would decide wrong. They do, and what she designates is a <b>path</b>, which
+			needs no copy and no place — the files join her workspace as they
+			stand. They do not, and what she designates is a <b>content</b>, which
+			travels and is copied into a place. A view decides nothing, so it
+			cannot be what tells the two apart; it is told, like everything else
+			it shows.
+
+			</p>
+
+			<p>
+			<b>What differs is wider than the control.</b> The bounds go with it:
+			C4 binds what is <i>deposited</i> — a size, a volume, a number of
+			places, a lifetime — and none of it is this domain's to fix, it
+			being asked of the deposit API and relayed. Where the files stand
+			already, nothing is deposited, so there is nothing to bind and
+			nothing to relay: no size to weigh, no volume against a bound, and
+			the announcement which serves B7, B8 and B15 has no object. Binding
+			a corpus of forty gigabytes to the room a shared and perishable
+			space keeps for strangers would forbid the very case the local use
+			exists for.
+
+			</p>
+
+			<p>
+			What does not move: the list, the way a file is taken back out, and
+			that a file may be refused for what it is rather than for its size.
 		</p>
 
 		<h4>What a view owes the next request</h4>
@@ -1464,8 +1922,10 @@
 
 		<p>
 			There is no record. The controller makes one at its default values — nothing
-			fed, no task, no place asked for — and what is shown is the announcement and
-			an empty list. Of the model, only what is accepted is called.
+			fed, no task, no place asked for — and what is shown is the announcement,
+			where there is one, and an empty list. Of the model, only what is accepted
+			is called, and only where the files have to be brought: where they stand
+			already nothing is announced (PF7), and nothing of the model is called.
 		</p>
 
 		<p>
@@ -1478,9 +1938,11 @@
 
 		<p>
 			What one request holds is an object, and it has a name: the record. It carries
-			what the page transmitted — the names and the sizes fed so far, the task, what
-			is to be shown — and it is rebuilt at every request from what came back with
-			it.
+			what the page transmitted — the task, whether the files stand already where
+			SPPAS reads them, the workspace they are known to,
+			the names and the sizes fed so far where the files have to be brought, and
+			what is to be shown — and it is rebuilt at every request from what came back
+			with it.
 		</p>
 
 		<p>
@@ -1490,14 +1952,52 @@
 			convenience of the code: it is the promise that nothing of her is held.
 		</p>
 
+		<p>
+			<b>It travels as a dictionary of strings</b>, one entry per name, which is
+			what a page can carry and what comes back in the events of the next
+			request. <code>serialize()</code> makes that dictionary and
+			<code>parse(data)</code> reads it back. A list is one entry: the record says how it is written and how it is
+			read again, and it is the only class which says it.
+		</p>
+
+		<p>
+			<b>The workspace is one of those entries, and it is not written here.</b>
+			The domain of the workspaces writes one and reads it back &mdash;
+			<code>sppasWJSON</code>, which the communication of SPPAS and its test app
+			already carry a workspace with &mdash; and this domain hands the dictionary
+			it gives to the page and hands back what comes. It holds the files, their
+			roots, their paths and their states, which is the whole of what the person
+			designated: a list of its own beside it would be a second truth, and the
+			day a state changed shape it would differ from itself. What a page sends
+			back and cannot be read as a workspace gives none, and nothing is guessed.
+		</p>
+
+		<p>
+			<b>What carries it in the page is one hidden field per entry</b>, in the
+			form which sends. A view builds them from what <code>serialize()</code>
+			gave it and writes none of its own — which is what the paragraph below
+			asks of it. <b>What a field carries is escaped</b>: a workspace is written
+			as JSON, JSON holds quotes, and an attribute which is not escaped is a page
+			which is broken. The names and the sizes fed are entries like the others,
+			and a content is never one. RO8
+		</p>
+
+		<p>
+			<b>A container is emptied before it is built.</b> The node of a view lives
+			longer than one request &mdash; an app holds the manager, and the manager
+			holds the views &mdash; so what was built for the request before is cleared
+			first. Written otherwise, a person would see her list twice, then three
+			times, and the page would carry as many records as she made requests.
+		</p>
+
 		<h4>A request, in order</h4>
 
 		<ol>
 			<li>The app receives the request and reads the event it carries. It belongs to this domain, so it dispatches it.</li>
 			<li>The controller starts from nothing and rebuilds its record from what the page transmitted: the names and the sizes, and no content.</li>
-			<li>It reads the task — designate a file, take one back, give, ask for the files to treat, here is what I produced, I have finished — and checks what has to be true before it.</li>
+			<li>It reads the task — designate a file, take one back, send, the workspace is ready, ask for the files to treat, here is what I produced, I have finished — and checks what has to be true before it.</li>
 			<li>It calls the façade, once. The façade calls what it has to, and answers.</li>
-			<li>The controller puts in its record what is to be shown: a list, a volume, a refusal and its reason, an hour, addresses.</li>
+			<li>The controller puts in its record what is to be shown: a list, a volume, a refusal and its reason, an hour, addresses, a cause.</li>
 			<li>The view populates its tree from that record.</li>
 			<li>The app puts that tree in its page, where it chose, and bakes the whole.</li>
 		</ol>
@@ -1509,7 +2009,7 @@
 		</p>
 
 		<p>
-			And the request which carries a content is the one which gives, and that one
+			And the request which carries a content is the one which sends, and that one
 			only. Every other request of this domain carries names, sizes and a task. RO8
 		</p>
 
@@ -1541,10 +2041,10 @@
 		<table>
 			<thead><tr><th>Class</th><th>From</th><th>Attributes</th><th>Operations</th></tr></thead>
 			<tbody>
-				<tr><td><code>FileProvision</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>what_is_accepted(), feed(), take_back(), give(), files_for_app(), produced(), finished()</td></tr>
+				<tr><td><code>FileProvision</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>what_is_accepted(), feed(), take_back(), send(), ask_for_files(), make_known(), works_on(), files_for_app(), lock(), release(), produced(), finished()</td></tr>
 				<tr><td><code>DepositAcceptance</code></td><td>module <i>acceptance</i></td><td>&mdash;</td><td>what_is_accepted(), accepts(), accepts_volume(), accepts_one_more_deposit(), accepts_content()</td></tr>
-				<tr><td><code>FilePlace</code></td><td>module <i>place</i></td><td>&mdash;</td><td>what_is_accepted(), ask_for_a_place(), put(), address_of()</td></tr>
-				<tr><td><code>WorkspaceAccess</code></td><td>module <i>workspace</i></td><td>&mdash;</td><td>make_workspace(), make_known(), check(), checked_files(), lock(), release(), write_produced()</td></tr>
+				<tr><td><code>FilePlace</code></td><td>module <i>place</i></td><td>&mdash;</td><td>what_is_accepted(), ask_for_a_place(), when_there_will_be_room(), put(), why_not(), address_of(), path_of(), serve()</td></tr>
+				<tr><td><code>WorkspaceAccess</code></td><td>module <i>workspace</i></td><td>&mdash;</td><td>make_workspace(), make_known(), check(), checked_files(), locked_files(), exists(), is_known(), known_files(), workspace(), works_on(), give_back(), lock(), release(), remove(), write_produced(), validate_filenames()</td></tr>
 				<tr><td><code>FilesForApp</code></td><td>module <i>handing</i></td><td>&mdash;</td><td>for_app(), back_from_app()</td></tr>
 				<tr><td><code>ResultDelivery</code></td><td>module <i>delivery</i></td><td>&mdash;</td><td>address_of(), serve()</td></tr>
 				<tr><td><code>Deposit</code></td><td>DEPOSIT</td><td>place, files, /volume</td><td>feed(), take_back(), volume()</td></tr>
@@ -1557,6 +2057,33 @@
 			The feeding module has no class of its own: what it holds is a deposit being
 			fed, rebuilt from what the page transmits at every request, and kept between
 			none of them. It is the controller which rebuilds it.
+		</p>
+
+		<p>
+			<b>The browser gives a content and never a path</b>, so where the files
+			stand already the path is asked for where they are: on the machine the
+			server runs on, by the file chooser of SPPAS, which one class of this
+			domain calls and no other. What a dialog gives back is read and never
+			guessed &mdash; one name, several, or nothing &mdash; and a person who
+			chose nothing adds nothing.
+		</p>
+
+		<p>
+			<b>Three operations make a copy live, and they are the whole of it.</b>
+			<code>works_on()</code> puts on it what one request carries, at every
+			request; the operations which make known, check, lock and release work on
+			it and on nothing else; and <code>give_back()</code> hands it to whoever
+			holds the workspace, once, when an app has finished &mdash; which is PF13.
+			A copy which was never given back changed nothing, and that is what makes
+			an app stopping halfway harmless.
+		</p>
+
+		<p>
+			<code>FileProvision.make_known()</code> is the way in of the files which
+			stand already where SPPAS reads them: they are made known and checked, and
+			nothing is copied and nothing is asked of the deposit API. It is
+			<code>send()</code> without the half which brings the files, which is what
+			the organisational level says of the first of its two tables.
 		</p>
 
 		<p>
@@ -1593,7 +2120,8 @@
 		<table>
 			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
 			<tbody>
-				<tr><td>holds</td><td><code>FileProvision</code> 1 &mdash; 1 each of the five others</td><td>A composition: the fa&ccedil;ade makes them, and they go when it goes</td></tr>
+				<tr><td>holds</td><td><code>FileProvision</code> 1 &mdash; 1 <code>WorkspaceAccess</code>, <code>FilesForApp</code></td><td>A composition: the fa&ccedil;ade makes them, and they go when it goes</td></tr>
+				<tr><td>holds</td><td><code>FileProvision</code> 1 &mdash; 0..1 <code>DepositAcceptance</code>, <code>FilePlace</code>, <code>ResultDelivery</code></td><td>A composition, made only where the files have to be brought. C15</td></tr>
 				<tr><td>holds</td><td><code>Deposit</code> 1 &mdash; 1..n <code>DepositedFile</code></td><td>A composition: a file of a deposit exists only inside it</td></tr>
 				<tr><td>uses</td><td><code>FilePlace</code> &rarr; <code>Deposit</code></td><td>A dependency: it writes them and forgets them, and keeps none</td></tr>
 				<tr><td>uses</td><td><code>FilesForApp</code> &rarr; <code>WorkspaceAccess</code></td><td>A dependency: it asks for what is checked, and for the workspace it will hand over</td></tr>
@@ -1610,11 +2138,11 @@
 			class diagram.
 		</p>
 
-		<pre class="dark"><code>[FileProvision|what_is_accepted();feed();take_back();give();files_for_app();produced();finished()]++1-1&gt;[DepositAcceptance|what_is_accepted();accepts();accepts_volume();accepts_one_more_deposit();accepts_content()]
-[FileProvision]++1-1&gt;[FilePlace|what_is_accepted();ask_for_a_place();put();address_of()]
-[FileProvision]++1-1&gt;[WorkspaceAccess|make_workspace();make_known();check();checked_files();lock();release();write_produced()]
+		<pre class="dark"><code>[FileProvision|what_is_accepted();feed();take_back();send();ask_for_files();make_known();works_on();files_for_app();lock();release();produced();finished()]++1-0..1&gt;[DepositAcceptance|what_is_accepted();accepts();accepts_volume();accepts_one_more_deposit();accepts_content()]
+[FileProvision]++1-0..1&gt;[FilePlace|what_is_accepted();ask_for_a_place();when_there_will_be_room();put();why_not();address_of();path_of();serve()]
+[FileProvision]++1-1&gt;[WorkspaceAccess|make_workspace();make_known();check();checked_files();locked_files();exists();is_known();known_files();workspace();works_on();give_back();lock();release();remove();write_produced()]
 [FileProvision]++1-1&gt;[FilesForApp|for_app();back_from_app()]
-[FileProvision]++1-1&gt;[ResultDelivery|address_of();serve()]
+[FileProvision]++1-0..1&gt;[ResultDelivery|address_of();serve()]
 
 [Deposit|place;files;/volume|feed();take_back();volume()]++1-1..*&gt;[DepositedFile|name;size;content]
 
@@ -1624,7 +2152,7 @@
 [ResultDelivery]-.-&gt;[FilePlace]
 
 [sppasWorkspace]-[note:class of the neighbouring domain. Only WorkspaceAccess speaks to it]
-[Deposit]-[note:volume is the sum of the sizes and is not held. place is what the API gave. content is absent until the person gives]
+[Deposit]-[note:volume is the sum of the sizes and is not held. place is what the API gave. content is absent until the person sends]
 [ResultDelivery]-[note:a produced file is a sibling of the one it was made from. Same path, same root, so it stands in the folder of the deposit]</code></pre>
 
 	</section>
@@ -1639,8 +2167,8 @@
 		<table>
 			<thead><tr><th>Class</th><th>Operations</th><th>What it shows</th></tr></thead>
 			<tbody>
-				<tr><td><code>DepositView</code></td><td>populate_tree_content(record)</td><td>What a person feeds: what is accepted, the button, the list, the volume against the bound, and what gives</td></tr>
-				<tr><td><code>DeliveryView</code></td><td>populate_tree_content(record)</td><td>What was produced: the files grouped by root, their addresses, the hour at which they go, and whether the app has finished</td></tr>
+				<tr><td><code>DepositView</code></td><td>populate_tree_content(record), serialize()</td><td><code>DepositView</code></td><td>populate_tree_content(record)</td><td>What a person feeds: what is accepted, the button, the list, the volume against the bound, and what sends</td></tr>
+				<tr><td><code>DeliveryView</code></td><td>populate_tree_content(record), serialize()</td><td><code>DeliveryView</code></td><td>populate_tree_content(record)</td><td>What was produced: the files grouped by root, their addresses, the hour at which they go, and whether the app has finished</td></tr>
 			</tbody>
 		</table>
 
@@ -1648,7 +2176,7 @@
 			A view builds a tree and does nothing else &mdash; it decides nothing, counts
 			nothing, refuses nothing, and reaches neither a disk nor a neighbour. What it
 			shows was decided before it was called. There are two and not one because what
-			a person gives and what she takes back are asked for at different moments, by
+			a person sends and what she takes back are asked for at different moments, by
 			different apps, and one of them without the other.
 		</p>
 
@@ -1664,8 +2192,8 @@
 
 		<h4>In yUML</h4>
 
-		<pre class="dark"><code>[DepositView|populate_tree_content()]-.-&gt;[FilesRecord]
-[DeliveryView|populate_tree_content()]-.-&gt;[FilesRecord]
+		<pre class="dark"><code>[DepositView|populate_tree_content();serialize()][DepositView|populate_tree_content()]-.-&gt;[FilesRecord]
+[DeliveryView|populate_tree_content();serialize()][DeliveryView|populate_tree_content()]-.-&gt;[FilesRecord]
 
 [DepositView]-[note:builds a tree and nothing else. Decides nothing, counts nothing, refuses nothing]</code></pre>
 
@@ -1682,9 +2210,9 @@
 			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
 			<tbody>
 				<tr><td><code>FilesController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
-				<tr><td><code>FilesRecord</code></td><td>task, fed, to_be_shown</td><td>serialize(), parse(data)</td></tr>
+				<tr><td><code>FilesRecord</code></td><td>task, reachable, has_workspace, workspace, fed, to_be_shown</td><td>serialize(), parse(data)</td></tr>
 				<tr><td colspan="3">A record comes from no table: it is what one request holds, it serialises itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
-				<tr><td><code>FilesManager</code></td><td>&mdash;</td><td>files_for_app(), consumes(events), populate_view()</td></tr>
+				<tr><td><code>FilesManager</code></td><td>&mdash;</td><td>files_for_app(), lock(), release(), produced(), consumes(events), is_ready(), start_over(), populate_view()</td></tr>
 			</tbody>
 		</table>
 
@@ -1710,11 +2238,11 @@
 
 		<h4>In yUML</h4>
 
-		<pre class="dark"><code>[FilesManager|files_for_app();consumes();populate_view()]++1-1&gt;[FileProvision]
+		<pre class="dark"><code>[FilesManager|files_for_app();lock();release();produced();consumes();is_ready();start_over();populate_view()]++1-1&gt;[FileProvision]
 [FilesManager]++1-1&gt;[FilesController|record|handle();populate_view()]
 [FilesManager]++1-1&gt;[DepositView]
 [FilesManager]++1-1&gt;[DeliveryView]
-[FilesController]++1-1&gt;[FilesRecord|task;fed;to_be_shown|serialize();parse()]
+[FilesController]++1-1&gt;[FilesRecord|task;reachable;has_workspace;workspace;fed;to_be_shown|serialize();parse()]
 
 [FilesController]-.-&gt;[FileProvision]
 
@@ -1735,13 +2263,13 @@
 			<thead><tr><th>State</th><th>What is true</th></tr></thead>
 			<tbody>
 				<tr><td>Fed</td><td>It holds names and sizes, it makes a volume, and it stands where the person stands. Nothing of it is on the server</td></tr>
-				<tr><td>Given</td><td>It holds the place the API gave, and its copies are written there</td></tr>
+				<tr><td>Sent</td><td>It holds the place the API gave, and its copies are written there</td></tr>
 				<tr><td>Gone</td><td>Its place did not last. The API emptied it, and nothing here was asked</td></tr>
 			</tbody>
 		</table>
 
 		<p>
-			A deposit which is fed and never given leaves nothing: it was never anywhere
+			A deposit which is fed and never sent leaves nothing: it was never anywhere
 			but where the person was. That is why an abandoned deposit is not a case to
 			be treated.
 		</p>
@@ -1773,8 +2301,8 @@
 			<li>The app asks for the files it is to treat.</li>
 			<li>A workspace exists: what is handed is made from it, holding the checked files and them only, and the app receives it. The sequence ends here.</li>
 			<li>No workspace exists: what is accepted is said, and what is not — the space being full — is said as well, with when to come back.</li>
-			<li>The person feeds what she is about to give, and is answered on each file as she adds it: the name, the size, the volume so far.</li>
-			<li>She gives. The contents travel then, and not before.</li>
+			<li>The person feeds what she is about to send, and is answered on each file as she adds it: the name, the size, the volume so far.</li>
+			<li>She sends. The contents travel then, and not before.</li>
 			<li>The types are verified on the bytes, the copies are written in the folder of the deposit, and what was refused is said.</li>
 			<li>The files are made known to a workspace, which takes the name of that folder, and those to be treated are checked in it.</li>
 			<li>The app is answered, as in step 2.</li>
@@ -1812,6 +2340,15 @@
 			What is raised is caught by whatever answers a request, and by nothing below
 			it. A person is never shown what a machine says to itself, and never left
 			before a page which does nothing without a reason.
+		</p>
+
+		<p>
+			<b>What an app failed to do is not in this table.</b> It is no error of
+			this domain: a file an app made nothing of, and why, is the app's to
+			state. This domain relays it to the delivery, beside the file it
+			concerns, without judging it, without rewording it, and without
+			stopping anything &mdash; the other files come back as they were
+			made. B16
 		</p>
 
 	</section>
@@ -1865,8 +2402,8 @@
 			<caption>acceptance</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
-				<tr><td>Say what is accepted</td><td>pre: none. post: the bounds, the extensions which are read, and that nothing of what is given is kept. It depends on no file and on no deposit</td></tr>
-				<tr><td>Answer on a name</td><td>pre: none. post: refused when the name is already taken in what is being fed, or when the extension is not one SPPAS reads, and the reason is given with the refusal</td></tr>
+				<tr><td>Say what is accepted</td><td>pre: none. post: the bounds, the extensions which are read, and that nothing of what is sent is kept. It depends on no file and on no deposit</td></tr>
+				<tr><td>Answer on a name</td><td>pre: none. post: refused when the name is already taken in what is being fed, and the reason is given with the refusal</td></tr>
 				<tr><td>Answer on a size, and on a volume</td><td>pre: a size and a volume of zero or more. post: refused beyond what the machine accepts, and beyond the volume of one deposit</td></tr>
 				<tr><td>Answer on a count of deposits</td><td>pre: none. post: what the deposit API answered, relayed as it was given, with the hour to come back</td></tr>
 				<tr><td>Answer on a content</td><td>pre: the bytes are those of the file. post: refused when what they say of the type is an executable or a script. The only operation of this class which needs a content</td></tr>
@@ -1883,17 +2420,17 @@
 			<caption>feeding</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
-				<tr><td>Feed a file in</td><td>pre: a name and a size. post: the file is in what is to be given, and the volume is that much greater — or nothing has changed and the refusal is said with its reason. Nothing of the file has travelled</td></tr>
-				<tr><td>Take a file back out</td><td>pre: none. post: it is no longer in what is to be given, and the volume is that much less. Taking back what is not there does nothing wrong</td></tr>
+				<tr><td>Feed a file in</td><td>pre: a name and a size. post: the file is in what is to be sent, and the volume is that much greater — or nothing has changed and the refusal is said with its reason. Nothing of the file has travelled</td></tr>
+				<tr><td>Take a file back out</td><td>pre: none. post: it is no longer in what is to be sent, and the volume is that much less. Taking back what is not there does nothing wrong</td></tr>
 				<tr><td>Give the volume</td><td>post: the sum of the sizes fed, zero when nothing was fed</td></tr>
-				<tr><td>Give what is to be given</td><td>post: the names and the sizes, in the order they were fed. May be empty</td></tr>
+				<tr><td>Give what is to be sent</td><td>post: the names and the sizes, in the order they were fed. May be empty</td></tr>
 			</tbody>
 		</table>
 
 		<p>
-			This class holds nothing between two requests: what is to be given is rebuilt
+			This class holds nothing between two requests: what is to be sent is rebuilt
 			from what the page transmits, each time. It decides on the server, on a name
-			and a size, the content staying where it is until the person gives. What she
+			and a size, the content staying where it is until the person sends. What she
 			fed is lost if she goes away, and an abandoned deposit leaves nothing behind.
 		</p>
 
@@ -1905,6 +2442,10 @@
 				<tr><td>Ask for a place</td><td>pre: none. post: a place, or a refusal with the hour at which there will be room. Neither is invented here</td></tr>
 				<tr><td>Put a copy in a place</td><td>pre: the place was given. post: the copy stands there under the name the person gave it</td></tr>
 				<tr><td>Ask for an address</td><td>pre: the file stands in a place. post: an address which leads to it and dies with it</td></tr>
+				<tr><td>Say when there will be room</td><td>pre: none. post: whether the last place asked for was refused, and in how many seconds there will be room. Neither is invented: both are what that API answered</td></tr>
+				<tr><td>Say why a file is refused</td><td>pre: none. post: the reason that API gave, as it gave it, and nothing written here</td></tr>
+				<tr><td>Say where a copy stands</td><td>pre: none. post: the name that copy stands under on the machine, with its path, which is what a workspace is made with; nothing at all when the place is out of date or holds no such file</td></tr>
+				<tr><td>Serve what an address names</td><td>pre: none. post: what that API answers, handed on untouched</td></tr>
 			</tbody>
 		</table>
 
@@ -1912,7 +2453,7 @@
 			<caption>handing</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
-				<tr><td>Make what an app receives</td><td>pre: none. post: a workspace holding the files to be treated and them only, sharing nothing with the one of the person; empty when nothing is checked, and never nothing at all</td></tr>
+				<tr><td>Make what an app receives</td><td>pre: none. post: a workspace holding the files to be treated and them only, sharing nothing with the one of the person; empty when nothing is checked, and never nothing at all. What was still locked has been released first: a lock no app holds is lifted here. RO10</td></tr>
 				<tr><td>Take back what an app gives</td><td>pre: what is given back was made by this class. post: the files the app added, and nothing of what it may have changed elsewhere</td></tr>
 			</tbody>
 		</table>
@@ -1928,9 +2469,18 @@
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
 				<tr><td>Make files known, and check those to be treated</td><td>pre: the files are reachable. post: every one of them is known, and those to be treated are checked. No content is read</td></tr>
-				<tr><td>Lock a file</td><td>pre: the file is known. post: it is locked, therefore no longer checked, therefore in nothing that is handed</td></tr>
-				<tr><td>Release a file</td><td>pre: none. post: it is checked again. Releasing what is not locked does nothing wrong</td></tr>
+				<tr><td>Lock a file</td><td>pre: the file is known. post: it is locked, therefore no longer checked, therefore in nothing that is handed &mdash; in the copy, and on the workspace which is held when that one knows it. Whoever holds it is told at once</td></tr>
+				<tr><td>Release a file</td><td>pre: none. post: it is checked again, on both, and whoever holds the workspace is told. Releasing what is not locked does nothing wrong</td></tr>
 				<tr><td>Write what an app produced</td><td>pre: the files come from what the app gave back. post: they are known and checked, and nothing which was checked before has been unchecked</td></tr>
+				<tr><td>Give the files which are locked</td><td>pre: none. post: the files an app is treating, which may be none. It is what a release with no name given releases</td></tr>
+				<tr><td>Say whether a name is known</td><td>pre: none. post: true when the workspace holds a file of that name. It is what tells a file an app produced from one it was given</td></tr>
+				<tr><td>Say whether a workspace is there to be used</td><td>pre: none. post: true when it holds files. One which holds none is one to be filled, and it is what tells the two local cases apart</td></tr>
+				<tr><td>Work on the copy a request carries</td><td>pre: none. post: what is made known, checked, locked and released from then on is that copy, and nothing which holds a workspace has been reached</td></tr>
+				<tr><td>Give the copy back</td><td>pre: an app has finished. post: every file of the copy which was added, checked or unchecked is so on the workspace which is held, and nothing else of the copy is: a file taken out of it is not taken out there, and a state this domain does not set is not set there. Whoever holds it is told once, and only when something was reported. Nothing at all is done when no workspace is held</td></tr>
+				<tr><td>Give the workspace it works on</td><td>pre: none. post: the workspace itself, which is what a request carries from one to the next. It is never what an app receives: that one is made by the handing</td></tr>
+				<tr><td>Take files out of a workspace</td><td>pre: none. post: they are no longer known to it. Taking out what is not known does nothing wrong</td></tr>
+				<tr><td>Give every file of a workspace</td><td>pre: none. post: every file it holds, whatever its state, the three levels being walked to get them. A workspace gives its files by state and never as a whole</td></tr>
+				<tr><td>Answer on a list of names</td><td>pre: none. post: the names as they were given, or a refusal: a single name given instead of a list would be walked letter by letter</td></tr>
 			</tbody>
 		</table>
 
@@ -1973,7 +2523,10 @@
 			<tbody>
 				<tr><td>Be built</td><td>pre: none. post: the model, the two views and the controller exist and are tied; nothing has been read, called or shown</td></tr>
 				<tr><td>Answer whether an event was for this domain</td><td>pre: none. post: true when it was consumed, false when it was not — and nothing is changed in that second case. It is never an error here: what nobody consumed is the app's to answer</td></tr>
+				<tr><td>Say whether the workspace is ready</td><td>pre: an event was consumed. post: true when the request carried <code>ready</code> (E7), false otherwise. Nothing is changed</td></tr>
 				<tr><td>Give an app the files it is to treat</td><td>pre: none. post: what the façade answers, handed on untouched</td></tr>
+				<tr><td>Take note of what an app holds</td><td>pre: none. post: the files it takes are locked and the files it gives back are checked, in the copy and on the workspace which is held; an app which says nothing holds nothing, as far as this domain and the other interface can tell</td></tr>
+				<tr><td>Start over</td><td>pre: none. post: the container shows the deposit again, and nothing of what was produced or finished is shown; the files are known to a new workspace, holding none. The workspace given when the manager was built is not altered</td></tr>
 				<tr><td>Populate a view</td><td>pre: an event was consumed, or it is a first request. post: the tree is built from the record</td></tr>
 			</tbody>
 		</table>
@@ -1994,21 +2547,18 @@
 			understood is dropped, and the person sees a state she can still correct.
 		</p>
 
-		<p>
-			That shape holds wherever the app runs. One of the apps it was read from is
-			served on a machine and nowhere else; the other is served both ways. Their
-			controllers are written the same, which says that this one has no reason to
-			differ either.
-		</p>
-
 		<table>
 			<caption>the two views</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
-				<tr><td>Populate the tree of a deposit</td><td>pre: the record comes from the controller. post: what is accepted, what has been fed, the volume against the bound, every refusal with its reason, and what gives — and nothing the record did not say</td></tr>
-				<tr><td>Populate it when no deposit can be made</td><td>pre: the record says there is no place. post: no control which gives is built at all. Not one which is built and disabled: one which is not there</td></tr>
-				<tr><td>Populate the tree of a delivery</td><td>pre: the record comes from the controller. post: the produced files grouped as the record groups them, one address for each, the hour at which they go, and whether the app has finished</td></tr>
+				<tr><td>Populate the tree of a deposit</td><td>pre: the record comes from the controller. post: what is accepted, what has been fed, the volume against the bound, every refusal with its reason, and what sends — and nothing the record did not say</td></tr>
+				<tr><td>Populate the tree of a workspace which is there</td><td>pre: the record says the files stand where SPPAS reads them, and that a workspace holds some. post: the name of the workspace, and nothing else: no list of files, no control which designates, none which validates, no bound. A workspace which is there is used, so nothing is asked of her &mdash; she is told which one it is</td></tr>
+				<tr><td>Populate the tree of a deposit which goes into the workspace</td><td>pre: the record says the files stand where SPPAS reads them. post: a control which designates a file by its path, the list of what was designated, and what validates it. No bound of any kind is shown, and no file is marked refused: C4 binds what is deposited, C7 to C12 bind what is deposited, and nothing is deposited here &mdash; the organisational level saying it in one line, « the announcement exists only where there is a refusal, and nothing is refused here »</td></tr>
+				<tr><td>Populate it when no deposit can be made</td><td>pre: the record says there is no place. post: no control which sends is built at all. Not one which is built and disabled: one which is not there</td></tr>
+				<tr><td>Populate the tree of a delivery</td><td>pre: the record comes from the controller. post: the produced files grouped as the record groups them, one address for each, the hour at which they go, whether the app has finished, and &mdash; for a file the app made nothing of &mdash; the cause as the record holds it, in the words it came in</td></tr>
 				<tr><td>Populate it with nothing in it</td><td>pre: the record holds no produced file. post: the tree of nothing yet, and never an empty one</td></tr>
+				<tr><td>Give what was built</td><td>pre: the tree was populated. post: the HTML of its node and of what stands under it, and nothing of a page: no head, no header, no footer. It is the node of the view which is serialized, and WhakerPy which serializes it</td></tr>
+				<tr><td>Empty what was built before</td><td>pre: none. post: the container holds what this request says and nothing of the request before. The node is the same from one request to the next, and what it held is cleared before it is built again</td></tr>
 				<tr><td>Carry the record back</td><td>pre: none. post: what is built holds the serialised record, so that the next request brings it back. A tree without it breaks the request which follows</td></tr>
 			</tbody>
 		</table>
@@ -2057,23 +2607,37 @@
 		<table>
 			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
 			<tbody>
-				<tr><td>TE1</td><td>What is accepted is said before anything is given, and depends on no file and on no deposit</td><td>B7, B8</td></tr>
+				<tr><td>TE1</td><td>What is accepted is said before anything is sent, and depends on no file and on no deposit</td><td>B7, B8</td></tr>
 				<tr><td>TE2</td><td>A name already taken in what is being fed is refused, and the reason is given with the refusal</td><td>C12</td></tr>
-				<tr><td>TE3</td><td>An extension SPPAS does not read is refused, with its reason</td><td>C10</td></tr>
 				<tr><td>TE4</td><td>A size beyond what the machine accepts is refused; the size one under it passes</td><td>C4</td></tr>
 				<tr><td>TE5</td><td>A volume beyond that of one deposit is refused; the volume one under it passes</td><td>C4</td></tr>
 				<tr><td>TE6</td><td>A count beyond the number of deposits is refused, and the refusal says when to come back</td><td>C4, relayed and not invented</td></tr>
 				<tr><td>TE7</td><td>A handful of bytes which say an executable or a script is refused. The only check which needs a content</td><td>T01</td></tr>
 				<tr><td>TE8</td><td>A file fed in raises the volume by its size</td><td>T08</td></tr>
 				<tr><td>TE9</td><td>A file taken back lowers it, and taking back what was never fed does nothing wrong</td><td>T09</td></tr>
-				<tr><td>TE10</td><td>What is to be given comes back in the order it was fed</td><td>T08</td></tr>
+				<tr><td>TE10</td><td>What is to be sent comes back in the order it was fed</td><td>T08</td></tr>
 				<tr><td>TE11</td><td>Nothing of a content travels while the person feeds: what is held is a name and a size</td><td>RO8</td></tr>
 				<tr><td>TE12</td><td>A state handed to a view gives a tree which holds what that state said and nothing more: no refusal it invented, no total it counted</td><td>D1</td></tr>
 				<tr><td>TE13</td><td>A state which says nothing gives a tree which says nothing</td><td>D1</td></tr>
 				<tr><td>TE14</td><td>What is handed to an app holds the checked files and them only</td><td>B1, RO9</td></tr>
 				<tr><td>TE15</td><td>Everything in what was handed is changed, emptied and added to &mdash; and the workspace of the person has not moved</td><td>RO9</td></tr>
+				<tr><td>TE23</td><td>The same state gives the same tree, twice: no clock is read, and no order shifts</td><td>D1</td></tr>
+				<tr><td>TE24</td><td>A refusal is marked on the file it refuses and on no other, with the reason it came with; a refused file stays in the list</td><td>C12</td></tr>
+				<tr><td>TE25</td><td>Where there is no place, no control which sends is built at all &mdash; and what she fed stands as it was</td><td>The contract of the view</td></tr>
+				<tr><td>TE26</td><td>A view writes nothing it was not given: no path, no place, no name of a folder</td><td>B6</td></tr>
+				<tr><td>TE28</td><td>What a dialog answers is read and never guessed; what she chose joins the workspace as it stands, checked, and choosing nothing adds nothing</td><td>C5</td></tr>
+				<tr><td>TE27</td><td>Where the files stand already: the paths are listed, no bound is shown, no file carries a mark of validity, and the control is not the one which gives a content &mdash; before anything is designated as well as after</td><td>C5, C6</td></tr>
+				<tr><td>TE29</td><td>Where the files stand already, the service is built and answers every task with no deposit API: nothing of it is built, no place is asked for, nothing is announced</td><td>C15</td></tr>
+				<tr><td>TE30</td><td><code>ready</code> sends nothing and asks nothing of the deposit API; <code>is_ready()</code> answers true after it, and false after any other task</td><td>E7</td></tr>
+				<tr><td>TE31</td><td><code>start_over()</code> gives a container which shows the deposit again, and <code>files_for_app()</code> hands no file afterwards</td><td>The contract of the manager</td></tr>
 			</tbody>
 		</table>
+
+		<p>
+			<b>TE23 to TE26 are what a view promises</b>, and they need nothing but a
+			state handed to it: the same state twice, a refusal shown where it belongs,
+			a control which is not built, and nothing written which was not given.
+		</p>
 
 		<p>
 			<b>TE1 to TE7 are the whole of what acceptance does.</b> It holds every rule of
@@ -2156,7 +2720,6 @@
 		<ul>
 			<li>What an app does with what it received: it is the app's, and this domain is answerable only for what it handed and for what came back.</li>
 			<li>How the domain of the workspaces writes a workspace: it is established, and it has its own tests or it has not.</li>
-			<li>The page which feeds a workspace in the wx interface: it exists, it is in production, and it is handled.</li>
 		</ul>
 
 		<p>
@@ -2260,7 +2823,7 @@
 			<thead><tr><th>What</th><th>Why</th></tr></thead>
 			<tbody>
 				<tr>
-					<td>Sending the contents as the person feeds, rather than when she gives</td>
+					<td>Sending the contents as the person feeds, rather than when she sends</td>
 					<td>A composition which takes an hour would expire under the person making it, and be deleted by the request of somebody else. A deposit cannot begin to age before it exists</td>
 				</tr>
 				<tr>
@@ -2308,7 +2871,8 @@
 		</p>
 
 		<ul>
-			<li>One word is not settled: the one for a file designated and not yet duplicated. What is given at one time is written <i>deposit</i> throughout, and that one is settled.</li>
+			<li>One word is not settled: the one for a file designated and not yet duplicated. What is sent at one time is written <i>deposit</i> throughout, and that one is settled.</li>
+			<li><b>Settled.</b> Where the files stand already, what the person designates is a path, and the record carries it inside the workspace the files are made known to: the two lists which would have said the same thing are one.</li>
 		</ul>
 
 	</section>
@@ -2327,6 +2891,339 @@
 <h1>Annexes</h1>
 
 <!-- =============================================================== -->
+
+	<section>
+	<h2>Annex: Mockup of the interface</h2>
+
+		<p>This annex is not a picture of a page. It is a piece of page &mdash;
+		the fragments below are HTML, styled by Whakerexa, rendered here by
+		the same stylesheets that will render wherever an app places them.
+		Interactions are inert; the structure, the labels and the wording are
+		not.</p>
+
+		<p><b>Four of the six fragments are what the views build</b>, copied
+		here as they came out of <code>swappDepositView</code> and
+		<code>swappDeliveryView</code>: what is read here cannot differ from
+		what an app shows, and the day this document is served, they are
+		written between the two marks rather than copied. The two others are
+		not of this service &mdash; a dialog, which belongs to the app, and a
+		sending, which belongs to what makes the contents travel &mdash; and
+		they stay as they were drawn.</p>
+
+		<p>The wrapping <code>div</code> which puts two of them side by side is
+		of this annex and of nowhere else: a view builds a
+		<code>section</code> or an <code>aside</code>, and where it stands is
+		the app's.</p>
+
+		<p>Two fragments, not one, because this domain shows two things at
+		two different moments, through two different views: what a person
+		feeds, before an app runs, and what was produced, once it has. They
+		stand side by side here so that both can be read at once; a page
+		shows one of them, never both.</p>
+
+		<p>Four more fragments follow them, which are these same two views
+		in the states they take apart from the one above. Only what differs
+		is drawn: the deposit itself is not repeated.</p>
+
+		<ul>
+			<li><b>No place to be had.</b> The dialog, and nothing else. Her
+			list stands as it was, and the control which sends is left out
+			&mdash; not built and disabled: not built.</li>
+			<li><b>While it is being sent.</b> The contents travel, which is
+			the one long moment of this domain, and the one where a
+			proportion can be said: the volume fed is known. It stands where
+			the control which sends stood.</li>
+			<li><b>Deposited into the workspace.</b> The files stand already
+			where SPPAS reads them, so what she designates is a path, and it
+			goes straight to her workspace: no copy and no place. And no bound either &mdash; the bounds are the deposit
+			API's, they bind what is deposited (C4), and here nothing is: a
+			corpus is not weighed against the room a shared space keeps. The
+			list and the way back out do not move; the control differs, the
+			bounds go, and what validates says the act and not a destination
+			which may not exist yet, T02 making a workspace when it finds none. No file
+			carries a mark of validity either: nothing is refused here.</li>
+			<li><b>Nothing produced yet.</b> The tree of nothing yet, which
+			is not an empty one. No bar here: how many files an app will
+			produce is not something this domain knows, and a bar would say
+			a proportion of nothing.</li>
+		</ul>
+
+		<!-- ============ BEGIN MOCKUP ============ -->
+
+		<div class="panel">
+
+		<div class="flex-panel">
+
+			<!-- ---------- DepositView ---------- -->
+
+			<div class="flex-item">
+    <section>
+        <form method="post">
+            <input type="hidden" name="task" value="send" />
+            <input type="hidden" name="fed" value="[[&quot;record-01.wav&quot;, 3355443]]" />
+            <fieldset class="dropzone">
+                <legend>
+                                Add files
+                </legend>
+                <p>
+                    <label for="files_input">
+                                        Select files
+                    </label>
+                    <input id="files_input" type="file" multiple="multiple" />
+                    <span>
+                                        , or drag and drop files here.
+                    </span>
+                </p>
+                <ul class="wrap-panel dropzone-list">
+                    <li class="wrap-item card" aria-invalid="false">
+                        <span class="file-status file-status-ok">
+                                                Accepted
+                        </span>
+                        <span class="dropzone-size">
+                                                3355443
+                        </span>
+                        <span class="dropzone-name">
+                                                record-01.wav
+                        </span>
+                        <button type="button" class="apply-button" name="record-01.wav">
+                                                Take back
+                        </button>
+                    </li>
+                    <li class="wrap-item card" aria-invalid="true">
+                        <span class="file-status file-status-error">
+                                                Refused: This name is already taken.
+                        </span>
+                        <span class="dropzone-size">
+                                                0
+                        </span>
+                        <span class="dropzone-name">
+                                                record-02.wav
+                        </span>
+                        <button type="button" class="apply-button" name="record-02.wav">
+                                                Take back
+                        </button>
+                    </li>
+                </ul>
+                <p>
+                                3.2 MB of 100 MB accepted here. Up to 10 MB per file.
+                </p>
+            </fieldset>
+            <p>
+                <button type="button" class="cta-button">
+                                Send
+                </button>
+            </p>
+        </form>
+    </section>
+			</div>
+
+			<!-- ---------- DeliveryView ---------- -->
+
+			<div class="flex-item">
+    <aside>
+        <h4>
+                What was produced
+        </h4>
+        <ul>
+            <li>
+                        record-01
+                <ul>
+                    <li class="wrap-item card">
+                        <a href="#">
+                                                record-01.TextGrid
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                        record-02
+                <ul>
+                    <li class="wrap-item card">
+                        <a href="#">
+                                                record-02.TextGrid
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                        record-03
+                <ul>
+                    <li class="wrap-item card">
+                                        Nothing was produced: the file holds no transcription to work from.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <p>
+                Reachable until 14:32.
+        </p>
+        <p>
+                The app has finished.
+        </p>
+        <form method="post">
+            <input type="hidden" name="task" value="" />
+            <input type="hidden" name="fed" value="[]" />
+        </form>
+    </aside>
+			</div>
+
+		</div>
+
+		</div>
+
+		<!-- ---------- DepositView, no place to be had ---------- -->
+
+		<div class="panel">
+
+		<dialog id="mk-nop-dialog" role="alertdialog" aria-labelledby="mk-nop-msg" class="info" open>
+
+			<p id="mk-nop-msg">Every place is taken. A new attempt will be
+			made in <span id="mk-nop-left">4 min 32 s</span>.</p>
+
+			<button type="button" id="mk-nop-cancel" class="action-button">Cancel everything</button>
+
+			<p>What you added will be cleared, and this page will start
+			again.</p>
+
+		</dialog>
+
+		</div>
+
+		<!-- ---------- DepositView, while it is being sent ---------- -->
+
+		<div class="panel">
+
+		<section id="progress_section">
+
+		<h3 id="progress_header">Sending</h3>
+
+		<progress id="percent_progress" max="100" value="42">42%</progress>
+
+		<p id="progress_text">record-02.wav</p>
+
+		</section>
+
+		</div>
+
+		<!-- ---------- DepositView, deposited into the workspace ---------- -->
+
+		<div class="panel">
+    <section>
+        <form method="post">
+            <input type="hidden" name="task" value="designate" />
+            <input type="hidden" name="fed" value="[]" />
+            <input type="hidden" name="workspace" value=" ... " />
+            <fieldset class="dropzone">
+                <legend>
+                                Add files
+                </legend>
+                <p>
+                    <button id="files_browse" type="button" class="apply-button">
+                                        Select files
+                    </button>
+                </p>
+                <ul class="wrap-panel dropzone-list">
+                    <li class="wrap-item card">
+                        <span class="dropzone-name">
+                                                /corpus/record-01.wav
+                        </span>
+                        <button type="button" class="apply-button" name="/corpus/record-01.wav">
+                                                Take back
+                        </button>
+                    </li>
+                    <li class="wrap-item card">
+                        <span class="dropzone-name">
+                                                /corpus/record-02.wav
+                        </span>
+                        <button type="button" class="apply-button" name="/corpus/record-02.wav">
+                                                Take back
+                        </button>
+                    </li>
+                </ul>
+            </fieldset>
+            <p>
+                <button type="button" class="cta-button">
+                                Done
+                </button>
+            </p>
+        </form>
+    </section>
+		</div>
+
+		<!-- ---------- DeliveryView, nothing produced yet ---------- -->
+
+		<div class="panel">
+    <aside>
+        <h4>
+                What was produced
+        </h4>
+        <p>
+                Nothing has come back yet.
+        </p>
+        <p>
+                The app has not finished.
+        </p>
+        <form method="post">
+            <input type="hidden" name="task" value="" />
+            <input type="hidden" name="fed" value="[]" />
+        </form>
+    </aside>
+		</div>
+
+		<!-- ============ END MOCKUP ============ -->
+
+		<h3>What the mockup settles, and what it does not</h3>
+
+		<p>The two views never stand on one page together: one page shows a
+		person what she feeds, another shows her what came back, and where
+		each is shown is settled by whoever assembles the app, not by this
+		dossier. Placing them side by side here is a convenience of reading,
+		not a third layout being proposed.</p>
+
+		<p>A refusal touching the whole deposit &mdash; no room now, and when
+		to come back &mdash; is not shown here: it goes to the dialog of the
+		app, of which every app already has one for information and one for
+		error. Only a refusal touching one file is marked in place, on that
+		file, which is the one thing an app's dialog cannot say by
+		itself.</p>
+
+		<p>What marks a file is <code>aria-invalid</code>, not an invented
+		flag: wexa.css already colors a field so marked, in the same
+		red and green shown here. The icon repeats what the color says for
+		whoever cannot read the color, and names it besides &mdash; the
+		reason of a refusal is read on the file it refused, not guessed from
+		a border.</p>
+
+		<p><b>A size is shown in bytes</b>, because a size is what the view
+		was given and a view counts nothing. Turning 3355443 into 3.2 MB is a
+		decision, and it is taken where the record is filled, not where it is
+		read.</p>
+
+		<p>A root from which nothing came stands in the same list as the
+		others, and carries the sentence the app gave for it. Those words are
+		the app's: this domain does not compose them, does not shorten them,
+		and does not put the file out of the list for want of a result.</p>
+
+		<p>Each list is a tree, not a table: what
+		<code>populate_tree_content</code> builds. A root groups the files
+		produced from it, and nothing in the fragment counts them, refuses
+		them, or judges a name &mdash; that was done before the fragment was
+		built, and none of it happens again here.</p>
+
+		<p>The bounds stated above &mdash; 10 MB, 100 MB &mdash; are read
+		from the deposit API and said as it gives them; this domain decides
+		none of them, and its dossier holds the reason for each.</p>
+
+		<p><b>Every fragment stands in a form, and the form carries what the
+		next request brings back</b>: one hidden field per entry of the
+		record, written as the view was given them and escaped, a workspace
+		being JSON and JSON holding quotes. Nothing of it is shown, and
+		nothing of it is optional: a fragment built without them is a page
+		which loses the list of the person at her next gesture. The values
+		above are cut short for reading; what a page carries is what the
+		record serialised, whole.</p>
+
+	</section>
 
 	<section>
 	<h2>Annex: Legal notices</h2>

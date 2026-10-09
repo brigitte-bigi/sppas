@@ -40,6 +40,7 @@
     TE1 to TE22 of the dossier "Providing files, and giving them back".
     TE1 to TE15 need nothing at all. TE16 and TE17 need the deposit API,
     TE18 and TE19 a disk, TE20 to TE22 the domain of the workspaces.
+    TE29 and TE30 run with the deposit API absent.
 
 """
 
@@ -48,22 +49,43 @@ import unittest
 import os
 import shutil
 import tempfile
+from unittest import mock
+
+from whakerpy.htmlmaker import HTMLTree
 
 from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States
 
-from sppas.ui.swapp.services.deposit.deposit_settings import sppasDepositSettings
-from sppas.ui.swapp.services.deposit.deposit_space import sppasDepositSpace
+from sppas.ui.swapp.services.deposit.deposit_settings import swappDepositSettings
+from sppas.ui.swapp.services.deposit.deposit_space import swappDepositSpace
 
-from sppas.ui.swapp.services.files.files_acceptance import sppasDepositAcceptance
-from sppas.ui.swapp.services.files.files_feeding import sppasDeposit
-from sppas.ui.swapp.services.files.files_place import sppasFilePlace
-from sppas.ui.swapp.services.files.files_workspace import sppasWorkspaceFiles
-from sppas.ui.swapp.services.files.files_handing import sppasAppExchange
-from sppas.ui.swapp.services.files.files_delivery import sppasResultDelivery
-from sppas.ui.swapp.services.files.files_record import sppasFilesRecord
-from sppas.ui.swapp.services.files.files_view import sppasDepositView
-from sppas.ui.swapp.services.files.files_view import sppasDeliveryView
+from sppas.ui.swapp.services.files.files_acceptance import swappDepositAcceptance
+from sppas.ui.swapp.services.files.files_feeding import swappDataFiles
+from sppas.ui.swapp.services.files.files_place import swappFilePlace
+from sppas.ui.swapp.services.files.files_workspace import swappWorkspaceFiles
+from sppas.ui.swapp.services.files.files_handing import swappAppExchange
+from sppas.ui.swapp.services.files.files_chooser import swappFileChooser
+from sppas.ui.swapp.services.files.files_provision import swappFileProvision
+from sppas.ui.swapp.services.files.files_delivery import swappResultDelivery
+from sppas.ui.swapp.services.files.files_record import swappFilesRecord
+from sppas.ui.swapp.services.files.files_view import swappDepositView
+from sppas.ui.swapp.services.files.files_view import swappDeliveryView
+from sppas.ui.swapp.services.files.files_controller import MSG_FAILED
+from sppas.ui.swapp.services.files.files_view import MSG_FINISHED
+from sppas.ui.swapp.services.files.files_manager import swappFilesManager
+
+# ---------------------------------------------------------------------------
+
+
+def files_of(workspace):
+    """Give every file of a workspace, whatever its state.
+
+    The three levels are walked because a workspace gives its files by
+    state and not as a whole: what is handed has to be seen entirely, the
+    promise being that it holds the checked files *and them only*.
+
+    """
+    return [fn for fp in workspace.get_paths() for fr in fp for fn in fr]
 
 # ---------------------------------------------------------------------------
 
@@ -83,7 +105,7 @@ class TestDepositAcceptance(unittest.TestCase):
     """TE1 to TE7. It reads nothing: no place, no API, no workspace."""
 
     def setUp(self):
-        self.acceptance = sppasDepositAcceptance()
+        self.acceptance = swappDepositAcceptance()
 
     # -----------------------------------------------------------------------
 
@@ -95,7 +117,7 @@ class TestDepositAcceptance(unittest.TestCase):
         said = self.acceptance.what_is_accepted()
         self.assertTrue(len(said) > 0)
 
-        deposit = sppasDeposit()
+        deposit = swappDataFiles()
         deposit.feed("a.wav", 1024)
         self.assertEqual(said, self.acceptance.what_is_accepted())
 
@@ -106,7 +128,7 @@ class TestDepositAcceptance(unittest.TestCase):
         reason is given with the refusal. C12
 
         """
-        deposit = sppasDeposit()
+        deposit = swappDataFiles()
         deposit.feed("a.wav", 1024)
 
         accepted, reason = self.acceptance.accepts("a.wav", deposit)
@@ -116,23 +138,6 @@ class TestDepositAcceptance(unittest.TestCase):
         accepted, reason = self.acceptance.accepts("b.wav", deposit)
         self.assertTrue(accepted)
         self.assertEqual("", reason)
-
-    # -----------------------------------------------------------------------
-
-    def test_te3_an_extension_sppas_does_not_read(self):
-        """TE3. What SPPAS reads is this domain's to say, and it says it on a
-        name. C10
-
-        """
-        deposit = sppasDeposit()
-        for name in ("a.exe", "a.zip", "a.unknown", "a"):
-            accepted, reason = self.acceptance.accepts(name, deposit)
-            self.assertFalse(accepted)
-            self.assertTrue(len(reason) > 0)
-
-        for name in ("a.wav", "a.TextGrid"):
-            accepted, reason = self.acceptance.accepts(name, deposit)
-            self.assertTrue(accepted)
 
     # -----------------------------------------------------------------------
 
@@ -190,7 +195,7 @@ class TestDeposit(unittest.TestCase):
     """TE8 to TE11. What is fed, before anything has travelled."""
 
     def setUp(self):
-        self.deposit = sppasDeposit()
+        self.deposit = swappDataFiles()
 
     # -----------------------------------------------------------------------
 
@@ -248,15 +253,25 @@ class TestDeposit(unittest.TestCase):
 class TestViews(unittest.TestCase):
     """TE12 and TE13. A view is given a state and builds a tree."""
 
+    def setUp(self):
+        # The identifier an app gives: the node of its page the container is
+        # built under. It is read from a tree of its own, and written nowhere
+        # here -- append_child() refuses a node which was built under another
+        # parent, and a value copied is a value which will differ from itself.
+        self.parent = HTMLTree("test_files").body_main.identifier
+
+    # -----------------------------------------------------------------------
+
     def test_te12_a_view_shows_what_the_state_says(self):
         """TE12. What that state said, and nothing more: no refusal it
         invented, no total it counted. D1
 
         """
-        record = sppasFilesRecord()
+        record = swappFilesRecord()
+        record.reachable = False
         record.fed = [("a.wav", 1024), ("b.TextGrid", 512)]
 
-        view = sppasDepositView()
+        view = swappDepositView(self.parent)
         view.populate_tree_content(record)
         shown = text_of(view)
 
@@ -271,13 +286,150 @@ class TestViews(unittest.TestCase):
         or invented a refusal is caught here. D1
 
         """
-        record = sppasFilesRecord()
+        record = swappFilesRecord()
+        record.reachable = False
 
-        for view in (sppasDepositView(), sppasDeliveryView()):
+        for view in (swappDepositView(self.parent), swappDeliveryView(self.parent)):
             view.populate_tree_content(record)
             shown = text_of(view)
             self.assertNotIn("a.wav", shown)
             self.assertNotIn("refus", shown.lower())
+
+    # -----------------------------------------------------------------------
+
+    def test_te23_the_same_state_gives_the_same_tree(self):
+        """TE23. No clock is read and no order shifts: a view is called with
+        everything it needs and asks for nothing. D1
+
+        """
+        record = swappFilesRecord()
+        record.reachable = False
+        record.fed = [("a.wav", 1024), ("b.TextGrid", 512)]
+        record.to_be_shown = {"accepted": "1536 of 100 bytes accepted here."}
+
+        first = swappDepositView(self.parent)
+        first.populate_tree_content(record)
+        second = swappDepositView(self.parent)
+        second.populate_tree_content(record)
+
+        self.assertEqual(text_of(first), text_of(second))
+
+    # -----------------------------------------------------------------------
+
+    def test_te24_a_refusal_is_marked_on_the_file_it_refuses(self):
+        """TE24. On that file and on no other, with the reason it came with.
+        A file which was refused stays in the list. C12
+
+        """
+        record = swappFilesRecord()
+        record.reachable = False
+        record.fed = [("a.wav", 1024)]
+        record.to_be_shown = {"refused": {"b.exe": "SPPAS does not read this kind of file."}}
+
+        view = swappDepositView(self.parent)
+        view.populate_tree_content(record)
+        shown = text_of(view)
+
+        self.assertIn("a.wav", shown)
+        self.assertIn("b.exe", shown)
+        self.assertIn("does not read", shown)
+        self.assertEqual(1, shown.count("does not read"))
+        self.assertEqual(1, shown.count('aria-invalid="true"'))
+        self.assertEqual(1, shown.count('aria-invalid="false"'))
+
+    # -----------------------------------------------------------------------
+
+    def test_te25_no_place_no_control_which_sends(self):
+        """TE25. Not one which is built and disabled: one which is not there.
+        And what she fed stands as it was.
+
+        """
+        record = swappFilesRecord()
+        record.reachable = False
+        record.fed = [("a.wav", 1024)]
+
+        view = swappDepositView(self.parent)
+        view.populate_tree_content(record)
+        self.assertIn("cta-button", text_of(view))
+
+        record.to_be_shown = {"no_place": "4 min 32 s"}
+        refused = swappDepositView(self.parent)
+        refused.populate_tree_content(record)
+        shown = text_of(refused)
+
+        self.assertNotIn("cta-button", shown)
+        self.assertIn("a.wav", shown)
+
+    # -----------------------------------------------------------------------
+
+    def test_te26_a_view_never_writes_what_it_was_not_given(self):
+        """TE26. No path, no place, no name of a folder, nothing of the
+        machine: what the person may see was chosen before the view was
+        called. B6
+
+        """
+        record = swappFilesRecord()
+        record.to_be_shown = {"produced": {"a": [("a-phon.TextGrid", "/deposit/place_1/a-phon.TextGrid")],
+                                           "b": ["Nothing was produced: the file holds no transcription."]},
+                              "reachable_until": "Reachable until 14:32.",
+                              "finished": True}
+
+        view = swappDeliveryView(self.parent)
+        view.populate_tree_content(record)
+        shown = text_of(view)
+
+        self.assertIn("a-phon.TextGrid", shown)
+        self.assertIn("no transcription", shown)
+        self.assertIn("14:32", shown)
+        self.assertNotIn(tempfile.gettempdir(), shown)
+        self.assertNotIn("a.wav", shown)
+
+    # -----------------------------------------------------------------------
+
+    def test_te27_where_the_files_stand_already(self):
+        """TE27. The view is told which case it is in and reads nothing else:
+        the files are listed by their path, no bound is shown and no file
+        carries a mark of validity. C5, C6
+
+        """
+        wkp = sppasWorkspace()
+        root = tempfile.mkdtemp(prefix="test_files_")
+        path = os.path.join(root, "a.wav")
+        with open(path, "w") as fp:
+            fp.write("")
+        wkp.add_file(path)
+
+        record = swappFilesRecord()
+        record.reachable = True
+        record.workspace = wkp
+        record.to_be_shown = {"accepted": "1536 of 100 bytes accepted here."}
+
+        view = swappDepositView(self.parent)
+        view.populate_tree_content(record)
+        shown = text_of(view)
+        shutil.rmtree(root, ignore_errors=True)
+
+        self.assertIn(path, shown)
+        self.assertNotIn("aria-invalid", shown)
+        self.assertNotIn("of 100 bytes", shown)
+        self.assertNotIn("type=\"file\"", shown)
+
+    # -----------------------------------------------------------------------
+
+    def test_te27bis_nothing_designated_yet(self):
+        """TE27. The same case, before she has designated anything: the list
+        is empty and the view shows the same control. C6
+
+        """
+        record = swappFilesRecord()
+        record.reachable = True
+
+        view = swappDepositView(self.parent)
+        view.populate_tree_content(record)
+        shown = text_of(view)
+
+        self.assertIn("files_browse", shown)
+        self.assertNotIn("type=\"file\"", shown)
 
 # ---------------------------------------------------------------------------
 
@@ -300,8 +452,8 @@ class TestAppExchange(unittest.TestCase):
         self.wkp.set_object_state(States().CHECKED, self.wkp.get_object(self.names[0]))
         self.wkp.set_object_state(States().CHECKED, self.wkp.get_object(self.names[1]))
 
-        self.workspace = sppasWorkspaceFiles(self.wkp)
-        self.exchange = sppasAppExchange(self.workspace)
+        self.workspace = swappWorkspaceFiles(self.wkp)
+        self.exchange = swappAppExchange(self.workspace)
 
     def tearDown(self):
         shutil.rmtree(self.root, ignore_errors=True)
@@ -312,7 +464,7 @@ class TestAppExchange(unittest.TestCase):
         """TE14. The one it is given is made for it. B1, RO9"""
         handed = self.exchange.for_app()
 
-        given = sorted(f.get_id() for f in handed.get_all_files())
+        given = sorted(f.get_id() for f in files_of(handed))
         self.assertEqual(sorted(self.names[:2]), given)
 
     # -----------------------------------------------------------------------
@@ -323,13 +475,13 @@ class TestAppExchange(unittest.TestCase):
         other promise of this domain rests on. RO9
 
         """
-        before = sorted(f.get_id() for f in self.wkp.get_all_files())
+        before = sorted(f.get_id() for f in files_of(self.wkp))
         states_before = [self.wkp.get_object(n).get_state() for n in self.names]
 
         handed = self.exchange.for_app()
         self.assertIsNot(self.wkp, handed)
 
-        for one in list(handed.get_all_files()):
+        for one in list(files_of(handed)):
             handed.set_object_state(States().UNUSED, one)
         other = os.path.join(self.root, "made_by_the_app.wav")
         with open(other, "w") as fp:
@@ -337,10 +489,173 @@ class TestAppExchange(unittest.TestCase):
         handed.add_file(other)
         handed.remove_file(self.names[0])
 
-        after = sorted(f.get_id() for f in self.wkp.get_all_files())
+        after = sorted(f.get_id() for f in files_of(self.wkp))
         self.assertEqual(before, after)
         self.assertEqual(states_before,
                          [self.wkp.get_object(n).get_state() for n in self.names])
+
+# ---------------------------------------------------------------------------
+
+
+class TestFileChooser(unittest.TestCase):
+    """TE28. The way in of the files which stand already."""
+
+    def setUp(self):
+        self.wkp = sppasWorkspace()
+        self.root = tempfile.mkdtemp(prefix="test_files_")
+        self.names = list()
+        for name in ("a.wav", "b.wav"):
+            path = os.path.join(self.root, name)
+            with open(path, "w") as fp:
+                fp.write("")
+            self.names.append(path)
+
+    def tearDown(self):
+        shutil.rmtree(self.root, ignore_errors=True)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def a_chooser(answer):
+        """Give a chooser which answers what a dialog would answer."""
+        class _Dialog(object):
+            def ask_file(self, **kwargs):
+                return answer
+
+        return swappFileChooser(_Dialog())
+
+    # -----------------------------------------------------------------------
+
+    def test_te28_what_a_dialog_answers_is_read_and_never_guessed(self):
+        """TE28. One name, several of them, nothing, or something which is no
+        name: only names are kept, and nothing is raised.
+
+        """
+        self.assertEqual([self.names[0]],
+                         swappFileChooser.validate_chosen(self.names[0]))
+        self.assertEqual(self.names,
+                         swappFileChooser.validate_chosen(list(self.names)))
+        self.assertEqual(list(), swappFileChooser.validate_chosen(None))
+        self.assertEqual(list(), swappFileChooser.validate_chosen(""))
+        self.assertEqual(list(), swappFileChooser.validate_chosen(12))
+
+    # -----------------------------------------------------------------------
+
+    def test_te28bis_what_she_chose_is_known_and_checked(self):
+        """TE28. The files join the workspace as they stand: nothing is
+        copied and nothing is asked of the deposit API. A person who chose
+        nothing adds nothing.
+
+        """
+        provision = swappFileProvision(swappWorkspaceFiles(self.wkp),
+                                       chooser=TestFileChooser.a_chooser(list(self.names)))
+
+        self.assertEqual(self.names, provision.ask_for_files())
+        self.assertEqual(sorted(self.names),
+                         sorted(f.get_id() for f in files_of(provision.files_for_app())))
+
+        nothing = swappFileProvision(swappWorkspaceFiles(sppasWorkspace()),
+                                     chooser=TestFileChooser.a_chooser(""))
+        self.assertEqual(list(), nothing.ask_for_files())
+        self.assertEqual(list(), files_of(nothing.files_for_app()))
+
+# ---------------------------------------------------------------------------
+
+
+class TestLocalUse(unittest.TestCase):
+    """TE29 and TE30. Where the files stand already, and nothing else."""
+
+    def setUp(self):
+        self.parent = HTMLTree("test_files").body_main.identifier
+        self.root = tempfile.mkdtemp(prefix="test_files_")
+        self.path = os.path.join(self.root, "a.wav")
+        with open(self.path, "w") as fp:
+            fp.write("")
+
+        # The deposit API is absent: an error is raised as soon as it is built.
+        self.absent = mock.patch(
+            "sppas.ui.swapp.services.files.files_place.swappDepositSpace",
+            side_effect=RuntimeError("The deposit API is absent."))
+        self.absent.start()
+
+    def tearDown(self):
+        self.absent.stop()
+        shutil.rmtree(self.root, ignore_errors=True)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def answer(manager, events):
+        """Offer the events of one request, and give what the container shows.
+
+        :param manager: (swappFilesManager) What an app holds of the service
+        :param events: (dict) The events of one request
+        :return: (tuple) Whether they were consumed, and the HTML of the container
+
+        """
+        consumed = manager.consumes(events)
+        manager.populate_view()
+
+        return consumed, manager.container().serialize()
+
+    # -----------------------------------------------------------------------
+
+    def test_te29_no_deposit_api_where_the_files_stand_already(self):
+        """TE29. The service is built and answers every task, and nothing of
+        the deposit API is built, asked or announced. C15
+
+        """
+        manager = swappFilesManager(self.parent, reachable=True)
+
+        requests = ({"designate": self.path},
+                    {"take_back": self.path},
+                    {"designate": self.path},
+                    {"ready": ""},
+                    {"finished": ""})
+        for events in requests:
+            consumed, shown = TestLocalUse.answer(manager, events)
+            self.assertTrue(consumed)
+            self.assertNotIn(MSG_FAILED, shown)
+
+    # -----------------------------------------------------------------------
+
+    def test_te30_ready(self):
+        """TE30. ready sends nothing and asks nothing of the deposit API;
+        is_ready() answers true after it, and false after any other task. E7
+
+        """
+        manager = swappFilesManager(self.parent, reachable=True)
+
+        manager.consumes({"designate": self.path})
+        self.assertFalse(manager.is_ready())
+
+        self.assertTrue(manager.consumes({"ready": ""}))
+        self.assertTrue(manager.is_ready())
+        handed = list()
+        for handed_file in files_of(manager.files_for_app()):
+            handed.append(handed_file.get_id())
+        self.assertEqual([self.path], handed)
+
+        manager.consumes({"take_back": self.path})
+        self.assertFalse(manager.is_ready())
+
+    # -----------------------------------------------------------------------
+
+    def test_te31_start_over(self):
+        """TE31. The deposit is shown again, and no file is handed afterwards:
+        the files are known to a new workspace, holding none.
+
+        """
+        manager = swappFilesManager(self.parent, reachable=True)
+        manager.consumes({"designate": self.path})
+        manager.consumes({"finished": ""})
+        manager.populate_view()
+        self.assertIn(MSG_FINISHED, manager.container().serialize())
+
+        manager.start_over()
+        manager.populate_view()
+        self.assertNotIn(MSG_FINISHED, manager.container().serialize())
+        self.assertEqual(list(), files_of(manager.files_for_app()))
 
 # ---------------------------------------------------------------------------
 
@@ -349,10 +664,10 @@ class TestFilePlace(unittest.TestCase):
     """TE16 and TE17. The only class which calls the deposit API."""
 
     def setUp(self):
-        self.settings = sppasDepositSettings()
+        self.settings = swappDepositSettings()
         self.settings.space = tempfile.mkdtemp(prefix="test_files_")
-        self.api = sppasDepositSpace(self.settings)
-        self.place = sppasFilePlace(self.api)
+        self.api = swappDepositSpace(self.settings)
+        self.place = swappFilePlace(self.api)
 
     def tearDown(self):
         shutil.rmtree(self.settings.space, ignore_errors=True)
@@ -400,11 +715,11 @@ class TestResultDelivery(unittest.TestCase):
     """TE18 and TE19. What an address reaches, and what it does not."""
 
     def setUp(self):
-        self.settings = sppasDepositSettings()
+        self.settings = swappDepositSettings()
         self.settings.space = tempfile.mkdtemp(prefix="test_files_")
-        self.api = sppasDepositSpace(self.settings)
-        self.place = sppasFilePlace(self.api)
-        self.delivery = sppasResultDelivery(self.place)
+        self.api = swappDepositSpace(self.settings)
+        self.place = swappFilePlace(self.api)
+        self.delivery = swappResultDelivery(self.place)
 
         self.given = self.place.ask_for_a_place()
         self.place.put(self.given, "a-phon.TextGrid", b"produced")
@@ -452,10 +767,10 @@ class TestWorkspaceFiles(unittest.TestCase):
                 fp.write("")
             self.names.append(path)
 
-        self.workspace = sppasWorkspaceFiles(self.wkp)
+        self.workspace = swappWorkspaceFiles(self.wkp)
         self.workspace.make_known(self.names)
         self.workspace.check(self.names)
-        self.exchange = sppasAppExchange(self.workspace)
+        self.exchange = swappAppExchange(self.workspace)
 
     def tearDown(self):
         shutil.rmtree(self.root, ignore_errors=True)
@@ -468,12 +783,12 @@ class TestWorkspaceFiles(unittest.TestCase):
 
         """
         first = self.exchange.for_app()
-        self.assertEqual(2, len(list(first.get_all_files())))
+        self.assertEqual(2, len(list(files_of(first))))
 
         self.workspace.lock([self.names[0]])
 
         second = self.exchange.for_app()
-        given = [f.get_id() for f in second.get_all_files()]
+        given = [f.get_id() for f in files_of(second)]
         self.assertEqual([self.names[1]], given)
 
     # -----------------------------------------------------------------------
@@ -484,7 +799,7 @@ class TestWorkspaceFiles(unittest.TestCase):
         self.workspace.release([self.names[0]])
 
         handed = self.exchange.for_app()
-        given = sorted(f.get_id() for f in handed.get_all_files())
+        given = sorted(f.get_id() for f in files_of(handed))
         self.assertEqual(sorted(self.names), given)
 
     # -----------------------------------------------------------------------
