@@ -39,18 +39,28 @@
 """
 
 from sppas.core.coreutils import sppasTypeError
+from sppas.src.wkps import sppasWorkspace
+from sppas.src.wkps import States
 
 # ---------------------------------------------------------------------------
 
 # The name of the event which carries the task of a request.
 EVENT_TASK = "convert_task"
 
-TASK_DESTINATION = "destination"
-TASK_GENERAL = "general"
 TASK_CONVERT = "convert"
 TASK_RESET = "reset"
 
-TASKS = (TASK_DESTINATION, TASK_GENERAL, TASK_CONVERT, TASK_RESET)
+TASKS = (TASK_CONVERT, TASK_RESET)
+
+# The events which follow a conversion, named as the ones of the Setup:
+# where it stands is asked by an event, its results by an event which bakes.
+EVENT_NAME = "event_name"
+EVENT_BAKE = "event_bake"
+TASK_UPDATE = "update"
+TASK_COMPLETE = "complete"
+
+# The name of the field which carries the name of the report of a conversion.
+FIELD_REPORT = "convert_report"
 
 MISSING_BATCH = "batch"
 
@@ -74,19 +84,21 @@ class swappConversion:
 
     # -----------------------------------------------------------------------
 
-    def what_is_missing(self, filenames: list) -> list:
+    def what_is_missing(self, batch: sppasWorkspace) -> list:
         """Return what is still missing before the conversion can run.
 
-        :param filenames: (list of str) The files of the batch
-        :raises: sppasTypeError: The given files are not a list
+        The batch is given and not held: it belongs to the provision of files.
+
+        :param batch: (sppasWorkspace) The workspace the provision of files hands
+        :raises: sppasTypeError: The given batch is not a sppasWorkspace
         :return: (list of str) Empty when the conversion may run
 
         """
-        if isinstance(filenames, (list, tuple)) is False:
-            raise sppasTypeError(filenames, "list")
+        if isinstance(batch, sppasWorkspace) is False:
+            raise sppasTypeError(batch, "sppasWorkspace")
 
         _missing = list()
-        if len(filenames) == 0:
+        if len(batch.get_filename_from_state(States().CHECKED)) == 0:
             _missing.append(MISSING_BATCH)
 
         return _missing
@@ -174,6 +186,7 @@ class swappConvertRecord:
     def __init__(self):
         """Create a record with nothing in it."""
         self.__task = ""
+        self.__report = ""
         self.__conversion = swappConversion()
         self.__to_be_shown = dict()
 
@@ -187,6 +200,7 @@ class swappConvertRecord:
         """
         _data = dict()
         _data["destination"] = self.__conversion.destination
+        _data[FIELD_REPORT] = self.__report
 
         return _data
 
@@ -205,11 +219,18 @@ class swappConvertRecord:
             raise sppasTypeError(data, "dict")
 
         self.__task = ""
+        self.__report = ""
         self.__conversion = swappConversion()
         self.__to_be_shown = dict()
 
         if isinstance(data.get(EVENT_TASK), str) is True:
             self.__task = data[EVENT_TASK]
+        elif data.get(EVENT_NAME) == TASK_UPDATE:
+            self.__task = TASK_UPDATE
+        elif data.get(EVENT_BAKE) == TASK_COMPLETE:
+            self.__task = TASK_COMPLETE
+        if isinstance(data.get(FIELD_REPORT), str) is True:
+            self.__report = data[FIELD_REPORT]
         if isinstance(data.get("destination"), str) is True:
             self.__conversion.destination = data["destination"]
         self.__conversion.override = str(data.get("override", False)) == "True"
@@ -234,6 +255,22 @@ class swappConvertRecord:
 
     # -----------------------------------------------------------------------
 
+    def get_report(self) -> str:
+        """Return the name of the report of the conversion, empty if none (str)."""
+        return self.__report
+
+    # -----------------------------------------------------------------------
+
+    def set_report(self, name: str) -> None:
+        """Set the name of the report of the conversion the page follows.
+
+        :param name: (str) Name of the report, without its path
+
+        """
+        self.__report = str(name)
+
+    # -----------------------------------------------------------------------
+
     def get_conversion(self) -> swappConversion:
         """Return what was decided (swappConversion)."""
         return self.__conversion
@@ -249,5 +286,6 @@ class swappConvertRecord:
     # -----------------------------------------------------------------------
 
     task = property(get_task, None)
+    report = property(get_report, set_report)
     conversion = property(get_conversion, None)
     to_be_shown = property(get_to_be_shown, None)

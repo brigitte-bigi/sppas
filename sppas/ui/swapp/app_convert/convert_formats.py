@@ -41,28 +41,27 @@
 from sppas.core.coreutils import sppasTypeError
 from sppas.src.anndata import sppasTrsRW
 from sppas.src.anndata import FileFormatProperty
-from sppas.ui import _
 
 # ---------------------------------------------------------------------------
 
-# The properties of a format: its identifier, the method of the API which
-# says whether a format holds it, and what is shown of it.
+# The properties of a format: its identifier, and the method of the API
+# which says whether a format holds it.
 PROPERTIES = (
-    ("metadata", "metadata_support", _("Metadata")),
-    ("multi_tiers", "multi_tiers_support", _("Multi tiers")),
-    ("no_tiers", "no_tiers_support", _("No tier")),
-    ("point", "point_support", _("Point")),
-    ("interval", "interval_support", _("Interval")),
-    ("gaps", "gaps_support", _("Gaps")),
-    ("overlaps", "overlaps_support", _("Overlaps")),
-    ("hierarchy", "hierarchy_support", _("Hierarchy")),
-    ("ctrl_vocab", "ctrl_vocab_support", _("Ctrl vocab")),
-    ("media", "media_support", _("Media")),
-    ("radius", "radius_support", _("Vagueness")),
-    ("alt_localization", "alternative_localization_support", _("Alt. loc")),
-    ("alt_tag", "alternative_tag_support", _("Alt. tag")),
-    ("tag_types", "tag_types_support", _("Typed tags")),
-    ("tag_geometry", "tag_geometry_support", _("Geom. tags"))
+    ("metadata", "metadata_support"),
+    ("multi_tiers", "multi_tiers_support"),
+    ("no_tiers", "no_tiers_support"),
+    ("point", "point_support"),
+    ("interval", "interval_support"),
+    ("gaps", "gaps_support"),
+    ("overlaps", "overlaps_support"),
+    ("hierarchy", "hierarchy_support"),
+    ("ctrl_vocab", "ctrl_vocab_support"),
+    ("media", "media_support"),
+    ("radius", "radius_support"),
+    ("alt_localization", "alternative_localization_support"),
+    ("alt_tag", "alternative_tag_support"),
+    ("tag_types", "tag_types_support"),
+    ("tag_geometry", "tag_geometry_support")
 )
 
 # ---------------------------------------------------------------------------
@@ -149,7 +148,7 @@ class swappFormat:
                 _instance = sppasTrsRW.TRANSCRIPTION_TYPES[_key]()
 
         _properties = dict()
-        for _identifier, _method, _text in PROPERTIES:
+        for _identifier, _method in PROPERTIES:
             if _instance is None:
                 _properties[_identifier] = False
             else:
@@ -190,35 +189,6 @@ class swappModelFormats:
 
         """
         return list(self.__formats)
-
-    # -----------------------------------------------------------------------
-
-    @staticmethod
-    def properties() -> list:
-        """Return the properties of a format, in the order they are shown.
-
-        :return: (list of tuple) The identifier and the text of every property
-
-        """
-        _properties = list()
-        for _identifier, _method, _text in PROPERTIES:
-            _properties.append((_identifier, _text))
-
-        return _properties
-
-    # -----------------------------------------------------------------------
-
-    def can_be_written(self, extension: str) -> bool:
-        """Return True if the given extension is one of a writable format.
-
-        :param extension: (str) Extension of a format, its dot included
-        :return: (bool)
-
-        """
-        if self.__format_of(extension) is None:
-            return False
-
-        return True
 
     # -----------------------------------------------------------------------
 

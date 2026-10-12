@@ -38,6 +38,7 @@
 
 """
 
+from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import TagNode
@@ -47,14 +48,17 @@ from sppas.ui import _
 
 from ..swapp_base.swapp_view import swappBaseView
 from ..swapp_core.swappsg import swapp_settings
+from ..nodes import swappProgressBar
 
 from .convert_record import swappConvertRecord
 from .convert_record import TASK_CONVERT
 from .convert_record import MISSING_BATCH
+from .convert_record import FIELD_REPORT
 from .convert_panels import swappFormatsPanel
 from .convert_panels import swappDestinationPanel
 from .convert_panels import swappComparePanel
 from .convert_panels import swappGeneralPanel
+from .convert_panels import ID_FORM
 from .convert_panels import swappResultsPanel
 
 # ---------------------------------------------------------------------------
@@ -63,15 +67,18 @@ ID_SECTION = "convert_section"
 
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Convert")
 MSG_TITLE = _("Conversion options")
+MSG_INTRO = _("Convert writes annotated files into another format. Add the files to convert, "
+              "choose the destination format, then convert. What the chosen format does not "
+              "support is said beside the list of formats.")
 MSG_MISSING = {MISSING_BATCH: _("No file is checked to be converted.")}
 
 BODY_SCRIPT = f"""
         import {{ ConvertManager }} from '/{swapp_settings.js}sppas.js';
         import SwappFiles from '/{swapp_settings.js}swapp_files.js';
-        const convertManager = new ConvertManager();
-        convertManager.handleConvertManagerOnLoad();
         const swappFiles = new SwappFiles();
         swappFiles.handleSwappFilesOnLoad();
+        const convertManager = new ConvertManager(swappFiles);
+        convertManager.handleConvertManagerOnLoad();
 """
 
 # ---------------------------------------------------------------------------
@@ -86,10 +93,11 @@ class swappConvertView(swappBaseView):
 
     """
 
-    def __init__(self, tree: HTMLTree):
+    def __init__(self, tree: HTMLTree, help_page: str):
         """Initialize and populate the Convert view structure.
 
         :param tree: (HTMLTree) An existing HTML tree to populate
+        :param help_page: (str) Name of the page serving the document of the app
         :raises: TypeError: tree is not an instance of HTMLTree
 
         """
@@ -97,7 +105,16 @@ class swappConvertView(swappBaseView):
             raise TypeError("swappConvertView: tree must be an instance of HTMLTree. "
                             "Got {} instead.".format(type(tree)))
         self.__section = None
+        self.__info = ""
+        # Set before the base view populates the nav with it.
+        self.__help_page = help_page
         super(swappConvertView, self).__init__(tree, MSG_HEADER)
+
+    # -----------------------------------------------------------------------
+
+    def get_info(self) -> str:
+        """Return what was said in the dialog of information, empty if nothing (str)."""
+        return self.__info
 
     # -----------------------------------------------------------------------
 
@@ -126,7 +143,19 @@ class swappConvertView(swappBaseView):
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
         self.append_home_link_button(self._htree.body_nav, self._home_target())
+        self.append_help_link_button(self._htree.body_nav, self.__help_page)
         self.append_trace_link_button(self._htree.body_nav)
+
+    # -----------------------------------------------------------------------
+
+    def _populate_head_css(self, *args, **kwargs):
+        """Override. Add the sheets of the table which compares the formats, and the one of Convert."""
+        super()._populate_head_css(*args, **kwargs)
+        self._htree.head.link("stylesheet", swapp_settings.wexa_statics + "css/extras/sortatable.css",
+                              link_type="text/css")
+        self._htree.head.link("stylesheet", swapp_settings.wexa_statics + "css/toggleselect.css",
+                              link_type="text/css")
+        self._htree.head.link("stylesheet", swapp_settings.css + "app_convert.css", link_type="text/css")
 
     # -----------------------------------------------------------------------
 
@@ -137,6 +166,12 @@ class swappConvertView(swappBaseView):
 
     # -----------------------------------------------------------------------
     # Update the tree -- for baking the page
+    # -----------------------------------------------------------------------
+
+    def populate_introduction(self) -> None:
+        """Append to the main content what the page is for, and in which order."""
+        self._htree.body_main.append_child(HTMLNode(self._htree.body_main.identifier, None, "p", value=MSG_INTRO))
+
     # -----------------------------------------------------------------------
 
     def populate_tree_content(self, record: swappConvertRecord) -> None:
@@ -154,28 +189,35 @@ class swappConvertView(swappBaseView):
 
         _shown = record.to_be_shown
         _conversion = record.conversion
-        _section = TagNode(self._htree.body_main.identifier, ID_SECTION, "div",
+        _section = TagNode(self._htree.body_main.identifier, ID_SECTION, "section",
                            attributes={"id": ID_SECTION, "class": "panel"})
         self._htree.body_main.append_child(_section)
         _section.append_child(HTMLNode(_section.identifier, None, "h3", value=MSG_TITLE))
+
+        _section.append_child(swappComparePanel(_section.identifier, _shown.get("formats", list())))
 
         _flex = TagNode(_section.identifier, None, "div", attributes={"class": "flex-panel"})
         _section.append_child(_flex)
         _flex.append_child(swappFormatsPanel(_flex.identifier, _shown.get("formats", list()),
                                              _conversion.destination))
-        _flex.append_child(swappDestinationPanel(_flex.identifier, _conversion.destination,
-                                                 _shown.get("properties", list()),
-                                                 _shown.get("held", dict())))
+        _flex.append_child(swappDestinationPanel(_flex.identifier, _shown.get("formats", list()),
+                                                 _conversion.destination))
 
-        _section.append_child(swappComparePanel(_section.identifier, _shown.get("formats", list()),
-                                                _shown.get("properties", list())))
-        _section.append_child(swappGeneralPanel(_section.identifier, record.serialize(),
-                                                _conversion.override, _conversion.heuristic))
+        _section.append_child(swappGeneralPanel(_section.identifier, _conversion.override, _conversion.heuristic))
+
+        # While the conversion runs, the page follows it: the progress, and the
+        # name of the report it reads, which the form transmits.
+        if _shown.get("converting", False) is True:
+            _section.append_child(swappProgressBar(_section.identifier).get_node())
+            _section.append_child(EmptyNode(_section.identifier, None, "input",
+                                            attributes={"type": "hidden", "form": ID_FORM,
+                                                        "name": FIELD_REPORT, "value": record.report}))
 
         if "results" in _shown:
             _section.append_child(swappResultsPanel(_section.identifier, _shown["results"]))
 
-        if record.task == TASK_CONVERT:
+        self.__info = ""
+        if record.task == TASK_CONVERT or _shown.get("ready", False) is True:
             self.__say_what_is_missing(_shown.get("missing", list()))
 
         self.__section = _section
@@ -194,12 +236,15 @@ class swappConvertView(swappBaseView):
             return
 
         _dialog = self._htree.body_main.get_child("info_dialog")
+        _said = list()
         for _missing in missing:
             _dialog.append_child(HTMLNode(_dialog.identifier, None, "p", value=MSG_MISSING[_missing]))
-        _dialog.set_attribute("class", "info")
+            _said.append(MSG_MISSING[_missing])
+        self.__info = " ".join(_said)
 
     # -----------------------------------------------------------------------
     # Properties
     # -----------------------------------------------------------------------
 
     section = property(get_section, None)
+    info = property(get_info, None)

@@ -121,7 +121,7 @@
 			<tr><td>files_delivery</td><td><code>swappResultDelivery</code></td><td>The address of a produced file</td></tr>
 			<tr><td>files_provision</td><td><code>swappFileProvision</code></td><td>The order of the tasks of one request</td></tr>
 			<tr><td>files_record</td><td><code>swappFilesRecord</code></td><td>What one request carries, and how it travels</td></tr>
-			<tr><td>files_view</td><td><code>swappDepositView</code>, <code>swappDeliveryView</code></td><td>The HTML. The only ones which build a node</td></tr>
+			<tr><td>files_view</td><td><code>swappDepositView</code></td><td>The HTML. The only ones which build a node</td></tr>
 			<tr><td>files_controller</td><td><code>swappFilesController</code></td><td>The names of the tasks</td></tr>
 			<tr><td>files_manager</td><td><code>swappFilesManager</code></td><td>Nothing: it builds the others and hands them over</td></tr>
 		</tbody>
@@ -153,7 +153,7 @@
 		<li><b>Offer it what was not recognised</b>: <code>consumes(events)</code> answers true when the request was of this service, false when it was not. Nothing is changed in that second case.</li>
 		<li><b>Ask whether the person has said the workspace is ready</b>: <code>is_ready()</code>, after <code>consumes()</code>. When it is, ask for the files: <code>files_for_app()</code>.</li>
 		<li><b>Have it build</b>: <code>populate_view()</code>, then <code>container()</code>, which is appended where the app chose. In that order: the container is what the last request made.</li>
-		<li><b>Ask for the files</b> when the app is about to work: <code>files_for_app()</code>. And give back what was produced: <code>produced(workspace)</code>.</li>
+		<li><b>Ask for the files</b> when the app is about to work: <code>files_for_app()</code>. And give back what was produced: <code>produced(workspace)</code>, which answers where each produced file is reached &mdash; where it stands, or at an address &mdash; and until when: the app shows them, this service shows nothing of them.</li>
 		<li><b>Say what it is holding</b>: <code>lock(names)</code> when it takes files to work on them, <code>release(names)</code> when it has done with them. What it still holds when it says it has finished is released without it asking. A lock is what keeps the other interface from taking a file being treated, so an app which does not say it is holding one is an app which lets that happen.</li>
 		<li><b>Start over</b> when the person asks for it: <code>start_over()</code>. The container shows the deposit again, and the files are known to a new workspace, holding none.</li>
 	</ol>
@@ -194,7 +194,7 @@
 			<tr><td><code>take_back</code></td><td><code>name</code></td><td>Takes the file out of the workspace, or out of what is to be sent</td></tr>
 			<tr><td><code>send</code></td><td><code>contents</code>, the bytes by name</td><td>Asks for a place, writes the copies, makes them known and checked</td></tr>
 			<tr><td><code>ready</code></td><td>&mdash;</td><td>Says the workspace is ready (E7): nothing is sent, nothing is asked of the deposit API</td></tr>
-			<tr><td><code>produced</code></td><td>&mdash;</td><td>Shows what an app gave back</td></tr>
+			<tr><td><code>produced</code></td><td>&mdash;</td><td>Marks as treated the files an app treated</td></tr>
 			<tr><td><code>finished</code></td><td>&mdash;</td><td>Releases what an app still held</td></tr>
 		</tbody>
 	</table>
@@ -221,11 +221,12 @@
 
 	<p>
 		What they name, and nothing else: <code>dropzone</code>,
-		<code>dropzone-list</code>, <code>dropzone-name</code>,
-		<code>dropzone-size</code>, <code>file-status</code> with
-		<code>file-status-ok</code> and <code>file-status-error</code>,
-		<code>apply-button</code>, <code>cta-button</code>, and the
-		<code>aria-invalid</code> attribute on a file which was refused.
+		<code>dropzone-name</code>, <code>dropzone-size</code>,
+		<code>file-status</code> with <code>file-status-ok</code> and
+		<code>file-status-error</code>, the <code>cards-panel</code> and the
+		<code>card</code>, <code>card-body</code> and <code>card-footer</code> of
+		Whakerexa, <code>cta-button</code>, and the <code>aria-invalid</code>
+		attribute on the card of a file which was refused.
 	</p>
 
 	<p>
@@ -244,7 +245,7 @@
 	<p>
 		In <code>tests/swapp/test_files.py</code>, numbered as the chapter on the
 		tests numbers them. Fifteen of them need nothing installed: what is
-		accepted, what is counted, the two views, and the door. The others need a
+		accepted, what is counted, the view, and the door. The others need a
 		disk, the deposit API, or the domain of the workspaces.
 	</p>
 
@@ -335,6 +336,7 @@
 			<li><b>B14</b> — To correct what one has fed, before sending it.</li>
 			<li><b>B15</b> — To know where one stands against what is accepted, while feeding.</li>
 			<li><b>B16</b> — To know what became of each file she sent, and why, when an app made nothing of it.</li>
+			<li><b>B17</b> — To see, on each file she gave, where it stands: deposited, refused, treated, or no longer reachable.</li>
 		</ul>
 
 		<p>
@@ -346,10 +348,22 @@
 		</p>
 
 		<p>
-			B9 and B12 are two moments of one thing, and this domain serves both: what an
-			app produced is added to the files which are known and checked among them, by
-			this domain and never by the app, so that the next treatment finds it already
-			designated; and it is reachable by the person wherever she reads it.
+			B9 and B12 are two moments of one thing. This domain serves B9: what an app
+			produced is added to the files which are known and checked among them, by this
+			domain and never by the app, so that the next treatment finds it already
+			designated. It serves B12 without showing anything of it: it makes what was
+			produced reachable by the person wherever she reads it, and gives the app the
+			address of each produced file and until when it can be reached there. The app
+			shows them, beside what became of each file (B16): what was produced is the
+			result of the app, and it is read where its results are.
+		</p>
+
+		<p>
+			B17 is what this domain shows once a batch has been treated: not what was
+			produced, but where each file she gave stands. Locally a file is deposited,
+			then treated; online it is deposited or refused, then treated, and no longer
+			reachable once its time is over. A file which was treated can be neither taken
+			back nor handed again.
 		</p>
 
 	</section>
@@ -364,7 +378,8 @@
 		<p>
 			This document covers the provision of files to an app, and the return to the
 			person of the files an app produced: where the files come from, what is
-			handed over, when, and how what was produced is reached.
+			handed over, when, and how what was produced is reached &mdash; this domain
+			makes it reachable and gives its address to the app, which shows it.
 		</p>
 
 		<p>
@@ -372,7 +387,7 @@
 			workspace says where it is, or it has to travel and it stands in a place a
 			neighbour gave, bounded and perishable, which the person reaches at an
 			address. An app says what it has produced and says when it has finished, and
-			the delivery holds to those two.
+			what this domain gives back holds to those two.
 		</p>
 
 		<p>
@@ -483,14 +498,15 @@
 			<li><b>F4. domain &rarr; A3</b> — the files to be known, their checking, and the states this domain sets on them (B2).</li>
 			<li><b>F5. A3 &rarr; domain</b> — the workspace and the states of its files (B1).</li>
 			<li><b>F6. domain &rarr; A2</b> — a workspace holding the files to be treated, and them only (B1).</li>
-			<li><b>F7. A2 &rarr; domain</b> — what it has produced, in the workspace it was given, as often as it has something to give back; and, for a file it made nothing of, the cause it states (B12, B16).</li>
+			<li><b>F7. A2 &rarr; domain</b> — what it has produced, in the workspace it was given, as often as it has something to give back (B12).</li>
 			<li><b>F8. A2 &rarr; domain</b> — the treatment is over.</li>
 			<li><b>F9. domain &rarr; A3</b> — the files produced, added and checked (B9).</li>
-			<li><b>F10. domain &rarr; A1</b> — the files produced, reached where they are or at an address, and what was grouped with what (B12, B13).</li>
+			<li><b>F10. domain &rarr; A2</b> — where each produced file is reached, where it stands or at an address, until when, and what was grouped with what: the app shows them (B12, B13).</li>
 			<li><b>F11. domain &rarr; A1</b> — what was not taken in, and why; and where she stands against what is accepted (B14, B15).</li>
 			<li><b>F12. domain &rarr; A4</b> — the request for a place, the files to put there, and the request for an address.</li>
 			<li><b>F13. A4 &rarr; domain</b> — what it accepts, the place it gives or its refusal with when to come back, and the address at which a file is reached.</li>
 			<li><b>F14. A2 &rarr; domain</b> — the request for files, when what it received does not suffice it.</li>
+			<li><b>F15. domain &rarr; A1</b> — where each file she gave stands: deposited, refused, treated, or no longer reachable (B17).</li>
 		</ul>
 
 		<p>
@@ -793,13 +809,11 @@
 			<p>Adding them does not uncheck what was treated. The app never wrote in the workspace of the person: it never held it. RO9</p>
 
 			<p>
-				<b>The cause is relayed, and never composed here.</b> Why an app made
+				<b>The cause is the app's, and the app shows it.</b> Why an app made
 				nothing of a file is the app's to say: it alone knows what it needed
-				and what it found in that file. This domain carries that sentence to
-				the delivery, with the file it concerns, and writes none of its own
-				&mdash; as acceptance relays the refusal of the deposit API rather
-				than inventing one. A file an app said nothing of is a file this
-				domain says nothing of either. B16
+				and what it found in that file. It says it beside that file, among its
+				results; this domain carries no such sentence and writes none of its
+				own. B16
 			</p>
 
 			<p>
@@ -813,8 +827,8 @@
 				The app gives back the workspace it was given, enriched with what it
 				produced. Grouping files — a path, a root, a name — is the workspace's own
 				work, and the domain does not redo it in its place: it takes what came back
-				and writes it where it belongs. It is also what lets the person see, at the
-				delivery, which files were grouped together and what they produced.
+				and writes it where it belongs. It is also what lets the app show which files
+				were grouped together and what they produced (F10).
 			</p>
 
 		</section>
@@ -829,8 +843,8 @@
 				<tbody>
 					<tr><td>Synchronisation</td><td>E8</td></tr>
 					<tr><td>Actions</td><td>Make every produced file reachable by the person, where an app wrote it: beside the file it was made from</td></tr>
-					<tr><td>Result</td><td>The produced files (F9). When the person reaches them where they are</td></tr>
-					<tr><td>Result</td><td>An address at which every produced file is reached (F9). When she cannot reach it where it is</td></tr>
+					<tr><td>Result</td><td>Where every produced file stands, given to the app (F10). When the person reaches it there</td></tr>
+					<tr><td>Result</td><td>An address at which every produced file is reached, and until when, given to the app (F10). When she cannot reach it where it is</td></tr>
 				</tbody>
 			</table>
 
@@ -893,7 +907,7 @@
 				What came with a refused file may fall in the root of the one which stays,
 				and nothing shows it: the domain cannot tell them apart, the folder the
 				person took them from not travelling with them. What groups the files is
-				read at the delivery, where the associations are seen.
+				read in the results of the app, where the associations are seen.
 			</p>
 
 		</section>
@@ -1605,9 +1619,9 @@
 				<tr><td>delivery</td><td>Makes the address of a produced file, and serves it when it is followed</td><td>PF5</td></tr>
 				<tr><td>provision</td><td>The fa&ccedil;ade: it puts the tasks of a request in order and calls what does them</td><td>None of its own: it is the order of every other</td></tr>
 				<tr><td>record</td><td>What one request holds, serialised for the page and parsed back from it</td><td>None of its own: every procedure passes through it</td></tr>
-				<tr><td>view</td><td>The two views, each building its tree from a record</td><td>What PF2, PF5, PF7, PF8 and PF9 show</td></tr>
+				<tr><td>view</td><td>The view, building its tree from a record</td><td>What PF2, PF7, PF8 and PF9 show, and where each file stands</td></tr>
 				<tr><td>controller</td><td>Reads the task, rebuilds the record, calls the fa&ccedil;ade once, has a view populate its tree</td><td>None of its own</td></tr>
-				<tr><td>manager</td><td>The entry class: builds the model, the two views and the controller, and answers an app</td><td>None of its own</td></tr>
+				<tr><td>manager</td><td>The entry class: builds the model, the view and the controller, and answers an app</td><td>None of its own</td></tr>
 			</tbody>
 		</table>
 
@@ -1702,9 +1716,9 @@
 		</table>
 
 		<p>
-			One controller for the two views. They never overlap in time — one deposits
-			before, one fetches after — and a domain which holds no state between two
-			requests would gain nothing from a second dispatch.
+			One controller for one view. What was produced is fetched where the app shows
+			it, and not here: the view shows only the files she gave, and where each
+			stands.
 		</p>
 
 		<h4>What a view builds</h4>
@@ -1758,7 +1772,7 @@
 			the view, then the controller, and it hands the controller the model and the
 			view. This domain is not an app and has no page of its own, so it has no
 			maker. It has an <b>entry class</b> — a manager — which does the same work for
-			it: it builds the model, the two views and the controller, and it is the only
+			it: it builds the model, the view and the controller, and it is the only
 			thing an app holds of this domain.
 		</p>
 
@@ -1852,13 +1866,14 @@
 			dictionary, and a page is not a place this domain holds.
 		</p>
 
-		<h4>Which of the two views</h4>
+		<h4>What the view shows</h4>
 
 		<p>
 			The record says what is known, and the view follows from that and not from the
-			task: what has been fed and not yet sent is shown as a deposit; what an app
-			has produced is shown as a delivery. It is the same mechanism as the pathway
-			of an app which has several pages — the state of what is known chooses.
+			task: every file she gave is shown with where it stands &mdash; deposited,
+			refused, treated, or no longer reachable. What an app has produced is not
+			shown here: the app shows it, with what this domain gives it (F10). A file
+			which was treated can be neither taken back nor handed again.
 		</p>
 
 		<p>
@@ -2167,8 +2182,7 @@
 		<table>
 			<thead><tr><th>Class</th><th>Operations</th><th>What it shows</th></tr></thead>
 			<tbody>
-				<tr><td><code>DepositView</code></td><td>populate_tree_content(record), serialize()</td><td><code>DepositView</code></td><td>populate_tree_content(record)</td><td>What a person feeds: what is accepted, the button, the list, the volume against the bound, and what sends</td></tr>
-				<tr><td><code>DeliveryView</code></td><td>populate_tree_content(record), serialize()</td><td><code>DeliveryView</code></td><td>populate_tree_content(record)</td><td>What was produced: the files grouped by root, their addresses, the hour at which they go, and whether the app has finished</td></tr>
+				<tr><td><code>DepositView</code></td><td>populate_tree_content(record), serialize()</td><td><code>DepositView</code></td><td>populate_tree_content(record)</td><td>What a person feeds: what is accepted, the button, the list, the volume against the bound, what sends, and where each file stands</td></tr>
 			</tbody>
 		</table>
 
@@ -2185,15 +2199,14 @@
 		<table>
 			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
 			<tbody>
-				<tr><td>uses</td><td>the two views &rarr; <code>FilesRecord</code></td><td>A dependency: they are given it and build from it</td></tr>
-				<tr><td>none</td><td>the two views</td><td>Tied to nothing else: they are given a state and give back HTML</td></tr>
+				<tr><td>uses</td><td>the view &rarr; <code>FilesRecord</code></td><td>A dependency: it is given it and builds from it</td></tr>
+				<tr><td>none</td><td>the view</td><td>Tied to nothing else: it is given a state and gives back HTML</td></tr>
 			</tbody>
 		</table>
 
 		<h4>In yUML</h4>
 
 		<pre class="dark"><code>[DepositView|populate_tree_content();serialize()][DepositView|populate_tree_content()]-.-&gt;[FilesRecord]
-[DeliveryView|populate_tree_content();serialize()][DeliveryView|populate_tree_content()]-.-&gt;[FilesRecord]
 
 [DepositView]-[note:builds a tree and nothing else. Decides nothing, counts nothing, refuses nothing]</code></pre>
 
@@ -2229,10 +2242,10 @@
 		<table>
 			<thead><tr><th>Tie</th><th>Legs</th><th>What it is</th></tr></thead>
 			<tbody>
-				<tr><td>holds</td><td><code>FilesManager</code> 1 &mdash; 1 the fa&ccedil;ade, the two views, the controller</td><td>A composition: it builds them, and they go when it goes. It is what the rule &laquo; the controller assembles nothing &raquo; leans on</td></tr>
+				<tr><td>holds</td><td><code>FilesManager</code> 1 &mdash; 1 the fa&ccedil;ade, the view, the controller</td><td>A composition: it builds them, and they go when it goes. It is what the rule &laquo; the controller assembles nothing &raquo; leans on</td></tr>
 				<tr><td>holds</td><td><code>FilesController</code> 1 &mdash; 1 <code>FilesRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
 				<tr><td>uses</td><td><code>FilesController</code> &rarr; <code>FileProvision</code></td><td>A dependency: it calls the fa&ccedil;ade, once per request</td></tr>
-				<tr><td>uses</td><td><code>FilesController</code> &rarr; the two views</td><td>A dependency: it hands them what to build from, and reads nothing back but HTML</td></tr>
+				<tr><td>uses</td><td><code>FilesController</code> &rarr; the view</td><td>A dependency: it hands it what to build from, and reads nothing back but HTML</td></tr>
 			</tbody>
 		</table>
 
@@ -2241,7 +2254,6 @@
 		<pre class="dark"><code>[FilesManager|files_for_app();lock();release();produced();consumes();is_ready();start_over();populate_view()]++1-1&gt;[FileProvision]
 [FilesManager]++1-1&gt;[FilesController|record|handle();populate_view()]
 [FilesManager]++1-1&gt;[DepositView]
-[FilesManager]++1-1&gt;[DeliveryView]
 [FilesController]++1-1&gt;[FilesRecord|task;reachable;has_workspace;workspace;fed;to_be_shown|serialize();parse()]
 
 [FilesController]-.-&gt;[FileProvision]
@@ -2345,10 +2357,9 @@
 		<p>
 			<b>What an app failed to do is not in this table.</b> It is no error of
 			this domain: a file an app made nothing of, and why, is the app's to
-			state. This domain relays it to the delivery, beside the file it
-			concerns, without judging it, without rewording it, and without
-			stopping anything &mdash; the other files come back as they were
-			made. B16
+			state, and to show beside the file it concerns. This domain neither
+			judges it nor rewords it, and stops nothing &mdash; the other files
+			come back as they were made. B16
 		</p>
 
 	</section>
@@ -2521,12 +2532,12 @@
 			<caption>the manager</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
-				<tr><td>Be built</td><td>pre: none. post: the model, the two views and the controller exist and are tied; nothing has been read, called or shown</td></tr>
+				<tr><td>Be built</td><td>pre: none. post: the model, the view and the controller exist and are tied; nothing has been read, called or shown</td></tr>
 				<tr><td>Answer whether an event was for this domain</td><td>pre: none. post: true when it was consumed, false when it was not — and nothing is changed in that second case. It is never an error here: what nobody consumed is the app's to answer</td></tr>
 				<tr><td>Say whether the workspace is ready</td><td>pre: an event was consumed. post: true when the request carried <code>ready</code> (E7), false otherwise. Nothing is changed</td></tr>
 				<tr><td>Give an app the files it is to treat</td><td>pre: none. post: what the façade answers, handed on untouched</td></tr>
 				<tr><td>Take note of what an app holds</td><td>pre: none. post: the files it takes are locked and the files it gives back are checked, in the copy and on the workspace which is held; an app which says nothing holds nothing, as far as this domain and the other interface can tell</td></tr>
-				<tr><td>Start over</td><td>pre: none. post: the container shows the deposit again, and nothing of what was produced or finished is shown; the files are known to a new workspace, holding none. The workspace given when the manager was built is not altered</td></tr>
+				<tr><td>Start over</td><td>pre: none. post: the container shows the deposit again, with no file in it; the files are known to a new workspace, holding none. The workspace given when the manager was built is not altered</td></tr>
 				<tr><td>Populate a view</td><td>pre: an event was consumed, or it is a first request. post: the tree is built from the record</td></tr>
 			</tbody>
 		</table>
@@ -2548,15 +2559,14 @@
 		</p>
 
 		<table>
-			<caption>the two views</caption>
+			<caption>the view</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
 				<tr><td>Populate the tree of a deposit</td><td>pre: the record comes from the controller. post: what is accepted, what has been fed, the volume against the bound, every refusal with its reason, and what sends — and nothing the record did not say</td></tr>
 				<tr><td>Populate the tree of a workspace which is there</td><td>pre: the record says the files stand where SPPAS reads them, and that a workspace holds some. post: the name of the workspace, and nothing else: no list of files, no control which designates, none which validates, no bound. A workspace which is there is used, so nothing is asked of her &mdash; she is told which one it is</td></tr>
 				<tr><td>Populate the tree of a deposit which goes into the workspace</td><td>pre: the record says the files stand where SPPAS reads them. post: a control which designates a file by its path, the list of what was designated, and what validates it. No bound of any kind is shown, and no file is marked refused: C4 binds what is deposited, C7 to C12 bind what is deposited, and nothing is deposited here &mdash; the organisational level saying it in one line, « the announcement exists only where there is a refusal, and nothing is refused here »</td></tr>
 				<tr><td>Populate it when no deposit can be made</td><td>pre: the record says there is no place. post: no control which sends is built at all. Not one which is built and disabled: one which is not there</td></tr>
-				<tr><td>Populate the tree of a delivery</td><td>pre: the record comes from the controller. post: the produced files grouped as the record groups them, one address for each, the hour at which they go, whether the app has finished, and &mdash; for a file the app made nothing of &mdash; the cause as the record holds it, in the words it came in</td></tr>
-				<tr><td>Populate it with nothing in it</td><td>pre: the record holds no produced file. post: the tree of nothing yet, and never an empty one</td></tr>
+				<tr><td>Show where each file stands</td><td>pre: the record comes from the controller. post: every card carries the state of its file &mdash; deposited, refused, treated, or no longer reachable &mdash; as an icon whose text alternative is the word; a treated file cannot be taken back, and once the batch was treated, Done is disabled. B17</td></tr>
 				<tr><td>Give what was built</td><td>pre: the tree was populated. post: the HTML of its node and of what stands under it, and nothing of a page: no head, no header, no footer. It is the node of the view which is serialized, and WhakerPy which serializes it</td></tr>
 				<tr><td>Empty what was built before</td><td>pre: none. post: the container holds what this request says and nothing of the request before. The node is the same from one request to the next, and what it held is cleared before it is built again</td></tr>
 				<tr><td>Carry the record back</td><td>pre: none. post: what is built holds the serialised record, so that the next request brings it back. A tree without it breaks the request which follows</td></tr>
@@ -2901,9 +2911,9 @@
 		Interactions are inert; the structure, the labels and the wording are
 		not.</p>
 
-		<p><b>Four of the six fragments are what the views build</b>, copied
-		here as they came out of <code>swappDepositView</code> and
-		<code>swappDeliveryView</code>: what is read here cannot differ from
+		<p><b>Three of the five fragments are what the view builds</b>, copied
+		here as they came out of <code>swappDepositView</code>: what is read
+		here cannot differ from
 		what an app shows, and the day this document is served, they are
 		written between the two marks rather than copied. The two others are
 		not of this service &mdash; a dialog, which belongs to the app, and a
@@ -2912,17 +2922,16 @@
 
 		<p>The wrapping <code>div</code> which puts two of them side by side is
 		of this annex and of nowhere else: a view builds a
-		<code>section</code> or an <code>aside</code>, and where it stands is
+		<code>section</code>, and where it stands is
 		the app's.</p>
 
-		<p>Two fragments, not one, because this domain shows two things at
-		two different moments, through two different views: what a person
-		feeds, before an app runs, and what was produced, once it has. They
-		stand side by side here so that both can be read at once; a page
-		shows one of them, never both.</p>
+		<p>Two fragments side by side, because the same view is read at two
+		moments: before an app runs, and once the batch was treated. Where
+		each file stands changes; nothing of what was produced is shown, which
+		is the app's to show. A page shows one of them, never both.</p>
 
-		<p>Four more fragments follow them, which are these same two views
-		in the states they take apart from the one above. Only what differs
+		<p>Three more fragments follow them, which are this same view in the
+		states it takes apart from the ones above. Only what differs
 		is drawn: the deposit itself is not repeated.</p>
 
 		<ul>
@@ -2940,12 +2949,8 @@
 			corpus is not weighed against the room a shared space keeps. The
 			list and the way back out do not move; the control differs, the
 			bounds go, and what validates says the act and not a destination
-			which may not exist yet, T02 making a workspace when it finds none. No file
-			carries a mark of validity either: nothing is refused here.</li>
-			<li><b>Nothing produced yet.</b> The tree of nothing yet, which
-			is not an empty one. No bar here: how many files an app will
-			produce is not something this domain knows, and a bar would say
-			a proportion of nothing.</li>
+			which may not exist yet, T02 making a workspace when it finds none.
+			Nothing is refused here: a file is deposited, then treated.</li>
 		</ul>
 
 		<!-- ============ BEGIN MOCKUP ============ -->
@@ -2958,113 +2963,125 @@
 
 			<div class="flex-item">
     <section>
+        <h3>
+                        Add files
+        </h3>
         <form method="post">
             <input type="hidden" name="task" value="send" />
             <input type="hidden" name="fed" value="[[&quot;record-01.wav&quot;, 3355443]]" />
-            <fieldset class="dropzone">
-                <legend>
-                                Add files
-                </legend>
-                <p>
-                    <label for="files_input">
-                                        Select files
-                    </label>
-                    <input id="files_input" type="file" multiple="multiple" />
-                    <span>
-                                        , or drag and drop files here.
-                    </span>
-                </p>
-                <ul class="wrap-panel dropzone-list">
-                    <li class="wrap-item card" aria-invalid="false">
-                        <span class="file-status file-status-ok">
-                                                Accepted
-                        </span>
-                        <span class="dropzone-size">
-                                                3355443
-                        </span>
-                        <span class="dropzone-name">
-                                                record-01.wav
-                        </span>
-                        <button type="button" class="apply-button" name="record-01.wav">
-                                                Take back
-                        </button>
-                    </li>
-                    <li class="wrap-item card" aria-invalid="true">
-                        <span class="file-status file-status-error">
-                                                Refused: This name is already taken.
-                        </span>
-                        <span class="dropzone-size">
-                                                0
-                        </span>
-                        <span class="dropzone-name">
-                                                record-02.wav
-                        </span>
-                        <button type="button" class="apply-button" name="record-02.wav">
-                                                Take back
-                        </button>
-                    </li>
-                </ul>
+            <div class="dropzone">
+                <label for="files_input">
+                                    Select files
+                </label>
+                <input id="files_input" type="file" multiple="multiple" />
+                <span>
+                                    , or drag and drop files here.
+                </span>
+                <section class="cards-panel">
+                    <article class="card" aria-invalid="false">
+                        <div class="card-header">
+                            <span class="file-status" data-icon="upload" role="img" aria-label="Deposited"></span>
+                        </div>
+                        <div class="card-body">
+                            <span class="dropzone-size">
+                                                    3355443
+                            </span>
+                            <span class="dropzone-name">
+                                                    record-01.wav
+                            </span>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" name="record-01.wav">
+                                                    Take back
+                            </button>
+                        </div>
+                    </article>
+                    <article class="card" aria-invalid="true">
+                        <div class="card-header">
+                            <span class="file-status file-status-error" data-icon="no" role="img" aria-label="Refused"></span>
+                        </div>
+                        <div class="card-body">
+                            <span class="dropzone-size">
+                                                    0
+                            </span>
+                            <span class="dropzone-name">
+                                                    record-02.wav
+                            </span>
+                            <p class="file-status file-status-error">
+                                                This name is already taken.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" name="record-02.wav">
+                                                    Take back
+                            </button>
+                        </div>
+                    </article>
+                </section>
                 <p>
                                 3.2 MB of 100 MB accepted here. Up to 10 MB per file.
                 </p>
-            </fieldset>
-            <p>
-                <button type="button" class="cta-button">
-                                Send
-                </button>
-            </p>
+            </div>
+            <button type="button" class="cta-button">
+                            Send
+            </button>
         </form>
     </section>
 			</div>
 
-			<!-- ---------- DeliveryView ---------- -->
+			<!-- ---------- DepositView, once the batch was treated ---------- -->
 
 			<div class="flex-item">
-    <aside>
-        <h4>
-                What was produced
-        </h4>
-        <ul>
-            <li>
-                        record-01
-                <ul>
-                    <li class="wrap-item card">
-                        <a href="#">
-                                                record-01.TextGrid
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                        record-02
-                <ul>
-                    <li class="wrap-item card">
-                        <a href="#">
-                                                record-02.TextGrid
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                        record-03
-                <ul>
-                    <li class="wrap-item card">
-                                        Nothing was produced: the file holds no transcription to work from.
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <p>
-                Reachable until 14:32.
-        </p>
-        <p>
-                The app has finished.
-        </p>
+    <section>
+        <h3>
+                        Add files
+        </h3>
         <form method="post">
-            <input type="hidden" name="task" value="" />
+            <input type="hidden" name="task" value="designate" />
             <input type="hidden" name="fed" value="[]" />
+            <input type="hidden" name="workspace" value=" ... " />
+            <div class="dropzone">
+                <button id="files_browse" type="button">
+                                    Select files
+                </button>
+                <section class="cards-panel">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="file-status file-status-ok" data-icon="yes" role="img" aria-label="Treated"></span>
+                        </div>
+                        <div class="card-body">
+                            <span class="dropzone-name" title="/corpus/record-01.wav">
+                                                    record-01.wav
+                            </span>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" name="/corpus/record-01.wav" disabled>
+                                                    Take back
+                            </button>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="file-status file-status-ok" data-icon="yes" role="img" aria-label="Treated"></span>
+                        </div>
+                        <div class="card-body">
+                            <span class="dropzone-name" title="/corpus/record-02.wav">
+                                                    record-02.wav
+                            </span>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" name="/corpus/record-02.wav" disabled>
+                                                    Take back
+                            </button>
+                        </div>
+                    </article>
+                </section>
+            </div>
+            <button type="button" class="cta-button" disabled>
+                            Done
+            </button>
         </form>
-    </aside>
+    </section>
 			</div>
 
 		</div>
@@ -3109,76 +3126,64 @@
 
 		<div class="panel">
     <section>
+        <h3>
+                        Add files
+        </h3>
         <form method="post">
             <input type="hidden" name="task" value="designate" />
             <input type="hidden" name="fed" value="[]" />
             <input type="hidden" name="workspace" value=" ... " />
-            <fieldset class="dropzone">
-                <legend>
-                                Add files
-                </legend>
-                <p>
-                    <button id="files_browse" type="button" class="apply-button">
-                                        Select files
-                    </button>
-                </p>
-                <ul class="wrap-panel dropzone-list">
-                    <li class="wrap-item card">
-                        <span class="dropzone-name">
-                                                /corpus/record-01.wav
-                        </span>
-                        <button type="button" class="apply-button" name="/corpus/record-01.wav">
-                                                Take back
-                        </button>
-                    </li>
-                    <li class="wrap-item card">
-                        <span class="dropzone-name">
-                                                /corpus/record-02.wav
-                        </span>
-                        <button type="button" class="apply-button" name="/corpus/record-02.wav">
-                                                Take back
-                        </button>
-                    </li>
-                </ul>
-            </fieldset>
-            <p>
-                <button type="button" class="cta-button">
-                                Done
+            <div class="dropzone">
+                <button id="files_browse" type="button">
+                                    Select files
                 </button>
-            </p>
+                <section class="cards-panel">
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="file-status" data-icon="upload" role="img" aria-label="Deposited"></span>
+                        </div>
+                        <div class="card-body">
+                            <span class="dropzone-name" title="/corpus/record-01.wav">
+                                                    record-01.wav
+                            </span>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" name="/corpus/record-01.wav">
+                                                    Take back
+                            </button>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="file-status" data-icon="upload" role="img" aria-label="Deposited"></span>
+                        </div>
+                        <div class="card-body">
+                            <span class="dropzone-name" title="/corpus/record-02.wav">
+                                                    record-02.wav
+                            </span>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" name="/corpus/record-02.wav">
+                                                    Take back
+                            </button>
+                        </div>
+                    </article>
+                </section>
+            </div>
+            <button type="button" class="cta-button">
+                            Done
+            </button>
         </form>
     </section>
-		</div>
-
-		<!-- ---------- DeliveryView, nothing produced yet ---------- -->
-
-		<div class="panel">
-    <aside>
-        <h4>
-                What was produced
-        </h4>
-        <p>
-                Nothing has come back yet.
-        </p>
-        <p>
-                The app has not finished.
-        </p>
-        <form method="post">
-            <input type="hidden" name="task" value="" />
-            <input type="hidden" name="fed" value="[]" />
-        </form>
-    </aside>
 		</div>
 
 		<!-- ============ END MOCKUP ============ -->
 
 		<h3>What the mockup settles, and what it does not</h3>
 
-		<p>The two views never stand on one page together: one page shows a
-		person what she feeds, another shows her what came back, and where
-		each is shown is settled by whoever assembles the app, not by this
-		dossier. Placing them side by side here is a convenience of reading,
-		not a third layout being proposed.</p>
+		<p>The two moments never stand on one page together: a page shows the
+		files she gave as they stand now. Placing them side by side here is a
+		convenience of reading, not a layout being proposed.</p>
 
 		<p>A refusal touching the whole deposit &mdash; no room now, and when
 		to come back &mdash; is not shown here: it goes to the dialog of the

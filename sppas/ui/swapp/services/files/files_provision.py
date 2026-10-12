@@ -39,6 +39,7 @@
 """
 
 from sppas.core.coreutils import sppasTypeError
+from sppas.ui import _
 
 from .files_acceptance import swappDepositAcceptance
 from .files_chooser import swappFileChooser
@@ -50,10 +51,10 @@ from .files_workspace import swappWorkspaceFiles
 
 # ---------------------------------------------------------------------------
 
-MSG_NO_PLACE = "No place can be given now."
-MSG_CONTENT = "This file is not one SPPAS reads."
-MSG_SIZE = "This file is beyond the size which is accepted."
-MSG_VOLUME = "This file is beyond the volume which is accepted."
+MSG_NO_PLACE = _("No place can be given now.")
+MSG_CONTENT = _("This file is not one SPPAS reads.")
+MSG_SIZE = _("This file is beyond the size which is accepted.")
+MSG_VOLUME = _("This file is beyond the volume which is accepted.")
 
 # ---------------------------------------------------------------------------
 

@@ -766,3 +766,209 @@ msgstr "Aucun fichier n'est sélectionné pour être supprimé."
 
 msgid "SPPAS is waiting for your answer in the Desktop window."
 msgstr "SPPAS attend votre réponse dans la fenêtre Bureau."
+
+# swapp: the application Convert, and the provision of files
+
+msgid "Writes annotated files into another format, and says what each format holds."
+msgstr "Écrit des fichiers annotés dans un autre format, et dit ce que chaque format supporte."
+
+msgid "The output file already exists."
+msgstr "Le fichier de sortie existe déjà."
+
+msgid "The file could not be read."
+msgstr "Le fichier n'a pas pu être lu."
+
+msgid "The file could not be written."
+msgstr "Le fichier n'a pas pu être écrit."
+
+msgid "Write into"
+msgstr "Écrire en"
+
+msgid "Not supported by this format: {}."
+msgstr "Non supporté par ce format : {}."
+
+msgid "supported"
+msgstr "supporté"
+
+msgid "not supported"
+msgstr "non supporté"
+
+msgid "Compare the formats"
+msgstr "Comparer les formats"
+
+msgid "Formats and the properties each supports"
+msgstr "Les formats et les propriétés que chacun supporte"
+
+msgid "Columns visibility:"
+msgstr "Visibilité des colonnes :"
+
+msgid "Toggle columns visibility"
+msgstr "Afficher ou masquer les colonnes"
+
+msgid "Show/Hide {}"
+msgstr "Afficher/Masquer {}"
+
+msgid "Format"
+msgstr "Format"
+
+msgid "Software"
+msgstr "Logiciel"
+
+msgid "Replace an output file that already exists"
+msgstr "Remplacer un fichier de sortie qui existe déjà"
+
+msgid "Guess the format of a file whose extension is unknown"
+msgstr "Deviner le format d'un fichier dont l'extension est inconnue"
+
+msgid "Reset"
+msgstr "Réinitialiser"
+
+msgid "Results"
+msgstr "Résultats"
+
+msgid "One line per file of the batch"
+msgstr "Une ligne par fichier du lot"
+
+msgid "File"
+msgstr "Fichier"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Result"
+msgstr "Résultat"
+
+msgid "Start over"
+msgstr "Recommencer"
+
+msgid "written"
+msgstr "écrit"
+
+msgid "skipped"
+msgstr "ignoré"
+
+msgid "refused"
+msgstr "refusé"
+
+msgid "Metadata"
+msgstr "Métadonnées"
+
+msgid "Multi tiers"
+msgstr "Plusieurs tiers"
+
+msgid "No tier"
+msgstr "Aucun tier"
+
+msgid "Point"
+msgstr "Point"
+
+msgid "Interval"
+msgstr "Intervalle"
+
+msgid "Gaps"
+msgstr "Trous"
+
+msgid "Overlaps"
+msgstr "Chevauchements"
+
+msgid "Hierarchy"
+msgstr "Hiérarchie"
+
+msgid "Ctrl vocab"
+msgstr "Vocab. contrôlé"
+
+msgid "Media"
+msgstr "Média"
+
+msgid "Vagueness"
+msgstr "Imprécision"
+
+msgid "Alt. loc"
+msgstr "Loc. alt."
+
+msgid "Alt. tag"
+msgstr "Étiq. alt."
+
+msgid "Typed tags"
+msgstr "Étiq. typées"
+
+msgid "Geom. tags"
+msgstr "Étiq. géom."
+
+msgid "Conversion options"
+msgstr "Options de conversion"
+
+msgid "Convert writes annotated files into another format. Add the files to convert, choose the destination format, then convert. What the chosen format does not support is said beside the list of formats."
+msgstr "Convert écrit des fichiers annotés dans un autre format. Ajoutez les fichiers à convertir, choisissez le format de destination, puis convertissez. Ce que le format choisi ne supporte pas est indiqué à côté de la liste des formats."
+
+msgid "No file is checked to be converted."
+msgstr "Aucun fichier n'est coché pour être converti."
+
+msgid "Every place is taken."
+msgstr "Toutes les places sont prises."
+
+msgid "This place is out of date."
+msgstr "Cette place est périmée."
+
+msgid "This file is beyond the size one file may be."
+msgstr "Ce fichier dépasse la taille permise pour un fichier."
+
+msgid "This file is beyond the volume one place may hold."
+msgstr "Ce fichier dépasse le volume qu'une place peut contenir."
+
+msgid "A file of this name already stands in this place."
+msgstr "Un fichier de ce nom se trouve déjà à cette place."
+
+msgid "This name is already taken."
+msgstr "Ce nom est déjà pris."
+
+msgid "Choose the files to be treated"
+msgstr "Choisir les fichiers à traiter"
+
+msgid "The file chooser could not be opened on this machine."
+msgstr "Le sélecteur de fichiers n'a pas pu être ouvert sur cette machine."
+
+msgid "What you asked could not be done. Nothing has changed."
+msgstr "Ce que vous avez demandé n'a pas pu être fait. Rien n'a changé."
+
+msgid "No file was obtained."
+msgstr "Aucun fichier n'a été obtenu."
+
+msgid "{:d} of {:d} bytes accepted here. Up to {:d} bytes per file."
+msgstr "{:d} octets sur {:d} acceptés ici. Jusqu'à {:d} octets par fichier."
+
+msgid "No place can be given now."
+msgstr "Aucune place ne peut être donnée pour l'instant."
+
+msgid "This file is not one SPPAS reads."
+msgstr "Ce fichier n'est pas un fichier que SPPAS lit."
+
+msgid "This file is beyond the size which is accepted."
+msgstr "Ce fichier dépasse la taille acceptée."
+
+msgid "This file is beyond the volume which is accepted."
+msgstr "Ce fichier dépasse le volume accepté."
+
+msgid "The files to be treated"
+msgstr "Les fichiers à traiter"
+
+msgid "Workspace:"
+msgstr "Espace de travail :"
+
+msgid "Select files"
+msgstr "Sélectionner des fichiers"
+
+msgid ", or drag and drop files here."
+msgstr ", ou glisser-déposer des fichiers ici."
+
+msgid "Take back"
+msgstr "Retirer"
+
+msgid "Refused"
+msgstr "Refusé"
+
+msgid "Deposited"
+msgstr "Déposé"
+
+msgid "Treated"
+msgstr "Traité"

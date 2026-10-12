@@ -69,9 +69,8 @@ from sppas.ui.swapp.services.files.files_provision import swappFileProvision
 from sppas.ui.swapp.services.files.files_delivery import swappResultDelivery
 from sppas.ui.swapp.services.files.files_record import swappFilesRecord
 from sppas.ui.swapp.services.files.files_view import swappDepositView
-from sppas.ui.swapp.services.files.files_view import swappDeliveryView
 from sppas.ui.swapp.services.files.files_controller import MSG_FAILED
-from sppas.ui.swapp.services.files.files_view import MSG_FINISHED
+from sppas.ui.swapp.services.files.files_view import MSG_TREATED
 from sppas.ui.swapp.services.files.files_manager import swappFilesManager
 
 # ---------------------------------------------------------------------------
@@ -289,11 +288,11 @@ class TestViews(unittest.TestCase):
         record = swappFilesRecord()
         record.reachable = False
 
-        for view in (swappDepositView(self.parent), swappDeliveryView(self.parent)):
-            view.populate_tree_content(record)
-            shown = text_of(view)
-            self.assertNotIn("a.wav", shown)
-            self.assertNotIn("refus", shown.lower())
+        view = swappDepositView(self.parent)
+        view.populate_tree_content(record)
+        shown = text_of(view)
+        self.assertNotIn("a.wav", shown)
+        self.assertNotIn("refus", shown.lower())
 
     # -----------------------------------------------------------------------
 
@@ -369,20 +368,17 @@ class TestViews(unittest.TestCase):
 
         """
         record = swappFilesRecord()
-        record.to_be_shown = {"produced": {"a": [("a-phon.TextGrid", "/deposit/place_1/a-phon.TextGrid")],
-                                           "b": ["Nothing was produced: the file holds no transcription."]},
-                              "reachable_until": "Reachable until 14:32.",
-                              "finished": True}
+        record.reachable = False
+        record.feed("a-phon.TextGrid", 10)
+        record.treated = ["a-phon.TextGrid"]
 
-        view = swappDeliveryView(self.parent)
+        view = swappDepositView(self.parent)
         view.populate_tree_content(record)
         shown = text_of(view)
 
         self.assertIn("a-phon.TextGrid", shown)
-        self.assertIn("no transcription", shown)
-        self.assertIn("14:32", shown)
+        self.assertIn(MSG_TREATED, shown)
         self.assertNotIn(tempfile.gettempdir(), shown)
-        self.assertNotIn("a.wav", shown)
 
     # -----------------------------------------------------------------------
 
@@ -648,13 +644,13 @@ class TestLocalUse(unittest.TestCase):
         """
         manager = swappFilesManager(self.parent, reachable=True)
         manager.consumes({"designate": self.path})
-        manager.consumes({"finished": ""})
+        manager.release([self.path])
         manager.populate_view()
-        self.assertIn(MSG_FINISHED, manager.container().serialize())
+        self.assertIn(MSG_TREATED, manager.container().serialize())
 
         manager.start_over()
         manager.populate_view()
-        self.assertNotIn(MSG_FINISHED, manager.container().serialize())
+        self.assertNotIn(MSG_TREATED, manager.container().serialize())
         self.assertEqual(list(), files_of(manager.files_for_app()))
 
 # ---------------------------------------------------------------------------

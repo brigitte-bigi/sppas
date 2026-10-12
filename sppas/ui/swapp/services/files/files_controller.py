@@ -40,27 +40,26 @@
 
 import base64
 import logging
-import os
 
 from sppas.core.coreutils import sppasTypeError
+from sppas.ui import _
 
 from .files_provision import swappFileProvision
 from .files_record import swappFilesRecord
 from .files_record import TASK_DESIGNATE
 from .files_record import TASK_FINISHED
-from .files_record import TASK_PRODUCED
 from .files_record import TASK_SEND
 from .files_record import TASK_TAKE_BACK
 from .files_record import TASKS
 from .files_feeding import swappDataFiles
-from .files_view import swappDeliveryView
 from .files_view import swappDepositView
 from .files_workspace import swappWorkspaceFiles
 
 # ---------------------------------------------------------------------------
 
-MSG_FAILED = "What you asked could not be done. Nothing has changed."
-MSG_NO_FILE = "No file was obtained."
+MSG_FAILED = _("What you asked could not be done. Nothing has changed.")
+MSG_NO_FILE = _("No file was obtained.")
+MSG_ACCEPTED_HERE = _("{:d} of {:d} bytes accepted here. Up to {:d} bytes per file.")
 
 # ---------------------------------------------------------------------------
 
@@ -77,11 +76,10 @@ class swappFilesController:
     """
 
     def __init__(self, model: swappFileProvision, deposit_view: swappDepositView,
-                 delivery_view: swappDeliveryView, reachable: bool = True,
-                 has_workspace: bool = False):
+                 reachable: bool = True, has_workspace: bool = False):
         """Create the controller with what it is given.
 
-        It assembles nothing: the manager builds the model and the views, and
+        It assembles nothing: the manager builds the model and the view, and
         hands them over.
 
         The case is assigned here, when an app is entered, and the record
@@ -91,7 +89,6 @@ class swappFilesController:
 
         :param model: (swappFileProvision) The provision of files
         :param deposit_view: (swappDepositView) The container of what is fed
-        :param delivery_view: (swappDeliveryView) The container of what was produced
         :param reachable: (bool) True when the person designates files which stand already
         :param has_workspace: (bool) True when the app was given a workspace which is declared
         :raises: sppasTypeError: One of the given objects is of a wrong type
@@ -101,8 +98,6 @@ class swappFilesController:
             raise sppasTypeError(model, "swappFileProvision")
         if isinstance(deposit_view, swappDepositView) is False:
             raise sppasTypeError(deposit_view, "swappDepositView")
-        if isinstance(delivery_view, swappDeliveryView) is False:
-            raise sppasTypeError(delivery_view, "swappDeliveryView")
 
         if isinstance(reachable, bool) is False:
             raise sppasTypeError(reachable, "bool")
@@ -111,13 +106,13 @@ class swappFilesController:
 
         self.__model = model
         self.__deposit_view = deposit_view
-        self.__delivery_view = delivery_view
         self.__reachable = reachable
         self.__has_workspace = has_workspace
         self.__record = swappFilesRecord()
         self.__record.reachable = reachable
         self.__record.has_workspace = has_workspace
-        self.__produced = dict()
+        # The files an app treated: an app says so, and not a page.
+        self.__treated = list()
 
     # -----------------------------------------------------------------------
 
@@ -179,6 +174,12 @@ class swappFilesController:
         self.__record.parse(data)
         self.__record.reachable = self.__reachable
         self.__record.has_workspace = self.__has_workspace
+        # An app which says it has finished sends no field of the page: what
+        # it treated is kept, and not lost with a record rebuilt from nothing.
+        if "treated" in data:
+            self.__treated = list(self.__record.treated)
+        else:
+            self.__record.treated = list(self.__treated)
         if self.__record.workspace is not None:
             self.__model.works_on(self.__record.workspace)
 
@@ -200,38 +201,30 @@ class swappFilesController:
     # -----------------------------------------------------------------------
 
     def populate_view(self) -> None:
-        """Have the view the record names build its tree.
+        """Have the view build its tree.
 
         A request which asked for no task of this service is a first request,
         and what it shows is the state: the workspace the files are known to,
-        as it stands now.
-
-        What an app gave back is shown here and once: it was given in this
-        request, and the request which follows is another state.
+        as it stands now, and where each file stands.
 
         """
-        if len(self.__produced) > 0:
-            self.__to_be_shown("produced", self.__shown_produced())
-            self.__produced = dict()
-
         if self.__record.workspace is None:
             self.__record.workspace = self.__model.workspace()
         if self.__record.has_workspace is True:
             self.__to_be_shown("workspace_name", self.__model.workspace_name())
 
-        self.view().populate_tree_content(self.__record)
+        self.__deposit_view.populate_tree_content(self.__record)
 
     # -----------------------------------------------------------------------
 
     def start_over(self) -> None:
         """Show the deposit again, with a new workspace holding no file.
 
-        What was produced and that an app has finished are no longer shown.
         The workspace the files were known to is left as it is: a new one is
         worked on.
 
         """
-        self.__produced = dict()
+        self.__treated = list()
         self.__model.works_on(swappWorkspaceFiles.make_workspace())
         self.__record = swappFilesRecord()
         self.__record.reachable = self.__reachable
@@ -240,37 +233,16 @@ class swappFilesController:
 
     # -----------------------------------------------------------------------
 
-    def shows_produced(self, produced: dict) -> None:
-        """Keep what an app gave back, to be shown when the view is built.
+    def treated(self, filenames: list) -> None:
+        """Say these files were treated by an app: they stand so from now on.
 
-        It is kept until it is shown, and no longer: what an app gives back is
-        shown by the request it was given in.
-
-        :param produced: (dict) Names of the produced files, with their path, by root
-        :raises: sppasTypeError: The given files are not a dictionary
+        :param filenames: (list of str) Names of the files, with their path
 
         """
-        if isinstance(produced, dict) is False:
-            raise sppasTypeError(produced, "dict")
-
-        self.__produced = produced
-
-    # -----------------------------------------------------------------------
-
-    def view(self):
-        """Return the view the record names.
-
-        What has been fed and not yet sent is shown as a deposit; what an app
-        produced is shown as a delivery.
-
-        :return: (swappDepositView|swappDeliveryView)
-
-        """
-        _shown = self.__record.to_be_shown
-        if "produced" in _shown or "finished" in _shown:
-            return self.__delivery_view
-
-        return self.__deposit_view
+        for _name in filenames:
+            if _name not in self.__treated:
+                self.__treated.append(_name)
+        self.__record.treated = list(self.__treated)
 
     # -----------------------------------------------------------------------
 
@@ -284,27 +256,6 @@ class swappFilesController:
 
     # -----------------------------------------------------------------------
     # Private
-    # -----------------------------------------------------------------------
-
-    def __shown_produced(self) -> dict:
-        """Return what an app gave back, as it is to be shown.
-
-        A produced file is shown by its name, and the path it stands under
-        comes with it: where it is read is the view's, and what is cut from
-        a name is decided here.
-
-        :return: (dict) A name and a path for every produced file, by root
-
-        """
-        _shown = dict()
-        for _root in self.__produced:
-            _of_root = list()
-            for _filename in self.__produced[_root]:
-                _of_root.append((os.path.basename(_filename), _filename))
-            _shown[_root] = _of_root
-
-        return _shown
-
     # -----------------------------------------------------------------------
 
     def __do(self, task: str, data: dict) -> None:
@@ -323,12 +274,8 @@ class swappFilesController:
         elif task == TASK_SEND:
             self.__send(data)
 
-        elif task == TASK_PRODUCED:
-            self.__to_be_shown("produced", dict())
-
         elif task == TASK_FINISHED:
             self.__model.finished()
-            self.__to_be_shown("finished", True)
 
         if self.__reachable is False:
             self.__to_be_shown("accepted", self.__accepted())
@@ -473,8 +420,7 @@ class swappFilesController:
         except NotImplementedError:
             return ""
 
-        return "{:d} of {:d} bytes accepted here. Up to {:d} bytes per file.".format(
-            self.__record_volume(), _accepted["volume"], _accepted["size"])
+        return MSG_ACCEPTED_HERE.format(self.__record_volume(), _accepted["volume"], _accepted["size"])
 
     # -----------------------------------------------------------------------
 

@@ -42,13 +42,14 @@ from sppas.core.config import sppasExtensionsSettings
 from sppas.core.coreutils import sppasTypeError
 from sppas.src.anndata.aio import extensions as annot_extensions
 from sppas.src.imgdata import image_extensions
+from sppas.ui import _
 from sppas.src.videodata import video_extensions
 
 from .files_place import swappFilePlace
 
 # ---------------------------------------------------------------------------
 
-MSG_NAME_TAKEN = "This name is already taken."
+MSG_NAME_TAKEN = _("This name is already taken.")
 
 # The first bytes of a file which is run instead of being read.
 EXECUTABLES = (b"MZ", b"\x7fELF", b"#!", b"\xca\xfe\xba\xbe", b"\xcf\xfa\xed\xfe")

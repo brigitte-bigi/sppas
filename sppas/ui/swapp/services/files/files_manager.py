@@ -44,7 +44,6 @@ from .files_controller import swappFilesController
 from .files_place import swappFilePlace
 from .files_provision import swappFileProvision
 from .files_record import TASK_READY
-from .files_view import swappDeliveryView
 from .files_view import swappDepositView
 from .files_workspace import swappWorkspaceFiles
 
@@ -85,10 +84,7 @@ class swappFilesManager:
 
         self.__model = swappFileProvision(workspace, place, reachable=reachable)
         self.__deposit_view = swappDepositView(parent)
-        self.__delivery_view = swappDeliveryView(parent)
-        self.__controller = swappFilesController(self.__model, self.__deposit_view,
-                                                 self.__delivery_view, reachable,
-                                                 has_workspace)
+        self.__controller = swappFilesController(self.__model, self.__deposit_view, reachable, has_workspace)
 
     # -----------------------------------------------------------------------
 
@@ -148,16 +144,14 @@ class swappFilesManager:
     def produced(self, workspace) -> dict:
         """Write what an app produced into the workspace, and check it.
 
-        What was produced is shown at the next building of the container: an
-        app gives back as often as it has something to give back, and the
-        request it gave in is the one which shows it.
+        Nothing of it is shown by this service: the app shows it. An app
+        gives back as often as it has something to give back.
 
         :param workspace: (sppasWorkspace) Workspace an app gives back
         :return: (dict) Names of the produced files, with their path, by root
 
         """
         _produced = self.__model.produced(workspace)
-        self.__controller.shows_produced(_produced)
 
         return _produced
 
@@ -178,12 +172,13 @@ class swappFilesManager:
     # -----------------------------------------------------------------------
 
     def release(self, filenames: list) -> int:
-        """Say the app gives these files back.
+        """Say the app gives these files back: they were treated.
 
         :param filenames: (list of str) Names of the files, with their path
         :return: (int) Number of released files
 
         """
+        self.__controller.treated(filenames)
         return self.__model.release(filenames)
 
     # -----------------------------------------------------------------------
@@ -203,4 +198,4 @@ class swappFilesManager:
         :return: (TagNode) The node of the view which was populated
 
         """
-        return self.__controller.view().node
+        return self.__deposit_view.node

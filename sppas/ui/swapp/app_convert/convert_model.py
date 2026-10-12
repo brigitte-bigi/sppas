@@ -38,18 +38,20 @@
 
 """
 
-from sppas.ui import _
+import os
+from threading import Thread
+
+from sppas.core.coreutils import sppasLogFile
+from sppas.src.wkps import States
 
 from ..services.files import swappFilesManager
 
 from .convert_formats import swappModelFormats
 from .convert_conversion import swappModelConversion
+from .convert_conversion import swappConversionReport
+from .convert_conversion import REPORT_PATTERN
 from .convert_provision import swappModelProvision
-
-# ---------------------------------------------------------------------------
-
-MSG_NO_DESTINATION = _("The format {} cannot be written.")
-MSG_NO_FILE = _("No file is to be converted.")
+from .convert_record import swappConversion
 
 # ---------------------------------------------------------------------------
 
@@ -77,45 +79,12 @@ class swappConvertModel:
     # -----------------------------------------------------------------------
 
     def writable_formats(self) -> list:
-        """Return the formats which can be written.
+        """Return the formats which can be written, with what each of them holds.
 
         :return: (list of swappFormat)
 
         """
         return self.__formats.writable_formats()
-
-    # -----------------------------------------------------------------------
-
-    @staticmethod
-    def properties() -> list:
-        """Return the properties of a format, in the order they are shown.
-
-        :return: (list of tuple) The identifier and the text of every property
-
-        """
-        return swappModelFormats.properties()
-
-    # -----------------------------------------------------------------------
-
-    def can_be_written(self, destination: str) -> bool:
-        """Return True if the given extension is one of a writable format.
-
-        :param destination: (str) Extension of a format, its dot included
-        :return: (bool)
-
-        """
-        return self.__formats.can_be_written(destination)
-
-    # -----------------------------------------------------------------------
-
-    def properties_of(self, destination: str) -> dict:
-        """Return what the destination format holds.
-
-        :param destination: (str) Extension of a writable format, its dot included
-        :return: (dict) True or False for every property
-
-        """
-        return self.__formats.properties_of(destination)
 
     # -----------------------------------------------------------------------
 
@@ -129,44 +98,66 @@ class swappConvertModel:
 
     # -----------------------------------------------------------------------
 
-    @staticmethod
-    def files_of(batch) -> list:
-        """Return the files of the batch which are to be converted.
+    def start(self, batch, conversion: swappConversion) -> str:
+        """Start the conversion of the batch on the server, and return the name of its report.
 
-        :param batch: (sppasWorkspace) Workspace holding the files to be converted
-        :return: (list of str) Names of the files, with their path
+        The report is written before the conversion starts: whoever asks where
+        it stands finds it, with no file treated yet.
+
+        :param batch: (sppasWorkspace) The workspace the provision of files handed
+        :param conversion: (swappConversion) What was decided
+        :return: (str) Name of the report, without its path
 
         """
-        return swappModelConversion.files_to_convert(batch)
+        _report = swappConversionReport(os.path.basename(sppasLogFile(pattern=REPORT_PATTERN).get_filename()))
+        _report.write(len(batch.get_filename_from_state(States().CHECKED)), list())
+        Thread(target=self.convert, args=(batch, conversion, _report), daemon=True).start()
+        return _report.name
 
     # -----------------------------------------------------------------------
 
-    def convert(self, batch, destination: str, answers: dict, general_options: dict) -> list:
+    @staticmethod
+    def read_report(name: str) -> tuple:
+        """Return where a conversion stands, as its report says it.
+
+        :param name: (str) Name of the report, without its path
+        :raises: ValueError: The name is not the one of a report of Convert
+        :return: (tuple) Number of files, the results written, and whether the batch was treated
+
+        """
+        return swappConversionReport(name).read()
+
+    # -----------------------------------------------------------------------
+
+    def convert(self, batch, conversion: swappConversion, report=None) -> list:
         """Convert the batch, and give back to the provision of files what was produced.
 
         The files of the batch are locked while they are converted, and
         released once each has its result. What was written is added to the
         batch, which is given back, and that the batch has been treated is said.
+        When a report is given, it is written as the files have their result,
+        and finished once the batch has been treated.
 
         :param batch: (sppasWorkspace) The workspace the provision of files handed
-        :param destination: (str) Extension of the destination format, its dot included
-        :param answers: (dict) The answer standing for each option, by option
-        :param general_options: (dict) "override" and "heuristic", both booleans
-        :raises: ValueError: The destination cannot be written, or the batch holds no file
+        :param conversion: (swappConversion) What was decided
+        :param report: (swappConversionReport|None) The report of the conversion
         :return: (list of swappFileResult) One result per file, in the order of the batch
 
         """
-        if self.__formats.can_be_written(destination) is False:
-            raise ValueError(MSG_NO_DESTINATION.format(destination))
+        _filenames = list()
+        for _file in batch.get_filename_from_state(States().CHECKED):
+            _filenames.append(_file.get_id())
 
-        _filenames = swappModelConversion.files_to_convert(batch)
-        if len(_filenames) == 0:
-            raise ValueError(MSG_NO_FILE)
+        _general_options = dict()
+        _general_options["override"] = conversion.override
+        _general_options["heuristic"] = conversion.heuristic
 
         self.__provision.lock(_filenames)
-        _results = self.__conversion.convert(batch, destination, answers, general_options)
+        _results = self.__conversion.convert(batch, conversion.destination, dict(), _general_options, report)
         self.__provision.release(_filenames)
         self.__provision.produced(batch)
         self.__provision.finished()
+        if report is not None:
+            report.write(len(_filenames), _results, finished=True)
 
         return _results

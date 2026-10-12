@@ -104,16 +104,19 @@ class swappDashboardView(swappBaseView):
 
     """
 
-    def __init__(self, tree: HTMLTree):
+    def __init__(self, tree: HTMLTree, help_page: str):
         """Initialize and populate the Dashboard view structure.
 
         :param tree: (HTMLTree) An existing HTML tree to populate with
                      the setup-specific content.
+        :param help_page: (str) Name of the page serving the document of the app
         :raises: TypeError: tree is not an instance of HTMLTree
 
         """
         if isinstance(tree, HTMLTree) is False:
             raise TypeError("swappDashboardView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
+        # Set before the base view populates the nav with it.
+        self.__help_page = help_page
         super().__init__(tree, MSG_HEADER)
 
     # -----------------------------------------------------------------------
@@ -181,7 +184,7 @@ class swappDashboardView(swappBaseView):
         self._htree.body_nav.append_child(_s)
 
         self.append_home_link_button(self._htree.body_nav, self._home_target())
-        self.append_help_link_button(self._htree.body_nav, "app_dashboard.html")
+        self.append_help_link_button(self._htree.body_nav, self.__help_page)
         self.append_trace_link_button(self._htree.body_nav)
         self.append_exit_button(self._htree.body_nav)
 

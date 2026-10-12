@@ -49,6 +49,7 @@ import unittest
 import os
 import shutil
 import tempfile
+from html.parser import HTMLParser
 from unittest.mock import patch
 
 from sppas.src.anndata import sppasTranscription
@@ -62,6 +63,7 @@ from sppas.src.anndata import sppasTrsRW
 from sppas.src.anndata.aio.readwrite import FileFormatProperty
 from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States
+from sppas.core.config import annots
 
 from whakerpy.htmlmaker import HTMLTree
 
@@ -70,9 +72,18 @@ from sppas.ui.swapp.app_convert.convert_formats import swappModelFormats
 from sppas.ui.swapp.app_convert.convert_remediation import swappModelRemediation
 from sppas.ui.swapp.app_convert.convert_conversion import swappModelConversion
 from sppas.ui.swapp.app_convert.convert_provision import swappModelProvision
+from sppas.ui.swapp.app_convert.convert_record import swappConversion
+from sppas.ui.swapp.app_convert.convert_record import MISSING_BATCH
+from sppas.ui.swapp.app_convert.convert_record import EVENT_TASK
+from sppas.ui.swapp.app_convert.convert_record import TASK_CONVERT
+from sppas.ui.swapp.app_convert.convert_panels import FIELD_DESTINATION
+from sppas.ui.swapp.app_convert.convert_panels import GENERAL_OPTIONS
+from sppas.ui.swapp.app_convert.convert_panels import holds_id
+from sppas.ui.swapp.app_convert.convert_panels import unsupported_properties
+from sppas.ui.swapp.app_convert.convert_maker import swappConvertResponseRecipe
 from sppas.ui.swapp.services.files import swappFilesManager
 from sppas.ui.swapp.services.files import swappWorkspaceFiles
-from sppas.ui.swapp.services.files.files_view import MSG_FINISHED
+from sppas.ui.swapp.services.files.files_view import MSG_TREATED
 
 # ---------------------------------------------------------------------------
 
@@ -91,6 +102,9 @@ def a_writable_format(supporting: bool, prop: str) -> str:
     for extension in sppasTrsRW.extensions():
         fmt = FileFormatProperty(extension)
         if fmt.get_writer() is False:
+            continue
+        # The files of the tests are written in xra: a destination is another format.
+        if fmt.get_extension().lower() == ".xra":
             continue
         instance = sppasTrsRW.TRANSCRIPTION_TYPES[extension.replace(".", "")]()
         if getattr(instance, prop)() is supporting:
@@ -652,17 +666,43 @@ class TestModelProvision(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_te27_that_the_batch_has_been_treated_is_said(self):
-        """TE27. Whatever the results: nothing was produced here. T06"""
-        self.provision.finished()
+        """TE27. Whatever the results: the files given back are shown treated. T06"""
+        self.provision.lock(self.files)
+        self.provision.release(self.files)
         self.manager.populate_view()
 
-        self.assertIn(MSG_FINISHED, self.manager.container().serialize())
+        self.assertIn(MSG_TREATED, self.manager.container().serialize())
+
+# ---------------------------------------------------------------------------
+
+
+class TestConversion(unittest.TestCase):
+    """TE24. What is missing before the conversion can run."""
+
+    def setUp(self):
+        self.root = tempfile.mkdtemp(prefix="test_convert_")
+        self.path = os.path.join(self.root, "a.xra")
+        sppasTrsRW(self.path).write(one_tier())
+
+    def tearDown(self):
+        shutil.rmtree(self.root, ignore_errors=True)
+
+    # -----------------------------------------------------------------------
+
+    def test_te24_what_is_missing(self):
+        """TE24. The batch when it is empty, and nothing when the conversion
+        may run. C12
+
+        """
+        conversion = swappConversion()
+        self.assertEqual([MISSING_BATCH], conversion.what_is_missing(sppasWorkspace()))
+        self.assertEqual([], conversion.what_is_missing(a_batch([self.path])))
 
 # ---------------------------------------------------------------------------
 
 
 class TestConvertModel(unittest.TestCase):
-    """TE24 and TE25. The façade."""
+    """TE25. The façade."""
 
     def setUp(self):
         self.root = tempfile.mkdtemp(prefix="test_convert_")
@@ -674,23 +714,6 @@ class TestConvertModel(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(self.root, ignore_errors=True)
-
-    # -----------------------------------------------------------------------
-
-    def test_te24_it_converts_only_when_everything_is_there(self):
-        """TE24. A destination, a batch which is not empty, and an answer
-        standing for every option. C12
-
-        """
-        with self.assertRaises(ValueError):
-            self.model.convert(sppasWorkspace(), self.destination, dict(), dict())
-
-        with self.assertRaises(ValueError):
-            self.model.convert(a_batch([self.path]), "", dict(), dict())
-
-        results = self.model.convert(a_batch([self.path]), self.destination,
-                                     dict(), dict())
-        self.assertEqual(1, len(results))
 
     # -----------------------------------------------------------------------
 
@@ -707,6 +730,137 @@ class TestConvertModel(unittest.TestCase):
 
         self.assertEqual(options, self.model.options_of(self.destination))
         self.assertEqual(lost, self.model.structural_loss_of(self.destination))
+
+# ---------------------------------------------------------------------------
+
+
+class PageReader(HTMLParser):
+    """Read what a page holds: its elements, and the form each one belongs to.
+
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.elements = list()
+        self.__forms = list()
+        self.__count = 0
+        self.__ids = dict()
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        if tag == "form":
+            self.__count += 1
+            self.__forms.append(self.__count)
+            if "id" in attributes:
+                self.__ids[attributes["id"]] = self.__count
+        enclosing = None
+        if len(self.__forms) > 0:
+            enclosing = self.__forms[-1]
+        self.elements.append((tag, attributes, enclosing))
+
+    def handle_endtag(self, tag):
+        if tag == "form" and len(self.__forms) > 0:
+            self.__forms.pop()
+
+    def form_of(self, element) -> int | None:
+        """Return the form an element belongs to: by its attribute, or the one it stands in."""
+        tag, attributes, enclosing = element
+        if "form" in attributes:
+            return self.__ids.get(attributes["form"])
+        return enclosing
+
+# ---------------------------------------------------------------------------
+
+
+class TestConvertView(unittest.TestCase):
+    """TE28 to TE30. The page, as the server writes it at the first request."""
+
+    def setUp(self):
+        self.formats = swappModelFormats().writable_formats()
+        self.reader = PageReader()
+        self.reader.feed(swappConvertResponseRecipe().bake(dict()))
+
+    # -----------------------------------------------------------------------
+
+    def the_convert_button(self):
+        """Return the element of the button which sends the task convert."""
+        for element in self.reader.elements:
+            tag, attributes, enclosing = element
+            if tag == "button" and attributes.get("name") == EVENT_TASK \
+                    and attributes.get("value") == TASK_CONVERT:
+                return element
+        return None
+
+    # -----------------------------------------------------------------------
+
+    def test_te28_one_block_per_format_which_loses_and_one_shown(self):
+        """TE28. Every format which loses something has its block in the page,
+        and only the one of the destination is shown. [1005], C3
+
+        """
+        losing = list()
+        for one in self.formats:
+            if len(unsupported_properties(one)) > 0:
+                losing.append(holds_id(one.extension))
+
+        blocks = list()
+        shown = list()
+        for tag, attributes, enclosing in self.reader.elements:
+            if tag == "div" and attributes.get("id", "").startswith(holds_id("")):
+                blocks.append(attributes["id"])
+                if "hidden" not in attributes.get("class", "").split():
+                    shown.append(attributes["id"])
+        self.assertEqual(sorted(losing), sorted(blocks))
+
+        expected = list()
+        if holds_id(annots.annot_extension) in losing:
+            expected.append(holds_id(annots.annot_extension))
+        self.assertEqual(expected, shown)
+
+    # -----------------------------------------------------------------------
+
+    def test_te29_every_field_of_a_decision_belongs_to_the_form(self):
+        """TE29. The radios of the formats and the general options belong to
+        the form which sends the conversion. [903], RO9
+
+        """
+        button = self.the_convert_button()
+        self.assertIsNotNone(button)
+        form = self.reader.form_of(button)
+        self.assertIsNotNone(form)
+
+        names = [FIELD_DESTINATION]
+        for name, text in GENERAL_OPTIONS:
+            names.append(name)
+
+        radios = 0
+        for element in self.reader.elements:
+            tag, attributes, enclosing = element
+            if tag == "input" and attributes.get("name") in names:
+                self.assertEqual(form, self.reader.form_of(element))
+                if attributes.get("type") == "radio":
+                    radios += 1
+        self.assertEqual(len(self.formats), radios)
+
+    # -----------------------------------------------------------------------
+
+    def test_te30_the_form_holds_reset_and_convert(self):
+        """TE30. A Reset button, which is a reset of the form, and a Convert
+        button, which sends the task convert. [903], T06
+
+        """
+        button = self.the_convert_button()
+        self.assertIsNotNone(button)
+        self.assertEqual("submit", button[1].get("type"))
+        form = self.reader.form_of(button)
+
+        resets = 0
+        for element in self.reader.elements:
+            tag, attributes, enclosing = element
+            if tag == "button" and attributes.get("type") == "reset":
+                self.assertEqual(form, self.reader.form_of(element))
+                resets += 1
+        self.assertEqual(1, resets)
 
 # ---------------------------------------------------------------------------
 

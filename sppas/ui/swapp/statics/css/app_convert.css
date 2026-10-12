@@ -1,0 +1,75 @@
+/*
+:filename: sppas.ui.swapp.statics.css.app_convert.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: Style to be used for the SPPAS Convert application
+
+.. _This file is part of SPPAS: https://sppas.org/
+..
+    -------------------------------------------------------------------------
+
+     ######   ########   ########      ###      ######
+    ##    ##  ##     ##  ##     ##    ## ##    ##    ##     the automatic
+    ##        ##     ##  ##     ##   ##   ##   ##            annotation
+     ######   ########   ########   ##     ##   ######        and
+          ##  ##         ##         #########        ##        analysis
+    ##    ##  ##         ##         ##     ##  ##    ##         of speech
+     ######   ##         ##         ##     ##   ######
+
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
+    Laboratoire Parole et Langage, Aix-en-Provence, France
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    This banner notice must not be removed.
+
+    -------------------------------------------------------------------------
+*/
+
+/*
+=================================  FORMATS  ===================================
+*/
+
+/* The formats are grouped by software, and a group is told apart by the cell
+   of its software: the rows are not striped. */
+#convert_section table[aria-labelledby="convert_formats_h"] tbody tr:nth-child(even) * {
+    background-color: var(--table-cell-bg-color);
+}
+
+/* The choice of the format and what the format supports start at the same
+   height: wexa.css pads a section of the main, and not an aside. */
+#convert_section .flex-panel > section {
+    padding: 0;
+}
+
+/* What a format supports is marked with the color of success, in the aside
+   of the format chosen as in the dialog which compares the formats. */
+#convert_section [data-icon="yes"] {
+    color: var(--success-color);
+}
+
+/* What the format chosen does not support is read against the table of the
+   formats: the column is centered on it, and not laid at its top. */
+#convert_destination {
+    align-self: center;
+}
+
+/* The status of a file, in the results: skipped, or refused. */
+#convert_section [aria-labelledby="convert_results_h"] [data-icon="warning"] {
+    color: var(--warning-color);
+}
+
+#convert_section [aria-labelledby="convert_results_h"] [data-icon="no"] {
+    color: var(--error-color);
+}

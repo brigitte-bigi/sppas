@@ -42,11 +42,12 @@ import logging
 import os
 
 from sppas.ui.agnostic.filechooser.filechooser_mixin import FileChooserMixin
+from sppas.ui import _
 
 # ---------------------------------------------------------------------------
 
-MSG_CHOOSE = "Choose the files to be treated"
-MSG_NO_CHOOSER = "The file chooser could not be opened on this machine."
+MSG_CHOOSE = _("Choose the files to be treated")
+MSG_NO_CHOOSER = _("The file chooser could not be opened on this machine.")
 
 # ---------------------------------------------------------------------------
 

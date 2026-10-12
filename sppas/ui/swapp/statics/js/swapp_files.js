@@ -1,6 +1,7 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
 const { RequestManager } = await import(`${wexa_statics_js}/transport/request.js`);
+const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
 
 /**
  * :filename: sppas.ui.swapp.statics.js.swapp_files.js
@@ -48,7 +49,6 @@ const { RequestManager } = await import(`${wexa_statics_js}/transport/request.js
 // --------------------------------------------------------------------------
 
 const DEPOSIT_CONTAINER_ID = 'files_deposit';
-const DELIVERY_CONTAINER_ID = 'files_delivery';
 const FILES_INPUT_ID = 'files_input';
 const DROPZONE_CLASS = 'dropzone';
 const TASK_DESIGNATE = 'designate';
@@ -58,9 +58,10 @@ const FIELD_NAME = 'name';
 const FIELD_SIZE = 'size';
 const FIELD_CONTENT = 'content';
 const FIELD_CONTAINER = 'container';
+const FIELD_INFO = 'info';
+const ID_INFO_DIALOG = 'info_dialog';
 const DRAGGED_OVER_CLASS = 'dragged-over';
 const JSON_TYPE = 'application/json';
-const ANSWERED_EVENT = 'swappfiles:answered';
 
 /**
  * This class carries what a person composes, and sends it when she asks.
@@ -93,6 +94,9 @@ export default class SwappFiles {
     /** What posts a task to the server and reads its answer. */
     #request;
 
+    /** What opens the dialog of information of the page. */
+    #dialog;
+
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
@@ -101,6 +105,7 @@ export default class SwappFiles {
         this.#container = null;
         this.#designated = new Map();
         this.#request = new RequestManager();
+        this.#dialog = new DialogManager();
     }
 
     // ------------------------------------------------------------------------
@@ -128,18 +133,12 @@ export default class SwappFiles {
      * Find the container and attach what a person does in it.
      *
      * It is called again after every answer of the server: the container is
-     * a new node, so the listeners of the one before are gone with it. Which
-     * of the two the server built is read here and never assumed: what a
-     * person feeds and what an app produced are two containers, and one page
-     * shows one of them.
+     * a new node, so the listeners of the one before are gone with it.
      *
      * @returns {void}
      */
     #attachListeners() {
         this.#container = document.getElementById(DEPOSIT_CONTAINER_ID);
-        if (this.#container === null) {
-            this.#container = document.getElementById(DELIVERY_CONTAINER_ID);
-        }
         if (this.#container === null) {
             console.error('SwappFiles: no container of the provision of files was found.');
             return;
@@ -348,10 +347,32 @@ export default class SwappFiles {
 
         this.#container.outerHTML = answered[FIELD_CONTAINER];
         this.#attachListeners();
+        // The icons of what the server wrote are placed, as the ones of the page were.
+        if (this.#container !== null && window.Wexa && window.Wexa.icons) {
+            window.Wexa.icons.run(this.#container);
+        }
 
-        // The page the container stands in may show more than the container:
-        // what the server answered is announced, for its own parts to follow.
-        document.dispatchEvent(new CustomEvent(ANSWERED_EVENT, {detail: answered}));
+        if (FIELD_INFO in answered && answered[FIELD_INFO].length > 0) {
+            this.#showInfo(answered[FIELD_INFO]);
+        }
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Display a message in the dialog of information of the page.
+     *
+     * @param {string} message - The message the server answered.
+     * @returns {void}
+     */
+    #showInfo(message) {
+        const dlg = document.getElementById(ID_INFO_DIALOG);
+        if (dlg === null) {
+            alert(message);
+            return;
+        }
+        dlg.innerHTML = `<p>${message}</p>`;
+        this.#dialog.open(ID_INFO_DIALOG);
     }
 
     // ------------------------------------------------------------------------

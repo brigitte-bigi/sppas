@@ -45,7 +45,6 @@ from .files_workspace import swappWorkspaceFiles
 from .files_handing import swappAppExchange
 from .files_record import swappFilesRecord
 from .files_view import swappDepositView
-from .files_view import swappDeliveryView
 from .files_acceptance import swappDepositAcceptance
 from .files_place import swappFilePlace
 from .files_delivery import swappResultDelivery
@@ -63,7 +62,6 @@ __all__ = (
     "swappAppExchange",
     "swappFilesRecord",
     "swappDepositView",
-    "swappDeliveryView",
     "swappDepositAcceptance",
     "swappFilePlace",
     "swappResultDelivery",

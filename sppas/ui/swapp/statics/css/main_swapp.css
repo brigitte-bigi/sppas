@@ -221,7 +221,7 @@ main > .panel-item:nth-child(2n) .card-footer {
 /* ── Buttons ─────────────────────────────────────────────── */
 
 /* A flat surface, on a page where the background, the bar, the panels and
-   the cards are all gradients: what stands out here is the plain one. */
+   the cards are all gradients: what stands out here is the plain one.
 button:not(.menuitem), [role="button"]:not(.menuitem) {
     background-color: var(--buttons-bg-color);
     background-image: none;
@@ -232,7 +232,7 @@ button:not(.menuitem), [role="button"]:not(.menuitem) {
 
 /* Two signals, never the color alone: it changes, and the button rises.
    The move is seen without telling the hues apart, and it displaces
-   nothing around since the room taken stays the same. */
+   nothing around since the room taken stays the same.
 button:hover, [role='button']:hover {
     color: var(--buttons-fg-color);
     background-color: var(--buttons-bg-color-hover);
@@ -240,6 +240,8 @@ button:hover, [role='button']:hover {
     transform: translateY(-2px);
     box-shadow: 0 2px 4px var(--shadow-color);
 }
+
+ */
 
 button:active, [role='button']:active {
     transform: translateY(0);
@@ -651,10 +653,6 @@ section.actions-panel {
 /* ── Utilities ───────────────────────────────────────────── */
 
 .noborder {
-    border: none;
-}
-
-:where(table) .noborder {
     border: none;
 }
 
@@ -1183,44 +1181,43 @@ dialog[role="alertdialog"] button:hover {
    which places its container define the same thing again.
 
      dropzone       the field where a person designates what she is sending
-     dropzone-list  the files she designated, one item for each of them
-     dropzone-name  the name of a file, or its path where it stands already
+     dropzone-name  the name of a file, its path in its title where it stands already
      dropzone-size  the size of a file, in bytes
-     file-status    the mark of validity of one file, in the corner of its item
-     aria-invalid   carried by a file which was refused
+     file-status    what became of one file, written under its name
+     aria-invalid   carried by the card of a file which was refused
 
-   A name and a size carry no rule: what they look like inside an item is
-   not settled. */
+   The zone is drawn with a thick dashed border. The files are the cards of a
+   cards panel of layout.css: in the header of a card, where the file
+   stands; in its body, the size of the file, its name and the reason of a
+   refusal, one under the other; in its footer, the button which takes it
+   back. */
 
 .dropzone {
     text-align: center;
-    border: var(--border-width) dashed var(--muted-border-color, var(--buttons-bg-color));
+    border: calc(3 * var(--border-width)) dashed var(--border-color);
     border-radius: var(--border-radius);
-    padding: calc(2 * var(--typography-spacing-vertical)) var(--typography-spacing-horizontal);
+    padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
 }
 
-/* The list is the wrap panel of the framework and one file is a card in it:
-   what is written here is only what a card of a file holds, the wrapping
-   being laid out by layout.css. */
-.dropzone-list {
-    list-style: none;
-    padding: 0;
+/* The buttons of the zone keep the width of their label -- the one which
+   opens the explorer of files, and the one of every card which takes a file
+   back: wexa.css gives every submit button the whole width of its form. A
+   button keeps a space under it: the one of a card does not touch its edge. */
+.dropzone button {
+    width: fit-content;
+    margin-bottom: calc(var(--typography-spacing-vertical) / 2);
 }
 
-.dropzone-list .wrap-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: calc(var(--typography-spacing-vertical) / 4);
-    border: var(--border-width) solid transparent;
+/* The button of a card has the ground of every button: layout.css makes
+   every child of a card transparent. */
+.dropzone .card button {
+    background-color: var(--buttons-bg-color);
 }
 
-.dropzone-list .wrap-item[aria-invalid="false"] {
-    border-color: var(--success-color);
-}
-
-.dropzone-list .wrap-item[aria-invalid="true"] {
-    border-color: var(--error-color);
+.dropzone-size,
+.dropzone-name,
+.file-status {
+    display: block;
 }
 
 .dropzone-size {
@@ -1228,20 +1225,23 @@ dialog[role="alertdialog"] button:hover {
     font-weight: bold;
 }
 
-/* A name is cut rather than wrapped: what tells two files apart is read at
-   its beginning, and a card keeps the width the panel gives it. */
+/* A name is shown whole, wrapped where it has to be. */
 .dropzone-name {
     max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
 }
 
-/* What became of a file is written under it, never guessed from the color of
-   a border: a refusal carries its reason, and a reason is a sentence. */
+/* What became of a file: an icon whose shape says it, never a color alone,
+   and the reason of a refusal, which is a sentence. */
 .file-status {
     font-size: calc(0.9 * var(--font-size));
     line-height: 1.2;
+}
+
+/* The button sending what the zone holds keeps the width of its label:
+   wexa.css gives every submit button the whole width of its form. */
+.dropzone ~ .cta-button {
+    width: fit-content;
 }
 
 .file-status-ok {

@@ -80,6 +80,7 @@ class swappFilesRecord:
         self.__reachable = True
         self.__has_workspace = False
         self.__place = ""
+        self.__treated = list()
         self.__to_be_shown = dict()
 
     # -----------------------------------------------------------------------
@@ -92,6 +93,7 @@ class swappFilesRecord:
         self.__reachable = True
         self.__has_workspace = False
         self.__place = ""
+        self.__treated = list()
         self.__to_be_shown = dict()
 
     # -----------------------------------------------------------------------
@@ -115,6 +117,7 @@ class swappFilesRecord:
         _data["has_workspace"] = str(self.__has_workspace)
         _data["place"] = self.__place
         _data["fed"] = json.dumps(_fed)
+        _data["treated"] = json.dumps(self.__treated)
         if self.__workspace is not None:
             _wjson = sppasWJSON()
             _wjson.set(self.__workspace)
@@ -154,6 +157,7 @@ class swappFilesRecord:
                 pass
 
         self.__workspace = swappFilesRecord.__workspace_entry(data)
+        self.__treated = swappFilesRecord.__treated_entry(data)
 
     # -----------------------------------------------------------------------
 
@@ -333,6 +337,27 @@ class swappFilesRecord:
 
     # -----------------------------------------------------------------------
 
+    def get_treated(self) -> list:
+        """Return the names of the files an app treated (list of str)."""
+        return self.__treated
+
+    # -----------------------------------------------------------------------
+
+    def set_treated(self, names: list) -> None:
+        """Set the names of the files an app treated.
+
+        :param names: (list of str) Names of the files, with their path
+        :raises: sppasTypeError: The given names are not a list
+
+        """
+        if isinstance(names, list) is False:
+            raise sppasTypeError(names, "list")
+        self.__treated = list()
+        for _name in names:
+            self.__treated.append(str(_name))
+
+    # -----------------------------------------------------------------------
+
     def get_to_be_shown(self) -> dict:
         """Return what is to be shown.
 
@@ -385,6 +410,30 @@ class swappFilesRecord:
     # -----------------------------------------------------------------------
 
     @staticmethod
+    def __treated_entry(data: dict) -> list:
+        """Return the names of the treated files a page sent.
+
+        :param data: (dict) What a page sent
+        :return: (list of str) Empty if the entry is absent or unreadable
+
+        """
+        if isinstance(data.get("treated"), str) is False:
+            return list()
+        try:
+            _read = json.loads(data["treated"])
+        except ValueError:
+            return list()
+        if isinstance(_read, list) is False:
+            return list()
+        _treated = list()
+        for _one in _read:
+            if isinstance(_one, str) is True:
+                _treated.append(_one)
+        return _treated
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
     def __fed_entry(data: dict) -> list:
         """Return the fed files a page sent, as pairs of two values.
 
@@ -420,4 +469,5 @@ class swappFilesRecord:
     place = property(get_place, set_place)
     fed = property(get_fed, set_fed)
     workspace = property(get_workspace, set_workspace)
+    treated = property(get_treated, set_treated)
     to_be_shown = property(get_to_be_shown, set_to_be_shown)

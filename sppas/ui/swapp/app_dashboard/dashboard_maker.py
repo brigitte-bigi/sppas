@@ -157,7 +157,7 @@ class swappDashboardResponseRecipe(swappBaseResponse):
         """
         super().create()
         # self.enable_components(['Dialog'])
-        self.__view = swappDashboardView(self._htree)
+        self.__view = swappDashboardView(self._htree, swappDashboardResponseRecipe.help_page())
         self.__controller = swappDashboardController(self.__model, self.__view)
 
     # -----------------------------------------------------------------------

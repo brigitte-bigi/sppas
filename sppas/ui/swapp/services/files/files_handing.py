@@ -93,9 +93,8 @@ class swappAppExchange:
         otherwise is left out.
 
         The cause an app states for a file it made nothing of is not read
-        here, and B16 waits on it: it is a sentence the app writes and this
-        domain relays untouched, beside the file it concerns, in what the
-        delivery view shows of a root which produced nothing.
+        here: it is a sentence the app writes, and shows itself beside the
+        file it concerns. B16
 
         :param workspace: (sppasWorkspace) Workspace an app gives back
         :raises: sppasTypeError: The given workspace is not a sppasWorkspace

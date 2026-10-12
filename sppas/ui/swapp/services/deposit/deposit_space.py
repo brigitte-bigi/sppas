@@ -41,6 +41,7 @@
 import time
 
 from sppas.core.coreutils import sppasTypeError
+from sppas.ui import _
 
 from .deposit_settings import swappDepositSettings
 from .deposit_acceptance import swappSpaceAcceptance
@@ -50,11 +51,11 @@ from .deposit_address import swappFileAddress
 
 # ---------------------------------------------------------------------------
 
-MSG_NO_ROOM = "Every place is taken."
-MSG_OUT_OF_DATE = "This place is out of date."
-MSG_SIZE = "This file is beyond the size one file may be."
-MSG_VOLUME = "This file is beyond the volume one place may hold."
-MSG_NAME_TAKEN = "A file of this name already stands in this place."
+MSG_NO_ROOM = _("Every place is taken.")
+MSG_OUT_OF_DATE = _("This place is out of date.")
+MSG_SIZE = _("This file is beyond the size one file may be.")
+MSG_VOLUME = _("This file is beyond the volume one place may hold.")
+MSG_NAME_TAKEN = _("A file of this name already stands in this place.")
 
 # ---------------------------------------------------------------------------
 

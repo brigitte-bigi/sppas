@@ -38,15 +38,18 @@
 
 """
 
+import logging
+
 from sppas.core.config import annots
 from sppas.core.coreutils import sppasTypeError
 
 from .convert_model import swappConvertModel
 from .convert_record import swappConvertRecord
 from .convert_record import EVENT_TASK
-from .convert_record import TASK_DESTINATION
 from .convert_record import TASK_CONVERT
 from .convert_record import TASK_RESET
+from .convert_record import TASK_COMPLETE
+from .convert_record import EVENT_BAKE
 from .convert_record import TASKS
 from .convert_view import swappConvertView
 
@@ -93,6 +96,8 @@ class swappConvertController:
         if isinstance(events, dict) is False:
             return False
 
+        if events.get(EVENT_BAKE) == TASK_COMPLETE:
+            return True
         return events.get(EVENT_TASK, "") in TASKS
 
     # -----------------------------------------------------------------------
@@ -105,18 +110,43 @@ class swappConvertController:
         """
         _record = swappConvertRecord()
         _record.parse(data)
-        if len(_record.conversion.destination) == 0:
-            _record.conversion.destination = annots.annot_extension
+        self.__set_destination(_record)
 
-        if _record.task == TASK_DESTINATION:
-            self.__set_destination(_record)
-        elif _record.task == TASK_CONVERT:
-            self.__convert(_record)
+        if _record.task == TASK_CONVERT:
+            self.__start(_record)
+        elif _record.task == TASK_COMPLETE:
+            self.__complete(_record)
         elif _record.task == TASK_RESET:
             _record = swappConvertRecord()
             _record.conversion.destination = annots.annot_extension
 
         self.__record = _record
+
+    # -----------------------------------------------------------------------
+
+    def progress(self) -> tuple:
+        """Return where the conversion the page follows stands, as its report says it.
+
+        :return: (tuple) The percent of files treated, a header and a text
+
+        """
+        try:
+            _total, _results, _finished = self.__model.read_report(self.__record.report)
+        except ValueError as e:
+            logging.error(str(e))
+            return 100, "", ""
+        _percent = 0
+        if _finished is True:
+            _percent = 100
+        elif _total > 0:
+            _percent = min(99, (100 * len(_results)) // _total)
+        return _percent, "", "{:d} / {:d}".format(len(_results), _total)
+
+    # -----------------------------------------------------------------------
+
+    def say_what_is_missing(self) -> None:
+        """Have what is still missing said again: the workspace was said ready."""
+        self.__record.show("ready", True)
 
     # -----------------------------------------------------------------------
 
@@ -127,12 +157,8 @@ class swappConvertController:
         read where it stands, and it may have changed since the last one.
 
         """
-        _filenames = self.__model.files_of(self.__model.batch())
-
-        self.__record.show("missing", self.__record.conversion.what_is_missing(_filenames))
+        self.__record.show("missing", self.__record.conversion.what_is_missing(self.__model.batch()))
         self.__record.show("formats", self.__model.writable_formats())
-        self.__record.show("properties", self.__model.properties())
-        self.__record.show("held", self.__model.properties_of(self.__record.conversion.destination))
 
         self.__view.populate_tree_content(self.__record)
 
@@ -146,25 +172,51 @@ class swappConvertController:
         :param record: (swappConvertRecord) The record of the request
 
         """
-        if self.__model.can_be_written(record.conversion.destination) is False:
+        if self.__format_of(record.conversion.destination) is None:
             record.conversion.destination = annots.annot_extension
 
     # -----------------------------------------------------------------------
 
-    def __convert(self, record: swappConvertRecord) -> None:
-        """Convert the batch, when nothing is missing.
+    def __start(self, record: swappConvertRecord) -> None:
+        """Start the conversion of the batch, when nothing is missing.
 
         :param record: (swappConvertRecord) The record of the request
 
         """
         _batch = self.__model.batch()
-        _missing = record.conversion.what_is_missing(self.__model.files_of(_batch))
-        if len(_missing) > 0:
+        if len(record.conversion.what_is_missing(_batch)) > 0:
             return
 
-        _general_options = dict()
-        _general_options["override"] = record.conversion.override
-        _general_options["heuristic"] = record.conversion.heuristic
+        record.report = self.__model.start(_batch, record.conversion)
+        record.show("converting", True)
 
-        _results = self.__model.convert(_batch, record.conversion.destination, dict(), _general_options)
+    # -----------------------------------------------------------------------
+
+    def __complete(self, record: swappConvertRecord) -> None:
+        """Show the results of the conversion, as its report gives them.
+
+        :param record: (swappConvertRecord) The record of the request
+
+        """
+        try:
+            _total, _results, _finished = self.__model.read_report(record.report)
+        except ValueError as e:
+            logging.error(str(e))
+            return
+
         record.show("results", _results)
+
+    # -----------------------------------------------------------------------
+
+    def __format_of(self, destination: str):
+        """Return the writable format of the given extension.
+
+        :param destination: (str) Extension of a format, its dot included
+        :return: (swappFormat) None when no writable format has this extension
+
+        """
+        for _format in self.__model.writable_formats():
+            if _format.extension.lower() == destination.lower():
+                return _format
+
+        return None

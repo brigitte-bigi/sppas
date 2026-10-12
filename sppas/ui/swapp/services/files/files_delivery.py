@@ -57,8 +57,7 @@ class swappResultDelivery:
     what the organisational model says of PF5 in that case. The address of a
     produced file, and the hour at which it goes, are what the deposit brings
     with it: they are to be asked for when the files have to be brought, and
-    put in the record under "reachable_until", which the delivery view shows
-    already.
+    given to the app, which shows them.
 
     """
 

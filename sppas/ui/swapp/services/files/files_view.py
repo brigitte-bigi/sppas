@@ -39,12 +39,14 @@
 """
 
 import html
+import os
 
 from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import TagNode
 
 from sppas.core.coreutils import sppasTypeError
+from sppas.ui import _
 
 from .files_record import swappFilesRecord
 from .files_record import TASK_DESIGNATE
@@ -55,24 +57,19 @@ from .files_record import TASK_TAKE_BACK
 # ---------------------------------------------------------------------------
 
 ID_DEPOSIT_CONTAINER = "files_deposit"
-ID_DELIVERY_CONTAINER = "files_delivery"
 
-MSG_ADD_FILES = "Add files"
-MSG_IN_USE = "The files to be treated"
-MSG_WORKSPACE = "Workspace:"
-MSG_NO_FILE = "No file was obtained."
-MSG_SELECT_FILES = "Select files"
-MSG_OR_DROP = ", or drag and drop files here."
-MSG_TAKE_BACK = "Take back"
-MSG_SEND = "Send"
-MSG_DONE = "Done"
-MSG_REFUSED = "Refused"
-MSG_ACCEPTED = "Accepted"
+MSG_ADD_FILES = _("Add files")
+MSG_IN_USE = _("The files to be treated")
+MSG_WORKSPACE = _("Workspace:")
+MSG_SELECT_FILES = _("Select files")
+MSG_OR_DROP = _(", or drag and drop files here.")
+MSG_TAKE_BACK = _("Take back")
+MSG_SEND = _("Send")
+MSG_DONE = _("Done")
+MSG_REFUSED = _("Refused")
+MSG_DEPOSITED = _("Deposited")
+MSG_TREATED = _("Treated")
 
-MSG_PRODUCED = "What was produced"
-MSG_NOTHING_YET = "Nothing has come back yet."
-MSG_FINISHED = "The app has finished."
-MSG_NOT_FINISHED = "The app has not finished."
 
 # ---------------------------------------------------------------------------
 
@@ -238,52 +235,46 @@ class swappDepositView(swappFilesBaseView):
 
         _shown = record.to_be_shown
 
+        self._node.append_child(HTMLNode(self._node.identifier, None, "h3", value=MSG_ADD_FILES))
         _form = self._append_form(self._node)
         self._append_record(_form, record)
 
-        _fieldset = TagNode(_form.identifier, None, "fieldset",
-                            attributes={"class": "dropzone"})
-        _form.append_child(_fieldset)
-        _legend = HTMLNode(_fieldset.identifier, None, "legend", value=MSG_ADD_FILES)
-        _fieldset.append_child(_legend)
+        _zone = TagNode(_form.identifier, None, "div", attributes={"class": "dropzone"})
+        _form.append_child(_zone)
 
-        _p = HTMLNode(_fieldset.identifier, None, "p")
-        _fieldset.append_child(_p)
-        _label = HTMLNode(_p.identifier, None, "label", value=MSG_SELECT_FILES,
+        _label = HTMLNode(_zone.identifier, None, "label", value=MSG_SELECT_FILES,
                           attributes={"for": "files_input"})
-        _p.append_child(_label)
-        _input = EmptyNode(_p.identifier, "files_input", "input",
+        _zone.append_child(_label)
+        _input = EmptyNode(_zone.identifier, "files_input", "input",
                            attributes={"id": "files_input", "type": "file",
                                        "multiple": "multiple"})
-        _p.append_child(_input)
-        _p.append_child(HTMLNode(_p.identifier, None, "span", value=MSG_OR_DROP))
+        _zone.append_child(_input)
+        _zone.append_child(HTMLNode(_zone.identifier, None, "span", value=MSG_OR_DROP))
 
-        _ul = TagNode(_fieldset.identifier, None, "ul",
-                      attributes={"class": "wrap-panel dropzone-list"})
-        _fieldset.append_child(_ul)
+        _panel = TagNode(_zone.identifier, None, "section", attributes={"class": "cards-panel"})
+        _zone.append_child(_panel)
         _refused = _shown.get("refused", dict())
         _listed = list()
+        _treated = swappDepositView.__treated_names(record)
         for _name, _size in record.fed:
-            self.__append_fed_file(_ul, _name, _size, _refused)
+            self.__append_fed_file(_panel, _name, _size, _refused, _treated)
             _listed.append(_name)
 
         for _name in _refused:
             if len(_name) > 0 and _name not in _listed:
-                self.__append_fed_file(_ul, _name, 0, _refused)
+                self.__append_fed_file(_panel, _name, 0, _refused, _treated)
 
         if "accepted" in _shown:
-            _fieldset.append_child(HTMLNode(_fieldset.identifier, None, "p",
+            _zone.append_child(HTMLNode(_zone.identifier, None, "p",
                                             value=_shown["accepted"]))
 
         if "no_place" in _shown:
             return
 
-        _p = HTMLNode(_form.identifier, None, "p")
-        _form.append_child(_p)
-        _button = HTMLNode(_p.identifier, None, "button", value=MSG_SEND,
+        _button = HTMLNode(_form.identifier, None, "button", value=MSG_SEND,
                            attributes={"type": "submit", "name": TASK_SEND,
                                        "value": "", "class": "cta-button"})
-        _p.append_child(_button)
+        _form.append_child(_button)
 
     # -----------------------------------------------------------------------
 
@@ -315,45 +306,41 @@ class swappDepositView(swappFilesBaseView):
         :param record: (swappFilesRecord) What is to be shown
 
         """
+        self._node.append_child(HTMLNode(self._node.identifier, None, "h3", value=MSG_ADD_FILES))
         _form = self._append_form(self._node)
         self._append_record(_form, record)
 
-        _fieldset = TagNode(_form.identifier, None, "fieldset",
-                            attributes={"class": "dropzone"})
-        _form.append_child(_fieldset)
-        _legend = HTMLNode(_fieldset.identifier, None, "legend", value=MSG_ADD_FILES)
-        _fieldset.append_child(_legend)
+        _zone = TagNode(_form.identifier, None, "div", attributes={"class": "dropzone"})
+        _form.append_child(_zone)
 
         if "failed" in record.to_be_shown:
-            _fieldset.append_child(HTMLNode(_fieldset.identifier, None, "p",
+            _zone.append_child(HTMLNode(_zone.identifier, None, "p",
                                             value=record.to_be_shown["failed"]))
 
-        _p = HTMLNode(_fieldset.identifier, None, "p")
-        _fieldset.append_child(_p)
-        _browse = HTMLNode(_p.identifier, "files_browse", "button", value=MSG_SELECT_FILES,
+        _browse = HTMLNode(_zone.identifier, "files_browse", "button", value=MSG_SELECT_FILES,
                            attributes={"id": "files_browse", "type": "submit",
-                                       "name": TASK_DESIGNATE, "value": "",
-                                       "class": "apply-button"})
-        _p.append_child(_browse)
+                                       "name": TASK_DESIGNATE, "value": ""})
+        _zone.append_child(_browse)
 
-        _ul = TagNode(_fieldset.identifier, None, "ul",
-                      attributes={"class": "wrap-panel dropzone-list"})
-        _fieldset.append_child(_ul)
+        _panel = TagNode(_zone.identifier, None, "section", attributes={"class": "cards-panel"})
+        _zone.append_child(_panel)
         for _filename in swappDepositView.__known_filenames(record):
-            _li = TagNode(_ul.identifier, None, "li", attributes={"class": "wrap-item card"})
-            _ul.append_child(_li)
-            _li.append_child(HTMLNode(_li.identifier, None, "span", value=_filename,
-                                      attributes={"class": "dropzone-name"}))
-            _li.append_child(HTMLNode(_li.identifier, None, "button", value=MSG_TAKE_BACK,
-                                      attributes={"type": "submit", "class": "apply-button",
-                                                  "name": TASK_TAKE_BACK,
-                                                  "value": _filename}))
+            _treated = _filename in record.treated
+            _card, _header, _body, _footer = swappDepositView.__append_card(_panel)
+            swappDepositView.__append_state(_header, _treated)
+            _body.append_child(HTMLNode(_body.identifier, None, "span", value=os.path.basename(_filename),
+                                        attributes={"class": "dropzone-name", "title": _filename}))
+            _button = {"type": "submit", "name": TASK_TAKE_BACK, "value": _filename}
+            if _treated is True:
+                _button["disabled"] = None
+            _footer.append_child(HTMLNode(_footer.identifier, None, "button", value=MSG_TAKE_BACK,
+                                          attributes=_button))
 
-        _p = HTMLNode(_form.identifier, None, "p")
-        _form.append_child(_p)
-        _p.append_child(HTMLNode(_p.identifier, None, "button", value=MSG_DONE,
-                                 attributes={"type": "submit", "name": TASK_READY,
-                                             "value": "", "class": "cta-button"}))
+        # Once a batch was treated, it is not handed again.
+        _done = {"type": "submit", "name": TASK_READY, "value": "", "class": "cta-button"}
+        if len(record.treated) > 0:
+            _done["disabled"] = None
+        _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_DONE, attributes=_done))
 
     # -----------------------------------------------------------------------
 
@@ -378,129 +365,90 @@ class swappDepositView(swappFilesBaseView):
 
     # -----------------------------------------------------------------------
 
-    def __append_fed_file(self, parent: TagNode, name: str, size: int, refused: dict) -> None:
-        """Append one fed file to the list.
+    def __append_fed_file(self, parent: TagNode, name: str, size: int, refused: dict, treated: list) -> None:
+        """Append the card of one fed file: its size, its name, what became of it.
 
-        :param parent: (TagNode) The list the file is appended to
+        :param parent: (TagNode) The panel of cards the card is appended to
         :param name: (str) Name of the file
         :param size: (int) Size of the file, in bytes
         :param refused: (dict) The reason of every refused file, by name
+        :param treated: (list of str) Names of the files an app treated
 
         """
-        _li = TagNode(parent.identifier, None, "li", attributes={"class": "wrap-item card"})
-        parent.append_child(_li)
+        _card, _header, _body, _footer = swappDepositView.__append_card(parent)
+        _body.append_child(HTMLNode(_body.identifier, None, "span", value=str(size),
+                                    attributes={"class": "dropzone-size"}))
+        _body.append_child(HTMLNode(_body.identifier, None, "span", value=name,
+                                    attributes={"class": "dropzone-name"}))
 
+        # A refusal says its reason, under the name.
         if name in refused:
-            _li.set_attribute("aria-invalid", "true")
-            _mark = HTMLNode(_li.identifier, None, "span",
-                             value=MSG_REFUSED + ": " + refused[name],
-                             attributes={"class": "file-status file-status-error"})
-            _li.append_child(_mark)
+            _card.set_attribute("aria-invalid", "true")
+            _header.append_child(HTMLNode(_header.identifier, None, "span", value="",
+                                          attributes={"class": "file-status file-status-error", "data-icon": "no",
+                                                      "role": "img", "aria-label": MSG_REFUSED}))
+            _body.append_child(HTMLNode(_body.identifier, None, "p", value=refused[name],
+                                        attributes={"class": "file-status file-status-error"}))
         else:
-            _li.set_attribute("aria-invalid", "false")
-            _mark = HTMLNode(_li.identifier, None, "span", value=MSG_ACCEPTED,
-                             attributes={"class": "file-status file-status-ok"})
-            _li.append_child(_mark)
+            _card.set_attribute("aria-invalid", "false")
+            swappDepositView.__append_state(_header, name in treated)
 
-        _li.append_child(HTMLNode(_li.identifier, None, "span", value=str(size),
-                                  attributes={"class": "dropzone-size"}))
-        _li.append_child(HTMLNode(_li.identifier, None, "span", value=name,
-                                  attributes={"class": "dropzone-name"}))
-        _li.append_child(HTMLNode(_li.identifier, None, "button", value=MSG_TAKE_BACK,
-                                  attributes={"type": "submit", "class": "apply-button",
-                                              "name": TASK_TAKE_BACK, "value": name}))
-
-# ---------------------------------------------------------------------------
-
-
-class swappDeliveryView(swappFilesBaseView):
-    """Show what an app produced, and where it is reached.
-
-    The files are grouped as the record groups them, and the sentence said of
-    a file an app made nothing of is the one the record holds.
-
-    """
-
-    @staticmethod
-    def _tag() -> str:
-        """Override. Return the tag of the container (str)."""
-        return "aside"
+        _button = {"type": "submit", "name": TASK_TAKE_BACK, "value": name}
+        if name in treated:
+            _button["disabled"] = None
+        _footer.append_child(HTMLNode(_footer.identifier, None, "button", value=MSG_TAKE_BACK, attributes=_button))
 
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def _identifier() -> str:
-        """Override. Return the identifier of the container (str)."""
-        return ID_DELIVERY_CONTAINER
+    def __append_card(parent: TagNode) -> tuple:
+        """Append the card of one file, with its header, its body and its footer.
+
+        :param parent: (TagNode) The panel of cards the card is appended to
+        :return: (tuple) The card, its header, its body and its footer
+
+        """
+        _card = TagNode(parent.identifier, None, "article", attributes={"class": "card"})
+        parent.append_child(_card)
+        _header = TagNode(_card.identifier, None, "div", attributes={"class": "card-header"})
+        _card.append_child(_header)
+        _body = TagNode(_card.identifier, None, "div", attributes={"class": "card-body"})
+        _card.append_child(_body)
+        _footer = TagNode(_card.identifier, None, "div", attributes={"class": "card-footer"})
+        _card.append_child(_footer)
+        return _card, _header, _body, _footer
 
     # -----------------------------------------------------------------------
 
-    def populate_tree_content(self, record: swappFilesRecord) -> None:
-        """Build the container: what was produced, and whether it is over.
+    @staticmethod
+    def __append_state(header: TagNode, treated: bool) -> None:
+        """Append where a file stands: deposited, or treated by an app.
+
+        The state is an icon whose shape says it, and whose text alternative
+        says it to a screen reader.
+
+        :param header: (TagNode) The header of the card of the file
+        :param treated: (bool) An app treated the file
+
+        """
+        _class, _icon, _label = "file-status", "upload", MSG_DEPOSITED
+        if treated is True:
+            _class, _icon, _label = "file-status file-status-ok", "yes", MSG_TREATED
+        header.append_child(HTMLNode(header.identifier, None, "span", value="",
+                                     attributes={"class": _class, "data-icon": _icon,
+                                                 "role": "img", "aria-label": _label}))
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __treated_names(record: swappFilesRecord) -> list:
+        """Return the names, without their path, of the files an app treated.
 
         :param record: (swappFilesRecord) What is to be shown
-        :raises: sppasTypeError: The given record is not a swappFilesRecord
+        :return: (list of str)
 
         """
-        self._validate_record(record)
-        _shown = record.to_be_shown
-
-        _title = HTMLNode(self._node.identifier, None, "h4", value=MSG_PRODUCED)
-        self._node.append_child(_title)
-
-        _produced = _shown.get("produced", dict())
-        if len(_produced) == 0:
-            self._node.append_child(HTMLNode(self._node.identifier, None, "p",
-                                             value=MSG_NOTHING_YET))
-        else:
-            _ul = TagNode(self._node.identifier, None, "ul")
-            self._node.append_child(_ul)
-            for _root in _produced:
-                self.__append_root(_ul, _root, _produced[_root], record.reachable)
-
-        if "reachable_until" in _shown:
-            self._node.append_child(HTMLNode(self._node.identifier, None, "p",
-                                             value=_shown["reachable_until"]))
-
-        _over = MSG_NOT_FINISHED
-        if _shown.get("finished") is True:
-            _over = MSG_FINISHED
-        self._node.append_child(HTMLNode(self._node.identifier, None, "p", value=_over))
-
-        self._append_record(self._append_form(self._node), record)
-
-    # -----------------------------------------------------------------------
-
-    def __append_root(self, parent: TagNode, root: str, produced: list,
-                      reachable: bool) -> None:
-        """Append one root and what it produced.
-
-        A file the person reaches where it stands is shown by its name, and
-        the path it stands under comes with it: the root above it says that
-        path as well, so nothing is read on a hover alone. A file she reaches
-        at an address is a link to it.
-
-        :param parent: (TagNode) The list the root is appended to
-        :param root: (str) Name of the root
-        :param produced: (list of tuple) A name and a path or an address each, or a sentence
-        :param reachable: (bool) True when the files stand where SPPAS reads them
-
-        """
-        _li = TagNode(parent.identifier, None, "li", value=root)
-        parent.append_child(_li)
-        _ul = TagNode(_li.identifier, None, "ul")
-        _li.append_child(_ul)
-
-        for _one in produced:
-            _item = TagNode(_ul.identifier, None, "li")
-            _ul.append_child(_item)
-            if isinstance(_one, str) is True:
-                _item.set_value(_one)
-            elif reachable is True:
-                _item.append_child(HTMLNode(_item.identifier, None, "span", value=_one[0],
-                                            attributes={"class": "dropzone-name",
-                                                        "title": _one[1]}))
-            else:
-                _a = HTMLNode(_item.identifier, None, "a", value=_one[0],
-                              attributes={"href": _one[1]})
-                _item.append_child(_a)
+        _names = list()
+        for _filename in record.treated:
+            _names.append(os.path.basename(_filename))
+        return _names
