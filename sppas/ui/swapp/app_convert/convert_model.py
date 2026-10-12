@@ -50,6 +50,7 @@ from .convert_formats import swappModelFormats
 from .convert_conversion import swappModelConversion
 from .convert_conversion import swappConversionReport
 from .convert_conversion import REPORT_PATTERN
+from .convert_conversion import REPORT_EXTENSION
 from .convert_provision import swappModelProvision
 from .convert_record import swappConversion
 
@@ -109,7 +110,7 @@ class swappConvertModel:
         :return: (str) Name of the report, without its path
 
         """
-        _report = swappConversionReport(os.path.basename(sppasLogFile(pattern=REPORT_PATTERN).get_filename()))
+        _report = swappConversionReport(os.path.basename(sppasLogFile(pattern=REPORT_PATTERN, extension=REPORT_EXTENSION).get_filename()))
         _report.write(len(batch.get_filename_from_state(States().CHECKED)), list())
         Thread(target=self.convert, args=(batch, conversion, _report), daemon=True).start()
         return _report.name

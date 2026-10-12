@@ -62,6 +62,7 @@ STATUS_REFUSED = "refused"
 
 # The report of a conversion is named as every report of SPPAS is.
 REPORT_PATTERN = "convert"
+REPORT_EXTENSION = ".json"
 REPORT_PREFIX = "{:s}_{:s}_".format(sg.__name__, REPORT_PATTERN)
 
 MSG_EXISTS = _("The output file already exists.")
@@ -238,7 +239,8 @@ class swappConversionReport:
         :raises: ValueError: The name is not the one of a report of Convert
 
         """
-        if name != os.path.basename(name) or name.startswith(REPORT_PREFIX) is False:
+        if name != os.path.basename(name) or name.startswith(REPORT_PREFIX) is False \
+                or name.endswith(REPORT_EXTENSION) is False:
             raise ValueError("Not the name of a report of a conversion: {}".format(name))
         self.__name = name
 

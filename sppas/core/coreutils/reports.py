@@ -56,13 +56,16 @@ class sppasLogFile(object):
 
     """
 
-    def __init__(self, pattern="log"):
+    def __init__(self, pattern="log", extension=".txt"):
         """Create a sppasLogFile instance.
 
         Create the log directory if it does not already exist, then fix the
         log filename with increment=0.
 
+        :param extension: (str) Extension of the log filename, with its dot
+
         """
+        self.__extension = extension
         log_dir = paths.logs
         if os.path.exists(log_dir) is False:
             os.mkdir(log_dir)
@@ -81,7 +84,7 @@ class sppasLogFile(object):
         """Return the current log filename."""
         fn = os.path.join(paths.logs, self.__filename)
         fn += "{0:04d}".format(self.__current)
-        return fn + ".txt"
+        return fn + self.__extension
 
     # -----------------------------------------------------------------------
 
