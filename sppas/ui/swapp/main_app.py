@@ -49,6 +49,7 @@ from sppas.core.config import cfg
 from sppas.core.coreutils import sppasKeyError
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommServerError
+from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 from sppas.ui.swapp.swapp_core.swappsg import swapp_notify
 from sppas.ui.swapp.swapp_core.swappsg import swapp_trace
@@ -192,6 +193,9 @@ class sppasWebApp:
         :param arguments: (dict) Optional arguments passed to the server.
 
         """
+        # The applications are served by the local server.
+        swapp_serverstate.local = True
+
         # Collect the python logging into the shared trace store: the swapp
         # server is the collector of the traces of all the SPPAS components.
         logging.getLogger().addHandler(swappTraceHandler(swapp_trace))

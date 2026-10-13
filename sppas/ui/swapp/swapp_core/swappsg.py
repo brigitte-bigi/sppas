@@ -139,6 +139,30 @@ swapp_wxstate = swappWxAppState()
 # -----------------------------------------------------------------------
 
 
+class swappServerState:
+    """Shared state of the server the applications are served by.
+
+    The same applications are served by two servers: the local one, which
+    main_app launches, and the wsgi service, which main_wsgi launches. Each
+    of them says which it is when it starts, because what a reader reaches
+    on the machine of a local server is not what a web service exposes.
+
+    As long as no server said it, "local" is None: importing swapp is not
+    being served by one, and neither answer would be true of a test or of
+    a script.
+
+    """
+
+    def __init__(self):
+        self.local = None
+
+
+# Instantiate the shared state of the server
+swapp_serverstate = swappServerState()
+
+# -----------------------------------------------------------------------
+
+
 def notify_wkp_changed() -> None:
     """Notify the observers that the shared workspace changed.
 

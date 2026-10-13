@@ -301,7 +301,8 @@ class swappDepositView(swappFilesBaseView):
 
         No bound of any kind is shown and no file carries a mark of validity:
         nothing is deposited here, so nothing is refused for a size or for a
-        volume.
+        volume. Nothing is handed either: the files stand where SPPAS reads
+        them, so there is nothing to send and nothing to declare finished.
 
         :param record: (swappFilesRecord) What is to be shown
 
@@ -335,12 +336,6 @@ class swappDepositView(swappFilesBaseView):
                 _button["disabled"] = None
             _footer.append_child(HTMLNode(_footer.identifier, None, "button", value=MSG_TAKE_BACK,
                                           attributes=_button))
-
-        # Once a batch was treated, it is not handed again.
-        _done = {"type": "submit", "name": TASK_READY, "value": "", "class": "cta-button"}
-        if len(record.treated) > 0:
-            _done["disabled"] = None
-        _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_DONE, attributes=_done))
 
     # -----------------------------------------------------------------------
 

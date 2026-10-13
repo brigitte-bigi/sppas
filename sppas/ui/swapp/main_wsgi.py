@@ -249,6 +249,11 @@ try:
     from sppas.core.config import set_language
     set_language(LANG[:2])
 
+    # The applications are served by the wsgi service
+    # ----------------------------------------------
+    from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
+    swapp_serverstate.local = False
+
     # Get the dispatcher of the apps and the pages
     # --------------------------------------------
     # The registries it reads import every app of swapp: the language and the

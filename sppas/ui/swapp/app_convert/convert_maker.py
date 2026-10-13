@@ -47,6 +47,7 @@ from sppas.core.config import sg
 from sppas.ui import _
 
 from ..swapp_base.swapp_response import swappBaseResponse
+from ..swapp_core.swappsg import swapp_serverstate
 from ..swapp_core.swappsg import swapp_wkps
 from ..swapp_core.swappsg import swapp_wxstate
 from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
@@ -131,8 +132,18 @@ class swappConvertResponseRecipe(swappBaseResponse):
         """
         super().create()
         self.__view = swappConvertView(self._htree, swappConvertResponseRecipe.help_page())
+
+        # The case the service is entered in: files stand already where SPPAS
+        # reads them when the server is the local one -- the person designates
+        # them with the file chooser of the machine. The wsgi service has the
+        # files brought to it, and the workspace it gives is a new one.
+        _workspace = swappConvertResponseRecipe.__workspace()
+        _local = swapp_serverstate.local is True
+
         self.__manager = swappFilesManager(self._htree.body_main.identifier,
-                                           swappConvertResponseRecipe.__workspace())
+                                           _workspace,
+                                           reachable=_local,
+                                           has_workspace=len(_workspace.name()) > 0)
         self.__controller = swappConvertController(swappConvertModel(self.__manager), self.__view)
 
     # -----------------------------------------------------------------------
@@ -212,11 +223,16 @@ class swappConvertResponseRecipe(swappBaseResponse):
     def __workspace() -> swappWorkspaceFiles:
         """Return the workspace of the moment, and the name it is known under.
 
-        :return: (swappWorkspaceFiles) One with no file in it when none is declared
+        The workspace a reader declared is on the machine of the local
+        server: the wsgi service exposes it to readers it knows nothing
+        about, and the files of one are not the files of another.
+
+        :return: (swappWorkspaceFiles) One with no file in it when none is to be used
 
         """
-        _name = swapp_wxstate.workspace_name
-        if len(_name) == 0:
-            return swappWorkspaceFiles()
+        if swapp_serverstate.local is True:
+            _name = swapp_wxstate.workspace_name
+            if len(_name) > 0:
+                return swappWorkspaceFiles(swapp_wkps.data, _name)
 
-        return swappWorkspaceFiles(swapp_wkps.data, _name)
+        return swappWorkspaceFiles()
