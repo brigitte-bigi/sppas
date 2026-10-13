@@ -1,11 +1,23 @@
 {
   "WhakerPy": {
-    "pagespath": "./statics/html/",
-    "legalnotices.html": {
-      "title": "Legal Notice",
-      "main": "legal_notices.htm",
-      "header": true,
-      "footer": true
+    "blacklist": [
+    ],
+    "signed_url": {
+      "secret": "azertyiopmlkkhjjshfrhetMVuRfxW3R2ZJIa6GMYMmyPV0HJg2I4i",
+      "ttl": 1200,
+      "protect": [
+        {
+          "prefix": "/textcues_",
+          "suffix": ".html"
+        }
+      ],
+      "query_keys": {
+        "ts": "ts",
+        "sig": "sig"
+      }
+    },
+    "pagespath": "html",
+    "pages": {
     }
   }
 }

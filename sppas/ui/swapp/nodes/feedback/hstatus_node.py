@@ -51,7 +51,18 @@ from ...swapp_core.swappsg import swapp_settings
 
 
 MSG_TITLE_410 = _("Session ended")
-MSG_DESCR_410 = _("You can close this tab. [...]")
+MSG_DESCR_410 = _("You can close this tab.")
+MSG_NOTE_410 = _("For a new session, restart SPPAS from your file explorer.")
+
+MSG_TITLE_404 = _("Oops... something is missing")
+MSG_DESCR_404 = _("Sorry. We searched carefully but could not find it.")
+MSG_NOTE_404 = _("The content you are looking for may have disappeared or may never have existed.")
+
+MSG_TITLE_403 = _("Access restricted")
+MSG_DESCR_403 = _("Sorry. This content is restricted.")
+MSG_CONTACT_403 = _("If you believe you should have access, please contact Brigitte Bigi.")
+
+MSG_CONTACT = _("If you experience difficulties accessing a resource, contact Brigitte Bigi.")
 
 # ---------------------------------------------------------------------------
 
@@ -61,19 +72,22 @@ class swappHTMLTreeStatus(HTMLTree):
 
     """
 
-    def __init__(self, status, msg_title: str = "", msg: str = ""):
+    def __init__(self, status, msg_title: str = "", msg: str = "",
+                 note: str = "", contact: str = ""):
         """Create an HTML Tree for a status response.
 
         :param status: (HTTPDStatus) The status of the response.
         :param msg_title: (str) The title of the message.
         :param msg: (str) Optional parameter, a message to display any information
+        :param note: (str) Optional parameter, a message to be set apart
+        :param contact: (str) Optional parameter, who to reach about it
 
         """
         super(swappHTMLTreeStatus, self).__init__(f"tree_{status.code}")
 
         code_name = HTTPDStatus.HTTPD_STATUS.get(status.code, "")
         self._create_head(code_name)
-        self._create_body(status, msg_title, msg, code_name)
+        self._create_body(status, msg_title, msg, code_name, note, contact)
 
     # -----------------------------------------------------------------------
 
@@ -96,13 +110,16 @@ class swappHTMLTreeStatus(HTMLTree):
 
     # -----------------------------------------------------------------------
 
-    def _create_body(self, status, msg_title: str = "", msg: str = "", code_name: str = ""):
+    def _create_body(self, status, msg_title: str = "", msg: str = "", code_name: str = "",
+                     note: str = "", contact: str = ""):
         """Fill-in the body element of the tree.
 
         :param status: (HTTPDStatus) The status of the response.
         :param msg_title: (str) The title of the message.
         :param msg: (str) Optional parameter, a message to display any information
         :param code_name: (str) The description of the HTTPD status.
+        :param note: (str) Optional parameter, a message to be set apart
+        :param contact: (str) Optional parameter, who to reach about it
 
         """
         if status.code < 300:
@@ -114,9 +131,24 @@ class swappHTMLTreeStatus(HTMLTree):
         else:
             code_class = "status5xx"
 
-        self.body_header.set_value(f"""<h1>CODE {status.code} - {code_name}</h1>""")
+        self.body_header.set_value(f"""<h1 class="page-title">{sg.__name__} {sg.__release__}</h1>""")
         self.body_header.add_attribute("class", code_class)
-        self.body_main.set_value(f"""<h2>{msg_title}</h2><p>{msg}</p> """)
+
+        blocks = f"""<div class="panel-title">{msg_title}</div>
+                <h2 class="status-code">{status.code} {code_name}</h2>
+                <p class="status-text">{msg}</p>"""
+        if len(note) > 0:
+            blocks += f"""
+                <div class="note">{note}</div>"""
+        if len(contact) > 0:
+            blocks += f"""
+                <p class="status-text">{contact}</p>"""
+
+        self.body_main.set_value(f"""
+            <section class="panel">
+                {blocks}
+            </section>
+        """)
         self.body_footer.set_value(f"""
                 <p>Powered by <a href="https://sppas.org">SPPAS</a></p>
                 <p>{sg.__copyright__}</p>
@@ -132,7 +164,34 @@ class swappHTMLTreeError410(swappHTMLTreeStatus):
     def __init__(self):
         """Create the HTML410StatusNode node."""
         super(swappHTMLTreeError410, self).__init__(
-            HTTPDStatus(410), MSG_TITLE_410, MSG_DESCR_410)
+            HTTPDStatus(410), MSG_TITLE_410, MSG_DESCR_410,
+            note=MSG_NOTE_410)
+
+# ---------------------------------------------------------------------------
+
+
+class swappHTMLTreeError404(swappHTMLTreeStatus):
+    """A node to represent the 404 HTTPD response status.
+
+    """
+    def __init__(self):
+        """Create the HTML404StatusNode node."""
+        super(swappHTMLTreeError404, self).__init__(
+            HTTPDStatus(404), MSG_TITLE_404, MSG_DESCR_404,
+            note=MSG_NOTE_404, contact=MSG_CONTACT)
+
+# ---------------------------------------------------------------------------
+
+
+class swappHTMLTreeError403(swappHTMLTreeStatus):
+    """A node to represent the 403 HTTPD response status.
+
+    """
+    def __init__(self):
+        """Create the HTML403StatusNode node."""
+        super(swappHTMLTreeError403, self).__init__(
+            HTTPDStatus(403), MSG_TITLE_403, MSG_DESCR_403,
+            contact=MSG_CONTACT_403)
 
 # ---------------------------------------------------------------------------
 

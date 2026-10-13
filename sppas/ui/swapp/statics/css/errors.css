@@ -1,50 +1,152 @@
+/* Style of the error pages: the 403 and 404 ones, and the 410 of the ended
+   session. It is injected into the page by swappHTMLTreeStatus: the server
+   is already gone when the last one is displayed, so nothing it would have
+   to serve can be asked for.
+
+   One set of tints per family of status code: blue for the 4xx, red for the
+   5xx, green for the 2xx and yellow for the 3xx. The names say the role each
+   colour plays, so that a single set of rules draws the four pages. The
+   header carries the class of the family, and the set is the one of the page
+   it announces. */
+
+:root,
+:root:has(header.status4xx) {
+    --sppas-banner: #071b66;
+    --sppas-label: #4b5ba8;
+    --sppas-panel: #f0ebf8;
+    --sppas-text: #1f2440;
+    --sppas-muted: #6c7390;
+    --sppas-border: rgba(45, 79, 163, 0.18);
+    --sppas-ground: #f5f7fc;
+    --sppas-title: #ffffff;
+    --sppas-note: #a01818;
+}
+
+:root:has(header.status5xx) {
+    --sppas-banner: #660c07;
+    --sppas-label: #a8544b;
+    --sppas-panel: #f8ecea;
+    --sppas-text: #401f1d;
+    --sppas-muted: #90706d;
+    --sppas-border: rgba(163, 61, 45, 0.18);
+    --sppas-ground: #fcf6f5;
+    --sppas-title: #ffffff;
+    --sppas-note: #7a1010;
+}
+
+:root:has(header.status2xx) {
+    --sppas-banner: #08400f;
+    --sppas-label: #4b8a56;
+    --sppas-panel: #ebf5ed;
+    --sppas-text: #1f3024;
+    --sppas-muted: #6c8073;
+    --sppas-border: rgba(45, 120, 64, 0.18);
+    --sppas-ground: #f5fcf7;
+    --sppas-title: #ffffff;
+    --sppas-note: #1d5c28;
+}
+
+:root:has(header.status3xx) {
+    --sppas-banner: #5c4707;
+    --sppas-label: #8a7430;
+    --sppas-panel: #f8f4ea;
+    --sppas-text: #40361d;
+    --sppas-muted: #90826d;
+    --sppas-border: rgba(150, 120, 30, 0.22);
+    --sppas-ground: #fcfaf5;
+    --sppas-title: #ffffff;
+    --sppas-note: #6b4e0a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    color: rgb(68, 68, 68);
-    background-color: rgb(255, 255, 255);
-    width: 60%;
-    margin: 2rem auto;
-    padding: 1rem;
-    font-family: 'Trebuchet MS', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    color: var(--sppas-text);
+    background: linear-gradient(to bottom, var(--sppas-banner) 0 12rem, var(--sppas-ground) 12rem 100%);
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
-    padding: 0.5rem;
-    text-align: center;
+    width: min(64rem, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 2rem 0 0 0;
 }
 
 main {
-    padding: 0.4rem 0 2rem 0;
+    width: min(64rem, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 0 0 1rem 0;
+    flex: 1;
 }
 
-footer {
-    color: rgb(102, 102, 102);
-    background: rgb(249, 249, 249);
-    padding: 1rem 2rem;
-    border-top: 0.4rem rgb(239, 239, 239) solid;
-    font-size: 0.8em;
+.page-title {
+    margin: 0 0 2rem 0;
+    color: var(--sppas-title);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+}
+
+.panel {
+    padding: 2rem;
+    border: 1px solid var(--sppas-border);
+    border-radius: 1rem;
+    background: var(--sppas-panel);
+}
+
+.panel-title {
+    display: inline-block;
+    margin: -3rem 0 1.5rem 0;
+    padding: 0.8rem 1.25rem;
+    border-radius: 0.75rem;
+    background: var(--sppas-label);
+    color: var(--sppas-title);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.status-code {
+    margin: 0 0 0.5rem 0;
+    color: var(--sppas-label);
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 700;
     text-align: center;
 }
 
+.status-text {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.note {
+    margin: 1.5rem auto;
+    max-width: 40rem;
+    padding: 0.9rem;
+    border: 1px solid var(--sppas-border);
+    border-radius: 0.6rem;
+    background: white;
+    color: var(--sppas-note);
+    text-align: center;
+}
+
+footer {
+    padding: 1rem;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+    color: var(--sppas-muted);
+    font-size: 0.9rem;
+}
+
 footer a {
-    color: rgb(153, 153, 153);
-}
-
-.status2xx {
-    background-color: rgb(48, 64, 0);
-    color: rgb(255, 255, 255);
-}
-
-.status3xx {
-    background-color: rgb(71, 80, 118);
-    color: rgb(255, 255, 255);
-}
-
-.status4xx {
-    background-color: rgb(242, 232, 26);
-    color: rgb(0, 0, 0);
-}
-
-.status5xx {
-    background-color: rgb(197, 80, 66);
-    color: rgb(255, 255, 255);
+    color: var(--sppas-muted);
 }

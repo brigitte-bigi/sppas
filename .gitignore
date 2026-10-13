@@ -1,3 +1,4 @@
+sppas/ui/swapp/wsgi.log
 .vscode
 .vscode/*
 .idea
@@ -31,3 +32,5 @@ tests/manual-check-out
 tests/manual-check-out/*
 notes
 notes/*
+/sppas/ui/swapp/SPPAS5/
+/sppas/ui/swapp/SPPAS5/*

@@ -2,7 +2,7 @@
 :filename: sppas.ui.swapp.main_app.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The main class for any of the SPPAS Web-based Applications.
+:summary: The main class for any of the SPPAS Web-based Applications with a local server.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -39,7 +39,6 @@
 """
 
 from __future__ import annotations
-import logging
 import threading
 
 from whakerpy.httpd import HTTPDHandler
@@ -48,7 +47,6 @@ from whakerpy.httpd import HTTPDHandlerUtils
 
 from sppas.core.config import cfg
 from sppas.core.coreutils import sppasKeyError
-from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommServerError
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
@@ -57,6 +55,8 @@ from sppas.ui.swapp.swapp_core.swappsg import swapp_trace
 from sppas.ui.swapp.swapp_core.swappsg import swapp_wxstate
 from .main_trace_handler import swappTraceHandler
 from .main_comm import swappCommServer
+from .nodes.feedback.hstatus_node import swappHTMLTreeError403
+from .swapp_core.swapp_dispatcher import swappDispatcher
 
 from .swapp_core.swapps import *
 
@@ -99,6 +99,31 @@ class sppasWebApp:
 
     # ---------------------------------------------------------------------------
 
+    class swappHandler(HTTPDHandler):
+        """A custom HTTPD request handler for SPPAS swapp.
+
+        """
+
+        def _response(self, content, status: int, mime_type: str = None) -> None:
+            """Override. Answer the error pages of SPPAS.
+
+            The 403 of a static file is answered by the framework, before any
+            response of swapp is asked for: the content is substituted here,
+            the only place the status and the content are both in hand.
+
+            :param content: (bytes|iterator) The response content
+            :param status: (int) The HTTPD status code of the response
+            :param mime_type: (str) The mime type of the file response
+
+            """
+            if status == 403:
+                content = swappHTMLTreeError403().serialize().encode("utf-8")
+                mime_type = "text/html"
+
+            super()._response(content, status, mime_type)
+
+    # ---------------------------------------------------------------------------
+
     class swappServer(BaseHTTPDServer):
         """A custom HTTPD server for SPPAS swapp.
 
@@ -110,47 +135,15 @@ class sppasWebApp:
             :param app_name: (str) One of the WEB_APPLICATIONS app name
 
             """
-            # Instantiate the response of the default page for the requested application
-            for web_app in WEB_APPLICATIONS:
-                # This is the requested one.
-                if app_name == web_app.name:
-                    logging.debug(f"HTTPD server initialization for {web_app.name}...")
-                    # Instantiate its response and add it to the server's pages dictionary
-                    _bakery = web_app.bakery()
-                    _page = _bakery.get_default_page()
-                    self._pages[_page] = _bakery.bake_response(_page)
-                    self._default = _page
-                    break
+            logging.debug(f"HTTPD server initialization for {app_name}...")
 
-            # If the requested page is the one of the Dashboard Application, then
-            # add all other apps and create the corresponding bakeries.
-            if app_name == sppasWebApp.DEFAULT_APP_NAME:
-                # Adding all applications to the dashboard response allows their cards
-                # to be displayed in the interface.
-                apps = WEB_APPLICATIONS.copy()
-                # Do not re-create the dashboard!
-                apps.pop(0)
+            # The dispatcher of the apps and the pages, shared with the WSGI service.
+            self.__dispatcher = swappDispatcher(app_name)
 
-                # Get the instantiated dashboard response and add apps to it
-                _dashboard_response = self._pages[self._default]
-                _dashboard_response.add_apps(apps)
-
-                # Adding the page providers allows the link buttons of their
-                # pages to be displayed in the interface.
-                _dashboard_response.add_pages(WEB_PAGES)
-
-                # Adding applications to the server's pages allows them to be accessed
-                # directly as known web apps. All apps must be created, not only the
-                # ones the UI is showing.
-                for web_app in apps:
-                    try:
-                        _bakery = web_app.bakery()
-                    except sppasEnableFeatureError as e:
-                        logging.info(f"Application {web_app.name} disabled: {e}.")
-                        pass
-                    else:
-                        _page = _bakery.get_default_page()
-                        self._pages[_page] = _bakery.bake_response(_page)
+            # Instantiate the responses the server starts with and enter the app
+            # by its default page.
+            self._pages.update(self.__dispatcher.create_pages())
+            self._default = self.__dispatcher.get_default_page()
 
         # -----------------------------------------------------------------------
         # OVERRIDE
@@ -179,22 +172,10 @@ class sppasWebApp:
 
             # An unknown response for yet
             # ---------------------------
+            # The dispatcher asks the known bakeries which one is able to bake
+            # the response, then the single provider of the generic pages.
             if page_name not in self._pages:
-                # Browse through the known bakeries to find which one is able to bake the response.
-                for web_app in WEB_APPLICATIONS:
-                    try:
-                        _bakery = web_app.bakery()
-                        if _bakery.is_page(page_name) is True:
-                            self._pages[page_name] = _bakery.bake_response(page_name)
-                    except sppasEnableFeatureError as e:
-                        logging.info(f"Application {web_app.name} disabled: {e}.")
-
-            # Still unknown: ask the single provider of the generic pages.
-            # ------------------------------------------------------------
-            if page_name not in self._pages:
-                _bakery = swappPagesData(WEB_PAGES)
-                if _bakery.is_page(page_name) is True:
-                    self._pages[page_name] = _bakery.bake_response(page_name)
+                self._pages[page_name] = self.__dispatcher.bake_response(page_name)
 
             # Process received events and bake the given page.
             return HTTPDHandlerUtils.bakery(self._pages, page_name, headers, events, has_to_return_data)
@@ -221,7 +202,7 @@ class sppasWebApp:
         server_address = (self.__location, self.__port)
 
         # Create an HTTPD server
-        self.__server = sppasWebApp.swappServer(server_address, HTTPDHandler)
+        self.__server = sppasWebApp.swappServer(server_address, sppasWebApp.swappHandler)
 
         if arguments is not None and len(arguments) > 0:
             _app = None

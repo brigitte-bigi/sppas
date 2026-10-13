@@ -134,15 +134,21 @@ class swappBaseResponse(BaseResponseRecipe):
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def asks_for_a_page(headers) -> bool:
+    def asks_for_a_page(headers: dict | str | None) -> bool:
         """Return True if the request asks for a page, and not for data.
 
-        :param headers: (dict) The headers of the http request received
+        The two servers do not announce the request the same way: the local
+        one gives the headers it received, the wsgi service gives the path
+        of the request. A path says nothing of what is accepted, and a page
+        is what a navigation asks for.
+
+        :param headers: (dict|str|None) The headers of the http request received
         :return: (bool) True when the answer is a page to be displayed
 
         """
-        if headers is None:
+        if isinstance(headers, dict) is False:
             return True
+
         accepted = headers.get("Accept", "text/html")
         return "application/json" not in accepted
 
