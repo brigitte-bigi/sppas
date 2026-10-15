@@ -152,7 +152,7 @@
 		<li><b>Build it</b>, with the identifier of the node it will append the container to &mdash; the identifier, and not the node: a node of WhakerPy carries the identifier of its parent, and one built under another is refused. It takes as well the workspace it works on, when the app holds one.</li>
 		<li><b>Offer it what was not recognised</b>: <code>consumes(events)</code> answers true when the request was of this service, false when it was not. Nothing is changed in that second case.</li>
 		<li><b>Ask whether the person has said the workspace is ready</b>: <code>is_ready()</code>, after <code>consumes()</code>. When it is, ask for the files: <code>files_for_app()</code>.</li>
-		<li><b>Have it build</b>: <code>populate_view()</code>, then <code>container()</code>, which is appended where the app chose. In that order: the container is what the last request made.</li>
+		<li><b>Have it build</b>: <code>populate_view()</code>, then <code>container()</code>, which is appended where the app chose. In that order: the container is what the last request made. The container carries no title: the app writes its own, at the level its page calls for, and the container names itself for whoever reads the page without seeing it.</li>
 		<li><b>Ask for the files</b> when the app is about to work: <code>files_for_app()</code>. And give back what was produced: <code>produced(workspace)</code>, which answers where each produced file is reached &mdash; where it stands, or at an address &mdash; and until when: the app shows them, this service shows nothing of them.</li>
 		<li><b>Say what it is holding</b>: <code>lock(names)</code> when it takes files to work on them, <code>release(names)</code> when it has done with them. What it still holds when it says it has finished is released without it asking. A lock is what keeps the other interface from taking a file being treated, so an app which does not say it is holding one is an app which lets that happen.</li>
 		<li><b>Start over</b> when the person asks for it: <code>start_over()</code>. The container shows the deposit again, and the files are known to a new workspace, holding none.</li>
@@ -2194,6 +2194,17 @@
 			different apps, and one of them without the other.
 		</p>
 
+		<p>
+			A view writes no title. A title stands in the plan of a page, at a level the
+			page alone knows: a service writing one would impose a rank in a document it
+			does not see. The container is a section carrying <code>aria-label</code>, so
+			that it is named for whoever reads the page without seeing it, and the app
+			writes the heading it wants above it. The files are the items of a list: the
+			panel is a <code>&lt;ul&gt;</code> and a card a <code>&lt;li&gt;</code>, as
+			every panel of cards of swapp is written, so that how many files there are
+			is said.
+		</p>
+
 		<h4>What is tied to what</h4>
 
 		<table>
@@ -2962,10 +2973,7 @@
 			<!-- ---------- DepositView ---------- -->
 
 			<div class="flex-item">
-    <section>
-        <h3>
-                        Add files
-        </h3>
+    <section id="files_deposit" aria-label="Files">
         <form method="post">
             <input type="hidden" name="task" value="send" />
             <input type="hidden" name="fed" value="[[&quot;record-01.wav&quot;, 3355443]]" />
@@ -2977,8 +2985,8 @@
                 <span>
                                     , or drag and drop files here.
                 </span>
-                <section class="cards-panel">
-                    <article class="card" aria-invalid="false">
+                <ul class="cards-panel">
+                    <li class="card">
                         <div class="card-header">
                             <span class="file-status" data-icon="upload" role="img" aria-label="Deposited"></span>
                         </div>
@@ -2995,8 +3003,8 @@
                                                     Take back
                             </button>
                         </div>
-                    </article>
-                    <article class="card" aria-invalid="true">
+                    </li>
+                    <li class="card">
                         <div class="card-header">
                             <span class="file-status file-status-error" data-icon="no" role="img" aria-label="Refused"></span>
                         </div>
@@ -3016,8 +3024,8 @@
                                                     Take back
                             </button>
                         </div>
-                    </article>
-                </section>
+                    </li>
+                </ul>
                 <p>
                                 3.2 MB of 100 MB accepted here. Up to 10 MB per file.
                 </p>
@@ -3032,10 +3040,7 @@
 			<!-- ---------- DepositView, once the batch was treated ---------- -->
 
 			<div class="flex-item">
-    <section>
-        <h3>
-                        Add files
-        </h3>
+    <section id="files_deposit" aria-label="Files">
         <form method="post">
             <input type="hidden" name="task" value="designate" />
             <input type="hidden" name="fed" value="[]" />
@@ -3044,8 +3049,8 @@
                 <button id="files_browse" type="button">
                                     Select files
                 </button>
-                <section class="cards-panel">
-                    <article class="card">
+                <ul class="cards-panel">
+                    <li class="card">
                         <div class="card-header">
                             <span class="file-status file-status-ok" data-icon="yes" role="img" aria-label="Treated"></span>
                         </div>
@@ -3059,8 +3064,8 @@
                                                     Take back
                             </button>
                         </div>
-                    </article>
-                    <article class="card">
+                    </li>
+                    <li class="card">
                         <div class="card-header">
                             <span class="file-status file-status-ok" data-icon="yes" role="img" aria-label="Treated"></span>
                         </div>
@@ -3074,8 +3079,8 @@
                                                     Take back
                             </button>
                         </div>
-                    </article>
-                </section>
+                    </li>
+                </ul>
             </div>
             <button type="button" class="cta-button" disabled>
                             Done
@@ -3125,10 +3130,7 @@
 		<!-- ---------- DepositView, deposited into the workspace ---------- -->
 
 		<div class="panel">
-    <section>
-        <h3>
-                        Add files
-        </h3>
+    <section id="files_deposit" aria-label="Files">
         <form method="post">
             <input type="hidden" name="task" value="designate" />
             <input type="hidden" name="fed" value="[]" />
@@ -3137,8 +3139,8 @@
                 <button id="files_browse" type="button">
                                     Select files
                 </button>
-                <section class="cards-panel">
-                    <article class="card">
+                <ul class="cards-panel">
+                    <li class="card">
                         <div class="card-header">
                             <span class="file-status" data-icon="upload" role="img" aria-label="Deposited"></span>
                         </div>
@@ -3152,8 +3154,8 @@
                                                     Take back
                             </button>
                         </div>
-                    </article>
-                    <article class="card">
+                    </li>
+                    <li class="card">
                         <div class="card-header">
                             <span class="file-status" data-icon="upload" role="img" aria-label="Deposited"></span>
                         </div>
@@ -3167,8 +3169,8 @@
                                                     Take back
                             </button>
                         </div>
-                    </article>
-                </section>
+                    </li>
+                </ul>
             </div>
             <button type="button" class="cta-button">
                             Done

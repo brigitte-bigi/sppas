@@ -205,6 +205,7 @@ class swappConvertResponseRecipe(swappBaseResponse):
 
         self._htree.body_main.clear_children()
         self.__view.populate_introduction()
+        self.__view.populate_files_title()
         self.__manager.populate_view()
         _container = self.__manager.container()
         self._htree.body_main.append_child(_container)

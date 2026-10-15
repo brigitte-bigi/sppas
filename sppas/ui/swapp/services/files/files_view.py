@@ -58,6 +58,7 @@ from .files_record import TASK_TAKE_BACK
 
 ID_DEPOSIT_CONTAINER = "files_deposit"
 
+MSG_FILES = _("Files")
 MSG_ADD_FILES = _("Add files")
 MSG_IN_USE = _("The files to be treated")
 MSG_WORKSPACE = _("Workspace:")
@@ -94,7 +95,8 @@ class swappFilesBaseView:
             raise sppasTypeError(parent, "str")
 
         self._node = TagNode(parent, self._identifier(), self._tag(),
-                             attributes={"id": self._identifier()})
+                             attributes={"id": self._identifier(),
+                                         "aria-label": MSG_FILES})
 
     # -----------------------------------------------------------------------
 
@@ -235,7 +237,6 @@ class swappDepositView(swappFilesBaseView):
 
         _shown = record.to_be_shown
 
-        self._node.append_child(HTMLNode(self._node.identifier, None, "h3", value=MSG_ADD_FILES))
         _form = self._append_form(self._node)
         self._append_record(_form, record)
 
@@ -251,7 +252,8 @@ class swappDepositView(swappFilesBaseView):
         _zone.append_child(_input)
         _zone.append_child(HTMLNode(_zone.identifier, None, "span", value=MSG_OR_DROP))
 
-        _panel = TagNode(_zone.identifier, None, "section", attributes={"class": "cards-panel"})
+        _panel = TagNode(_zone.identifier, None, "ul",
+                         attributes={"class": "cards-panel"})
         _zone.append_child(_panel)
         _refused = _shown.get("refused", dict())
         _listed = list()
@@ -287,9 +289,6 @@ class swappDepositView(swappFilesBaseView):
         :param record: (swappFilesRecord) What is to be shown
 
         """
-        _title = HTMLNode(self._node.identifier, None, "h3", value=MSG_IN_USE)
-        self._node.append_child(_title)
-
         _said = MSG_WORKSPACE + " " + record.to_be_shown.get("workspace_name", "")
         self._node.append_child(HTMLNode(self._node.identifier, None, "p",
                                          value=_said))
@@ -307,7 +306,6 @@ class swappDepositView(swappFilesBaseView):
         :param record: (swappFilesRecord) What is to be shown
 
         """
-        self._node.append_child(HTMLNode(self._node.identifier, None, "h3", value=MSG_ADD_FILES))
         _form = self._append_form(self._node)
         self._append_record(_form, record)
 
@@ -323,7 +321,8 @@ class swappDepositView(swappFilesBaseView):
                                        "name": TASK_DESIGNATE, "value": ""})
         _zone.append_child(_browse)
 
-        _panel = TagNode(_zone.identifier, None, "section", attributes={"class": "cards-panel"})
+        _panel = TagNode(_zone.identifier, None, "ul",
+                         attributes={"class": "cards-panel"})
         _zone.append_child(_panel)
         for _filename in swappDepositView.__known_filenames(record):
             _treated = _filename in record.treated
@@ -378,14 +377,12 @@ class swappDepositView(swappFilesBaseView):
 
         # A refusal says its reason, under the name.
         if name in refused:
-            _card.set_attribute("aria-invalid", "true")
             _header.append_child(HTMLNode(_header.identifier, None, "span", value="",
                                           attributes={"class": "file-status file-status-error", "data-icon": "no",
                                                       "role": "img", "aria-label": MSG_REFUSED}))
             _body.append_child(HTMLNode(_body.identifier, None, "p", value=refused[name],
                                         attributes={"class": "file-status file-status-error"}))
         else:
-            _card.set_attribute("aria-invalid", "false")
             swappDepositView.__append_state(_header, name in treated)
 
         _button = {"type": "submit", "name": TASK_TAKE_BACK, "value": name}
@@ -403,7 +400,7 @@ class swappDepositView(swappFilesBaseView):
         :return: (tuple) The card, its header, its body and its footer
 
         """
-        _card = TagNode(parent.identifier, None, "article", attributes={"class": "card"})
+        _card = TagNode(parent.identifier, None, "li", attributes={"class": "card"})
         parent.append_child(_card)
         _header = TagNode(_card.identifier, None, "div", attributes={"class": "card-header"})
         _card.append_child(_header)

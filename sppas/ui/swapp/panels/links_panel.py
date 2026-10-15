@@ -51,7 +51,7 @@ from sppas.ui.swapp.nodes import swappHTMLLink
 class swappBaseLinksNode(HTMLNode):
 
     def __init__(self, parent_id, identifier: str):
-        super(swappBaseLinksNode, self).__init__(parent_id, identifier, "section")
+        super(swappBaseLinksNode, self).__init__(parent_id, identifier, "ul")
         self.add_attribute("id", self.identifier)
         self.add_attribute("class", "cards-panel")
         self.add_attribute("class", "links-panel")
@@ -64,7 +64,9 @@ class swappBaseLinksNode(HTMLNode):
         :return: (swappHTMLLink)
 
         """
-        link_node = swappHTMLLink(self.identifier, identifier=ident+"_button")
+        item_node = HTMLNode(self.identifier, ident+"_item", "li")
+        self.append_child(item_node)
+        link_node = swappHTMLLink(item_node.identifier, identifier=ident+"_button")
 
         # - design
         link_node.remove_attribute("class")  # just in case...
@@ -86,7 +88,7 @@ class swappBaseLinksNode(HTMLNode):
         link_node.set_icon(icon_name, attributes={"class": "link-button-icon", "alt": text})
         link_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
 
-        self.append_child(link_node)
+        item_node.append_child(link_node)
         return link_node
 
     # ----------------------------------------------------------------------
@@ -114,7 +116,9 @@ class swappBaseLinksNode(HTMLNode):
         :return: (swappHTMLButton)
 
         """
-        button_node = swappHTMLButton(self.identifier, identifier=ident+"_button")
+        item_node = HTMLNode(self.identifier, ident+"_item", "li")
+        self.append_child(item_node)
+        button_node = swappHTMLButton(item_node.identifier, identifier=ident+"_button")
         button_node.add_attribute("onclick", f"Wexa.dialog.open('{dialog_name}', true)")
 
         # - design
@@ -126,5 +130,5 @@ class swappBaseLinksNode(HTMLNode):
         button_node.set_icon(icon_name, attributes={"class": "link-button-icon", "alt": text})
         button_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
 
-        self.append_child(button_node)
+        item_node.append_child(button_node)
         return button_node

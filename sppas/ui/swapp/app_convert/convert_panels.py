@@ -459,13 +459,18 @@ class swappGeneralPanel(TagNode):
             _form.append_child(_p)
             _label = TagNode(_p.identifier, None, "label", attributes={"class": "switch", "for": _id})
             _p.append_child(_label)
-            _attributes = {"type": "checkbox", "id": _id, "name": _name, "value": "True", "aria-label": _text}
+            _attributes = {"type": "checkbox", "id": _id, "name": _name, "value": "True"}
             if _values[_name] is True:
                 _attributes["checked"] = None
             _label.append_child(EmptyNode(_label.identifier, None, "input", attributes=_attributes))
             _label.append_child(HTMLNode(_label.identifier, None, "span", value="",
                                          attributes={"class": "switch-slider round switch-no-text"}))
-            _p.append_child(HTMLNode(_p.identifier, None, "span", value=_text))
+            # The text is a label of its own: the switch is of a fixed width
+            # and holds nothing but its slider, so what names the checkbox
+            # stands beside it. A label, and not a span: it says the name
+            # once instead of twice, and clicking the text switches it.
+            _p.append_child(HTMLNode(_p.identifier, None, "label", value=_text,
+                                     attributes={"for": _id}))
 
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_CONVERT,
                                     attributes={"type": "submit", "class": "action-button",

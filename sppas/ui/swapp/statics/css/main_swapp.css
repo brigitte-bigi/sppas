@@ -475,11 +475,28 @@ section.actions-panel {
     min-width: 15rem;
 }
 
+/* ── Panels of cards: what a list writes, and what a grid does not want ──
+   A grid of cards is a list of them: the panels are written <ul>, and their
+   cards <li>. What wexa.css writes before an item of a list -- a square --
+   and the indent it leaves for it have no place in a grid. Written on the
+   class and not on the tags, which stay what they are everywhere else. */
+
+.cards-panel {
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+.cards-panel > li::before {
+    content: none;
+}
+
 /* ── Application cards ───────────────────────────────────── */
 
 /* The grid comes from .cards-panel of layout.css. What is written here is
-   what belongs to SPPAS: the ground, and the fact that a list of choices
-   wants neither the square wexa.css writes before an item nor its indent. */
+   what belongs to SPPAS: the ground of the panel. The square wexa.css writes
+   before an item, and its indent, are taken away from every panel of cards
+   by the rule of .cards-panel above: a grid of cards is read as a list, and
+   a list of cards wants neither of them. */
 .apps-panel {
     padding: calc(1 * var(--font-size));
     place-items: center;
@@ -893,7 +910,6 @@ dialog[role="alertdialog"] button:hover {
      dropzone-name  the name of a file, its path in its title where it stands already
      dropzone-size  the size of a file, in bytes
      file-status    what became of one file, written under its name
-     aria-invalid   carried by the card of a file which was refused
 
    The zone is drawn with a thick dashed border. The files are the cards of a
    cards panel of layout.css: in the header of a card, where the file

@@ -52,6 +52,8 @@ from ..nodes import swappProgressBar
 
 from .convert_record import swappConvertRecord
 from .convert_record import TASK_CONVERT
+from sppas.ui.swapp.services.files.files_view import MSG_ADD_FILES
+
 from .convert_record import MISSING_BATCH
 from .convert_record import FIELD_REPORT
 from .convert_panels import swappFormatsPanel
@@ -174,6 +176,19 @@ class swappConvertView(swappBaseView):
 
     # -----------------------------------------------------------------------
 
+    def populate_files_title(self) -> None:
+        """Append the title of the files the page is given.
+
+        The service of the files builds a container and names it; what the
+        title says, and at which level it stands, belongs to the page which
+        places that container.
+
+        """
+        self._htree.body_main.append_child(
+            HTMLNode(self._htree.body_main.identifier, None, "h2", value=MSG_ADD_FILES))
+
+    # -----------------------------------------------------------------------
+
     def populate_tree_content(self, record: swappConvertRecord) -> None:
         """Append the panel of the conversion to the main content.
 
@@ -192,7 +207,7 @@ class swappConvertView(swappBaseView):
         _section = TagNode(self._htree.body_main.identifier, ID_SECTION, "section",
                            attributes={"id": ID_SECTION, "class": "panel"})
         self._htree.body_main.append_child(_section)
-        _section.append_child(HTMLNode(_section.identifier, None, "h3", value=MSG_TITLE))
+        _section.append_child(HTMLNode(_section.identifier, None, "h2", value=MSG_TITLE))
 
         _section.append_child(swappComparePanel(_section.identifier, _shown.get("formats", list())))
 
