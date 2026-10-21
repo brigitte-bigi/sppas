@@ -351,17 +351,37 @@ export default class ConvertManager extends BaseManager {
      * @param {Object} answered - What the server answered.
      * @returns {void}
      */
+    /**
+     * Place the icons of what the server wrote, as the ones of the page were.
+     *
+     * The replaced node is out of the document: the new one is asked for
+     * again, by the identifier it carries.
+     *
+     * @param {string} id - Identifier of what has just been replaced.
+     * @returns {void}
+     */
+    #placeIcons(id) {
+        const fresh = document.getElementById(id);
+        if (fresh !== null && window.Wexa && window.Wexa.icons) {
+            window.Wexa.icons.run(fresh);
+        }
+    }
+
+    // -----------------------------------------------------------------------
+
     #replace(answered) {
         if (DATA_CONVERT in answered) {
             const section = document.getElementById(SECTION_ID);
             if (section !== null) {
                 section.outerHTML = answered[DATA_CONVERT];
+                this.#placeIcons(SECTION_ID);
             }
         }
         if (DATA_CONTAINER in answered) {
             const container = document.getElementById(DEPOSIT_CONTAINER_ID);
             if (container !== null) {
                 container.outerHTML = answered[DATA_CONTAINER];
+                this.#placeIcons(DEPOSIT_CONTAINER_ID);
             }
             if (this.#files !== null) {
                 this.#files.handleSwappFilesOnLoad();

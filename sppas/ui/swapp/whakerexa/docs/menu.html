@@ -161,19 +161,20 @@
 &lt;/nav&gt;</code></pre>
         </article>
 
-        <h3>Header nav — <code>#header-nav-content</code></h3>
+        <h3>Header bar — <code>.nav-wexa.header</code></h3>
         <p>
-            The special ID <code>header-nav-content</code> places a compact icon-only nav at
-            the top-right of the header (absolute positioned, no shadow, no background).
-            Use it for small accessibility or branding controls inside a decorative header.
+            The <code>header</code> variant places a compact icon-only bar at the
+            top-right of the header: absolutely positioned, no shadow, and no ground
+            of its own, the header having one. Use it for small accessibility or
+            branding controls inside a decorative header.
         </p>
 
-        <article class="card-doc" aria-label="#header-nav-content — code">
+        <article class="card-doc" aria-label=".nav-wexa.header — code">
             <div class="card-view">
                 <p>See the <a href="menu-side.html">side menu demo</a> header for a live example.</p>
             </div>
             <pre class="dark"><code>&lt;header&gt;
-    &lt;nav id="header-nav-content" aria-label="Accessibility navigation"&gt;
+    &lt;nav class="nav-wexa header" aria-label="Accessibility navigation"&gt;
         &lt;button class="menuitem" aria-label="..."&gt;&lt;/button&gt;
     &lt;/nav&gt;
 &lt;/header&gt;</code></pre>
@@ -245,6 +246,28 @@
             <code>&lt;span&gt;</code> label. Use <code>aria-current="page"</code> to mark the
             active item.
         </p>
+        <p>
+            <strong>Three things, three shapes.</strong> A bar holds items that lead
+            elsewhere, the page being read, and sometimes a toggle. Each says itself
+            by its own shape, never by a colour alone, and all three keep the ground
+            and the ink of the bar &mdash; a command&rsquo;s own colours belong to a
+            command. An ordinary item carries the border of the bar. The page being
+            read, <code>aria-current</code>, carries a thick line on the edge the items
+            are stacked against &mdash; the left of a vertical bar, the lower side of a
+            row &mdash; and its label in bold: it says a place. What is active now &mdash; a toggle
+            that is on, <code>aria-pressed="true"</code>, or an item whose submenu is
+            open, <code>aria-expanded="true"</code> &mdash; takes a grey veil over the
+            ground of the bar, the alternate border colour and a shadow cast inside, and
+            no bold: it says a state, not a place. The veil is a translucent grey, so it
+            marks the item on a light bar as on a dark one, whatever the theme.
+        </p>
+        <p>
+            And an item that opens a submenu carries one mark more: a triangle in its
+            lower-right corner, drawn in the ink of the bar. It takes no room on the
+            line, so a bar reduced to its icons keeps it, where a chevron after a label
+            would have nowhere to sit. <code>aria-haspopup</code> is what puts it there,
+            whatever its value &mdash; <code>menu</code> as well as <code>true</code>.
+        </p>
 
         <article class="card-doc" aria-label="Menuitems — icon and label">
             <div class="card-view">
@@ -307,7 +330,7 @@
     &lt;a class="menuitem" href="#"&gt;Home&lt;/a&gt;
     &lt;ul&gt;
         &lt;li&gt;
-            &lt;a class="expand menuitem" href="#"&gt;Products&lt;/a&gt;
+            &lt;a class="menuitem" href="#" aria-haspopup="true"&gt;Products&lt;/a&gt;
             &lt;ul class="submenu submenu-gray"&gt;
                 &lt;li&gt;&lt;a role="menuitem" href="#"&gt;Item A&lt;/a&gt;&lt;/li&gt;
                 &lt;li&gt;&lt;a role="menuitem" href="#"&gt;Item B&lt;/a&gt;&lt;/li&gt;
@@ -367,7 +390,7 @@
             <pre class="dark"><code>&lt;nav id="nav-content" class="nav-wexa side collapsible"&gt;
     &lt;button id="pin-menu" class="menuitem menu-pin"
             type="button" aria-controls="nav-content"
-            aria-pressed="true" aria-label="Pin menu"&gt;
+            aria-pressed="false" aria-label="Pin menu"&gt;
         &lt;svg aria-label="Pushpin"&gt;...&lt;/svg&gt;
     &lt;/button&gt;
     ...

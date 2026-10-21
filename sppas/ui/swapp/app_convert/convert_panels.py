@@ -468,7 +468,7 @@ class swappGeneralPanel(TagNode):
             _p.append_child(HTMLNode(_p.identifier, None, "span", value=_text))
 
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_CONVERT,
-                                    attributes={"type": "submit", "class": "cta-button",
+                                    attributes={"type": "submit", "class": "action-button",
                                                 "name": EVENT_TASK, "value": TASK_CONVERT}))
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_RESET,
                                     attributes={"type": "reset"}))

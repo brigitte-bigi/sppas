@@ -115,12 +115,12 @@ class swappAppsNode(HTMLNode):
 
         # Define the content of the card: a container and a button
         content = HTMLNode(article.identifier, ident + "_content", "div")
-        content.add_attribute("class", "app-content | flow")
+        content.add_attribute("class", "app-content flow")
         article.append_child(content)
 
         # Container for a title and a description
         container = HTMLNode(content.identifier, ident + "_container", "div")
-        container.add_attribute("class", "app-container | flow")
+        container.add_attribute("class", "app-container flow")
         content.append_child(container)
 
         # - title

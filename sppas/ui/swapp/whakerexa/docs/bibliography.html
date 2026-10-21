@@ -129,6 +129,18 @@
                     <pre class="dark"><code>&lt;div id="bibliography"&gt;&lt;/div&gt;</code></pre>
                 </article>
 
+                <article class="card-doc" aria-label="HTML — where the addresses open">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>The addresses of the references — the PDF, the open archive, the
+                            publisher — open in a tab of their own, so that the document stays
+                            where the reader left it. A page that wants them to open in place
+                            writes <code>data-links-target="_self"</code> on that same element.
+                            The two values are the ones HTML uses, and the addresses that open
+                            under a citation follow the same rule.</p>
+                    </div>
+                    <pre class="dark"><code>&lt;div id="bibliography" data-links-target="_self"&gt;&lt;/div&gt;</code></pre>
+                </article>
+
                 <article class="card-doc" aria-label="JavaScript — BookBibliography API">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>Instantiate <code>BookBibliography</code> with the id of the data, the id of
@@ -287,9 +299,9 @@ biblio.run();</code></pre>
                         <td>A content that opens, across the whole table, right after its reference.</td>
                     </tr>
                     <tr>
-                        <td><code>.bib-number</code>, <code>.bib-year</code>, <code>.bib-reference</code></td>
+                        <td><code>.bib-number</code>, <code>.bib-year</code>, <code>.bib-type</code>, <code>.bib-reference</code></td>
                         <td><code>td</code></td>
-                        <td>The three cells. The number column only exists when something is cited.</td>
+                        <td>The cells. The number column only exists when something is cited, and the type column opens hidden: it is checked from the column selector.</td>
                     </tr>
                     <tr>
                         <td><code>.bib-controls</code>, <code>.bib-search-field</code>, <code>.bib-columns</code></td>

@@ -30,144 +30,150 @@ This banner notice must not be removed.
 
 */
 
-/* The line never breaks inside itself: its button would drop under its text
-   while the panel that holds it still had room to wrap as a whole. */
-.summary-choice {
-    border: none;
-    background: var(--bg-color);
-    color: var(--fg-color);
-    white-space: nowrap;
-}
+@layer reset, base, theme, components, accessibility;
 
-.summary-choice span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+@layer components {
 
-.toggleselect-action {
-    padding: calc(var(--font-size) * 0.5);
-    height: calc(var(--font-size) * 3);
-    border: var(--border-width) solid var(--buttons-bg-color);
-}
+    /* The line never breaks inside itself: its button would drop under its text
+       while the panel that holds it still had room to wrap as a whole. */
+    .summary-choice {
+        border: none;
+        background: var(--bg-color);
+        color: var(--fg-color);
+        white-space: nowrap;
+    }
 
-.accordion-action {
-    background: transparent;
-    color: var(--fg-color);
-}
+    .summary-choice span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
-/* The line keeps the hover of the framework, which surrounds it as the focus
-   does. Only the button answers for itself, on top of it. */
-summary :is(button, a, [role=button], [role=link]).accordion-action:is(:hover, :active, :focus) {
-    background: var(--buttons-bg-color-hover);
-}
+    .toggleselect-action {
+        padding: calc(var(--font-size) * 0.5);
+        height: calc(var(--font-size) * 3);
+        border: var(--border-width) solid var(--buttons-bg-color);
+    }
 
-summary :is(button, a, [role=button], [role=link]).accordion-action:is(:hover, :active, :focus) svg * {
-    stroke: var(--buttons-fg-color);
-}
+    .accordion-action {
+        background: transparent;
+        color: var(--fg-color);
+    }
 
-/* The native box takes no room, so the focus is drawn on the box that is seen. */
-li.check-item input[type=checkbox]:focus-visible + label span.check-box {
-    outline: var(--outline-size) var(--outline-focus-style) var(--outline-color);
-    outline-offset: var(--outline-offset, var(--outline-size));
-}
+    /* The line keeps the hover of the framework, which surrounds it as the focus
+       does. Only the button answers for itself, on top of it. */
+    summary :is(button, a, [role=button], [role=link]).accordion-action:is(:hover, :active, :focus) {
+        background: var(--buttons-bg-color-hover);
+    }
 
-/* The box is drawn by the icon of the framework: the native control stays
-   where it is, reachable by the keyboard, and takes no room of its own. */
-li.check-item > input[type=checkbox] {
-    appearance: none;
-    width: 0;
-    height: 0;
-    margin: 0;
-    border: none;
-}
+    summary :is(button, a, [role=button], [role=link]).accordion-action:is(:hover, :active, :focus) svg * {
+        stroke: var(--buttons-fg-color);
+    }
 
-li.check-item label {
-    display: flex;
-    align-items: center;
-    gap: calc(var(--font-size) * 0.5);
-    cursor: pointer;
-}
+    /* The native box takes no room, so the focus is drawn on the box that is seen. */
+    li.check-item input[type=checkbox]:focus-visible + label span.check-box {
+        outline: var(--outline-size) var(--outline-focus-style) var(--outline-color);
+        outline-offset: var(--outline-offset, var(--outline-size));
+    }
 
-/* The drawn box is a box, not a letter: left inline, it would sit on the
-   baseline and leave under it the room a descender asks for, which the focus
-   outline draws around. */
-li.check-item span.check-box {
-    display: inline-flex;
-}
+    /* The box is drawn by the icon of the framework: the native control stays
+       where it is, reachable by the keyboard, and takes no room of its own. */
+    li.check-item > input[type=checkbox] {
+        appearance: none;
+        width: 0;
+        height: 0;
+        margin: 0;
+        border: none;
+    }
 
-li.check-item svg {
-    width: calc(var(--font-size) * 1.4);
-    height: calc(var(--font-size) * 1.4);
-    display: block;
-    color: inherit;
-    flex: none;
-}
+    li.check-item label {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--font-size) * 0.5);
+        cursor: pointer;
+    }
 
-/* A choice is read as a box and its label, not as an item of a list: wexa.css
-   draws the marker of a list item with a pseudo-element, and the boxes already
-   say what each line is. */
-li.check-item {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: calc(var(--font-size) * 0.5);
-}
+    /* The drawn box is a box, not a letter: left inline, it would sit on the
+       baseline and leave under it the room a descender asks for, which the focus
+       outline draws around. */
+    li.check-item span.check-box {
+        display: inline-flex;
+    }
 
-ul > li.check-item::before {
-    content: none;
-}
+    li.check-item svg {
+        width: calc(var(--font-size) * 1.4);
+        height: calc(var(--font-size) * 1.4);
+        display: block;
+        color: inherit;
+        flex: none;
+    }
 
-summary :is(button, a, [role=button], [role=link]).accordion-action {
-    color: var(--fg-color);
-    width: calc(var(--font-size) * 2);
-    border: none;
-    position: relative;
-    margin: 0;
-    display: block;
-    height: 100%;
-}
+    /* A choice is read as a box and its label, not as an item of a list: wexa.css
+       draws the marker of a list item with a pseudo-element, and the boxes already
+       say what each line is. */
+    li.check-item {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: calc(var(--font-size) * 0.5);
+    }
 
-/* The state of the whole list is drawn by an injected icon: it is given the
-   size of a menu icon, and takes the color of the text around it. */
-summary :is(button, a, [role=button], [role=link]).accordion-action svg {
-    width: calc(var(--font-size) * 1.4);
-    height: calc(var(--font-size) * 1.4);
-    display: block;
-    margin: auto;
-}
+    ul > li.check-item::before {
+        content: none;
+    }
 
-/* wexa.css paints a background on every element, so what a details holds draws
-   a square over its rounded corners: the content leaves the corners to it. */
-details:has(summary.summary-choice) > div,
-details:has(summary.summary-choice) > div * {
-    background-color: transparent;
-}
+    summary :is(button, a, [role=button], [role=link]).accordion-action {
+        color: var(--fg-color);
+        width: calc(var(--font-size) * 2);
+        border: none;
+        position: relative;
+        margin: 0;
+        display: block;
+        height: 100%;
+    }
 
-/* The content is set off from the border it is drawn in: a choice flush with
-   the edge has its focus outline drawn outside the box. */
-details:has(summary.summary-choice) > div {
-    padding-top: calc(var(--font-size) * 0.4);
-    padding-bottom: calc(var(--font-size) * 0.4);
-    padding-right: calc(var(--font-size) * 0.5);
-}
+    /* The state of the whole list is drawn by an injected icon: it is given the
+       size of a menu icon, and takes the color of the text around it. */
+    summary :is(button, a, [role=button], [role=link]).accordion-action svg {
+        width: calc(var(--font-size) * 1.4);
+        height: calc(var(--font-size) * 1.4);
+        display: block;
+        margin: auto;
+    }
 
-/* The choices line up under the line that opens them, and not under its text:
-   a list of boxes is read from its left edge. */
-details:has(summary.summary-choice) > div > ul {
-    margin: 0;
-    padding-left: calc(var(--font-size) * 0.5);
-}
+    /* wexa.css paints a background on every element, so what a details holds draws
+       a square over its rounded corners: the content leaves the corners to it. */
+    details:has(summary.summary-choice) > div,
+    details:has(summary.summary-choice) > div * {
+        background-color: transparent;
+    }
 
-/* wexa.css propagates the color of a button to everything it holds, so an icon
-   injected in one is written in the color of a filled button. The drawing takes
-   the color of the text, in the button as in the list. */
-summary :is(button, a, [role=button], [role=link]).accordion-action svg *,
-li.check-item svg * {
-    stroke: var(--fg-color);
-}
+    /* The content is set off from the border it is drawn in: a choice flush with
+       the edge has its focus outline drawn outside the box. */
+    details:has(summary.summary-choice) > div {
+        padding-top: calc(var(--font-size) * 0.4);
+        padding-bottom: calc(var(--font-size) * 0.4);
+        padding-right: calc(var(--font-size) * 0.5);
+    }
 
-summary :is(button, a, [role=button], [role=link]).accordion-action svg circle,
-li.check-item svg circle {
-    fill: var(--fg-color);
-    stroke: none;
-}
+    /* The choices line up under the line that opens them, and not under its text:
+       a list of boxes is read from its left edge. */
+    details:has(summary.summary-choice) > div > ul {
+        margin: 0;
+        padding-left: calc(var(--font-size) * 0.5);
+    }
+
+    /* wexa.css propagates the color of a button to everything it holds, so an icon
+       injected in one is written in the color of a filled button. The drawing takes
+       the color of the text, in the button as in the list. */
+    summary :is(button, a, [role=button], [role=link]).accordion-action svg *,
+    li.check-item svg * {
+        stroke: var(--fg-color);
+    }
+
+    summary :is(button, a, [role=button], [role=link]).accordion-action svg circle,
+    li.check-item svg circle {
+        fill: var(--fg-color);
+        stroke: none;
+    }
+
+} /* end @layer components */

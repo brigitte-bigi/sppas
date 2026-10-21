@@ -345,11 +345,14 @@ export default class SwappFiles {
             return;
         }
 
+        const place = this.#container.parentElement;
         this.#container.outerHTML = answered[FIELD_CONTAINER];
         this.#attachListeners();
-        // The icons of what the server wrote are placed, as the ones of the page were.
-        if (this.#container !== null && window.Wexa && window.Wexa.icons) {
-            window.Wexa.icons.run(this.#container);
+        // The icons of what the server wrote are placed, as the ones of the page
+        // were. The replaced node is out of the document, so what held it is
+        // walked instead.
+        if (place !== null && window.Wexa && window.Wexa.icons) {
+            window.Wexa.icons.run(place);
         }
 
         if (FIELD_INFO in answered && answered[FIELD_INFO].length > 0) {

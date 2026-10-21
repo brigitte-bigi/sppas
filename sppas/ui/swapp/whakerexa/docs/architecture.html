@@ -75,6 +75,7 @@
                     <li><code>reset</code> — universal margin, padding, box-sizing defaults.</li>
                     <li><code>base</code> — structural rules, scrollbar, focus outlines, disabled states, typography defaults.</li>
                     <li><code>theme</code> — light and dark color palettes, animation variables.</li>
+                    <li><code>components</code> — the sheets a page links beside <code>wexa.css</code>: <code>menu.css</code>, <code>dialog.css</code>, <code>code.css</code>, <code>togglegroup.css</code> and <code>toggleselect.css</code>. They come after <code>theme</code>, so they override it whatever the specificity, and what you write yourself still wins over them.</li>
                     <li><code>accessibility</code> — contrast mode (WCAG 1.4.12 spacing and ContrastFont), enforced with <code>!important</code> only in that context.</li>
                 </ul>
                 <p>Any CSS you write outside of a layer <strong>automatically wins</strong> over all wexa rules,
@@ -82,8 +83,12 @@
                     own stylesheet overrides wexa without needing <code>!important</code> or complex selectors.</p>
                 <p>To create a custom theme, use <code>@layer theme { }</code> in a stylesheet loaded after
                     <code>wexa.css</code> — your values override the defaults within that layer.</p>
+                <p>One sheet stays outside the layers: <code>print.css</code>. It re-defines
+                    <code>--bg-color</code> and <code>--fg-color</code> for the paper, and a theme
+                    declares those outside any layer as well — in a layer it would lose them, and a
+                    page would print the colors of the screen.</p>
             </div>
-            <pre class="dark"><code>@layer reset, base, theme, accessibility;</code></pre>
+            <pre class="dark"><code>@layer reset, base, theme, components, accessibility;</code></pre>
         </article>
 
         <h3>Sizes, and where the rule stops</h3>

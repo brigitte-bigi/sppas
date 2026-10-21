@@ -153,5 +153,48 @@ link_tests.add_test(() => {
 });
 
 
+// -----------------------------------------------------------------------
+// Where an address opens is one answer for the whole page: a tab of its
+// own, unless the page says to stay. B28.
+// -----------------------------------------------------------------------
+
+link_tests.add_test(() => {
+    UnitTest.assert_values_equals('_blank', Link.target, "link_target_by_default_test");
+
+    Link.setTarget('_self');
+    UnitTest.assert_values_equals('_self', Link.target, "link_target_said_test");
+
+    Link.setTarget('nothing-like-a-target');
+    UnitTest.assert_values_equals('_self', Link.target, "link_target_unknown_test");
+
+    Link.resetTarget();
+    UnitTest.assert_values_equals('_blank', Link.target, "link_target_reset_test");
+});
+
+// -----------------------------------------------------------------------
+// What opens a tab gives no handle on the page it was opened from; what
+// stays has none to give. B28.
+// -----------------------------------------------------------------------
+
+link_tests.add_test(() => {
+    const opening = document.createElement('a');
+    Link.openIn(opening);
+
+    UnitTest.assert_values_equals('_blank', opening.getAttribute('target'),
+        "link_open_in_a_tab_test");
+    UnitTest.assert_values_equals('noopener', opening.getAttribute('rel'),
+        "link_open_holds_nothing_test");
+
+    Link.setTarget('_self');
+    const staying = document.createElement('a');
+    Link.openIn(staying);
+    Link.resetTarget();
+
+    UnitTest.assert_values_equals('_self', staying.getAttribute('target'),
+        "link_open_stays_test");
+    UnitTest.assert_values_equals(null, staying.getAttribute('rel'),
+        "link_open_no_rel_test");
+});
+
 // launch all unit tests added
 link_tests.launch_unit_test();

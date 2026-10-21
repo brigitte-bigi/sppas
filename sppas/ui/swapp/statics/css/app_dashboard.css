@@ -50,13 +50,12 @@
     margin: 1rem auto;
 }
 
-/* disable the generic rule for a transparent background in wexa.css */
 dialog[role="alertdialog"] blockquote {
     background: var(--header-bg-color);
     color: var(--header-fg-color);
 }
 
+/* The children take the ink that goes with the ground of the quotation. */
 dialog[role="alertdialog"] blockquote * {
-    background: none;
     color: var(--header-fg-color);
 }

@@ -148,7 +148,7 @@
             A theme you write yourself is held to the same rule, and the groups it holds
             are listed below.</p>
 
-        <table role="grid">
+        <table class="equal-columns">
             <caption>The groups, and what each one holds</caption>
             <thead>
             <tr><th>Group</th><th>Variables</th></tr>
@@ -164,7 +164,7 @@
             <tr><td>borders</td><td><code>--border-color</code>, <code>--border-color-alt</code></td></tr>
             <tr><td>headings</td><td><code>--h1-color</code> to <code>--h6-color</code></td></tr>
             <tr><td>blockquote</td><td><code>--blockquote-border-color</code>, <code>--blockquote-footer-color</code>, <code>--blockquote-bg-color</code>, <code>--blockquote-fg-color</code></td></tr>
-            <tr><td>table</td><td><code>--table-border-color</code>, <code>--table-cell-bg-color</code>, <code>--table-row-stripped-bg-color</code>, <code>--table-head-bg-color</code>, <code>--table-head-fg-color</code>, <code>--table-caption-bg-color</code>, <code>--table-caption-fg-color</code></td></tr>
+            <tr><td>table</td><td><code>--table-cell-bg-color</code>, <code>--table-row-stripped-bg-color</code>, <code>--table-head-bg-color</code>, <code>--table-head-fg-color</code>, <code>--table-caption-bg-color</code>, <code>--table-caption-fg-color</code></td></tr>
             <tr><td>card</td><td><code>--card-bg-color</code>, <code>--card-fg-color</code></td></tr>
             <tr><td>dialog</td><td><code>--dialog-bg-color</code>, <code>--dialog-fg-color</code></td></tr>
             <tr><td>progress</td><td><code>--progress-bg-color</code>, <code>--progress-fg-color</code></td></tr>
@@ -188,7 +188,7 @@
 
         <p>Structural and typographic defaults. In contrast mode, font and spacing values are overridden by <code>@layer accessibility</code> — reflected in the "Contrast" column. An unlayered custom rule wins over both.</p>
 
-        <table role="grid">
+        <table class="equal-columns">
             <caption>Layout</caption>
             <thead>
             <tr>
@@ -226,7 +226,7 @@
             </tbody>
         </table>
 
-        <table role="grid">
+        <table class="equal-columns">
             <caption>Typography</caption>
             <thead>
             <tr>
@@ -348,7 +348,7 @@
             </tbody>
         </table>
 
-        <table role="grid">
+        <table class="equal-columns">
             <caption>Icons and outline</caption>
             <thead>
             <tr>
@@ -360,14 +360,8 @@
             </thead>
             <tbody>
             <tr>
-                <th scope="row">checked-icon</th>
-                <td><code>url(&quot;data:image/png</code></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
                 <th scope="row">external-link-icon</th>
-                <td><code>url(&quot;data:image/png</code></td>
+                <td><code>url(&quot;data:image/svg+xml</code></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -419,7 +413,15 @@
 
         <p>Visual palette and decoration. The "Contrast" column shows values from the <code>.contrast</code> block within <code>@layer theme</code>. The "Dark" column shows values from the <code>.dark</code> block. An unlayered custom rule wins over all.</p>
 
-        <table role="grid">
+        <p>
+            A border is drawn with one of two pairs. The first draws what
+            answers — a command, a field — and is tight and firm; the second
+            draws what only surrounds — a frame, a table, a dialog — and is
+            thin and soft. A container that wants no frame at all says so
+            where it is drawn, as a card does.
+        </p>
+
+        <table class="equal-columns">
             <caption>Borders and shape</caption>
             <thead>
             <tr>
@@ -438,18 +440,18 @@
             </tr>
             <tr>
                 <th scope="row">border-width</th>
-                <td><code>1px</code></td>
                 <td><code>2px</code></td>
+                <td><code>4px</code></td>
                 <td></td>
             </tr>
             <tr>
-                <th scope="row">dialog-border-radius</th>
-                <td><code>0.4rem</code></td>
-                <td><code>0.4rem</code></td>
+                <th scope="row">border-radius-alt</th>
+                <td><code>0.5rem</code></td>
+                <td><code>0.8rem</code></td>
                 <td></td>
             </tr>
             <tr>
-                <th scope="row">dialog-border-width</th>
+                <th scope="row">border-width-alt</th>
                 <td><code>1px</code></td>
                 <td><code>2px</code></td>
                 <td></td>
@@ -460,16 +462,10 @@
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
-                <th scope="row">table-border-width</th>
-                <td><code>1px</code></td>
-                <td><code>2px</code></td>
-                <td></td>
-            </tr>
             </tbody>
         </table>
 
-        <table role="grid">
+        <table class="equal-columns">
             <caption>Animation</caption>
             <thead>
             <tr>

@@ -41,7 +41,6 @@
 
     --bg-color:     transparent;
     --bg-color-alt: transparent;
-    --img-bg-color: rgba(150, 170, 210, 0.5);
     /* The ground the page sits on, drawn along the diagonal it is read on: the
        navy of the header at the top, the cream of the nav at the bottom. */
     --body-bg-color: linear-gradient(160deg,
@@ -49,45 +48,14 @@
         rgb(230, 230, 236) 45%,
         rgb(242, 233, 214) 100%);
 
-    /* A deep blue, and a cream on it: the pair reads on a light page, where
-       the nav is the one dark band. */
-    --nav-bg-color: rgb(8, 22, 68);
-    --nav-fg-color: rgb(240, 230, 220);
-
-    /* The two grounds layout.css swaps from one section to the next. */
-    --panel-bg-color:     rgb(248, 249, 252);
-    --panel-bg-color-alt: rgb(237, 239, 245);
-
-    /* A card carries a ground of its own, and not the transparency the rest
-       of the theme is built on: laid on a veiled section, it would be the
-       color of what it sits on. */
-    --card-bg-color: rgb(250, 251, 254);
-    --card-fg-color: rgb(18, 22, 38);
-
-    /* A dialog is raised above the page: its ground is the pale one of the
-       theme, a shade below the card laid flat on it, and its text a shade
-       above the one of the page. */
-    --dialog-bg-color: rgb(233, 235, 242);
-    --dialog-fg-color: rgb(35, 38, 53);
-
-    /* The two accents of the text. */
-    --a-color:  rgb(8, 92, 148);
-    --li-color: rgb(50, 121, 142);
-
     /* The header, as the framework draws it: the one dark band of a light
        page, written in the pale blue it is built on. */
     --header-bg-color: linear-gradient(155deg,
         rgb(8, 22, 68) 0%,
         rgb(14, 48, 105) 50%,
         rgb(22, 48, 118) 100%);
-    --header-fg-color: rgb(220, 222, 230);
-
-    /* The text of the page. */
-    --fg-color:     rgb(18, 22, 38);
-    --fg-color-alt: rgb(45, 55, 80);
 
 }
-
 
 /* =========================================================================
    Dark mode — CSS variable overrides (unlayered)
@@ -103,16 +71,10 @@
         rgb(6, 10, 24) 0%,
         rgb(8, 20, 40) 45%,
         rgb(8, 30, 36) 100%);
-    --img-bg-color: rgba(150, 170, 210, 0.5);
 
     /* Transparent as in light mode: what a section holds is read on the ground
        html carries, and not on a band of its own. */
     --bg-color-alt: transparent;
-
-    /* The dark band of a light page becomes the light band of a dark one: the
-       cream stays, and the deep blue gives way to the navy of the header. */
-    --nav-bg-color: rgb(8, 16, 34);
-    --nav-fg-color: rgb(246, 238, 222);
 
     /* The header answers the page it opens: the navy of the ground, and the
        cream everything is written in here. */
@@ -120,30 +82,8 @@
         rgb(8, 16, 34) 0%,
         rgb(10, 28, 52) 55%,
         rgb(12, 40, 48) 100%);
-    --header-fg-color: rgb(246, 238, 222);
 
-    --panel-bg-color:     rgb(13, 24, 44);
-    --panel-bg-color-alt: rgb(20, 33, 55);
-
-    --card-bg-color: rgb(26, 36, 54);
-    --card-fg-color: rgb(244, 236, 220);
-
-    --dialog-bg-color: rgb(22, 34, 54);
-    --dialog-fg-color: rgb(229, 221, 206);
-
-    /* A link is read: on this ground the blue of the framework holds 6.5:1,
-       which is above what a text asks for and below what is comfortable.
-       This one holds 10.5:1. The teal of the list marks holds 7.5:1. */
-    --a-color:  rgb(130, 205, 240);
-    --li-color: rgb(62, 182, 180);
-
-    /* Cream on night blue: the warm answer to a cold ground, which is what
-       the page was missing. Brighter than the framework writes it, too — on a
-       ground this dark, a text is read, not deciphered. */
-    --fg-color:     rgb(246, 238, 222);
-    --fg-color-alt: rgb(216, 204, 182);
 }
-
 
 /* =========================================================================
    Decoration overrides — inside @layer theme
@@ -155,7 +95,10 @@
        Slides accent colors — override slides.css defaults
        ====================================================================== */
 
-    :root {
+    /* Said with the same reach as the rest of a light palette: the default of
+       the framework is written on :root:not(.dark), and a plain :root would
+       lose to it. */
+    :root:not(.dark) {
         --custom-color1: rgb(17, 25, 53);
         --custom-color2: rgb(130, 189, 215);
     }
@@ -163,19 +106,6 @@
     .dark {
         --custom-color2: rgb(15, 20, 40);
         --custom-color1: rgb(132, 203, 234);
-    }
-
-    /* ======================================================================
-       Sizing variables — in @layer so unlayered page CSS (e.g. slides.css)
-       can override without specificity games.
-       ====================================================================== */
-
-    :root:not(.contrast) {
-        --border-radius: 6px;
-    }
-
-    .contrast {
-        --border-radius: 6px;
     }
 
     /* ======================================================================
@@ -188,44 +118,15 @@
         background-size: 100% 0%;
         background-repeat: no-repeat;
         background-position: bottom;
-        transition: background-size 0.32s ease, color 0s linear 0.32s;
-        border-radius: calc(var(--border-radius) / 2);
+        transition: background-size 0.25s ease, color 0s linear 0.25s;
     }
 
     main a:not(.menuitem):not(:has(img)):hover,
     main a:not(.menuitem):not(:has(img)):focus-visible {
         color: var(--buttons-fg-color);
         background-size: 100% 100%;
-        transition: background-size 0.32s ease, color 0s;
+        transition: background-size 0.2s ease, color 0s;
         text-decoration: none;
-    }
-
-    /* ======================================================================
-       Progress 
-       ====================================================================== */
-
-    progress {
-        border: 0;
-    }
-
-    /* ======================================================================
-       details / summary — restrained button-like style
-       ====================================================================== */
-
-    details > summary {
-        cursor: pointer;
-        padding: calc(0.5 * var(--typography-spacing-vertical)) var(--typography-spacing-horizontal);
-        border: var(--border-width) solid var(--border-color);
-        border-radius: var(--border-radius);
-        background-color: var(--bg-color-alt);
-        color: var(--fg-color);
-        font-weight: var(--font-weight-semibold);
-    }
-
-    details > summary:hover {
-        background-color: var(--bg-color);
-        border-color: var(--a-color);
-        color: var(--a-color);
     }
 
 }

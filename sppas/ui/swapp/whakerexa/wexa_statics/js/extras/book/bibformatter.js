@@ -31,6 +31,8 @@
  */
 'use strict';
 
+import { Labels } from './labels.js';
+
 /**
  * Display a bibliographic reference according to its type.
  *
@@ -106,6 +108,31 @@ export class ReferenceFormatter {
     static YEAR_CLOSING = ')';
 
     /**
+     * What each type is called, in the languages the program knows.
+     *
+     * BibTeX writes "@Article", "@article" and "@ARTICLE" for one same type,
+     * and a column that repeated them would read as three. A type nobody
+     * planned for is written as the data wrote it, its first letter in
+     * capital: naming it would only be guessing.
+     */
+    static TYPE_NAMES = new Map([
+        ['en', {
+            article: 'Article', inproceedings: 'Conference',
+            conference: 'Conference', incollection: 'Chapter',
+            inbook: 'Chapter', book: 'Book', techreport: 'Report',
+            phdthesis: 'PhD thesis', mastersthesis: "Master's thesis",
+            unpublished: 'Unpublished', misc: 'Miscellaneous'
+        }],
+        ['fr', {
+            article: 'Article', inproceedings: 'Communication',
+            conference: 'Communication', incollection: 'Chapitre',
+            inbook: 'Chapitre', book: 'Ouvrage', techreport: 'Rapport',
+            phdthesis: 'Thèse', mastersthesis: 'Mémoire',
+            unpublished: 'Non publié', misc: 'Divers'
+        }]
+    ]);
+
+    /**
      * What each line is called, whatever the type of the reference.
      *
      * The names do not change from one type to the next: a stylesheet that
@@ -115,7 +142,40 @@ export class ReferenceFormatter {
     static LINE_NAMES = ['authors', 'title', 'source'];
 
 
+    // FIELDS
+    #texts;
+
+
+    // CONSTRUCTOR
+    /**
+     * Instantiate what displays a reference.
+     */
+    constructor() {
+        this.#texts = new Labels(ReferenceFormatter.TYPE_NAMES);
+    }
+
+
     // PUBLIC METHODS
+    /**
+     * Say what a type is called, in the language of the document.
+     *
+     * The case of the type is ignored, BibTeX being written by hand. A type
+     * that is not named is written as it was, its first letter in capital.
+     *
+     * @param type {string} The entry type, as written.
+     * @returns {string} What to write for it.
+     */
+    nameOf(type) {
+        const wanted = type.toLowerCase();
+        const written = this.#texts.text(wanted);
+
+        if (written === undefined) {
+            return wanted.charAt(0).toUpperCase() + wanted.slice(1);
+        }
+
+        return written;
+    }
+
     /**
      * Display a reference.
      *

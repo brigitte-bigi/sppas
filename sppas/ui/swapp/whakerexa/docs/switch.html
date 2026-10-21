@@ -126,24 +126,44 @@
                     <td><code>calc(var(--font-size) * 2.8)</code></td>
                 </tr>
                 <tr>
+                    <td><code>--switch-gap</code></td>
+                    <td>Room kept between the knob and the edge of the track</td>
+                    <td><code>calc(0.4 * var(--font-size))</code></td>
+                </tr>
+                <tr>
+                    <td><code>--switch-knob-size</code></td>
+                    <td>Side of the knob and of each text box; follows the height of the track</td>
+                    <td><code>calc(var(--switch-height) - var(--switch-gap))</code></td>
+                </tr>
+                <tr>
+                    <td><code>--switch-radius</code></td>
+                    <td>Radius of the track</td>
+                    <td><code>var(--border-radius)</code></td>
+                </tr>
+                <tr>
+                    <td><code>--switch-knob-radius</code></td>
+                    <td>Radius of the knob and of the texts</td>
+                    <td><code>var(--border-radius)</code></td>
+                </tr>
+                <tr>
                     <td><code>--switch-bg-color</code></td>
-                    <td>Track background when ON</td>
+                    <td>Ground of the track, on and off alike</td>
                     <td><code>var(--inputs-bg-color)</code></td>
                 </tr>
                 <tr>
                     <td><code>--switch-fg-color</code></td>
-                    <td>Track background when OFF</td>
-                    <td><code>var(--bg-color-alt)</code></td>
+                    <td>Color of the text written in the track</td>
+                    <td><code>var(--buttons-fg-color)</code></td>
                 </tr>
                 <tr>
                     <td><code>--switch-slider-off-color</code></td>
                     <td>Knob color when OFF</td>
-                    <td><code>var(--fg-color-alt)</code></td>
+                    <td><code>var(--error-color)</code></td>
                 </tr>
                 <tr>
                     <td><code>--switch-slider-on-color</code></td>
                     <td>Knob color when ON</td>
-                    <td><code>var(--fg-color)</code></td>
+                    <td><code>var(--success-color)</code></td>
                 </tr>
                 <tr>
                     <td><code>--switch-slider-unselected-opacity</code></td>

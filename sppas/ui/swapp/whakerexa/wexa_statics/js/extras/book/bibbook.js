@@ -37,6 +37,7 @@ import { CitationIndex } from './bibcite.js';
 import { BibliographyTable } from './bibtable.js';
 import { ReferenceDisclosure } from './bibdisclosure.js';
 import { BibliographyControls } from './bibcontrols.js';
+import { Link } from './biblink.js';
 import { BibliographyError, MissingBibliographyPlace } from './biberrors.js';
 
 /**
@@ -128,6 +129,11 @@ export class BookBibliography {
             const content = await this.#source.read();
             const references = this.#parser.parse(content);
 
+            // Where the addresses open is read once, before the first one is
+            // written, and it is read where the bibliography stands. A page
+            // that says nothing opens a tab of its own. B28.
+            this.#takeWhereAddressesOpen();
+
             // The citations are numbered before anything else is looked for:
             // they are in the text, and the text is there. A document with
             // nowhere to put its bibliography still reads.
@@ -166,6 +172,31 @@ export class BookBibliography {
 
 
     // PRIVATE METHODS
+    /**
+     * Take where the page says its addresses open.
+     *
+     * The element where the bibliography stands carries it, written as HTML
+     * writes it: data-links-target="_self" to stay in the document. What is
+     * not said, and what is not one of the two, leaves the tab of its own.
+     *
+     * @returns {void}
+     */
+    #takeWhereAddressesOpen() {
+        Link.resetTarget();
+
+        const place = document.getElementById(this.#placeId);
+        if (place === null) {
+            return;
+        }
+
+        const said = place.getAttribute('data-links-target');
+        if (said === null) {
+            return;
+        }
+
+        Link.setTarget(said);
+    }
+
     /**
      * Give a life to every content the table wrote as opening on demand.
      *

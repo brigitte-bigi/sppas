@@ -117,8 +117,6 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><code>--dialog-border-width</code></td>
-                <tr>
                     <td><code>--dialog-bg-color</code></td>
                     <td>Ground of the dialog</td>
                     <td><code>var(--bg-color)</code></td>
@@ -127,14 +125,6 @@
                     <td><code>--dialog-fg-color</code></td>
                     <td>Text written on it</td>
                     <td><code>var(--fg-color)</code></td>
-                </tr>
-                    <td>Border width (follows <code>--border-width</code>)</td>
-                    <td><code>1px</code> / <code>2px</code> (contrast)</td>
-                </tr>
-                <tr>
-                    <td><code>--dialog-border-radius</code></td>
-                    <td>Corner radius</td>
-                    <td><code>0.4rem</code></td>
                 </tr>
                 <tr>
                     <td><code>--dialog-box-shadow</code></td>
@@ -158,7 +148,10 @@
         <p>
             Load <code>dialog.css</code> to use styled message dialogs. No JavaScript required.
             Add <code>role="alertdialog"</code> and a type class to a <code>&lt;dialog&gt;</code>.
-            The icon header zone is generated via <code>::before</code> — no extra markup required.
+            The sign is generated via <code>::before</code> — no extra markup required: a
+            round of the color of its kind, beside the sentence it qualifies, with what
+            answers at the end of the row. Under a width where a line would be too short
+            to read, the sentence takes the line below the sign.
             Six types are available: <code>info</code>, <code>warning</code>, <code>error</code>,
             <code>success</code>, <code>tips</code>, <code>question</code>.
         </p>
@@ -182,13 +175,11 @@
                     <p>This is a tip: a very useful one!</p>
                 </dialog>
                 <dialog role="alertdialog" class="question" aria-label="Question dialog">
-                    <div><p>Is this a question?</p></div>
-                    <div>
-                        <form method="dialog">
-                            <button>yes</button>
-                            <button>no</button>
-                        </form>
-                    </div>
+                    <p>Is this a question?</p>
+                    <form method="dialog">
+                        <button>yes</button>
+                        <button>no</button>
+                    </form>
                 </dialog>
             </div>
             <pre class="dark"><code>&lt;dialog role="alertdialog" class="info" aria-label="Info dialog"&gt;

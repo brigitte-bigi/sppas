@@ -103,22 +103,26 @@
     <!-- ============================================================ -->
     <section class="panel-item">
 
-        <h2>Call-to-action</h2>
+        <h2>An element that carries role="button"</h2>
         <p>
-            Use <code>.cta-button</code> for the single primary action on a page or panel.
-            It renders with a solid background, small-caps uppercase label and a drop shadow.
-            Works on both <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code> elements.
+            <code>role="button"</code> is drawn the way a <code>&lt;button&gt;</code> is,
+            on whatever element carries it.
+            A command that no longer answers says it with
+            <code>aria-disabled="true"</code>: it keeps the look it has and is no longer
+            lit under the pointer, the way a <code>&lt;button disabled&gt;</code> is not.
         </p>
 
-        <article class="card-doc" aria-label="Call-to-action button — example">
+        <article class="card-doc" aria-label="Role button — example">
             <div class="card-view">
-                <button class="cta-button">Get started</button>
-                <button class="cta-button">Download</button>
-                <button class="cta-button" disabled>Unavailable</button>
+                <div role="button" tabindex="0">a div</div>
+                <span role="button" tabindex="0">a span</span>
+                <span role="button" tabindex="0" aria-disabled="true">a span that does not answer</span>
+                <button disabled>a disabled button</button>
             </div>
-            <pre class="dark"><code>&lt;button class="cta-button"&gt;Get started&lt;/button&gt;
-&lt;a class="cta-button" href="..."&gt;Download&lt;/a&gt;
-&lt;button class="cta-button" disabled&gt;Unavailable&lt;/button&gt;</code></pre>
+            <pre class="dark"><code>&lt;div role="button" tabindex="0"&gt;a div&lt;/div&gt;
+&lt;span role="button" tabindex="0"&gt;a span&lt;/span&gt;
+&lt;span role="button" tabindex="0" aria-disabled="true"&gt;a span that does not answer&lt;/span&gt;
+&lt;button disabled&gt;a disabled button&lt;/button&gt;</code></pre>
         </article>
 
     </section>
@@ -163,8 +167,6 @@
         <p>
             Size is controlled by <code>--text-reveal-height</code> and <code>--text-reveal-width</code>
             (both default to <code>calc(var(--font-size) * 1.6)</code>).
-            Do not combine with <code>.cta-button</code> or <code>.action-button</code> —
-            their padding conflicts with the fixed-width layout.
         </p>
 
         <article class="card-doc" aria-label="Text-reveal button — custom size example">
@@ -221,43 +223,161 @@
     <!-- ============================================================ -->
     <section class="panel-item">
 
-        <h2>Gradient buttons</h2>
+        <h2>Danger</h2>
         <p>
-            <code>.action-button</code> combines an icon and a text label on a horizontal gradient background.
-            <code>.apply-button</code> is its text-only counterpart, slightly shorter.
-            Both share the same gradient that reverses on hover.
+            <code>.danger-button</code> is the only button wearing the color of
+            an error. It is drawn at rest and filled under the pointer, so what
+            it warns of is said twice: by the color, and by the ground that
+            changes. Use it for what cannot be undone — deleting, revoking,
+            emptying — and nowhere else, or the warning stops being read.
         </p>
 
-        <article class="card-doc" aria-label="Action button — example">
+        <article class="card-doc" aria-label="Danger button — example">
             <div class="card-view">
-                <button class="action-button" onclick="Wexa.accessibility.switchContrastScheme();">
-                    <img src="../wexa_statics/icons/contrast_switcher.jpg" alt=""/>
-                    <span>Change contrast</span>
+                <button class="danger-button">Delete the file</button>
+                <button class="danger-button" disabled>Delete the file</button>
+            </div>
+            <pre class="dark"><code>&lt;button class="danger-button"&gt;Delete the file&lt;/button&gt;</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Busy</h2>
+        <p>
+            <code>aria-busy="true"</code> on a button says the work it started
+            is not finished: a ring is drawn at the end of the label and the
+            pointer becomes the one of a wait. The button keeps its place and
+            the size of its text. A screen reader reads the attribute, so the
+            state is not told by the drawing alone. In contrast mode the ring
+            stands still, as every other movement of the framework does.
+        </p>
+        <p>
+            The attribute is written and removed by the page: the framework
+            draws the state, it does not decide when it begins or ends. A
+            command that must not answer twice also carries
+            <code>disabled</code>, which the framework already dresses.
+        </p>
+
+        <article class="card-doc" aria-label="Busy button — example">
+            <div class="card-view">
+                <button aria-busy="true">Sending</button>
+            </div>
+            <pre class="dark"><code>&lt;button aria-busy="true"&gt;Sending&lt;/button&gt;</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Icon only</h2>
+        <p>
+            <code>.icon-button</code> is a square the size of a command, holding
+            a drawing and nothing else. Its name is written in
+            <code>aria-label</code>: it is read by whoever does not see the
+            drawing, and it does not wait for a pointer that a touch screen has
+            not got — which is what separates it from
+            <code>.text-reveal-button</code>, whose label is revealed. The
+            drawing takes the room the button decided, whether it is written in
+            the page or put there by an icon set.
+        </p>
+
+        <article class="card-doc" aria-label="Icon button — example">
+            <div class="card-view">
+                <button class="icon-button" aria-label="Add">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                        <path d="M16 7v18M7 16h18" />
+                    </svg>
                 </button>
-                <button class="action-button" onclick="Wexa.accessibility.switchColorScheme();">
-                    <img src="../wexa_statics/icons/theme_switcher.png" alt=""/>
-                    <span>Change color</span>
+                <button class="icon-button" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                        <path d="M8 8l16 16M24 8L8 24" />
+                    </svg>
+                </button>
+                <button class="icon-button" aria-label="Next" aria-pressed="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 8l8 8-8 8" />
+                    </svg>
                 </button>
             </div>
-            <pre class="dark"><code>&lt;button class="action-button"&gt;
-    &lt;img src="icon.png" alt=""&gt;
-    &lt;span&gt;Label&lt;/span&gt;
+            <pre class="dark"><code>&lt;button class="icon-button" aria-label="Add"&gt;
+    &lt;svg ... aria-hidden="true"&gt;...&lt;/svg&gt;
 &lt;/button&gt;</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="Apply button — example">
+        <p>
+            <code>--icon-button-size</code> says the side of the square, and the
+            drawing takes six tenths of it. A page that wants another size
+            writes the variable on the button, or on what holds a set of them.
+        </p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Row of buttons</h2>
+        <p>
+            A row of buttons is a <code>.wrap-panel</code> of
+            <code>layout.css</code>: the distance between them is said once by
+            <code>--wrap-panel-gap</code>, and a row wider than the room it is
+            given wraps, each button keeping the width of its label. No class is
+            needed on the buttons themselves.
+        </p>
+
+        <article class="card-doc" aria-label="Row of buttons — example">
             <div class="card-view">
-                <button class="apply-button">Apply</button>
-                <button class="apply-button">Cancel</button>
+                <div class="wrap-panel">
+                    <button>Open</button>
+                    <button>Save</button>
+                    <button>Apply</button>
+                    <button class="danger-button">Delete</button>
+                </div>
             </div>
-            <pre class="dark"><code>&lt;button class="apply-button"&gt;Apply&lt;/button&gt;
-&lt;button class="apply-button"&gt;Cancel&lt;/button&gt;</code></pre>
+            <pre class="dark"><code>&lt;div class="wrap-panel"&gt;
+    &lt;button&gt;Open&lt;/button&gt;
+    &lt;button&gt;Apply&lt;/button&gt;
+&lt;/div&gt;</code></pre>
         </article>
 
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Toggle</h2>
         <p>
-            Height: <code>--action-height</code> (default <code>calc(var(--font-size) * 2.8)</code>)
-            and <code>--apply-height</code> (default <code>calc(var(--font-size) * 2.1)</code>).
+            A toggle is a button that stays pressed: a tool left on, a panel
+            left open. <code>aria-pressed</code> carries its state —
+            <code>true</code> when it is on, <code>false</code> when it is off —
+            and a screen reader reads it. The ground takes the shade of a hovered
+            command and a line is drawn inside, so the state is told by more than
+            the color, and the one that is on is seen at rest.
         </p>
+        <p>
+            A button with no <code>aria-pressed</code> is not a toggle, and the
+            attribute is written and changed by the page. Several toggles that
+            exclude one another are a <code>.toggle-group</code>, below.
+        </p>
+
+        <article class="card-doc" aria-label="Toggle — example">
+            <div class="card-view">
+                <button aria-pressed="true">Bold</button>
+                <button aria-pressed="false">Italic</button>
+                <button aria-pressed="false">Underline</button>
+            </div>
+            <pre class="dark"><code>&lt;button aria-pressed="true"&gt;Bold&lt;/button&gt;
+&lt;button aria-pressed="false"&gt;Italic&lt;/button&gt;</code></pre>
+        </article>
 
     </section>
 

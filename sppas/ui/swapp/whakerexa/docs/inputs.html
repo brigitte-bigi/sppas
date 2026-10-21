@@ -90,6 +90,25 @@
 &lt;/div&gt;</code></pre>
         </article>
 
+        <p>
+            An <code>&lt;input&gt;</code> that carries <code>role="button"</code> is given
+            the same room as the one that carries <code>type="button"</code>: a command
+            carries no outer margin of its own. What acts on the form —
+            <code>submit</code> and <code>reset</code> — is the one set apart from the
+            fields above it.
+        </p>
+
+        <article class="card-doc" aria-label="Input buttons — example">
+            <div class="card-view">
+                <input type="button" value="an input button">
+                <input type="submit" value="a submit">
+                <input type="reset" value="a reset">
+            </div>
+            <pre class="dark"><code>&lt;input type="button" value="an input button"&gt;
+&lt;input type="submit" value="a submit"&gt;
+&lt;input type="reset" value="a reset"&gt;</code></pre>
+        </article>
+
         <h3>Variables</h3>
         <p>Interactive element colors are controlled by the following variables:</p>
         <table>
@@ -126,11 +145,11 @@
                 </tr>
                 <tr>
                     <td><code>--border-width</code></td>
-                    <td>Border thickness for inputs and fieldset</td>
+                    <td>Border thickness for inputs and the other commands</td>
                 </tr>
                 <tr>
                     <td><code>--border-radius</code></td>
-                    <td>Corner radius for all form elements</td>
+                    <td>Corner radius of the commands and the fields; a fieldset takes the frame's</td>
                 </tr>
             </tbody>
         </table>
@@ -145,8 +164,10 @@
             Use <code>&lt;form&gt;</code> with <code>&lt;label&gt;</code> elements
             that reference their control via <code>for</code>/<code>id</code>.
             Wrap a group of related fields in <code>&lt;fieldset&gt;</code> with a
-            <code>&lt;legend&gt;</code>. All inputs, selects and textareas fill
-            the available width automatically.
+            <code>&lt;legend&gt;</code>. Every field — input, select, textarea — fills
+            the available width automatically, so that a form reads as one column.
+            An action takes the width of its label, and is set apart from the
+            fields it follows.
         </p>
 
         <article class="card-doc" aria-label="Form with fieldset — example">
@@ -221,6 +242,29 @@
 &lt;/form&gt;</code></pre>
         </article>
 
+        <h3>Fields joined in a row</h3>
+        <p>
+            A <code>&lt;fieldset class="field-group"&gt;</code> lays what it holds in a
+            row, joined: the fields share the room, the action takes the width of its
+            label, and only the two ends of the row are rounded. The row places what it
+            holds, so nothing inside it takes a margin of its own.
+        </p>
+
+        <article class="card-doc" aria-label="Field group — example">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                <form>
+                    <fieldset class="field-group">
+                        <input id="who" type="text" placeholder="Your name" aria-label="Your name"/>
+                        <button type="submit">Send</button>
+                    </fieldset>
+                </form>
+            </div>
+            <pre class="dark"><code>&lt;fieldset class="field-group"&gt;
+    &lt;input type="text" placeholder="Your name" aria-label="Your name"/&gt;
+    &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/fieldset&gt;</code></pre>
+        </article>
+
     </section>
 
     <!-- ============================================================ -->
@@ -255,7 +299,9 @@
         <p>
             Set <code>aria-invalid="true"</code> on an input to show an error icon.
             Set <code>aria-invalid="false"</code> to show a success icon.
-            The icon appears inside the input field on the right side.
+            The icon appears inside the input field on the right side, and the border
+            of the field takes the same color — <code>--error-color</code> or
+            <code>--success-color</code>. A select and a textarea take the border too.
         </p>
 
         <article class="card-doc" aria-label="Validation states — example">

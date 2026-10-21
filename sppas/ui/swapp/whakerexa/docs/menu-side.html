@@ -45,7 +45,7 @@
            aria-label="Menu" aria-haspopup="true" aria-expanded="false">
     <p>Whakerexa > Menus > Side menu demo</p>
 
-    <nav id="header-nav-content" aria-label="Accessibility navigation">
+    <nav id="header-nav-content" class="nav-wexa header" aria-label="Accessibility navigation">
         <button id="btn-contrast" class="menuitem accessibility print-off"
                 type="button" aria-pressed="false" aria-label="Switch contrast" title="Switch contrast"
                 onclick="Wexa.accessibility.switchContrastScheme()">
@@ -63,7 +63,7 @@
     <button aria-label="Pin menu"
             id="pin-menu" type="button"
             aria-controls="nav-content"
-            aria-pressed="true"
+            aria-pressed="false"
             title="Pin menu"
             class="menuitem menu-pin" data-icon="pin">
     </button>
@@ -152,7 +152,7 @@
                 <code>&lt;header&gt;</code>, visible below 896 px.
             </li>
             <li>
-                <code>nav#header-nav-content</code> — compact accessibility controls
+                <code>nav.nav-wexa.header</code> — compact accessibility controls
                 in the header, absolutely positioned at top-right.
             </li>
             <li>
@@ -177,7 +177,7 @@
             aria-expanded="false" aria-label="Toggle navigation menu"&gt;
         &lt;svg ...&gt;&lt;/svg&gt;
     &lt;/button&gt;
-    &lt;nav id="header-nav-content" aria-label="Accessibility navigation"&gt;
+    &lt;nav class="nav-wexa header" aria-label="Accessibility navigation"&gt;
         &lt;button class="menuitem" aria-label="..."&gt;&lt;/button&gt;
     &lt;/nav&gt;
 &lt;/header&gt;
@@ -187,7 +187,7 @@
 
     &lt;button id="pin-menu" class="menuitem menu-pin"
             type="button" aria-controls="nav-content"
-            aria-pressed="true" aria-label="Pin menu"&gt;
+            aria-pressed="false" aria-label="Pin menu"&gt;
         &lt;svg aria-label="Pushpin"&gt;...&lt;/svg&gt;
     &lt;/button&gt;
 

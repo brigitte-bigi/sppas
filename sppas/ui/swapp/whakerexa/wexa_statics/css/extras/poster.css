@@ -151,7 +151,7 @@ the page — which is why this file offers one format and no preset list.
     --size-divisor: 1;
 
     /* The two radii Whakerexa draws with, both taken from the poster's. */
-    --card-border-radius: var(--poster-border-radius);
+    --border-radius-alt: var(--poster-border-radius);
     --border-radius: var(--poster-border-radius);
 }
 

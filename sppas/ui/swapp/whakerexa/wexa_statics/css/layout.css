@@ -31,7 +31,7 @@ This banner notice must not be removed.
 
 */
 
-@layer reset, base, theme, accessibility;
+@layer reset, base, theme, components, accessibility;
 
 
 /* =======================================================================
@@ -46,8 +46,6 @@ This banner notice must not be removed.
 
     :root {
         --card-max-width:     15rem;
-        --card-border-width:  0;
-        --card-border-radius: 8px;
         --card-padding:       0.6rem;
     }
 
@@ -70,6 +68,18 @@ This banner notice must not be removed.
         text-align: center;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .noborder {
+        border: none;
+    }
+
+    /* One space between what follows what, and none before the first: a
+       container says the distance once, and each element after the first
+       takes it. A child that wants another one writes --flow-space. */
+
+    .flow > * + * {
+        margin-top: var(--flow-space, 1em);
     }
 
     /* ------------------------------------------------------------------ */
@@ -118,6 +128,88 @@ This banner notice must not be removed.
 
     .width_full {
         width: 100%;
+    }
+
+    /* A logo is bounded by its height where there is room, and by its width
+       where there is none: a wide screen has lines to spare and a narrow one
+       has not. The other side is left free, so the drawing keeps its shape. */
+
+    @media all and (min-width: 1024px) {
+
+        .small-logo {
+            max-height: 3.5rem;
+            width: auto;
+        }
+
+        .medium-logo {
+            max-height: 6.5rem;
+            width: auto;
+        }
+
+        .large-logo {
+            max-height: 10rem;
+            width: auto;
+        }
+    }
+
+    @media only screen and (max-width: 1023.98px) {
+
+        .small-logo {
+            max-width: 3.5rem;
+            height: auto;
+        }
+
+        .medium-logo {
+            max-width: 6.5rem;
+            height: auto;
+        }
+
+        .large-logo {
+            max-width: 10rem;
+            height: auto;
+        }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Illustrated content — a drawing beside what it illustrates           */
+    /* ------------------------------------------------------------------ */
+
+    /* The drawing takes a share of the width and the text the rest, until
+       the room is too narrow for two columns: then one follows the other. */
+
+    .illustrated-content {
+        display: grid;
+        grid-template-columns: minmax(140px, 22%) 1fr;
+        gap: var(--typography-spacing-horizontal);
+        align-items: center;
+        padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
+    }
+
+    .illustrated-content > img {
+        display: block;
+        width: 100%;
+        max-width: 220px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    /* A grid cell is as wide as what it holds unless it is told it may be
+       narrower: a long word would otherwise widen the column. */
+
+    .illustrated-content > :not(img) {
+        min-width: 0;
+    }
+
+    @media only screen and (max-width: 640px) {
+
+        .illustrated-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .illustrated-content > img {
+            max-width: 160px;
+        }
     }
 
     /* ------------------------------------------------------------------ */
@@ -303,6 +395,29 @@ This banner notice must not be removed.
         grid-row-gap: calc(0.1 * var(--card-max-width));
     }
 
+    /* A panel is written as a list when what it holds is a set, and a set is
+       what a reader is told. The framework draws a square before an item and
+       reserves its place: an item of a panel is not a line of text, so it
+       carries neither. */
+
+    :is(ul, ol):is(.panel, .flex-panel, .wrap-panel, .grid-panel,
+                   .scrolled-panel, .cards-panel, .full-cards-panel) > li {
+        padding-inline-start: 0;
+    }
+
+    :is(ul, ol):is(.panel, .flex-panel, .wrap-panel, .grid-panel,
+                   .scrolled-panel, .cards-panel, .full-cards-panel) > li::before {
+        content: none;
+    }
+
+    /* In a panel of cards, the item is the place the panel gives and the card
+       takes it entire. */
+
+    :is(ul, ol):is(.cards-panel, .full-cards-panel) > li {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+    }
+
     /* ------------------------------------------------------------------ */
     /* Card — structure                                                     */
     /* ------------------------------------------------------------------ */
@@ -311,7 +426,7 @@ This banner notice must not be removed.
         position: relative;
         padding: var(--card-padding);
         margin: 0.4rem;
-        border-radius: var(--card-border-radius);
+        border-radius: var(--border-radius-alt);
         display: flex;
         flex-direction: column;
         cursor: default;
@@ -341,11 +456,6 @@ This banner notice must not be removed.
         margin-bottom: 0;
     }
 
-    /* Reset background on all card children (wexa.css sets * { background-color: var(--bg-color) }) */
-    .card * {
-        background-color: transparent;
-    }
-
     @media only screen and (max-width: 1023.98px) {
         .card {
             max-width: 75%;
@@ -372,8 +482,8 @@ This banner notice must not be removed.
         max-height: calc(8rem * var(--size-divisor));
         width: calc(100% + 2 * var(--card-padding));
         padding: 0.4rem;
-        border-top-right-radius: var(--card-border-radius);
-        border-top-left-radius: var(--card-border-radius);
+        border-top-right-radius: var(--border-radius-alt);
+        border-top-left-radius: var(--border-radius-alt);
         display: inline-flex;
         justify-content: center;
         flex-direction: column;
@@ -382,8 +492,8 @@ This banner notice must not be removed.
 
     .card .card-header img,
     .card .card-header svg {
-        border-top-right-radius: var(--card-border-radius);
-        border-top-left-radius: var(--card-border-radius);
+        border-top-right-radius: var(--border-radius-alt);
+        border-top-left-radius: var(--border-radius-alt);
         max-width: 90%;
         max-height: 90%;
     }
@@ -407,8 +517,8 @@ This banner notice must not be removed.
         min-height: calc(2rem * var(--size-divisor));
         max-height: calc(6rem * var(--size-divisor));
         width: calc(100% + 2 * var(--card-padding));
-        border-bottom-right-radius: var(--card-border-radius);
-        border-bottom-left-radius: var(--card-border-radius);
+        border-bottom-right-radius: var(--border-radius-alt);
+        border-bottom-left-radius: var(--border-radius-alt);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -423,7 +533,7 @@ This banner notice must not be removed.
     .card .card-footer a {
         display: inline-block;
         padding: 0.3rem 1rem;
-        border-radius: var(--card-border-radius);
+        border-radius: var(--border-radius-alt);
         font-weight: var(--font-weight-semibold);
         text-decoration: underline;
         text-underline-offset: 0.2rem;
@@ -489,6 +599,26 @@ This banner notice must not be removed.
         margin-left: calc(var(--font-size) * 0.5);
     }
 
+    /* ------------------------------------------------------------------ */
+    /* Table — columns of equal width                                       */
+    /* ------------------------------------------------------------------ */
+
+    /* The columns of a table are drawn from what they hold, which makes a
+       table of two words and a sentence read crooked. Here the width of the
+       table is shared equally, and a word too long for its column is broken
+       rather than widening it. */
+
+    table.equal-columns {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    table.equal-columns th,
+    table.equal-columns td {
+        overflow: hidden;
+        word-wrap: break-word;
+    }
+
 } /* end @layer base */
 
 
@@ -500,8 +630,6 @@ This banner notice must not be removed.
 
     .contrast {
         --card-max-width:     20rem;
-        --card-border-width:  2px;
-        --card-border-radius: 0.8rem;
     }
 
 } /* end @layer accessibility */
@@ -575,7 +703,7 @@ This banner notice must not be removed.
     /* ------------------------------------------------------------------ */
 
     .card {
-        border: var(--card-border-width) solid var(--border-color-alt);
+        border: var(--border-width-alt) solid var(--border-color-alt);
         background: var(--card-bg-color, var(--bg-color-alt));
         color: var(--card-fg-color, var(--fg-color));
         box-shadow: var(--card-box-shadow);
@@ -590,12 +718,12 @@ This banner notice must not be removed.
         color: inherit;
     }
 
-    .card > * > a[role=button],
+    .card > * > [role=button],
     .card > * > button {
         border: calc(var(--border-width) / 2) solid var(--a-color);
     }
 
-    .card > * > a[role=button]:hover,
+    .card > * > [role=button]:not([aria-disabled=true]):hover,
     .card > * > button:enabled:hover {
         border: calc(var(--border-width) / 2) dashed var(--a-color);
     }
@@ -609,6 +737,7 @@ This banner notice must not be removed.
        grounds alone, it holds nothing in a theme that leaves them transparent:
        a gradient from transparent to transparent shows no card at all. */
     li.enumerate-cards-item {
+        border: var(--border-width-alt) solid var(--border-color-alt);
         background: var(--card-bg-color, var(--bg-color-alt));
         color: var(--card-fg-color, var(--fg-color));
         box-shadow: 0.3rem 0.3rem 0.6rem var(--shadow-color);

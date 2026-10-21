@@ -44,6 +44,9 @@ This banner notice must not be removed.
     height: 100%;
     min-height: 1.5rem;
     font-weight: var(--font-weight-bold);
+    /* The head of a column carries the ground, and what sorts it is written on
+       that ground: a command's own pair would put its ink on the head's paper. */
+    background: none;
     color: inherit;
     border: none;
 }

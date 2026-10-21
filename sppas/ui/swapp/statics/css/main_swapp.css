@@ -72,23 +72,12 @@
     --nav-item-width-v-collapsed: calc(var(--nav-min-width) - var(--typography-spacing-horizontal));
     --nav-item-width-v-expanded: calc(var(--nav-expanded-width) - var(--typography-spacing-horizontal));
 
-    /* Cards */
-    --card-border-radius: 0.8rem;
+    /* The height of an action: the framework carried it while it dressed the
+       buttons of a gradient, and no longer does. The rules below read it. */
+    --action-height: calc(var(--font-size) * 3);
 
     /* SPPAS color tokens: see main_swapp_theme.css */
 }
-
-/* ── Border radius: normal vs contrast ───────────────────── 
-
-:root:not(.contrast) {
-    --border-radius: 0.4rem;
-    --dialog-border-radius: 0.4rem;
-}
-
-.contrast {
-    --border-radius: 0.6rem;
-    --dialog-border-radius: 0.6rem;
-}*/
 
 /* Colors + light/dark/contrast theme extracted to main_swapp_theme.css (loaded right after this file). */
 
@@ -116,8 +105,12 @@
 body > header {
     padding-top: 1rem;
     padding-left: var(--typography-spacing-horizontal);
-    text-align: left !important;
     align-items: flex-start;
+}
+
+/* wexa.css centers what the header holds: here each one starts at the left. */
+body > header > * {
+    text-align: left;
 }
 
 body > header > h1 {
@@ -135,7 +128,7 @@ body > main {
 }
 
 body > main > h2 {
-    padding-left: var(--card-border-radius);
+    padding-left: var(--border-radius-alt);
     padding-bottom: 0;
     padding-top: 2rem;
 }
@@ -165,7 +158,7 @@ nav#nav-content.nav-wexa.side {
 }
 
 nav.nav-wexa button > span {
-    color: var(--nav-fg-color) !important;
+    color: var(--nav-fg-color);
 }
 
 #nav-content [role='menuitem']:hover,
@@ -197,7 +190,12 @@ nav.nav-wexa button > span {
     filter: none;
 }
 
-#nav-content .nav-current {
+/* The page being read. SPPAS marks it with its own class, Whakerexa reads
+   aria-current: both are taken, so the look is the same whichever the markup
+   writes -- and the attribute is the one a screen reader announces. */
+#nav-content .nav-current,
+#nav-content [role='menuitem'][aria-current]:not([aria-current='false']),
+#nav-content .menuitem[aria-current]:not([aria-current='false']) {
     background: var(--nav-item-bg-color-current);
     filter: brightness(0.8) saturate(0.9);
 }
@@ -220,34 +218,6 @@ main > .panel-item:nth-child(2n) .card-footer {
 
 /* ── Buttons ─────────────────────────────────────────────── */
 
-/* A flat surface, on a page where the background, the bar, the panels and
-   the cards are all gradients: what stands out here is the plain one.
-button:not(.menuitem), [role="button"]:not(.menuitem) {
-    background-color: var(--buttons-bg-color);
-    background-image: none;
-    padding: 0.6rem 1.2rem;
-    border: var(--border-width) solid var(--border-color);
-    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
-}
-
-/* Two signals, never the color alone: it changes, and the button rises.
-   The move is seen without telling the hues apart, and it displaces
-   nothing around since the room taken stays the same.
-button:hover, [role='button']:hover {
-    color: var(--buttons-fg-color);
-    background-color: var(--buttons-bg-color-hover);
-    background-image: none;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 4px var(--shadow-color);
-}
-
- */
-
-button:active, [role='button']:active {
-    transform: translateY(0);
-    box-shadow: none;
-}
-
 /* The button carrying an action -- launching an app, sending a message,
    answering a box -- wears the colors of SPPAS, so that it is found before
    anything else is read. One dressing for all of them: what a page adds is
@@ -255,7 +225,7 @@ button:active, [role='button']:active {
 button.action-button {
     background: var(--buttons-bg-color);
     color: var(--buttons-fg-color);
-    padding: 1em 2em;
+    padding: calc(0.5 * var(--typography-spacing-vertical)) var(--typography-spacing-horizontal);
     width: fit-content;
     width: -moz-fit-content;
     font-size: calc(var(--font-size) * 1.125);
@@ -264,16 +234,6 @@ button.action-button {
     text-transform: uppercase;
     border-radius: var(--border-radius);
     box-shadow: none;
-}
-
-/* ── Checkboxes ──────────────────────────────────────────── */
-/* wexa.css hides any native checkbox inside a label. The SPPAS
-   checkboxes are native controls: restore their visibility.    */
-
-label.focusable > input[type="checkbox"] {
-    opacity: 1;
-    width: auto;
-    height: auto;
 }
 
 /* ── Links — animated fill-from-bottom ───────────────────── */
@@ -389,7 +349,7 @@ body.exit-waiting > footer {
 }
 
 .email {
-    font: var(--font-family-mono);
+    font-family: var(--font-family-mono);
 }
 
 .socialnet {
@@ -404,7 +364,7 @@ body.exit-waiting > footer {
 /* The grid comes from .cards-panel of layout.css. */
 .links-panel {
     padding: calc(1.3 * var(--typography-spacing-vertical));
-    border-radius: var(--card-border-radius);
+    border-radius: var(--border-radius-alt);
     background: var(--links-panel-bg-image);
 }
 
@@ -611,53 +571,9 @@ section.actions-panel {
 
 /* ── Logos ───────────────────────────────────────────────── */
 
-@media all and (min-width: 1024px) {
-    .small-logo {
-        max-height: 3.5rem;
-        width: auto;
-    }
-
-    .medium-logo {
-        max-height: 6.5rem;
-        width: auto;
-    }
-
-    .large-logo {
-        max-height: 10rem;
-        width: auto;
-    }
-}
-
-@media only screen and (max-width: 1023.98px) {
-    .small-logo {
-        height: auto;
-        max-width: 3.5rem;
-    }
-
-    .medium-logo {
-        max-width: 6.5rem;
-        height: auto;
-    }
-
-    .large-logo {
-        max-width: 10rem;
-        height: auto;
-    }
-}
-
 .extra-large-logo {
     width: 40rem;
     min-width: 15rem;
-}
-
-/* ── Utilities ───────────────────────────────────────────── */
-
-.noborder {
-    border: none;
-}
-
-.flow > * + * {
-    margin-top: var(--flow-space, 1em);
 }
 
 /* ── Application cards ───────────────────────────────────── */
@@ -670,10 +586,6 @@ section.actions-panel {
     place-items: center;
     border-radius: var(--border-radius);
     background: var(--apps-panel-bg-image);
-}
-
-.apps-panel > .app::before {
-    content: none;
 }
 
 /* A card of layout.css, with two differences of its own: its children are
@@ -698,13 +610,9 @@ section.actions-panel {
     grid-row: 1 / 2;
 }
 
-/* .card of layout.css turns the background of all its children back to
-   transparent: the image asks for its ground again, the one wexa.css gives
-   to every image, in every mode. */
 .app-background-img {
-    background-color: var(--img-bg-color);
     object-fit: cover;
-    border-radius: var(--card-border-radius);
+    border-radius: var(--border-radius-alt);
     max-width: calc(13 * var(--font-size));
     max-height: calc(13 * var(--font-size));
     margin: 0;
@@ -737,7 +645,6 @@ section.actions-panel {
 }
 
 .app-content * {
-    background-color: transparent;
     padding: 0;
     margin: 0;
 }
@@ -768,7 +675,7 @@ section.actions-panel {
     overflow: hidden;
 }
 
-.app-description:not(.contrast) {
+:root:not(.contrast) .app-description {
     max-height: calc(7 * var(--font-size));
 }
 
@@ -777,10 +684,10 @@ section.actions-panel {
     max-height: calc(9 * var(--font-size));
 }
 
-/* Its look comes from .action-button: only its place is written here. */
+/* Its look comes from button.action-button of this file: only its place is
+   written here. */
 .app-button {
     margin: 0 auto;
-    height: calc(var(--font-size) * 2.5);;
 }
 
 /* Hover/focus animation — only for pointer devices */
@@ -907,10 +814,6 @@ section.actions-panel {
     box-shadow: 0 2px 4px var(--toc-shadow-color);
 }
 
-.page-toc a * {
-    background: var(--bg-color);
-}
-
 .page-toc a:hover {
     border-color: var(--toc-border-color-hover);
 }
@@ -965,41 +868,6 @@ section.actions-panel {
     background: var(--toc-num-bg-color-5);
 }
 
-/* ── Illustrated content — image at left, content at right ── */
-/* The SPPAS way of organizing an illustration with its content,
-   in a dialog main as well as in a page main. */
-
-.illustrated-content {
-    display: grid;
-    grid-template-columns: minmax(140px, 22%) 1fr;
-    gap: 1rem;
-    align-items: center;
-    padding: 1rem;
-}
-
-.illustrated-content > img {
-    display: block;
-    width: 100%;
-    max-width: 220px;
-    height: auto;
-    margin: 0 auto;
-}
-
-.illustrated-content > section {
-    min-width: 0;
-}
-
-@media (max-width: 640px) {
-    .illustrated-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-
-    .illustrated-content > img {
-        max-width: 160px;
-    }
-}
-
 /* ── Version block of the About page ─────────────────────── */
 
 .version-block {
@@ -1008,10 +876,6 @@ section.actions-panel {
 
 .version-block .details {
     margin-left: 1.6rem;
-}
-
-.version-block .details p {
-    margin: 0.25rem 0 0 0;
 }
 
 .green {
@@ -1093,22 +957,6 @@ section.actions-panel {
 
 /* ── Message dialogs: a sign, a sentence, a button ─────────── */
 
-/* dialog.css stacks a full-width colored band holding the sign, above the
-   text. A large flat area for one small character, on a page made of
-   cards: the sign comes down beside the sentence instead, in a round of
-   the color of its kind. */
-
-dialog[role=alertdialog] {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--typography-spacing-horizontal);
-    padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
-    /* dialog.css lays the closing cross over the content, out of the flow:
-       the room it needs is kept here, on the right. */
-    padding-right: calc(4 * var(--typography-spacing-horizontal));
-}
-
 /* The cross that closes a box is not the button that answers it. */
 dialog button[name="popup-close-btn"] {
     align-self: flex-start;
@@ -1117,31 +965,10 @@ dialog button[name="popup-close-btn"] {
     border-color: var(--border-color);
 }
 
-dialog[role=alertdialog]::before {
-    flex: none;
-    width: calc(2.4 * var(--font-size));
-    height: calc(2.4 * var(--font-size));
-    padding: 0;
-    border-radius: 50%;
-}
-
-/* The sentence takes the room left, and pushes the button to the end. */
-dialog[role=alertdialog] > p,
-dialog[role=alertdialog] > div {
-    flex: 1 1 min(20rem, 100%);
-    padding: 0;
-}
-
-dialog[role=alertdialog] > button,
-dialog[role=alertdialog] > form {
-    flex: none;
-    margin-top: 0;
-}
-
 /* ── Buttons of the alert dialogs: one single style, centered ── */
 
-/* Its look comes from .action-button, its color from the kind of the box:
-   the round and the button then answer each other. */
+/* Its look comes from button.action-button of this file, its color from the
+   kind of the box: the round and the button then answer each other. */
 dialog[role="alertdialog"] button {
     align-self: center;
     color: var(--dialog-icon-color, rgb(255, 255, 255));
@@ -1199,19 +1026,9 @@ dialog[role="alertdialog"] button:hover {
     padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
 }
 
-/* The buttons of the zone keep the width of their label -- the one which
-   opens the explorer of files, and the one of every card which takes a file
-   back: wexa.css gives every submit button the whole width of its form. A
-   button keeps a space under it: the one of a card does not touch its edge. */
+/* A button keeps a space under it: the one of a card does not touch its edge. */
 .dropzone button {
-    width: fit-content;
     margin-bottom: calc(var(--typography-spacing-vertical) / 2);
-}
-
-/* The button of a card has the ground of every button: layout.css makes
-   every child of a card transparent. */
-.dropzone .card button {
-    background-color: var(--buttons-bg-color);
 }
 
 .dropzone-size,
@@ -1236,12 +1053,6 @@ dialog[role="alertdialog"] button:hover {
 .file-status {
     font-size: calc(0.9 * var(--font-size));
     line-height: 1.2;
-}
-
-/* The button sending what the zone holds keeps the width of its label:
-   wexa.css gives every submit button the whole width of its form. */
-.dropzone ~ .cta-button {
-    width: fit-content;
 }
 
 .file-status-ok {

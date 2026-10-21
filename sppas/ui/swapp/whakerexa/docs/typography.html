@@ -381,6 +381,15 @@
             and description (<code>&lt;dl&gt;</code>) lists are all styled by default.
             No class is required.
         </p>
+        <p>
+            A marker is drawn and the room it needs is kept, for a list read in a
+            text. A list inside a <code>&lt;nav&gt;</code> takes neither: a bar lays
+            its items out itself, and a breadcrumb or a pagination is an
+            <code>&lt;ol&gt;</code> of navigation, not a list of steps to read. So
+            nothing has to be undone there &mdash; no margin, no indent, no number.
+            Where a page writes a list as a panel of <code>layout.css</code>, the same
+            holds, and for the same reason.
+        </p>
 
         <article class="card-doc" aria-label="Lists — ul, ol, dl examples">
             <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">

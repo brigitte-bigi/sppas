@@ -166,7 +166,15 @@ html:lang(fr) .chapter > h1::before {
 
 /* ------------------------- Placement: fixed panel ---------------------- */
 
+/* The ground and the colors of a table of contents: it took them from the rule
+   that dressed every nav, which now names the bar alone. They are said here,
+   where its place is said. */
 nav.book-toc {
+    background: var(--nav-bg-color);
+    color: var(--nav-fg-color);
+    --fg-color: var(--nav-fg-color);
+    --a-color:  var(--nav-fg-color);
+    --li-color: var(--nav-fg-color);
     z-index: 9;
     width: var(--toc-width);
     height: 100%;
@@ -255,7 +263,7 @@ nav.book-toc * {
     padding: 0;
 }
 
-aside.book-toc-aside *:not([role=button]) {
+aside.book-toc-aside *:not(button, [role=button]) {
     margin: 0;
     padding: 0;
     background-color: transparent;
@@ -284,7 +292,7 @@ aside.book-toc-aside *:not([role=button]) {
     font-weight: var(--font-weight-bold);
 }
 
-:is(nav.book-toc, aside.book-toc-aside) a[role=button],
+:is(nav.book-toc, aside.book-toc-aside) [role=button],
 :is(nav.book-toc, aside.book-toc-aside) button {
     width: calc(0.75 * var(--toc-width));
     height: calc(3 * var(--font-size));
@@ -580,7 +588,7 @@ aside.book-toc-aside *:not([role=button]) {
     /* Table of content: text color. The universal selector does not reach a
        pseudo-element, and the number of an entry is one: it is given the
        colour of the entry it numbers, and not the one of a link. */
-    :is(nav.book-toc, aside.book-toc-aside) *:not([role=button]),
+    :is(nav.book-toc, aside.book-toc-aside) *:not(button, [role=button]),
     :is(nav.book-toc, aside.book-toc-aside) li::before {
         color: var(--nav-fg-color);
     }

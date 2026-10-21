@@ -68,12 +68,20 @@
 }
 
 
+/* ── The reading font ──────────────────────────── */
+
+/* The font of SPPAS comes ahead of the system stack, except in contrast mode:
+   there, the framework asks for ContrastFont, and this sheet being outside the
+   layers would pass in front of it whatever its specificity. */
+
+:root:not(.contrast) {
+    --font-family-sans: SansFont, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+
 /* ── Colors of the same value in every mode ───────────────── */
 
 :root {
-    /* The reading font of SPPAS, ahead of the system stack */
-    --font-family-sans: SansFont, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-
     /* The seven links of the Dashboard: one color each, the border being
        the same in both modes. */
     --link-web-border-color: rgb(87, 109, 159);

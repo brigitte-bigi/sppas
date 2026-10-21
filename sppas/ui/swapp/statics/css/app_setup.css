@@ -42,7 +42,6 @@
     /* the ends are clipped by the inner edge of the border of the tour */
     --inner-radius: calc(var(--border-radius) - var(--border-width));
     --breacrumb-height: calc(var(--breadcrumb-font-size) * 3);
-    --action-height: calc(var(--font-size) * 3);
 
     --header-height: max((calc(6 * var(--font-size)) / var(--size-divisor)), 4rem);
 
@@ -209,10 +208,6 @@ ol.breadcrumb > li:before  {
     background: var(--wizard-fieldset-bg-image);
 }
 
-.wizard-fieldset * {
-    background: transparent;
-}
-
 .wizard-fieldset legend {
     background-color: var(--wizard-legend-bg-color);
     color: var(--wizard-legend-fg-color);
@@ -248,7 +243,7 @@ ol.breadcrumb > li:before  {
 .features-caption {
     background-color: transparent;
     color:var(--table-caption-fg-color);
-    border-bottom: var(--border-width) solid var(--table-border-color);
+    border-bottom: var(--border-width) solid var(--border-color-alt);
     text-align: left;
     padding-left: 0;
     padding-top: 0.5rem;
@@ -257,7 +252,7 @@ ol.breadcrumb > li:before  {
 }
 
 .features-table td, .features-table th {
-    border-bottom: var(--table-border-width) solid var(--border-color-alt);
+    border-bottom: var(--border-width-alt) solid var(--border-color-alt);
 }
 
 .p-brief {
@@ -281,13 +276,10 @@ ol.breadcrumb > li:before  {
     color: var(--fg-color-alt);
     background-color: var(--bg-color-alt);
     border: var(--outline-size) solid var(--border-color);
-    border-radius: var(--card-border-radius);
+    border-radius: var(--border-radius-alt);
     padding-left: 0.5rem;
     padding-right: 0.4rem;
     margin-right: 0.5rem;
-    /* wexa.css gives the marker a fixed width, too narrow once the
-       padding and the border above are added */
-    width: auto;
     margin-inline-start: 0;
 }
 

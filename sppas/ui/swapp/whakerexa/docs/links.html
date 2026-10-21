@@ -87,11 +87,101 @@
             <tbody>
                 <tr>
                     <td><code>--a-color</code></td>
-                    <td>Link text color and external-link icon color</td>
+                    <td>Link text color; the external-link mark takes the color of the text it follows</td>
                     <td><code>rgb(8, 92, 148)</code></td>
                 </tr>
             </tbody>
         </table>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>An element that carries role="link"</h2>
+        <p>
+            A role announces a link to the reader who listens, and <code>wexa.css</code>
+            draws one for the reader who looks, on whatever element carries it.
+            The icon of <code>.external-link</code> comes with it, and so does the fit of
+            the box around an image it holds.
+            Being reached from the keyboard is the author's part: the role says what it is,
+            <code>tabindex</code> says it can be reached.
+        </p>
+
+        <article class="card-doc" aria-label="Links — role=link examples">
+            <div class="card-view">
+                <span role="link" tabindex="0">A span that is a link</span>
+                <span role="link" tabindex="0" class="external-link">A span that leaves the page</span>
+                <span role="link" tabindex="0"><img src="../wexa_statics/logos/whakerexa-128.webp" alt="The logo of Whakerexa" width="64"></span>
+            </div>
+            <pre class="dark"><code>&lt;span role="link" tabindex="0"&gt;A span that is a link&lt;/span&gt;
+&lt;span role="link" tabindex="0" class="external-link"&gt;A span that leaves the page&lt;/span&gt;
+&lt;span role="link" tabindex="0"&gt;&lt;img src="logo.webp" alt="The logo of Whakerexa" width="64"&gt;&lt;/span&gt;</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>The marks of a link</h2>
+        <p>
+            A link that does what a reader expects carries no mark. Four do not,
+            and each says so after its text: one leaves the document, one stays
+            inside the page, one hands over a file, one opens a mail program.
+            A fifth says nothing of the address: it is the invitation of the one
+            who writes — read on.
+        </p>
+        <p>
+            Two of them are asked for, because the address does not say them:
+            <code>.external-link</code>, since an absolute address can be of this
+            very site, and <code>.anchor-link</code>, since an anchor is also how
+            a table of contents is written — marking every one of them would
+            mark the rule instead of the exception. The other two are read from
+            the address and need nothing: <code>download</code> and
+            <code>mailto:</code>. The fifth, <code>.more-link</code>, is asked for
+            too, and anywhere: it draws the arrow a page would otherwise type at
+            the end of its text, where a screen reader would read it aloud.
+        </p>
+        <p>
+            The three classes name no element. What leaves the document leaves it
+            whether a reader follows an <code>&lt;a&gt;</code>, something that
+            carries <code>role="link"</code>, or a button that navigates: the
+            class is written where the fact is true, and the mark is drawn there.
+            The two that are read from an address stay on an anchor, since a
+            button has none.
+        </p>
+
+        <article class="card-doc" aria-label="Links — the five marks">
+            <div class="card-view">
+                <a href="#main-content" class="anchor-link">Back to the content</a>
+                <a href="../wexa_statics/icons/mono-svg/anchor-link.svg" download>The icon file</a>
+                <a href="mailto:contact@sppas.org">Write to us</a>
+                <a href="https://sppas.org" class="external-link">SPPAS</a>
+                <a href="bibliography.html" class="more-link">Read on</a>
+                <button class="external-link" onclick="window.open('https://sppas.org', '_blank')">A button that leaves</button>
+            </div>
+            <pre class="dark"><code>&lt;a href="#main-content" class="anchor-link"&gt;Back to the content&lt;/a&gt;
+&lt;a href="icon.svg" download&gt;The icon file&lt;/a&gt;
+&lt;a href="mailto:contact@sppas.org"&gt;Write to us&lt;/a&gt;
+&lt;a href="https://sppas.org" class="external-link"&gt;SPPAS&lt;/a&gt;
+&lt;a href="bibliography.html" class="more-link"&gt;Read on&lt;/a&gt;
+&lt;button class="external-link"&gt;A button that leaves&lt;/button&gt;</code></pre>
+        </article>
+
+        <p>
+            A mark is drawn by the framework, not written in the text: a screen
+            reader does not read it, and the color it takes is the color of the
+            text it follows. A page that wants none of the two automatic ones
+            says so in its own stylesheet:
+        </p>
+
+        <article class="card-doc" aria-label="Links — turning a mark off">
+            <pre class="dark"><code>a[download]::after,
+a[href^="mailto:"]::after {
+    content: none;
+}</code></pre>
+        </article>
 
     </section>
 

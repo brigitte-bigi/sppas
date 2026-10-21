@@ -134,12 +134,12 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><code>--table-border-color</code></td>
-                    <td>Color of all table borders</td>
+                    <td><code>--border-color-alt</code></td>
+                    <td>Color of all table borders, as of any frame</td>
                 </tr>
                 <tr>
-                    <td><code>--table-border-width</code></td>
-                    <td>Thickness of all table borders</td>
+                    <td><code>--border-width-alt</code></td>
+                    <td>Thickness of all table borders, as of any frame</td>
                 </tr>
                 <tr>
                     <td><code>--table-cell-bg-color</code></td>
@@ -173,19 +173,19 @@
     <!-- ============================================================ -->
     <section class="panel-item">
 
-        <h2>Grid layout</h2>
+        <h2>Columns of equal width</h2>
         <p>
-            Adding <code>role="grid"</code> sets a fixed table layout where all columns
+            Adding <code>class="equal-columns"</code> sets a fixed table layout where all columns
             share equal width based on the total table width. Long cell content is
             truncated with word-wrap rather than expanding the column.
-            Use this role for data grids with many columns.
+            Use this class for tables with many columns.
         </p>
 
-        <article class="card-doc" aria-label="Grid table role=grid — example">
+        <article class="card-doc" aria-label="Table with equal columns — example">
             <div class="card-view" style="overflow: auto; width: 100%;">
-                <table role="grid">
+                <table class="equal-columns">
                     <caption>
-                        <span>Table 2:</span> Equal-width columns with <code>role="grid"</code>.
+                        <span>Table 2:</span> Equal-width columns with <code>class="equal-columns"</code>.
                     </caption>
                     <thead>
                         <tr>
@@ -233,7 +233,7 @@
                     </tbody>
                 </table>
             </div>
-            <pre class="dark"><code>&lt;table role="grid"&gt;
+            <pre class="dark"><code>&lt;table class="equal-columns"&gt;
     ...
 &lt;/table&gt;</code></pre>
         </article>
@@ -308,7 +308,7 @@
 
         <article class="card-doc" aria-label="Table — forced dark mode">
             <div class="card-view dark" style="overflow: auto; width: 100%;">
-                <table role="grid">
+                <table class="equal-columns">
                     <caption>
                         <span>Table 3:</span> Forced dark mode via <code>div.dark</code>.
                     </caption>
@@ -359,7 +359,7 @@
                 </table>
             </div>
             <pre class="dark"><code>&lt;div class="dark"&gt;
-    &lt;table role="grid"&gt;
+    &lt;table class="equal-columns"&gt;
         ...
     &lt;/table&gt;
 &lt;/div&gt;</code></pre>

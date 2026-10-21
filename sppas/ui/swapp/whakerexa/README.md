@@ -302,3 +302,17 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - Icons. New `Wexa.gatheredIcons`. A file written by an older build is still read.
 - Themes. Slides read `data-themes` the way the loader does.
 - Logging. A page says how much the framework says: `Wexa.logLevel = 'warning'`, before the loader.
+
+
+## Version 4.2.0 - develop
+
+- Themes: Apply the default theme when none is given.
+- Bibliography: Open the links of the references in a tab, table sort improved.
+- CSS: uniformized the element styling and the corresponding role.
+- CSS: borders are managed with 2 width/colors/radius only. Removed table-border-* and others.
+- CSS: a panel can be written as a list, the file field holds its button.
+- CSS: new classes added to categorize links and add an icon right after.
+- CSS: the sheets of the components are in a layer of their own, a page owns the last word without !important.
+- CSS: buttons and menus revisions.
+- CSS: colors of wexa_theme migrated to default.
+- CSS: a list in a nav has no marker and no indent.

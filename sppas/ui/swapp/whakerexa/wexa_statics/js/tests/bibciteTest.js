@@ -293,5 +293,48 @@ citation_index_tests.add_test(() => {
 });
 
 
+// -----------------------------------------------------------------------
+// The addresses that open under a citation open where those of the table
+// open: one page, one answer. B28.
+// -----------------------------------------------------------------------
+
+citation_index_tests.add_test(() => {
+    const written = write_text('target', ['addressed2026']);
+    const carrying = new BibtexParser().parse(
+        '@misc{addressed2026, title = {A Title}, url = {http://www.example.org/paper.pdf}}');
+
+    new CitationIndex().index(written.root, carrying);
+
+    const address = written.root.querySelector('a.bib-link.external-link');
+    UnitTest.assert_values_equals('_blank', address.getAttribute('target'),
+        "index_address_opens_a_tab_test");
+    UnitTest.assert_values_equals('noopener', address.getAttribute('rel'),
+        "index_address_holds_nothing_test");
+
+    written.remove();
+});
+
+// -----------------------------------------------------------------------
+// A page that asks to stay where it is is answered here too. B28.
+// -----------------------------------------------------------------------
+
+citation_index_tests.add_test(() => {
+    const written = write_text('target-self', ['addressed2026']);
+    const carrying = new BibtexParser().parse(
+        '@misc{addressed2026, title = {A Title}, url = {http://www.example.org/paper.pdf}}');
+
+    Link.setTarget('_self');
+    new CitationIndex().index(written.root, carrying);
+    Link.resetTarget();
+
+    const address = written.root.querySelector('a.bib-link.external-link');
+    UnitTest.assert_values_equals('_self', address.getAttribute('target'),
+        "index_address_stays_test");
+    UnitTest.assert_values_equals(null, address.getAttribute('rel'),
+        "index_address_no_rel_test");
+
+    written.remove();
+});
+
 // launch all unit tests added
 citation_index_tests.launch_unit_test();

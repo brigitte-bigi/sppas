@@ -488,7 +488,7 @@
             <article class="card-doc" aria-label="Table — normal view">
                 <div class="card-view" style="flex-direction: column; width: 100%;">
             <h4>Normal view</h4>
-              <table role="grid">
+              <table class="equal-columns">
                 <caption>
                     <span>Table 1:</span> A caption of the table in this normal view.
                   </caption>
@@ -538,7 +538,7 @@
                 </tbody>
               </table>
                 </div>
-                <pre class="dark"><code>&lt;table role="grid"&gt;
+                <pre class="dark"><code>&lt;table class="equal-columns"&gt;
     &lt;thead&gt;&lt;tr&gt;&lt;th scope="col"&gt;...&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
     &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;...&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
     &lt;caption&gt;&lt;span&gt;Table N:&lt;/span&gt; Caption text.&lt;/caption&gt;
@@ -548,7 +548,7 @@
             <article class="card-doc" aria-label="Table — contrast view">
                 <div class="card-view" style="flex-direction: column; width: 100%;">
             <h4>Contrast view</h4>
-              <table role="grid" class="contrast">
+              <table class="contrast equal-columns">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -598,7 +598,7 @@
                   </caption>
               </table>
                 </div>
-                <pre class="dark"><code>&lt;table role="grid" class="contrast"&gt;&lt;/table&gt;</code></pre>
+                <pre class="dark"><code>&lt;table class="contrast equal-columns"&gt;&lt;/table&gt;</code></pre>
             </article>
 
             <article class="card-doc" aria-label="Table — dark theme">
@@ -606,7 +606,7 @@
             <div class="dark">
             <h4>Dark theme</h4>
 
-            <table role="grid">
+            <table class="equal-columns">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -658,7 +658,7 @@
             </div>
                 </div>
                 <pre class="dark"><code>&lt;div class="dark"&gt;
-    &lt;table role="grid"&gt;&lt;/table&gt;
+    &lt;table class="equal-columns"&gt;&lt;/table&gt;
 &lt;/div&gt;</code></pre>
             </article>
 

@@ -30,7 +30,14 @@ This banner notice must not be removed.
 
 */
 
-@layer reset, base, theme, accessibility;
+@layer reset, base, theme, components, accessibility;
+
+/* The mark of a command at work turns on itself. */
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 
 /* =======================================================================
@@ -46,11 +53,17 @@ This banner notice must not be removed.
     :root {
         --switch-width:                    calc(var(--font-size) * 5);
         --switch-height:                   calc(var(--font-size) * 2.8);
+        /* The room kept between the knob and the edge of the track, the side
+           of the knob, and the two radii: a page changes the look of a switch
+           by these values, without writing a rule. */
+        --switch-gap:                      calc(0.4 * var(--font-size));
+        --switch-radius:                   var(--border-radius);
+        --switch-knob-radius:              var(--border-radius);
         --switch-slider-unselected-opacity: 0;
-        --action-height:                   calc(var(--font-size) * 2.8);
-        --apply-height:                    calc(var(--font-size) * 2.1);
         --text-reveal-height:              calc(var(--font-size) * 1.6);
         --text-reveal-width:               calc(var(--font-size) * 1.6);
+        --icon-button-size:                calc(var(--font-size) * 2.2);
+        --button-busy-animation:           spin;
     }
 
     /* -----------------------------------------------------------------------
@@ -82,6 +95,10 @@ This banner notice must not be removed.
     /* The designed switch. Usually in a span element. */
     /* ----------------------------------------------- */
     .switch-slider {
+        /* The side of the knob is said on the track and not on the root: a
+           switch given another height carries its own, and the knob follows
+           it. */
+        --switch-knob-size: calc(var(--switch-height) - var(--switch-gap));
         position: absolute;
         cursor: pointer;
         top: 0;
@@ -91,17 +108,15 @@ This banner notice must not be removed.
         color: var(--switch-fg-color);
         background-color: var(--switch-bg-color);
         transition: background-color 0.4s ease, transform 0.4s ease;
-        border-radius: var(--border-radius);
-        border: var(--border-width) solid var(--border-color-alt);
+        border-radius: var(--switch-radius);
+        border: var(--border-width) solid var(--border-color);
     }
 
-    .switch-slider:before {
-        border-radius: var(--border-radius);
-    }
-
-    /* Rounded switch. */
+    /* Rounded switch: the two radii are said here, and the rules that draw
+       the track, the knob and the texts read them where they are. */
     .switch-slider.round {
-        border-radius: calc(var(--switch-height) / 2);
+        --switch-radius: calc(var(--switch-height) / 2);
+        --switch-knob-radius: 50%;
     }
 
     /* The switch indicator, with or without text */
@@ -116,10 +131,10 @@ This banner notice must not be removed.
         font-size: calc(var(--font-size) * 0.75);
         font-weight: var(--font-weight-semibold);
         text-align: center;
-        min-width: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
-        max-width: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
+        min-width: var(--switch-knob-size);
+        max-width: var(--switch-knob-size);
         width: fit-content;
-        height: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
+        height: var(--switch-knob-size);
         line-height: normal;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -128,41 +143,34 @@ This banner notice must not be removed.
 
     .switch-slider .switch-off-text {
         background-color: var(--switch-slider-off-color);
-        left: calc(var(--font-size) * 0.4);
+        left: var(--switch-gap);
         opacity: 1;
     }
 
     .switch-slider .switch-on-text {
         background-color: var(--switch-slider-on-color);
-        right: calc(var(--font-size) * 0.4);
+        right: var(--switch-gap);
         opacity: var(--switch-slider-unselected-opacity);
     }
 
     .switch-slider.switch-no-text:before {
         content: "";
-        width: calc(var(--switch-height) - var(--font-size) * 0.4);
+        width: var(--switch-knob-size);
         background-color: var(--switch-slider-off-color);
-        left: calc(var(--font-size) * 0.4);
+        left: var(--switch-gap);
     }
 
     .switch-slider .switch-off-text,
     .switch-slider .switch-on-text,
     .switch-slider.switch-no-text:before {
         position: absolute;
-        padding: 0 calc(var(--font-size) * 0.4);
-        height: calc(var(--switch-height) - var(--font-size) * 0.4);
+        padding: 0 var(--switch-gap);
+        height: var(--switch-knob-size);
         transition: opacity 0.4s ease, transform 0.4s ease;
         color: var(--switch-fg-color);
-        border-radius: var(--border-radius);
-        line-height: calc(var(--font-size) * 2.4);
+        border-radius: var(--switch-knob-radius);
         top: 50%;
         transform: translateY(-50%);
-    }
-
-    .switch-slider.round .switch-off-text,
-    .switch-slider.round .switch-on-text,
-    .switch-slider.round:before {
-        border-radius: 50%;
     }
 
     /* Adjust slider position when checked */
@@ -172,13 +180,9 @@ This banner notice must not be removed.
         background-color: var(--switch-bg-color);
     }
 
-    input:checked + .switch-slider:before {
-        transform: translateX(calc(var(--switch-width) - calc(var(--font-size) * 2.4 + (2 * calc(var(--font-size) / 4)))));
-    }
-
     input:checked + .switch-slider.switch-no-text:before {
         background-color: var(--switch-slider-on-color);
-        transform: translateY(-50%) translateX(calc(var(--switch-width) - var(--switch-height) - calc(0.4 * var(--font-size))));
+        transform: translateY(-50%) translateX(calc(var(--switch-width) - var(--switch-height) - var(--switch-gap)));
     }
 
     input:checked + .switch-slider .switch-off-text {
@@ -200,98 +204,39 @@ This banner notice must not be removed.
     }
 
     /* -----------------------------------------------------------------------
-     Gradient buttons: left/right gradient and shadow for a better contrast.
-     - action-button: img + span
-     - apply-button: text only
-     ----------------------------------------------------------------------- */
-
-    .action-button {
-        height: var(--action-height);
-        min-height: 2rem;
-    }
-
-    .apply-button {
-        height: var(--apply-height);
-        min-height: 1.4rem;
-        padding: 0.2rem;
-    }
-
-    .action-button,
-    .apply-button {
-        box-shadow: 0 0 var(--border-width) var(--border-width) var(--border-color);
-        border-radius: var(--border-radius);
-        background: linear-gradient(to right, var(--bg-color-alt), var(--buttons-bg-color));
-        color: var(--fg-color-alt);
-        transform: all 0.3s ease;
-        margin-left: 0.5rem;
-    }
-
-    .action-button:hover, .action-button:focus,
-    .apply-button:hover, .apply-button:focus {
-        background: linear-gradient(to right, var(--buttons-bg-color), var(--bg-color-alt));
-    }
-
-    .action-button > img {
-        object-fit: contain;
-        flex-shrink: 0;
-        max-height: calc(var(--action-height) * 0.9);
-        padding: 0.2rem;
-        background: none;
-        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8))
-                drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))
-                drop-shadow(0 0 16px rgba(255, 255, 255, 0.4))
-                drop-shadow(0 0 32px rgba(255, 255, 255, 0.2));
-    }
-
-    .action-button > span {
-        background: none;
-        padding: 0.2rem;
-    }
-
-    /* -----------------------------------------------------------------------
      Text-reveal button: img + a span text displayed on hover.
      No transition is defined because of "width: auto".
      ----------------------------------------------------------------------- */
 
     .text-reveal-button {
-        border: var(--border-width) solid var(--buttons-fg-color);
         height: var(--text-reveal-height);
         width: var(--text-reveal-width);
-        /* The room a drawing takes here is the room the button has, less what
-           keeps it off the border: an icon follows the size of the button and
-           not the size of the text, as it does everywhere else. */
-        --icon-width:  calc(var(--text-reveal-width) * 0.9);
-        --icon-height: calc(var(--text-reveal-height) * 0.9);
-        align-items: center;
-        overflow: hidden;
-        justify-content: center;
+        /* The room a drawing takes here is the room the button has, less its
+           border: an icon follows the size of the button and not the size of
+           the text, as it does everywhere else. Said as a coefficient, it was
+           wider than the room and the drawing came out cut. */
+        --icon-width:  calc(var(--text-reveal-width) - 2 * var(--border-width));
+        --icon-height: calc(var(--text-reveal-height) - 2 * var(--border-width));
         position: relative;
         white-space: nowrap;
-        padding: 0;
-        margin: 0;
-    }
-
-    .text-reveal-button > img {
-        object-fit: contain;
-        height: 100%;
-        width: 100%;
-        max-width: 100%;
-        max-height: 100%;
-        padding: 0.2rem;
-        margin: 0;
     }
 
     /* The drawing keeps the room the button gave it: a flexible item is
-       squeezed when the button is closed, and would grow back on hover. */
+       squeezed when the button is closed, and would grow back on hover. The
+       size is the one the button decided, whether the drawing is written in
+       the page, injected by an icon set, or an image. */
+    .text-reveal-button > img,
     .text-reveal-button > svg {
         flex: none;
+        width: var(--icon-width);
+        height: var(--icon-height);
+        object-fit: contain;
     }
 
     .text-reveal-button > span {
-        font-size: 0.8rem;
+        font-size: calc(0.8 * var(--font-size));
         display: none;
-        padding: 0.2rem;
-        margin: 0;
+        padding: calc(0.2 * var(--font-size));
     }
 
     .text-reveal-button:hover,
@@ -313,33 +258,75 @@ This banner notice must not be removed.
     }
 
     /* -----------------------------------------------------------------------
-     Call-to-action button: primary action, high visual weight.
+     Danger button: the action that destroys.
      ----------------------------------------------------------------------- */
 
-    .cta-button {
-        font-variant: small-caps;
-        font-weight: bold;
-        font-size: calc(var(--font-size) * 1.125);
-        text-transform: uppercase;
-        padding: 0.6rem 1.2rem;
-        border-radius: var(--border-radius);
-        box-shadow: 0 0 1.5rem var(--shadow-color);
-        background: var(--buttons-bg-color);
-        color: var(--buttons-fg-color);
-        transition: background 0.4s ease;
+    /* An action that cannot be undone says so before it is clicked, and it is
+       the only one wearing the color of an error. Drawn at rest and filled
+       under the pointer, so the warning is given twice: by the color, and by
+       the ground that changes. */
+
+    .danger-button {
+        border-color: var(--error-color);
+        background: var(--bg-color);
+        color: var(--error-color);
     }
 
-    .cta-button:enabled:hover {
-        background: var(--buttons-bg-color-hover);
+    /* wexa.css gives the children of a command the color of a command: here
+       they take the color the button carries. */
+    .danger-button * {
+        color: inherit;
     }
 
-    a.cta-button {
-        display: inline-block;
-        text-decoration: none;
+    .danger-button:enabled:is(:hover, :active, :focus) {
+        background: var(--error-color);
+        color: var(--bg-color);
     }
 
-    a.cta-button:hover {
-        background: var(--buttons-bg-color-hover);
+    /* -----------------------------------------------------------------------
+     Busy: the command has been clicked and the answer is not there yet.
+     ----------------------------------------------------------------------- */
+
+    /* A ring at the end of the label says the work is not finished. The
+       command keeps its place and the size of its text; what changes is the
+       pointer, and that mark. */
+
+    :is(button, [type=button], [type=submit], [role=button])[aria-busy=true] {
+        cursor: progress;
+    }
+
+    :is(button, [type=button], [type=submit], [role=button])[aria-busy=true]::after {
+        content: "";
+        flex: none;
+        width: calc(0.8 * var(--font-size));
+        height: calc(0.8 * var(--font-size));
+        margin-left: calc(0.5 * var(--typography-spacing-horizontal));
+        border: var(--border-width) solid currentColor;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: var(--button-busy-animation) 0.8s linear infinite;
+    }
+
+    /* -----------------------------------------------------------------------
+     Icon button: a drawing alone, named for whoever does not see it.
+     ----------------------------------------------------------------------- */
+
+    /* A square the size of a command, holding a drawing and nothing else. The
+       name is written in aria-label: it is read, it is never shown, and it
+       does not wait for a pointer that a touch screen has not got. */
+
+    .icon-button {
+        width: var(--icon-button-size);
+        height: var(--icon-button-size);
+        --icon-width:  calc(0.6 * var(--icon-button-size));
+        --icon-height: calc(0.6 * var(--icon-button-size));
+    }
+
+    .icon-button > svg,
+    .icon-button > img {
+        flex: none;
+        width: var(--icon-width);
+        height: var(--icon-height);
     }
 
 } /* end @layer base */
@@ -362,4 +349,36 @@ This banner notice must not be removed.
         --switch-slider-on-color:   var(--success-color);
     }
 
+    /* ------------------------------------------------------------------ */
+    /* The room around the label of a command                              */
+    /* ------------------------------------------------------------------ */
+
+    /* wexa.css says it in this layer, for every command at once: a class that
+       gives a command another size has to say it from here too, or the one of
+       every command would cover it. */
+
+    /* A danger says nothing about the size of a command: it keeps the room
+       wexa.css gives to every one of them, and stands beside them. */
+
+    .icon-button,
+    .text-reveal-button {
+        padding: 0;
+    }
+
 } /* end @layer theme */
+
+
+/* =======================================================================
+                    @layer accessibility — contrast mode
+   ======================================================================== */
+
+@layer accessibility {
+
+    /* A mark that turns is a movement: in contrast mode it stands still, as
+       every other movement of the framework does. */
+
+    .contrast {
+        --button-busy-animation: animDisabled;
+    }
+
+} /* end @layer accessibility */

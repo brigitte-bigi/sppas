@@ -47,12 +47,6 @@
     background-color: var(--table-cell-bg-color);
 }
 
-/* The choice of the format and what the format supports start at the same
-   height: wexa.css pads a section of the main, and not an aside. */
-#convert_section .flex-panel > section {
-    padding: 0;
-}
-
 /* What a format supports is marked with the color of success, in the aside
    of the format chosen as in the dialog which compares the formats. */
 #convert_section [data-icon="yes"] {

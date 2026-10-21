@@ -65,7 +65,11 @@ This banner notice must not be removed.
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
     cursor: pointer;
+    /* A key says its ground, so it says its ink: the ground of a command and
+       the ink of a command go together, and taking one without the other wrote
+       the letter in white on a pale key. */
     background-color: var(--bg-color-alt);
+    color: var(--fg-color);
 }
 
 /* Deliberately no image sizing rule here: a key's illustration is content, */

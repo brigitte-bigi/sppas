@@ -295,8 +295,8 @@ body > footer {
    ======================================================================= */
 
 .slide {
-    border: var(--border-width) solid var(--border-color);
-    border-radius: var(--border-radius);
+    border: var(--border-width-alt) solid var(--border-color-alt);
+    border-radius: var(--border-radius-alt);
 }
 
 /* =======================================================================
@@ -448,6 +448,17 @@ body.note-view aside[for] {
     gap: var(--font-size);
     align-content: flex-start;
     justify-content: center;
+}
+
+/* The label is the visible control: the radio it holds stays reachable by the
+   keyboard and by assistive tech, and is not painted. */
+.overview-btn input[type="radio"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    margin: 0;
 }
 
 .overview-btn {
@@ -639,9 +650,10 @@ body.presentation-view {
           VISUAL DEFAULTS — @layer theme, overrideable by theme files
 
    Theme files injected by ThemeManager are appended to <head> after this
-   stylesheet. Within @layer theme, later source order wins, so any theme
-   file that defines the same selectors will automatically override these
-   defaults without specificity tricks.
+   stylesheet. Within @layer theme, the more specific selector wins first, and
+   source order decides only between equals: a theme writes these on the same
+   selector as the framework does -- :root:not(.dark) for a light palette --
+   and its values are then taken.
    ======================================================================= */
 
 @layer theme {
@@ -716,7 +728,7 @@ body.presentation-view {
         font-variant: normal;
         text-align: left;
         letter-spacing: calc(var(--font-size) * 0.03);
-        border-bottom: var(--border-width) solid var(--border-color);
+        border-bottom: var(--border-width-alt) solid var(--border-color-alt);
     }
 
     /* Sub-section heading */
@@ -726,7 +738,7 @@ body.presentation-view {
         font-variant: normal;
         text-align: left;
         letter-spacing: calc(var(--font-size) * 0.03);
-        border-bottom: var(--border-width) solid var(--border-color);
+        border-bottom: var(--border-width-alt) solid var(--border-color-alt);
     }
 
     /* Inline quotes */
@@ -763,7 +775,7 @@ body.presentation-view {
 
     /* Notes column */
     body.note-view aside[for] {
-        border-left: var(--border-width) solid var(--border-color);
+        border-left: var(--border-width-alt) solid var(--border-color-alt);
         color: var(--fg-color);
     }
 

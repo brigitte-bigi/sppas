@@ -263,9 +263,9 @@ aside.book-toc-aside::after {
 
 /* The universal selector does not reach a pseudo-element, and the number of
    an entry of the table of contents is one. */
-nav.book-toc *:not([role=button]),
+nav.book-toc *:not(button, [role=button]),
 nav.book-toc li::before,
-aside.book-toc-aside *:not([role=button]),
+aside.book-toc-aside *:not(button, [role=button]),
 aside.book-toc-aside li::before {
     color: var(--a-color);
 }

@@ -30,841 +30,880 @@ This banner notice must not be removed.
 
 */
 
+@layer reset, base, theme, components, accessibility;
 
-/* =======================================================================
-                            VARIABLE DEFINITIONS
-  ======================================================================== */
+@layer components {
 
-:root {
-    /* Default behavior is an horizontal menu, with a min height and no
-    min width. For a side menu, fix a min-height to 0 and the desired min
-    width.  */
-    --nav-min-height: max(calc(var(--font-size) * 4 / var(--size-divisor)), calc(var(--font-size) * 3));
-    --nav-min-width: 0;
+    /* =======================================================================
+                                VARIABLE DEFINITIONS
+      ======================================================================== */
 
-    /* What a bar takes on the page. Its box is a border-box, so the room it
-       keeps for the outline of a focused item is already inside its minimum
-       height: the bar is that minimum, unless what it holds asks for more --
-       an item, and the two spaces the outline is drawn in. What is placed
-       under a bar is placed at this, never at the minimum alone. */
-    --nav-height: max(var(--nav-min-height),
-                      calc(var(--nav-item-height) + 2 * var(--outline-size)));
-
-    /* All menu items */
-    --nav-item-min-height: max(calc(var(--font-size) * 2 / var(--size-divisor)), calc(var(--font-size) * 2));
-    --nav-item-height: max(calc(var(--font-size) * 2.5 / var(--size-divisor)), calc(var(--font-size) * 2.5));
-    --nav-item-max-height: max(calc(var(--font-size) * 3 / var(--size-divisor)), calc(var(--font-size) * 3));
-
-    /* An item gives up its own width before the row wraps. */
-    --nav-item-min-width-h: min-content;
-    --nav-item-width-h: max(calc(var(--font-size) * 8 / var(--size-divisor)), calc(var(--font-size) * 6));
-    --nav-item-max-width-h: max(calc(var(--font-size) * 15 / var(--size-divisor)), calc(var(--font-size) * 12));
-
-    /* Vertical side widths */
-    --nav-expanded-width: max(calc(var(--font-size) * 16 / var(--size-divisor)), calc(var(--font-size) * 14)); /* open side */
-
-    /* A nav narrower than a third of a phone screen makes no sense. */
-    --nav-mobile-expanded-width: min(80vw, calc(var(--font-size) * 30));
-    --nav-item-width-v-collapsed: var(--nav-min-width);
-    --nav-item-width-v-expanded: var(--nav-expanded-width);
-
-    --appmenu-position: left;
-    --appmenu-align: left top;
-
-    --menu-button-size: max(calc(var(--font-size) * 4 / var(--size-divisor)), calc(var(--font-size) * 3));
-}
-
-
-/* =======================================================================
-                            OVERRIDES STYLE
-  ======================================================================== */
-
-/* The bar keeps, above and below its items, the room the focus outline is
-   drawn in. Without it that room is what is left over when the bar is asked to
-   be taller than its items, so lowering the height of the bar takes the outline
-   away with it, and the bar clips what its items draw outside themselves. */
-nav.nav-wexa {
-    min-height: var(--nav-min-height);
-    min-width: var(--nav-min-width);
-    padding-top: var(--outline-size);
-    padding-bottom: var(--outline-size);
-}
-
-/* Required for a submenu positioning */
-nav.nav-wexa ul > li {
-    position: relative;
-}
-
-/* DEPRECATED: checkbox-based toggle, use #menu-button instead. */
-/* Hide checkboxes */
-nav.nav-wexa input[type=checkbox] {
-    display: none;
-}
-
-/* =======================================================================
-                            TARGETED STYLE
-  ======================================================================== */
-
-/* --------------------------------------------------------------------- */
-/* Header navigation placement (#header-nav-content)                     */
-/* --------------------------------------------------------------------- */
-
-nav#header-nav-content {
-    position: absolute;
-    bottom: auto;
-    top: calc(var(--font-size) * 1);
-    left: auto;
-    right: calc(var(--font-size) * 2);
-    background: transparent;
-    box-shadow: none;
-}
-
-nav#header-nav-content :is([role="menuitem"], .menuitem) {
-    min-width: var(--nav-item-height);
-    width: var(--nav-item-height);
-    max-width: var(--nav-item-height);
-}
-
-nav#header-nav-content :is([role="menuitem"], .menuitem) > svg {
-    width: 90%;
-    height: 90%;
-}
-
-/* ----------------------------------------------------------------------
-   Main navigation placement (#nav-content)
-   ---------------------------------------------------------------------
-   Its default position in wexa.css is horizontal, sticky at top
-
-   Below, it can be fixed at:
-    - top (.top), horizontally,
-    - bottom (.bottom), horizontally,  or
-    - left-side (.side), vertically.
-
-/* --------------------------------------------------------------------- */
-
-.nav-wexa {
-    color: var(--nav-fg-color);
-    background: var(--nav-bg-color);
-}
-
-/* -------- Fixed at the top of the page --------- */
-nav.nav-wexa.top {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding-left: var(--typography-spacing-horizontal);
-    padding-right: var(--typography-spacing-horizontal);
-    padding-top: var(--outline-size);
-    padding-bottom: var(--outline-size);
-}
-
-/* When the top menu is present, push down the page content */
-body:has(nav.nav-wexa.top) {
-    padding-top: var(--nav-height);
-}
-
-/* -------- Fixed at the bottom of the page -------- */
-nav.nav-wexa.bottom {
-    position: fixed;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding-left: var(--typography-spacing-horizontal);
-    padding-right: var(--typography-spacing-horizontal);
-    padding-top: var(--outline-size);
-    padding-bottom: var(--outline-size);
-}
-
-/* When the bottom menu is present, push up the page content */
-body:has(nav.nav-wexa.bottom) {
-    padding-bottom: var(--nav-item-height);
-}
-
-nav.nav-wexa.top,
-nav.nav-wexa.bottom {
-    overflow-x: auto;
-    max-width: 100vw;
-}
-
-/* -------- Fixed vertically on the left side --------- */
-nav.nav-wexa.side {
-    margin: 0;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: calc(2 * var(--typography-spacing-vertical) + var(--menu-button-size));
-    padding-bottom: var(--typography-spacing-vertical);
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: auto;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    min-width: var(--nav-min-width);
-    width: var(--nav-min-width);
-    box-shadow: none;
-
-    max-height: 100vh;
-
-    flex-wrap: nowrap;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-/* When the side menu is collapsed */
-nav.nav-wexa.side.collapsible {
-    min-width: var(--nav-min-width);
-    width: var(--nav-min-width);
-}
-
-body:has(nav.nav-wexa.side) {
-    transition: padding-left 0.3s ease;
-    margin: 0;  /* avoid cumulative spacing */
-    width: 100%;
-}
-
-/* Padding left */
-body:has(nav.nav-wexa.side.collapsible) {
-    padding-left: var(--nav-min-width);
-}
-
-body:has(nav.nav-wexa.side:not(.collapsible)) {
-    padding-left: var(--nav-expanded-width);
-}
-
-/* When the side menu is pinned-expanded */
-body:has(nav.nav-wexa.side.collapsible.expanded[aria-pinned="true"]) {
-    padding-left: var(--nav-expanded-width);
-}
-
-/* Expand when hovered, focused, or pinned (.expanded).
-   When a submenu (aside.appmenu) is open the nav collapses back — the aside
-   takes over visually and closes via the body click handler. */
-nav.nav-wexa.side.collapsible:hover:not(:has(aside.appmenu.open)),
-nav.nav-wexa.side.collapsible:has(:is([role="menuitem"], .menuitem):focus-visible):not(:has(aside.appmenu.open)),
-nav.nav-wexa.side.collapsible.expanded:not(:has(aside.appmenu.open)) {
-    width: var(--nav-expanded-width);
-}
-
-
-/* =======================================================================
-                            MENUITEM STYLE
-  ======================================================================== */
-
-/* -----------------------------------------------------------------------
-    Base style for all nav menu items
-   ----------------------------------------------------------------------- */
-
-:is([role="menuitem"], .menuitem) {
-    min-height: var(--nav-item-min-height);
-    height:     var(--nav-item-height);
-    max-height: var(--nav-item-max-height);
-
-    /* Horizontal defaults, used when not overridden. */
-    min-width:  var(--nav-item-min-width-h);
-    flex-basis: var(--nav-item-min-width-h);
-    width:      var(--nav-item-width-h);
-    max-width:  var(--nav-item-max-width-h);
-
-    padding-left: calc(0.2 * var(--typography-spacing-horizontal));
-    padding-right: calc(0.2 * var(--typography-spacing-horizontal));
-    padding-top: calc(0.2 * var(--typography-spacing-vertical));
-    padding-bottom: calc(0.2 * var(--typography-spacing-vertical));
-
-    text-decoration: none;
-}
-
-/* -------- the current nav item -------- */
-nav.nav-wexa :is([role="menuitem"], .menuitem)[aria-current] {
-    opacity: 1;
-    box-shadow: none;
-    filter: none;
-    border-radius: var(--border-radius);
-}
-
-/* -------- images in items -------- */
-:is([role="menuitem"], .menuitem) > img,
-:is([role="menuitem"], .menuitem) > svg {
-    display: block;
-    width: calc(var(--nav-item-height) * 0.9);
-    height: calc(var(--nav-item-height) * 0.9);
-    cursor: pointer;
-    margin: 0;
-}
-
-
-/* -------- text in items -------- */
-:is([role="menuitem"], .menuitem):not(img) {
-    text-align: center;
-    font-family: inherit;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: var(--font-weight-semibold);
-    font-size: calc(0.9 * var(--font-size));
-    overflow: hidden;
-    position: relative;
-}
-
-
-/* -----------------------------------------------------------------------
-    Specific style for the menu items of the main menu
-   ----------------------------------------------------------------------- */
-
-nav.nav-wexa :is([role="menuitem"], .menuitem),
-aside.appmenu nav :is([role="menuitem"], .menuitem) {
-    font-variant: small-caps;
-    font-weight: var(--font-weight-semibold);
-    font-size: calc(0.8 * var(--font-size));
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: space-around;
-    text-decoration: none;
-    color: var(--nav-fg-color);
-    background-color: var(--nav-bg-color);
-}
-
-nav.nav-wexa :is([role="menuitem"], .menuitem):not([aria-current]),
-aside.appmenu nav :is([role="menuitem"], .menuitem):not([aria-current]) {
-    opacity: 1;
-}
-
-/* ---- the menuitem is opening a submenu ---- */
-
-:is([role="menuitem"], .menuitem)[aria-haspopup="true"] {
-    border-left: calc(4 * var(--border-width)) solid var(--a-color);
-}
-
-
-/* ---------------------- Vertical at side main menu ------------------- */
-
-nav.nav-wexa.side :is([role="menuitem"], .menuitem) {
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-}
-
-nav.nav-wexa.side :is([role="menuitem"], .menuitem):hover,
-nav.nav-wexa.side :is([role="menuitem"], .menuitem):focus-visible {
-    background-color: rgba(128, 128, 128, 0.5);
-}
-
-nav.nav-wexa :is([role="menuitem"], .menuitem) span {
-    font-variant: small-caps;
-    font-size: calc(0.8 * var(--font-size));
-    font-weight: var(--font-weight-semibold);
-}
-
-nav.nav-wexa :is([role="menuitem"], .menuitem) * {
-    color: inherit;
-}
-
-/* Fixed, non-collapsible: show labels and use expanded width */
-nav.nav-wexa.side:not(.collapsible) :is([role="menuitem"], .menuitem) {
-    min-width: var(--nav-item-width-v-expanded);
-    width:     var(--nav-item-width-v-expanded);
-    max-width: var(--nav-item-width-v-expanded);
-}
-
-/* ------------------ Expand side if collapsible --------------- */
-
-/* Collapsible — collapsed = icons only, labels hidden. An open submenu
-   collapses the nav whatever opened it, so it collapses the items too. */
-nav.nav-wexa.side.collapsible:not(.expanded) > :is([role="menuitem"], .menuitem),
-nav.nav-wexa.side.collapsible:not(.expanded) > section > :is([role="menuitem"], .menuitem),
-nav.nav-wexa.side.collapsible:has(aside.appmenu.open) > :is([role="menuitem"], .menuitem),
-nav.nav-wexa.side.collapsible:has(aside.appmenu.open) > section > :is([role="menuitem"], .menuitem) {
-    min-width: var(--nav-item-width-v-collapsed);
-    width:     var(--nav-item-width-v-collapsed);
-    max-width: var(--nav-item-width-v-collapsed);
-}
-
-nav.nav-wexa.side.collapsible:not(.expanded) :is([role="menuitem"], .menuitem) span,
-nav.nav-wexa.side.collapsible:has(aside.appmenu.open) :is([role="menuitem"], .menuitem) span {
-    display: none;
-}
-
-/* Smooth transition for menu items and container */
-nav.nav-wexa.side.collapsible,
-nav.nav-wexa.side.collapsible :is([role="menuitem"], .menuitem) {
-    transition: min-width 0.3s ease, width 0.3s ease, max-width 0.3s ease;
-}
-
-nav.nav-wexa.side.collapsible:hover:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem),
-nav.nav-wexa.side.collapsible:has(:is([role="menuitem"], .menuitem):focus-visible):not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem),
-nav.nav-wexa.side.collapsible.expanded:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) {
-    min-width: var(--nav-item-width-v-expanded);
-    width:     var(--nav-item-width-v-expanded);
-    max-width: var(--nav-item-width-v-expanded);
-}
-
-nav.nav-wexa.side.collapsible:hover:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) span,
-nav.nav-wexa.side.collapsible:has(:is([role="menuitem"], .menuitem):focus-visible):not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) span,
-nav.nav-wexa.side.collapsible.expanded:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) span {
-    display: inline;
-}
-
-/* =======================================================================
-                            SUBMENUS (for the default sticky)
-  ======================================================================== */
-
-.submenu {
-    flex-direction: column;
-    z-index: 100;
-    padding-left: var(--typography-spacing-horizontal);
-    padding-right: var(--typography-spacing-horizontal);
-    padding-top: calc(0.3 * var(--typography-spacing-vertical));
-    padding-bottom: calc(0.3 * var(--typography-spacing-vertical));
-}
-
-.submenu :is([role="menuitem"], .menuitem) {
-    background-color: var(--bg-color-alt);
-    font-weight: var(--font-weight-normal);
-}
-
-.submenu {
-    display: none;
-}
-
-body > nav > * *:hover .submenu,
-body > nav > * *:focus-within .submenu {
-    box-shadow: 0 calc(var(--font-size) * 0.3) calc(var(--font-size) * 0.4) calc(var(--font-size) * 0.2) var(--shadow-color);  /* same as 'nav' */
-    position: absolute;
-    display: flex;
-    top: 100%;
-    min-width: 100%;
-}
-
-/* -------- Submenus background colors -------- */
-
-.submenu-gray {
-    background-color: rgba(128, 128, 128, 0.5);
-}
-
-.submenu-red {
-    background-color: rgba(255, 50, 50, 0.5);
-}
-
-.submenu-green {
-    background-color: rgba(29, 72, 18, 0.5);
-}
-
-.submenu-orange {
-    background-color: rgba(154, 109, 38, 0.5);
-}
-
-
-/* ======================================================================= */
-/*      Mobile menu toggle           */
-/* ======================================================================= */
-
-/* -------- via #mobile + .expanded  -------- */
-
-/* DEPRECATED: #mobile (input[type=checkbox]) is no longer recommended.
-   Use #menu-button (button) with aria-label instead. */
-#mobile {
-    display: none;
-}
-
-#menu-button {
-    position: fixed;
-    top: var(--typography-spacing-vertical);
-    left: var(--typography-spacing-horizontal);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: var(--menu-button-size);
-    height: var(--menu-button-size);
-
-    border-radius: 50%;
-    /* A dark button outlined with its own color vanishes on a dark header. */
-    border: var(--border-width) solid var(--border-color);
-    color: var(--nav-fg-color);
-    cursor: pointer;
-
-    transition: background-color 0.2s ease, transform 0.1s ease;
-
-    background-color: var(--nav-bg-color);
-    padding: 0;
-    z-index: 100;
-}
-
-/* The strokes are named here, and not left to the currentColor the icon
-   declares: that relay did not happen at rest, and the icon stayed the color it
-   had been given last, which no eye finds again on the white nav of the high
-   contrast theme. Why it held under the pointer and not at rest is not known.
-
-   This is written for this button alone. The same could be done for every icon
-   of a menu item, but not in one rule: an icon that is drawn asks for 'stroke',
-   an icon that is filled for 'fill', and giving 'fill' to one that declares
-   'fill: none' fills the shapes it draws with. */
-#menu-button > svg {
-    width: 55%;
-    height: 55%;
-    stroke: var(--nav-fg-color);
-}
-
-#menu-button:hover {
-    background-color: var(--nav-fg-color);
-    color: var(--nav-bg-color);
-    transform: scale(1.05);
-}
-
-#menu-button:hover > svg {
-    stroke: var(--nav-bg-color);
-}
-
-/* -------- mobile screen and print -------- */
-/* The code below is preserved but some is deprecated */
-@media screen and (max-width: 1023.98px) {
-    #menu-button {
-        display: inline-flex;
-    }
-    nav.nav-wexa.side #pin-menu {
-        display: none;
-    }
-
-    /* A narrow screen leaves no room beside the title. */
-    nav#header-nav-content {
-        position: static;
-    }
-}
-
-@media all and (max-width: 1023.98px) {
-
-    /* Under the mobile border, the open side menu takes the mobile width */
     :root {
-        --nav-expanded-width: var(--nav-mobile-expanded-width);
+        /* Default behavior is an horizontal menu, with a min height and no
+        min width. For a side menu, fix a min-height to 0 and the desired min
+        width.  */
+        --nav-min-height: max(calc(var(--font-size) * 4 / var(--size-divisor)), calc(var(--font-size) * 3));
+        --nav-min-width: 0;
+
+        /* What a bar takes on the page. Its box is a border-box, so the room it
+           keeps for the outline of a focused item is already inside its minimum
+           height: the bar is that minimum, unless what it holds asks for more --
+           an item, and the two spaces the outline is drawn in. What is placed
+           under a bar is placed at this, never at the minimum alone. */
+        --nav-height: max(var(--nav-min-height),
+                          calc(var(--nav-item-height) + 2 * var(--outline-size)));
+
+        /* All menu items */
+        --nav-item-min-height: max(calc(var(--font-size) * 2 / var(--size-divisor)), calc(var(--font-size) * 2));
+        --nav-item-height: max(calc(var(--font-size) * 2.5 / var(--size-divisor)), calc(var(--font-size) * 2.5));
+        --nav-item-max-height: max(calc(var(--font-size) * 3 / var(--size-divisor)), calc(var(--font-size) * 3));
+
+        /* An item gives up its own width before the row wraps. */
+        --nav-item-min-width-h: min-content;
+        --nav-item-width-h: max(calc(var(--font-size) * 8 / var(--size-divisor)), calc(var(--font-size) * 6));
+        --nav-item-max-width-h: max(calc(var(--font-size) * 15 / var(--size-divisor)), calc(var(--font-size) * 12));
+
+        /* Vertical side widths */
+        --nav-expanded-width: max(calc(var(--font-size) * 16 / var(--size-divisor)), calc(var(--font-size) * 14)); /* open side */
+
+        /* A nav narrower than a third of a phone screen makes no sense. */
+        --nav-mobile-expanded-width: min(80vw, calc(var(--font-size) * 30));
+        --nav-item-width-v-collapsed: var(--nav-min-width);
+        --nav-item-width-v-expanded: var(--nav-expanded-width);
+
+        --appmenu-position: left;
+        --appmenu-align: left top;
+
+        --menu-button-size: max(calc(var(--font-size) * 4 / var(--size-divisor)), calc(var(--font-size) * 3));
     }
 
-    /* Hide expanded side menu */
-    nav.nav-wexa.side {
+
+    /* =======================================================================
+                                OVERRIDES STYLE
+      ======================================================================== */
+
+    /* The bar keeps, above and below its items, the room the focus outline is
+       drawn in. Without it that room is what is left over when the bar is asked to
+       be taller than its items, so lowering the height of the bar takes the outline
+       away with it, and the bar clips what its items draw outside themselves. */
+    nav.nav-wexa {
+        min-height: var(--nav-min-height);
+        min-width: var(--nav-min-width);
+        padding-top: var(--outline-size);
+        padding-bottom: var(--outline-size);
+    }
+
+    /* Required for a submenu positioning */
+    nav.nav-wexa ul > li {
+        position: relative;
+    }
+
+    /* DEPRECATED: checkbox-based toggle, use #menu-button instead. */
+    /* Hide checkboxes */
+    nav.nav-wexa input[type=checkbox] {
         display: none;
     }
-    nav.nav-wexa.side.expanded {
-        display: flex;
+
+    /* =======================================================================
+                                TARGETED STYLE
+      ======================================================================== */
+
+    /* --------------------------------------------------------------------- */
+    /* Header bar placement (.nav-wexa.header)                               */
+    /* --------------------------------------------------------------------- */
+
+    /* A bar of the header: it sits in the corner of a decorative header and
+       carries no ground of its own, the header having one. A variant of the
+       family, as .top, .bottom and .side are, and no longer an identifier the
+       stylesheet knows by name. */
+
+    nav.nav-wexa.header {
+        position: absolute;
+        bottom: auto;
+        top: calc(var(--font-size) * 1);
+        left: auto;
+        right: calc(var(--font-size) * 2);
+        background: transparent;
+        box-shadow: none;
     }
 
-    /* Remove body left padding when side menu is hidden */
-    body:has(nav.nav-wexa.side.collapsible) {
+    nav.nav-wexa.header :is([role="menuitem"], .menuitem) {
+        min-width: var(--nav-item-height);
+        width: var(--nav-item-height);
+        max-width: var(--nav-item-height);
+    }
+
+    nav.nav-wexa.header :is([role="menuitem"], .menuitem) > svg {
+        width: 90%;
+        height: 90%;
+    }
+
+    /* ----------------------------------------------------------------------
+       Main navigation placement (#nav-content)
+       ---------------------------------------------------------------------
+       Its default position in wexa.css is horizontal, sticky at top
+
+       Below, it can be fixed at:
+        - top (.top), horizontally,
+        - bottom (.bottom), horizontally,  or
+        - left-side (.side), vertically.
+
+    /* --------------------------------------------------------------------- */
+
+    .nav-wexa {
+        color: var(--nav-fg-color);
+        background: var(--nav-bg-color);
+    }
+
+    /* -------- Fixed at the top of the page --------- */
+    nav.nav-wexa.top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding-left: var(--typography-spacing-horizontal);
+        padding-right: var(--typography-spacing-horizontal);
+        padding-top: var(--outline-size);
+        padding-bottom: var(--outline-size);
+    }
+
+    /* When the top menu is present, push down the page content */
+    body:has(nav.nav-wexa.top) {
+        padding-top: var(--nav-height);
+    }
+
+    /* -------- Fixed at the bottom of the page -------- */
+    nav.nav-wexa.bottom {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding-left: var(--typography-spacing-horizontal);
+        padding-right: var(--typography-spacing-horizontal);
+        padding-top: var(--outline-size);
+        padding-bottom: var(--outline-size);
+    }
+
+    /* When the bottom menu is present, push up the page content */
+    body:has(nav.nav-wexa.bottom) {
+        padding-bottom: var(--nav-item-height);
+    }
+
+    nav.nav-wexa.top,
+    nav.nav-wexa.bottom {
+        overflow-x: auto;
+        max-width: 100vw;
+    }
+
+    /* -------- Fixed vertically on the left side --------- */
+    nav.nav-wexa.side {
+        margin: 0;
         padding-left: 0;
+        padding-right: 0;
+        padding-top: calc(2 * var(--typography-spacing-vertical) + var(--menu-button-size));
+        padding-bottom: var(--typography-spacing-vertical);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: auto;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        min-width: var(--nav-min-width);
+        width: var(--nav-min-width);
+        box-shadow: none;
+
+        max-height: 100vh;
+
+        flex-wrap: nowrap;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    /* When the side menu is collapsed */
+    nav.nav-wexa.side.collapsible {
+        min-width: var(--nav-min-width);
+        width: var(--nav-min-width);
+    }
+
+    body:has(nav.nav-wexa.side) {
+        transition: padding-left 0.3s ease;
+        margin: 0;  /* avoid cumulative spacing */
+        width: 100%;
+    }
+
+    /* Padding left */
+    body:has(nav.nav-wexa.side.collapsible) {
+        padding-left: var(--nav-min-width);
+    }
+
+    body:has(nav.nav-wexa.side:not(.collapsible)) {
+        padding-left: var(--nav-expanded-width);
+    }
+
+    /* When the side menu is pinned-expanded */
+    body:has(nav.nav-wexa.side.collapsible.expanded[aria-pinned="true"]) {
+        padding-left: var(--nav-expanded-width);
+    }
+
+    /* Expand when hovered, focused, or pinned (.expanded).
+       When a submenu (aside.appmenu) is open the nav collapses back — the aside
+       takes over visually and closes via the body click handler. */
+    nav.nav-wexa.side.collapsible:hover:not(:has(aside.appmenu.open)),
+    nav.nav-wexa.side.collapsible:has(:is([role="menuitem"], .menuitem):focus-visible):not(:has(aside.appmenu.open)),
+    nav.nav-wexa.side.collapsible.expanded:not(:has(aside.appmenu.open)) {
+        width: var(--nav-expanded-width);
+    }
+
+
+    /* =======================================================================
+                                MENUITEM STYLE
+      ======================================================================== */
+
+    /* -----------------------------------------------------------------------
+        Base style for all nav menu items
+       ----------------------------------------------------------------------- */
+
+    :is([role="menuitem"], .menuitem) {
+        min-height: var(--nav-item-min-height);
+        height:     var(--nav-item-height);
+        max-height: var(--nav-item-max-height);
+
+        /* Horizontal defaults, used when not overridden. */
+        min-width:  var(--nav-item-min-width-h);
+        flex-basis: var(--nav-item-min-width-h);
+        width:      var(--nav-item-width-h);
+        max-width:  var(--nav-item-max-width-h);
+
+        padding-left: calc(0.2 * var(--typography-spacing-horizontal));
+        padding-right: calc(0.2 * var(--typography-spacing-horizontal));
+        padding-top: calc(0.2 * var(--typography-spacing-vertical));
+        padding-bottom: calc(0.2 * var(--typography-spacing-vertical));
+
+        text-decoration: none;
+    }
+
+    /* -------- the current nav item -------- */
+
+    /* Three things sit in a bar, and each says itself by its own shape, never
+       by a colour alone:
+         - an item that leads elsewhere: the ground of the bar, its border;
+         - the page being read: a thick line on the leading edge, and bold --
+           a place;
+         - a toggle that is on: a line all around inside and a shadow cast
+           inside, sinking it -- a state.
+       The ground and the ink stay those of the bar in all three: a command's
+       pair belongs to a command. */
+
+    nav.nav-wexa :is([role="menuitem"], .menuitem)[aria-current]:not([aria-current=false]),
+    nav.nav-wexa :is([role="menuitem"], .menuitem)[aria-pressed="true"] {
+        filter: none;
+        border-color: var(--nav-fg-color);
+        border-radius: var(--border-radius);
+        background-color: var(--nav-bg-color);
+        color: var(--nav-fg-color);
+    }
+
+    /* The page being read: the line is on the side the items are stacked
+       against -- the left edge of a vertical bar, the lower edge of a row. */
+
+    nav.nav-wexa :is([role="menuitem"], .menuitem)[aria-current]:not([aria-current=false]) {
+        /*box-shadow: inset calc(3 * var(--border-width)) 0 0 currentColor;*/
+        font-weight: var(--font-weight-bold);
+    }
+
+    nav.nav-wexa.top :is([role="menuitem"], .menuitem)[aria-current]:not([aria-current=false]),
+    nav.nav-wexa.bottom :is([role="menuitem"], .menuitem)[aria-current]:not([aria-current=false]) {
+        /*box-shadow: inset 0 calc(-3 * var(--border-width)) 0 currentColor;*/
+    }
+
+    /* The shadow cast inside only adds the depth. */
+
+    nav.nav-wexa :is([role="menuitem"], .menuitem)[aria-pressed="false"] {
+        border-color: var(--border-color-alt);
+    }
+
+    /* Open now, or pressed now: for whoever reads the bar it is the same
+       thing -- this command is active. The triangle says that an item can
+       open something; this says that it is open. */
+
+    nav.nav-wexa :is([role="menuitem"], .menuitem)[aria-pressed="true"],
+    nav.nav-wexa :is([role="menuitem"], .menuitem)[aria-expanded="true"] {
+        border-style: solid;
+        border-color: var(--border-color-alt);
+        background-color: rgba(128, 128, 128, 0.25);
+        box-shadow: inset 0 calc(0.15 * var(--font-size)) calc(0.35 * var(--font-size)) var(--shadow-color);
+    }
+
+    /* -------- images in items -------- */
+    :is([role="menuitem"], .menuitem) > img,
+    :is([role="menuitem"], .menuitem) > svg {
+        display: block;
+        width: calc(var(--nav-item-height) * 0.9);
+        height: calc(var(--nav-item-height) * 0.9);
+        cursor: pointer;
+        margin: 0;
+    }
+
+
+    /* -------- text in items -------- */
+    :is([role="menuitem"], .menuitem):not(img) {
+        text-align: center;
+        font-family: inherit;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: var(--font-weight-semibold);
+        font-size: calc(0.9 * var(--font-size));
+        overflow: hidden;
+        position: relative;
+    }
+
+
+    /* -----------------------------------------------------------------------
+        Specific style for the menu items of the main menu
+       ----------------------------------------------------------------------- */
+
+    nav.nav-wexa :is([role="menuitem"], .menuitem),
+    aside.appmenu nav :is([role="menuitem"], .menuitem) {
+        font-variant: small-caps;
+        font-weight: var(--font-weight-semibold);
+        font-size: calc(0.8 * var(--font-size));
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: space-around;
+        text-decoration: none;
+        color: var(--nav-fg-color);
+        background-color: var(--nav-bg-color);
+    }
+
+    nav.nav-wexa :is([role="menuitem"], .menuitem):not([aria-current]),
+    aside.appmenu nav :is([role="menuitem"], .menuitem):not([aria-current]) {
+        opacity: 1;
+    }
+
+    /* ---- the menuitem is opening a submenu ---- */
+
+    /* A triangle in the corner says there is something underneath. It takes no
+       room on the line, so a bar reduced to its icons keeps it, and it is drawn
+       in the ink of the item, which makes it readable on any bar and leaves it
+       visible when a system forces its own colours. */
+
+    /* The attribute carries "menu" as well as "true" -- both say a popup, and
+       menu.js writes "menu" -- so the value is not tested, only its presence. */
+    :is([role="menuitem"], .menuitem)[aria-haspopup]:not([aria-haspopup="false"])::after {
+        content: "";
+        position: absolute;
+        right: calc(0.15 * var(--font-size));
+        bottom: calc(0.15 * var(--font-size));
+        width: calc(0.45 * var(--font-size));
+        height: calc(0.45 * var(--font-size));
+        background-color: currentColor;
+        clip-path: polygon(100% 0, 100% 100%, 0 100%);
+        pointer-events: none;
+    }
+
+
+    /* ---------------------- Vertical at side main menu ------------------- */
+
+    nav.nav-wexa.side :is([role="menuitem"], .menuitem) {
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+    }
+
+    nav.nav-wexa.side :is([role="menuitem"], .menuitem):hover,
+    nav.nav-wexa.side :is([role="menuitem"], .menuitem):focus-visible {
+        background-color: rgba(128, 128, 128, 0.5);
+    }
+
+    nav.nav-wexa :is([role="menuitem"], .menuitem) span {
+        font-variant: small-caps;
+        font-size: calc(0.8 * var(--font-size));
+        font-weight: var(--font-weight-semibold);
+    }
+
+    nav.nav-wexa :is([role="menuitem"], .menuitem) * {
+        color: inherit;
+    }
+
+    /* Fixed, non-collapsible: show labels and use expanded width */
+    nav.nav-wexa.side:not(.collapsible) :is([role="menuitem"], .menuitem) {
+        min-width: var(--nav-item-width-v-expanded);
+        width:     var(--nav-item-width-v-expanded);
+        max-width: var(--nav-item-width-v-expanded);
+    }
+
+    /* ------------------ Expand side if collapsible --------------- */
+
+    /* Collapsible — collapsed = icons only, labels hidden. An open submenu
+       collapses the nav whatever opened it, so it collapses the items too. */
+    nav.nav-wexa.side.collapsible:not(.expanded) > :is([role="menuitem"], .menuitem),
+    nav.nav-wexa.side.collapsible:not(.expanded) > section > :is([role="menuitem"], .menuitem),
+    nav.nav-wexa.side.collapsible:has(aside.appmenu.open) > :is([role="menuitem"], .menuitem),
+    nav.nav-wexa.side.collapsible:has(aside.appmenu.open) > section > :is([role="menuitem"], .menuitem) {
+        min-width: var(--nav-item-width-v-collapsed);
+        width:     var(--nav-item-width-v-collapsed);
+        max-width: var(--nav-item-width-v-collapsed);
+    }
+
+    nav.nav-wexa.side.collapsible:not(.expanded) :is([role="menuitem"], .menuitem) span,
+    nav.nav-wexa.side.collapsible:has(aside.appmenu.open) :is([role="menuitem"], .menuitem) span {
+        display: none;
+    }
+
+    /* Smooth transition for menu items and container */
+    nav.nav-wexa.side.collapsible,
+    nav.nav-wexa.side.collapsible :is([role="menuitem"], .menuitem) {
+        transition: min-width 0.3s ease, width 0.3s ease, max-width 0.3s ease;
+    }
+
+    nav.nav-wexa.side.collapsible:hover:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem),
+    nav.nav-wexa.side.collapsible:has(:is([role="menuitem"], .menuitem):focus-visible):not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem),
+    nav.nav-wexa.side.collapsible.expanded:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) {
+        min-width: var(--nav-item-width-v-expanded);
+        width:     var(--nav-item-width-v-expanded);
+        max-width: var(--nav-item-width-v-expanded);
+    }
+
+    nav.nav-wexa.side.collapsible:hover:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) span,
+    nav.nav-wexa.side.collapsible:has(:is([role="menuitem"], .menuitem):focus-visible):not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) span,
+    nav.nav-wexa.side.collapsible.expanded:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) span {
+        display: inline;
+    }
+
+    /* =======================================================================
+                                SUBMENUS (for the default sticky)
+      ======================================================================== */
+
+    .submenu {
+        flex-direction: column;
+        z-index: 100;
+        padding-left: var(--typography-spacing-horizontal);
+        padding-right: var(--typography-spacing-horizontal);
+        padding-top: calc(0.3 * var(--typography-spacing-vertical));
+        padding-bottom: calc(0.3 * var(--typography-spacing-vertical));
+    }
+
+    .submenu :is([role="menuitem"], .menuitem) {
+        background-color: var(--bg-color-alt);
+        font-weight: var(--font-weight-normal);
+    }
+
+    .submenu {
+        display: none;
+    }
+
+    body > nav > * *:hover .submenu,
+    body > nav > * *:focus-within .submenu {
+        box-shadow: 0 calc(var(--font-size) * 0.3) calc(var(--font-size) * 0.4) calc(var(--font-size) * 0.2) var(--shadow-color);  /* same as 'nav' */
+        position: absolute;
+        display: flex;
+        top: 100%;
+        min-width: 100%;
+    }
+
+    /* -------- Submenus background colors -------- */
+
+    .submenu-gray {
+        background-color: rgba(128, 128, 128, 0.5);
+    }
+
+    .submenu-red {
+        background-color: rgba(255, 50, 50, 0.5);
+    }
+
+    .submenu-green {
+        background-color: rgba(29, 72, 18, 0.5);
+    }
+
+    .submenu-orange {
+        background-color: rgba(154, 109, 38, 0.5);
+    }
+
+
+    /* ======================================================================= */
+    /*      Mobile menu toggle           */
+    /* ======================================================================= */
+
+    /* -------- via #mobile + .expanded  -------- */
+
+    /* DEPRECATED: #mobile (input[type=checkbox]) is no longer recommended.
+       Use #menu-button (button) with aria-label instead. */
+    #mobile {
+        display: none;
+    }
+
+    #menu-button {
+        position: fixed;
+        top: var(--typography-spacing-vertical);
+        left: var(--typography-spacing-horizontal);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: var(--menu-button-size);
+        height: var(--menu-button-size);
+
+        border-radius: 50%;
+        /* A dark button outlined with its own color vanishes on a dark header. */
+        border: var(--border-width) solid var(--border-color);
+        color: var(--nav-fg-color);
+        cursor: pointer;
+
+        transition: background-color 0.2s ease, transform 0.1s ease;
+
+        background-color: var(--nav-bg-color);
+        padding: 0;
+        z-index: 100;
+    }
+
+    /* The strokes are named here, and not left to the currentColor the icon
+       declares: that relay did not happen at rest, and the icon stayed the color it
+       had been given last, which no eye finds again on the white nav of the high
+       contrast theme. Why it held under the pointer and not at rest is not known.
+
+       This is written for this button alone. The same could be done for every icon
+       of a menu item, but not in one rule: an icon that is drawn asks for 'stroke',
+       an icon that is filled for 'fill', and giving 'fill' to one that declares
+       'fill: none' fills the shapes it draws with. */
+    #menu-button > svg {
+        width: 55%;
+        height: 55%;
+        stroke: var(--nav-fg-color);
+    }
+
+    #menu-button:hover {
+        background-color: var(--nav-fg-color);
+        color: var(--nav-bg-color);
+        transform: scale(1.05);
+    }
+
+    #menu-button:hover > svg {
+        stroke: var(--nav-bg-color);
+    }
+
+    /* -------- mobile screen and print -------- */
+    /* The code below is preserved but some is deprecated */
+    @media screen and (max-width: 1023.98px) {
+        #menu-button {
+            display: inline-flex;
+        }
+        nav.nav-wexa.side #pin-menu {
+            display: none;
+        }
+
+        /* A narrow screen leaves no room beside the title. */
+        nav.nav-wexa.header {
+            position: static;
+        }
+    }
+
+    @media all and (max-width: 1023.98px) {
+
+        /* Under the mobile border, the open side menu takes the mobile width */
+        :root {
+            --nav-expanded-width: var(--nav-mobile-expanded-width);
+        }
+
+        /* Hide expanded side menu */
+        nav.nav-wexa.side {
+            display: none;
+        }
+        nav.nav-wexa.side.expanded {
+            display: flex;
+        }
+
+        /* Remove body left padding when side menu is hidden */
+        body:has(nav.nav-wexa.side.collapsible) {
+            padding-left: 0;
+        }
+
+        body:has(nav.nav-wexa.side) aside.appmenu.open[data-submenu-position="left"] {
+            left: 0;
+        }
+    }
+
+    /* ----------------------- 'nav' wide screens ---------------------- */
+
+    @media only screen and (min-width: 1024px) {
+        #menu-button {
+            display: none;
+        }
+    }
+
+    /* Toggle to expand/collapse the 'nav' content. Invisible. */
+    body > nav.nav-wexa label {
+        display: none;
+    }
+
+
+    /* ----------------------------------------------------------------------- */
+    /* ------------  Menu or Sub-Menu for mobile applications  --------------- */
+    /* ----------------------------------------------------------------------- */
+
+    /* IMPORTANT: aside.appmenu must be a direct child of nav, never wrapped in a
+       section. background:inherit inherits from the DOM parent; if the aside is
+       inside nav > section, it inherits the section's background (transparent)
+       instead of the nav's background (gradient or color). */
+    aside.appmenu {
+        position: fixed;
+        z-index: 50; /* keep overlay priority */
+        visibility: hidden;  /* Make it invisible by default */
+        background: inherit;
+        height: 100%;
+    }
+
+    aside.appmenu nav {
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: var(--typography-spacing-vertical);
+        padding-bottom: var(--typography-spacing-vertical);
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    /* Alignment horizontal */
+    aside.appmenu[data-submenu-align-horizontal="left"]  nav {
+        align-items: flex-start;
+    }
+    aside.appmenu[data-submenu-align-horizontal="center"]nav {
+        align-items: center;
+    }
+    aside.appmenu[data-submenu-align-horizontal="right"] nav {
+        align-items: flex-end;
+    }
+
+    /* Alignment vertical */
+    aside.appmenu[data-submenu-align-vertical="top"] nav {
+        justify-content: flex-start;
+    }
+    aside.appmenu[data-submenu-align-vertical="center"] nav {
+        justify-content: center;
+    }
+    aside.appmenu[data-submenu-align-vertical="bottom"] nav {
+        justify-content: flex-end;
+    }
+
+    /* Size */
+    aside.appmenu nav :is([role="menuitem"], .menuitem) {
+        min-width: var(--nav-item-width-v-expanded);
+        width:     var(--nav-item-width-v-expanded);
+        max-width: var(--nav-item-width-v-expanded);
+    }
+
+    /* Hover/Focus */
+    aside.appmenu :is([role="menuitem"], .menuitem):hover,
+    aside.appmenu :is([role="menuitem"], .menuitem):focus-visible {
+        background-color: rgba(128, 128, 128, 0.5);
+    }
+
+    /* Section labels inside submenus */
+    aside.appmenu nav .nav-section-label {
+        font-size: calc(0.8 * var(--font-size));
+        font-weight: var(--font-weight-semibold);
+        color: var(--nav-fg-color);
+        background-color: transparent;
+        width: 100%;
+        margin: 0;
+        margin-top: var(--typography-spacing-vertical);
+        margin-bottom: calc(0.15 * var(--typography-spacing-vertical));
+        padding-left: calc(0.3 * var(--typography-spacing-horizontal));
+        pointer-events: none;
+        cursor: default;
+        text-align: left;
+    }
+
+    /* -------- Sub-menu positioning, initially hidden off-screen,
+       with a smooth slide-in animation when opened. -------- */
+
+    aside.appmenu[data-submenu-position="left"] {
+        top: 0;
+        left: -100%;
+        min-width: var(--nav-expanded-width);
+        width: var(--nav-expanded-width);
+        height: 100%;
+        transition: left var(--transition), visibility 0s 0.3s;  /* Transition only position and visibility */
+        box-shadow: calc(var(--font-size) * 0.2) 0 calc(var(--font-size) * 0.4) var(--shadow-color);
+    }
+
+    aside.appmenu[data-submenu-position="right"] {
+        top: 0;
+        right: -100%;
+        min-width: var(--nav-expanded-width);
+        width: var(--nav-expanded-width);
+        height: 100%;
+        transition: right var(--transition), visibility 0s 0.3s;  /* Transition only position and visibility */
+        box-shadow: 0 calc(var(--font-size) * 0.2) calc(var(--font-size) * 0.4) var(--shadow-color);
+    }
+
+    aside.appmenu[data-submenu-position="bottom"] {
+        top: auto;
+        bottom: -100%;  /* Initially off-screen at the bottom */
+        width: 100%;    /* Set the width for the bottom submenu */
+        height: auto;   /* Auto height to fit content */
+        transition: bottom var(--transition), visibility 0s 0.3s;
+    }
+
+    aside.appmenu[data-submenu-position="top"] {
+        bottom: auto;
+        top: -100%;    /* Initially off-screen at the top */
+        width: 100%;   /* Set the width for the top submenu */
+        height: auto;  /* Auto height to fit content */
+        transition: top var(--transition), visibility 0s 0.3s;
+    }
+
+    /* -------------- Alignment of elements inside the submenu --------------- */
+
+    aside.appmenu[data-submenu-align-vertical="top"] nav {
+        position: absolute;
+        top: 0;
+    }
+
+    aside.appmenu[data-submenu-align-vertical="bottom"] nav {
+        position: absolute;
+        bottom: 0;
+    }
+
+    /* Optional: Align horizontally based on left/right */
+    aside.appmenu[data-submenu-align-horizontal="left"] nav {
+        align-items: center;
+    }
+
+    aside.appmenu[data-submenu-align-horizontal="right"] nav {
+        align-items: center;
+    }
+
+    aside.appmenu[data-submenu-align-horizontal="center"] nav {
+        align-items: center;
+    }
+
+    /* ----------------- When submenu is open, slide it in ------------------- */
+
+    aside.appmenu.open {
+        visibility: visible;
+    }
+
+    aside.appmenu.open[data-submenu-position="left"] {
+        left: 0;
     }
 
     body:has(nav.nav-wexa.side) aside.appmenu.open[data-submenu-position="left"] {
-        left: 0;
+        left: var(--nav-min-width);
+        padding-left: 0;
+        margin: 0; /* avoid cumulative spacing */
     }
-}
 
-/* ----------------------- 'nav' wide screens ---------------------- */
-
-@media only screen and (min-width: 1024px) {
-    #menu-button {
-        display: none;
+    body:has(nav.nav-wexa.side.collapsible.expanded[aria-pinned="true"]) aside.appmenu.open[data-submenu-position="left"] {
+        left: var(--nav-expanded-width);
+        padding-left: 0;
+        margin: 0; /* avoid cumulative spacing */
     }
-}
 
-/* Toggle to expand/collapse the 'nav' content. Invisible. */
-body > nav.nav-wexa label {
-    display: none;
-}
+    aside.appmenu.open[data-submenu-position="right"] {
+        right: 0;
+    }
 
-:is([role="menuitem"], .menuitem).expand::after {
-    content: " ▼";
-}
+    aside.appmenu.open[data-submenu-position="bottom"] {
+        bottom: 0;
+    }
 
+    aside.appmenu.open[data-submenu-position="top"] {
+        top: 0;
+    }
 
-/* ----------------------------------------------------------------------- */
-/* ------------  Menu or Sub-Menu for mobile applications  --------------- */
-/* ----------------------------------------------------------------------- */
+    /* =======================================================================
+                        SECTIONS IN NAV
+       ======================================================================= */
 
-/* IMPORTANT: aside.appmenu must be a direct child of nav, never wrapped in a
-   section. background:inherit inherits from the DOM parent; if the aside is
-   inside nav > section, it inherits the section's background (transparent)
-   instead of the nav's background (gradient or color). */
-aside.appmenu {
-    position: fixed;
-    z-index: 50; /* keep overlay priority */
-    visibility: hidden;  /* Make it invisible by default */
-    background: inherit;
-    height: 100%;
-}
+    /* wexa.css * rule sets background-color on every element; reset here so the nav background shows through. */
+    nav.nav-wexa > section {
+        background-color: transparent;
+    }
 
-aside.appmenu nav {
-    margin: 0;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: var(--typography-spacing-vertical);
-    padding-bottom: var(--typography-spacing-vertical);
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-}
-
-/* Alignment horizontal */
-aside.appmenu[data-submenu-align-horizontal="left"]  nav {
-    align-items: flex-start;
-}
-aside.appmenu[data-submenu-align-horizontal="center"]nav {
-    align-items: center;
-}
-aside.appmenu[data-submenu-align-horizontal="right"] nav {
-    align-items: flex-end;
-}
-
-/* Alignment vertical */
-aside.appmenu[data-submenu-align-vertical="top"] nav {
-    justify-content: flex-start;
-}
-aside.appmenu[data-submenu-align-vertical="center"] nav {
-    justify-content: center;
-}
-aside.appmenu[data-submenu-align-vertical="bottom"] nav {
-    justify-content: flex-end;
-}
-
-/* Size */
-aside.appmenu nav :is([role="menuitem"], .menuitem) {
-    min-width: var(--nav-item-width-v-expanded);
-    width:     var(--nav-item-width-v-expanded);
-    max-width: var(--nav-item-width-v-expanded);
-}
-
-/* Hover/Focus */
-aside.appmenu :is([role="menuitem"], .menuitem):hover,
-aside.appmenu :is([role="menuitem"], .menuitem):focus-visible {
-    background-color: rgba(128, 128, 128, 0.5);
-}
-
-/* Section labels inside submenus */
-aside.appmenu nav .nav-section-label {
-    font-size: calc(0.8 * var(--font-size));
-    font-weight: var(--font-weight-semibold);
-    color: var(--nav-fg-color);
-    background-color: transparent;
-    width: 100%;
-    margin: 0;
-    margin-top: var(--typography-spacing-vertical);
-    margin-bottom: calc(0.15 * var(--typography-spacing-vertical));
-    padding-left: calc(0.3 * var(--typography-spacing-horizontal));
-    pointer-events: none;
-    cursor: default;
-    text-align: left;
-}
-
-/* -------- Sub-menu positioning, initially hidden off-screen,
-   with a smooth slide-in animation when opened. -------- */
-
-aside.appmenu[data-submenu-position="left"] {
-    top: 0;
-    left: -100%;
-    min-width: var(--nav-expanded-width);
-    width: var(--nav-expanded-width);
-    height: 100%;
-    transition: left var(--transition), visibility 0s 0.3s;  /* Transition only position and visibility */
-    box-shadow: calc(var(--font-size) * 0.2) 0 calc(var(--font-size) * 0.4) var(--shadow-color);
-}
-
-aside.appmenu[data-submenu-position="right"] {
-    top: 0;
-    right: -100%;
-    min-width: var(--nav-expanded-width);
-    width: var(--nav-expanded-width);
-    height: 100%;
-    transition: right var(--transition), visibility 0s 0.3s;  /* Transition only position and visibility */
-    box-shadow: 0 calc(var(--font-size) * 0.2) calc(var(--font-size) * 0.4) var(--shadow-color);
-}
-
-aside.appmenu[data-submenu-position="bottom"] {
-    top: auto;
-    bottom: -100%;  /* Initially off-screen at the bottom */
-    width: 100%;    /* Set the width for the bottom submenu */
-    height: auto;   /* Auto height to fit content */
-    transition: bottom var(--transition), visibility 0s 0.3s;
-}
-
-aside.appmenu[data-submenu-position="top"] {
-    bottom: auto;
-    top: -100%;    /* Initially off-screen at the top */
-    width: 100%;   /* Set the width for the top submenu */
-    height: auto;  /* Auto height to fit content */
-    transition: top var(--transition), visibility 0s 0.3s;
-}
-
-/* -------------- Alignment of elements inside the submenu --------------- */
-
-aside.appmenu[data-submenu-align-vertical="top"] nav {
-    position: absolute;
-    top: 0;
-}
-
-aside.appmenu[data-submenu-align-vertical="bottom"] nav {
-    position: absolute;
-    bottom: 0;
-}
-
-/* Optional: Align horizontally based on left/right */
-aside.appmenu[data-submenu-align-horizontal="left"] nav {
-    align-items: center;
-}
-
-aside.appmenu[data-submenu-align-horizontal="right"] nav {
-    align-items: center;
-}
-
-aside.appmenu[data-submenu-align-horizontal="center"] nav {
-    align-items: center;
-}
-
-/* ----------------- When submenu is open, slide it in ------------------- */
-
-aside.appmenu.open {
-    visibility: visible;
-}
-
-aside.appmenu.open[data-submenu-position="left"] {
-    left: 0;
-}
-
-body:has(nav.nav-wexa.side) aside.appmenu.open[data-submenu-position="left"] {
-    left: var(--nav-min-width);
-    padding-left: 0;
-    margin: 0; /* avoid cumulative spacing */
-}
-
-body:has(nav.nav-wexa.side.collapsible.expanded[aria-pinned="true"]) aside.appmenu.open[data-submenu-position="left"] {
-    left: var(--nav-expanded-width);
-    padding-left: 0;
-    margin: 0; /* avoid cumulative spacing */
-}
-
-aside.appmenu.open[data-submenu-position="right"] {
-    right: 0;
-}
-
-aside.appmenu.open[data-submenu-position="bottom"] {
-    bottom: 0;
-}
-
-aside.appmenu.open[data-submenu-position="top"] {
-    top: 0;
-}
-
-/* =======================================================================
-                    SECTIONS IN NAV
-   ======================================================================= */
-
-/* wexa.css * rule sets background-color on every element; reset here so the nav background shows through. */
-nav.nav-wexa > section {
-    background-color: transparent;
-}
-
-/* SIDE nav and appmenu: sections stack vertically */
-nav.nav-wexa.side > section,
-aside.appmenu nav > section {
-    display: flex;
-    flex-direction: column;
-    align-self: stretch;
-    align-items: center;
-    width: 100%;
-    gap: calc(0.3 * var(--typography-spacing-vertical));
-}
-
-/* TOP and BOTTOM nav: sections stack horizontally */
-nav.nav-wexa.top > section,
-nav.nav-wexa.bottom > section {
-    display: flex;
-    flex-direction: row;
-    align-self: auto;
-    width: auto;
-    gap: calc(0.3 * var(--typography-spacing-horizontal));
-}
-
-/* Spacing between sections — SIDE */
-nav.nav-wexa.side > section + section,
-nav.nav-wexa.side > section + :is([role="menuitem"], .menuitem),
-nav.nav-wexa.side > :is([role="menuitem"], .menuitem) + section {
-    margin-top: var(--typography-spacing-vertical);
-}
-
-/* Spacing between sections — TOP */
-nav.nav-wexa.top > section + section,
-nav.nav-wexa.top > section + :is([role="menuitem"], .menuitem),
-nav.nav-wexa.top > :is([role="menuitem"], .menuitem) + section {
-    margin-left: var(--typography-spacing-horizontal);
-    margin-right: var(--typography-spacing-horizontal);
-}
-
-/* Spacing between sections — BOTTOM */
-nav.nav-wexa.bottom > section + section,
-nav.nav-wexa.bottom > section + :is([role="menuitem"], .menuitem),
-nav.nav-wexa.bottom > :is([role="menuitem"], .menuitem) + section {
-    margin-left: var(--typography-spacing-horizontal);
-    margin-right: var(--typography-spacing-horizontal);
-}
-
-
-@media (min-width: 1024px) {
-
-    nav.nav-wexa.side :is([role="menuitem"], .menuitem),
-    nav.nav-wexa.top :is([role="menuitem"], .menuitem),
-    nav.nav-wexa.bottom :is([role="menuitem"], .menuitem),
-    aside.appmenu nav :is([role="menuitem"], .menuitem) {
-        flex-direction: row;
+    /* SIDE nav and appmenu: sections stack vertically */
+    nav.nav-wexa.side > section,
+    aside.appmenu nav > section {
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
         align-items: center;
-        gap: calc(var(--font-size) * 0.5);
-        flex-grow: 1;
+        width: 100%;
+        gap: calc(0.3 * var(--typography-spacing-vertical));
+    }
+
+    /* TOP and BOTTOM nav: sections stack horizontally */
+    nav.nav-wexa.top > section,
+    nav.nav-wexa.bottom > section {
+        display: flex;
+        flex-direction: row;
+        align-self: auto;
         width: auto;
+        gap: calc(0.3 * var(--typography-spacing-horizontal));
     }
-}
 
-@media (max-width: 1023.98px) {
-
-    nav.nav-wexa.side :is([role="menuitem"], .menuitem),
-    nav.nav-wexa.top :is([role="menuitem"], .menuitem),
-    nav.nav-wexa.bottom :is([role="menuitem"], .menuitem),
-    aside.appmenu nav :is([role="menuitem"], .menuitem) {
-        flex-direction: row;
-        align-items: center;
-        gap: calc(var(--font-size) * 0.5);
-        /* A mobile menu holds buttons of one fixed width, five to a row. */
-        flex: none;
-        width: calc((100% - 4 * calc(var(--font-size) / var(--size-divisor))) / 5);
-        height: auto;
+    /* Spacing between sections — SIDE */
+    nav.nav-wexa.side > section + section,
+    nav.nav-wexa.side > section + :is([role="menuitem"], .menuitem),
+    nav.nav-wexa.side > :is([role="menuitem"], .menuitem) + section {
+        margin-top: var(--typography-spacing-vertical);
     }
-}
+
+    /* Spacing between sections — TOP */
+    nav.nav-wexa.top > section + section,
+    nav.nav-wexa.top > section + :is([role="menuitem"], .menuitem),
+    nav.nav-wexa.top > :is([role="menuitem"], .menuitem) + section {
+        margin-left: var(--typography-spacing-horizontal);
+        margin-right: var(--typography-spacing-horizontal);
+    }
+
+    /* Spacing between sections — BOTTOM */
+    nav.nav-wexa.bottom > section + section,
+    nav.nav-wexa.bottom > section + :is([role="menuitem"], .menuitem),
+    nav.nav-wexa.bottom > :is([role="menuitem"], .menuitem) + section {
+        margin-left: var(--typography-spacing-horizontal);
+        margin-right: var(--typography-spacing-horizontal);
+    }
 
 
-/* =======================================================================
-                            BUTTONS
-  ======================================================================== */
+    @media (min-width: 1024px) {
 
-nav.nav-wexa.side :is([role="menuitem"], .menuitem)[aria-pressed="false"] {
-    border-color: var(--border-color);
-}
+        nav.nav-wexa.side :is([role="menuitem"], .menuitem),
+        nav.nav-wexa.top :is([role="menuitem"], .menuitem),
+        nav.nav-wexa.bottom :is([role="menuitem"], .menuitem),
+        aside.appmenu nav :is([role="menuitem"], .menuitem) {
+            flex-direction: row;
+            align-items: center;
+            gap: calc(var(--font-size) * 0.5);
+            flex-grow: 1;
+            width: auto;
+        }
+    }
 
-nav.nav-wexa.side :is([role="menuitem"], .menuitem)[aria-pressed="true"] {
-    border-color: var(--nav-fg-color);
-}
+    @media (max-width: 1023.98px) {
 
-/* Skip button styles are defined in wexa.css (used on all pages, not just with menus). */
+        nav.nav-wexa.side :is([role="menuitem"], .menuitem),
+        nav.nav-wexa.top :is([role="menuitem"], .menuitem),
+        nav.nav-wexa.bottom :is([role="menuitem"], .menuitem),
+        aside.appmenu nav :is([role="menuitem"], .menuitem) {
+            flex-direction: row;
+            align-items: center;
+            gap: calc(var(--font-size) * 0.5);
+            /* A mobile menu holds buttons of one fixed width, five to a row. */
+            flex: none;
+            width: calc((100% - 4 * calc(var(--font-size) / var(--size-divisor))) / 5);
+            height: auto;
+        }
+    }
 
-/* ------------------ Pin button -----------------------------------------
-  Optionally used by a side menu to pin it in expanded mode.
-  It has the same sizing as other menu items.
-  ------------------------------------------------------------------------ */
-
-nav.nav-wexa.side :is([role="menuitem"], .menuitem)#pin-menu {
-    align-items: center;
-    justify-content: center;
-    color: var(--nav-fg-color);
-}
+} /* end @layer components */

@@ -356,12 +356,21 @@ export class BibliographyControls {
             const item = document.createElement('li');
             item.className = 'check-item';
 
+            // A column whose header says it opens hidden is listed like the
+            // others, and unchecked: what it holds is read by whoever asks for
+            // it. The header decides, here nothing is named. B27.
+            const startsHidden = header.hasAttribute('data-starts-hidden');
+
             const box = document.createElement('input');
             box.type = 'checkbox';
             box.id = this.#table.id + '-column-' + name;
-            box.checked = true;
+            box.checked = startsHidden === false;
             box.setAttribute('data-toggle', name);
             box.setAttribute('aria-labelledby', box.id + '-label');
+
+            if (startsHidden === true) {
+                box.setAttribute('data-starts-hidden', '');
+            }
 
             const label = document.createElement('label');
             label.id = box.id + '-label';
@@ -408,6 +417,11 @@ export class BibliographyControls {
         this.#wasNarrow = isNarrow;
 
         this.#selector.getCheckboxes().forEach(box => {
+            if (box.hasAttribute('data-starts-hidden') === true) {
+                box.checked = false;
+                return;
+            }
+
             box.checked = isNarrow === false || box.getAttribute('data-toggle') === 'author';
         });
 

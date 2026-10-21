@@ -179,7 +179,8 @@ bibliography_table_tests.add_test(() => {
 
     UnitTest.assert_values_not_equals(null, table.querySelector('button[data-sort="author"]'),
         "table_author_header_test");
-    UnitTest.assert_values_equals('Bigi, Brigitte', row.cells[1].getAttribute('data-sort-value'),
+    UnitTest.assert_values_equals('Bigi, Brigitte',
+        row.querySelector('td.bib-reference').getAttribute('data-sort-value'),
         "table_sort_value_test");
 });
 
@@ -189,7 +190,7 @@ bibliography_table_tests.add_test(() => {
 
 bibliography_table_tests.add_test(() => {
     const table = new BibliographyTable().build(table_references(), new Map());
-    const cell = table.querySelector('#bib-bigi2022lrec').cells[1];
+    const cell = table.querySelector('#bib-bigi2022lrec td.bib-reference');
 
     UnitTest.assert_array_contains(true, [cell.textContent.includes('A Large Open Multi-Speaker Corpus')],
         "table_reference_displayed_test");
@@ -289,6 +290,104 @@ bibliography_table_tests.add_test(() => {
         english.querySelector('thead th').textContent, "table_language_test");
 });
 
+
+// -----------------------------------------------------------------------
+// The type has a column of its own, which is sorted on and which opens
+// unchecked: nothing else writes the type of a reference. B27.
+// -----------------------------------------------------------------------
+
+bibliography_table_tests.add_test(() => {
+    const table = new BibliographyTable().build(table_references(), new Map());
+    const header = table.querySelector('thead th.bib-header-type');
+
+    UnitTest.assert_values_not_equals(null, header, "table_type_header_test");
+    UnitTest.assert_values_not_equals(null, header.querySelector('button[data-sort="type"]'),
+        "table_type_sortable_test");
+    UnitTest.assert_values_equals(true, header.hasAttribute('data-starts-hidden'),
+        "table_type_starts_hidden_test");
+});
+
+// -----------------------------------------------------------------------
+// Each row says the type of its reference, written as the BibTeX data
+// wrote it, and sorted on whatever the case it was written in. B27.
+// -----------------------------------------------------------------------
+
+bibliography_table_tests.add_test(() => {
+    const table = new BibliographyTable().build(table_references(), new Map());
+    const cell = table.querySelector('#bib-bigi2022lrec td.bib-type');
+
+    UnitTest.assert_values_not_equals(null, cell, "table_type_cell_test");
+    UnitTest.assert_values_equals('Conference', cell.textContent,
+        "table_type_written_test");
+    UnitTest.assert_values_equals(cell.textContent.toLowerCase(),
+        cell.getAttribute('data-sort-value'), "table_type_sort_value_test");
+});
+
+// -----------------------------------------------------------------------
+// A type nobody planned for is written as the data wrote it, its first
+// letter in capital, and the column holds it like any other. B27.
+// -----------------------------------------------------------------------
+
+bibliography_table_tests.add_test(() => {
+    const unplanned = String.raw`
+@softwareversion{bigi2026wexa,
+    author = {Brigitte Bigi},
+    title = {Whakerexa},
+    year = {2026}
+}`;
+
+    const table = new BibliographyTable().build(new BibtexParser().parse(unplanned), new Map());
+    const cell = table.querySelector('#bib-bigi2026wexa td.bib-type');
+
+    UnitTest.assert_values_equals('Softwareversion', cell.textContent,
+        "table_unplanned_type_written_test");
+});
+
+// -----------------------------------------------------------------------
+// What opens under a reference spans every column, the type one included:
+// a content that stops short of the last column breaks the table. B25.
+// -----------------------------------------------------------------------
+
+bibliography_table_tests.add_test(() => {
+    const table = new BibliographyTable().build(table_references(), new Map());
+    const opened = table.querySelector('tr.bib-opened-row td');
+    const columns = table.querySelectorAll('thead th').length;
+
+    UnitTest.assert_values_equals(String(columns), opened.getAttribute('colspan'),
+        "table_opened_row_colspan_test");
+});
+
+// -----------------------------------------------------------------------
+// An address opens in a tab of its own, and the page it opens holds no
+// handle on the one it was opened from. B28.
+// -----------------------------------------------------------------------
+
+bibliography_table_tests.add_test(() => {
+    const table = new BibliographyTable().build(table_references(), new Map());
+    const address = table.querySelector('#bib-bigi2022lrec a.bib-link');
+
+    UnitTest.assert_values_equals('_blank', address.getAttribute('target'),
+        "table_address_opens_a_tab_test");
+    UnitTest.assert_values_equals('noopener', address.getAttribute('rel'),
+        "table_address_holds_nothing_test");
+});
+
+// -----------------------------------------------------------------------
+// A page that asks to stay where it is gets what it asked for, and no
+// handle is given away, there being no tab to open. B28.
+// -----------------------------------------------------------------------
+
+bibliography_table_tests.add_test(() => {
+    Link.setTarget('_self');
+    const table = new BibliographyTable().build(table_references(), new Map());
+    const address = table.querySelector('#bib-bigi2022lrec a.bib-link');
+    Link.resetTarget();
+
+    UnitTest.assert_values_equals('_self', address.getAttribute('target'),
+        "table_address_stays_test");
+    UnitTest.assert_values_equals(null, address.getAttribute('rel'),
+        "table_address_no_rel_test");
+});
 
 // launch all unit tests added
 bibliography_table_tests.launch_unit_test();

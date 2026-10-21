@@ -71,8 +71,8 @@
     --fg-color:     rgb(28, 18, 60);
     --fg-color-alt: rgb(58, 44, 95);
 
-    --border-color:     rgba(110, 70, 200, 0.2);
-    --border-color-alt: rgba(110, 70, 200, 0.12);
+    --border-color:     rgb(110, 70, 200);
+    --border-color-alt: rgb(235, 228, 248);
 
     /* [override] Primary accent — Aurora violet */
     --a-color:                rgb(80, 40, 185);
@@ -98,7 +98,6 @@
     --blockquote-border-color: rgb(95, 50, 200);
     --blockquote-footer-color: rgb(128, 98, 168);
 
-    --table-border-color:           rgba(110, 70, 200, 0.15);
     --table-cell-bg-color:          rgb(252, 250, 255);
     --table-row-stripped-bg-color:  rgb(248, 245, 255);
     --table-head-bg-color:          rgb(232, 226, 255);
@@ -151,7 +150,7 @@
         --fg-color-alt: rgb(250, 248, 255);
 
         --border-color:     rgb(150, 120, 175);
-        --border-color-alt: rgba(150, 120, 175, 0.35);
+        --border-color-alt: rgb(60, 47, 79);
 
         /* A link is read, so it is written light: the blue the palette uses on
            a light ground holds 3.8:1 on night blue, where a text asks for 4.5,
@@ -195,9 +194,7 @@
 
         --blockquote-border-color: rgb(130, 60, 130);
         --blockquote-footer-color: rgb(198, 165, 195);
-        --blockquote-border-width: calc(0.25 * var(--font-size));
 
-        --table-border-color:           rgba(150, 120, 175, 0.3);
         --table-cell-bg-color:          rgb(12, 8, 28);
         --table-row-stripped-bg-color:  rgb(28, 18, 55);
         --table-head-bg-color:          rgb(22, 14, 50);
@@ -226,7 +223,10 @@
        Slides accent colors — override slides.css defaults
        ====================================================================== */
 
-    :root {
+    /* Said with the same reach as the rest of a light palette: the default of
+       the framework is written on :root:not(.dark), and a plain :root would
+       lose to it. */
+    :root:not(.dark) {
         --custom-color1: rgb(28, 11, 76);
         --custom-color2: rgb(208, 197, 246);
     }
@@ -243,6 +243,8 @@
 
     :root:not(.contrast) {
         --border-radius:                 6px;
+        --border-width:                  1px;
+        --border-width-alt:              0px;
         --font-size:                     calc(16px / var(--fontsize-divisor));
         --typography-spacing-vertical:   calc(0.8 * 16px / var(--size-divisor));
         --typography-spacing-horizontal: calc(0.6 * 16px / var(--size-divisor));
@@ -306,7 +308,9 @@
 
     blockquote {
         border: none;
-        border-left: var(--blockquote-border-width) solid var(--blockquote-border-color);
+        /* The frame of this theme is drawn with no width at all: the bar of a
+           quote is the one line it keeps, so it takes the width of a command. */
+        border-left: var(--border-width) solid var(--blockquote-border-color);
         border-radius: 0;
         background-image: none;
         background-color: transparent;
@@ -360,15 +364,15 @@
 
     td, th {
         border-left: none;
-        border-bottom: var(--table-border-width) solid var(--table-border-color);
+        border-bottom: var(--border-width) solid var(--border-color-alt);
     }
 
     thead td, thead th {
-        border-bottom: calc(var(--table-border-width) * 3) solid var(--table-border-color);
+        border-bottom: calc(var(--border-width) * 3) solid var(--border-color-alt);
     }
 
     tfoot td, tfoot th {
-        border-top: var(--table-border-width) solid var(--table-border-color);
+        border-top: var(--border-width) solid var(--border-color-alt);
         border-bottom: none;
     }
 
@@ -378,6 +382,32 @@
     label.switch {
         --switch-width:  calc(2.625 * var(--font-size));
         --switch-height: calc(1.375 * var(--font-size));
+    }
+
+    /* ── What a frame no longer draws ───────────────────────────────────── */
+    /* This theme gives a frame no width at all: an element a frame used to
+       hold is held by a shadow instead, the one a card is given below. */
+
+    fieldset,
+    fieldset legend,
+    details,
+    progress,
+    table:not([role="presentation"]),
+    .highlight,
+    .slide {
+        box-shadow: 0 calc(0.125 * var(--font-size)) calc(0.5 * var(--font-size)) var(--shadow-color);
+    }
+
+    /* A line that the frame no longer draws takes the width of a command, as
+       the bar of a quote and the lines of a table do above. */
+
+    pre {
+        border-left-width: calc(2 * var(--border-width));
+    }
+
+    optgroup,
+    option {
+        border-top-width: var(--border-width);
     }
 
     /* ── Article: card with Aurora gradient ──────────────────────────────── */

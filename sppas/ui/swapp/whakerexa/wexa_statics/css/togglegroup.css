@@ -41,58 +41,75 @@ item — the label remains the visible/clickable control throughout.
 
 */
 
+@layer reset, base, theme, components, accessibility;
 
-.toggle-group {
-    display: flex;
-    flex-direction: row;
-    gap: 0;
-}
+@layer components {
 
-/* The label is the visible control; the native radio stays functional
-   for keyboard/assistive tech but is not painted on screen */
-.toggle-group input[type="radio"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-    pointer-events: none;
-}
+    /* A toggle alone: a button that stays pressed. aria-pressed carries the
+       state, the ground takes the shade of a hovered command and a line is
+       drawn inside, so the one that is on is seen at rest and not by its
+       color alone. */
 
-/* Flatten inner edges; overlap borders by one width to avoid a double seam */
-.toggle-group > .menuitem {
-    border-radius: 0;
-    margin-left: calc(-1 * var(--border-width));
-}
+    :is(button, [type=button], [type=submit], [role=button]):not([aria-disabled=true])[aria-pressed=true] {
+        border-style: solid;
+        border-color: currentColor;
+        border-width: max(calc(2 * var(--border-width)), calc(0.15 * var(--font-size)));
+        box-shadow: inset 0 calc(0.15 * var(--font-size)) calc(0.35 * var(--font-size)) var(--shadow-color);
+    }
 
-.toggle-group > .menuitem:first-child {
-    border-radius: var(--border-radius) 0 0 var(--border-radius);
-    margin-left: 0;
-}
+    .toggle-group {
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+    }
 
-.toggle-group > .menuitem:last-child {
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
-}
+    /* The label is the visible control; the native radio stays functional
+       for keyboard/assistive tech but is not painted on screen */
+    .toggle-group input[type="radio"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+    }
 
-/* Active item: same treatment as a hovered/current button (wexa.css) —
-   plain --buttons-bg-color is already the resting color of every item,
-   so the checked state needs the hover shade to actually stand out */
-.toggle-group > .menuitem:has(:checked) {
-    background: var(--buttons-bg-color-hover);
-    color: var(--buttons-fg-color);
-}
+    /* Flatten inner edges; overlap borders by one width to avoid a double seam */
+    .toggle-group > .menuitem {
+        border-radius: 0;
+        margin-left: calc(-1 * var(--border-width));
+    }
 
-/* Bring the highlighted item's border above its neighbours' overlap */
-.toggle-group > .menuitem:hover,
-.toggle-group > .menuitem:has(:focus-visible),
-.toggle-group > .menuitem:has(:checked) {
-    position: relative;
-    z-index: 1;
-}
+    .toggle-group > .menuitem:first-child {
+        border-radius: var(--border-radius) 0 0 var(--border-radius);
+        margin-left: 0;
+    }
 
-/* Inside nav.nav-wexa.top/.bottom, menu.css sets a gap on every direct
-   "> section" — a plain class cannot out-specify that selector, so the
-   reset is repeated here at matching specificity. */
-nav.nav-wexa.top > section.toggle-group,
-nav.nav-wexa.bottom > section.toggle-group {
-    gap: 0;
-}
+    .toggle-group > .menuitem:last-child {
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+
+    /* Active item: same treatment as a hovered/current button (wexa.css) —
+       plain --buttons-bg-color is already the resting color of every item,
+       so the checked state needs the hover shade to actually stand out */
+    .toggle-group > .menuitem:has(:checked) {
+        background: var(--buttons-bg-color-hover);
+        color: var(--buttons-fg-color);
+    }
+
+    /* Bring the highlighted item's border above its neighbours' overlap */
+    .toggle-group > .menuitem:hover,
+    .toggle-group > .menuitem:has(:focus-visible),
+    .toggle-group > .menuitem:has(:checked) {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Inside nav.nav-wexa.top/.bottom, menu.css sets a gap on every direct
+       "> section" — a plain class cannot out-specify that selector, so the
+       reset is repeated here at matching specificity. */
+    nav.nav-wexa.top > section.toggle-group,
+    nav.nav-wexa.bottom > section.toggle-group {
+        gap: 0;
+    }
+
+} /* end @layer components */

@@ -34,6 +34,7 @@
 import { Citation } from './bibcitation.js';
 import { CitedKey } from './bibcitedkey.js';
 import { CitedReference } from './bibcitedref.js';
+import { Link } from './biblink.js';
 import { ReferenceFormatter } from './bibformatter.js';
 import { BibliographyTable } from './bibtable.js';
 import { Labels } from './labels.js';
@@ -194,6 +195,7 @@ export class CitationIndex {
             address.className = 'bib-link external-link';
             address.setAttribute('href', link.address);
             address.textContent = link.address;
+            Link.openIn(address);
             content.appendChild(address);
         });
 

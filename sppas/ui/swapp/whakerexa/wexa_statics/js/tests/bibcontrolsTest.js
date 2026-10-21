@@ -271,5 +271,24 @@ bibliography_controls_tests.add_test(() => {
 });
 
 
+// -----------------------------------------------------------------------
+// A column whose header says it opens hidden is listed in the selector,
+// unchecked, and its cells are not displayed. B27.
+// -----------------------------------------------------------------------
+
+bibliography_controls_tests.add_test(() => {
+    const written = write_bibliography('hidden');
+
+    const box = document.querySelector('#hidden-table-column-type');
+    UnitTest.assert_values_not_equals(null, box, "controls_hidden_column_listed_test");
+    UnitTest.assert_values_equals(false, box.checked, "controls_hidden_column_unchecked_test");
+
+    const cell = written.table.querySelector('td.bib-type');
+    UnitTest.assert_values_equals(true, cell.classList.contains('hidden'),
+        "controls_hidden_column_cell_test");
+
+    written.remove();
+});
+
 // launch all unit tests added
 bibliography_controls_tests.launch_unit_test();

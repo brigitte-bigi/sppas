@@ -33,7 +33,7 @@
 
 import { Citation } from './bibcitation.js';
 import { ReferenceFormatter } from './bibformatter.js';
-import { LinkKind } from './biblink.js';
+import { Link, LinkKind } from './biblink.js';
 import { Labels } from './labels.js';
 
 /**
@@ -79,13 +79,13 @@ export class BibliographyTable {
      */
     static LABELS = new Map([
         ['en', {
-            number: 'No.', year: 'Year', reference: 'Reference',
+            number: 'No.', year: 'Year', type: 'Type', reference: 'Reference',
             abstract: 'Abstract', source: 'BibTeX', backTo: 'Back to citation',
             pdf: 'PDF', repository: 'Open archive', publisher: 'Publisher', other: 'Link',
             of: 'of'
         }],
         ['fr', {
-            number: 'N°', year: 'Année', reference: 'Référence',
+            number: 'N°', year: 'Année', type: 'Type', reference: 'Référence',
             abstract: 'Résumé', source: 'BibTeX', backTo: 'Retour à la citation',
             pdf: 'PDF', repository: 'Archive ouverte', publisher: 'Éditeur', other: 'Lien',
             of: 'de'
@@ -190,6 +190,14 @@ export class BibliographyTable {
             row.appendChild(this.#buildHeader('number', true));
         }
         row.appendChild(this.#buildHeader('year', true));
+
+        // What nothing else writes: a reference is displayed by the fields its
+        // type asks for, and two types ask for the same ones. The column opens
+        // unchecked, a bibliography being read for its references. B27.
+        const type = this.#buildHeader('type', true);
+        type.setAttribute('data-starts-hidden', '');
+        row.appendChild(type);
+
         row.appendChild(this.#buildHeader('reference', true, 'author'));
 
         head.appendChild(row);
@@ -254,6 +262,18 @@ export class BibliographyTable {
         year.className = 'bib-year';
         year.textContent = reference.field('year');
         row.appendChild(year);
+
+        // What the formatter calls this type, and never what BibTeX wrote:
+        // "@Article", "@article" and "@ARTICLE" are one type, and a column
+        // that repeated them would read as three. The column sorts as it
+        // reads, so the value to sort on is the written name. B27.
+        const written = this.#formatter.nameOf(reference.type);
+
+        const type = document.createElement('td');
+        type.className = 'bib-type';
+        type.textContent = written;
+        type.setAttribute('data-sort-value', written.toLowerCase());
+        row.appendChild(type);
 
         row.appendChild(this.#buildReferenceCell(reference, cited));
 
@@ -400,6 +420,10 @@ export class BibliographyTable {
         // so before following it, the way Whakerexa marks any outward link.
         element.className = 'bib-link external-link';
         element.setAttribute('href', link.address);
+
+        // The class says the link leaves the document, the attribute says
+        // where it opens: what a reader is told, and what a browser does.
+        Link.openIn(element);
 
         // A page holding twenty links all named "PDF" is a page where a name
         // says nothing, so each one names its reference.
@@ -578,10 +602,10 @@ export class BibliographyTable {
      */
     static #columnCount(hasNumbers) {
         if (hasNumbers === true) {
-            return 3;
+            return 4;
         }
 
-        return 2;
+        return 3;
     }
 
     /**

@@ -405,7 +405,11 @@ export class MenuManager {
      */
     #initToggleAttributes(toggle, asideId) {
         toggle.setAttribute('aria-controls', asideId);
-        toggle.setAttribute('aria-haspopup', 'menu');
+        // What the page wrote is kept: 'true' and 'menu' both say a popup, and
+        // the value is the author's. One is written only when none is there.
+        if (toggle.hasAttribute('aria-haspopup') === false) {
+            toggle.setAttribute('aria-haspopup', 'menu');
+        }
         toggle.setAttribute('aria-expanded', 'false');
     }
 

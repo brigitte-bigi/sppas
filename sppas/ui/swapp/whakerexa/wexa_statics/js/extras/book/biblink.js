@@ -74,11 +74,30 @@ export class Link {
      */
     static PUBLISHER_MARKS = ['doi.org', '/doi/'];
 
+    /**
+     * Where an address opens when the page says nothing.
+     *
+     * A bibliography is read alongside what cites it, and a reader who
+     * follows an address has not finished reading: the document stays as it
+     * was, and the address opens beside it. B28.
+     */
+    static DEFAULT_TARGET = '_blank';
+
+    /**
+     * Where an address may open: what HTML already writes, and nothing else.
+     */
+    static TARGETS = ['_self', '_blank'];
+
     // FIELDS
     /**
      * The hosts currently known as archives, shared by every link.
      */
     static #repositoryHosts = [...Link.DEFAULT_REPOSITORY_HOSTS];
+
+    /**
+     * Where the addresses of this page open, shared by every link.
+     */
+    static #target = Link.DEFAULT_TARGET;
 
     #address;
 
@@ -142,6 +161,61 @@ export class Link {
      */
     static resetRepositoryHosts() {
         Link.#repositoryHosts = [...Link.DEFAULT_REPOSITORY_HOSTS];
+    }
+
+    /**
+     * Get where the addresses of this page open.
+     *
+     * @returns {string} "_blank" or "_self".
+     */
+    static get target() {
+        return Link.#target;
+    }
+
+    /**
+     * Say where the addresses of this page open.
+     *
+     * One page, one answer: a document does not open some of its addresses
+     * one way and the rest another. What is neither of the two is said and
+     * changes nothing.
+     *
+     * @param said {string} "_blank" or "_self".
+     * @returns {void}
+     */
+    static setTarget(said) {
+        if (Link.TARGETS.includes(said) === false) {
+            console.warn(`Link.setTarget: "${said}" is not where an address opens.`
+                + ` It is "${Link.TARGETS.join('" or "')}".`);
+            return;
+        }
+        Link.#target = said;
+    }
+
+    /**
+     * Give back where the addresses open the way it was at the start.
+     *
+     * @returns {void}
+     */
+    static resetTarget() {
+        Link.#target = Link.DEFAULT_TARGET;
+    }
+
+    /**
+     * Say on an element where it opens.
+     *
+     * A page opened in a tab of its own otherwise keeps a handle on the one
+     * that opened it, and an address of a reference comes from data the
+     * document did not write: nothing is handed over. B28.
+     *
+     * @param element {HTMLElement} The link that leads outside.
+     * @returns {void}
+     */
+    static openIn(element) {
+        element.setAttribute('target', Link.#target);
+
+        if (Link.#target === '_blank') {
+            element.setAttribute('rel', 'noopener');
+        }
     }
 
 

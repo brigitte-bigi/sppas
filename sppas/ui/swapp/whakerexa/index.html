@@ -92,7 +92,7 @@
     <input type="checkbox" id="mobile" role="button"
            aria-label="Menu" aria-haspopup="true" aria-expanded="false">
 
-    <nav id="header-nav-content" aria-label="Accessibility navigation">
+    <nav id="header-nav-content" class="nav-wexa header" aria-label="Accessibility navigation">
         <button id="btn-css-theme" class="menuitem" type="button"
                 aria-label="Switch theme" title="Switch theme"
                 onclick="window.themes && window.themes.next()">
@@ -107,10 +107,12 @@
 
     <h1>Whakerexa</h1>
     <h2>A minimal toolkit for clean, accessible HTML</h2>
-    <p class="wrap-panel">
-        <a class="cta-button" id="cta-quickstart" data-href="docs/quick-start.html" data-target="_self">Quick start</a>
-        <a class="cta-button" id="cta-browsedocs" data-href="docs/accessibility.html" data-target="_self">Accessibility</a>
-    </p>
+    <nav aria-label="Where to start">
+        <ul class="wrap-panel">
+            <li><a class="menuitem" id="cta-quickstart" href="docs/quick-start.html" data-target="_self">Quick start</a></li>
+            <li><a class="menuitem" id="cta-browsedocs" href="docs/accessibility.html" data-target="_self">Accessibility</a></li>
+        </ul>
+    </nav>
 </header>
 
 <nav id="nav-content" class="nav-wexa side collapsible" aria-label="Main navigation">
@@ -119,7 +121,7 @@
         <button aria-label="Pin menu"
                 id="pin-menu" type="button"
                 aria-controls="nav-content"
-                aria-pressed="true"
+                aria-pressed="false"
                 title="Pin menu"
                 class="menuitem menu-pin" data-icon="pin">
         </button>
@@ -239,9 +241,9 @@
 
         <h2 class="center">What Whakerexa gives you</h2>
 
-        <div class="cards-panel">
+        <ul class="cards-panel">
 
-            <article class="card">
+            <li><article class="card">
                 <div class="card-header" data-icon="page">
                 </div>
                 <div class="card-body">
@@ -249,11 +251,11 @@
                     <p>Wexa styles tags directly. No <code>.btn</code>, no <code>.container</code>, no utility class soup — your markup stays readable.</p>
                 </div>
                 <div class="card-footer">
-                    <a id="card-nav-wexa" data-href="docs/wexa.html" data-target="_self">See it →</a>
+                    <a id="card-nav-wexa" data-href="docs/wexa.html" data-target="_self" class="more-link">See it</a>
                 </div>
-            </article>
+            </article></li>
 
-            <article class="card">
+            <li><article class="card">
                 <div class="card-header" data-icon="settings">
                 </div>
                 <div class="card-body">
@@ -261,11 +263,11 @@
                     <p>Every color, size and spacing is a variable. Redefine a handful and the whole design follows — themes included.</p>
                 </div>
                 <div class="card-footer">
-                    <a id="card-nav-cssvariables" data-href="docs/css-variables.html" data-target="_self">Explore →</a>
+                    <a id="card-nav-cssvariables" data-href="docs/css-variables.html" data-target="_self" class="more-link">Explore</a>
                 </div>
-            </article>
+            </article></li>
 
-            <article class="card">
+            <li><article class="card">
                 <div class="card-header" data-icon="layers">
                 </div>
                 <div class="card-body">
@@ -273,11 +275,11 @@
                     <p>Your CSS wins over wexa defaults automatically. No <code>!important</code>, no specificity fights — just write your rules.</p>
                 </div>
                 <div class="card-footer">
-                    <a id="card-nav-architecture" data-href="docs/architecture.html" data-target="_self">Learn more →</a>
+                    <a id="card-nav-architecture" data-href="docs/architecture.html" data-target="_self" class="more-link">Learn more</a>
                 </div>
-            </article>
+            </article></li>
 
-            <article class="card">
+            <li><article class="card">
                 <div class="card-header" data-icon="accessibility">
                 </div>
                 <div class="card-body">
@@ -285,11 +287,11 @@
                     <p>Light, dark and contrast modes. Skip links, ARIA roles, keyboard navigation — from the ground up, not as an afterthought.</p>
                 </div>
                 <div class="card-footer">
-                    <a id="card-nav-accessibility" data-href="docs/accessibility.html" data-target="_self">See modes →</a>
+                    <a id="card-nav-accessibility" data-href="docs/accessibility.html" data-target="_self" class="more-link">See modes</a>
                 </div>
-            </article>
+            </article></li>
 
-            <article class="card">
+            <li><article class="card">
                 <div class="card-header" data-icon="grid-view">
                 </div>
                 <div class="card-body">
@@ -297,11 +299,23 @@
                     <p>Import only what you need. Or use the single-file bundle for offline and <code>file://</code> environments. No build step.</p>
                 </div>
                 <div class="card-footer">
-                    <a id="card-nav-bundle" data-href="docs/wexa.bundle.html" data-target="_self">Bundle docs →</a>
+                    <a id="card-nav-bundle" data-href="docs/wexa.bundle.html" data-target="_self" class="more-link">Bundle docs</a>
                 </div>
-            </article>
+            </article></li>
 
-            <article class="card">
+            <li><article class="card">
+                <div class="card-header" data-icon="book">
+                </div>
+                <div class="card-body">
+                    <h3>BibTeX bibliography</h3>
+                    <p>Give it your <code>.bib</code> file: citations are numbered in the order they are read, each one leads to its reference, and the table at the end leads back to every place it is cited.</p>
+                </div>
+                <div class="card-footer">
+                    <a id="card-nav-bibliography" data-href="docs/bibliography.html" data-target="_self" class="more-link">Cite from BibTeX</a>
+                </div>
+            </article></li>
+
+            <li><article class="card">
                 <div class="card-header" data-icon="screen">
                 </div>
                 <div class="card-body">
@@ -309,11 +323,23 @@
                     <p>A full accessible presentation framework. Keyboard control, handout and memo modes, themes — runs in any browser.</p>
                 </div>
                 <div class="card-footer">
-                    <a id="card-nav-slides" data-href="docs/slides.html" data-target="_self">See slides →</a>
+                    <a id="card-nav-slides" data-href="docs/slides.html" data-target="_self" class="more-link">See slides</a>
                 </div>
-            </article>
+            </article></li>
 
-        </div>
+            <li><article class="card">
+                <div class="card-header" data-icon="print">
+                </div>
+                <div class="card-body">
+                    <h3>Conference poster</h3>
+                    <p>One page of one size &mdash; A0 by default &mdash; printed whole as a vector PDF. Everything is placed in millimetres, and the stylesheet asks for no JavaScript.</p>
+                </div>
+                <div class="card-footer">
+                    <a id="card-nav-poster" data-href="docs/poster.html" data-target="_self" class="more-link">Lay out a poster</a>
+                </div>
+            </article></li>
+
+        </ul>
 
     </section>
 
@@ -347,7 +373,6 @@
                     <li>Light / dark / contrast — <code>wexa.css</code> @layer</li>
                     <li>Accessibility controls — <code>AccessibilityManager</code></li>
                     <li>CSS theme switcher — <code>ThemeManager</code></li>
-                    <li>CTA buttons — <code>button.css</code> .cta-button</li>
                 </ul>
             </div>
 
@@ -379,6 +404,17 @@
             Need more? See the <a id="start-quickstart" data-href="docs/quick-start.html" data-target="_self">Quick start</a>
             or browse individual component pages from the menu.
         </p>
+
+        <details>
+            <summary>Readable CSS vs minified — which to link?</summary>
+            <p>
+                <code>wexa_statics/css/</code> holds the stylesheets as they are written,
+                comments included: this is what the documentation links, and what you read
+                when you want to know how something is drawn.
+                <code>wexa_statics/css.min/</code> holds the same sheets, same names, same
+                folders, at half the weight — point a site in production at it.
+            </p>
+        </details>
 
         <details>
             <summary>ES6 modules vs bundle — which to use?</summary>

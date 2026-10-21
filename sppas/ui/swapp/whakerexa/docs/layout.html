@@ -111,14 +111,14 @@
                     <td><code>15rem</code></td>
                 </tr>
                 <tr>
-                    <td><code>--card-border-width</code></td>
-                    <td>Card border width</td>
-                    <td><code>0</code></td>
+                    <td><code>--border-width-alt</code></td>
+                    <td>Border width of a frame, a card among them</td>
+                    <td><code>1px</code></td>
                 </tr>
                 <tr>
-                    <td><code>--card-border-radius</code></td>
-                    <td>Card corner radius</td>
-                    <td><code>8px</code></td>
+                    <td><code>--border-radius-alt</code></td>
+                    <td>Corner radius of a frame, a card among them</td>
+                    <td><code>0.5rem</code></td>
                 </tr>
                 <tr>
                     <td><code>--card-box-shadow</code></td>
@@ -240,6 +240,32 @@
 
         <!-- ============================================================ -->
         <section class="panel-item">
+            <h2>A panel written as a list</h2>
+            <p>When a panel holds a set — three themes, four cells, a row of
+                cards — write it as a list, and a reader who listens is told it
+                is one. Any of the panels above takes <code>&lt;ul&gt;</code> or
+                <code>&lt;ol&gt;</code> in place of its container, and
+                <code>&lt;li&gt;</code> in place of each item. The square the
+                framework draws before an item is not drawn there, and the room
+                it reserves is not taken: the item is the place the panel gives.</p>
+            <article class="card-doc" aria-label="A panel written as a list">
+                <div class="card-view" style="width: 100%;">
+                    <ul class="wrap-panel">
+                        <li class="wrap-item" style="border: 1px solid var(--border-color); padding: 0.5rem;">First</li>
+                        <li class="wrap-item" style="border: 1px solid var(--border-color); padding: 0.5rem;">Second</li>
+                        <li class="wrap-item" style="border: 1px solid var(--border-color); padding: 0.5rem;">Third</li>
+                    </ul>
+                </div>
+                <pre class="dark"><code>&lt;ul class="wrap-panel"&gt;
+    &lt;li class="wrap-item"&gt;First&lt;/li&gt;
+    &lt;li class="wrap-item"&gt;Second&lt;/li&gt;
+    &lt;li class="wrap-item"&gt;Third&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            </article>
+        </section>
+
+        <!-- ============================================================ -->
+        <section class="panel-item">
             <h2>Collapsible panel</h2>
             <p>Use the native HTML <code>&lt;details&gt;</code> / <code>&lt;summary&gt;</code> elements.
                 No CSS class required — <code>wexa.css</code> styles them directly.
@@ -271,7 +297,7 @@
                         <div class="card-body">
                             <h2>Card title</h2>
                             <p>Card content — wraps when needed.</p>
-                            <a href="#">Learn more →</a>
+                            <a href="#" class="more-link">Learn more</a>
                         </div>
                     </article>
                 </div>
@@ -279,7 +305,7 @@
     &lt;div class="card-body"&gt;
         &lt;h2&gt;Card title&lt;/h2&gt;
         &lt;p&gt;Content&lt;/p&gt;
-        &lt;a href="#"&gt;Learn more →&lt;/a&gt;
+        &lt;a href="#" class="more-link"&gt;Learn more&lt;/a&gt;
     &lt;/div&gt;
 &lt;/article&gt;</code></pre>
             </article>
@@ -311,17 +337,17 @@
                         <article class="card">
                             <div class="card-header"><h2>Card A</h2></div>
                             <div class="card-body"><p>First card in the grid.</p></div>
-                            <div class="card-footer"><a href="#">More →</a></div>
+                            <div class="card-footer"><a href="#" class="more-link">More</a></div>
                         </article>
                         <article class="card">
                             <div class="card-header"><h2>Card B</h2></div>
                             <div class="card-body"><p>Second card in the grid.</p></div>
-                            <div class="card-footer"><a href="#">More →</a></div>
+                            <div class="card-footer"><a href="#" class="more-link">More</a></div>
                         </article>
                         <article class="card">
                             <div class="card-header"><h2>Card C</h2></div>
                             <div class="card-body"><p>Third card in the grid.</p></div>
-                            <div class="card-footer"><a href="#">More →</a></div>
+                            <div class="card-footer"><a href="#" class="more-link">More</a></div>
                         </article>
                     </section>
                 </div>
@@ -343,7 +369,7 @@
                                     spans the full available width — suitable for featured content.</p>
                             </div>
                             <div class="card-footer">
-                                <a href="#">See more</a>
+                                <a href="#" class="more-link">See more</a>
                             </div>
                         </article>
                     </section>
@@ -354,6 +380,65 @@
         &lt;div class="card-footer"&gt;...&lt;/div&gt;
     &lt;/article&gt;
 &lt;/section&gt;</code></pre>
+            </article>
+        </section>
+
+        <!-- ============================================================ -->
+        <section class="panel-item">
+            <h2>A drawing beside what it illustrates</h2>
+            <p>
+                <code>.illustrated-content</code> gives a drawing a share of the
+                width and the text the rest. Under 640&nbsp;px, where two columns
+                would leave lines too short to read, one follows the other and the
+                text is centred. The drawing is the <code>&lt;img&gt;</code>; what
+                it illustrates is whatever else the container holds.
+            </p>
+
+            <article class="card-doc" aria-label="Illustrated content — example">
+                <div class="card-view" style="width: 100%;">
+                    <div class="illustrated-content" style="border: var(--border-width-alt) solid var(--border-color-alt);">
+                        <img src="../wexa_statics/logos/whakerexa-128.webp" alt="The logo of Whakerexa">
+                        <section>
+                            <h3>What it is for</h3>
+                            <p>A figure and what it says, side by side, without a
+                               panel and without a class on each of the two.</p>
+                        </section>
+                    </div>
+                </div>
+                <pre class="dark"><code>&lt;div class="illustrated-content"&gt;
+    &lt;img src="logo.webp" alt="..."&gt;
+    &lt;section&gt;...&lt;/section&gt;
+&lt;/div&gt;</code></pre>
+            </article>
+
+            <h3>Two utilities and the size of a logo</h3>
+            <p>
+                <code>.flow</code> puts one space between what follows what, and
+                none before the first: the container says the distance once, and
+                each element after the first takes it. A child that wants another
+                distance writes <code>--flow-space</code> on itself.
+                <code>.noborder</code> removes a border.
+            </p>
+            <p>
+                <code>.small-logo</code>, <code>.medium-logo</code> and
+                <code>.large-logo</code> bound an image by its height on a wide
+                screen — 3.5, 6.5 and 10&nbsp;rem — and by its width on a narrow
+                one. The other side is left free, so the drawing keeps its shape.
+            </p>
+
+            <article class="card-doc" aria-label="Flow and logo sizes — example">
+                <div class="card-view" style="width: 100%;">
+                    <div class="flow" style="width: 100%;">
+                        <img src="../wexa_statics/logos/whakerexa-128.webp" alt="The logo of Whakerexa" class="small-logo">
+                        <img src="../wexa_statics/logos/whakerexa-128.webp" alt="The logo of Whakerexa" class="medium-logo">
+                        <p style="--flow-space: 2rem;">This paragraph asks for twice the distance.</p>
+                    </div>
+                </div>
+                <pre class="dark"><code>&lt;div class="flow"&gt;
+    &lt;img src="logo.webp" alt="..." class="small-logo"&gt;
+    &lt;img src="logo.webp" alt="..." class="medium-logo"&gt;
+    &lt;p style="--flow-space: 2rem;"&gt;...&lt;/p&gt;
+&lt;/div&gt;</code></pre>
             </article>
         </section>
 

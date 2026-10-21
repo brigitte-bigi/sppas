@@ -1,4 +1,4 @@
-// Bundle automatically generated on 2026-09-16 18:09:40
+// Bundle automatically generated on 2026-10-21 13:58:22
 
 // ---------------- logger.js ---------------
 class WexaLogger {
@@ -2709,7 +2709,11 @@ class MenuManager {
     // ----------------------------------------------------------------------
     #initToggleAttributes(toggle, asideId) {
         toggle.setAttribute('aria-controls', asideId);
-        toggle.setAttribute('aria-haspopup', 'menu');
+        // What the page wrote is kept: 'true' and 'menu' both say a popup, and
+        // the value is the author's. One is written only when none is there.
+        if (toggle.hasAttribute('aria-haspopup') === false) {
+            toggle.setAttribute('aria-haspopup', 'menu');
+        }
         toggle.setAttribute('aria-expanded', 'false');
     }
     // ----------------------------------------------------------------------
@@ -4880,8 +4884,11 @@ class Link {
     // CONSTANTS
     static DEFAULT_REPOSITORY_HOSTS = ['hal.science', 'archives-ouvertes.fr', 'arxiv.org', 'zenodo.org'];
     static PUBLISHER_MARKS = ['doi.org', '/doi/'];
+    static DEFAULT_TARGET = '_blank';
+    static TARGETS = ['_self', '_blank'];
     // FIELDS
     static #repositoryHosts = [...Link.DEFAULT_REPOSITORY_HOSTS];
+    static #target = Link.DEFAULT_TARGET;
     #address;
     // PUBLIC STATIC METHODS
     static get repositoryHosts() {
@@ -4911,6 +4918,26 @@ class Link {
     }
     static resetRepositoryHosts() {
         Link.#repositoryHosts = [...Link.DEFAULT_REPOSITORY_HOSTS];
+    }
+    static get target() {
+        return Link.#target;
+    }
+    static setTarget(said) {
+        if (Link.TARGETS.includes(said) === false) {
+            console.warn(`Link.setTarget: "${said}" is not where an address opens.`
+                + ` It is "${Link.TARGETS.join('" or "')}".`);
+            return;
+        }
+        Link.#target = said;
+    }
+    static resetTarget() {
+        Link.#target = Link.DEFAULT_TARGET;
+    }
+    static openIn(element) {
+        element.setAttribute('target', Link.#target);
+        if (Link.#target === '_blank') {
+            element.setAttribute('rel', 'noopener');
+        }
     }
     // CONSTRUCTOR
     constructor(address) {
@@ -5430,8 +5457,38 @@ class ReferenceFormatter {
     static TERMINATOR = '.';
     static YEAR_OPENING = ' (';
     static YEAR_CLOSING = ')';
+    static TYPE_NAMES = new Map([
+        ['en', {
+            article: 'Article', inproceedings: 'Conference',
+            conference: 'Conference', incollection: 'Chapter',
+            inbook: 'Chapter', book: 'Book', techreport: 'Report',
+            phdthesis: 'PhD thesis', mastersthesis: "Master's thesis",
+            unpublished: 'Unpublished', misc: 'Miscellaneous'
+        }],
+        ['fr', {
+            article: 'Article', inproceedings: 'Communication',
+            conference: 'Communication', incollection: 'Chapitre',
+            inbook: 'Chapitre', book: 'Ouvrage', techreport: 'Rapport',
+            phdthesis: 'Thèse', mastersthesis: 'Mémoire',
+            unpublished: 'Non publié', misc: 'Divers'
+        }]
+    ]);
     static LINE_NAMES = ['authors', 'title', 'source'];
+    // FIELDS
+    #texts;
+    // CONSTRUCTOR
+    constructor() {
+        this.#texts = new Labels(ReferenceFormatter.TYPE_NAMES);
+    }
     // PUBLIC METHODS
+    nameOf(type) {
+        const wanted = type.toLowerCase();
+        const written = this.#texts.text(wanted);
+        if (written === undefined) {
+            return wanted.charAt(0).toUpperCase() + wanted.slice(1);
+        }
+        return written;
+    }
     format(reference) {
         const fragment = document.createDocumentFragment();
         const required = this.#requiredFor(reference.type);
@@ -5672,13 +5729,13 @@ class BibliographyTable {
     static BACK_SEPARATOR = '-';
     static LABELS = new Map([
         ['en', {
-            number: 'No.', year: 'Year', reference: 'Reference',
+            number: 'No.', year: 'Year', type: 'Type', reference: 'Reference',
             abstract: 'Abstract', source: 'BibTeX', backTo: 'Back to citation',
             pdf: 'PDF', repository: 'Open archive', publisher: 'Publisher', other: 'Link',
             of: 'of'
         }],
         ['fr', {
-            number: 'N°', year: 'Année', reference: 'Référence',
+            number: 'N°', year: 'Année', type: 'Type', reference: 'Référence',
             abstract: 'Résumé', source: 'BibTeX', backTo: 'Retour à la citation',
             pdf: 'PDF', repository: 'Archive ouverte', publisher: 'Éditeur', other: 'Lien',
             of: 'de'
@@ -5730,6 +5787,12 @@ class BibliographyTable {
             row.appendChild(this.#buildHeader('number', true));
         }
         row.appendChild(this.#buildHeader('year', true));
+        // What nothing else writes: a reference is displayed by the fields its
+        // type asks for, and two types ask for the same ones. The column opens
+        // unchecked, a bibliography being read for its references. B27.
+        const type = this.#buildHeader('type', true);
+        type.setAttribute('data-starts-hidden', '');
+        row.appendChild(type);
         row.appendChild(this.#buildHeader('reference', true, 'author'));
         head.appendChild(row);
         return head;
@@ -5768,6 +5831,16 @@ class BibliographyTable {
         year.className = 'bib-year';
         year.textContent = reference.field('year');
         row.appendChild(year);
+        // What the formatter calls this type, and never what BibTeX wrote:
+        // "@Article", "@article" and "@ARTICLE" are one type, and a column
+        // that repeated them would read as three. The column sorts as it
+        // reads, so the value to sort on is the written name. B27.
+        const written = this.#formatter.nameOf(reference.type);
+        const type = document.createElement('td');
+        type.className = 'bib-type';
+        type.textContent = written;
+        type.setAttribute('data-sort-value', written.toLowerCase());
+        row.appendChild(type);
         row.appendChild(this.#buildReferenceCell(reference, cited));
         return row;
     }
@@ -5832,6 +5905,9 @@ class BibliographyTable {
         // so before following it, the way Whakerexa marks any outward link.
         element.className = 'bib-link external-link';
         element.setAttribute('href', link.address);
+        // The class says the link leaves the document, the attribute says
+        // where it opens: what a reader is told, and what a browser does.
+        Link.openIn(element);
         // A page holding twenty links all named "PDF" is a page where a name
         // says nothing, so each one names its reference.
         const label = BibliographyTable.#labelOf(link.kind());
@@ -5915,9 +5991,9 @@ class BibliographyTable {
     }
     static #columnCount(hasNumbers) {
         if (hasNumbers === true) {
-            return 3;
+            return 4;
         }
-        return 2;
+        return 3;
     }
     static #contentId(key, name) {
         return BibliographyTable.ROW_PREFIX + key + '-' + name;
@@ -6012,6 +6088,7 @@ class CitationIndex {
             address.className = 'bib-link external-link';
             address.setAttribute('href', link.address);
             address.textContent = link.address;
+            Link.openIn(address);
             content.appendChild(address);
         });
         if (reference.abstract.length > 0) {
@@ -6341,12 +6418,19 @@ class BibliographyControls {
             }
             const item = document.createElement('li');
             item.className = 'check-item';
+            // A column whose header says it opens hidden is listed like the
+            // others, and unchecked: what it holds is read by whoever asks for
+            // it. The header decides, here nothing is named. B27.
+            const startsHidden = header.hasAttribute('data-starts-hidden');
             const box = document.createElement('input');
             box.type = 'checkbox';
             box.id = this.#table.id + '-column-' + name;
-            box.checked = true;
+            box.checked = startsHidden === false;
             box.setAttribute('data-toggle', name);
             box.setAttribute('aria-labelledby', box.id + '-label');
+            if (startsHidden === true) {
+                box.setAttribute('data-starts-hidden', '');
+            }
             const label = document.createElement('label');
             label.id = box.id + '-label';
             label.setAttribute('for', box.id);
@@ -6375,6 +6459,10 @@ class BibliographyControls {
         }
         this.#wasNarrow = isNarrow;
         this.#selector.getCheckboxes().forEach(box => {
+            if (box.hasAttribute('data-starts-hidden') === true) {
+                box.checked = false;
+                return;
+            }
             box.checked = isNarrow === false || box.getAttribute('data-toggle') === 'author';
         });
         this.#applyColumns();
@@ -6473,6 +6561,10 @@ class BookBibliography {
         try {
             const content = await this.#source.read();
             const references = this.#parser.parse(content);
+            // Where the addresses open is read once, before the first one is
+            // written, and it is read where the bibliography stands. A page
+            // that says nothing opens a tab of its own. B28.
+            this.#takeWhereAddressesOpen();
             // The citations are numbered before anything else is looked for:
             // they are in the text, and the text is there. A document with
             // nowhere to put its bibliography still reads.
@@ -6502,6 +6594,18 @@ class BookBibliography {
         }
     }
     // PRIVATE METHODS
+    #takeWhereAddressesOpen() {
+        Link.resetTarget();
+        const place = document.getElementById(this.#placeId);
+        if (place === null) {
+            return;
+        }
+        const said = place.getAttribute('data-links-target');
+        if (said === null) {
+            return;
+        }
+        Link.setTarget(said);
+    }
     #buildDisclosures(roots) {
         const disclosures = [];
         const controls = new Set();
@@ -6789,6 +6893,7 @@ window.Wexa.KeyPiano = KeyPiano;
 // ------------- SVG icons (gathered in, for a document on a disk) ------------
 IconReader.gather('mono-svg', 'accessibility', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <circle cx=\"16\" cy=\"8\" r=\"3\" />\n  <path d=\"M8 15h16\" />\n  <path d=\"M16 15v10\" />\n  <path d=\"M10 25l2-6\" />\n  <path d=\"M22 25l-2-6\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'add', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <line x1=\"16\" y1=\"7\" x2=\"16\" y2=\"25\" />\n  <line x1=\"7\" y1=\"16\" x2=\"25\" y2=\"16\" />\n</svg>\n");
+IconReader.gather('mono-svg', 'anchor-link', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <line x1=\"13\" y1=\"5\" x2=\"10\" y2=\"27\" />\n  <line x1=\"23\" y1=\"5\" x2=\"20\" y2=\"27\" />\n  <line x1=\"6\" y1=\"12\" x2=\"27\" y2=\"12\" />\n  <line x1=\"5\" y1=\"20\" x2=\"26\" y2=\"20\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'anonymous', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <circle cx=\"16\" cy=\"11\" r=\"5\" />\n  <path d=\"M5 27c0-5 5-8 11-8s11 3 11 8\" />\n  <line x1=\"8\" y1=\"8\" x2=\"24\" y2=\"24\" />\n</svg>");
 IconReader.gather('mono-svg', 'arrow-down', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <line x1=\"16\" y1=\"5\" x2=\"16\" y2=\"27\" />\n  <polyline points=\"8 19 16 27 24 19\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'arrow-left', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <line x1=\"27\" y1=\"16\" x2=\"5\" y2=\"16\" />\n  <polyline points=\"13 8 5 16 13 24\" />\n</svg>\n");

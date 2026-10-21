@@ -276,6 +276,14 @@ export default class SetupManager extends BaseManager {
                     const old = document.getElementById(id);
                     if (old) old.outerHTML = html;
 
+                    // The icons of what the server wrote are placed, as the
+                    // ones of the page were. The replaced node is out of the
+                    // document: the new one is asked for again.
+                    const fresh = document.getElementById(id);
+                    if (fresh !== null && window.Wexa && window.Wexa.icons) {
+                        window.Wexa.icons.run(fresh);
+                    }
+
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
                     if (doc.getElementById('install_field') !== null) {

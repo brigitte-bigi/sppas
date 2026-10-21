@@ -103,10 +103,6 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>Show the type of a reference in a column</td>
-                        <td>The formatted reference already says what it is.</td>
-                    </tr>
-                    <tr>
                         <td>Sort the types by importance</td>
                         <td>No order of types is true for two readers.</td>
                     </tr>
@@ -219,6 +215,8 @@
                     <tr><td>B24</td><td>A reference is read whole on a narrow screen: what numbers it and what dates it never take the width its text needs. The columns follow the width of the screen, at every moment and not only when the page opens.</td></tr>
                     <tr><td>B25</td><td>What a reference opens, its abstract and its BibTeX source, is read whatever the columns show. Hiding a column takes away a column, never the content of a row that has none: B13 and B14 hold at every width.</td></tr>
                     <tr><td>B26</td><td>In a presentation, what acts upon the bibliography is not shown: neither the search field nor the column selector. An audience reads what is on the screen and acts on nothing; what is read on its own stays, the sorting of a column being written as well as done.</td></tr>
+                    <tr><td>B27</td><td>The type of a reference is a column of its own, sorted on like the others. Nothing else writes it: a reference is displayed by the fields its type asks for, and two types ask for the same ones. What is written is the name of the type in the language of the document, never what BibTeX wrote: "@Article", "@article" and "@ARTICLE" are one type, and a type nobody planned for is written as it was, its first letter in capital. The column is not checked when the page opens.</td></tr>
+                    <tr><td>B28</td><td>An address of a reference opens in a tab of its own, leaving the document where the reader left it. A page that wants it otherwise says so, once, where the bibliography stands.</td></tr>
                     </tbody>
                 </table>
             </section>
@@ -317,6 +315,15 @@
                 <p>What this is not: a feature withheld from a small screen. Everything the
                     bibliography does on a wide screen, it does on a phone. Only the columns
                     checked at the opening differ.</p>
+
+                <p>The type is a column that opens unchecked. B27. What was written before, that
+                    the displayed reference already says what it is, is false: no template writes
+                    the type, and what appears are its fields. A journal is read as an article and
+                    a publisher as a book, but <code>inproceedings</code> and
+                    <code>conference</code> are displayed the same, and an entry in a collection
+                    differs from an article by the label of one field. Unchecked, because a
+                    bibliography is read for its references; whoever compares types checks it, and
+                    sorts on it.</p>
             </section>
 
             <section class="ssection"><h2>The citation in the source</h2>
@@ -354,6 +361,23 @@
 
                 <p>Nothing is ever completed by going to the internet. Data that are well kept
                     do not need it.</p>
+
+                <p>Where they open: a tab of their own, and the document stays as it was. B28. A
+                    bibliography is read alongside what cites it, and a reader who follows an
+                    address has not finished reading. The mark that says a link leaves the
+                    document says what the link is, never what the browser does with it, so the
+                    two are written apart: the class carries the mark, the attribute carries the
+                    opening.</p>
+
+                <p>How a page says otherwise: <code>data-links-target</code>, written on the
+                    element where the bibliography stands, read once when it is built. It holds
+                    <code>_self</code> or <code>_blank</code>, the values HTML already uses, and
+                    anything else is said and changes nothing. A page that says nothing opens a
+                    tab: what has to be written is what departs from the ordinary.</p>
+
+                <p>What comes with a new tab: <code>rel="noopener"</code>. A page opened this way
+                    otherwise keeps a handle on the one that opened it, and the address comes from
+                    data the document did not write.</p>
             </section>
 
             <section class="ssection"><h2>The language</h2>

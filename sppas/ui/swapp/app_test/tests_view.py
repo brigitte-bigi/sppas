@@ -200,7 +200,7 @@ class swappTestsView:
                                   identifier=swappTestsModel.button_of(recipe))
         _button.add_attribute("data-href", "/" + recipe.page())
         _button.add_attribute("data-target", "_self")
-        _button.add_attribute("class", "cta-button")
+        _button.add_attribute("class", "action-button")
         _button.set_text(None, recipe.name())
         _li.append_child(_button)
 

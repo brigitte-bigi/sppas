@@ -153,6 +153,25 @@
             External links are marked with a visible icon and an implicit warning for screen readers.
         </p>
 
+        <h2>A role is dressed as the element it names</h2>
+
+        <p>
+            A role is a promise made to the reader who listens: this is a button, this is
+            a link. Whakerexa gives the eye what the role gives the ear, and it does so on
+            any element: a <code>&lt;div role="button"&gt;</code> or a
+            <code>&lt;span role="button"&gt;</code> is drawn as a
+            <code>&lt;button&gt;</code> is, and <code>role="link"</code> is drawn as an
+            <code>&lt;a&gt;</code> is, down to the mark of a link that leaves the page.
+            The roles of the commands — <code>button</code>, <code>link</code> and
+            <code>menuitem</code> — are the ones that are given a look, because a reader
+            who is shown nothing has no other way to learn that something answers.
+        </p>
+        <p>
+            A command that does not answer says it with <code>aria-disabled="true"</code>:
+            it keeps the look it has and is no longer lit under the pointer, the way a
+            <code>&lt;button disabled&gt;</code> is not.
+        </p>
+
     </section>
 
     <!-- ============================================================ -->

@@ -61,8 +61,8 @@
     --font-family-serif:       var(--font-family-sans);
     --border-radius:           0;
     --border-width:            2px;
-    --blockquote-border-width: 4px;
-    --card-border-width:       2px;
+    --border-radius-alt:       0;
+    --border-width-alt:        1px;
 }
 
 /* ======================================================================
@@ -72,6 +72,7 @@
 .contrast {
     --border-radius: 0;
     --border-width:  5px;
+    --border-radius-alt: 0;
 }
 
 /* ======================================================================
@@ -87,7 +88,7 @@
     --fg-color-alt:          rgb(26, 26, 26);
 
     --border-color:          green;
-    --border-color-alt:      rgb(51, 201, 51);
+    --border-color-alt:      rgb(0, 0, 139);
 
     --a-color:               rgb(0, 0, 139);
     --link-color:            rgb(0, 0, 139);
@@ -122,7 +123,6 @@
     --blockquote-border-color: rgb(0, 0, 0);
     --blockquote-footer-color: rgb(51, 51, 51);
 
-    --table-border-color:             rgb(0, 0, 0);
     --table-cell-bg-color:            rgb(255, 255, 255);
     --table-head-bg-color:            rgb(0, 0, 0);
     --table-head-fg-color:            rgb(255, 255, 255);
@@ -131,7 +131,7 @@
     --table-row-stripped-bg-color:    rgb(240, 240, 240);
 
     --inputs-bg-color:       rgb(255, 255, 255);
-    --progress-bg-color:     rgb(240, 240, 240);
+    --progress-bg-color:     rgb(118, 118, 118);
     --progress-fg-color:     rgb(0, 0, 0);
     --shadow-color:          rgba(0, 0, 0, 0.6);
 
@@ -152,8 +152,8 @@
         --fg-color:              rgb(255, 255, 255);
         --fg-color-alt:          rgb(240, 240, 240);
 
-        --border-color:          orange;
-        --border-color-alt:      rgb(204, 64, 64);
+        --border-color:          rgb(0, 180, 0);
+        --border-color-alt:      orange;
 
         --a-color:               rgb(255, 255, 0);
         --link-color:            rgb(255, 255, 0);
@@ -186,7 +186,6 @@
         --blockquote-border-color: rgb(255, 255, 0);
         --blockquote-footer-color: rgb(204, 204, 204);
 
-        --table-border-color:             rgb(255, 255, 255);
         --table-cell-bg-color:            rgb(0, 0, 0);
         --table-head-bg-color:            rgb(255, 255, 255);
         --table-head-fg-color:            rgb(0, 0, 0);
@@ -195,7 +194,7 @@
         --table-row-stripped-bg-color:    rgb(26, 26, 26);
 
         --inputs-bg-color:       rgb(0, 0, 0);
-        --progress-bg-color:     rgb(26, 26, 26);
+        --progress-bg-color:     rgb(118, 118, 118);
         --progress-fg-color:     rgb(255, 255, 255);
         --shadow-color:          rgba(255, 255, 255, 0.3);
 
@@ -233,15 +232,15 @@
     article.card {
         background-color: var(--card-bg-color);
         background-image: none;
-        border: var(--border-width) solid var(--border-color);
-        box-shadow: 3px 3px 0 var(--border-color);
+        border: var(--border-width-alt) solid var(--border-color-alt);
+        box-shadow: 3px 3px 0 var(--shadow-color);
         border-radius: 0;
     }
 
     article.card > footer {
         margin-top: var(--typography-spacing-vertical);
         padding-top: var(--typography-spacing-vertical);
-        border-top: var(--border-width) solid var(--border-color);
+        border-top: var(--border-width-alt) solid var(--border-color-alt);
     }
 
     /* -- Reset button: inverted of primary ----------------------------------- */
@@ -278,12 +277,6 @@
 
 li.enumerate-cards-item {
     box-shadow: none;
-    border: var(--border-color) solid var(--border-width);
+    border: var(--border-color-alt) solid var(--border-width-alt);
     border-radius: none;
-}
-
-
-.cta-button {
-    border: var(--border-width) solid var(--border-color);
-    box-shadow: none;
 }
