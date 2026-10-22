@@ -12,16 +12,11 @@
 /* ── SPPAS color tokens ─────────────────────────────────── */
 
 :root {
-    --logo-color: rgb(70, 100, 150);
-    --sppas-color1: rgb(100, 160, 220); /* soft blue */
-    --sppas-color2: rgb(20, 40, 70);    /* desaturated navy */
-
     /* Items of the side menu: the bar is dark in both modes, so a white
        veil lightens them the same way in both. */
     --nav-item-bg-color: rgba(255, 255, 255, 0.05);
     --nav-item-bg-color-hover: rgba(255, 255, 255, 0.12);
     --nav-item-bg-color-current: rgba(255, 255, 255, 0.18);
-    --nav-item-pressed-shadow-color: rgba(255, 255, 255, 0.15);
 
     /* Setup: the caption of a table */
     --table-caption-bg-color: rgb(230, 235, 245);
@@ -92,7 +87,9 @@
     --dialog-fg-color: rgb(10, 40, 90);
     --dialog-bg-color: rgb(235, 240, 255);
 
-    --border-color: rgb(204, 213, 224);
+    --border-color-alt: rgb(42, 111, 190);
+    --border-color: rgb(72, 150, 240);
+
     --a-color: rgb(0, 70, 100);
     --link-color: rgb(42, 111, 190);
     --li-color: rgb(20, 100, 110);
@@ -101,7 +98,7 @@
     --card-bg-color: rgb(238, 233, 242);
     --card-fg-color: rgb(10, 40, 90);
 
-    --img-bg-color: rgba(248, 250, 255, 0.4);
+    --img-bg-color: rgba(228, 230, 245, 0.4);
 
 }
 

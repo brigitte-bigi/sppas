@@ -161,8 +161,8 @@ This banner notice must not be removed.
         top: 0;
         left: 0;
         right: 0;
-        padding-left: var(--typography-spacing-horizontal);
-        padding-right: var(--typography-spacing-horizontal);
+        padding-left: calc(0.8 * var(--font-size));
+        padding-right: calc(0.8 * var(--font-size));
         padding-top: var(--outline-size);
         padding-bottom: var(--outline-size);
     }
@@ -179,8 +179,8 @@ This banner notice must not be removed.
         bottom: 0;
         left: 0;
         right: 0;
-        padding-left: var(--typography-spacing-horizontal);
-        padding-right: var(--typography-spacing-horizontal);
+        padding-left: calc(0.8 * var(--font-size));
+        padding-right: calc(0.8 * var(--font-size));
         padding-top: var(--outline-size);
         padding-bottom: var(--outline-size);
     }
@@ -201,8 +201,8 @@ This banner notice must not be removed.
         margin: 0;
         padding-left: 0;
         padding-right: 0;
-        padding-top: calc(2 * var(--typography-spacing-vertical) + var(--menu-button-size));
-        padding-bottom: var(--typography-spacing-vertical);
+        padding-top: calc(2.4 * var(--font-size) + var(--menu-button-size));
+        padding-bottom: calc(1.2 * var(--font-size));
         position: fixed;
         top: 0;
         bottom: 0;
@@ -277,10 +277,10 @@ This banner notice must not be removed.
         width:      var(--nav-item-width-h);
         max-width:  var(--nav-item-max-width-h);
 
-        padding-left: calc(0.2 * var(--typography-spacing-horizontal));
-        padding-right: calc(0.2 * var(--typography-spacing-horizontal));
-        padding-top: calc(0.2 * var(--typography-spacing-vertical));
-        padding-bottom: calc(0.2 * var(--typography-spacing-vertical));
+        padding-left: calc(0.16 * var(--font-size));
+        padding-right: calc(0.16 * var(--font-size));
+        padding-top: calc(0.24 * var(--font-size));
+        padding-bottom: calc(0.24 * var(--font-size));
 
         text-decoration: none;
     }
@@ -482,10 +482,10 @@ This banner notice must not be removed.
     .submenu {
         flex-direction: column;
         z-index: 100;
-        padding-left: var(--typography-spacing-horizontal);
-        padding-right: var(--typography-spacing-horizontal);
-        padding-top: calc(0.3 * var(--typography-spacing-vertical));
-        padding-bottom: calc(0.3 * var(--typography-spacing-vertical));
+        padding-left: calc(0.8 * var(--font-size));
+        padding-right: calc(0.8 * var(--font-size));
+        padding-top: calc(0.36 * var(--font-size));
+        padding-bottom: calc(0.36 * var(--font-size));
     }
 
     .submenu :is([role="menuitem"], .menuitem) {
@@ -661,8 +661,8 @@ This banner notice must not be removed.
         margin: 0;
         padding-left: 0;
         padding-right: 0;
-        padding-top: var(--typography-spacing-vertical);
-        padding-bottom: var(--typography-spacing-vertical);
+        padding-top: calc(1.2 * var(--font-size));
+        padding-bottom: calc(1.2 * var(--font-size));
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
@@ -718,7 +718,7 @@ This banner notice must not be removed.
         margin: 0;
         margin-top: var(--typography-spacing-vertical);
         margin-bottom: calc(0.15 * var(--typography-spacing-vertical));
-        padding-left: calc(0.3 * var(--typography-spacing-horizontal));
+        padding-left: calc(0.24 * var(--font-size));
         pointer-events: none;
         cursor: default;
         text-align: left;
@@ -884,7 +884,7 @@ This banner notice must not be removed.
         aside.appmenu nav :is([role="menuitem"], .menuitem) {
             flex-direction: row;
             align-items: center;
-            gap: calc(var(--font-size) * 0.5);
+            gap: calc(0.42 * var(--typography-spacing-vertical)) calc(0.62 * var(--typography-spacing-horizontal));
             flex-grow: 1;
             width: auto;
         }
@@ -898,7 +898,7 @@ This banner notice must not be removed.
         aside.appmenu nav :is([role="menuitem"], .menuitem) {
             flex-direction: row;
             align-items: center;
-            gap: calc(var(--font-size) * 0.5);
+            gap: calc(0.42 * var(--typography-spacing-vertical)) calc(0.62 * var(--typography-spacing-horizontal));
             /* A mobile menu holds buttons of one fixed width, five to a row. */
             flex: none;
             width: calc((100% - 4 * calc(var(--font-size) / var(--size-divisor))) / 5);

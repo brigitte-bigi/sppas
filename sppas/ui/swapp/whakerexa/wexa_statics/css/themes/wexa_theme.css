@@ -48,13 +48,6 @@
         rgb(230, 230, 236) 45%,
         rgb(242, 233, 214) 100%);
 
-    /* The header, as the framework draws it: the one dark band of a light
-       page, written in the pale blue it is built on. */
-    --header-bg-color: linear-gradient(155deg,
-        rgb(8, 22, 68) 0%,
-        rgb(14, 48, 105) 50%,
-        rgb(22, 48, 118) 100%);
-
 }
 
 /* =========================================================================
@@ -75,13 +68,6 @@
     /* Transparent as in light mode: what a section holds is read on the ground
        html carries, and not on a band of its own. */
     --bg-color-alt: transparent;
-
-    /* The header answers the page it opens: the navy of the ground, and the
-       cream everything is written in here. */
-    --header-bg-color: linear-gradient(160deg,
-        rgb(8, 16, 34) 0%,
-        rgb(10, 28, 52) 55%,
-        rgb(12, 40, 48) 100%);
 
 }
 

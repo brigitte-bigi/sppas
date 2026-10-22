@@ -19,14 +19,6 @@
     <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/button.css" type="text/css" media="all" />
 
-    <style>
-        :root {
-            --header-height:   2rem;
-            --header-bg-color: transparent;
-            --header-fg-color: var(--fg-color-alt);
-            --header-slidein:  none;
-        }
-    </style>
 
 </head>
 
@@ -223,21 +215,27 @@
     <!-- ============================================================ -->
     <section class="panel-item">
 
-        <h2>Danger</h2>
+        <h2>The reach of an action</h2>
         <p>
-            <code>.danger-button</code> is the only button wearing the color of
-            an error. It is drawn at rest and filled under the pointer, so what
-            it warns of is said twice: by the color, and by the ground that
-            changes. Use it for what cannot be undone — deleting, revoking,
-            emptying — and nowhere else, or the warning stops being read.
+            Three buttons say, before they are clicked, how far their action
+            goes: <code>.danger-button</code> for what cannot be undone —
+            deleting, revoking, emptying — <code>.warning-button</code> for what
+            engages without destroying, and <code>.success-button</code> for
+            what validates or adds. Each is drawn at rest and filled under the
+            pointer, so the reach is said twice: by the color, and by the ground
+            that changes. Keep them for those actions, or they stop being read.
         </p>
 
-        <article class="card-doc" aria-label="Danger button — example">
+        <article class="card-doc" aria-label="The reach of an action — examples">
             <div class="card-view">
                 <button class="danger-button">Delete the file</button>
+                <button class="warning-button">Replace the file</button>
+                <button class="success-button">Install</button>
                 <button class="danger-button" disabled>Delete the file</button>
             </div>
-            <pre class="dark"><code>&lt;button class="danger-button"&gt;Delete the file&lt;/button&gt;</code></pre>
+            <pre class="dark"><code>&lt;button class="danger-button"&gt;Delete the file&lt;/button&gt;
+&lt;button class="warning-button"&gt;Replace the file&lt;/button&gt;
+&lt;button class="success-button"&gt;Install&lt;/button&gt;</code></pre>
         </article>
 
     </section>

@@ -396,7 +396,7 @@ body > header > *, body > footer > * {
     top: 0;
     left: 0;
     display: flex;
-    gap: calc(var(--font-size) * 0.5);
+    gap: calc(0.42 * var(--typography-spacing-vertical)) calc(0.62 * var(--typography-spacing-horizontal));
     z-index: 2000;
 }
 

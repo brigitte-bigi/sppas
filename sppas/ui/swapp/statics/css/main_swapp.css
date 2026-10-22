@@ -72,10 +72,6 @@
     --nav-item-width-v-collapsed: calc(var(--nav-min-width) - var(--typography-spacing-horizontal));
     --nav-item-width-v-expanded: calc(var(--nav-expanded-width) - var(--typography-spacing-horizontal));
 
-    /* The height of an action: the framework carried it while it dressed the
-       buttons of a gradient, and no longer does. The rules below read it. */
-    --action-height: calc(var(--font-size) * 3);
-
     /* SPPAS color tokens: see main_swapp_theme.css */
 }
 
@@ -145,20 +141,8 @@ nav#nav-content.nav-wexa.side {
     /* The size of a drawing is set by these two, never by an attribute. */
     --icon-width: calc(var(--font-size) * 1.6);
     --icon-height: calc(var(--font-size) * 1.6);
-    color: var(--nav-fg-color);
     background: var(--nav-item-bg-color);
-    border-radius: 0.5rem;
     transition: background 0.25s ease, transform 0.15s ease, color 0.25s ease;
-    border-width: calc(var(--border-width) / 2);
-}
-
-#nav-content [role='menuitem'][aria-pressed='true'],
-#nav-content .menuitem[aria-pressed='true'] {
-    box-shadow: inset 0 0 0 2px var(--nav-item-pressed-shadow-color);
-}
-
-nav.nav-wexa button > span {
-    color: var(--nav-fg-color);
 }
 
 #nav-content [role='menuitem']:hover,
@@ -174,13 +158,6 @@ nav.nav-wexa button > span {
 #nav-content .menuitem[aria-disabled='true'] {
     opacity: 1;
     background: transparent;
-    cursor: not-allowed;
-}
-
-/* menu.css gives the pointer to the icon and the label of an item. */
-#nav-content [role='menuitem'][aria-disabled='true'] *,
-#nav-content .menuitem[aria-disabled='true'] * {
-    cursor: not-allowed;
 }
 
 #nav-content [role='menuitem'][aria-disabled='true']:hover,
@@ -190,14 +167,10 @@ nav.nav-wexa button > span {
     filter: none;
 }
 
-/* The page being read. SPPAS marks it with its own class, Whakerexa reads
-   aria-current: both are taken, so the look is the same whichever the markup
-   writes -- and the attribute is the one a screen reader announces. */
-#nav-content .nav-current,
+/* The page being read: the veil of the bar, under the shape menu.css gives it. */
 #nav-content [role='menuitem'][aria-current]:not([aria-current='false']),
 #nav-content .menuitem[aria-current]:not([aria-current='false']) {
     background: var(--nav-item-bg-color-current);
-    filter: brightness(0.8) saturate(0.9);
 }
 
 /* ── Card zones (layout.css override) ───────────────────── */
@@ -225,7 +198,6 @@ main > .panel-item:nth-child(2n) .card-footer {
 button.action-button {
     background: var(--buttons-bg-color);
     color: var(--buttons-fg-color);
-    padding: calc(0.5 * var(--typography-spacing-vertical)) var(--typography-spacing-horizontal);
     width: fit-content;
     width: -moz-fit-content;
     font-size: calc(var(--font-size) * 1.125);
@@ -234,38 +206,6 @@ button.action-button {
     text-transform: uppercase;
     border-radius: var(--border-radius);
     box-shadow: none;
-}
-
-/* ── Links — animated fill-from-bottom ───────────────────── */
-
-a:not(:has(img)),
-[role=link]:not(:has(img)) {
-    background-image: linear-gradient(var(--a-color), var(--a-color));
-    background-size: 100% 0%;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    transition: background-size .35s ease, color 0s linear .35s;
-    border-radius: 2px;
-}
-
-a:not(:has(img)):hover,
-[role=link]:not(:has(img)):hover {
-    color: var(--bg-color);
-    background-size: 100% 100%;
-    transition: background-size .35s ease, color 0s;
-}
-
-/* ── details/summary — button-like appearance ────────────── */
-
-details summary {
-    cursor: pointer;
-    padding: 0.6rem 1rem;
-    border: var(--border-width) solid var(--border-color);
-    border-radius: var(--border-radius);
-    background-color: var(--buttons-bg-color);
-    background-image: none;
-    color: var(--buttons-fg-color);
-    font-weight: var(--font-weight-semibold);
 }
 
 /* ── blockquote ──────────────────────────────────────────── */
@@ -325,8 +265,8 @@ body.exit-waiting > footer {
     margin-bottom: 1rem;
     /* The size of a drawing is given by these two, never by a height on the
        svg: the icon manager writes both of them. */
-    --icon-width: calc(var(--action-height) * 1.5);
-    --icon-height: calc(var(--action-height) * 1.5);
+    --icon-width: calc(var(--font-size) * 4.5);
+    --icon-height: calc(var(--font-size) * 4.5);
 }
 
 .footer-button:hover {
@@ -416,117 +356,76 @@ body.exit-waiting > footer {
 
 /* The two cards the About page adds to the ones above. */
 #download_button {
-    border: var(--border-width) solid var(--link-download-border-color);
+    border-color: var(--link-download-border-color);
 }
 
 #source_button {
-    border: var(--border-width) solid var(--link-source-border-color);
+    border-color: var(--link-source-border-color);
 }
 
 #web_button {
-    border: var(--border-width) solid var(--link-web-border-color);
+    border-color: var(--link-web-border-color);
 }
 
 #docu_button {
-    border: var(--border-width) solid var(--link-docu-border-color);
+    border-color: var(--link-docu-border-color);
 }
 
 #tuto_button {
-    border: var(--border-width) solid var(--link-tuto-border-color);
+    border-color: var(--link-tuto-border-color);
 }
 
 #faq_button {
-    border: var(--border-width) solid var(--link-faq-border-color);
+    border-color: var(--link-faq-border-color);
 }
 
 #src_button {
-    border: var(--border-width) solid var(--link-src-border-color);
+    border-color: var(--link-src-border-color);
 }
 
 #res_button {
-    border: var(--border-width) solid var(--link-res-border-color);
+    border-color: var(--link-res-border-color);
 }
 
 #award_button {
-    border: var(--border-width) solid var(--link-award-border-color);
+    border-color: var(--link-award-border-color);
 }
 
 
-:root:not(.dark) {
-    #web_text {
-        background-color: var(--link-web-bg-color);
-    }
-
-    #docu_text {
-        background-color: var(--link-docu-bg-color);
-    }
-
-    #tuto_text {
-        background-color: var(--link-tuto-bg-color);
-    }
-
-    #faq_text {
-        background-color: var(--link-faq-bg-color);
-    }
-
-    #src_text {
-        background-color: var(--link-src-bg-color);
-    }
-
-    #res_text {
-        background-color: var(--link-res-bg-color);
-    }
-
-    #award_text {
-        background-color: var(--link-award-bg-color);
-    }
-
-    #download_text {
-        background-color: var(--link-download-bg-color);
-    }
-
-    #source_text {
-        background-color: var(--link-source-bg-color);
-    }
-
+#web_text {
+    background-color: var(--link-web-bg-color);
 }
 
-.dark {
-    #web_text {
-        background-color: var(--link-web-bg-color);
-    }
+#docu_text {
+    background-color: var(--link-docu-bg-color);
+}
 
-    #docu_text {
-        background-color: var(--link-docu-bg-color);
-    }
+#tuto_text {
+    background-color: var(--link-tuto-bg-color);
+}
 
-    #tuto_text {
-        background-color: var(--link-tuto-bg-color);
-    }
+#faq_text {
+    background-color: var(--link-faq-bg-color);
+}
 
-    #faq_text {
-        background-color: var(--link-faq-bg-color);
-    }
+#src_text {
+    background-color: var(--link-src-bg-color);
+}
 
-    #src_text {
-        background-color: var(--link-src-bg-color);
-    }
+#res_text {
+    background-color: var(--link-res-bg-color);
+}
 
-    #res_text {
-        background-color: var(--link-res-bg-color);
-    }
+#award_text {
+    background-color: var(--link-award-bg-color);
+}
 
-    #award_text {
-        background-color: var(--link-award-bg-color);
-    }
+#download_text {
+    background-color: var(--link-download-bg-color);
+}
 
-    #download_text {
-        background-color: var(--link-download-bg-color);
-    }
-
-    #source_text {
-        background-color: var(--link-source-bg-color);
-    }
+#source_text {
+    background-color: var(--link-source-bg-color);
 }
 
 
@@ -565,8 +464,8 @@ section.actions-panel {
    that asks for it: a height alone leaves the width to the framework, and
    the drawing is then held in a box as wide as one letter. */
 .actions-panel button {
-    --icon-width: calc(var(--action-height) * 0.7);
-    --icon-height: calc(var(--action-height) * 0.7);
+    --icon-width: calc(var(--font-size) * 2.1);
+    --icon-height: calc(var(--font-size) * 2.1);
 }
 
 /* ── Logos ───────────────────────────────────────────────── */
@@ -598,11 +497,8 @@ section.actions-panel {
     max-width: calc(16 * var(--font-size));
     height: calc(20 * var(--font-size));
     overflow: hidden;
-    transition: box-shadow 0.2s ease-in-out;
-}
-
-.app {
     background: var(--app-bg-image);
+    transition: box-shadow 0.2s ease-in-out;
 }
 
 .app > * {
@@ -634,17 +530,16 @@ section.actions-panel {
     align-self: flex-end;
     height: calc(14 * var(--font-size));
     padding: 1.25rem;
+    background-color: inherit;
 }
 
 .contrast .app-content {
     height: calc(16 * var(--font-size));
 }
 
-.app-content {
-    background-color: inherit;
-}
-
-.app-content * {
+/* What a card writes carries no space of its own. A button is not written
+   text: it keeps the box wexa.css gives it. */
+.app-content *:not(button, [role=button]) {
     padding: 0;
     margin: 0;
 }

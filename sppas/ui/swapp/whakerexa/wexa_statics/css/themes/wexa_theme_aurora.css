@@ -413,7 +413,7 @@
     /* ── Article: card with Aurora gradient ──────────────────────────────── */
 
     article {
-        padding: calc(1.5 * var(--typography-spacing-vertical));
+        padding: calc(1.8 * var(--font-size));
         border-radius: var(--border-radius);
         background: linear-gradient(135deg, var(--bg-color-alt) 0%, var(--bg-color) 100%);
         box-shadow: 0 calc(0.125 * var(--font-size)) calc(0.5 * var(--font-size)) var(--shadow-color);
@@ -422,7 +422,7 @@
 
     article > footer {
         margin-top: var(--typography-spacing-vertical);
-        padding-top: var(--typography-spacing-vertical);
+        padding-top: calc(1.2 * var(--font-size));
         border-top: var(--border-width) solid var(--border-color-alt);
     }
 

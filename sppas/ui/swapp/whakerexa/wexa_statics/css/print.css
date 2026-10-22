@@ -205,7 +205,7 @@ body > header * {
 }
 
 #toc-content {
-    margin-left: 1rem;
+    margin-left: calc(1.25 * var(--typography-spacing-horizontal));
 }
 
 /* -------------------------------- EXTRAS ------------------------------- */
@@ -240,8 +240,8 @@ body > header * {
 nav.book-toc,
 aside.book-toc-aside {
     width: 100%;
-    padding-top: 1rem;
-    padding-bottom: 0.3rem;
+    padding-top: var(--font-size);
+    padding-bottom: calc(0.3 * var(--font-size));
     margin: 0;
     font-size: 90%;
     overflow: unset;

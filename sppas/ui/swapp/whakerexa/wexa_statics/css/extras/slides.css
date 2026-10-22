@@ -200,10 +200,10 @@ body > footer {
 
 /* Content margins */
 .slide > * {
-    margin-top: calc(var(--font-size) * 0.5);
-    margin-bottom: calc(var(--font-size) * 0.5);
-    margin-right: calc(var(--font-size) * 0.5);
-    margin-left: calc(var(--font-size) * 2);
+    margin-top: calc(0.42 * var(--typography-spacing-vertical));
+    margin-bottom: calc(0.42 * var(--typography-spacing-vertical));
+    margin-right: calc(0.62 * var(--typography-spacing-horizontal));
+    margin-left: calc(2.5 * var(--typography-spacing-horizontal));
 }
 
 .slide table *,
@@ -373,7 +373,7 @@ body.handout-view .slide[aria-selected] ~ .slide {
     left: 0;
     width: var(--screen-width);
     height: var(--height);
-    margin-bottom: calc(var(--font-size) * 2);
+    margin-bottom: calc(1.67 * var(--typography-spacing-vertical));
     overflow: hidden;
 }
 
@@ -399,7 +399,7 @@ body.note-view .note-container {
     display: grid;
     grid-template-columns: calc(var(--screen-width) * 0.65) 1fr;
     height: var(--height);
-    margin-bottom: calc(var(--font-size) * 2);
+    margin-bottom: calc(1.67 * var(--typography-spacing-vertical));
     overflow: hidden;
 }
 
@@ -445,7 +445,7 @@ body.note-view aside[for] {
     padding-top: calc(var(--nav-height) + var(--font-size));
     display: flex;
     flex-wrap: wrap;
-    gap: var(--font-size);
+    gap: calc(0.83 * var(--typography-spacing-vertical)) calc(1.25 * var(--typography-spacing-horizontal));
     align-content: flex-start;
     justify-content: center;
 }
@@ -465,7 +465,7 @@ body.note-view aside[for] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: calc(var(--font-size) * 0.5);
+    gap: calc(0.42 * var(--typography-spacing-vertical)) calc(0.62 * var(--typography-spacing-horizontal));
     width: calc(var(--font-size) * 12);
     min-height: calc(var(--font-size) * 4);
     padding: calc(var(--font-size) * 0.75) var(--font-size);
@@ -608,7 +608,7 @@ body.presentation-view .incremental-invisible > *[aria-selected] ~ * {
     top: 0;
     left: 0;
     display: flex;
-    gap: calc(var(--font-size) * 0.5);
+    gap: calc(0.42 * var(--typography-spacing-vertical)) calc(0.62 * var(--typography-spacing-horizontal));
     z-index: 2000;
 }
 

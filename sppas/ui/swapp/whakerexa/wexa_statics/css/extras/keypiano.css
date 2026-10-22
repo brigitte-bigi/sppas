@@ -37,8 +37,8 @@ This banner notice must not be removed.
 .wexa-key-piano {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.5rem;
+    gap: calc(0.42 * var(--typography-spacing-vertical)) calc(0.62 * var(--typography-spacing-horizontal));
+    padding: calc(0.5 * var(--font-size));
     border: var(--border-width) solid var(--border-color-alt);
     border-radius: var(--border-radius);
 }
@@ -46,7 +46,7 @@ This banner notice must not be removed.
 .wexa-key-piano-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: calc(0.33 * var(--typography-spacing-vertical)) calc(0.5 * var(--typography-spacing-horizontal));
 }
 
 /* --------------------------------------------------------------------- */
@@ -61,7 +61,7 @@ This banner notice must not be removed.
     justify-content: center;
     min-height: calc(var(--font-size) * 1.2);
     min-width: calc(var(--font-size) * 1.2);
-    padding: 0.3rem;
+    padding: calc(0.3 * var(--font-size));
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -111,7 +111,7 @@ label.wexa-key-piano-key:has(input[type="radio"]:disabled) {
     justify-content: center;
     align-self: center;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: calc(0.33 * var(--typography-spacing-vertical)) calc(0.5 * var(--typography-spacing-horizontal));
 }
 
 .wexa-key-piano-control {
@@ -120,7 +120,7 @@ label.wexa-key-piano-key:has(input[type="radio"]:disabled) {
     justify-content: center;
     min-height: calc(var(--font-size) * 1.2);
     min-width: calc(var(--font-size) * 1.2);
-    padding: 0.2rem;
+    padding: calc(0.2 * var(--font-size));
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
     cursor: pointer;

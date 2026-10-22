@@ -258,28 +258,47 @@ This banner notice must not be removed.
     }
 
     /* -----------------------------------------------------------------------
-     Danger button: the action that destroys.
+     The reach of an action: what destroys, what engages, what validates.
      ----------------------------------------------------------------------- */
 
-    /* An action that cannot be undone says so before it is clicked, and it is
-       the only one wearing the color of an error. Drawn at rest and filled
-       under the pointer, so the warning is given twice: by the color, and by
-       the ground that changes. */
+    /* An action says its reach before it is clicked: the color of an error for
+       what cannot be undone, of a warning for what engages without destroying,
+       of a success for what validates or adds. Drawn at rest and filled under
+       the pointer, so the reach is said twice: by the color, and by the ground
+       that changes. */
 
     .danger-button {
-        border-color: var(--error-color);
+        --action-color: var(--error-color);
+    }
+
+    .warning-button {
+        --action-color: var(--warning-color);
+    }
+
+    .success-button {
+        --action-color: var(--success-color);
+    }
+
+    .danger-button,
+    .warning-button,
+    .success-button {
+        border-color: var(--action-color);
         background: var(--bg-color);
-        color: var(--error-color);
+        color: var(--action-color);
     }
 
     /* wexa.css gives the children of a command the color of a command: here
        they take the color the button carries. */
-    .danger-button * {
+    .danger-button *,
+    .warning-button *,
+    .success-button * {
         color: inherit;
     }
 
-    .danger-button:enabled:is(:hover, :active, :focus) {
-        background: var(--error-color);
+    .danger-button:enabled:is(:hover, :active, :focus),
+    .warning-button:enabled:is(:hover, :active, :focus),
+    .success-button:enabled:is(:hover, :active, :focus) {
+        background: var(--action-color);
         color: var(--bg-color);
     }
 

@@ -98,7 +98,7 @@ body {
     width: 100%;
     padding-top: calc(var(--font-size) * 2);
     padding-bottom: calc(var(--font-size) * 2);
-    margin-bottom: calc(var(--font-size) * 4);
+    margin-bottom: calc(3.33 * var(--typography-spacing-vertical));
     line-height: calc(4 * var(--font-size));
 
     /* a chapter title is a box for 2 items: number + title */
@@ -115,7 +115,7 @@ body {
     content: "Chapter " counter(chapter) ".";
     padding-top: calc(var(--font-size) * 1);
     margin-top: 0;
-    margin-right: calc(var(--font-size) * 1);
+    margin-right: calc(1.25 * var(--typography-spacing-horizontal));
 }
 
 html:lang(fr) .chapter > h1::before {
@@ -197,7 +197,7 @@ body:has(nav.nav-wexa.top) nav.book-toc {
 aside.book-toc-aside {
     width: var(--toc-width);
     display: block;
-    padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
+    padding: calc(1.2 * var(--font-size)) calc(0.8 * var(--font-size));
     padding-bottom: calc(var(--font-size) * 3);
 }
 
@@ -230,7 +230,7 @@ aside.book-toc-aside {
         z-index: 11;
         writing-mode: vertical-rl;
         transform: translateY(-50%) rotate(180deg);
-        padding: var(--typography-spacing-vertical) calc(0.5 * var(--typography-spacing-horizontal));
+        padding: calc(1.2 * var(--font-size)) calc(0.4 * var(--font-size));
         border-radius: var(--border-radius) 0 0 var(--border-radius);
         cursor: pointer;
         font-size: calc(0.75 * var(--font-size));
@@ -275,8 +275,8 @@ aside.book-toc-aside *:not(button, [role=button]) {
 :is(nav.book-toc, aside.book-toc-aside) > hr,
 :is(nav.book-toc, aside.book-toc-aside) > h1,
 :is(nav.book-toc, aside.book-toc-aside) > h2 {
-    margin-top: calc(var(--font-size) * 1);
-    margin-bottom: calc(var(--font-size) * 2);
+    margin-top: calc(0.83 * var(--typography-spacing-vertical));
+    margin-bottom: calc(1.67 * var(--typography-spacing-vertical));
 }
 
 /* The title of a panel is written larger than what the panel holds, and the
@@ -300,7 +300,7 @@ aside.book-toc-aside *:not(button, [role=button]) {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin-bottom: calc(var(--font-size) * 0.5);
+    margin-bottom: calc(0.42 * var(--typography-spacing-vertical));
 }
 
 /* --------------------------- Common: the entries ----------------------- */
@@ -328,7 +328,7 @@ aside.book-toc-aside *:not(button, [role=button]) {
     display: grid;
     grid-template-columns: var(--toc-number-width) 1fr;
     column-gap: var(--typography-spacing-horizontal);
-    margin-bottom: calc(var(--font-size) * 0.2);
+    margin-bottom: calc(0.17 * var(--typography-spacing-vertical));
     text-align: left;
 }
 
@@ -403,15 +403,15 @@ aside.book-toc-aside *:not(button, [role=button]) {
 
 :is(nav.book-toc, aside.book-toc-aside) li.h1::before {
     content: counter(toc-chapter) ".";
-    padding-right: calc(0.4 * var(--typography-spacing-horizontal));
+    padding-right: calc(0.32 * var(--font-size));
 }
 :is(nav.book-toc, aside.book-toc-aside) li.h2::before {
     content: counter(toc-chapter) "." counter(toc-ssection);
-    padding-right: calc(0.4 * var(--typography-spacing-horizontal));
+    padding-right: calc(0.32 * var(--font-size));
 }
 :is(nav.book-toc, aside.book-toc-aside) li.h3::before {
     content: counter(toc-chapter) "." counter(toc-ssection) "." counter(toc-subssection);
-    padding-right: calc(0.4 * var(--typography-spacing-horizontal));
+    padding-right: calc(0.32 * var(--font-size));
 }
 :is(nav.book-toc, aside.book-toc-aside) li.h1.nonumber::before,
 :is(nav.book-toc, aside.book-toc-aside) li.h2.nonumber::before,
@@ -421,11 +421,11 @@ aside.book-toc-aside *:not(button, [role=button]) {
 }
 :is(nav.book-toc, aside.book-toc-aside) li.h4::before {
     content: "-";
-    padding-right: calc(0.4 * var(--typography-spacing-horizontal));
+    padding-right: calc(0.32 * var(--font-size));
 }
 :is(nav.book-toc, aside.book-toc-aside) li.h5::before {
     content: "□";
-    padding-right: calc(0.4 * var(--typography-spacing-horizontal));
+    padding-right: calc(0.32 * var(--font-size));
 }
 
 /* ------------------------- Common: the links ---------------------------- */
@@ -476,12 +476,12 @@ aside.book-toc-aside *:not(button, [role=button]) {
    'var(--toc-width)' wide, so both indent the same way. */
 
 :is(nav.book-toc, aside.book-toc-aside) li.h1 {
-    margin-top: calc(var(--font-size) * 1.5);
-    margin-bottom: calc(var(--font-size) * 1);
+    margin-top: calc(1.25 * var(--typography-spacing-vertical));
+    margin-bottom: calc(0.83 * var(--typography-spacing-vertical));
     padding-left: 0;
 }
 :is(nav.book-toc, aside.book-toc-aside) li.h2 {
-    margin-top: calc(var(--font-size) * 1);
+    margin-top: calc(0.83 * var(--typography-spacing-vertical));
     padding-left: calc(var(--font-size) * 0.5);
 }
 :is(nav.book-toc, aside.book-toc-aside) li.h3 { padding-left: calc(var(--font-size) * 1.5); }
@@ -498,7 +498,7 @@ aside.book-toc-aside *:not(button, [role=button]) {
     margin-right: calc(2 * var(--typography-spacing-horizontal));
     margin-top: var(--typography-spacing-vertical);
     margin-bottom: var(--typography-spacing-vertical);
-    padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
+    padding: calc(1.2 * var(--font-size)) calc(0.8 * var(--font-size));
     border-radius: var(--border-radius);
     font-size: calc(0.9 * var(--font-size));
     font-style: italic;

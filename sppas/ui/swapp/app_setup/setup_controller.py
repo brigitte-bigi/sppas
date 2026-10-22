@@ -86,6 +86,17 @@ class swappSetupController:
 
     # -----------------------------------------------------------------------
 
+    def is_installation_next(self) -> bool:
+        """Return True if the installation starts at the next browse action.
+
+        :return: (bool) The next fieldset is the installation one
+
+        """
+        install_index = self.__fieldsets.get_index_from_name("install_field")
+        return self.__fieldsets.get_current() + 1 == install_index
+
+    # -----------------------------------------------------------------------
+
     def get_progress_values(self) -> tuple:
         """Get the current progress values.
 
@@ -123,7 +134,7 @@ class swappSetupController:
         if self.__fieldsets.get_current() == current_index:
             cur = self.__fieldsets.browse_previous()
             self.__view.update_header_breadcrumb(cur)
-            self.update_tree_content(actions=True, install=False)
+            self.update_tree_content(actions=True, install=self.is_installation_next())
             return True
 
         return False
@@ -154,7 +165,7 @@ class swappSetupController:
             else:
                 # Update the main content for the fieldset and actions
                 # cur = self.__fieldsets.browse_next()
-                can_install = self.__fieldsets.get_current_identifier() == "install_field"
+                can_install = self.is_installation_next()
                 self.update_tree_content(actions=True, install=can_install)
 
             # Update the header content for the breadcrumb

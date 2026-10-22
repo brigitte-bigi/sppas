@@ -1,4 +1,4 @@
-// Bundle automatically generated on 2026-10-21 13:58:22
+// Bundle automatically generated on 2026-10-22 15:23:29
 
 // ---------------- logger.js ---------------
 class WexaLogger {
@@ -2057,13 +2057,29 @@ class SlideComposer {
         const source = body.closest('table');
         const table = source.cloneNode(false);
         const head = source.querySelector('thead');
+        // An identifier names one element. The part says which table it
+        // continues, and whoever acts on the columns reads that.
+        table.removeAttribute('id');
+        if (source.id.length > 0) {
+            table.dataset.partOf = source.id;
+        }
         if (head !== null) {
             table.appendChild(head.cloneNode(true));
         }
+        // One part of a table is shown at a time: sorting a column would move
+        // rows the reader does not see. The heads keep their text and lose
+        // their buttons, in the table written and in the parts.
+        SlideComposer.#unsortable(source);
+        SlideComposer.#unsortable(table);
         const next = document.createElement('tbody');
         rows.forEach(row => next.appendChild(row));
         table.appendChild(next);
         return table;
+    }
+    static #unsortable(table) {
+        table.querySelectorAll('thead button.sortatable').forEach(button => {
+            button.replaceWith(document.createTextNode(button.textContent));
+        });
     }
     #rebuildList(source, items) {
         const list = source.cloneNode(false);

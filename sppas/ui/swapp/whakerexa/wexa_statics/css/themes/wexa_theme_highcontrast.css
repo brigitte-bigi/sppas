@@ -239,7 +239,7 @@
 
     article.card > footer {
         margin-top: var(--typography-spacing-vertical);
-        padding-top: var(--typography-spacing-vertical);
+        padding-top: calc(1.2 * var(--font-size));
         border-top: var(--border-width-alt) solid var(--border-color-alt);
     }
 

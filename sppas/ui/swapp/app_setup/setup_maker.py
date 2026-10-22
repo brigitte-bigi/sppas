@@ -344,7 +344,8 @@ class swappSetupResponseRecipe(swappBaseResponse):
             self._htree = swappHTMLTreeError410()
 
         elif self._status.code in (200, 205):
-            self.__controller.update_tree_content(actions=True, install=False)
+            _install = self.__controller.is_installation_next()
+            self.__controller.update_tree_content(actions=True, install=_install)
 
         elif self._status.code == 202:
             # Installation started

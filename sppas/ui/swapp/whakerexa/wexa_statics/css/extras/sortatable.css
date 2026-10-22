@@ -35,7 +35,7 @@ This banner notice must not be removed.
 
 .sortatable {
     margin: 0;
-    padding: 0.5rem;
+    padding: calc(0.5 * var(--font-size));
     width: 100%;
     /* A button is never narrower than what it says. Its box is the one of its
        column, and a column drawn on its cells can be shorter than its header:
@@ -56,7 +56,7 @@ This banner notice must not be removed.
     display: inline-block;
     width: 0.8rem;
     height: 0.6rem;
-    margin-left: 1rem;
+    margin-left: calc(1.25 * var(--typography-spacing-horizontal));
     vertical-align: middle;
     border-style: solid;
     border-color: currentColor;

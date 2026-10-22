@@ -31,6 +31,20 @@ This banner notice must not be removed.
 */
 
 /* ------------------------------------------------------------------ */
+/* The band of a documentation page                                    */
+/* ------------------------------------------------------------------ */
+
+/* It holds one line, the path to the page: no ground of its own, so the
+   text is written in the ink of the page, and no animation on arrival. */
+
+:root {
+    --header-height:   2rem;
+    --header-bg-color: transparent;
+    --header-fg-color: var(--fg-color-alt);
+    --header-slidein:  none;
+}
+
+/* ------------------------------------------------------------------ */
 /* Card for component rendering in doc pages                           */
 /* ------------------------------------------------------------------ */
 

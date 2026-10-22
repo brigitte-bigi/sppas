@@ -106,10 +106,10 @@ This banner notice must not be removed.
         flex-wrap: wrap;
         align-items: center;
         gap: var(--typography-spacing-horizontal);
-        padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
+        padding: calc(1.2 * var(--font-size)) calc(0.8 * var(--font-size));
         /* The cross that closes the box is laid over the content, out of the
            flow: the room it needs is kept here, on the right. */
-        padding-right: calc(4 * var(--typography-spacing-horizontal));
+        padding-right: calc(3.2 * var(--font-size));
         min-width: min(28rem, 80vw);
         max-height: 80vh;
         overflow: hidden;
@@ -213,7 +213,7 @@ This banner notice must not be removed.
 
     dialog[role=alertdialog] form button {
         border-radius: var(--border-radius);
-        padding: calc(var(--typography-spacing-vertical) / 2) var(--typography-spacing-horizontal);
+        padding: calc(0.6 * var(--font-size)) calc(0.8 * var(--font-size));
         color: var(--dialog-icon-color, rgb(255, 255, 255));
         border: none;
 
@@ -245,8 +245,8 @@ This banner notice must not be removed.
     :modal[open] {
         position: revert;
 
-        row-gap: 0.5rem;
-        column-gap: 0.5rem;
+        row-gap: calc(0.42 * var(--typography-spacing-vertical));
+        column-gap: calc(0.62 * var(--typography-spacing-horizontal));
     }
 
     :modal[open].popup-video {
@@ -267,7 +267,7 @@ This banner notice must not be removed.
         background-color: var(--buttons-bg-color);
         border: var(--border-width) solid var(--border-color);
         border-radius: var(--border-radius);
-        padding: 0.3rem 0.6rem;
+        padding: calc(0.3 * var(--font-size)) calc(0.6 * var(--font-size));
         font-weight: bold;
     }
 

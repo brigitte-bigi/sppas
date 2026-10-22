@@ -46,7 +46,7 @@ This banner notice must not be removed.
 
     :root {
         --card-max-width:     15rem;
-        --card-padding:       0.6rem;
+        --card-padding:       calc(0.6 * var(--font-size));
     }
 
     /* ------------------------------------------------------------------ */
@@ -182,7 +182,7 @@ This banner notice must not be removed.
         grid-template-columns: minmax(140px, 22%) 1fr;
         gap: var(--typography-spacing-horizontal);
         align-items: center;
-        padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
+        padding: calc(1.2 * var(--font-size)) calc(0.8 * var(--font-size));
     }
 
     .illustrated-content > img {
@@ -241,8 +241,8 @@ This banner notice must not be removed.
     .flex-panel {
         display: flex;
         justify-content: space-evenly;
-        row-gap: 0.5rem;
-        column-gap: 0.5rem;
+        row-gap: calc(0.42 * var(--typography-spacing-vertical));
+        column-gap: calc(0.62 * var(--typography-spacing-horizontal));
         flex-wrap: wrap;
     }
 
@@ -269,7 +269,7 @@ This banner notice must not be removed.
 
         .flex-border-left {
             border-left-style: solid;
-            padding-left: var(--typography-spacing-horizontal);
+            padding-left: calc(0.8 * var(--font-size));
         }
 
     }
@@ -317,7 +317,7 @@ This banner notice must not be removed.
     /* ------------------------------------------------------------------ */
 
     :root {
-        --wrap-panel-gap: 0.5rem;
+        --wrap-panel-gap: calc(0.62 * var(--typography-spacing-horizontal));
     }
 
     .wrap-panel {
@@ -425,7 +425,7 @@ This banner notice must not be removed.
     .card {
         position: relative;
         padding: var(--card-padding);
-        margin: 0.4rem;
+        margin: calc(0.33 * var(--typography-spacing-vertical)) calc(0.5 * var(--typography-spacing-horizontal));
         border-radius: var(--border-radius-alt);
         display: flex;
         flex-direction: column;
@@ -481,7 +481,7 @@ This banner notice must not be removed.
         min-height: calc(3rem * var(--size-divisor));
         max-height: calc(8rem * var(--size-divisor));
         width: calc(100% + 2 * var(--card-padding));
-        padding: 0.4rem;
+        padding: calc(0.4 * var(--font-size));
         border-top-right-radius: var(--border-radius-alt);
         border-top-left-radius: var(--border-radius-alt);
         display: inline-flex;
@@ -499,7 +499,7 @@ This banner notice must not be removed.
     }
 
     .card .card-body {
-        padding: 0.4rem;
+        padding: calc(0.4 * var(--font-size));
         flex: 1 0 auto;
         display: flex;
         flex-direction: column;
@@ -527,12 +527,12 @@ This banner notice must not be removed.
 
     .card .card-footer *:not(img) {
         font-size: 80%;
-        margin: 0.4rem;
+        margin: calc(0.33 * var(--typography-spacing-vertical)) calc(0.5 * var(--typography-spacing-horizontal));
     }
 
     .card .card-footer a {
         display: inline-block;
-        padding: 0.3rem 1rem;
+        padding: calc(0.3 * var(--font-size)) var(--font-size);
         border-radius: var(--border-radius-alt);
         font-weight: var(--font-weight-semibold);
         text-decoration: underline;
@@ -555,7 +555,7 @@ This banner notice must not be removed.
     }
 
     li.enumerate-cards-item + li {
-        margin-top: calc(var(--font-size) * 0.8);
+        margin-top: calc(0.67 * var(--typography-spacing-vertical));
     }
 
     li.enumerate-cards-item {
@@ -565,7 +565,7 @@ This banner notice must not be removed.
         max-width: 80%;
         display: flex;
         align-items: center;
-        gap: var(--font-size);
+        gap: calc(0.83 * var(--typography-spacing-vertical)) calc(1.25 * var(--typography-spacing-horizontal));
         padding: calc(var(--font-size) * 1.1);
         border-radius: var(--border-radius);
         width: calc(100% - 2 * var(--typography-spacing-horizontal));
@@ -596,7 +596,7 @@ This banner notice must not be removed.
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: calc(var(--font-size) * 0.5);
+        margin-left: calc(0.62 * var(--typography-spacing-horizontal));
     }
 
     /* ------------------------------------------------------------------ */
