@@ -1,4 +1,4 @@
-// Bundle automatically generated on 2026-10-22 15:23:29
+// Bundle automatically generated on 2026-10-25 09:27:06
 
 // ---------------- logger.js ---------------
 class WexaLogger {
@@ -3983,6 +3983,7 @@ const THEMES_BASE = 'css/themes/';
 const REFERENCE_THEMES = [
     ['wexa_theme', 'wexa_theme.css'],
     ['aurora', 'wexa_theme_aurora.css'],
+    ['desert', 'wexa_theme_desert.css'],
     ['highcontrast', 'wexa_theme_highcontrast.css'],
 ];
 // ---------------- customize/icon_reference.js ---------------
@@ -3991,6 +3992,7 @@ const REFERENCE_BASE = 'icons/mono-svg/';
 const REFERENCE_FILES = [
     'accessibility.svg',
     'add.svg',
+    'anchor-link.svg',
     'anonymous.svg',
     'arrow-down.svg',
     'arrow-left.svg',

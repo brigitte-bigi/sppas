@@ -48,7 +48,7 @@
             the link to <code>wexa.css</code>. Because wexa uses <code>@layer</code>, your
             unlayered rules win automatically — no <code>!important</code>, no complex selectors needed.</p>
 
-        <article class="card-doc" aria-label="Override variables globally or in contrast mode">
+        <article class="card card-doc" aria-label="Override variables globally or in contrast mode">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>Overrides in <code>:root</code> apply to all modes; overrides in <code>.contrast</code> apply only in contrast mode.</p>
             </div>
@@ -66,7 +66,7 @@
 &lt;/style&gt;</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="Override colors in light mode only">
+        <article class="card card-doc" aria-label="Override colors in light mode only">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>To override colors in light mode only, limit the selector so it does not match when <code>.dark</code> is active.</p>
             </div>
@@ -80,7 +80,7 @@
 &lt;/style&gt;</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="Create a full replacement theme">
+        <article class="card card-doc" aria-label="Create a full replacement theme">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>To create a full replacement theme, use <code>@layer theme</code> in a separate stylesheet loaded after <code>wexa.css</code>.</p>
             </div>
@@ -88,7 +88,7 @@
 &lt;link rel="stylesheet" href="theme_myapp.css" media="screen" /&gt;</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="theme_myapp.css example">
+        <article class="card card-doc" aria-label="theme_myapp.css example">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>Inside the theme file, use <code>@layer theme</code> to override defaults.</p>
             </div>
@@ -499,7 +499,7 @@
         <p>Print rules are in a dedicated <code>print.css</code>, loaded only when printing
             (<code>media="print"</code>). Add it to your page alongside <code>wexa.css</code>:</p>
 
-        <article class="card-doc" aria-label="Print stylesheet loading">
+        <article class="card card-doc" aria-label="Print stylesheet loading">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>Because <code>print.css</code> is unlayered, it overrides all wexa layer rules
                     automatically when printing.</p>

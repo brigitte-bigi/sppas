@@ -95,7 +95,7 @@
             </li>
         </ol>
 
-        <article class="card-doc" aria-label="Theme file must not be double-loaded">
+        <article class="card card-doc" aria-label="Theme file must not be double-loaded">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>
                     <strong>Never load a theme file with a static <code>&lt;link&gt;</code> in addition to registering it.</strong>
@@ -107,7 +107,7 @@
             </div>
         </article>
 
-        <article class="card-doc" aria-label="Theme link element">
+        <article class="card card-doc" aria-label="Theme link element">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>Add <code>id="wexa-theme"</code> to the default theme link in <code>&lt;head&gt;</code>.</p>
             </div>
@@ -115,7 +115,7 @@
       href="wexa_statics/css/themes/wexa_theme.css" /&gt;</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="ThemeManager initialization">
+        <article class="card card-doc" aria-label="ThemeManager initialization">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>
                     The active theme name is persisted in the URL parameter <code>wexa_theme</code> and propagated
@@ -130,7 +130,7 @@ themes.setDefault('wexa_theme');
 window.themes = themes;</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="The themes a page takes">
+        <article class="card card-doc" aria-label="The themes a page takes">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>
                     A page says on the tag of the loader which themes it takes, and in which
@@ -171,15 +171,15 @@ data-themes="swapp:./statics/swapp_theme.css, aurora, highcontrast"</code></pre>
             <tr><th>Written</th><th>Registered</th></tr>
             </thead>
             <tbody>
-            <tr><td>Nothing</td><td><code>wexa_theme</code>, <code>aurora</code>, <code>highcontrast</code>, in that order.</td></tr>
+            <tr><td>Nothing</td><td><code>wexa_theme</code>, <code>aurora</code>, <code>desert</code>, <code>highcontrast</code>, in that order.</td></tr>
             <tr><td>A name alone</td><td>That theme of the framework, and it alone: naming one is choosing among them.</td></tr>
-            <tr><td><code>name:path</code></td><td>The theme the page brings, and then the three of the framework — bringing one adds it, and says nothing of the others.</td></tr>
+            <tr><td><code>name:path</code></td><td>The theme the page brings, and then the four of the framework — bringing one adds it, and says nothing of the others.</td></tr>
             <tr><td>Both</td><td>What is written, in the order it is written, and nothing else: the framework's are named, so they are chosen.</td></tr>
             </tbody>
         </table>
 
         <p>The names the framework answers to are <code>wexa_theme</code>,
-            <code>aurora</code> and <code>highcontrast</code>.</p>
+            <code>aurora</code>, <code>desert</code> and <code>highcontrast</code>.</p>
 
         <p><code>data-default</code> names the one applied when the address carries no
             <code>wexa_theme</code> parameter, or when it names a theme the page does not
@@ -227,6 +227,21 @@ data-themes="swapp:./statics/swapp_theme.css, aurora, highcontrast"</code></pre>
                 <div class="card-header" data-icon="theme">
                 </div>
                 <div class="card-body">
+                    <h3>desert</h3>
+                    <p>
+                        Eggshell, sand and brown. The hues of aurora, transposed: every colour
+                        keeps the lightness it was validated with. Commissioner font.
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <code>wexa_statics/css/themes/wexa_theme_desert.css</code>
+                </div>
+            </article></li>
+
+            <li><article class="card full-card">
+                <div class="card-header" data-icon="theme">
+                </div>
+                <div class="card-body">
                     <h3>highcontrast</h3>
                     <p>
                         OS-style high contrast. White/black with dark-blue or yellow links (WCAG AAA).
@@ -253,7 +268,7 @@ data-themes="swapp:./statics/swapp_theme.css, aurora, highcontrast"</code></pre>
             <code>@layer theme</code>, matching the built-in themes.
         </p>
 
-        <article class="card-doc" aria-label="Custom theme example">
+        <article class="card card-doc" aria-label="Custom theme example">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>Write it beside your page, then declare it on the tag of the loader, under
                     the name it will answer to: <code>data-themes="mytheme:./css/my_theme.css"</code>,

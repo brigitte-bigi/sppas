@@ -64,10 +64,6 @@ This banner notice must not be removed.
     --bg-color: white;
     --fg-color: black;
 
-    --print-margin-top:    2.5cm;
-    --print-margin-right:  2.5cm;
-    --print-margin-bottom: 2.5cm;
-    --print-margin-left:   3cm;
 }
 
 html, body {

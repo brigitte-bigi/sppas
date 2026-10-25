@@ -125,7 +125,6 @@ Architecture:
 /* Structural slide variables */
 :root {
     --footer-text: "";
-    --footer-margin-left: calc((var(--screen-width) / 2) - var(--font-size));
 }
 
 /* Page header/footer are hidden in slide mode */

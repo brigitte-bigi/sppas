@@ -38,7 +38,7 @@ This banner notice must not be removed.
    text is written in the ink of the page, and no animation on arrival. */
 
 :root {
-    --header-height:   2rem;
+    --header-height:   calc(2 * var(--font-size));
     --header-bg-color: transparent;
     --header-fg-color: var(--fg-color-alt);
     --header-slidein:  none;
@@ -48,28 +48,30 @@ This banner notice must not be removed.
 /* Card for component rendering in doc pages                           */
 /* ------------------------------------------------------------------ */
 
+/* A card of layout.css, and what a demonstration adds to it: it takes the
+   whole width instead of the one a grid gives a card, it stands apart from
+   the text it illustrates, and it carries the ground of a page, since what
+   it shows is what a page is made of. */
+
 .card-doc {
+    max-width: none;
     margin-left: var(--typography-spacing-horizontal);
-    background-color: var(--bg-color);
-    border: var(--border-width) solid var(--border-color-alt);
-    border-radius: var(--border-radius);
     margin-top: var(--typography-spacing-vertical);
     margin-bottom: var(--typography-spacing-vertical);
-    box-shadow: var(--card-box-shadow);
+    background-color: var(--bg-color);
 }
 
 .card-view {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: var(--typography-spacing-horizontal);
-    padding: calc(2 * var(--typography-spacing-horizontal));
-    box-shadow: none;
+    gap: calc(0.67 * var(--typography-spacing-vertical)) var(--typography-spacing-horizontal);
+    padding: calc(1.6 * var(--font-size));
 }
 
-/* How to apply dark mode to pre? instead of writing <pre class="dark"> */
+/* The code of a demonstration is shown on the ground of a page, and the
+   line on its side says where it starts. */
 .card-doc pre {
     background-color: var(--bg-color);
     border-left: calc(var(--border-width) * 2) solid var(--border-color);

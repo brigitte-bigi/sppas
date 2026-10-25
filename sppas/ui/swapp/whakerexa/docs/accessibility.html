@@ -72,7 +72,7 @@
             No settings panel. No account required. One click.
         </p>
 
-        <article class="card-doc" aria-label="Light / Dark mode demo">
+        <article class="card card-doc" aria-label="Light / Dark mode demo">
             <div class="card-view" style="flex-direction: column; align-items: center; gap: 0.5rem;">
                 <button id="btn-color-demo" class="menuitem accessibility"
                         type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
@@ -90,7 +90,7 @@
         onclick="Wexa.accessibility.switchColorScheme()"&gt;&lt;/button&gt;</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="High contrast mode demo">
+        <article class="card card-doc" aria-label="High contrast mode demo">
             <div class="card-view" style="flex-direction: column; align-items: center; gap: 0.5rem;">
                 <button id="btn-contrast-demo" class="menuitem accessibility"
                         type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
@@ -189,7 +189,7 @@
 
         <h2>Wire it up in two lines</h2>
 
-        <article class="card-doc" aria-label="AccessibilityManager wiring">
+        <article class="card card-doc" aria-label="AccessibilityManager wiring">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>
                     Add two buttons to your navigation — IDs and <code>aria-pressed</code> are the only requirements.
@@ -215,7 +215,7 @@
             offers: a document with a single theme has nothing to cycle, and says so.
         </p>
 
-        <article class="card-doc" aria-label="AccessibilityNav — the bar it builds">
+        <article class="card card-doc" aria-label="AccessibilityNav — the bar it builds">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>The bar is built, then added where it belongs. The buttons carry the
                     identifiers the framework answers to, so what is written by hand and what
@@ -225,7 +225,7 @@
 document.getElementById('header-nav-content').appendChild(await bar.build());</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="AccessibilityNav — the wording it proposes">
+        <article class="card card-doc" aria-label="AccessibilityNav — the wording it proposes">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>
                     The wording is proposed, never imposed. <code>NAV_WORDING</code> carries what
@@ -259,7 +259,7 @@ document.getElementById('header-nav-content').appendChild(await bar.build());</c
             never answered: they operate whatever holds the focus.
         </p>
 
-        <article class="card-doc" aria-label="KeyboardController — one shortcut">
+        <article class="card card-doc" aria-label="KeyboardController — one shortcut">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>
                     A shortcut is its keys and what they do — a function, or the name of a
@@ -289,7 +289,7 @@ keyboard.init();</code></pre>
 
         <h2>Reusing a named tab</h2>
 
-        <article class="card-doc" aria-label="Named tab links">
+        <article class="card card-doc" aria-label="Named tab links">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>
                     A plain <code>&lt;a&gt;</code> normally navigates the current tab. Set

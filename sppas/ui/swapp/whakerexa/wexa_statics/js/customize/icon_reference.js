@@ -42,6 +42,7 @@ export const REFERENCE_BASE = 'icons/mono-svg/';
 export const REFERENCE_FILES = [
     'accessibility.svg',
     'add.svg',
+    'anchor-link.svg',
     'anonymous.svg',
     'arrow-down.svg',
     'arrow-left.svg',

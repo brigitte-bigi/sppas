@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
     <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
     <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
 
 
 </head>
@@ -62,7 +62,7 @@
             so that the scale adapts to all screen sizes and accessibility modes.
         </p>
 
-        <article class="card-doc" aria-label="Headings h1 to h6 — example">
+        <article class="card card-doc" aria-label="Headings h1 to h6 — example">
             <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                 <h1>Heading 1</h1>
                 <h2>Heading 2</h2>
@@ -131,7 +131,7 @@
             for improved legibility.
         </p>
 
-        <article class="card-doc" aria-label="Font families — example">
+        <article class="card card-doc" aria-label="Font families — example">
             <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                 <p class="font-sans">Sans — <strong>Bold.</strong> <em>Italic.</em></p>
                 <p class="font-serif">Serif — <strong>Bold.</strong> <em>Italic.</em></p>
@@ -178,7 +178,7 @@
             character it leaves empty would show nothing at all.
         </p>
 
-        <article class="card-doc" aria-label="Script blocks — example">
+        <article class="card card-doc" aria-label="Script blocks — example">
             <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                 <table>
                     <caption>Samples of one script block each, and the file they pull in either mode</caption>
@@ -266,7 +266,7 @@
             so that all weights remain legible at higher contrast levels.
         </p>
 
-        <article class="card-doc" aria-label="Font weights — example">
+        <article class="card card-doc" aria-label="Font weights — example">
             <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                 <p class="font-sans font-weight-thin">Sans — weight thin</p>
                 <p class="font-sans font-weight-normal">Sans — weight normal</p>
@@ -294,7 +294,7 @@
             No class is required.
         </p>
 
-        <article class="card-doc" aria-label="Inline text elements — example">
+        <article class="card card-doc" aria-label="Inline text elements — example">
             <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                 <p>
                     <a href="#" onclick="event.preventDefault()">Link</a>
@@ -338,16 +338,17 @@
             renders the attribution on its own line.
         </p>
         <p>
-            A theme paints the quote with <code>--blockquote-border-color</code>,
-            <code>--blockquote-bg-color</code>, <code>--blockquote-fg-color</code> and,
-            for the <code>&lt;cite&gt;</code> line, <code>--blockquote-footer-color</code>.
+            A theme paints the quote with <code>--blockquote-bg-color</code>,
+            <code>--blockquote-fg-color</code> and, for the <code>&lt;cite&gt;</code> line,
+            <code>--blockquote-footer-color</code>. Its line is the one of any framed
+            element, <code>--border-color-alt</code>.
             The last three are unset by default: the quote then reads its ground from the
             <code>--bg-color-alt</code> to <code>--bg-color</code> gradient and its ink from
             <code>--fg-color</code>. Setting <code>--blockquote-bg-color</code> replaces the
             gradient with one flat color.
         </p>
 
-        <article class="card-doc" aria-label="Blockquote — example">
+        <article class="card card-doc" aria-label="Blockquote — example">
             <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                 <blockquote>
                     La règle d'or de la conduite est la tolérance mutuelle, car nous ne
@@ -383,7 +384,7 @@
             holds, and for the same reason.
         </p>
 
-        <article class="card-doc" aria-label="Lists — ul, ol, dl examples">
+        <article class="card card-doc" aria-label="Lists — ul, ol, dl examples">
             <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                 <ul>
                     <li>First item</li>
@@ -428,7 +429,7 @@
             visually distinguished from the main text — a note, a warning, a tip.
         </p>
 
-        <article class="card-doc" aria-label="Aside — example">
+        <article class="card card-doc" aria-label="Aside — example">
             <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                 <aside>
                     This is an aside. It draws attention to supplementary content

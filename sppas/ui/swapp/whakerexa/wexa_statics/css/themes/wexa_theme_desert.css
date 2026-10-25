@@ -1,0 +1,443 @@
+/*
+ :filename: wexa_statics/css/themes/wexa_theme_desert.css
+ :author: Brigitte Bigi
+ :contact: contact@sppas.org
+ :summary: Desert theme for Whakerexa — eggshell, sand and brown gradients.
+
+ -------------------------------------------------------------------------
+
+ This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
+
+ Copyright (C) 2023-2026 Brigitte Bigi, CNRS
+ Laboratoire Parole et Langage, Aix-en-Provence, France
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU Affero General Public License for more details.
+
+ You should have received a copy of the GNU Affero General Public License
+ along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+ This banner notice must not be removed.
+
+ -------------------------------------------------------------------------
+
+ Load AFTER wexa.css:
+   <link rel="stylesheet" href="wexa.css">
+   <link rel="stylesheet" href="themes/wexa_theme_desert.css">
+
+ Architecture:
+   - Color/font-family variables are unlayered so they win over all wexa.css
+     @layer rules regardless of load order.
+   - Sizing variables (--font-size, --typography-spacing-*, --border-radius) are
+     inside @layer theme so that unlayered page-specific CSS (e.g. slides.css)
+     can override them without specificity games.
+   - Decoration overrides (element rules) are inside @layer theme.
+
+ Desert theme — eggshell, sand and brown palette with gradients. The hues
+ of Aurora, transposed: every colour keeps the lightness it was validated
+ with, and only its hue and saturation change.
+ Flat type scale, Commissioner font, card-style articles.
+
+ Variable conventions used in this file:
+   [override] — variable already defined in wexa.css, value changed for Desert style
+   [new]      — variable that does not exist in wexa.css, created for Desert-specific needs
+*/
+
+
+/* =========================================================================
+   CSS variables -- unlayered, win over all @layer rules in wexa.css
+   ========================================================================= */
+
+/* ======================================================================
+   Typography — normal mode
+   ====================================================================== */
+
+/* ======================================================================
+   Light mode — CSS variable overrides
+   ====================================================================== */
+
+:root {
+    /* Commissioner, which wexa.css declares under the name SansFont. */
+    --font-family-sans:  SansFont, system-ui, Arial, sans-serif;
+    --font-family-serif: var(--font-family-sans);
+
+    /* The outline is the one colour of this theme that belongs to no surface
+       of it: a red, which nothing here wears, so that what is focused is seen
+       in both modes. */
+    --outline-color: rgba(230, 60, 50, 0.9);
+}
+
+:root:not(.dark) {
+
+    /* ── @layer theme color overrides ──────────────────────────────── */
+    --body-bg-color: rgb(253, 248, 244);
+    --bg-color:     rgb(254, 252, 251);
+    --img-bg-color: rgba(197, 180, 163, 0.5);
+    --bg-color-alt: rgb(253, 246, 238);
+    --fg-color:     rgb(57, 39, 21);
+    --fg-color-alt: rgb(91, 70, 48);
+
+    --border-color:     rgb(190, 135, 80);
+    --border-color-alt: rgb(246, 238, 230);
+
+    /* [override] Primary accent — burnt ochre */
+    --a-color:                rgb(162, 104, 48);
+    --li-color:               rgb(189, 128, 66);
+    --buttons-bg-color:       rgb(160, 106, 52);
+    --buttons-bg-color-hover: rgb(129, 83, 37);
+    --buttons-fg-color:       rgb(255, 255, 255);
+
+    --header-bg-color: linear-gradient(135deg, rgb(88, 52, 16) 0%, rgb(136, 87, 38) 55%, rgb(165, 112, 60) 100%);
+    --nav-bg-color:    rgb(88, 52, 16);
+    --footer-bg-color: rgb(253, 246, 238);
+    --header-fg-color: rgb(255, 255, 255);
+    --nav-fg-color:    rgb(248, 225, 202);
+    --footer-fg-color: rgb(91, 70, 48);
+
+    --h1-color: rgb(52, 32, 13);
+    --h2-color: rgb(76, 51, 26);
+    --h3-color: rgb(100, 72, 43);
+    --h4-color: rgb(100, 72, 43);
+    --h5-color: rgb(123, 92, 60);
+    --h6-color: rgb(142, 110, 77);
+
+    --blockquote-footer-color: rgb(163, 133, 103);
+
+    --table-cell-bg-color:          rgb(254, 252, 251);
+    --table-row-stripped-bg-color:  rgb(254, 250, 246);
+    --table-head-bg-color:          rgb(251, 240, 230);
+    --table-head-fg-color:          rgb(57, 39, 21);
+    --table-caption-bg-color:       rgb(251, 240, 230);
+    --table-caption-fg-color:       rgb(91, 70, 48);
+
+    --inputs-bg-color: rgb(255, 255, 255);
+
+    /* wexa.css writes these three without a hue of the palette: a panel
+       and a run of code take the eggshell and the sand of this one. */
+    --panel-bg-color:     rgb(254, 250, 243);
+    --panel-bg-color-alt: rgb(248, 238, 223);
+    --code-bg-color:      rgba(240, 220, 180, 0.45);
+
+    --progress-bg-color: rgb(243, 229, 215);
+    --progress-fg-color: rgb(189, 125, 61);
+
+    --shadow-color: rgba(189, 125, 61, 0.14);
+
+    /* A card is the one sand surface of a light page, as it is the one
+       lighted surface of a dark one. */
+    --card-bg-color: rgb(253, 246, 238);
+    --card-fg-color: rgb(57, 39, 21);
+
+    --dialog-bg-color: rgb(245, 240, 236);
+    --dialog-fg-color: rgb(71, 55, 38);
+
+}
+
+
+/* =========================================================================
+   Dark mode — CSS variable overrides (unlayered)
+   ========================================================================= */
+
+/* The dark mode holds two axes instead of one: the brown of the desert for
+   what is read at length, terracotta for what frames it, and a sand that
+   answers them both. */
+
+:root.dark {
+    --body-bg-color: rgb(38, 26, 13);
+    --bg-color: rgb(26, 18, 9);
+    --img-bg-color: rgba(212, 195, 178, 0.5);
+}
+
+
+/* ======================================================================
+   Dark mode — CSS variable overrides
+   ====================================================================== */
+
+.dark {
+
+        --bg-color-alt: rgb(47, 32, 17);
+        --fg-color:     rgb(238, 231, 224);
+        --fg-color-alt: rgb(254, 252, 249);
+
+        --border-color:     rgb(171, 147, 124);
+        --border-color-alt: rgb(77, 63, 49);
+
+        /* A link is read, so it is written light: this sand holds 12.5:1 on
+           the brown of the ground, where a text asks for 4.5. */
+        --a-color:          rgb(232, 211, 148);
+        /* The terracotta of the accents, lightened until it is seen: it holds
+           4.95:1 on the ground, where a mark asks for 3:1. */
+        --li-color:         rgb(169, 121, 101);
+        --buttons-bg-color:       rgb(81, 45, 9);
+        --buttons-bg-color-hover: rgb(85, 47, 9);
+        --buttons-fg-color:       rgb(249, 248, 244);
+
+        --header-bg-color: linear-gradient(323deg, rgb(66, 33, 19) 0%, rgb(85, 48, 12) 70%, rgb(65, 35, 5) 100%);
+        --nav-bg-color:    rgb(65, 35, 5);
+        --footer-bg-color: linear-gradient(to bottom,
+            var(--bg-color) 0%,
+            rgb(69, 37, 6) 30%,
+            rgb(66, 33, 19) 50%,
+            rgb(96, 66, 54) 70%,
+            rgb(125, 83, 65) 100%);
+        --header-fg-color: rgb(236, 229, 214);
+        --nav-fg-color:    rgb(236, 229, 214);
+        --footer-fg-color: rgb(249, 248, 244);
+
+        /* What is written on a brown ground is written in sand. */
+        --card-bg-color: rgb(65, 35, 5);
+        --card-fg-color: rgb(236, 229, 214);
+
+        --dialog-bg-color: rgb(45, 37, 29);
+        --dialog-fg-color: rgb(222, 214, 207);
+
+        /* The titles walk from the sand of the frames down to the terracotta
+           of the accents, which is what ties the two axes together. */
+        --h1-color: rgb(209, 187, 178);
+        --h2-color: rgb(218, 200, 192);
+        --h3-color: rgb(226, 207, 208);
+        --h4-color: rgb(226, 207, 208);
+        --h5-color: rgb(231, 219, 211);
+        --h6-color: rgb(236, 229, 214);
+
+        --blockquote-footer-color: rgb(196, 176, 167);
+
+        --table-cell-bg-color:          rgb(26, 18, 9);
+        --table-row-stripped-bg-color:  rgb(52, 36, 21);
+        --table-head-bg-color:          rgb(47, 32, 17);
+        --table-head-fg-color:          rgb(236, 229, 214);
+        --table-caption-bg-color:       rgb(47, 32, 17);
+        --table-caption-fg-color:       rgb(238, 231, 224);
+
+        --inputs-bg-color: rgb(47, 32, 17);
+
+        --progress-bg-color: rgb(240, 227, 197);
+        --progress-fg-color: rgb(125, 83, 65);
+
+    --shadow-color: rgba(125, 83, 65, 0.28);
+
+}
+
+
+
+/* =========================================================================
+   Decoration overrides -- inside @layer theme
+   ========================================================================= */
+
+@layer theme {
+
+    /* ======================================================================
+       Slides accent colors — override slides.css defaults
+       ====================================================================== */
+
+    /* Said with the same reach as the rest of a light palette: the default of
+       the framework is written on :root:not(.dark), and a plain :root would
+       lose to it. */
+    :root:not(.dark) {
+        --custom-color1: rgb(71, 44, 16);
+        --custom-color2: rgb(240, 222, 203);
+    }
+
+    .dark {
+        --custom-color1: rgb(236, 229, 214);
+        --custom-color2: rgb(65, 35, 5);
+    }
+
+    /* ======================================================================
+       Sizing variables — in @layer so unlayered page CSS (e.g. slides.css)
+       can override without specificity games.
+       ====================================================================== */
+
+    :root:not(.contrast) {
+        --border-radius:                 6px;
+        --border-width:                  1px;
+        --border-width-alt:              0px;
+        --font-size:                     calc(16px / var(--fontsize-divisor));
+        --typography-spacing-vertical:   calc(0.8 * 16px / var(--size-divisor));
+        --typography-spacing-horizontal: calc(0.6 * 16px / var(--size-divisor));
+    }
+
+    .contrast {
+        --border-radius:                 6px;
+        --font-size:                     calc(17px / var(--fontsize-divisor));
+        --typography-spacing-vertical:   calc(1.0 * 17px / var(--size-divisor));
+        --typography-spacing-horizontal: calc(0.8 * 17px / var(--size-divisor));
+    }
+    /* ======================================================================
+       Decoration overrides — Desert visual style
+       Interactive element padding uses var(--font-size) multiples.
+       Block-level structural spacing uses var(--typography-spacing-*).
+       ====================================================================== */
+
+    /* ── Headings: flat type scale ───────────────────────────────────────── */
+    /* Overrides wexa.css context-dependent sizing (header/main/footer) with  */
+    /* a flat scale. Sets bold on all levels (wexa uses semibold for h3/h4).  */
+    /* Removes h6 italic. Adds line-height on all levels.                     */
+
+    h1 {
+        font-size: calc(2 * var(--font-size));
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    h2 {
+        font-size: calc(1.75 * var(--font-size));
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    h3 {
+        font-size: calc(1.5 * var(--font-size));
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    h4 {
+        font-size: calc(1.25 * var(--font-size));
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    h5 {
+        font-size: calc(1.125 * var(--font-size));
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    h6 {
+        font-size: var(--font-size);
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    /* ── Blockquote: left border only, no background ─────────────────────── */
+    /* border shorthand resets ALL borders before adding left border.         */
+
+    blockquote {
+        border: none;
+        /* The frame of this theme is drawn with no width at all: the bar of a
+           quote is the one line it keeps, so it takes the width of a command. */
+        border-left: var(--border-width) solid var(--border-color-alt);
+        border-radius: 0;
+        background-image: none;
+        background-color: transparent;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    blockquote,
+    blockquote > p,
+    blockquote > a {
+        font-weight: var(--font-weight-normal);
+    }
+
+    /* ── Progress: thin bar ─────────────────────────────────────────────── */
+
+    progress {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        display: block;
+        width: 100%;
+        height: calc(0.5 * var(--font-size));
+        border: 0;
+        border-radius: var(--border-radius);
+        background-color: var(--progress-bg-color);
+        overflow: hidden;
+        color: var(--progress-fg-color);
+        margin-bottom: var(--typography-spacing-vertical);
+    }
+
+    progress::-webkit-progress-bar {
+        background-color: var(--progress-bg-color);
+        border-radius: var(--border-radius);
+    }
+
+    progress::-webkit-progress-value {
+        background-color: var(--progress-fg-color);
+        border-radius: var(--border-radius);
+    }
+
+    progress::-moz-progress-bar {
+        background-color: var(--progress-fg-color);
+        border-radius: var(--border-radius);
+    }
+
+    /* ── Table: horizontal lines only, no outer border ──────────────────── */
+
+    table:not([role="presentation"]) {
+        border: none;
+    }
+
+    td, th {
+        border-left: none;
+        border-bottom: var(--border-width) solid var(--border-color-alt);
+    }
+
+    thead td, thead th {
+        border-bottom: calc(var(--border-width) * 3) solid var(--border-color-alt);
+    }
+
+    tfoot td, tfoot th {
+        border-top: var(--border-width) solid var(--border-color-alt);
+        border-bottom: none;
+    }
+
+    /* ── Switch: compact toggle ──────────────────────────────────────────── */
+
+    .switch,
+    label.switch {
+        --switch-width:  calc(2.625 * var(--font-size));
+        --switch-height: calc(1.375 * var(--font-size));
+    }
+
+    /* ── What a frame no longer draws ───────────────────────────────────── */
+    /* This theme gives a frame no width at all: an element a frame used to
+       hold is held by a shadow instead, the one a card is given below. */
+
+    fieldset,
+    fieldset legend,
+    details,
+    progress,
+    table:not([role="presentation"]),
+    .highlight,
+    .slide {
+        box-shadow: 0 calc(0.125 * var(--font-size)) calc(0.5 * var(--font-size)) var(--shadow-color);
+    }
+
+    /* A line that the frame no longer draws takes the width of a command, as
+       the bar of a quote and the lines of a table do above. */
+
+    pre {
+        border-left-width: calc(2 * var(--border-width));
+    }
+
+    optgroup,
+    option {
+        border-top-width: var(--border-width);
+    }
+
+    /* ── Article: card with the desert gradient ──────────────────────────── */
+
+    article {
+        padding: calc(1.8 * var(--font-size));
+        border-radius: var(--border-radius);
+        background: linear-gradient(135deg, var(--bg-color-alt) 0%, var(--bg-color) 100%);
+        box-shadow: 0 calc(0.125 * var(--font-size)) calc(0.5 * var(--font-size)) var(--shadow-color);
+        overflow: hidden;
+    }
+
+    article > footer {
+        margin-top: var(--typography-spacing-vertical);
+        padding-top: calc(1.2 * var(--font-size));
+        border-top: var(--border-width) solid var(--border-color-alt);
+    }
+
+}

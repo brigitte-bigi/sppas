@@ -95,7 +95,6 @@
     --h5-color: rgb(75, 55, 128);
     --h6-color: rgb(95, 72, 150);
 
-    --blockquote-border-color: rgb(95, 50, 200);
     --blockquote-footer-color: rgb(128, 98, 168);
 
     --table-cell-bg-color:          rgb(252, 250, 255);
@@ -152,10 +151,10 @@
         --border-color:     rgb(150, 120, 175);
         --border-color-alt: rgb(60, 47, 79);
 
-        /* A link is read, so it is written light: the blue the palette uses on
-           a light ground holds 3.8:1 on night blue, where a text asks for 4.5,
-           and its soft blue 7:1. This one holds 10:1. */
-        --a-color:          rgb(140, 190, 240);
+        /* A link is read, so it is written light, and in the hue of the theme:
+           the plum of the accents, lightened until it holds 10:1 on the ground
+           and 9.4:1 on a card, where a text asks for 4.5. */
+        --a-color:          rgb(214, 173, 212);
         /* The plum of the accents, lightened until it is seen: the deeper one
            holds 2.7:1 on night blue, where a mark asks for 3:1. This one
            holds 4.7:1, and keeps its hue. */
@@ -192,7 +191,6 @@
         --h5-color: rgb(234, 218, 208);
         --h6-color: rgb(240, 230, 210);
 
-        --blockquote-border-color: rgb(130, 60, 130);
         --blockquote-footer-color: rgb(198, 165, 195);
 
         --table-cell-bg-color:          rgb(12, 8, 28);
@@ -310,7 +308,7 @@
         border: none;
         /* The frame of this theme is drawn with no width at all: the bar of a
            quote is the one line it keeps, so it takes the width of a command. */
-        border-left: var(--border-width) solid var(--blockquote-border-color);
+        border-left: var(--border-width) solid var(--border-color-alt);
         border-radius: 0;
         background-image: none;
         background-color: transparent;

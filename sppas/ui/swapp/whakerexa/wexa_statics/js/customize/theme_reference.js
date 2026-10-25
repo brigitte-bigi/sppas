@@ -42,5 +42,6 @@ export const THEMES_BASE = 'css/themes/';
 export const REFERENCE_THEMES = [
     ['wexa_theme', 'wexa_theme.css'],
     ['aurora', 'wexa_theme_aurora.css'],
+    ['desert', 'wexa_theme_desert.css'],
     ['highcontrast', 'wexa_theme_highcontrast.css'],
 ];

@@ -60,7 +60,7 @@
             file that defines <code>window.Wexa</code> without any <code>import</code>. Both
             give the same names to a page.</p>
 
-        <article class="card-doc" aria-label="Loading the framework">
+        <article class="card card-doc" aria-label="Loading the framework">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>Over http, the modules. This is the form to use, and the only one under
                     which the unit tests run.</p>
@@ -68,7 +68,7 @@
             <pre class="dark"><code>&lt;script type="module" src="wexa_statics/js/wexa.js"&gt;&lt;/script&gt;</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="Loading the bundle">
+        <article class="card card-doc" aria-label="Loading the bundle">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>From the disk, the bundle. It is generated from the sources and is never
                     edited by hand; see <a id="nav-bundle" data-href="wexa.bundle.html" data-target="_self">Bundle</a>.</p>
@@ -76,7 +76,7 @@
             <pre class="dark"><code>&lt;script src="wexa_statics/js/wexa.bundle.js"&gt;&lt;/script&gt;</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="Loading whichever suits the protocol">
+        <article class="card card-doc" aria-label="Loading whichever suits the protocol">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>A page that has to work both ways says neither of the two: it names the
                     loader, which reads the protocol and takes the modules over http, the
@@ -87,7 +87,7 @@
         data-base="wexa_statics/"&gt;&lt;/script&gt;</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="wexa.loader.js">
+        <article class="card card-doc" aria-label="wexa.loader.js">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>One tag does the choosing, and says at the same time what the page brings:
                     its themes, its sets of icons, the extras it loads. Everything is
@@ -124,7 +124,7 @@
             page, one written <code>/</code> from the root of the site, one carrying a
             scheme from its host.</p>
 
-        <article class="card-doc" aria-label="Saying how much the framework says">
+        <article class="card card-doc" aria-label="Saying how much the framework says">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>What the framework says goes to the console, and a page says how much of it
                     it wants to hear. It is written before the loader, on the namespace: a
@@ -215,7 +215,7 @@
             </tbody>
         </table>
 
-        <article class="card-doc" aria-label="Calling a service">
+        <article class="card card-doc" aria-label="Calling a service">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>A service is called, never instantiated.</p>
             </div>
@@ -288,7 +288,7 @@ Wexa.logger.info('Page ready.');</code></pre>
             itself: <code>wexa.js</code> registers there what makes every <code>data-href</code>
             element reachable with the Tab key.</p>
 
-        <article class="card-doc" aria-label="Registering a function that waits for the page">
+        <article class="card card-doc" aria-label="Registering a function that waits for the page">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>Registering is enough; nothing else has to be listened to.</p>
             </div>
@@ -321,7 +321,7 @@ Wexa.logger.info('Page ready.');</code></pre>
             </tbody>
         </table>
 
-        <article class="card-doc" aria-label="Setting the log level">
+        <article class="card card-doc" aria-label="Setting the log level">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>A page asking to see everything lowers the level; 0 silences nothing, it
                     shows all of it.</p>
@@ -343,7 +343,7 @@ Wexa.logger.debug('Slides: 57 pages laid out.');</code></pre>
             carries them all, so on <code>file://</code> they are found under
             <code>Wexa</code> as well.</p>
 
-        <article class="card-doc" aria-label="Importing an extra">
+        <article class="card card-doc" aria-label="Importing an extra">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>Five extras are available: the table of contents, the sortable table, the
                     theme switcher, the piano keyboard and the slides.</p>
@@ -367,7 +367,7 @@ Wexa.logger.debug('Slides: 57 pages laid out.');</code></pre>
             <code>wexa:slides:ready</code>. This is also what a keyboard shortcut may be given
             instead of a function.</p>
 
-        <article class="card-doc" aria-label="Answering a key with an event">
+        <article class="card card-doc" aria-label="Answering a key with an event">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <p>The shortcut says the name of the event; whoever navigates listens for it.</p>
             </div>

@@ -13,11 +13,11 @@
     <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
     <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
     <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/extras/bibbook.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
 
 
 </head>
@@ -71,7 +71,7 @@
             <section class="ssection"><h2>How to use</h2>
                 <p>Three steps: write the data, add the placeholder, call the JS API.</p>
 
-                <article class="card-doc" aria-label="HTML — BibTeX data">
+                <article class="card card-doc" aria-label="HTML — BibTeX data">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>Put the BibTeX entries in a <code>pre</code> element. Keep it hidden, and
                             reveal it when JavaScript is disabled, so that the data stays readable.</p>
@@ -89,14 +89,14 @@
 &lt;/pre&gt;</code></pre>
                 </article>
 
-                <article class="card-doc" aria-label="HTML — bibliography placeholder">
+                <article class="card card-doc" aria-label="HTML — bibliography placeholder">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>Add an empty element where the table is to be placed.</p>
                     </div>
                     <pre class="dark"><code>&lt;div id="bibliography"&gt;&lt;/div&gt;</code></pre>
                 </article>
 
-                <article class="card-doc" aria-label="JavaScript — BookBibliography API">
+                <article class="card card-doc" aria-label="JavaScript — BookBibliography API">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>Instantiate <code>BookBibliography</code> with the id of the data, the id of
                             the placeholder, and the id of the content to scan for citations. Then call

@@ -539,7 +539,7 @@ section.actions-panel {
 
 /* What a card writes carries no space of its own. A button is not written
    text: it keeps the box wexa.css gives it. */
-.app-content *:not(button, [role=button]) {
+.app-content *:where(:not(button, [role=button])) {
     padding: 0;
     margin: 0;
 }
@@ -823,20 +823,7 @@ section.actions-panel {
     font-weight: bold;
 }
 
-/* ── Header: the skip link, the home button (logo, to the Dashboard)
-   and the title ── */
-
-.skip {
-    position: fixed;
-    top: var(--border-width);
-    left: var(--border-width);
-    width: calc(100% - 2 * (var(--border-width)));
-    text-align: center;
-    margin: auto;
-    border: none;
-    border-radius: 0;
-    height: 1rem;
-}
+/* ── Header: the home button (logo, to the Dashboard) and the title ── */
 
 #link-title-header {
     display: flex;

@@ -13,11 +13,11 @@
     <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
     <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
     <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/extras/bibbook.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
 
 
 </head>
@@ -74,7 +74,7 @@
             <section class="ssection"><h2>How to use</h2>
                 <p>Four steps: write the data, cite in the text, add the placeholder, call the JS API.</p>
 
-                <article class="card-doc" aria-label="HTML — the stylesheet a bibliography needs">
+                <article class="card card-doc" aria-label="HTML — the stylesheet a bibliography needs">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>One stylesheet, and one only. A bibliography is a table that sorts and
                             whose columns are shown or hidden; <code>bibbook.css</code> brings what
@@ -83,7 +83,7 @@
                     <pre class="dark"><code>&lt;link rel="stylesheet" href="wexa_statics/css/extras/bibbook.css"&gt;</code></pre>
                 </article>
 
-                <article class="card-doc" aria-label="HTML — BibTeX data">
+                <article class="card card-doc" aria-label="HTML — BibTeX data">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>Put the BibTeX entries in a <code>pre</code> element. Keep it hidden, and
                             reveal it when JavaScript is disabled, so that the data stays readable.</p>
@@ -100,7 +100,7 @@
 &lt;/pre&gt;</code></pre>
                 </article>
 
-                <article class="card-doc" aria-label="HTML — a citation">
+                <article class="card card-doc" aria-label="HTML — a citation">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>Cite with a <code>span</code> carrying a <code>data-bibtex</code> attribute.
                             A <code>span</code> is allowed between two words of a sentence. Write a
@@ -114,14 +114,14 @@
 &lt;!-- without JavaScript: The corpus is described in Bigi et al., 2022. --&gt;</code></pre>
                 </article>
 
-                <article class="card-doc" aria-label="HTML — bibliography placeholder">
+                <article class="card card-doc" aria-label="HTML — bibliography placeholder">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>Add an empty element where the table is to be placed.</p>
                     </div>
                     <pre class="dark"><code>&lt;div id="bibliography"&gt;&lt;/div&gt;</code></pre>
                 </article>
 
-                <article class="card-doc" aria-label="HTML — where the addresses open">
+                <article class="card card-doc" aria-label="HTML — where the addresses open">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>The addresses of the references — the PDF, the open archive, the
                             publisher — open in a tab of their own, so that the document stays
@@ -133,7 +133,7 @@
                     <pre class="dark"><code>&lt;div id="bibliography" data-links-target="_self"&gt;&lt;/div&gt;</code></pre>
                 </article>
 
-                <article class="card-doc" aria-label="JavaScript — BookBibliography API">
+                <article class="card card-doc" aria-label="JavaScript — BookBibliography API">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>Instantiate <code>BookBibliography</code> with the id of the data, the id of
                             the placeholder, and the id of the content to scan for citations. Then call
@@ -198,7 +198,7 @@ biblio.run();</code></pre>
                     entry, so a stylesheet can lay them out side by side, wrap them, or reorder
                     them.</p>
 
-                <article class="card-doc" aria-label="CSS — laying out the three lines">
+                <article class="card card-doc" aria-label="CSS — laying out the three lines">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>The three lines, side by side rather than one under the other.</p>
                     </div>

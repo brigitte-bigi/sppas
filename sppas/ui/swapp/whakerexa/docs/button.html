@@ -13,11 +13,11 @@
     <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
     <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
     <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/togglegroup.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/button.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
 
 
 </head>
@@ -56,7 +56,7 @@
         Each can be customized through CSS variables. No JavaScript required.
     </p>
         <h2>Default button - no class applied</h2>
-<article class="card-doc" aria-label="Default button — example">
+<article class="card card-doc" aria-label="Default button — example">
     <div class="card-view">
         <button>a button</button>
         <button disabled>a disabled button</button>
@@ -104,7 +104,7 @@
             lit under the pointer, the way a <code>&lt;button disabled&gt;</code> is not.
         </p>
 
-        <article class="card-doc" aria-label="Role button — example">
+        <article class="card card-doc" aria-label="Role button — example">
             <div class="card-view">
                 <div role="button" tabindex="0">a div</div>
                 <span role="button" tabindex="0">a span</span>
@@ -139,7 +139,7 @@
             giving keyboard users the same feedback as pointer users.
         </p>
 
-        <article class="card-doc" aria-label="Text-reveal button — example">
+        <article class="card card-doc" aria-label="Text-reveal button — example">
             <div class="card-view">
                 <button class="text-reveal-button" data-icon="download">
                     <span>Download</span>
@@ -161,7 +161,7 @@
             (both default to <code>calc(var(--font-size) * 1.6)</code>).
         </p>
 
-        <article class="card-doc" aria-label="Text-reveal button — custom size example">
+        <article class="card card-doc" aria-label="Text-reveal button — custom size example">
             <div class="card-view">
                 <button class="text-reveal-button" data-icon="download"
                         style="--text-reveal-height: calc(var(--font-size) * 3); --text-reveal-width: calc(var(--font-size) * 3);">
@@ -189,7 +189,7 @@
             comes from a set or from the page itself.
         </p>
 
-        <article class="card-doc" aria-label="Text-reveal button — a drawing of its own">
+        <article class="card card-doc" aria-label="Text-reveal button — a drawing of its own">
             <div class="card-view">
                 <button class="text-reveal-button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"
@@ -226,7 +226,7 @@
             that changes. Keep them for those actions, or they stop being read.
         </p>
 
-        <article class="card-doc" aria-label="The reach of an action — examples">
+        <article class="card card-doc" aria-label="The reach of an action — examples">
             <div class="card-view">
                 <button class="danger-button">Delete the file</button>
                 <button class="warning-button">Replace the file</button>
@@ -259,7 +259,7 @@
             <code>disabled</code>, which the framework already dresses.
         </p>
 
-        <article class="card-doc" aria-label="Busy button — example">
+        <article class="card card-doc" aria-label="Busy button — example">
             <div class="card-view">
                 <button aria-busy="true">Sending</button>
             </div>
@@ -283,7 +283,7 @@
             the page or put there by an icon set.
         </p>
 
-        <article class="card-doc" aria-label="Icon button — example">
+        <article class="card card-doc" aria-label="Icon button — example">
             <div class="card-view">
                 <button class="icon-button" aria-label="Add">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"
@@ -332,7 +332,7 @@
             needed on the buttons themselves.
         </p>
 
-        <article class="card-doc" aria-label="Row of buttons — example">
+        <article class="card card-doc" aria-label="Row of buttons — example">
             <div class="card-view">
                 <div class="wrap-panel">
                     <button>Open</button>
@@ -367,7 +367,7 @@
             exclude one another are a <code>.toggle-group</code>, below.
         </p>
 
-        <article class="card-doc" aria-label="Toggle — example">
+        <article class="card card-doc" aria-label="Toggle — example">
             <div class="card-view">
                 <button aria-pressed="true">Bold</button>
                 <button aria-pressed="false">Italic</button>
@@ -401,7 +401,7 @@
             both the visible control and its accessible name.
         </p>
 
-        <article class="card-doc" aria-label="Toggle group — example">
+        <article class="card card-doc" aria-label="Toggle group — example">
             <div class="card-view">
                 <section class="toggle-group" role="radiogroup" aria-label="Text alignment">
                     <label class="menuitem" for="align-left">

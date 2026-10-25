@@ -189,7 +189,7 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - CSS now uses `@layer reset, base, theme, accessibility`. Rules written outside any layer override framework defaults automatically — no `!important` needed.
 - Light/dark/contrast modes are controlled by `.dark` and `.contrast` classes on `:root` (the old `[data-theme=dark]` attribute is removed).
 - Print styles moved to a separate `print.css` loaded with `media="print"`.
-- Alternative themes are standalone CSS files containing only an `@layer theme` block. Three themes are provided: `wexa_theme` (navy/teal), `aurora` (blue/mauve/violet) and `highcontrast`.
+- Alternative themes are standalone CSS files containing only an `@layer theme` block. Four themes are provided: `wexa_theme` (navy/teal), `aurora` (blue/mauve/violet), `desert` (eggshell/sand/brown) and `highcontrast`.
 - New `ThemeManager` class: registers named themes, cycles through them, and persists the choice via URL parameter.
 - New `SVGIconsManager` class: loads SVG icons from `icons/mono-svg/` and injects them inline so they inherit `currentColor`. `inject(element, name)` guards against double-injection. In bundle mode, icons are pre-registered at build time — no `fetch()` required on `file://`.
 - `AccessibilityManager` manages exactly two modes — color (light/dark) and contrast (normal/high). Methods renamed to `switchColorScheme()` and `switchContrastScheme()`.
@@ -296,7 +296,7 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - Loading. `wexa.loader.js` takes `data-themes`.
 
 
-## Version 4.1.0 - stable
+## Version 4.1.0
 
 - Themes. `data-themes` says which ones a page takes, and in which order.
 - Icons. New `Wexa.gatheredIcons`. A file written by an older build is still read.
@@ -304,10 +304,11 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - Logging. A page says how much the framework says: `Wexa.logLevel = 'warning'`, before the loader.
 
 
-## Version 4.2.0 - develop
+## Version 4.2.0 - stable
 
 - Themes: Apply the default theme when none is given.
 - Bibliography: Open the links of the references in a tab, table sort improved.
+- Bibliography&Slides: Cancel the sort of columns in a multi-slides table
 - CSS: uniformized the element styling and the corresponding role.
 - CSS: borders are managed with 2 width/colors/radius only. Removed table-border-* and others.
 - CSS: a panel can be written as a list, the file field holds its button.
@@ -316,3 +317,5 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - CSS: buttons and menus revisions.
 - CSS: colors of wexa_theme migrated to default.
 - CSS: a list in a nav has no marker and no indent.
+- CSS: all dimensions are properly proportional to their definition (padding with font size, etc.)
+- CSS: Added a new theme "desert"

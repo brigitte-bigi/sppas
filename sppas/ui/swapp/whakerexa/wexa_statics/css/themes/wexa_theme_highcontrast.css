@@ -91,7 +91,6 @@
     --border-color-alt:      rgb(0, 0, 139);
 
     --a-color:               rgb(0, 0, 139);
-    --link-color:            rgb(0, 0, 139);
     --li-color:              rgb(0, 0, 139);
 
     --buttons-bg-color:      rgb(0, 0, 0);
@@ -120,7 +119,6 @@
     --h5-color:              rgb(0, 0, 0);
     --h6-color:              rgb(0, 0, 0);
 
-    --blockquote-border-color: rgb(0, 0, 0);
     --blockquote-footer-color: rgb(51, 51, 51);
 
     --table-cell-bg-color:            rgb(255, 255, 255);
@@ -156,7 +154,6 @@
         --border-color-alt:      orange;
 
         --a-color:               rgb(255, 255, 0);
-        --link-color:            rgb(255, 255, 0);
         --li-color:              orange;
 
         --buttons-bg-color:      rgb(255, 255, 255);
@@ -183,7 +180,6 @@
         --h5-color:              rgb(255, 255, 255);
         --h6-color:              rgb(255, 255, 255);
 
-        --blockquote-border-color: rgb(255, 255, 0);
         --blockquote-footer-color: rgb(204, 204, 204);
 
         --table-cell-bg-color:            rgb(0, 0, 0);

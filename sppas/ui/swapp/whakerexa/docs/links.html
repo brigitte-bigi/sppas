@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
     <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
     <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
 
 
 </head>
@@ -58,7 +58,7 @@
             Add <code>.external-link</code> to append an external link icon after the text.
         </p>
 
-        <article class="card-doc" aria-label="Links — native examples">
+        <article class="card card-doc" aria-label="Links — native examples">
             <div class="card-view">
                 <a href="#">Internal link</a>
                 <a href="#" class="external-link">External link</a>
@@ -100,7 +100,7 @@
             <code>tabindex</code> says it can be reached.
         </p>
 
-        <article class="card-doc" aria-label="Links — role=link examples">
+        <article class="card card-doc" aria-label="Links — role=link examples">
             <div class="card-view">
                 <span role="link" tabindex="0">A span that is a link</span>
                 <span role="link" tabindex="0" class="external-link">A span that leaves the page</span>
@@ -144,7 +144,7 @@
             button has none.
         </p>
 
-        <article class="card-doc" aria-label="Links — the five marks">
+        <article class="card card-doc" aria-label="Links — the five marks">
             <div class="card-view">
                 <a href="#main-content" class="anchor-link">Back to the content</a>
                 <a href="../wexa_statics/icons/mono-svg/anchor-link.svg" download>The icon file</a>
@@ -168,7 +168,7 @@
             says so in its own stylesheet:
         </p>
 
-        <article class="card-doc" aria-label="Links — turning a mark off">
+        <article class="card card-doc" aria-label="Links — turning a mark off">
             <pre class="dark"><code>a[download]::after,
 a[href^="mailto:"]::after {
     content: none;
@@ -230,7 +230,7 @@ a[href^="mailto:"]::after {
         </p>
 
         <h3>Open in new tab</h3>
-        <article class="card-doc" aria-label="LinkController — open in new tab">
+        <article class="card card-doc" aria-label="LinkController — open in new tab">
             <div class="card-view">
                 <a id="link-blank" role="button" data-href="https://sppas.org">Open SPPAS (new tab)</a>
             </div>
@@ -243,7 +243,7 @@ lc.handleLinks(['link-blank']);</code></pre>
         </article>
 
         <h3>Open in same page</h3>
-        <article class="card-doc" aria-label="LinkController — open in same page">
+        <article class="card card-doc" aria-label="LinkController — open in same page">
             <div class="card-view">
                 <a id="link-self" role="button" data-href="../index.html" data-target="_self">
                     Open index (_self)
@@ -257,7 +257,7 @@ lc.handleLinks(['link-self']);</code></pre>
         </article>
 
         <h3>Open in iframe</h3>
-        <article class="card-doc" aria-label="LinkController — open in iframe">
+        <article class="card card-doc" aria-label="LinkController — open in iframe">
             <div class="card-view" style="flex-direction: column; width: 100%;">
                 <button id="link-iframe" data-href="https://example.org" data-target="preview-iframe">
                     Load in iframe
@@ -289,7 +289,7 @@ lc.handleLinks(['link-iframe']);</code></pre>
             and should open in the same accessibility state as the current page.
         </p>
 
-        <article class="card-doc" aria-label="LinkController — handleLinksWithParameters">
+        <article class="card card-doc" aria-label="LinkController — handleLinksWithParameters">
             <div class="card-view">
                 <a id="link-params" role="button" data-href="../index.html" data-target="_blank">
                     Open index with accessibility params

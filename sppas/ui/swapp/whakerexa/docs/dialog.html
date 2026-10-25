@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
     <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
     <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/dialog.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
 
     <style>
         :root {
@@ -83,7 +83,7 @@
             pseudo-element applies a grayscale blur behind it.
         </p>
 
-        <article class="card-doc" aria-label="Dialog — basic example">
+        <article class="card card-doc" aria-label="Dialog — basic example">
             <div class="card-view" style="align-items: flex-start;">
                 <dialog open>
                     <p>A simple dialog box.</p>
@@ -145,7 +145,7 @@
         </p>
 
         <h3>Light color scheme</h3>
-        <article class="card-doc" aria-label="Message dialogs — light scheme">
+        <article class="card card-doc" aria-label="Message dialogs — light scheme">
             <div class="card-view dialog-demo">
                 <dialog role="alertdialog" class="info" aria-label="Info dialog">
                     <p>This is irrelevant information...</p>
@@ -262,7 +262,7 @@
             or <code>Wexa.dialog.open(id, true)</code> to open it as a modal with a blurred backdrop.
         </p>
 
-        <article class="card-doc" aria-label="Hidden alert dialogs — modal mode">
+        <article class="card card-doc" aria-label="Hidden alert dialogs — modal mode">
             <div class="card-view dialog-demo">
                 <div class="dialog-demo-group">
                     <dialog id="info-dlg" role="alertdialog" class="info hidden-alert" aria-label="Info dialog">
@@ -334,7 +334,7 @@
             A play button centered over the image opens the video dialog on click.
         </p>
 
-        <article class="card-doc" aria-label="Popup video — image preview">
+        <article class="card card-doc" aria-label="Popup video — image preview">
             <div class="card-view">
                 <figure class="img-video-visualization" style="width: 35vw; height: auto;">
                     <img src="images/demo_video.png" alt="Video preview"/>
@@ -360,7 +360,7 @@
             when no image preview is needed.
         </p>
 
-        <article class="card-doc" aria-label="Popup video — play button only">
+        <article class="card card-doc" aria-label="Popup video — play button only">
             <div class="card-view">
                 <button name="play-btn" aria-label="Play video" onclick="Wexa.dialog.playVideo('demo')">&#9658;</button>
             </div>

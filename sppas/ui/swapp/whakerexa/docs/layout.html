@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
     <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
     <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
 
 
 </head>
@@ -130,7 +130,7 @@
         <section class="panel-item">
             <h2>Simple panel</h2>
             <p>Use <code>.panel</code> for a basic block container that clears floats.</p>
-            <article class="card-doc" aria-label="Simple panel — example">
+            <article class="card card-doc" aria-label="Simple panel — example">
                 <div class="card-view">
                     <div class="panel" style="border: 1px solid var(--border-color); padding: 1rem; min-width: 10rem;">
                         <p>Panel content</p>
@@ -147,7 +147,7 @@
             <h2>Scrolled panel</h2>
             <p>Use <code>.scrolled-panel</code> for a container with scrollable overflow.
                 Set an explicit height to activate scrolling.</p>
-            <article class="card-doc" aria-label="Scrolled panel — example">
+            <article class="card card-doc" aria-label="Scrolled panel — example">
                 <div class="card-view">
                     <div class="scrolled-panel" style="height: 4rem; width: 14rem; border: 1px solid var(--border-color); padding: 0.5rem;">
                         <p>Line 1</p><p>Line 2</p><p>Line 3</p><p>Line 4</p><p>Line 5</p>
@@ -167,7 +167,7 @@
                 Width helpers (<code>.width_30</code>, <code>.width_60</code>, etc.) control proportions.
                 On narrow screens the layout collapses to a single column.
                 Add <code>.flex-border-left</code> to a <code>.flex-item</code> for a vertical separator.</p>
-            <article class="card-doc" aria-label="Flex panel — example">
+            <article class="card card-doc" aria-label="Flex panel — example">
                 <div class="card-view" style="width: 100%;">
                     <div class="flex-panel width_full">
                         <p class="flex-item width_30" style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">30 %</p>
@@ -189,7 +189,7 @@
             <p>Use <code>.grid-panel</code> for an equal-column auto-fit grid.
                 Items use <code>.grid-item</code>.
                 The number of columns adapts to the available space.</p>
-            <article class="card-doc" aria-label="Grid panel — example">
+            <article class="card card-doc" aria-label="Grid panel — example">
                 <div class="card-view" style="width: 100%;">
                     <div class="grid-panel width_full">
                         <p class="grid-item" style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">Cell 1</p>
@@ -212,7 +212,7 @@
             <p>Use <code>.wrap-panel</code> for a row of items that keep their natural size and wrap to a new line only when space runs out.
                 Each child takes <code>.wrap-item</code>.
                 Unlike <code>.flex-panel</code>, there is no forced single-column collapse on narrow screens — wrapping follows the actual available space.</p>
-            <article class="card-doc" aria-label="Wrap panel — example">
+            <article class="card card-doc" aria-label="Wrap panel — example">
                 <div class="card-view" style="width: 100%;">
                     <div class="wrap-panel">
                         <p class="wrap-item" style="border: 1px solid var(--border-color); padding: 0.5rem;">Short item</p>
@@ -240,7 +240,7 @@
                 <code>&lt;li&gt;</code> in place of each item. The square the
                 framework draws before an item is not drawn there, and the room
                 it reserves is not taken: the item is the place the panel gives.</p>
-            <article class="card-doc" aria-label="A panel written as a list">
+            <article class="card card-doc" aria-label="A panel written as a list">
                 <div class="card-view" style="width: 100%;">
                     <ul class="wrap-panel">
                         <li class="wrap-item" style="border: 1px solid var(--border-color); padding: 0.5rem;">First</li>
@@ -262,7 +262,7 @@
             <p>Use the native HTML <code>&lt;details&gt;</code> / <code>&lt;summary&gt;</code> elements.
                 No CSS class required — <code>wexa.css</code> styles them directly.
                 Keyboard-accessible: Tab to focus, Enter or Space to toggle.</p>
-            <article class="card-doc" aria-label="Collapsible panel — example">
+            <article class="card card-doc" aria-label="Collapsible panel — example">
                 <div class="card-view">
                     <details>
                         <summary>Toggle me</summary>
@@ -283,7 +283,7 @@
                 A card can contain up to three zones: <code>.card-header</code>, <code>.card-body</code>, <code>.card-footer</code>.
                 Group cards in a <code>.cards-panel</code> container for a responsive grid layout.</p>
 
-            <article class="card-doc" aria-label="Simple card — example">
+            <article class="card card-doc" aria-label="Simple card — example">
                 <div class="card-view">
                     <article class="card">
                         <div class="card-body">
@@ -302,7 +302,7 @@
 &lt;/article&gt;</code></pre>
             </article>
 
-            <article class="card-doc" aria-label="Card with header, body and footer — example">
+            <article class="card card-doc" aria-label="Card with header, body and footer — example">
                 <div class="card-view">
                     <article class="card">
                         <div class="card-header"><h2>Header</h2></div>
@@ -323,7 +323,7 @@
 &lt;/article&gt;</code></pre>
             </article>
 
-            <article class="card-doc" aria-label="cards-panel — example">
+            <article class="card card-doc" aria-label="cards-panel — example">
                 <div class="card-view">
                     <section class="cards-panel">
                         <article class="card">
@@ -352,7 +352,7 @@
 &lt;/section&gt;</code></pre>
             </article>
 
-            <article class="card-doc" aria-label="full-cards-panel — example">
+            <article class="card card-doc" aria-label="full-cards-panel — example">
                 <div class="card-view">
                     <section class="full-cards-panel" style="width: 100%;">
                         <article class="card full-card">
@@ -386,7 +386,7 @@
                 it illustrates is whatever else the container holds.
             </p>
 
-            <article class="card-doc" aria-label="Illustrated content — example">
+            <article class="card card-doc" aria-label="Illustrated content — example">
                 <div class="card-view" style="width: 100%;">
                     <div class="illustrated-content" style="border: var(--border-width-alt) solid var(--border-color-alt);">
                         <img src="../wexa_statics/logos/whakerexa-128.webp" alt="The logo of Whakerexa">
@@ -418,7 +418,7 @@
                 one. The other side is left free, so the drawing keeps its shape.
             </p>
 
-            <article class="card-doc" aria-label="Flow and logo sizes — example">
+            <article class="card card-doc" aria-label="Flow and logo sizes — example">
                 <div class="card-view" style="width: 100%;">
                     <div class="flow" style="width: 100%;">
                         <img src="../wexa_statics/logos/whakerexa-128.webp" alt="The logo of Whakerexa" class="small-logo">
