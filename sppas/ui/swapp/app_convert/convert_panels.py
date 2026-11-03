@@ -475,8 +475,13 @@ class swappGeneralPanel(TagNode):
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_CONVERT,
                                     attributes={"type": "submit", "class": "action-button",
                                                 "name": EVENT_TASK, "value": TASK_CONVERT}))
+        # Not a reset of the browser: that one puts the fields of this form
+        # back and says nothing to the server, so the files stay deposited
+        # and the page stays where it is. This button asks for the task,
+        # exactly as the one which restarts after a conversion.
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_RESET,
-                                    attributes={"type": "reset"}))
+                                    attributes={"type": "submit", "name": EVENT_TASK,
+                                                "value": TASK_RESET}))
 
 # ---------------------------------------------------------------------------
 
