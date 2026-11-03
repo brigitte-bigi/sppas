@@ -925,6 +925,20 @@ dialog[role="alertdialog"] button:hover {
    refusal, one under the other; in its footer, the button which takes it
    back. */
 
+/* The field of the files is held by the label which says what to do: the
+   browser draws it with a button and a "no file chosen" of its own, which
+   says the same thing a second time, in its own words. It is taken out of
+   the drawing and stays where it was for the keyboard and for whoever reads
+   without seeing. */
+.dropzone input[type=file] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
 .dropzone {
     text-align: center;
     border: calc(3 * var(--border-width)) dashed var(--border-color);

@@ -243,14 +243,17 @@ class swappDepositView(swappFilesBaseView):
         _zone = TagNode(_form.identifier, None, "div", attributes={"class": "dropzone"})
         _form.append_child(_zone)
 
-        _label = HTMLNode(_zone.identifier, None, "label", value=MSG_SELECT_FILES,
+        # One sentence, and one control: the label says what to do and holds
+        # the field, which the browser would otherwise draw with a button of
+        # its own and a "no file chosen" of its own, under the sentence.
+        _label = HTMLNode(_zone.identifier, None, "label",
+                          value=MSG_SELECT_FILES + MSG_OR_DROP,
                           attributes={"for": "files_input"})
         _zone.append_child(_label)
-        _input = EmptyNode(_zone.identifier, "files_input", "input",
+        _input = EmptyNode(_label.identifier, "files_input", "input",
                            attributes={"id": "files_input", "type": "file",
                                        "multiple": "multiple"})
-        _zone.append_child(_input)
-        _zone.append_child(HTMLNode(_zone.identifier, None, "span", value=MSG_OR_DROP))
+        _label.append_child(_input)
 
         _panel = TagNode(_zone.identifier, None, "ul",
                          attributes={"class": "cards-panel"})

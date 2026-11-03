@@ -6,10 +6,542 @@
 
 <!-- =============================================================== -->
 
-	<p>
-		<b>Not written yet.</b> This chapter is the help of the person who converts files: what the page
-		shows, what is decided on it, and what happens once a conversion has run.
-	</p>
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Overview</h2>
+
+		<p>
+			This page writes annotated files into another format. You give it the files, you say
+			which format they are to be written into, and it writes them. The files you gave are
+			never changed: each conversion writes a new file beside the one it was read from.
+		</p>
+
+		<p>
+			The four spaces of SPPAS are here as everywhere else -- the header, the menu along the
+			left edge, the body in the middle, the footer at the bottom. The help of the Dashboard
+			describes them, and the menu buttons do the same thing here.
+		</p>
+
+		<p>
+			The body holds two parts, one under the other: the files to convert, then the options of
+			the conversion. You go through them in that order. Each part is shown below as you see
+			it on the page.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Giving the files</h2>
+
+		<p>
+			The first part of the body is where the files wait before being converted. What it
+			shows depends on where SPPAS runs: on your own computer, it reads the files where
+			they stand; on a server, you have to send them to it first.
+		</p>
+
+		<section class="subssection">
+		<h3>SPPAS on your computer</h3>
+
+			<p>
+				Your files are already within reach, so nothing is sent anywhere. Click
+				<b>Select files</b> and SPPAS opens its own window to choose them, among the
+				files of your computer:
+			</p>
+
+			    <section aria-label="Files" aria-hidden="true">
+			        <div>
+			            <input tabindex="-1" type="hidden" value="True" />
+			            <input tabindex="-1" type="hidden" value="False" />
+			            <input tabindex="-1" type="hidden" value="" />
+			            <input tabindex="-1" type="hidden" value="[]" />
+			            <input tabindex="-1" type="hidden" value="[]" />
+			            <div class="dropzone">
+			                <button tabindex="-1" type="submit" value="">
+			                                Select files
+			                </button>
+			                <ul class="cards-panel">
+			                    <li>
+			                        <article class="card">
+			                            <div class="card-header">
+			                                <span class="file-status" data-icon="upload" role="img" aria-label="Deposited">
+			                                </span>
+			                            </div>
+			                            <div class="card-body">
+			                                <span class="dropzone-name" title="/home/you/corpus/entretien-01.TextGrid">
+			                                                                entretien-01.TextGrid
+			                                </span>
+			                            </div>
+			                            <div class="card-footer">
+			                                <button tabindex="-1" type="submit" value="/home/you/corpus/entretien-01.TextGrid">
+			                                                                Take back
+			                                </button>
+			                            </div>
+			                        </article>
+			                    </li>
+			                </ul>
+			            </div>
+			        </div>
+			    </section>
+
+			<p>
+				Each file you chose is one rectangle holding its name. Rest the mouse on the
+				name and the whole path is shown. The <b>Take back</b> button removes the file
+				from the list: nothing of the file itself is touched.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>SPPAS on a server</h3>
+
+			<p>
+				Your files are on your computer and SPPAS is elsewhere, so they travel to it.
+				The frame is drawn with a dashed border, and you drop the files into it:
+			</p>
+
+			    <section aria-label="Files" aria-hidden="true">
+			        <div>
+			            <input tabindex="-1" type="hidden" value="False" />
+			            <input tabindex="-1" type="hidden" value="False" />
+			            <input tabindex="-1" type="hidden" value="" />
+			            <input tabindex="-1" type="hidden" value="[[&quot;entretien-01.TextGrid&quot;, 35840]]" />
+			            <input tabindex="-1" type="hidden" value="[]" />
+			            <div class="dropzone">
+			                <label>
+			                                Select files, or drag and drop files here.
+			                                <input tabindex="-1" type="file" multiple="multiple" />
+			                </label>
+			                <ul class="cards-panel">
+			                    <li>
+			                        <article class="card">
+			                            <div class="card-header">
+			                                <span class="file-status" data-icon="upload" role="img" aria-label="Deposited">
+			                                </span>
+			                            </div>
+			                            <div class="card-body">
+			                                <span class="dropzone-size">
+			                                                                35840
+			                                </span>
+			                                <span class="dropzone-name">
+			                                                                entretien-01.TextGrid
+			                                </span>
+			                            </div>
+			                            <div class="card-footer">
+			                                <button tabindex="-1" type="submit" value="entretien-01.TextGrid">
+			                                                                Take back
+			                                </button>
+			                            </div>
+			                        </article>
+			                    </li>
+			                </ul>
+			            </div>
+			            <button tabindex="-1" type="submit" value="" class="cta-button">
+			                        Send
+			            </button>
+			        </div>
+			    </section>
+
+			<p>
+				Click <b>Select files</b> and your computer opens its own window to choose them;
+				you can choose several at once. You can also drag files from a window of your
+				computer and drop them into the frame.
+			</p>
+
+			<p>
+				Each file you gave is one rectangle: its size, its name, and a <b>Take back</b>
+				button, which removes it from the list before anything is sent.
+			</p>
+
+			<p class="abstract">
+				A file may be refused -- too large, or of a kind the server does not take. Its
+				rectangle then says why, under the name. A refused file stays in the list so
+				that you can read the reason; take it back when you have.
+			</p>
+
+			<p>
+				Once the list is the one you want, click <b>Send</b>, at the bottom of the
+				frame. The files travel to SPPAS, and the frame is replaced by the list of what
+				it holds.
+			</p>
+
+		</section>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Choosing the format to write into</h2>
+
+		<p>
+			The second part of the body is titled <b>Conversion options</b>. On its left, under
+			<b>Write into</b>, one line per format SPPAS can write, with the software which reads
+			it. Click the line of the format you want -- here, three of them, Elan being the one
+			chosen:
+		</p>
+
+		    <section class="flex-item width_50" aria-hidden="true">
+		        <h4>
+		                Write into
+		        </h4>
+		        <table>
+		            <thead>
+		                <tr>
+		                    <th scope="col">
+		                                        Software
+		                    </th>
+		                    <th scope="col">
+		                                        Format
+		                    </th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <tr>
+		                    <th scope="rowgroup" rowspan="1">
+		                                        Praat
+		                    </th>
+		                    <td>
+		                        <input tabindex="-1" type="radio" form="convert_form" value=".TextGrid" />
+		                        <label>
+		                                                TextGrid
+		                        </label>
+		                    </td>
+		                </tr>
+		            </tbody>
+		            <tbody>
+		                <tr>
+		                    <th scope="rowgroup" rowspan="1">
+		                                        Elan
+		                    </th>
+		                    <td>
+		                        <input tabindex="-1" type="radio" form="convert_form" value=".eaf" checked />
+		                        <label>
+		                                                eaf
+		                        </label>
+		                    </td>
+		                </tr>
+		            </tbody>
+		            <tbody>
+		                <tr>
+		                    <th scope="rowgroup" rowspan="1">
+		                    </th>
+		                    <td>
+		                        <input tabindex="-1" type="radio" form="convert_form" value=".csv" />
+		                        <label>
+		                                                csv
+		                        </label>
+		                    </td>
+		                </tr>
+		            </tbody>
+		        </table>
+		    </section>
+
+		<p>
+			Only one format is chosen at a time, and every file you gave is written into it.
+		</p>
+
+		<p>
+			On the right of the same part, SPPAS says what that format does not keep. A format is
+			not able to hold everything an annotated file may carry, and what is named here will be
+			left out of the file which is written:
+		</p>
+
+		    <section class="flex-item width_50" aria-live="polite" aria-hidden="true">
+		        <div>
+		            <p>
+		                        Not supported by this format:
+		            </p>
+		            <ul>
+		                <li>
+		                                Point
+		                </li>
+		                <li>
+		                                Overlaps
+		                </li>
+		                <li>
+		                                Vagueness
+		                </li>
+		                <li>
+		                                Alt. loc
+		                </li>
+		                <li>
+		                                Alt. tag
+		                </li>
+		                <li>
+		                                Typed tags
+		                </li>
+		                <li>
+		                                Geom. tags
+		                </li>
+		            </ul>
+		        </div>
+		    </section>
+
+		<p class="abstract">
+			Read that list before converting. What is named there is lost in the new file: the file
+			you gave still holds it, the one SPPAS writes does not.
+		</p>
+
+		<section class="subssection">
+		<h3>Comparing the formats</h3>
+
+			<p>
+				The button <b>Compare the formats</b>, above the formats, opens a table: one line per
+				format, one column per property -- metadata, multi tiers, gaps, overlaps, hierarchy,
+				media, and the others. Each cell says whether that format supports that property.
+			</p>
+
+			<p>
+				The table is wide. Under <b>Columns visibility</b>, tick only the properties you care
+				for and click <b>Apply</b>: the other columns are hidden and the table becomes
+				readable. This changes what you see, and nothing of what is written.
+			</p>
+
+			<p>
+				Here is what each property is, in the order of the columns. The same names are
+				used beside the formats, where SPPAS says what the chosen one does not keep.
+			</p>
+
+			<table>
+				<caption>The properties of a format, and what each one holds</caption>
+				<thead>
+					<tr><th scope="col">Property</th><th scope="col">What it is</th></tr>
+				</thead>
+				<tbody>
+					<tr><th scope="row">Metadata</th>
+						<td>The information attached to the file, to a tier or to an annotation,
+							beside the annotations themselves -- who wrote it, in which language,
+							with which software.</td></tr>
+					<tr><th scope="row">Multi tiers</th>
+						<td>Several tiers in one file. A format without it holds one tier, and
+							one only.</td></tr>
+					<tr><th scope="row">No tier</th>
+						<td>A file holding no tier at all. A format without it refuses to be
+							written when there is nothing to write.</td></tr>
+					<tr><th scope="row">Point</th>
+						<td>An annotation placed at one moment of the recording, and not over a
+							duration -- a beat, a click, a change.</td></tr>
+					<tr><th scope="row">Interval</th>
+						<td>An annotation which lasts, from a beginning to an end -- a word, a
+							sentence, a silence.</td></tr>
+					<tr><th scope="row">Gaps</th>
+						<td>Holes between the annotations of a tier. Without it, the annotations
+							follow one another with nothing between them.</td></tr>
+					<tr><th scope="row">Overlaps</th>
+						<td>Annotations of the same tier which cover a common moment. Without
+							it, two annotations never share any time.</td></tr>
+					<tr><th scope="row">Hierarchy</th>
+						<td>The links between tiers: one tier said to come from another, the
+							words from the sentences, the phonemes from the words.</td></tr>
+					<tr><th scope="row">Ctrl vocab</th>
+						<td>A controlled vocabulary: the list of the labels a tier is allowed to
+							hold, written in the file with the annotations.</td></tr>
+					<tr><th scope="row">Media</th>
+						<td>The link to the recording the annotations were made on -- the sound
+							or the video file.</td></tr>
+					<tr><th scope="row">Vagueness</th>
+						<td>How uncertain a moment is: SPPAS keeps, beside each time, by how much
+							it may vary. Without it, every time is written as exact.</td></tr>
+					<tr><th scope="row">Alt. loc</th>
+						<td>Several possible places for the same annotation, when where it stands
+							is not settled.</td></tr>
+					<tr><th scope="row">Alt. tag</th>
+						<td>Several possible labels for the same annotation, when what it says is
+							not settled -- two readings of the same word.</td></tr>
+					<tr><th scope="row">Typed tags</th>
+						<td>Labels which are not text: a number, a true or false. Without it,
+							everything is written as text.</td></tr>
+					<tr><th scope="row">Geom. tags</th>
+						<td>Labels which describe a shape on an image: a point, or a rectangle --
+							a face, a hand, an object followed through a video.</td></tr>
+				</tbody>
+			</table>
+
+		</section>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The two switches, and the buttons</h2>
+
+		<p>
+			Under the formats, two switches and two buttons. Both switches are off when the page
+			opens:
+		</p>
+
+		    <section aria-hidden="true">
+		        <div>
+		            <p>
+		                <label class="switch">
+		                    <input tabindex="-1" type="checkbox" value="True" />
+		                    <span class="switch-slider round switch-no-text">
+		                    </span>
+		                </label>
+		                <label>
+		                                Replace an output file that already exists
+		                </label>
+		            </p>
+		            <p>
+		                <label class="switch">
+		                    <input tabindex="-1" type="checkbox" value="True" />
+		                    <span class="switch-slider round switch-no-text">
+		                    </span>
+		                </label>
+		                <label>
+		                                Guess the format of a file whose extension is unknown
+		                </label>
+		            </p>
+		            <button tabindex="-1" type="submit" class="action-button" value="convert">
+		                        Convert
+		            </button>
+		            <button tabindex="-1" type="submit" value="reset">
+		                        Reset
+		            </button>
+		        </div>
+		    </section>
+
+		<ul>
+			<li><b>Replace an output file that already exists.</b> Off, a file whose result is
+				already there is left alone, and the conversion says it was skipped. On, the
+				existing file is overwritten by the new one: what it contained is lost, and
+				SPPAS cannot give it back.</li>
+			<li><b>Guess the format of a file whose extension is unknown.</b> Off, SPPAS reads a
+				file by its extension and refuses one it does not know. On, it looks inside the file
+				to recognise it. Use it for a file whose name says nothing of its format.</li>
+		</ul>
+
+		<p>
+			Click the switch itself, or its text: both do the same thing. <b>Reset</b> takes back
+			the files you gave and puts the two switches off -- the page is the one you found when
+			you arrived.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.5 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Converting, and reading what happened</h2>
+
+		<p>
+			Click <b>Convert</b>. A bar shows how far the conversion has gone, file after file. A
+			conversion is not undone: let it finish.
+		</p>
+
+		<p>
+			Then a table titled <b>Results</b> is shown, one line per file you gave:
+		</p>
+
+		    <section aria-hidden="true">
+		        <h4>
+		                Results
+		        </h4>
+		        <table>
+		            <caption>
+		                        One line per file of the batch
+		            </caption>
+		            <thead>
+		                <tr>
+		                    <th scope="col">
+		                                        File
+		                    </th>
+		                    <th scope="col">
+		                                        Status
+		                    </th>
+		                    <th scope="col">
+		                                        Result
+		                    </th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <tr>
+		                    <th scope="row">
+		                                        entretien-01.TextGrid
+		                    </th>
+		                    <td>
+		                        <span data-icon="yes" role="img" aria-label="written">
+		                        </span>
+		                    </td>
+		                    <td>
+		                        <ul>
+		                            <li>
+		                                                        entretien-01.eaf
+		                            </li>
+		                        </ul>
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <th scope="row">
+		                                        entretien-02.TextGrid
+		                    </th>
+		                    <td>
+		                        <span data-icon="warning" role="img" aria-label="skipped">
+		                        </span>
+		                    </td>
+		                    <td>
+		                                        The output file already exists.
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <th scope="row">
+		                                        notes.txt
+		                    </th>
+		                    <td>
+		                        <span data-icon="no" role="img" aria-label="refused">
+		                        </span>
+		                    </td>
+		                    <td>
+		                                        Unknown extension for filename notes.txt.
+		                    </td>
+		                </tr>
+		            </tbody>
+		        </table>
+		        <div>
+		            <button tabindex="-1" type="submit" value="reset">
+		                        Start over
+		            </button>
+		        </div>
+		    </section>
+
+		<ul>
+			<li><b>written</b> -- the file was converted. The line names the file which was written,
+				beside the one it came from.</li>
+			<li><b>skipped</b> -- nothing was done, because the result was already there and the
+				first switch was off.</li>
+			<li><b>refused</b> -- the file could not be converted. The line says why: an unknown
+				extension, a file which is not there, a content the format cannot hold.</li>
+		</ul>
+
+		<p>
+			The <b>Journal</b>, which the menu opens, holds the same account in full. Read it when a
+			line of the table is not enough.
+		</p>
+
+		<p>
+			<b>Start over</b>, under the table, empties the list of files and the results, and the
+			page is ready for another batch.
+		</p>
+
+	</section>
 
 </section>
 
@@ -22,10 +554,108 @@
 
 <!-- =============================================================== -->
 
-	<p>
-		<b>Not written yet.</b> This chapter is for whoever reads or changes the code: how it is organised,
-		what the page is made of, the events it answers, and the stylesheets.
-	</p>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Organisation</h2>
+
+		<p>
+			The application lives in <code>sppas/ui/swapp/app_convert/</code>. It follows the MVC
+			pattern shared by every application of the swapp package. What each class holds, and why,
+			is the subject of the Modelling chapter; this section says where to look.
+		</p>
+
+		<ul>
+			<li><code>app_convert.py</code> -- <code>swappConvertWebData</code>, which answers which
+				page it can bake.</li>
+			<li><code>convert_maker.py</code> -- <code>swappConvertResponseRecipe</code>, the bakery of
+				<code>app_convert.html</code>: it receives the events, answers the progress alone, and
+				decides whether the page is created again.</li>
+			<li><code>convert_controller.py</code> -- <code>swappConvertController</code>, which reads
+				the task a request carries and does it.</li>
+			<li><code>convert_model.py</code> -- <code>swappConvertModel</code>, which starts the
+				conversion in a thread of its own and reads its report.</li>
+			<li><code>convert_conversion.py</code> -- <code>swappModelConversion</code>, the only class
+				which reads and writes a file of the API, and <code>swappConversionReport</code>, which
+				keeps what happened to each of them.</li>
+			<li><code>convert_formats.py</code> -- what each format supports, read from the API.</li>
+			<li><code>convert_remediation.py</code> -- what is transformed in a content so that a
+				format can hold it.</li>
+			<li><code>convert_record.py</code> -- what a page transmits from one request to the next.</li>
+			<li><code>convert_view.py</code> and <code>convert_panels.py</code> -- the HTML tree, and
+				the panels it is made of.</li>
+			<li><code>convert_provision.py</code> -- what the service of the files is asked for.</li>
+		</ul>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What the page is made of</h2>
+
+		<section class="subssection">
+		<h3>The panels</h3>
+
+			<p>
+				The body is built by <code>swappConvertView</code>: the introduction, the title of the
+				files, the container of the service of the files, then one section holding the panels
+				of <code>convert_panels.py</code> -- <code>swappComparePanel</code> (the table of the
+				formats, in a dialog), <code>swappFormatsPanel</code> and
+				<code>swappDestinationPanel</code> side by side (the formats, and what the chosen one
+				does not support), <code>swappGeneralPanel</code> (the two switches and the buttons),
+				and <code>swappResultsPanel</code> once a conversion has run.
+			</p>
+
+			<p>
+				The files are not of this application: the frame where they are given belongs to the
+				service of the files, which builds its own container and names it. The title above it
+				is written by this page, at the level its plan calls for.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>The events the page answers</h3>
+
+			<p>
+				Every button of the two forms posts <code>convert_task</code>:
+				<code>convert</code> starts the conversion, <code>reset</code> empties the record and
+				the files. A reset of the browser is never used: it would put the fields of one form
+				back and say nothing to the server, leaving the files deposited.
+			</p>
+
+			<p>
+				While the conversion runs, <code>convert_manager.js</code> asks for
+				<code>event_name=update</code> every second. The bakery answers that one alone, with
+				the percent, a header and a text, and a status of 202 until the hundred is reached:
+				the page is not built again for a progress bar. The name of the report travels in a
+				hidden field, so that the server reads the account of the conversion the page follows
+				and not another.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>The client</h3>
+
+			<p>
+				<code>statics/js/convert_manager.js</code> does three things: it shows, among what the
+				server wrote, the block of the chosen format; it follows the progress; and it brings
+				the page back to its top, focus on the main content, once a reset was granted. The
+				stylesheet of the page is <code>statics/css/main_swapp.css</code>, with the grids,
+				the cards and the switches of Whakerexa under it.
+			</p>
+
+		</section>
+
+	</section>
 
 </section>
 
