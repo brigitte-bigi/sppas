@@ -75,6 +75,11 @@ class sppasLogSetup(object):
         # Create a log formatter
         self._formatter = logging.Formatter(format_msg)
 
+        # The handlers added beside the main one -- a stream asked for with
+        # a file -- are held, so that they are removed with it and nothing
+        # else is.
+        self.__companions = list()
+
         # Remove all existing handlers in the logging
         for h in reversed(list(logging.getLogger().handlers)):
             logging.getLogger().removeHandler(h)
@@ -147,6 +152,7 @@ class sppasLogSetup(object):
             console_handler.setFormatter(self._formatter)
             console_handler.setLevel(self._log_level)
             logging.getLogger().addHandler(console_handler)
+            self.__companions.append(console_handler)
 
         logging.info("Logging redirected to FileHandler (level={:d}) "
                      "in file {:s}."
@@ -157,14 +163,22 @@ class sppasLogSetup(object):
     # -----------------------------------------------------------------------
 
     def __stop_handler(self):
-        """Stops the current handler."""
+        """Stops the handlers this instance added, and only them.
+
+        A handler somebody else added to the root logger stays: it was not
+        put there by this class, and removing it silently cuts whoever was
+        collecting the records -- the Journal of the web interface collects
+        them that way, and a page changing the destination of the logs would
+        empty it without saying so.
+
+        """
         if self._handler is not None:
             # Show a bye message on the console!
             logging.info("Stops current logging handler.")
-            # Remove the current handler
+            # Remove the current handler, and the stream which came with it
             logging.getLogger().removeHandler(self._handler)
-            # and remove others (if any)
-            for h in reversed(list(logging.getLogger().handlers)):
+            for h in reversed(self.__companions):
                 logging.getLogger().removeHandler(h)
 
+        self.__companions = list()
         self._handler = None

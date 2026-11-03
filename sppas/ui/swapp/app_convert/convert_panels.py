@@ -53,7 +53,7 @@ from .convert_record import TASK_RESET
 # ---------------------------------------------------------------------------
 
 MSG_WRITE_INTO = _("Write into")
-MSG_UNSUPPORTED = _("Not supported by this format: {}.")
+MSG_UNSUPPORTED = _("Not supported by this format:")
 MSG_SUPPORTED = _("supported")
 MSG_NOT_SUPPORTED = _("not supported")
 MSG_COMPARE = _("Compare the formats")
@@ -291,11 +291,13 @@ class swappDestinationPanel(TagNode):
                 _attributes["class"] = "hidden"
             _block = TagNode(self.identifier, None, "div", attributes=_attributes)
             self.append_child(_block)
-            _names = list()
-            for _identifier in _unsupported:
-                _names.append(property_name(_identifier))
             _block.append_child(HTMLNode(_block.identifier, None, "p",
-                                         value=MSG_UNSUPPORTED.format(", ".join(_names))))
+                                         value=MSG_UNSUPPORTED))
+            _list = TagNode(_block.identifier, None, "ul")
+            _block.append_child(_list)
+            for _identifier in _unsupported:
+                _list.append_child(HTMLNode(_list.identifier, None, "li",
+                                            value=property_name(_identifier)))
 
 # ---------------------------------------------------------------------------
 

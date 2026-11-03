@@ -400,8 +400,10 @@ class swappDepositView(swappFilesBaseView):
         :return: (tuple) The card, its header, its body and its footer
 
         """
-        _card = TagNode(parent.identifier, None, "li", attributes={"class": "card"})
-        parent.append_child(_card)
+        _item = TagNode(parent.identifier, None, "li")
+        parent.append_child(_item)
+        _card = TagNode(_item.identifier, None, "article", attributes={"class": "card"})
+        _item.append_child(_card)
         _header = TagNode(_card.identifier, None, "div", attributes={"class": "card-header"})
         _card.append_child(_header)
         _body = TagNode(_card.identifier, None, "div", attributes={"class": "card-body"})

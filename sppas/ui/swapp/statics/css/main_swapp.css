@@ -72,6 +72,12 @@
     --nav-item-width-v-collapsed: calc(var(--nav-min-width) - var(--typography-spacing-horizontal));
     --nav-item-width-v-expanded: calc(var(--nav-expanded-width) - var(--typography-spacing-horizontal));
 
+    /* A switch stands beside the buttons which send the page: button.css
+       gives it 2.8 times the size of the font, which is taller than a
+       button, whose height is its text and its padding. */
+    --switch-height: calc(var(--font-size) * 1.3);
+    --switch-width: calc(var(--font-size) * 2.4);
+
     /* SPPAS color tokens: see main_swapp_theme.css */
 }
 
@@ -475,19 +481,21 @@ section.actions-panel {
     min-width: 15rem;
 }
 
-/* ── Panels of cards: what a list writes, and what a grid does not want ──
-   A grid of cards is a list of them: the panels are written <ul>, and their
-   cards <li>. What wexa.css writes before an item of a list -- a square --
-   and the indent it leaves for it have no place in a grid. Written on the
-   class and not on the tags, which stay what they are everywhere else. */
+/* ── Switches: the slider, then what it is about, on one line ──
+   wexa.css lays out a label as a block, which sends the text of a switch
+   under it. The switch holds nothing but its slider -- it is of a fixed
+   width -- so what names it is a label of its own, beside it, and both
+   stand on the line, middle against middle. */
 
-.cards-panel {
-    list-style: none;
-    padding-inline-start: 0;
+label.switch,
+label.switch + label {
+    display: inline-block;
+    vertical-align: middle;
 }
 
-.cards-panel > li::before {
-    content: none;
+label.switch + label {
+    width: auto;
+    margin-left: var(--typography-spacing-horizontal);
 }
 
 /* ── Application cards ───────────────────────────────────── */

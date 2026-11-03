@@ -249,7 +249,10 @@ feedback.
 The store is fed by two producers:
 
 - the python logging of the server process, through `swappTraceHandler`,
-  added to the root logger at startup;
+  added to the root logger at startup. It stays there whatever a page does
+  with the destination of the logs: `sppasLogSetup` removes the handlers it
+  added itself, and only them, so that changing the log file does not empty
+  the Journal in silence;
 - the wx interface, through the communication socket (its python logging
   records are sent by a dedicated handler).
 

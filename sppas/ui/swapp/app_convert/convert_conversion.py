@@ -45,6 +45,8 @@ import os
 from sppas.core.config import paths
 from sppas.core.config import sg
 from sppas.core.coreutils import sppasTypeError
+from sppas.core.coreutils import sppasIOError
+from sppas.src.anndata.anndataexc import AioError
 from sppas.src.anndata import sppasTrsRW
 from sppas.src.anndata.anndataexc import AioMultiTiersError
 from sppas.src.anndata.anndataexc import AioNoTiersError
@@ -72,6 +74,12 @@ MSG_NOT_WRITTEN = _("The file could not be written.")
 # The typed causes of the API when writing. They are bound to the properties
 # of the destination, and are stated as they stand.
 TYPED_CAUSES = (AioMultiTiersError, AioNoTiersError, AioEmptyTierError, AioLocationTypeError)
+
+# The typed causes of the API when reading. The message of such an error says
+# what the file is, and the reader can act on it -- an unknown extension, a
+# file which is not there, a content the format does not hold. Anything else
+# is a failure of the API, which is said in the generic way.
+TYPED_READ_CAUSES = (sppasIOError, AioError)
 
 # ---------------------------------------------------------------------------
 
@@ -204,6 +212,9 @@ class swappModelConversion:
 
         try:
             _transcription = sppasTrsRW(filename).read(heuristic=_heuristic)
+        except TYPED_READ_CAUSES as e:
+            logging.error("The file {} could not be read: {}".format(filename, e))
+            return swappFileResult(filename, STATUS_REFUSED, str(e))
         except Exception as e:
             logging.error("The file {} could not be read: {}".format(filename, e))
             return swappFileResult(filename, STATUS_REFUSED, MSG_NOT_READ)

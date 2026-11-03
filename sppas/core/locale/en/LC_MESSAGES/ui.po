@@ -448,3 +448,6 @@ msgstr ""
 
 msgid "SPPAS is waiting for your answer in the Desktop window."
 msgstr ""
+
+msgid "Not supported by this format:"
+msgstr ""

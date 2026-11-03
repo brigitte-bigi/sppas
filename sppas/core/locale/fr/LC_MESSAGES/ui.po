@@ -972,3 +972,6 @@ msgstr "Déposé"
 
 msgid "Treated"
 msgstr "Traité"
+
+msgid "Not supported by this format:"
+msgstr "Non pris en charge par ce format :"
