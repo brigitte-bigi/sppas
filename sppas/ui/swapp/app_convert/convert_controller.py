@@ -48,6 +48,7 @@ from .convert_record import swappConvertRecord
 from .convert_record import EVENT_TASK
 from .convert_record import TASK_CONVERT
 from .convert_record import TASK_RESET
+from .convert_record import TASK_RESTART
 from .convert_record import TASK_COMPLETE
 from .convert_record import EVENT_BAKE
 from .convert_record import TASKS
@@ -117,8 +118,20 @@ class swappConvertController:
         elif _record.task == TASK_COMPLETE:
             self.__complete(_record)
         elif _record.task == TASK_RESET:
+            # A reset is a reset: the decisions and the batch go together,
+            # and the page is the one she arrived at.
             _record = swappConvertRecord()
             _record.conversion.destination = annots.annot_extension
+
+        elif _record.task == TASK_RESTART:
+            # Another batch, into the same format: one converts a batch,
+            # then another one, and taking every decision again at each
+            # batch is what this treatment saves.
+            _kept = _record.conversion
+            _record = swappConvertRecord()
+            _record.conversion.destination = _kept.destination
+            _record.conversion.override = _kept.override
+            _record.conversion.heuristic = _kept.heuristic
 
         self.__record = _record
 

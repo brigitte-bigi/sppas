@@ -195,6 +195,12 @@ main > .panel-item:nth-child(2n) .card-footer {
     color: var(--card-fg-color);
 }
 
+/* What is done with the whole batch of results -- getting it back, and
+   starting again -- stands on one line, whatever the width: flex-panel of
+   layout.css turns into a column on a narrow screen, which is right for
+   panels and wrong for two controls which go together. The form holding
+   the second one is a box like the first, and both are of one height. */
+
 /* ── Buttons ─────────────────────────────────────────────── */
 
 /* The button carrying an action -- launching an app, sending a message,

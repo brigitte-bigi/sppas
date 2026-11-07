@@ -49,6 +49,7 @@ from sppas.ui import _
 from .convert_record import EVENT_TASK
 from .convert_record import TASK_CONVERT
 from .convert_record import TASK_RESET
+from .convert_record import TASK_RESTART
 
 # ---------------------------------------------------------------------------
 
@@ -478,10 +479,10 @@ class swappGeneralPanel(TagNode):
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_CONVERT,
                                     attributes={"type": "submit", "class": "action-button",
                                                 "name": EVENT_TASK, "value": TASK_CONVERT}))
-        # Not a reset of the browser: that one puts the fields of this form
-        # back and says nothing to the server, so the files stay deposited
-        # and the page stays where it is. This button asks for the task,
-        # exactly as the one which restarts after a conversion.
+        # A reset is a reset: the decisions and the files go together, so it
+        # is asked of the server -- the files are its to take back. A reset
+        # of the browser would put the fields of this form back and leave
+        # the files where they are.
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_RESET,
                                     attributes={"type": "submit", "name": EVENT_TASK,
                                                 "value": TASK_RESET}))
@@ -558,15 +559,19 @@ class swappResultsPanel(TagNode):
             else:
                 _tr.append_child(HTMLNode(_tr.identifier, None, "td", value=_result.cause))
 
-        # Ten files are got back in one gesture and not in ten.
-        if len(archive) > 0:
-            self.append_child(HTMLNode(self.identifier, None, "a", value=MSG_DOWNLOAD_ALL,
-                                       attributes={"href": archive,
-                                                   "download": "",
-                                                   "class": "action-button",
-                                                   "role": "button"}))
-
+        # What is done with the whole batch stands in the form which starts
+        # again: two controls of one form follow each other, as Convert and
+        # Reset do in the panel of the options.
         _form = TagNode(self.identifier, None, "form", attributes={"method": "post"})
         self.append_child(_form)
+
+        # Ten files are got back in one gesture and not in ten.
+        if len(archive) > 0:
+            _form.append_child(HTMLNode(_form.identifier, None, "a", value=MSG_DOWNLOAD_ALL,
+                                        attributes={"href": archive,
+                                                    "download": "",
+                                                    "class": "action-button",
+                                                    "role": "button"}))
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_RESTART,
-                                    attributes={"type": "submit", "name": EVENT_TASK, "value": TASK_RESET}))
+                                    attributes={"type": "submit", "name": EVENT_TASK,
+                                                "value": TASK_RESTART}))

@@ -44,7 +44,7 @@
 		<p>
 			The first part of the body is where the files wait before being converted. What it
 			shows depends on where SPPAS runs: on your own computer, it reads the files where
-			they stand; on a server, you have to send them to it first.
+			they stand; on the web, you have to send them to it first.
 		</p>
 
 		<section class="subssection">
@@ -100,10 +100,10 @@
 		</section>
 
 		<section class="subssection">
-		<h3>SPPAS on a server</h3>
+		<h3>SPPAS on the web</h3>
 
 			<p>
-				Your files are on your computer and SPPAS is elsewhere, so they travel to it.
+				Your files are on your computer and SPPAS is on the web, so they travel to it.
 				The frame is drawn with a dashed border, and you drop the files into it:
 			</p>
 
@@ -161,7 +161,7 @@
 			</p>
 
 			<p class="abstract">
-				A file may be refused -- too large, or of a kind the server does not take. Its
+				A file may be refused -- too large, or of a kind SPPAS does not take. Its
 				rectangle then says why, under the name. A refused file stays in the list so
 				that you can read the reason; take it back when you have.
 			</p>
@@ -427,9 +427,9 @@
 		</ul>
 
 		<p>
-			Click the switch itself, or its text: both do the same thing. <b>Reset</b> takes back
-			the files you gave and puts the two switches off -- the page is the one you found when
-			you arrived.
+			Click the switch itself, or its text: both do the same thing. <b>Reset</b> takes the
+			page back to what it was when it opened: your choices and the files you gave go
+			together.
 		</p>
 
 	</section>
@@ -443,117 +443,230 @@
 	<h2>Converting, and reading what happened</h2>
 
 		<p>
-			Click <b>Convert</b>. A bar shows how far the conversion has gone, file after file. A
-			conversion is not undone: let it finish.
+			Click <b>Convert</b>. A bar shows how far the conversion has gone, file after
+			file. A conversion is not undone: let it finish.
 		</p>
 
 		<p>
-			Then a table titled <b>Results</b> is shown, one line per file you gave:
+			Then a table titled <b>Results</b> is shown, one line per file you gave. Each
+			line says what became of that file:
 		</p>
 
-		    <section aria-hidden="true">
-		        <h4>
-		                Results
-		        </h4>
-		        <table>
-		            <caption>
-		                        One line per file of the batch
-		            </caption>
-		            <thead>
-		                <tr>
-		                    <th scope="col">
-		                                        File
-		                    </th>
-		                    <th scope="col">
-		                                        Status
-		                    </th>
-		                    <th scope="col">
-		                                        Result
-		                    </th>
-		                </tr>
-		            </thead>
-		            <tbody>
-		                <tr>
-		                    <th scope="row">
-		                                        entretien-01.TextGrid
-		                    </th>
-		                    <td>
-		                        <span data-icon="yes" role="img" aria-label="written">
-		                        </span>
-		                    </td>
-		                    <td>
-		                        <ul>
-		                            <li>
-		                                                        entretien-01.eaf
-		                            </li>
-		                        </ul>
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <th scope="row">
-		                                        entretien-02.TextGrid
-		                    </th>
-		                    <td>
-		                        <span data-icon="warning" role="img" aria-label="skipped">
-		                        </span>
-		                    </td>
-		                    <td>
-		                                        The output file already exists.
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <th scope="row">
-		                                        notes.txt
-		                    </th>
-		                    <td>
-		                        <span data-icon="no" role="img" aria-label="refused">
-		                        </span>
-		                    </td>
-		                    <td>
-		                                        Unknown extension for filename notes.txt.
-		                    </td>
-		                </tr>
-		            </tbody>
-		        </table>
-		        <div>
-		            <button tabindex="-1" type="submit" value="reset">
-		                        Start over
-		            </button>
-		        </div>
-		    </section>
-
 		<ul>
-			<li><b>written</b> -- the file was converted. The line names the file which was written,
-				beside the one it came from.</li>
-			<li><b>skipped</b> -- nothing was done, because the result was already there and the
-				first switch was off.</li>
-			<li><b>refused</b> -- the file could not be converted. The line says why: an unknown
-				extension, a file which is not there, a content the format cannot hold.</li>
+			<li><b>written</b> -- the file was converted, and the line names what it
+				produced.</li>
+			<li><b>skipped</b> -- nothing was done, because the result was already there
+				and the first switch was off.</li>
+			<li><b>refused</b> -- the file could not be converted. The line says why: an
+				unknown extension, a file which is not there, a content the format cannot
+				hold.</li>
 		</ul>
 
 		<p>
-			Where SPPAS runs on a server, the name of a produced file is a link: click it and
-			your browser keeps the file under that name. Above the table, <b>Download all the
-			files</b> brings them back in one archive, which saves clicking each of them. Both
-			are reached for as long as what you sent is kept, and no longer.
+			What the table does with what was produced depends on where SPPAS runs.
 		</p>
 
-		<p class="abstract">
-			Where SPPAS runs on your own computer, there is nothing to download: the files
-			were written beside the ones they were made from, and the table names them.
+		<section class="subssection">
+		<h3>SPPAS on your computer</h3>
+
+			<p>
+				Each converted file was written beside the one it was made from, in the
+				same folder, under the same name with another extension. The table names
+				it, and that is all it has to do: the file is already among your own
+				files, and you open it where you work.
+			</p>
+
+			    <section aria-hidden="true">
+			        <h4>
+			                Results
+			        </h4>
+			        <table>
+			            <caption>
+			                        One line per file of the batch
+			            </caption>
+			            <thead>
+			                <tr>
+			                    <th scope="col">
+			                                        File
+			                    </th>
+			                    <th scope="col">
+			                                        Status
+			                    </th>
+			                    <th scope="col">
+			                                        Result
+			                    </th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <tr>
+			                    <th scope="row">
+			                                        entretien-01.TextGrid
+			                    </th>
+			                    <td>
+			                        <span data-icon="yes" role="img" aria-label="written">
+			                        </span>
+			                    </td>
+			                    <td>
+			                        <ul>
+			                            <li>
+			                                                        entretien-01.eaf
+			                            </li>
+			                        </ul>
+			                    </td>
+			                </tr>
+			                <tr>
+			                    <th scope="row">
+			                                        entretien-02.TextGrid
+			                    </th>
+			                    <td>
+			                        <span data-icon="warning" role="img" aria-label="skipped">
+			                        </span>
+			                    </td>
+			                    <td>
+			                                        The output file already exists.
+			                    </td>
+			                </tr>
+			                <tr>
+			                    <th scope="row">
+			                                        notes.txt
+			                    </th>
+			                    <td>
+			                        <span data-icon="no" role="img" aria-label="refused">
+			                        </span>
+			                    </td>
+			                    <td>
+			                                        Unknown extension for filename notes.txt.
+			                    </td>
+			                </tr>
+			            </tbody>
+			        </table>
+			        <div>
+			            <button tabindex="-1" type="submit" value="restart">
+			                        Start over
+			            </button>
+			        </div>
+			    </section>
+
+			<p>
+				There is nothing to download, and nothing expires: what was written is
+				yours and stays. <b>skipped</b> means that a file of that name was already
+				in your folder, and SPPAS did not write over it.
+			</p>
+
+			<p class="abstract">
+				<b>Start over</b> empties the list and the results of this page. It does
+				not touch your folder: the files which were written stay where they are.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>SPPAS on the web</h3>
+
+			<p>
+				The converted files were written where SPPAS runs, beside the copies you
+				sent. The name of each one is a link: click it and your browser keeps the
+				file under that name.
+			</p>
+
+			    <section aria-hidden="true">
+			        <h4>
+			                Results
+			        </h4>
+			        <table>
+			            <caption>
+			                        One line per file of the batch
+			            </caption>
+			            <thead>
+			                <tr>
+			                    <th scope="col">
+			                                        File
+			                    </th>
+			                    <th scope="col">
+			                                        Status
+			                    </th>
+			                    <th scope="col">
+			                                        Result
+			                    </th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <tr>
+			                    <th scope="row">
+			                                        entretien-01.TextGrid
+			                    </th>
+			                    <td>
+			                        <span data-icon="yes" role="img" aria-label="written">
+			                        </span>
+			                    </td>
+			                    <td>
+			                        <ul>
+			                            <li>
+			                                <a tabindex="-1" href="/deposit/place/entretien-01.eaf" download="entretien-01.eaf">
+			                                                                entretien-01.eaf
+			                                </a>
+			                            </li>
+			                        </ul>
+			                    </td>
+			                </tr>
+			                <tr>
+			                    <th scope="row">
+			                                        entretien-02.TextGrid
+			                    </th>
+			                    <td>
+			                        <span data-icon="warning" role="img" aria-label="skipped">
+			                        </span>
+			                    </td>
+			                    <td>
+			                                        The output file already exists.
+			                    </td>
+			                </tr>
+			                <tr>
+			                    <th scope="row">
+			                                        notes.txt
+			                    </th>
+			                    <td>
+			                        <span data-icon="no" role="img" aria-label="refused">
+			                        </span>
+			                    </td>
+			                    <td>
+			                                        Unknown extension for filename notes.txt.
+			                    </td>
+			                </tr>
+			            </tbody>
+			        </table>
+			        <div>
+			            <a tabindex="-1" href="/deposit/place/sppas-results.zip" download="" class="action-button" role="button">
+			                        Download all the files
+			            </a>
+			            <button tabindex="-1" type="submit" value="restart">
+			                        Start over
+			            </button>
+			        </div>
+			    </section>
+
+			<p>
+				Above the table, <b>Download all the files</b> brings them back in one
+				archive, which saves clicking each of them. Both are reached for as long
+				as what you sent is kept, and no longer: take them before you leave.
+			</p>
+
+		</section>
+
+		<p>
+			The <b>Journal</b>, which the menu opens, holds the same account in full. Read
+			it when a line of the table is not enough.
 		</p>
 
 		<p>
-			The <b>Journal</b>, which the menu opens, holds the same account in full. Read it when a
-			line of the table is not enough.
-		</p>
-
-		<p>
-			<b>Start over</b>, under the table, empties the list of files and the results, and the
-			page is ready for another batch.
+			<b>Start over</b>, under the table, is for converting another set of files into
+			the same format: the files and the results are emptied, and your choices are
+			kept. Use <b>Reset</b> instead to take the page back to what it was when it
+			opened.
 		</p>
 
 	</section>
+
 
 </section>
 
@@ -638,9 +751,12 @@
 
 			<p>
 				Every button of the two forms posts <code>convert_task</code>:
-				<code>convert</code> starts the conversion, <code>reset</code> empties the record and
-				the files. A reset of the browser is never used: it would put the fields of one form
-				back and say nothing to the server, leaving the files deposited.
+				<code>convert</code> starts the conversion, <code>reset</code> takes the page
+				back to what it was on arrival -- the decisions and the files together -- and
+				<code>restart</code> empties the files and the results while keeping the
+				decisions. A reset of the browser is never used for either: it would put the
+				fields of one form back and say nothing to the server, leaving the files
+				deposited.
 			</p>
 
 			<p>
@@ -1325,7 +1441,9 @@
 			<h5>[900] Restarting</h5>
 			<ul class="req">
 			<li>[901] The user can start a new conversion.</li>
-			<li>[902] The system resets the decisions, and the provision of files starts over.</li>
+			<li>[902] A reset takes the decisions and the provision of files back to what
+			they were on arrival; a restart asks the provision of files to start over, and
+			keeps the decisions.</li>
 			<li>[903] The user can put every decision back as it was on arrival at the
 			page, without the batch being touched.</li>
 			</ul>
@@ -1755,24 +1873,30 @@
 			<h5>T07 — Start a new conversion</h5>
 			<ul class="mct">
 			<li><strong>Event</strong>: E7.</li>
-			<li><strong>Purpose</strong>: take the decisions back to what they were
-			before any were taken.</li>
+			<li><strong>Purpose</strong>: convert another batch, with the decisions
+			already taken. It is the other end of T09: this one keeps what that one
+			puts back.</li>
 			<li><strong>Inputs</strong>: user choice.</li>
-			<li><strong>Outputs</strong>: <code>destination</code>,
-			<code>options</code>, <code>answers</code>, <code>general_options</code>,
-			<code>structural_loss</code> and <code>results</code>, all undefined, and the
-			destination back to the default format of the annotated files.</li>
+			<li><strong>Outputs</strong>: <code>structural_loss</code> and
+			<code>results</code>, undefined; <code>destination</code>,
+			<code>options</code>, <code>answers</code> and <code>general_options</code>,
+			as they were.</li>
 			<li><strong>Preconditions</strong>: none.</li>
-			<li><strong>Postconditions</strong>: the conversion is in the state T01
-			finds it in at the beginning [012].</li>
+			<li><strong>Postconditions</strong>: no batch and no result, and the
+			decisions are those the person had taken [012].</li>
 			<li><strong>Emission</strong>: F2, always; F7, always; E10, always.</li>
 			<li><strong>Rules</strong>:
 			  <ul>
-				<li>the general options are decisions and are reset with the others;</li>
+				<li>the decisions are kept: one converts a batch, then another one into
+				the same format, and taking every decision again at each batch is what
+				this treatment saves;</li>
 				<li>the provision of files is asked to start over,
 				<code>start_over()</code>;</li>
+				<li>what it keeps is what T09 puts back, and what it empties is what T09
+				does not touch: between the two of them, every decision and every file
+				can be taken back, and neither one undoes the other;</li>
 				<li>nothing of what was written on disk is undone: a new conversion is a
-				new set of decisions, not the undoing of a conversion which ran.</li>
+				new batch, not the undoing of a conversion which ran.</li>
 			  </ul>
 			</li>
 			</ul>
@@ -1812,8 +1936,8 @@
 			<h5>T09 — Put the decisions back</h5>
 			<ul class="mct">
 			<li><strong>Event</strong>: E12.</li>
-			<li><strong>Purpose</strong>: take every decision back to what it was on
-			arrival at the page, in one gesture.</li>
+			<li><strong>Purpose</strong>: take the page back to what it was on arrival,
+			in one gesture: a reset is a reset.</li>
 			<li><strong>Inputs</strong>: user choice.</li>
 			<li><strong>Outputs</strong>: <code>destination</code>,
 			<code>answers</code> and <code>general_options</code>, as they were on
@@ -1828,8 +1952,9 @@
 			  <ul>
 				<li>the answers given for every format are put back, and not only those
 				of the destination;</li>
-				<li>nothing is asked of the provision of files: the batch is not
-				touched, which is what tells it from T07;</li>
+				<li>the provision of files is asked to start over,
+				<code>start_over()</code>: a person who resets the page does not keep
+				the files she had given it;</li>
 				<li>the results of a conversion which ran are not touched.</li>
 			  </ul>
 			</li>
@@ -1925,7 +2050,7 @@
 		<li>Answering an export option</li>
 		<li>Setting a general option</li>
 		<li>Requesting the conversion to run (triggers T06)</li>
-		<li>Requesting a new conversion (resets the decisions)</li>
+		<li>Requesting a new conversion (keeps the decisions, empties the batch)</li>
 		<li>Putting the decisions back as they were on arrival (T09, without a request)</li>
 		</ul>
 
@@ -1946,7 +2071,8 @@
 		<ul>
 		<li>one can select a destination without leaving it;</li>
 		<li>one can run a conversion, which replaces the results shown;</li>
-		<li>one can start a new conversion, which resets the decisions;</li>
+		<li>one can start a new conversion, which keeps the decisions and empties the
+		batch;</li>
 		<li>one can put the decisions back as they were on arrival, which touches no
 		file.</li>
 		</ul>
@@ -1987,8 +2113,9 @@
 		setting and no session is kept for a given user, and a decision held on the
 		server would be a decision belonging to somebody.</li>
 		<li><b>RO9</b> — A decision is taken in the page and sent with the conversion.
-		Choosing a format, answering an option, setting a general option and putting
-		them back make no request, and replace nothing of what is read [1005].</li>
+		Choosing a format, answering an option and setting a general option make no
+		request, and replace nothing of what is read [1005]. Putting them back is of
+		another kind: it takes the batch back as well, which is the server's.</li>
 		</ul>
 
 		<p>RO8 is what makes the two contexts one organisation: a conversion which keeps
@@ -2488,8 +2615,11 @@
 			defined; batch not empty; every option of the destination answered, defaults
 			applying to those left unanswered. Triggers: T06. Produces: the results.</li>
 			<li><strong>reset</strong> — transmitted: nothing. Preconditions: none.
-			Triggers: none. Produces: the page in its initial state. The provision of files
+			Triggers: T09. Produces: the page in its initial state. The provision of files
 			starts over.</li>
+			<li><strong>restart</strong> — transmitted: the decisions. Preconditions:
+			none. Triggers: T07. Produces: the page without batch and without results, the
+			decisions as they were. The provision of files starts over.</li>
 			</ul>
 
 			<h5>Default answers</h5>
@@ -2557,8 +2687,10 @@
 			conversion; <strong>complete</strong> gives its results, read in the same
 			report; T08 follows the
 			conversion, on the server, once its last file is treated; T07 is
-			<strong>reset</strong>. T01, T03, T04 and T09 happen in the page and make no
-			request RO9: what they decide is transmitted with <strong>convert</strong>.
+			<strong>restart</strong> and T09 is <strong>reset</strong>, both of them
+			requests, because both empty the batch and the batch is the server's. T01, T03
+			and T04 happen in the page and make no request RO9: what they decide is
+			transmitted with <strong>convert</strong>.
 			Every task is one request; T06 alone runs beyond the request which starts
 			it. <strong>update</strong> and <strong>complete</strong> are sent as the
 			Setup sends them: <code>event_name</code> carries the first, and
@@ -2644,10 +2776,12 @@
 			readable.</p>
 
 			<p><code>GeneralPanel</code> presents the general options, and the two
-			buttons of the form of the conversion: Convert, and Reset, which puts every
-			field back as it was on arrival, without a request [903]. Every field of a
-			decision belongs to that form, wherever it stands in the page: Convert sends
-			them all, and Reset puts them all back.</p>
+			buttons of the form of the conversion: Convert, and Reset, which takes the page
+			back to what it was on arrival [903]. Every field of a decision belongs to that
+			form, wherever it stands in the page: Convert sends them all, and Reset sends
+			the task which puts them all back, with the files it was given. The button
+			which keeps the decisions is Start over, under the results, and it belongs to
+			another form.</p>
 
 			<p><code>ResultsPanel</code> presents the result of every file of the
 			batch: one line per file, with its status &mdash; an icon whose shape says it,
@@ -3579,7 +3713,7 @@
 		Whakerexa, and driven by the script the application loads,
 		<code>convert_manager.js</code>. What is unreadable here will be unreadable
 		there. Served in http, choosing a format shows its block and hides the others,
-		and Reset puts every field back.</p>
+		and Reset asks for the page as it was on arrival.</p>
 
 		<p>It shows one state: the destination <code>TextGrid</code> selected, on a
 		batch of four files, after a conversion has run. Two parts are added by hand,
@@ -6123,7 +6257,10 @@
               </tbody>
           </table>
           <form method="post">
-              <button type="submit" name="convert_task" value="reset">
+              <a href="#" download="" class="action-button" role="button">
+                            Download all the files
+              </a>
+              <button type="submit" name="convert_task" value="restart">
                             Start over
               </button>
           </form>

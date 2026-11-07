@@ -111,6 +111,9 @@ class swappFilesController:
         self.__record = swappFilesRecord()
         self.__record.reachable = reachable
         self.__record.has_workspace = has_workspace
+        # What the record held before the one being built: a caller which
+        # sends nothing of the page keeps what the page last transmitted.
+        self.__record_before = self.__record
         # The files an app treated: an app says so, and not a page.
         self.__treated = list()
 
@@ -175,17 +178,32 @@ class swappFilesController:
         :param data: (dict) What a page sent
 
         """
+        self.__record_before = self.__record
         self.__record = swappFilesRecord()
         self.__record.reachable = self.__reachable
         self.__record.has_workspace = self.__has_workspace
         if isinstance(data, dict) is False:
+            self.__record.place = self.__record_before.place
+            self.__record.fed = list(self.__record_before.fed)
+            self.__record.deposited = list(self.__record_before.deposited)
             return
 
+        _before = self.__record_before
         self.__record.parse(data)
         self.__record.reachable = self.__reachable
         self.__record.has_workspace = self.__has_workspace
-        # An app which says it has finished sends no field of the page: what
-        # it treated is kept, and not lost with a record rebuilt from nothing.
+
+        # An app speaks to this service without sending anything of the page:
+        # it says it has finished, or it asks for the files. What it did not
+        # send is what the page last transmitted, and not nothing -- a record
+        # rebuilt from nothing would forget where the deposit stands, which
+        # files travelled, and which ones she gave.
+        if "place" not in data:
+            self.__record.place = _before.place
+        if "fed" not in data:
+            self.__record.fed = list(_before.fed)
+        if "deposited" not in data:
+            self.__record.deposited = list(_before.deposited)
         if "treated" in data:
             self.__treated = list(self.__record.treated)
         else:

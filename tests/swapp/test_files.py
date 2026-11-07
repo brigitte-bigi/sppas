@@ -526,6 +526,48 @@ class TestViews(unittest.TestCase):
 # ---------------------------------------------------------------------------
 
 
+class TestInternalCall(unittest.TestCase):
+    """TE38. An app speaks to this service without sending the page."""
+
+    def setUp(self):
+        self.parent = HTMLTree("test_files").body_main.identifier
+        self.settings = swappDepositSettings()
+        self.settings.space = tempfile.mkdtemp(prefix="test_files_")
+        self.place = swappFilePlace(swappDepositSpace(self.settings))
+
+    def tearDown(self):
+        shutil.rmtree(self.settings.space, ignore_errors=True)
+
+    # -----------------------------------------------------------------------
+
+    def test_te38_what_a_caller_does_not_send_is_not_erased(self):
+        """TE38. An app says it has finished, and sends nothing of the page:
+        where the deposit stands, what she gave and what travelled are what
+        the page last transmitted, and not nothing. T12
+
+        """
+        manager = swappFilesManager(self.parent, place=self.place, reachable=False)
+        manager.consumes({"reachable": "False", "fed": '[["a.wav", 5]]', "name": "a.wav"})
+        manager.consumes({"reachable": "False", "fed": '[["a.wav", 5]]',
+                          "send": "", "name": "a.wav", "content": "MTIzNDU="})
+
+        record = manager.files_for_app() and None
+        before = manager._swappFilesManager__controller.record
+        place, fed, deposited = before.place, list(before.fed), list(before.deposited)
+        self.assertTrue(len(place) > 0)
+        self.assertEqual(["a.wav"], deposited)
+
+        # What an app says when it has finished: no field of the page.
+        manager.consumes({"task": "finished"})
+
+        after = manager._swappFilesManager__controller.record
+        self.assertEqual(place, after.place)
+        self.assertEqual(fed, after.fed)
+        self.assertEqual(deposited, after.deposited)
+
+# ---------------------------------------------------------------------------
+
+
 class TestNoWindow(unittest.TestCase):
     """TE37. The machine cannot open the window which chooses files."""
 

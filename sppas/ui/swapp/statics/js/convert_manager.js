@@ -66,6 +66,7 @@ const EVENT_BAKE = 'event_bake';
 const TASK_UPDATE = 'update';
 const TASK_COMPLETE = 'complete';
 const TASK_RESET = 'reset';
+const TASK_RESTART = 'restart';
 const MAIN_ID = 'main-content';
 const DATA_CONVERT = 'convert';
 const DATA_CONTAINER = 'container';
@@ -279,7 +280,8 @@ export default class ConvertManager extends BaseManager {
         }
         event.preventDefault();
         const replaced = await this.#post(this.#fieldsOf(event.target, submitter));
-        if (replaced === true && submitter.value === TASK_RESET) {
+        if (replaced === true &&
+            (submitter.value === TASK_RESET || submitter.value === TASK_RESTART)) {
             this.#backToTop();
         }
     }

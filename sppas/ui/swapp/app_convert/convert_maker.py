@@ -59,6 +59,7 @@ from .convert_view import swappConvertView
 from .convert_controller import swappConvertController
 from .convert_record import EVENT_TASK
 from .convert_record import TASK_RESET
+from .convert_record import TASK_RESTART
 from .convert_record import TASK_UPDATE
 from .convert_record import EVENT_NAME
 
@@ -174,7 +175,7 @@ class swappConvertResponseRecipe(swappBaseResponse):
                 self._status.code = 200
             return False
         if swappConvertController.is_a_task(events) is True:
-            if events.get(EVENT_TASK) == TASK_RESET:
+            if events.get(EVENT_TASK) in (TASK_RESET, TASK_RESTART):
                 self.__manager.start_over()
             return True
 

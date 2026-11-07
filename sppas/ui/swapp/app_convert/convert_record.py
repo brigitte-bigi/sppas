@@ -49,8 +49,9 @@ EVENT_TASK = "convert_task"
 
 TASK_CONVERT = "convert"
 TASK_RESET = "reset"
+TASK_RESTART = "restart"
 
-TASKS = (TASK_CONVERT, TASK_RESET)
+TASKS = (TASK_CONVERT, TASK_RESET, TASK_RESTART)
 
 # The events which follow a conversion, named as the ones of the Setup:
 # where it stands is asked by an event, its results by an event which bakes.
