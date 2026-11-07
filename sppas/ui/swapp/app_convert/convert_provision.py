@@ -112,6 +112,31 @@ class swappModelProvision:
 
     # -----------------------------------------------------------------------
 
+    def address_of(self, filename: str) -> str:
+        """Return the address a produced file is reached at.
+
+        Empty where the person reads SPPAS on the machine the files stand
+        on: she reaches what was produced where it was written.
+
+        :param filename: (str) Name of the produced file, with its path
+        :return: (str) Empty when the file is reached at no address
+
+        """
+        return self.__manager.address_of(filename)
+
+    # -----------------------------------------------------------------------
+
+    def address_of_all(self, filenames: list) -> str:
+        """Return the address of one archive holding the produced files.
+
+        :param filenames: (list of str) Names of the files, with their path
+        :return: (str) Empty when no archive is to be made
+
+        """
+        return self.__manager.address_of_all(filenames)
+
+    # -----------------------------------------------------------------------
+
     def finished(self) -> None:
         """Say the batch has been treated."""
         self.__manager.consumes({"task": "finished"})

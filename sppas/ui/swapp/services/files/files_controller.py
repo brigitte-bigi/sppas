@@ -116,6 +116,16 @@ class swappFilesController:
 
     # -----------------------------------------------------------------------
 
+    def say(self, message: str) -> None:
+        """Have the page say one thing, until the record is made anew.
+
+        :param message: (str) What is to be said to the person
+
+        """
+        self.__to_be_shown("failed", message)
+
+    # -----------------------------------------------------------------------
+
     @staticmethod
     def is_a_task(data: dict) -> bool:
         """Return True if the given data carries a task of this service.
@@ -328,7 +338,7 @@ class swappFilesController:
         if len(_name) == 0:
             return
 
-        self.__model.take_out([_name])
+        self.__model.take_out([_name], self.__record.place)
 
         _fed = list()
         for _one_name, _one_size in self.__record.fed:
@@ -336,6 +346,15 @@ class swappFilesController:
                 _fed.append((_one_name, _one_size))
 
         self.__record.fed = _fed
+
+        # It is no longer deposited: the copy is gone with it, and giving
+        # the same file again gives it added, as the first time.
+        _deposited = list()
+        for _one_name in self.__record.deposited:
+            if _one_name != _name:
+                _deposited.append(_one_name)
+
+        self.__record.deposited = _deposited
 
     # -----------------------------------------------------------------------
 
@@ -360,6 +379,17 @@ class swappFilesController:
                 self.__to_be_shown("no_place", _refused[_name])
             else:
                 self.__refused(_name, _refused[_name])
+
+        # What travelled is deposited, and is no longer what sending sends.
+        # What was refused stays as it was: it is said, and the person takes
+        # it back when she has read why.
+        _deposited = list(self.__record.deposited)
+        for _name in _contents:
+            if _name in _refused:
+                continue
+            if _name not in _deposited:
+                _deposited.append(_name)
+        self.__record.deposited = _deposited
 
     # -----------------------------------------------------------------------
 

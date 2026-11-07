@@ -50,6 +50,7 @@ const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
 
 const DEPOSIT_CONTAINER_ID = 'files_deposit';
 const FILES_INPUT_ID = 'files_input';
+const FILES_BROWSE_ID = 'files_browse_button';
 const DROPZONE_CLASS = 'dropzone';
 const TASK_DESIGNATE = 'designate';
 const TASK_SEND = 'send';
@@ -166,6 +167,14 @@ export default class SwappFiles {
             return;
         }
         input.addEventListener('change', () => this.#onFilesDesignated(input.files));
+
+        // The field is not drawn: the button is what opens the window of
+        // the files, and a page without this script still has the label,
+        // which the field answers to.
+        const browse = document.getElementById(FILES_BROWSE_ID);
+        if (browse !== null) {
+            browse.addEventListener('click', () => input.click());
+        }
 
         const dropzone = this.#container.querySelector('.' + DROPZONE_CLASS);
         if (dropzone !== null) {

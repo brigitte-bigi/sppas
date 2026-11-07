@@ -451,3 +451,17 @@ msgstr ""
 
 msgid "Not supported by this format:"
 msgstr ""
+
+msgid "Added"
+msgstr ""
+
+msgid "Browse"
+msgstr ""
+
+msgid "Download all the files"
+msgstr ""
+
+msgid ""
+"This computer cannot open the window to choose files. Send them instead, as "
+"on a web service."
+msgstr ""

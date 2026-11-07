@@ -79,6 +79,28 @@ class swappConvertModel:
 
     # -----------------------------------------------------------------------
 
+    def address_of(self, filename: str) -> str:
+        """Return the address a produced file is reached at.
+
+        :param filename: (str) Name of the produced file, with its path
+        :return: (str) Empty when the file is reached at no address
+
+        """
+        return self.__provision.address_of(filename)
+
+    # -----------------------------------------------------------------------
+
+    def address_of_all(self, filenames: list) -> str:
+        """Return the address of one archive holding the produced files.
+
+        :param filenames: (list of str) Names of the files, with their path
+        :return: (str) Empty when no archive is to be made
+
+        """
+        return self.__provision.address_of_all(filenames)
+
+    # -----------------------------------------------------------------------
+
     def writable_formats(self) -> list:
         """Return the formats which can be written, with what each of them holds.
 

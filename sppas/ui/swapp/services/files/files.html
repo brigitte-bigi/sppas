@@ -331,15 +331,21 @@
 			<li><b>B8</b> — To know what size of file SPPAS accepts.</li>
 			<li><b>B9</b> — To find what an app produced among her own files, ready for the next thing she does with them.</li>
 			<li><b>B11</b> — To know which files SPPAS accepts.</li>
-			<li><b>B12</b> — To get back the files which were produced, or where they are.</li>
+			<li><b>B12</b> — To get back the files which were produced, or where they are, one by one or all at once.</li>
 			<li><b>B13</b> — To see which files were grouped together, and what they produced.</li>
 			<li><b>B14</b> — To correct what one has fed, before sending it.</li>
 			<li><b>B15</b> — To know where one stands against what is accepted, while feeding.</li>
 			<li><b>B16</b> — To know what became of each file she sent, and why, when an app made nothing of it.</li>
-			<li><b>B17</b> — To see, on each file she gave, where it stands: deposited, refused, treated, or no longer reachable.</li>
+			<li><b>B17</b> — To see, on each file she gave, where it stands: added, deposited, refused, treated, or no longer reachable.</li>
 		</ul>
 
 		<p>
+			One machine of the first situation behaves as one of the second: designating
+			a file where it stands opens a window of the computer, and a computer without
+			that window cannot be asked. The person then deposits her files, exactly as
+			she would on a web service, and the page says why. It is not a third case:
+			it is the second one, reached for another reason.
+
 			B5 is the need which holds the two situations together without naming either:
 			where SPPAS runs on the machine of the person the file is already there and
 			there is nothing to do; where it does not, the file has to get there — and
@@ -359,11 +365,16 @@
 		</p>
 
 		<p>
-			B17 is what this domain shows once a batch has been treated: not what was
+			B17 is what this domain shows from the first file she gives: not what was
 			produced, but where each file she gave stands. Locally a file is deposited,
-			then treated; online it is deposited or refused, then treated, and no longer
-			reachable once its time is over. A file which was treated can be neither taken
-			back nor handed again.
+			then treated; online it is added, then deposited or refused once it was sent,
+			then treated, and no longer reachable once its time is over. A file which was
+			treated can be neither taken back nor handed again.
+
+			The difference between added and deposited is what the person acts on: what is
+			added may still be taken back and is what sending sends, what is deposited
+			has travelled and is what an app is given. A deposit holding nothing added has
+			nothing to send, and the control which sends says so by not answering.
 		</p>
 
 	</section>
@@ -506,7 +517,7 @@
 			<li><b>F12. domain &rarr; A4</b> — the request for a place, the files to put there, and the request for an address.</li>
 			<li><b>F13. A4 &rarr; domain</b> — what it accepts, the place it gives or its refusal with when to come back, and the address at which a file is reached.</li>
 			<li><b>F14. A2 &rarr; domain</b> — the request for files, when what it received does not suffice it.</li>
-			<li><b>F15. domain &rarr; A1</b> — where each file she gave stands: deposited, refused, treated, or no longer reachable (B17).</li>
+			<li><b>F15. domain &rarr; A1</b> — where each file she gave stands: added, deposited, refused, treated, or no longer reachable (B17).</li>
 		</ul>
 
 		<p>
@@ -573,9 +584,10 @@
 		<p>
 			A copy is in its deposit from the moment the file is taken in, and before the
 			deposit is sent it carries a name and a size and no content: that is what the
-			verifications of T08 are made on. The dossier has no word for a file
-			designated and not yet duplicated, and none is invented here: it is the
-			word which is still to be fixed.
+			verifications of T08 are made on. Such a copy is said <b>added</b>: the person
+			designated the file, nothing of it has travelled, and she may still take it
+			back. A copy becomes <b>deposited</b> when the deposit it belongs to was sent
+			and the place answered for it.
 		</p>
 
 		<h4>The relations</h4>
@@ -852,6 +864,15 @@
 				What is handed over is an address and not a file: the copy the person ends up
 				with is made by what fetches it, and this domain knows nothing of it, which
 				is what B6 asks. The address lives as long as the file it names.
+
+				Where she cannot reach them, every produced file is also gathered in one
+				archive, and the address of that archive is given with the others: a batch
+				of ten files is got back in one gesture and not in ten. The archive is
+				written where the produced files stand, so it is one file of the deposit
+				like any other &mdash; it is reached by an address of the same kind, it
+				perishes with the deposit which holds it, and nothing of it outlives the
+				duration. Where she reaches the files where they stand, no archive is
+				made: there is nothing to fetch.
 			</p>
 
 		</section>
@@ -913,22 +934,33 @@
 		</section>
 
 		<section>
-		<h4>T09 — Take a file back out of what is to be sent</h4>
+		<h4>T09 — Take a file back</h4>
 
-			<p><b>Purpose:</b> that the person can correct what she is about to send, before she sends it.</p>
+			<p><b>Purpose:</b> that the person can correct what she gave, before it is treated.</p>
 
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
 					<tr><td>Synchronisation</td><td>E11</td></tr>
-					<tr><td>Actions</td><td>Take it out of what is to be sent</td></tr>
+					<tr><td>Actions</td><td>Take it out of what is to be sent; where it was deposited, erase the copy too</td></tr>
 					<tr><td>Result</td><td>What is to be sent, without it, and the volume it now makes. Always</td></tr>
 				</tbody>
 			</table>
 
 			<p>
-				Nothing of the file had travelled when it was taken in, so taking it back
-				undoes the taking in and nothing more. RO8
+				A file which is added has not travelled, so taking it back undoes the
+				taking in and nothing more. A file which is deposited has travelled, and
+				taking it back erases the copy which was made of it: what she takes back
+				is gone from the place as it is gone from the list, and giving the same
+				file again gives it added, as the first time. RO8
+			</p>
+
+			<p>
+				One file cannot be taken back: the one an app treated. It is the only
+				refusal of this treatment, and the control which takes back says it by
+				not answering on that card. Nothing else is forbidden here: a person who
+				corrects what she gave does it one file at a time, and never has to
+				take everything back in order to change one.
 			</p>
 		</section>
 

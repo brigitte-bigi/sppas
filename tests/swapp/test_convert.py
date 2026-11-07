@@ -845,8 +845,9 @@ class TestConvertView(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_te30_the_form_holds_reset_and_convert(self):
-        """TE30. A Reset button, which is a reset of the form, and a Convert
-        button, which sends the task convert. [903], T06
+        """TE30. A Reset button and a Convert button, both of them sending
+        their task: a reset of the browser would put the fields of the form
+        back and say nothing to the server. [903], T06
 
         """
         button = self.the_convert_button()
@@ -857,7 +858,12 @@ class TestConvertView(unittest.TestCase):
         resets = 0
         for element in self.reader.elements:
             tag, attributes, enclosing = element
-            if tag == "button" and attributes.get("type") == "reset":
+            if tag != "button":
+                continue
+            # No button of this page resets the form by itself.
+            self.assertNotEqual("reset", attributes.get("type"))
+            if attributes.get("value") == "reset":
+                self.assertEqual("submit", attributes.get("type"))
                 self.assertEqual(form, self.reader.form_of(element))
                 resets += 1
         self.assertEqual(1, resets)

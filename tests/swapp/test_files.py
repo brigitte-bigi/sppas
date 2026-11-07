@@ -46,6 +46,7 @@
 
 from __future__ import annotations
 import unittest
+import io
 import os
 import shutil
 import tempfile
@@ -72,6 +73,11 @@ from sppas.ui.swapp.services.files.files_view import swappDepositView
 from sppas.ui.swapp.services.files.files_controller import MSG_FAILED
 from sppas.ui.swapp.services.files.files_view import MSG_TREATED
 from sppas.ui.swapp.services.files.files_manager import swappFilesManager
+from sppas.ui.swapp.services.files.files_manager import MSG_NO_WINDOW
+from sppas.ui.swapp.services.files.files_view import MSG_ADDED
+from sppas.ui.swapp.services.files.files_view import MSG_REFUSED
+from sppas.ui.swapp.services.files.files_view import MSG_DEPOSITED
+from sppas.ui.swapp.services.files.files_manager import swappFilesManager
 
 # ---------------------------------------------------------------------------
 
@@ -96,6 +102,21 @@ def text_of(view):
 
     """
     return view.serialize()
+
+# ---------------------------------------------------------------------------
+
+
+def sending_control(view):
+    """Give the control which sends, as the view wrote it.
+
+    :param view: (swappDepositView) A view which was populated
+    :return: (str) The opening tag of the button, or an empty string
+
+    """
+    for line in text_of(view).split("\n"):
+        if 'name="send"' in line:
+            return line
+    return ""
 
 # ---------------------------------------------------------------------------
 
@@ -333,8 +354,10 @@ class TestViews(unittest.TestCase):
         self.assertIn("b.exe", shown)
         self.assertIn("does not read", shown)
         self.assertEqual(1, shown.count("does not read"))
-        self.assertEqual(1, shown.count('aria-invalid="true"'))
-        self.assertEqual(1, shown.count('aria-invalid="false"'))
+        # What marks a refusal: the icon which says it, and its reason. One
+        # file was refused, the other one was not.
+        self.assertEqual(1, shown.count(MSG_REFUSED))
+        self.assertEqual(1, shown.count("file-status-error\" data-icon=\"no\""))
 
     # -----------------------------------------------------------------------
 
@@ -426,6 +449,123 @@ class TestViews(unittest.TestCase):
 
         self.assertIn("files_browse", shown)
         self.assertNotIn("type=\"file\"", shown)
+
+    # -----------------------------------------------------------------------
+
+    def test_te32_a_file_added_is_not_a_file_deposited(self):
+        """TE32. A file she designated is added: nothing of it travelled.
+        It is deposited once the deposit it belongs to was sent. B17
+
+        """
+        record = swappFilesRecord()
+        record.reachable = False
+        record.fed = [("a.wav", 1024), ("b.TextGrid", 512)]
+
+        view = swappDepositView(self.parent)
+        view.populate_tree_content(record)
+        shown = text_of(view)
+        self.assertIn(MSG_ADDED, shown)
+        self.assertNotIn(MSG_DEPOSITED, shown)
+
+        record.deposited = ["a.wav"]
+        view.populate_tree_content(record)
+        shown = text_of(view)
+        self.assertIn(MSG_ADDED, shown)
+        self.assertIn(MSG_DEPOSITED, shown)
+
+    # -----------------------------------------------------------------------
+
+    def test_te33_nothing_added_nothing_to_send(self):
+        """TE33. The control which sends does not answer when there is
+        nothing to send: no file at all, or every one of them deposited. B14
+
+        """
+        record = swappFilesRecord()
+        record.reachable = False
+        view = swappDepositView(self.parent)
+
+        # She gave nothing.
+        view.populate_tree_content(record)
+        self.assertIn("disabled", sending_control(view))
+
+        # She gave two files, and sent neither.
+        record.fed = [("a.wav", 1024), ("b.TextGrid", 512)]
+        view.populate_tree_content(record)
+        self.assertNotIn("disabled", sending_control(view))
+
+        # One of them travelled, the other did not.
+        record.deposited = ["a.wav"]
+        view.populate_tree_content(record)
+        self.assertNotIn("disabled", sending_control(view))
+
+        # Both travelled.
+        record.deposited = ["a.wav", "b.TextGrid"]
+        view.populate_tree_content(record)
+        self.assertIn("disabled", sending_control(view))
+
+    # -----------------------------------------------------------------------
+
+    def test_te34_a_refused_file_is_not_what_sending_waits_for(self):
+        """TE34. A file which was refused is neither added nor deposited:
+        it is said, and it does not keep the control which sends awake. B16
+
+        """
+        record = swappFilesRecord()
+        record.reachable = False
+        record.fed = [("a.wav", 1024)]
+        record.deposited = ["a.wav"]
+        record.to_be_shown = {"refused": {"b.exe": "Not a file of annotations."}}
+
+        view = swappDepositView(self.parent)
+        view.populate_tree_content(record)
+        shown = text_of(view)
+
+        self.assertIn("b.exe", shown)
+        self.assertIn("disabled", sending_control(view))
+
+# ---------------------------------------------------------------------------
+
+
+class TestNoWindow(unittest.TestCase):
+    """TE37. The machine cannot open the window which chooses files."""
+
+    def setUp(self):
+        self.parent = HTMLTree("test_files").body_main.identifier
+
+    # -----------------------------------------------------------------------
+
+    def test_te37_no_window_no_designation_but_a_deposit(self):
+        """TE37. Designating a file of the machine opens a window, and that
+        window is tkinter. Without it the deposit is the way in, exactly as
+        on a web service, and the person is told why. T07
+
+        """
+        with mock.patch("sppas.ui.swapp.services.files.files_manager.cfg.feature_installed",
+                        side_effect=lambda name: False if name == "tkinter" else True):
+            manager = swappFilesManager(self.parent, reachable=True)
+            manager.populate_view()
+            shown = manager.container().serialize()
+
+        # The way in of a deposit: a field of files, and the reason it is
+        # there. Nothing asks the server to designate a file of the machine.
+        self.assertIn('type="file"', shown)
+        self.assertIn(MSG_NO_WINDOW, shown)
+        self.assertNotIn('name="designate"', shown)
+
+    # -----------------------------------------------------------------------
+
+    def test_te37bis_the_window_is_there(self):
+        """TE37. With tkinter, nothing changes: she designates her files
+        where they stand, and nothing is said.
+
+        """
+        manager = swappFilesManager(self.parent, reachable=True)
+        manager.populate_view()
+        shown = manager.container().serialize()
+
+        self.assertIn('name="designate"', shown)
+        self.assertNotIn('type="file"', shown)
+        self.assertNotIn(MSG_NO_WINDOW, shown)
 
 # ---------------------------------------------------------------------------
 
@@ -683,6 +823,105 @@ class TestFilePlace(unittest.TestCase):
         address = self.place.address_of(given, "a.wav")
         self.assertTrue(len(address) > 0)
         self.assertEqual(b"12345", self.api.serve(address))
+
+    # -----------------------------------------------------------------------
+
+    def test_te35_a_file_taken_back_is_gone_from_the_place(self):
+        """TE35. Taking back a deposited file erases the copy which was made
+        of it: the list and the place lose it together, and giving the same
+        file again gives it added. T09
+
+        """
+        workspace = swappWorkspaceFiles(sppasWorkspace())
+        provision = swappFileProvision(workspace, reachable=False, place=self.place)
+
+        feeding = swappDataFiles()
+        feeding.feed("a.wav", 5)
+        feeding.feed("b.wav", 5)
+        refused = provision.send(feeding, {"a.wav": b"12345", "b.wav": b"67890"})
+        self.assertEqual(dict(), refused)
+
+        place = feeding.place
+        self.assertTrue(len(self.place.path_of(place, "a.wav")) > 0)
+
+        provision.take_out(["a.wav"], place)
+
+        # The copy is gone, the other one stays, and so does the place.
+        self.assertEqual("", self.place.path_of(place, "a.wav"))
+        self.assertTrue(len(self.place.path_of(place, "b.wav")) > 0)
+        self.assertEqual(["b.wav"],
+                         [os.path.basename(f.get_id())
+                          for f in files_of(provision.files_for_app())])
+
+    # -----------------------------------------------------------------------
+
+    def test_te35bis_taking_back_what_was_only_added(self):
+        """TE35. A file which was never sent has nothing in a place: taking
+        it back leaves the place alone, and does nothing wrong. T09
+
+        """
+        workspace = swappWorkspaceFiles(sppasWorkspace())
+        provision = swappFileProvision(workspace, reachable=False, place=self.place)
+
+        feeding = swappDataFiles()
+        feeding.feed("a.wav", 5)
+        provision.send(feeding, {"a.wav": b"12345"})
+        place = feeding.place
+
+        # "c.wav" was added and never sent: nothing of it is in the place.
+        provision.take_out(["c.wav"], place)
+
+        self.assertTrue(len(self.place.path_of(place, "a.wav")) > 0)
+
+    # -----------------------------------------------------------------------
+
+    def test_te36_one_archive_for_every_produced_file(self):
+        """TE36. Ten files are got back in one gesture: the archive is written
+        in the place, holds the produced files under their own names, and is
+        reached by an address of the same kind as theirs. T05
+
+        """
+        import zipfile
+
+        workspace = swappWorkspaceFiles(sppasWorkspace())
+        provision = swappFileProvision(workspace, reachable=False, place=self.place)
+
+        feeding = swappDataFiles()
+        feeding.feed("a.wav", 5)
+        feeding.feed("b.wav", 5)
+        provision.send(feeding, {"a.wav": b"12345", "b.wav": b"67890"})
+        place = feeding.place
+
+        produced = [self.place.path_of(place, "a.wav"),
+                    self.place.path_of(place, "b.wav")]
+        address = provision.address_of_all(place, produced)
+
+        self.assertTrue(len(address) > 0)
+        self.assertEqual(address, provision.address_of(place, "sppas-results.zip"))
+
+        kept = provision.serve(address)
+        with zipfile.ZipFile(io.BytesIO(kept)) as archive:
+            self.assertEqual(["a.wav", "b.wav"], sorted(archive.namelist()))
+            self.assertEqual(b"12345", archive.read("a.wav"))
+
+    # -----------------------------------------------------------------------
+
+    def test_te36bis_nothing_produced_nothing_archived(self):
+        """TE36. No produced file, no place, or names which stand nowhere:
+        no archive is made and no address is given. T05
+
+        """
+        workspace = swappWorkspaceFiles(sppasWorkspace())
+        provision = swappFileProvision(workspace, reachable=False, place=self.place)
+
+        feeding = swappDataFiles()
+        feeding.feed("a.wav", 5)
+        provision.send(feeding, {"a.wav": b"12345"})
+        place = feeding.place
+
+        self.assertEqual("", provision.address_of_all(place, list()))
+        self.assertEqual("", provision.address_of_all("", ["/nowhere/a.wav"]))
+        self.assertEqual("", provision.address_of_all(place, ["/nowhere/a.wav"]))
 
     # -----------------------------------------------------------------------
 

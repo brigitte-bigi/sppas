@@ -273,6 +273,8 @@
 			<li><b>F8. domain &rarr; A1</b> &mdash; the address (R4).</li>
 			<li><b>F9. A2 &rarr; domain</b> &mdash; a request at an address.</li>
 			<li><b>F10. domain &rarr; A2</b> &mdash; the file, or nothing at all (C10).</li>
+			<li><b>F11. A1 &rarr; domain</b> &mdash; the request to take a file of a place out of it (R3).</li>
+			<li><b>F12. domain &rarr; A1</b> &mdash; that it stands there no more, or that nothing was deleted.</li>
 		</ul>
 
 		<p>
@@ -410,6 +412,7 @@
 				<tr><td>E4</td><td>A caller asks for an address</td><td>external</td><td>F7</td></tr>
 				<tr><td>E5</td><td>A request arrives at an address</td><td>external</td><td>F9</td></tr>
 				<tr><td>E6</td><td>The duration of a place has run out</td><td>temporal</td><td>The moment the place holds, and C1</td></tr>
+				<tr><td>E7</td><td>A caller takes a file out of a place</td><td>external</td><td>F11</td></tr>
 			</tbody>
 		</table>
 
@@ -561,6 +564,36 @@
 		</section>
 
 		<section>
+		<h4>T07 &mdash; Take a file out of a place</h4>
+
+			<p><b>Purpose:</b> that what a caller put in a place can be taken out of it, before the duration runs out.</p>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronisation</td><td>E7</td></tr>
+					<tr><td>Actions</td><td>Verify the place is one and is not out of date; verify a file of that name stands there; delete it</td></tr>
+					<tr><td>Result</td><td>It stands there no more (F12). When everything is verified</td></tr>
+					<tr><td>Result</td><td>Nothing is deleted (F12). When the place is not one, is out of date, or holds no such file</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				A caller which put a file is the one which takes it out: this domain knows
+				nothing of whose file it is, and asks nothing. Taking out what is not there
+				does nothing wrong, and says so: a caller which tried twice is not an error.
+			</p>
+
+			<p>
+				It deletes one file and never a place: a place goes when its duration runs
+				out (T06), and emptying it of its last file does not end it. The two are of
+				different kinds, and a caller which takes back what it gave is not a caller
+				which gives up its place.
+			</p>
+
+		</section>
+
+		<section>
 		<h4>T06 &mdash; Forget what is out of date</h4>
 
 			<p><b>Purpose:</b> that nothing stays beyond the duration, and that no caller has to ask for it.</p>
@@ -601,6 +634,7 @@
 				<tr><td>Put a file in a place</td><td>The file stands there under the name it was given, or it is refused for its size or for the volume. Two places never meet</td></tr>
 				<tr><td>Give an address</td><td>An address which leads to that file and to nothing else of the machine, and which dies with it</td></tr>
 				<tr><td>Serve what an address names</td><td>The file, or nothing at all when it is out of date or when the address names none</td></tr>
+				<tr><td>Take a file out of a place</td><td>That file stands there no more, and the place stays. Taking out what is not there does nothing wrong</td></tr>
 				<tr><td>Forget what is out of date</td><td>No place older than the one duration remains, with anything it held. Nobody asks for it: it is done while something else is</td></tr>
 			</tbody>
 		</table>
@@ -1439,6 +1473,7 @@
 				<tr><td>Put a file in a place</td><td>pre: the place was given by this domain, and the bytes are those of the file. post: the file stands there under the name it was given, holding those bytes &mdash; or nothing of it stands, and the reason is said: the place is not of this hour, the size, the volume, or the name is taken. Nothing is renamed and nothing is overwritten</td></tr>
 				<tr><td>Ask for an address</td><td>pre: none. post: an address which leads to that file and to nothing else of the machine, and which authorises reaching it for at least as long as the place lasts &mdash; or no address at all, when the place is not of this hour or holds no file of that name</td></tr>
 				<tr><td>Serve what an address names</td><td>pre: what authorises the address has been verified by the front of the machine. post: the bytes of the file, or nothing at all &mdash; and nothing at all is one answer for the four cases which give it, with no reason said</td></tr>
+				<tr><td>Take a file out of a place</td><td>pre: none. post: no file of that name stands in that place &mdash; or nothing was deleted, when the place is not of this hour or holds no file of that name. The place itself stays, empty or not: it goes with its duration and with nothing else</td></tr>
 				<tr><td>Say where a file of a place stands</td><td>pre: none. post: the name of that file on the machine, with its path &mdash; or nothing at all when the place is out of date or holds no file of that name. It is what a caller which has to read a file where it was written is given, and no other name of the machine is ever answered</td></tr>
 				<tr><td>Forget what is out of date</td><td>pre: none. post: no place whose duration has run out stands in the space, nor anything it held. It answers nobody, and no caller calls it</td></tr>
 			</tbody>

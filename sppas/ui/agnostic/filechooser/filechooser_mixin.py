@@ -44,6 +44,16 @@ import json
 import os
 import sys
 
+from sppas.core.config import cfg
+
+# ---------------------------------------------------------------------------
+
+MSG_NO_TKINTER = ("tkinter is not installed on this computer: "
+                  "no dialog can be opened to choose files.")
+
+# ---------------------------------------------------------------------------
+
+
 class FileChooserMixin:
     """Mixin to provide file/folder selection dialogs via a subprocess.
 
@@ -83,6 +93,12 @@ class FileChooserMixin:
         :return: (str|list) Selected path(s) as str or list or error
 
         """
+        # The worker is tkinter and nothing else: without it, the subprocess
+        # dies on its import and says it in a traceback. The reason is said
+        # here instead, and no process is started to fail.
+        if cfg.feature_installed("tkinter") is False:
+            return "Error: " + MSG_NO_TKINTER
+
         args = [sys.executable, self.FILECHOOSER_WORKER, mode]
 
         if title is not None:

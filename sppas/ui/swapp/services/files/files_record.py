@@ -80,6 +80,7 @@ class swappFilesRecord:
         self.__reachable = True
         self.__has_workspace = False
         self.__place = ""
+        self.__deposited = list()
         self.__treated = list()
         self.__to_be_shown = dict()
 
@@ -93,6 +94,7 @@ class swappFilesRecord:
         self.__reachable = True
         self.__has_workspace = False
         self.__place = ""
+        self.__deposited = list()
         self.__treated = list()
         self.__to_be_shown = dict()
 
@@ -117,6 +119,7 @@ class swappFilesRecord:
         _data["has_workspace"] = str(self.__has_workspace)
         _data["place"] = self.__place
         _data["fed"] = json.dumps(_fed)
+        _data["deposited"] = json.dumps(self.__deposited)
         _data["treated"] = json.dumps(self.__treated)
         if self.__workspace is not None:
             _wjson = sppasWJSON()
@@ -157,6 +160,7 @@ class swappFilesRecord:
                 pass
 
         self.__workspace = swappFilesRecord.__workspace_entry(data)
+        self.__deposited = swappFilesRecord.__names_entry(data, "deposited")
         self.__treated = swappFilesRecord.__treated_entry(data)
 
     # -----------------------------------------------------------------------
@@ -337,6 +341,34 @@ class swappFilesRecord:
 
     # -----------------------------------------------------------------------
 
+    def get_deposited(self) -> list:
+        """Return the names of the files which were sent (list of str).
+
+        A file she designated is added: it carries a name and a size, and
+        nothing of it has travelled. It is deposited once the deposit it
+        belongs to was sent. What is added is what sending sends, and what
+        is deposited is what an app is given.
+
+        """
+        return self.__deposited
+
+    # -----------------------------------------------------------------------
+
+    def set_deposited(self, names: list) -> None:
+        """Set the names of the files which were sent.
+
+        :param names: (list of str) Names of the files
+        :raises: sppasTypeError: The given names are not a list
+
+        """
+        if isinstance(names, list) is False:
+            raise sppasTypeError(names, "list")
+        self.__deposited = list()
+        for _name in names:
+            self.__deposited.append(str(_name))
+
+    # -----------------------------------------------------------------------
+
     def get_treated(self) -> list:
         """Return the names of the files an app treated (list of str)."""
         return self.__treated
@@ -417,19 +449,32 @@ class swappFilesRecord:
         :return: (list of str) Empty if the entry is absent or unreadable
 
         """
-        if isinstance(data.get("treated"), str) is False:
+        return swappFilesRecord.__names_entry(data, "treated")
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __names_entry(data: dict, key: str) -> list:
+        """Return the names a page sent under the given key.
+
+        :param data: (dict) What a page sent
+        :param key: (str) The entry holding a list of names
+        :return: (list of str) Empty if the entry is absent or unreadable
+
+        """
+        if isinstance(data.get(key), str) is False:
             return list()
         try:
-            _read = json.loads(data["treated"])
+            _read = json.loads(data[key])
         except ValueError:
             return list()
         if isinstance(_read, list) is False:
             return list()
-        _treated = list()
+        _names = list()
         for _one in _read:
             if isinstance(_one, str) is True:
-                _treated.append(_one)
-        return _treated
+                _names.append(_one)
+        return _names
 
     # -----------------------------------------------------------------------
 
@@ -469,5 +514,6 @@ class swappFilesRecord:
     place = property(get_place, set_place)
     fed = property(get_fed, set_fed)
     workspace = property(get_workspace, set_workspace)
+    deposited = property(get_deposited, set_deposited)
     treated = property(get_treated, set_treated)
     to_be_shown = property(get_to_be_shown, set_to_be_shown)

@@ -394,6 +394,41 @@ class TestDepositSpace(unittest.TestCase):
 
     # -----------------------------------------------------------------------
 
+    def test_te23_a_file_taken_out_of_a_place(self):
+        """TE23. It stands there no more, the place stays, and the other
+        files of the place are untouched. T07
+
+        """
+        place, _ = self.space.ask_for_a_place()
+        self.space.put(place, "a.wav", b"12345")
+        self.space.put(place, "b.wav", b"67890")
+
+        self.assertTrue(self.space.remove(place, "a.wav"))
+
+        self.assertEqual(["b.wav"], self.folder.files(place))
+        self.assertIn(place, self.folder.places())
+        self.assertEqual(b"67890", self.folder.read(place, "b.wav"))
+
+    # -----------------------------------------------------------------------
+
+    def test_te23bis_taking_out_what_is_not_there(self):
+        """TE23. Does nothing wrong and says so: a caller which tried twice
+        is not an error. An old place takes nothing out either. T07
+
+        """
+        place, _ = self.space.ask_for_a_place()
+        self.space.put(place, "a.wav", b"12345")
+
+        self.assertFalse(self.space.remove(place, "never_given.wav"))
+        self.assertTrue(self.space.remove(place, "a.wav"))
+        self.assertFalse(self.space.remove(place, "a.wav"))
+        self.assertIn(place, self.folder.places())
+
+        old = self.an_old_place()
+        self.assertFalse(self.space.remove(old, "a.wav"))
+
+    # -----------------------------------------------------------------------
+
     def test_te18_what_is_out_of_date_goes_without_being_asked(self):
         """TE18. A place of thirty-one minutes ago is gone from the listing
         after any operation at all, nobody having asked for it. C2, RO2

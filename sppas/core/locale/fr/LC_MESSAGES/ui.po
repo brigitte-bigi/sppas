@@ -975,3 +975,19 @@ msgstr "Traité"
 
 msgid "Not supported by this format:"
 msgstr "Non pris en charge par ce format :"
+
+msgid "Added"
+msgstr "Ajouté"
+
+msgid "Browse"
+msgstr "Parcourir"
+
+msgid "Download all the files"
+msgstr "Télécharger tous les fichiers"
+
+msgid ""
+"This computer cannot open the window to choose files. Send them instead, as "
+"on a web service."
+msgstr ""
+"Cet ordinateur ne peut pas ouvrir la fenêtre de choix des fichiers. "
+"Envoyez-les, comme sur un service en ligne."

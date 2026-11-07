@@ -130,6 +130,18 @@ class swappFilePlace:
 
     # -----------------------------------------------------------------------
 
+    def remove(self, place: str, name: str) -> bool:
+        """Take a file out of a place.
+
+        :param place: (str) Place the deposit API gave
+        :param name: (str) Name the file stands under
+        :return: (bool) False when nothing of that name was there
+
+        """
+        return self.__api.remove(place, name)
+
+    # -----------------------------------------------------------------------
+
     def why_not(self, place: str, name: str, content: bytes) -> str:
         """Return why the deposit API refuses a file, and write nothing.
 

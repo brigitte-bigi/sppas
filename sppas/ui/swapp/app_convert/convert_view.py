@@ -229,7 +229,9 @@ class swappConvertView(swappBaseView):
                                                         "name": FIELD_REPORT, "value": record.report}))
 
         if "results" in _shown:
-            _section.append_child(swappResultsPanel(_section.identifier, _shown["results"]))
+            _section.append_child(swappResultsPanel(_section.identifier, _shown["results"],
+                                                    _shown.get("addresses", dict()),
+                                                    _shown.get("archive", "")))
 
         self.__info = ""
         if record.task == TASK_CONVERT or _shown.get("ready", False) is True:

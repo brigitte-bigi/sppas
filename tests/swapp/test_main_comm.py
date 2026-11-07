@@ -39,6 +39,7 @@
 """
 
 import unittest
+import threading
 
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import COMM_PROTOCOL_VERSION
@@ -83,7 +84,9 @@ class TestInterlocutorGone(unittest.TestCase):
         """An interlocutor which does not answer is un-registered too.
 
         This is the crash of the wx interface: no BYE is ever sent, and the
-        state it left behind must not outlive it.
+        state it left behind must not outlive it. The sending is done by a
+        thread of its own -- a push made while an answer is owed must not
+        hold that answer -- so the state is read once that thread is over.
 
         """
         self.server._prepare_response(sppasCommKeys.HELLO, self.hello)
@@ -91,6 +94,9 @@ class TestInterlocutorGone(unittest.TestCase):
 
         # Nothing is listening on the announced port: the push fails
         self.server.push(sppasCommKeys.SHOW_PAGE, "page_files")
+        for thread in threading.enumerate():
+            if thread is not threading.current_thread():
+                thread.join(timeout=5.)
 
         self.assertFalse(swapp_wxstate.running)
         # the announced address stays: a silence is not a reason to forget

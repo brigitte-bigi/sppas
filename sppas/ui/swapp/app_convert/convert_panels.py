@@ -74,6 +74,7 @@ MSG_FILE = _("File")
 MSG_STATUS = _("Status")
 MSG_RESULT = _("Result")
 MSG_RESTART = _("Start over")
+MSG_DOWNLOAD_ALL = _("Download all the files")
 MSG_STATUSES = {"written": _("written"), "skipped": _("skipped"), "refused": _("refused")}
 
 # The icon which says the status of a file: its shape says it, its text alternative is the word.
@@ -493,13 +494,19 @@ class swappResultsPanel(TagNode):
 
     """
 
-    def __init__(self, parent: str, results: list):
+    def __init__(self, parent: str, results: list, addresses: dict | None = None,
+                 archive: str = ""):
         """Create the panel of the results.
 
         :param parent: (str) Identifier of the node the panel is appended to
         :param results: (list of swappFileResult) One result per file of the batch
+        :param addresses: (dict) The address of a produced file, by name, when
+        the person is not on the machine which wrote it
+        :param archive: (str) The address of the archive holding them all
 
         """
+        if addresses is None:
+            addresses = dict()
         super(swappResultsPanel, self).__init__(parent, None, "section",
                                                 attributes={"aria-labelledby": ID_RESULTS})
 
@@ -536,9 +543,28 @@ class swappResultsPanel(TagNode):
                 _ul = TagNode(_td.identifier, None, "ul")
                 _td.append_child(_ul)
                 for _produced in _result.produced:
-                    _ul.append_child(HTMLNode(_ul.identifier, None, "li", value=os.path.basename(_produced)))
+                    _li = TagNode(_ul.identifier, None, "li")
+                    _ul.append_child(_li)
+                    _name = os.path.basename(_produced)
+                    if _produced in addresses:
+                        # The file was written where the person is not: the
+                        # name leads to it, and the browser is told to keep
+                        # it under that name instead of showing it.
+                        _li.append_child(HTMLNode(_li.identifier, None, "a", value=_name,
+                                                  attributes={"href": addresses[_produced],
+                                                              "download": _name}))
+                    else:
+                        _li.set_value(_name)
             else:
                 _tr.append_child(HTMLNode(_tr.identifier, None, "td", value=_result.cause))
+
+        # Ten files are got back in one gesture and not in ten.
+        if len(archive) > 0:
+            self.append_child(HTMLNode(self.identifier, None, "a", value=MSG_DOWNLOAD_ALL,
+                                       attributes={"href": archive,
+                                                   "download": "",
+                                                   "class": "action-button",
+                                                   "role": "button"}))
 
         _form = TagNode(self.identifier, None, "form", attributes={"method": "post"})
         self.append_child(_form)

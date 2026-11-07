@@ -49,6 +49,8 @@ from sppas.core.config import cfg
 from sppas.core.coreutils import sppasKeyError
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommServerError
+from sppas.ui.swapp.services.deposit.deposit_address import swappFileAddress
+from sppas.ui.swapp.services.files import swappResultDelivery
 from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 from sppas.ui.swapp.swapp_core.swappsg import swapp_notify
@@ -104,6 +106,29 @@ class sppasWebApp:
         """A custom HTTPD request handler for SPPAS swapp.
 
         """
+
+        def do_GET(self) -> None:
+            """Override. Serve a produced file, or hand over to the framework.
+
+            A file an app produced where the person is not is reached at an
+            address the deposit domain made, and that address is answered
+            here: the domain reads the place and the name out of it, and
+            gives nothing at all when the place is out of date, when it
+            names no file, or when it names something of the machine which
+            is no file of a place.
+
+            """
+            if self.path.startswith(swappFileAddress.PREFIX) is True:
+                _bytes = swappResultDelivery().serve(self.path)
+                if len(_bytes) == 0:
+                    self._response(b"", 404, "text/plain")
+                    return
+                self._response(_bytes, 200, "application/octet-stream")
+                return
+
+            super().do_GET()
+
+        # -------------------------------------------------------------------
 
         def _response(self, content, status: int, mime_type: str = None) -> None:
             """Override. Answer the error pages of SPPAS.

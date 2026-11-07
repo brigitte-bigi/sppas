@@ -38,6 +38,10 @@
 
 """
 
+import io
+import os
+import zipfile
+
 from sppas.core.coreutils import sppasTypeError
 from sppas.ui import _
 
@@ -52,6 +56,10 @@ from .files_workspace import swappWorkspaceFiles
 # ---------------------------------------------------------------------------
 
 MSG_NO_PLACE = _("No place can be given now.")
+
+# The name the archive of the produced files stands under, in the deposit.
+# It is not translated: it is the name of a file, which travels.
+MSG_ARCHIVE_NAME = "sppas-results.zip"
 MSG_CONTENT = _("This file is not one SPPAS reads.")
 MSG_SIZE = _("This file is beyond the size which is accepted.")
 MSG_VOLUME = _("This file is beyond the volume which is accepted.")
@@ -267,14 +275,33 @@ class swappFileProvision:
 
     # -----------------------------------------------------------------------
 
-    def take_out(self, filenames: list) -> int:
-        """Take files out of the workspace.
+    def take_out(self, filenames: list, place: str = "") -> int:
+        """Take files out of the workspace, and out of the place they stand in.
+
+        A file which was deposited has travelled: taking it back erases the
+        copy which was made of it, so that what she takes back is gone from
+        the place as it is gone from the list. A file which was only added
+        has nothing in a place, and the place is left alone.
 
         :param filenames: (list of str) Names of the files, with their path
+        :param place: (str) Place the deposit stands in, empty if none
         :return: (int) Number of removed files, roots and paths
 
         """
-        return self.__workspace.remove(filenames)
+        if len(place) == 0:
+            return self.__workspace.remove(filenames)
+
+        _removed = 0
+        for _name in filenames:
+            _path = self.__place.path_of(place, _name)
+            if len(_path) == 0:
+                # Nothing of it was deposited: it is only in the list.
+                _removed += self.__workspace.remove([_name])
+                continue
+            _removed += self.__workspace.remove([_path])
+            self.__place.remove(place, _name)
+
+        return _removed
 
     # -----------------------------------------------------------------------
 
@@ -432,6 +459,43 @@ class swappFileProvision:
 
         """
         return self.__delivery.address_of(place, name)
+
+    # -----------------------------------------------------------------------
+
+    def address_of_all(self, place: str, filenames: list) -> str:
+        """Return the address of one archive holding the given files.
+
+        A batch of ten files is got back in one gesture and not in ten. The
+        archive is written where the files stand, so it is one file of the
+        deposit like any other: it is reached by an address of the same kind
+        and it perishes with the deposit which holds it.
+
+        :param place: (str) Place the files stand in
+        :param filenames: (list of str) Names of the files, with their path
+        :return: (str) Empty when no archive could be made
+
+        """
+        if self.__place is None or len(place) == 0 or len(filenames) == 0:
+            return ""
+
+        _archive = io.BytesIO()
+        _written = 0
+        with zipfile.ZipFile(_archive, "w", zipfile.ZIP_DEFLATED) as _zip:
+            for _filename in filenames:
+                if os.path.isfile(_filename) is False:
+                    continue
+                _zip.write(_filename, os.path.basename(_filename))
+                _written += 1
+
+        if _written == 0:
+            return ""
+
+        _name = MSG_ARCHIVE_NAME
+        self.__place.remove(place, _name)
+        if self.__place.put(place, _name, _archive.getvalue()) is False:
+            return ""
+
+        return self.__delivery.address_of(place, _name)
 
     # -----------------------------------------------------------------------
 

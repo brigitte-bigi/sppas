@@ -150,6 +150,30 @@ class swappDepositSpace:
 
     # -----------------------------------------------------------------------
 
+    def remove(self, place: str, name: str) -> bool:
+        """Take a file out of a place, before the duration runs out.
+
+        A caller which put a file is the one which takes it out: this domain
+        knows nothing of whose file it is, and asks nothing. Taking out what
+        is not there does nothing wrong, and says so. The place itself stays,
+        empty or not: it goes with its duration (T06) and with nothing else.
+
+        :param place: (str) Name of the place
+        :param name: (str) Name of the file
+        :return: (bool) False if the place is out of date, or holds no such file
+
+        """
+        self.forget()
+
+        if swappPlace(place, self.__settings).is_of_this_hour() is False:
+            return False
+        if name not in self.__folder.files(place):
+            return False
+
+        return self.__folder.delete_a_file(place, name)
+
+    # -----------------------------------------------------------------------
+
     def address_of(self, place: str, name: str) -> str:
         """Return the address a file of a place is reached at.
 

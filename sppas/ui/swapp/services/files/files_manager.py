@@ -38,7 +38,12 @@
 
 """
 
+import logging
+import os
+
+from sppas.core.config import cfg
 from sppas.core.coreutils import sppasTypeError
+from sppas.ui import _
 
 from .files_controller import swappFilesController
 from .files_place import swappFilePlace
@@ -46,6 +51,11 @@ from .files_provision import swappFileProvision
 from .files_record import TASK_READY
 from .files_view import swappDepositView
 from .files_workspace import swappWorkspaceFiles
+
+# ---------------------------------------------------------------------------
+
+MSG_NO_WINDOW = _("This computer cannot open the window to choose files. "
+                  "Send them instead, as on a web service.")
 
 # ---------------------------------------------------------------------------
 
@@ -82,9 +92,22 @@ class swappFilesManager:
         if isinstance(parent, str) is False:
             raise sppasTypeError(parent, "str")
 
+        # Designating a file of the machine opens a window, and that window
+        # is tkinter. Without it, the person cannot say where her files are,
+        # so she sends them instead: the deposit is the way in, exactly as on
+        # a web service, and she is told why.
+        _switched = False
+        if reachable is True and cfg.feature_installed("tkinter") is False:
+            logging.info("No tkinter on this machine: the files are deposited "
+                         "instead of being designated.")
+            reachable = False
+            _switched = True
+
         self.__model = swappFileProvision(workspace, place, reachable=reachable)
         self.__deposit_view = swappDepositView(parent)
         self.__controller = swappFilesController(self.__model, self.__deposit_view, reachable, has_workspace)
+        if _switched is True:
+            self.__controller.say(MSG_NO_WINDOW)
 
     # -----------------------------------------------------------------------
 
@@ -154,6 +177,56 @@ class swappFilesManager:
         _produced = self.__model.produced(workspace)
 
         return _produced
+
+    # -----------------------------------------------------------------------
+
+    def address_of(self, filename: str) -> str:
+        """Return the address a produced file is reached at.
+
+        Where the files stand already on the machine of the person, she
+        reaches what was produced where it was written and no address is
+        made: the answer is then empty, and the app says where the file
+        stands instead of leading to it.
+
+        :param filename: (str) Name of the file, with its path
+        :return: (str) Empty when the file is reached at no address
+
+        """
+        _place = self.__controller.record.place
+        if len(_place) == 0:
+            return ""
+
+        return self.__model.address_of(_place, os.path.basename(filename))
+
+    # -----------------------------------------------------------------------
+
+    def address_of_all(self, filenames: list) -> str:
+        """Return the address of one archive holding the produced files.
+
+        A batch of ten files is got back in one gesture and not in ten.
+        Where the person reaches the files where they stand, nothing is
+        archived and the answer is empty.
+
+        :param filenames: (list of str) Names of the files, with their path
+        :return: (str) Empty when no archive is to be made
+
+        """
+        _place = self.__controller.record.place
+        if len(_place) == 0:
+            return ""
+
+        return self.__model.address_of_all(_place, filenames)
+
+    # -----------------------------------------------------------------------
+
+    def serve(self, address: str) -> bytes:
+        """Return the bytes an address names.
+
+        :param address: (str) Address to be served
+        :return: (bytes) Empty when there is nothing to give
+
+        """
+        return self.__model.serve(address)
 
     # -----------------------------------------------------------------------
 

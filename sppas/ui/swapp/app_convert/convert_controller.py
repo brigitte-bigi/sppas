@@ -206,6 +206,23 @@ class swappConvertController:
 
         record.show("results", _results)
 
+        # Where the person is not on the machine which wrote them, each
+        # produced file is reached at an address: the page leads to it.
+        _addresses = dict()
+        _all = list()
+        for _result in _results:
+            for _produced in _result.produced:
+                _address = self.__model.address_of(_produced)
+                if len(_address) > 0:
+                    _addresses[_produced] = _address
+                _all.append(_produced)
+        record.show("addresses", _addresses)
+
+        # Ten files are got back in one gesture and not in ten: they are
+        # gathered in one archive, which is reached like any of them.
+        if len(_addresses) > 0:
+            record.show("archive", self.__model.address_of_all(_all))
+
     # -----------------------------------------------------------------------
 
     def __format_of(self, destination: str):

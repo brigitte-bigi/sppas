@@ -63,11 +63,13 @@ MSG_ADD_FILES = _("Add files")
 MSG_IN_USE = _("The files to be treated")
 MSG_WORKSPACE = _("Workspace:")
 MSG_SELECT_FILES = _("Select files")
+MSG_BROWSE = _("Browse")
 MSG_OR_DROP = _(", or drag and drop files here.")
 MSG_TAKE_BACK = _("Take back")
 MSG_SEND = _("Send")
 MSG_DONE = _("Done")
 MSG_REFUSED = _("Refused")
+MSG_ADDED = _("Added")
 MSG_DEPOSITED = _("Deposited")
 MSG_TREATED = _("Treated")
 
@@ -243,17 +245,24 @@ class swappDepositView(swappFilesBaseView):
         _zone = TagNode(_form.identifier, None, "div", attributes={"class": "dropzone"})
         _form.append_child(_zone)
 
-        # One sentence, and one control: the label says what to do and holds
-        # the field, which the browser would otherwise draw with a button of
-        # its own and a "no file chosen" of its own, under the sentence.
+        # What to do, then what does it: a sentence, and a button which
+        # opens the window of the files. The field itself is not drawn --
+        # a browser gives it a button of its own and a "no file chosen" of
+        # its own, which says the same thing a second time.
         _label = HTMLNode(_zone.identifier, None, "label",
                           value=MSG_SELECT_FILES + MSG_OR_DROP,
                           attributes={"for": "files_input"})
         _zone.append_child(_label)
-        _input = EmptyNode(_label.identifier, "files_input", "input",
+        _input = EmptyNode(_zone.identifier, "files_input", "input",
                            attributes={"id": "files_input", "type": "file",
                                        "multiple": "multiple"})
-        _label.append_child(_input)
+        _zone.append_child(_input)
+        _browse = HTMLNode(_zone.identifier, "files_browse_button", "button",
+                           value=MSG_BROWSE,
+                           attributes={"id": "files_browse_button",
+                                       "type": "button",
+                                       "class": "action-button"})
+        _zone.append_child(_browse)
 
         _panel = TagNode(_zone.identifier, None, "ul",
                          attributes={"class": "cards-panel"})
@@ -261,13 +270,21 @@ class swappDepositView(swappFilesBaseView):
         _refused = _shown.get("refused", dict())
         _listed = list()
         _treated = swappDepositView.__treated_names(record)
+        _deposited = record.deposited
+        _to_send = 0
         for _name, _size in record.fed:
-            self.__append_fed_file(_panel, _name, _size, _refused, _treated)
+            self.__append_fed_file(_panel, _name, _size, _refused, _treated, _deposited)
             _listed.append(_name)
+            if _name not in _deposited and _name not in _refused:
+                _to_send += 1
 
         for _name in _refused:
             if len(_name) > 0 and _name not in _listed:
-                self.__append_fed_file(_panel, _name, 0, _refused, _treated)
+                self.__append_fed_file(_panel, _name, 0, _refused, _treated, _deposited)
+
+        if "failed" in _shown:
+            _zone.append_child(HTMLNode(_zone.identifier, None, "p",
+                                        value=_shown["failed"]))
 
         if "accepted" in _shown:
             _zone.append_child(HTMLNode(_zone.identifier, None, "p",
@@ -276,9 +293,14 @@ class swappDepositView(swappFilesBaseView):
         if "no_place" in _shown:
             return
 
+        # Nothing added, nothing to send: the control is shown and it does
+        # not answer. She gave no file, or every one of them has travelled.
+        _attributes = {"type": "submit", "name": TASK_SEND,
+                       "value": "", "class": "cta-button"}
+        if _to_send == 0:
+            _attributes["disabled"] = None
         _button = HTMLNode(_form.identifier, None, "button", value=MSG_SEND,
-                           attributes={"type": "submit", "name": TASK_SEND,
-                                       "value": "", "class": "cta-button"})
+                           attributes=_attributes)
         _form.append_child(_button)
 
     # -----------------------------------------------------------------------
@@ -330,7 +352,7 @@ class swappDepositView(swappFilesBaseView):
         for _filename in swappDepositView.__known_filenames(record):
             _treated = _filename in record.treated
             _card, _header, _body, _footer = swappDepositView.__append_card(_panel)
-            swappDepositView.__append_state(_header, _treated)
+            swappDepositView.__append_state(_header, _treated, True, _card)
             _body.append_child(HTMLNode(_body.identifier, None, "span", value=os.path.basename(_filename),
                                         attributes={"class": "dropzone-name", "title": _filename}))
             _button = {"type": "submit", "name": TASK_TAKE_BACK, "value": _filename}
@@ -362,7 +384,8 @@ class swappDepositView(swappFilesBaseView):
 
     # -----------------------------------------------------------------------
 
-    def __append_fed_file(self, parent: TagNode, name: str, size: int, refused: dict, treated: list) -> None:
+    def __append_fed_file(self, parent: TagNode, name: str, size: int, refused: dict,
+                          treated: list, deposited: list) -> None:
         """Append the card of one fed file: its size, its name, what became of it.
 
         :param parent: (TagNode) The panel of cards the card is appended to
@@ -370,6 +393,7 @@ class swappDepositView(swappFilesBaseView):
         :param size: (int) Size of the file, in bytes
         :param refused: (dict) The reason of every refused file, by name
         :param treated: (list of str) Names of the files an app treated
+        :param deposited: (list of str) Names of the files which were sent
 
         """
         _card, _header, _body, _footer = swappDepositView.__append_card(parent)
@@ -380,13 +404,15 @@ class swappDepositView(swappFilesBaseView):
 
         # A refusal says its reason, under the name.
         if name in refused:
+            _card.add_attribute("class", "file-refused")
             _header.append_child(HTMLNode(_header.identifier, None, "span", value="",
                                           attributes={"class": "file-status file-status-error", "data-icon": "no",
                                                       "role": "img", "aria-label": MSG_REFUSED}))
             _body.append_child(HTMLNode(_body.identifier, None, "p", value=refused[name],
                                         attributes={"class": "file-status file-status-error"}))
         else:
-            swappDepositView.__append_state(_header, name in treated)
+            swappDepositView.__append_state(_header, name in treated,
+                                            name in deposited, _card)
 
         _button = {"type": "submit", "name": TASK_TAKE_BACK, "value": name}
         if name in treated:
@@ -418,19 +444,32 @@ class swappDepositView(swappFilesBaseView):
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def __append_state(header: TagNode, treated: bool) -> None:
-        """Append where a file stands: deposited, or treated by an app.
+    def __append_state(header: TagNode, treated: bool, deposited: bool = True,
+                       card: TagNode | None = None) -> None:
+        """Append where a file stands: added, deposited, or treated by an app.
 
         The state is an icon whose shape says it, and whose text alternative
-        says it to a screen reader.
+        says it to a screen reader. A file she designated is added: nothing
+        of it has travelled, and she may still take it back. It is deposited
+        once it was sent, and treated once an app made something of it. The
+        card carries the state too, so that it is seen before it is read.
 
         :param header: (TagNode) The header of the card of the file
         :param treated: (bool) An app treated the file
+        :param deposited: (bool) The file was sent
+        :param card: (TagNode) The card itself, to be marked with the state
 
         """
-        _class, _icon, _label = "file-status", "upload", MSG_DEPOSITED
+        _class, _icon, _label = "file-status", "add", MSG_ADDED
+        _state = "file-added"
+        if deposited is True:
+            _class, _icon, _label = "file-status", "upload", MSG_DEPOSITED
+            _state = "file-deposited"
         if treated is True:
             _class, _icon, _label = "file-status file-status-ok", "yes", MSG_TREATED
+            _state = "file-treated"
+        if card is not None:
+            card.add_attribute("class", _state)
         header.append_child(HTMLNode(header.identifier, None, "span", value="",
                                      attributes={"class": _class, "data-icon": _icon,
                                                  "role": "img", "aria-label": _label}))

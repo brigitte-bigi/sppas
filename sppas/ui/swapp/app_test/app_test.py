@@ -71,6 +71,19 @@ class swappTestsWebData(swappWebData):
 
     # -----------------------------------------------------------------------
 
+    @staticmethod
+    def get_fids() -> tuple:
+        """Return the features this application requires to be used.
+
+        One of its tests asks the dialog to choose files of the computer,
+        and that dialog is tkinter: without it, the application is shown
+        and disabled instead of answering an error at the click.
+
+        """
+        return ("tkinter", )
+
+    # -----------------------------------------------------------------------
+
     def is_page(self, page_name: str) -> bool:
         """Override. Return true if the given page name can be baked.
 

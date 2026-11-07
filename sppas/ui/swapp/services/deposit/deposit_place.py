@@ -291,6 +291,32 @@ class swappSpaceFolder:
 
     # -----------------------------------------------------------------------
 
+    def delete_a_file(self, place: str, name: str) -> bool:
+        """Delete one file of a place, and leave the place where it is.
+
+        A place goes with its duration and with nothing else: emptying it
+        of its last file does not end it.
+
+        :param place: (str) Name of the place
+        :param name: (str) Name the file stands under
+        :return: (bool) False if no file of that name stands there
+
+        """
+        _filename = self.filename_of(place, name)
+        if len(_filename) == 0:
+            return False
+        if os.path.isfile(_filename) is False:
+            return False
+
+        try:
+            os.remove(_filename)
+        except OSError:
+            return False
+
+        return True
+
+    # -----------------------------------------------------------------------
+
     def files(self, place: str) -> list:
         """Return the names of the files standing in a place.
 
