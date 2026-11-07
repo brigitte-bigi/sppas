@@ -80,6 +80,20 @@ class swappWebData(WebSiteData):
         return "Undefined"
 
     @staticmethod
+    def local_only() -> bool:
+        """Return True if the application is served by a local server only.
+
+        An application says it itself, and it says it once: what it does
+        decides, not what happens to be installed where it is served. One
+        which installs packages on the machine, or opens a window on it,
+        is of the machine of its reader and not of a service a crowd
+        reaches. Its card is still shown, and disabled, so that a reader
+        of the web service sees what SPPAS holds.
+
+        """
+        return False
+
+    @staticmethod
     def theme_name() -> str:
         """Return the name of the theme the application brings, if any.
 

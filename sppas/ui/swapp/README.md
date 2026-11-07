@@ -144,6 +144,47 @@ reads it to create the application cards displayed in the Dashboard. As a
 consequence, an entry in `WEB_APPLICATIONS` is, by definition, an app: it
 is dispatched *and* it gets a card. 
 
+#### Where an app can be served
+
+The same apps are served by two servers: the local one of `main_app.py`,
+and the wsgi service of `main_wsgi.py`. Each says which it is when it
+starts, in `swapp_serverstate.local`.
+
+An app says for itself where it may be served, with `local_only()` of
+`swappWebData` — `False` by default, so an app which does nothing of the
+machine has nothing to declare. Setup declares `True`: it installs
+packages on the machine it runs on, and a web service would install them
+on the server, for everybody, at the request of anybody.
+
+The declaration is read twice, and both are needed: the dispatcher drops
+such an app when the server is the service, so its pages answer the "Page
+not found" of swapp (`swapp_core/swapp_dispatcher.py`), and the Dashboard
+disables its card without removing it (`app_dashboard/dashboard_controller.py`).
+A disabled card is what a reader sees; the dispatcher is what a forged
+request cannot get past.
+
+#### Why the Desktop card is not in the registry
+
+The card launching the wx interface is built by the Dashboard view itself,
+and its launch is a method of the Dashboard controller. It is not an entry
+of `WEB_APPLICATIONS`, and it is not an oversight. Five differences keep it
+out, and they were checked in 2026-11:
+
+- it has no page at all, while the registry exists to route page names;
+- its button is not a link: `create_app_card()` builds a link for a page
+  name ending in `.html`, and an action button otherwise, whose id
+  `desktop_button` the JavaScript of the Dashboard knows by name;
+- it carries a state no app has, `busy`, fed by the subprocess and by the
+  socket: only one instance of the wx interface may run;
+- its launch blocks: the HTTP response arrives when wx is closed, and the
+  client re-enables the button on it;
+- its picture is a logo, where the apps carry an image.
+
+Its two rules about where it may run -- the disabled card, and the refused
+launch -- are therefore written by hand in the controller, beside the launch
+itself. The wx interface is not a web application, and it is to disappear
+in a few years.
+
 ### How pages are served
 
 Pages live in the `pages/` package. Each page has its own module; a page 

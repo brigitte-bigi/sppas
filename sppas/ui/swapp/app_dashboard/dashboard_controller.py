@@ -48,6 +48,7 @@ from sppas.core.config import sppasExecProcess
 from sppas.core.config import cfg
 from sppas.core.config import paths
 from sppas.core.preinstall.installer import quote
+from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 from sppas.ui.swapp.swapp_core.swappsg import swapp_trace
 from sppas.ui.swapp.swapp_core.swappsg import swapp_wxstate
@@ -144,6 +145,14 @@ class swappDashboardController:
         :return: (str) Error message if any.
 
         """
+        # The Desktop opens a window on the machine which runs it. Served
+        # by the web service, that machine is the server: nobody would see
+        # the window, and anybody could open one. A disabled card is what a
+        # reader sees; this is what a request cannot get past.
+        if swapp_serverstate.local is False:
+            logging.warning("The Desktop was asked for, and this is a web service.")
+            return "The Desktop runs on the computer of its reader, not on a server."
+
         # Only the answer of the interface can forbid a new launch: the
         # flag of the subprocess belongs to the request which launched it,
         # and that request may never come back -- a killed process leaves
@@ -186,6 +195,8 @@ class swappDashboardController:
 
         """
         wx_enabled = cfg.feature_installed("wxpython")
+        if swapp_serverstate.local is False:
+            wx_enabled = False
         # Two sources are needed: the subprocess flag covers the launches of
         # this dashboard, including the delay before the HELLO of wx arrives;
         # the socket state covers a wx launched elsewhere, and its Close.
@@ -218,7 +229,12 @@ class swappDashboardController:
             try:
                 bakery = app_info.bakery()
                 enabled = True
-                if hasattr(bakery, 'get_fids') is True:
+                # An application of the machine is not served by the web
+                # service: its card is shown, and disabled, so that a reader
+                # of the service sees what SPPAS holds and where.
+                if swapp_serverstate.local is False and bakery.local_only() is True:
+                    enabled = False
+                if enabled is True and hasattr(bakery, 'get_fids') is True:
                     fids = bakery.get_fids() or []
                     # All requested features must be enabled
                     enabled = all(cfg.feature_installed(item) for item in fids)

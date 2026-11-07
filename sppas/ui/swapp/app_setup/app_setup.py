@@ -87,6 +87,17 @@ class swappSetupWebData(swappWebData):
         """Return the page icon name."""
         return swappImagesAccess.get_image_filename("app_setup")
 
+    @staticmethod
+    def local_only() -> bool:
+        """Override. Setup installs packages on the machine it runs on.
+
+        Installing is done on the machine of the reader, and on no other:
+        a web service would install on the server, for everybody, at the
+        request of anybody.
+
+        """
+        return True
+
     # -----------------------------------------------------------------------
 
     def is_page(self, page_name: str) -> bool:
