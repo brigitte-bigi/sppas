@@ -33,7 +33,7 @@
                 <button id="btn-css-theme" class="menuitem print-off" type="button" aria-label="Switch CSS theme" title="Switch CSS theme" onclick="window.themes && window.themes.next()"></button>
             </nav>
         
-    <h1>sppas 5.1.0</h1>
+    <h1>sppas 5.1.1</h1>
         <p><img class="small-logo" src="../sppas/ui/swapp/statics/logos/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
@@ -71,10 +71,11 @@
 
 <p>Create the log directory if it does not already exist, then fix the
 log filename with increment=0.</p>
+
 <h5>Parameters</h5>
 
 <ul>
-<li><strong>pattern</strong></li>
+<li><strong>extension</strong>: (<em>str</em>) Extension of the log filename, with its dot</li>
 </ul>
 
     </article>
@@ -84,13 +85,16 @@ log filename with increment=0.</p>
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">'log'</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">'log'</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">'.txt'</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Create a sppasLogFile instance.</span>
 
 <span class="sd">    Create the log directory if it does not already exist, then fix the</span>
 <span class="sd">    log filename with increment=0.</span>
 
+<span class="sd">    :param extension: (str) Extension of the log filename, with its dot</span>
+
 <span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__extension</span> <span class="o">=</span> <span class="n">extension</span>
     <span class="n">log_dir</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">logs</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">log_dir</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">log_dir</span><span class="p">)</span>
@@ -124,7 +128,7 @@ View Source
 <span class="w">    </span><span class="sd">"""Return the current log filename."""</span>
     <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
     <span class="n">fn</span> <span class="o">+=</span> <span class="s1">'</span><span class="si">{0:04d}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__current</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">fn</span> <span class="o">+</span> <span class="s1">'.txt'</span>
+    <span class="k">return</span> <span class="n">fn</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__extension</span>
 </code></pre></div>
 
     </details>

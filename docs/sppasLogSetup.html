@@ -33,7 +33,7 @@
                 <button id="btn-css-theme" class="menuitem print-off" type="button" aria-label="Switch CSS theme" title="Switch CSS theme" onclick="window.themes && window.themes.next()"></button>
             </nav>
         
-    <h1>sppas 5.1.0</h1>
+    <h1>sppas 5.1.1</h1>
         <p><img class="small-logo" src="../sppas/ui/swapp/statics/logos/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
@@ -119,6 +119,7 @@ View Source
     <span class="bp">self</span><span class="o">.</span><span class="n">_log_level</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">log_level</span><span class="p">)</span>
     <span class="n">format_msg</span> <span class="o">=</span> <span class="s1">'</span><span class="si">%(asctime)s</span><span class="s1"> [</span><span class="si">%(levelname)s</span><span class="s1">] </span><span class="si">%(message)s</span><span class="s1">'</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">format_msg</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__companions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">handlers</span><span class="p">)):</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">NullHandler</span><span class="p">()</span>
@@ -255,6 +256,7 @@ View Source
         <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatter</span><span class="p">)</span>
         <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log_level</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console_handler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__companions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">console_handler</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Logging redirected to FileHandler (level=</span><span class="si">{:d}</span><span class="s1">) in file </span><span class="si">{:s}</span><span class="s1">.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log_level</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
 </code></pre></div>
 
@@ -267,7 +269,13 @@ View Source
 <h4>__stop_handler</h4>
 
     <article class="docstring">
-<p><em>Stops the current handler.</em></p>
+<p><em>Stops the handlers this instance added, and only them.</em></p>
+
+<p>A handler somebody else added to the root logger stays: it was not
+put there by this class, and removing it silently cuts whoever was
+collecting the records -- the Journal of the web interface collects
+them that way, and a page changing the destination of the logs would
+empty it without saying so.</p>
 
     </article>
 
@@ -277,12 +285,21 @@ View Source
 View Source
     </summary>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__stop_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Stops the current handler."""</span>
+<span class="w">    </span><span class="sd">"""Stops the handlers this instance added, and only them.</span>
+
+<span class="sd">        A handler somebody else added to the root logger stays: it was not</span>
+<span class="sd">        put there by this class, and removing it silently cuts whoever was</span>
+<span class="sd">        collecting the records -- the Journal of the web interface collects</span>
+<span class="sd">        them that way, and a page changing the destination of the logs would</span>
+<span class="sd">        empty it without saying so.</span>
+
+<span class="sd">        """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Stops current logging handler.'</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handler</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">handlers</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__companions</span><span class="p">):</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__companions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
 
