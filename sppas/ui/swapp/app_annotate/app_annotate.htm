@@ -1,0 +1,2662 @@
+<!-- ====================== USER MANUAL ============================ -->
+
+
+<section class="chapter">
+<h1>User manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is the help of the person who annotates:
+		what the page shows, how an annotation is chosen and set, what is done to the
+		files, and what is read of what came of it.
+	</p>
+
+</section>
+
+
+<!-- ====================== DEVELOPER MANUAL ======================= -->
+
+
+<section class="chapter">
+<h1>Developer manual</h1>
+
+<!-- =============================================================== -->
+
+	<p>
+		<b>Not written yet.</b> This chapter is for whoever reads or changes the code:
+		how it is organised, what the page is made of, the events it answers, and the
+		stylesheets.
+	</p>
+
+</section>
+
+
+<!-- ====================== MODELLING ============================== -->
+
+
+<section class="chapter">
+<h1>Modelling</h1>
+
+<!-- =============================================================== -->
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Problem and scope</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Description</h3>
+
+			<p>
+				SPPAS annotates: it takes the files of a person and writes, beside them,
+				what it found in them &mdash; the words, the sounds, the syllables, what was
+				said at the same time as something else. What it can find is not one thing
+				but a score of them, each with its own languages, its own configuration and
+				its own needs.
+			</p>
+
+			<p>
+				The application "Annotate" is what stands between a person and those
+				annotations. It shows the annotations which can be performed, lets them be
+				selected and configured, performs the selected ones on the files, says what
+				came of each, and keeps what it said so that it can be read again. It
+				annotates nothing itself.
+			</p>
+
+			<p>
+				The annotations are not independent of one another. The phonetization needs
+				the text normalization, the alignment needs the phonetization. Every
+				annotation declares what it requires; what is missing is a place where a
+				person can see it. A score of annotations offered as a flat list is a list
+				one gets lost in.
+			</p>
+
+			<p>
+				"Annotate" is the page "Annotate" of the desktop interface of SPPAS, brought
+				to the web. A person who knows the one must find her way in the other: the
+				same five steps, the same lists, the same report. What differs is how the
+				files are given and how what was produced is reached, because a web page
+				does not read the disk of the person who looks at it.
+			</p>
+
+			<p>
+				"Annotate" belongs to the SPPAS ecosystem and relies on its automatic
+				annotations, which it never exposes. It is available both as a page of the
+				SPPAS Dashboard and as an online application, addressing the same need in
+				two contexts of use: within a working session on a local corpus, or as an
+				occasional service.
+			</p>
+
+			<p>
+				Accessibility is treated here as a functional requirement rather than an
+				added quality: what "Annotate" exposes &mdash; what an annotation does,
+				whether it can be selected, how far the annotations have gone, how each of
+				them went &mdash; is of no use if it is not perceivable.
+			</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Defining the needs</h3>
+
+			<!-- --------------------------------------------------- -->
+
+			<section>
+			<h4>Problem statement and objectives</h4>
+
+				<p>
+					Performing automatic annotations raises a difficulty which is not
+					technical: the user has to decide, before anything happens, which
+					annotations to perform, in which language, with which configuration and
+					into which file formats &mdash; among a score of annotations whose names
+					say little to whoever did not write them. The decision is taken on a
+					list, and the consequences are read afterwards, file by file, in a
+					report.
+				</p>
+
+				<p>
+					The central problem addressed by "Annotate" is thus:
+				</p>
+
+				<blockquote role="region" aria-label="Key Idea" class="info">
+					<p>how to let a user perform, on a set of files, the automatic
+					annotations she selected, in the language and with the configuration she
+					fixed, and read what came of each of them, without requiring any
+					knowledge of how an annotation works.</p>
+				</blockquote>
+
+				<p>
+					This problem is sharpened by the conditions of use. Annotating is a batch
+					operation: several annotations are performed, one after another, on a set
+					of files whose contents are not examined when the user decides. It is
+					also a long operation, and nothing can be undone: what an annotation
+					wrote is written. "Annotate" must therefore let decisions be taken once
+					and applied to every file, show how far the annotations have gone while
+					they are performed, and remain accountable for each annotation and each
+					file.
+				</p>
+
+				<p>The objectives follow:</p>
+				<ul>
+					<li>to let the user choose the output file format of every kind of file
+					which is produced;</li>
+					<li>to let the user fix the language of the annotations, and another one
+					for a given annotation;</li>
+					<li>to let the user find her way among the annotations, know what each
+					one does and what it requires, select the ones to perform, and configure
+					them;</li>
+					<li>to perform every selected annotation at one go on the files the user
+					delimited, and to show how far it has gone;</li>
+					<li>to report what happened, annotation by annotation and file by file,
+					and to keep the reports so that they are read again, or deleted;</li>
+					<li>to give the user access to the files which were produced, in a manner
+					adapted to the context of use;</li>
+					<li>to guarantee accessibility, of the interface and of the information
+					it exposes;</li>
+					<li>to remain the page the users of the desktop interface know.</li>
+				</ul>
+
+				<p>
+					"Annotate" does not aim to say what an annotation does or how: that is
+					established in the API of SPPAS, whose classes are read here and not
+					modelled. It does not aim to select the files, which are given by the
+					provision of files, nor to show and check the options of an annotation,
+					which is the service of the options'. What is left is the annotations as
+					a set: which can be performed, which are selected, what they are
+					performed with, and what came of it.
+				</p>
+
+			</section>
+
+			<!-- --------------------------------------------------- -->
+
+			<section>
+			<h4>Expressing the needs</h4>
+
+				<h5>Choosing the output file formats</h5>
+
+				<p>
+					An annotation does not write one kind of file: what is produced is
+					annotations, and it may be a sound, an image or a video as well. The user
+					chooses one extension for every kind of file which can be produced, among
+					those SPPAS is able to write for that kind; a default one is already
+					selected, so that nothing has to be chosen by whoever has no preference.
+				</p>
+
+				<h5>Fixing the language</h5>
+
+				<p>
+					Most annotations need language resources, and a corpus is usually in one
+					language. The user fixes it once, and every annotation which has
+					resources for that language takes it. An annotation which has none is
+					left without a language, and the user gives it another one on its own
+					line. When the selected annotations do not all have the same language,
+					the page says so rather than showing one of them.
+				</p>
+
+				<h5>Finding, selecting and configuring the annotations</h5>
+
+				<p>
+					The annotations are shown in three lists, one per type: those which take
+					one file on its own, those which take two files of one speaker, and those
+					which take two files of two speakers. From the main page, the user sees
+					at once which lists hold a selected annotation.
+				</p>
+
+				<p>
+					In a list, each annotation says what it does, and gives the way to the
+					published work it rests on &mdash; or, where there is none yet, how far
+					its development has gone. It says what it requires, and the list is
+					arranged so that an annotation comes after the ones it requires. Every
+					annotation is shown, including the ones which cannot be selected on that
+					machine: they are disabled and not hidden, so that two users have the
+					same page, and what differs between them is what is installed.
+				</p>
+
+				<p>
+					Selecting an annotation selects no other. The user configures an
+					annotation before it is performed, and what she fixed is kept as long as
+					she stays on the page.
+				</p>
+
+				<h5>Delimiting the set of files to annotate</h5>
+
+				<p>
+					The files to be annotated come from the working context, not from the
+					tool: in a working session, they are the files currently selected in the
+					workspace; in an occasional use, they are the files the user brings to
+					the tool. The requirement is the same in both cases &mdash; the user
+					delimits a set, "Annotate" operates on that set, and none of its files is
+					altered. The two contexts differ only in their material constraints, an
+					occasional use being bounded by what a service can reasonably receive.
+				</p>
+
+				<h5>Performing the annotations, and following them</h5>
+
+				<p>
+					One gesture performs every selected annotation on the delimited files.
+					The user may ask, before it, for one file gathering everything which was
+					annotated for each file, to open it in an annotation editor. While the
+					annotations are performed, the page says which one is being performed and
+					how far it has gone, and nothing else can be started: there is one
+					performance at a time.
+				</p>
+
+				<h5>Reading the procedure outcome report</h5>
+
+				<p>
+					The annotations are a series of operations sharing the same decisions.
+					Some succeed, some do not, for reasons belonging to one annotation or to
+					one file. The report is written while the annotations are performed, line
+					by line, each line carrying how what it is about went. It is therefore
+					readable whatever happened, including when the performance stopped before
+					its end. The user reads it when the annotations have been performed, and
+					reads again the reports of the previous ones; she deletes the ones which
+					are of no use any more.
+				</p>
+
+				<h5>Reaching the produced files</h5>
+
+				<p>
+					Annotations which produce files the user cannot find have annotated
+					nothing. In a working session, the produced files join the workspace and
+					remain available to the following operations. In an occasional use, they
+					are handed back to the user. The requirement is that the outcome be
+					reachable without the user having to know where the tool put it.
+				</p>
+
+				<h5>Accessibility</h5>
+
+				<p>
+					Everything above rests on information being exposed: descriptions,
+					languages, states, progress, reports. Contrast, legibility, text
+					alternatives to any graphical encoding &mdash; an annotation which is
+					selected, a line of a report which is an error &mdash;, keyboard
+					operation and consistent terminology between the interface and the
+					concepts are conditions of the tool working at all. On a web page, what
+					is being decided and the list of the reports do not always fit side by
+					side: the user says whether she sees the one, the other, or both.
+				</p>
+
+			</section>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Conceptual level</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Requirements</h3>
+
+			<p>
+				The previous sections state what users need and why; this section states
+				what the system does to answer it, and what it manipulates in order to do so.
+			</p>
+
+			<p>
+				Two markers are used throughout. <span class="api-ok">[API-OK]</span> denotes
+				what is achievable with the current SPPAS API.
+				<span class="api-ext">[API-EXT]</span> denotes what requires an extension of
+				that API. A requirement marked <span class="api-ext">[API-EXT]</span> is part
+				of the model; it remains inactive until the API supports it.
+			</p>
+
+			<!-- --------------------------------------------------- -->
+
+			<section>
+			<h4>Concepts manipulated by the application</h4>
+
+				<p>The data dictionary of this application. Thirteen concepts, and the model
+				below names no other.</p>
+
+				<dl>
+				<dt>D1. Annotation</dt>
+				<dd>One automatic annotation SPPAS is able to perform. What it declares of
+				itself &mdash; its name, its description, its types, its languages, its
+				options, its references, how far its development has gone, what it requires
+				&mdash; is written in the API and read from there.</dd>
+
+				<dt>D2. Type</dt>
+				<dd>What an annotation takes: one file on its own, two files of one speaker,
+				or two files of two speakers. An annotation has one type or several.</dd>
+
+				<dt>D3. Selected annotation</dt>
+				<dd>An annotation the user decided to perform.</dd>
+
+				<dt>D4. Language</dt>
+				<dd>The language an annotation is performed in, among those it has resources
+				for, or none. An annotation which has no language resource has no
+				language.</dd>
+
+				<dt>D5. Kind of output file</dt>
+				<dd>What an annotation produces: annotations, and possibly a sound, an image
+				or a video. Each kind is written with one extension.</dd>
+
+				<dt>D6. Output extension</dt>
+				<dd>The extension chosen for one kind of output file, among those SPPAS is
+				able to write for that kind.</dd>
+
+				<dt>D7. Configuration</dt>
+				<dd>The values given to the options of one annotation.</dd>
+
+				<dt>D8. Requirement</dt>
+				<dd>An annotation which has to have been performed before another one.</dd>
+
+				<dt>D9. Merge option</dt>
+				<dd>A decision of the user: whether one file gathering everything which was
+				annotated is created for each annotated file.</dd>
+
+				<dt>D10. Batch</dt>
+				<dd>The set of files delimited by the user, whose contents are unknown at the
+				time decisions are taken.</dd>
+
+				<dt>D11. Performance</dt>
+				<dd>Every selected annotation performed at one go on the batch, with the
+				decisions taken when it was asked for.</dd>
+
+				<dt>D12. Progress</dt>
+				<dd>Which annotation is being performed, and how far it has gone. It exists
+				while a performance goes, and nothing of it is kept.</dd>
+
+				<dt>D13. Procedure outcome report</dt>
+				<dd>What a performance wrote of itself, line by line, while it went. Each
+				line carries how what it is about went: OK, ERROR, WARNING, INFO or IGNORED.
+				It is a file, and it is kept until it is deleted.</dd>
+				</dl>
+
+			</section>
+
+			<!-- --------------------------------------------------- -->
+
+			<section>
+			<h4>The language of the page, and the language of an annotation</h4>
+
+				<p>There are two places where a language is fixed, and the second one exists
+				because of the first.</p>
+
+				<p><b>The language of the page</b> is chosen in one list, which holds every
+				language at least one annotation has resources for, and the entry
+				<code>---</code>, which is no language. It is <code>---</code> when the page
+				is asked for. Fixing it gives it to every annotation which has resources for
+				it; an annotation which has resources, but none for that language, is left
+				without a language. An annotation which has no language resource is not
+				concerned. Fixing <code>---</code> leaves every annotation which has
+				resources without a language.</p>
+
+				<p><b>The language of one annotation</b> is chosen on the line of that
+				annotation, among its own languages and <code>---</code>. It is where the
+				user gives a language to an annotation the language of the page left without
+				one, and it changes no other annotation.</p>
+
+				<p>The list of the page then shows what the selected annotations hold: their
+				language when they all have the same, <code>---</code> when none has one, and
+				the entry <code>MIX</code> when they do not all have the same. That entry is
+				in the list only as long as it is true.</p>
+
+			</section>
+
+			<!-- --------------------------------------------------- -->
+
+			<section>
+			<h4>What an annotation requires</h4>
+
+				<p>Every annotation declares the ones it requires. The page shows it on the
+				line of each annotation, and each list is arranged so that an annotation
+				comes after the ones it requires
+				<span class="api-ext">[API-EXT]</span>: what requires what is written in the
+				declarations, and the annex states what reading it asks of the API.</p>
+
+				<p>What is shown is not what is done. Selecting an annotation selects no
+				other: one annotation is performed, what it wrote is corrected by hand, and
+				the next one is performed on the corrected version. Selecting what an
+				annotation requires in its place would perform the whole chain on what was
+				not corrected.</p>
+
+				<p>The order in which the selected annotations are performed is the API's,
+				and this application neither chooses it nor changes it.</p>
+
+			</section>
+
+			<!-- --------------------------------------------------- -->
+
+			<section>
+			<h4>The reports</h4>
+
+				<p>Each performance writes one report, under a name no report bore before.
+				The reports which are kept are listed beside the five steps, and one of them
+				at most is checked: checking one unchecks the other. The report of the
+				performance which has just ended is added at the top of the list, and
+				checked.</p>
+
+				<p>Three things are done with that list: the checked report is shown; the
+				checked report is deleted; every report which is not checked is deleted.
+				Showing is offered only when a report is checked and its file is still
+				there.</p>
+
+				<p>A report which is shown begins with the name of its file. Its lines are
+				shown as they were written, and the state each of them carries is shown as
+				what it is.</p>
+
+				<p><b>Online, there is no list of reports.</b> The report of a performance
+				is written where the files the user sent stand, with everything which was
+				produced: it is one of the produced files. It is shown when the annotations
+				have been performed, as it is locally; it is downloaded on its own, and it
+				is in the archive which brings every produced file back at once. No report
+				of a previous performance is kept for a given user, so there is nothing to
+				list, to check or to delete: online, the panel of the reports is
+				collapsed.</p>
+
+			</section>
+
+			<!-- --------------------------------------------------- -->
+
+			<section>
+			<h4>Organising the needs</h4>
+
+				<h5>[010] Starting</h5>
+				<ul class="req">
+				<li>[011] The user can initiate the automatic annotation of a set of
+				files.</li>
+				<li>[012] The system initialises the page with the default extension of
+				every kind of output file, no language, no annotation selected, the merge
+				option off, and no batch.</li>
+				</ul>
+
+				<h5>[020] Understanding the process</h5>
+				<ul class="req">
+				<li>[021] The system presents five steps, in this order: choose the output
+				file formats, fix the languages, select and configure annotations, perform
+				the annotations, read the procedure outcome report.</li>
+				<li>[022] The system states what is missing before the annotations can be
+				performed.</li>
+				</ul>
+
+				<h5>[030] Controlled progression</h5>
+				<ul class="req">
+				<li>[031] The system allows the annotations to be performed only if at least
+				one annotation is selected and the batch is not empty.</li>
+				<li>[032] The system performs one set of annotations at a time: nothing can
+				be started while a performance goes.</li>
+				</ul>
+
+				<h5>[100] Output file formats</h5>
+				<ul class="req">
+				<li>[101] The user can choose one extension for each kind of output
+				file.</li>
+				<li>[102] The system restricts the choice to the extensions it is able to
+				write for that kind.</li>
+				<li>[103] The system offers no choice for a kind which has no
+				extension.</li>
+				<li>[104] The system holds the default extension of a kind until another is
+				chosen.</li>
+				</ul>
+
+				<h5>[200] Languages</h5>
+				<ul class="req">
+				<li>[201] The user can fix the language of the page, among every language at
+				least one annotation has resources for, or none.</li>
+				<li>[202] The system gives the language of the page to every annotation
+				which has resources for it, and leaves without a language an annotation
+				which has resources but none for it.</li>
+				<li>[203] The user can fix the language of one annotation, among its own
+				languages, or none.</li>
+				<li>[204] The system shows the language the selected annotations hold: the
+				one they share, none, or that they differ.</li>
+				</ul>
+
+				<h5>[300] Annotations</h5>
+				<ul class="req">
+				<li>[301] The system presents the annotations in one list per type; an
+				annotation which has several types is in each of their lists.</li>
+				<li>[302] The system shows, for each type, whether at least one of its
+				annotations is selected.</li>
+				<li>[303] The system presents, for each annotation, its name and its
+				description.</li>
+				<li>[304] The system presents, for each annotation, a way to each of its
+				references, telling a document from a web page; where it has none, how far
+				its development has gone, when that is known; and nothing otherwise.</li>
+				<li>[305] The user can select an annotation, or take the selection
+				back.</li>
+				<li>[306] Selecting an annotation selects no other.</li>
+				<li>[307] The system shows what each annotation requires, and arranges each
+				list so that an annotation comes after the ones it requires
+				<span class="api-ext">[API-EXT]</span>.</li>
+				<li>[308] The system shows every annotation, and disables the ones which
+				cannot be performed on that machine.</li>
+				<li>[309] The user can configure an annotation: its options are shown with
+				their values, and what was fixed is kept or given up.</li>
+				<li>[310] The system keeps the decisions taken for as long as the user stays
+				on the page.</li>
+				</ul>
+
+				<h5>[400] Batch</h5>
+				<ul class="req">
+				<li>[401] The user delimits the set of files to annotate.</li>
+				<li>[402] The system operates on that set and alters none of its
+				files.</li>
+				<li>[403] The system reports when the set is empty.</li>
+				</ul>
+
+				<h5>[500] Performing</h5>
+				<ul class="req">
+				<li>[501] The user can ask for one file gathering everything which was
+				annotated.</li>
+				<li>[502] The system performs every selected annotation on the batch, in the
+				order of the API.</li>
+				<li>[503] The failure of one annotation never interrupts the others.</li>
+				<li>[504] The system names the report of each performance so that it
+				replaces no other.</li>
+				<li>[505] The system shows which annotation is being performed, and how far
+				it has gone.</li>
+				</ul>
+
+				<h5>[600] Reading the report</h5>
+				<ul class="req">
+				<li>[601] The system shows the report of a performance when it has
+				ended.</li>
+				<li>[602] The system shows the name of the file of the report which is
+				read.</li>
+				<li>[603] The system shows each line with the state it carries.</li>
+				<li>[604] The system says so when a report cannot be read.</li>
+				<li>[605] Online, the user can download the report which is shown.</li>
+				</ul>
+
+				<h5>[700] Managing the reports</h5>
+				<ul class="req">
+				<li>[701] The system lists the reports which are kept.</li>
+				<li>[702] The user can check one report at a time; the report of the
+				performance which has just ended is checked.</li>
+				<li>[703] The user can show the checked report; the system offers it only
+				when a report is checked and can be read.</li>
+				<li>[704] The user can delete the checked report.</li>
+				<li>[705] The user can delete every report which is not checked.</li>
+				<li>[706] Deleting a report deletes nothing of what was produced.</li>
+				<li>[707] Online, the system lists no report, and the panel of the reports
+				is collapsed: [701] to [706] hold locally.</li>
+				</ul>
+
+				<h5>[800] Reaching the results</h5>
+				<ul class="req">
+				<li>[801] The system makes the produced files reachable to the user.</li>
+				<li>[802] The system makes them reachable without the user knowing where
+				they were written.</li>
+				<li>[803] Online, the report is one of the produced files, and the user can
+				download every produced file at once.</li>
+				</ul>
+
+				<h5>[900] Restarting</h5>
+				<ul class="req">
+				<li>[901] The user can annotate another batch: the provision of files starts
+				over, and the decisions are kept.</li>
+				<li>[902] The user can reset the page: the decisions and the provision of
+				files are taken back to what they were on arrival.</li>
+				</ul>
+
+				<h5>[1000] UX and accessibility</h5>
+				<ul class="req">
+				<li>[1001] The system provides text alternatives to any graphical encoding:
+				an annotation which is selected, a type which holds a selected annotation,
+				the state of a line of a report.</li>
+				<li>[1002] The system uses consistent terminology between interface and
+				concepts, and the terminology of the page of the desktop interface.</li>
+				<li>[1003] The system is operable by keyboard and by screen reader.</li>
+				<li>[1004] The system provides explicit messages at every decision
+				point.</li>
+				<li>[1005] Choosing an extension, fixing a language or selecting an
+				annotation replaces nothing on the page and never moves the focus.</li>
+				<li>[1006] The user can show the five steps, the reports, or both; online,
+				the reports are collapsed.</li>
+				</ul>
+
+			</section>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Conceptual model</h3>
+
+			<p>
+				Annotate holds no data of its own but the reports. Everything else it
+				manipulates belongs to one performance being decided, and is derived from a
+				small number of user decisions. This section states who it exchanges with,
+				which data exist, what produces them, and on which event each treatment runs.
+			</p>
+
+			<!-- --------------------------------------------------- -->
+
+			<section>
+			<h4>Conceptual model of communication</h4>
+
+				<p>Four actors border Annotate, and only one of them is a person. Three are
+				neighbouring systems.</p>
+
+				<h5>Actors</h5>
+
+				<ul>
+				<li><b>A1. The user</b> &mdash; she chooses the output extensions, fixes the
+				languages, selects and configures annotations, asks for them to be performed,
+				follows them, reads the report, reaches what was produced, and manages the
+				reports.</li>
+				<li><b>A2. The provider of files</b> &mdash; it hands Annotate a workspace
+				holding the files to be treated, possibly empty, in both contexts of
+				execution, and it is told what Annotate takes, gives back and produced. It
+				is the domain of the provision of files, and the batch is what it
+				hands.</li>
+				<li><b>A3. The API of SPPAS</b> &mdash; it says which annotations there are
+				and what each declares, which extensions each kind of output file can be
+				written with, it performs the selected annotations, says how far it has
+				gone, writes the report, and names the report of each performance.</li>
+				<li><b>A4. The service of the options</b> &mdash; it shows the options of
+				one annotation and gives back the values which were fixed.</li>
+				</ul>
+
+				<h5>Flows</h5>
+
+				<ul>
+				<li><b>F1. A3 &rarr; Annotate</b> &mdash; the annotations, and what each declares of itself; the kinds of output file, the extensions of each and its default one.</li>
+				<li><b>F2. Annotate &rarr; A1</b> &mdash; the five steps; the extensions of each kind; the languages; the annotations in one list per type, each with its name, its description, its references or how far its development has gone, its languages, what it requires, and whether it can be performed on that machine [021], [102] to [104], [201], [301], [303], [304], [307], [308].</li>
+				<li><b>F3. A1 &rarr; Annotate</b> &mdash; the extension of one kind of output file [101].</li>
+				<li><b>F4. A1 &rarr; Annotate</b> &mdash; the language of the page [201].</li>
+				<li><b>F5. A1 &rarr; Annotate</b> &mdash; an annotation selected, or a selection taken back [305].</li>
+				<li><b>F6. A1 &rarr; Annotate</b> &mdash; the language of one annotation [203].</li>
+				<li><b>F7. Annotate &rarr; A1</b> &mdash; which types hold a selected annotation, and the language the selected annotations hold [204], [302].</li>
+				<li><b>F8. Annotate &rarr; A4</b> &mdash; the options of one annotation, to be shown and fixed [309].</li>
+				<li><b>F9. A4 &rarr; Annotate</b> &mdash; those options, with the values which were fixed, or that nothing was [309].</li>
+				<li><b>F10. A2 &rarr; Annotate</b> &mdash; the batch: the workspace holding the files to be treated, possibly empty, <code>files_for_app()</code>; and that the person said it is ready, <code>is_ready()</code> [401].</li>
+				<li><b>F11. Annotate &rarr; A1</b> &mdash; what is still missing before the annotations can be performed [022], [403].</li>
+				<li><b>F12. A1 &rarr; Annotate</b> &mdash; the merge option [501].</li>
+				<li><b>F13. A1 &rarr; Annotate</b> &mdash; perform the annotations [031].</li>
+				<li><b>F14. Annotate &rarr; A3</b> &mdash; a name for the report of this performance [504].</li>
+				<li><b>F15. Annotate &rarr; A3</b> &mdash; what is to be performed: the annotations with what was decided on each, the output extensions, the batch, the name of the report, and the merge option [502].</li>
+				<li><b>F16. A3 &rarr; Annotate</b> &mdash; which annotation is being performed, and how far it has gone.</li>
+				<li><b>F17. Annotate &rarr; A1</b> &mdash; the same [505].</li>
+				<li><b>F18. A3 &rarr; Annotate</b> &mdash; the annotations have been performed: the batch, holding what was produced, and the report, written.</li>
+				<li><b>F19. Annotate &rarr; A2</b> &mdash; the files it takes and gives back while the annotations are performed, <code>lock()</code> and <code>release()</code>; what was produced, in the workspace it was handed, <code>produced()</code>; and that it has finished [801], [802].</li>
+				<li><b>F20. Annotate &rarr; A1</b> &mdash; a report: the name of its file, and its lines with the state each carries; or that it cannot be read; online, a link to download it [601] to [605].</li>
+				<li><b>F21. Annotate &rarr; A1</b> &mdash; locally, the reports which are kept, and the one which is checked [701], [702], [707].</li>
+				<li><b>F22. A1 &rarr; Annotate</b> &mdash; a report checked; show the checked report [702], [703].</li>
+				<li><b>F23. A1 &rarr; Annotate</b> &mdash; delete the checked report, or every report which is not checked [704], [705].</li>
+				<li><b>F24. A1 &rarr; Annotate</b> &mdash; annotate another batch [901].</li>
+				<li><b>F25. Annotate &rarr; A1</b> &mdash; the produced files, reached without her knowing where they were written: online, the address of one archive holding all of them, the report included [801] to [803].</li>
+				<li><b>F26. A1 &rarr; Annotate</b> &mdash; reset the page [902].</li>
+				</ul>
+
+				<p><b>F15 carries the whole of what was decided, and not one annotation.</b>
+				The API performs what was selected, in its own order: this application
+				chooses no order and imposes none [502]. What it reads of the requirements,
+				it reads to show [307].</p>
+
+				<p><b>F15 carries a workspace, and not what an annotation reads.</b> Which
+				files an annotation takes among those of the batch is settled between the
+				workspace and what that annotation declares. This application chooses no
+				file, pairs no file and looks for none.</p>
+
+				<p><b>Nothing is written into what an annotation declares.</b> A language
+				fixed on an annotation, an annotation selected, an option configured: all of
+				it is held for the performance being decided, and the declaration is what it
+				was.</p>
+
+				<p>What goes to A2 is said of the workspace made for Annotate, and never of
+				the one of the person, which never leaves that domain [402].</p>
+
+			</section>
+
+			<!-- --------------------------------------------------- -->
+
+			<section>
+			<h4>Conceptual model of data</h4>
+
+				<p>Eight classes. Three are read from a neighbour and appear here with their
+				identifier and nothing else; four belong to one performance being decided;
+				one is what stays.</p>
+
+				<h5>The classes of entities</h5>
+
+				<table>
+				<thead>
+				  <tr><th scope="col">Class</th><th scope="col">Properties</th><th scope="col">What it is</th></tr>
+				</thead>
+				<tbody>
+				  <tr><td>ANNOTATION</td><td># annotation</td><td>One annotation SPPAS is able to perform (D1). What it declares is read from the API</td></tr>
+				  <tr><td>KIND</td><td># kind</td><td>One kind of output file (D5). The extensions it can be written with are read from the API</td></tr>
+				  <tr><td>FILE</td><td># file</td><td>One file of the batch (D10). It is exposed by A2, and this domain holds its identity and nothing else</td></tr>
+				  <tr><td>PERFORMANCE</td><td># performance, merge</td><td>What is decided, then performed at one go (D11), and the merge option (D9)</td></tr>
+				  <tr><td>SELECTION</td><td># performance, # annotation, language</td><td>One annotation which is to be performed (D3), and the language it is to be performed in (D4)</td></tr>
+				  <tr><td>EXTENSION</td><td># performance, # kind, extension</td><td>The extension the files of one kind are written with (D6)</td></tr>
+				  <tr><td>VALUE</td><td># performance, # annotation, # option, value</td><td>The value fixed for one option of one annotation (D7)</td></tr>
+				  <tr><td>REPORT</td><td># report</td><td>What a performance wrote of itself, kept so that it can be read again (D13)</td></tr>
+				</tbody>
+				</table>
+
+				<h5>The relations</h5>
+
+				<table>
+				<thead>
+				  <tr><th scope="col">No.</th><th scope="col">Verb</th><th scope="col">Leg 1</th><th scope="col">Leg 2</th></tr>
+				</thead>
+				<tbody>
+				  <tr><td>R1</td><td>is decided in</td><td>SELECTION (1,1)</td><td>PERFORMANCE (0,n)</td></tr>
+				  <tr><td>R2</td><td>selects</td><td>SELECTION (1,1)</td><td>ANNOTATION (0,n)</td></tr>
+				  <tr><td>R3</td><td>is chosen in</td><td>EXTENSION (1,1)</td><td>PERFORMANCE (1,n)</td></tr>
+				  <tr><td>R4</td><td>is the extension of</td><td>EXTENSION (1,1)</td><td>KIND (0,n)</td></tr>
+				  <tr><td>R5</td><td>is fixed in</td><td>VALUE (1,1)</td><td>PERFORMANCE (0,n)</td></tr>
+				  <tr><td>R6</td><td>configures</td><td>VALUE (1,1)</td><td>ANNOTATION (0,n)</td></tr>
+				  <tr><td>R7</td><td>is annotated by</td><td>FILE (0,n)</td><td>PERFORMANCE (0,n)</td></tr>
+				  <tr><td>R8</td><td>was written by</td><td>REPORT (0,1)</td><td>PERFORMANCE (0,1)</td></tr>
+				  <tr><td>R9</td><td>requires</td><td>ANNOTATION (0,n)</td><td>ANNOTATION (0,n)</td></tr>
+				</tbody>
+				</table>
+
+				<p>R1, R3 and R5 are aggregations: a selection, an extension and a value
+				exist only inside the performance they were decided for. R1 and R2 together
+				identify a selection: an annotation is selected once and not twice.</p>
+
+				<p><b>The language is on the selection and not on the annotation.</b> The
+				language of the page is not a property of anything: it is a gesture which
+				writes the language of every annotation concerned [202], and what the page
+				shows afterwards is read on the selected annotations [204].</p>
+
+				<p><b>A value is tied to an annotation and not to a selection.</b> An
+				annotation is configured whether it is selected or not, and what was fixed
+				stays when the selection is taken back.</p>
+
+				<p><b>R8 reads (0,1) on both sides.</b> A performance which was not asked for
+				yet wrote no report; a report is read long after the performance which wrote
+				it, which is gone. A report is identified by itself.</p>
+
+				<p><b>R9 is read and never written.</b> It is what the annotations declare,
+				and it is used to show [307]. It orders no performance.</p>
+
+				<p><b>A performance holds no file.</b> R7 is a relation and not a holding:
+				the batch is exposed by A2, and what this domain knows of a file is its
+				identity [402].</p>
+
+				<h5>Computed, and never held</h5>
+
+				<ul>
+				<li>The annotations of one type, which are those whose declaration names that type [301].</li>
+				<li>Whether a type holds a selected annotation [302].</li>
+				<li>The languages of the page, which are every language at least one annotation has resources for [201].</li>
+				<li>The language the selected annotations hold: the one they share, none, or that they differ [204].</li>
+				<li>The arrangement of a list, which follows from R9 [307].</li>
+				<li>Whether an annotation can be performed on that machine [308].</li>
+				<li>What is still missing before the annotations can be performed: an annotation selected, a batch which is not empty [031].</li>
+				<li>The progress, which the API says while it works [505].</li>
+				<li>The files produced, which stand where the API wrote them.</li>
+				</ul>
+
+				<h5>What one performance carries, in the words the code will use</h5>
+
+				<ul>
+				<li><code>extensions</code> &mdash; one extension per kind of output file.</li>
+				<li><code>selected</code> &mdash; the annotations which are to be performed.</li>
+				<li><code>lang</code> &mdash; the language of each annotation, or none.</li>
+				<li><code>options</code> &mdash; the values fixed for the options of each annotation.</li>
+				<li><code>merge</code> &mdash; boolean.</li>
+				<li><code>batch</code> &mdash; a set of files, possibly empty.</li>
+				<li><code>report</code> &mdash; the name of the report this performance writes.</li>
+				<li><code>progress</code> &mdash; which annotation is being performed, and how far it has gone.</li>
+				</ul>
+
+				<p>Their dependencies, which the treatments below turn into events:</p>
+
+				<ul>
+				<li><code>language of the page &rarr; lang</code></li>
+				<li><code>(selected &and; lang) &rarr; what the page shows of the languages</code></li>
+				<li><code>(batch &and; selected &and; lang &and; options &and; extensions &and; merge) &rarr; report, produced files</code></li>
+				</ul>
+
+				<h5>What is not modelled, and why</h5>
+
+				<ul>
+				<li>What an annotation declares of itself, which is the API's: it is read where it is written, and nothing here adds to it.</li>
+				<li>The options of an annotation and what a value may be, which the service of the options shows and checks. What is held here is the values which were fixed.</li>
+				<li>The files of the batch beyond their identity, which are A2's [402].</li>
+				<li>What a report says, which is written by the API. This application shows its lines, and the state each carries, as they stand.</li>
+				<li>The order of a performance, which is the API's [502].</li>
+				</ul>
+
+			</section>
+
+			<!-- --------------------------------------------------- -->
+
+			<section>
+			<h4>Conceptual model of treatments</h4>
+
+				<p>Thirteen treatments. Six are the decisions, one is the batch, two are the
+				performance and what it produced, two are the reports, and the last two
+				start again. Each one says on which event it runs, what it does, and under
+				which condition each of its results is emitted.</p>
+
+				<h5>The events</h5>
+
+				<table>
+				<thead>
+				  <tr><th scope="col">No.</th><th scope="col">Event</th><th scope="col">Kind</th><th scope="col">Comes from</th></tr>
+				</thead>
+				<tbody>
+				  <tr><td>E1</td><td>The page is asked for</td><td>external</td><td>[011]</td></tr>
+				  <tr><td>E2</td><td>The user chooses the extension of one kind of output file</td><td>external</td><td>F3</td></tr>
+				  <tr><td>E3</td><td>The user fixes the language of the page</td><td>external</td><td>F4</td></tr>
+				  <tr><td>E4</td><td>The user selects an annotation, or takes a selection back</td><td>external</td><td>F5</td></tr>
+				  <tr><td>E5</td><td>The user fixes the language of one annotation</td><td>external</td><td>F6</td></tr>
+				  <tr><td>E6</td><td>The user asks to configure an annotation</td><td>external</td><td>F8</td></tr>
+				  <tr><td>E7</td><td>The batch is exposed</td><td>external</td><td>F10</td></tr>
+				  <tr><td>E8</td><td>The user asks for the annotations to be performed</td><td>external</td><td>F13</td></tr>
+				  <tr><td>E9</td><td>The annotations have been performed</td><td>internal</td><td>T08</td></tr>
+				  <tr><td>E10</td><td>The user asks to show the checked report</td><td>external</td><td>F22</td></tr>
+				  <tr><td>E11</td><td>The user asks to delete reports</td><td>external</td><td>F23</td></tr>
+				  <tr><td>E12</td><td>The user asks to annotate another batch</td><td>external</td><td>F24</td></tr>
+				  <tr><td>E13</td><td>A decision has changed</td><td>internal</td><td>T02 to T07, T12, T13</td></tr>
+				  <tr><td>E14</td><td>The user resets the page</td><td>external</td><td>F26</td></tr>
+				</tbody>
+				</table>
+
+				<p><b>E13 is the event the page turns on.</b> Every treatment which takes a
+				decision emits it, and what the page shows of the decisions is said again:
+				which types hold a selected annotation, the language the selected
+				annotations hold, and whether the annotations can be performed [022]. No
+				treatment is written for that announcement: it is a result of each of
+				them.</p>
+
+				<p>Nothing here waits for two events. T08 is the only treatment with a
+				condition on its synchronisation, and that condition is read on the data it
+				already holds.</p>
+
+				<h5>T01 &mdash; Present the annotations</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E1.</li>
+				<li><strong>Purpose</strong>: show what can be decided, and in which
+				order.</li>
+				<li><strong>Inputs</strong>: what the API declares (F1); the reports which
+				are kept.</li>
+				<li><strong>Outputs</strong>: the five steps, the lists of annotations, the
+				list of reports.</li>
+				<li><strong>Preconditions</strong>: none.</li>
+				<li><strong>Postconditions</strong>: every decision can be taken.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>one list per type, and an annotation which has several types is in
+					each of their lists;</li>
+					<li>what is shown of an annotation is what it declares, and nothing this
+					application wrote;</li>
+					<li>an annotation shows its references, or how far its development has
+					gone when it has no reference and that is known, or neither;</li>
+					<li>an annotation which has language resources shows its languages, and
+					one which has none shows no choice;</li>
+					<li>each list is arranged so that an annotation comes after the ones it
+					requires; one whose requirement is not in the list keeps its place;</li>
+					<li>every annotation is shown, and the ones which cannot be performed on
+					that machine are disabled;</li>
+					<li>a kind of output file which has no extension is not shown;</li>
+					<li>the page starts as [012] says.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: F2 and F21, always.</li>
+				</ul>
+
+				<h5>T02 &mdash; Choose an output extension</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E2.</li>
+				<li><strong>Purpose</strong>: decide with which extension the files of one
+				kind are written.</li>
+				<li><strong>Inputs</strong>: user choice (one extension of one kind).</li>
+				<li><strong>Outputs</strong>: <code>extensions</code>.</li>
+				<li><strong>Preconditions</strong>: none.</li>
+				<li><strong>Postconditions</strong>: <code>extensions</code> are available
+				to T08.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>the extension is one the system is able to write for that kind;</li>
+					<li>choosing the extension of one kind says nothing of the others.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: <code>extensions</code>, always; E13,
+				always.</li>
+				</ul>
+
+				<h5>T03 &mdash; Fix the language of the page</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E3.</li>
+				<li><strong>Purpose</strong>: give one language to every annotation which
+				has resources for it.</li>
+				<li><strong>Inputs</strong>: user choice (one language, or none).</li>
+				<li><strong>Outputs</strong>: <code>lang</code>, for every annotation which
+				has language resources.</li>
+				<li><strong>Preconditions</strong>: none.</li>
+				<li><strong>Postconditions</strong>: <code>lang</code> is available to
+				T08.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>an annotation which has resources for that language takes it;</li>
+					<li>an annotation which has resources, but none for that language, is
+					left without a language: it is not performed in another one, its
+					selection is not taken back, and it is not disabled;</li>
+					<li>an annotation which has no language resource is not concerned;</li>
+					<li>fixing none leaves every annotation which has resources without a
+					language;</li>
+					<li>selected or not, every annotation is concerned.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: <code>lang</code>, always; E13, always.</li>
+				</ul>
+
+				<h5>T04 &mdash; Select an annotation</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E4.</li>
+				<li><strong>Purpose</strong>: decide which annotations are performed.</li>
+				<li><strong>Inputs</strong>: user choice (one annotation, selected or
+				not).</li>
+				<li><strong>Outputs</strong>: <code>selected</code>.</li>
+				<li><strong>Preconditions</strong>: the annotation is not disabled.</li>
+				<li><strong>Postconditions</strong>: <code>selected</code> is available to
+				T08.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>selecting an annotation selects no other, and no other is
+					refused;</li>
+					<li>an annotation whose requirement is not selected is selected all the
+					same: what it finds is what is already beside the files;</li>
+					<li>an annotation left without a language is selected all the same.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: <code>selected</code>, always; E13, always;
+				F7, always.</li>
+				</ul>
+
+				<h5>T05 &mdash; Fix the language of one annotation</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E5.</li>
+				<li><strong>Purpose</strong>: give an annotation a language which is not the
+				one of the page.</li>
+				<li><strong>Inputs</strong>: user choice (one language of that annotation,
+				or none).</li>
+				<li><strong>Outputs</strong>: <code>lang</code>, for that annotation.</li>
+				<li><strong>Preconditions</strong>: the annotation has language
+				resources.</li>
+				<li><strong>Postconditions</strong>: <code>lang</code> is available to
+				T08.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>the language is one that annotation has resources for;</li>
+					<li>no other annotation is changed;</li>
+					<li>the language of the page fixed afterwards replaces it.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: <code>lang</code>, always; E13, always; F7,
+				when that annotation is selected.</li>
+				</ul>
+
+				<h5>T06 &mdash; Configure an annotation</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E6.</li>
+				<li><strong>Purpose</strong>: give an annotation the values it is performed
+				with.</li>
+				<li><strong>Inputs</strong>: the options of that annotation, with their
+				values.</li>
+				<li><strong>Outputs</strong>: <code>options</code>, for that
+				annotation.</li>
+				<li><strong>Preconditions</strong>: none; the annotation is selected or
+				not.</li>
+				<li><strong>Postconditions</strong>: <code>options</code> are available to
+				T08.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>the options are handed to the service of the options, which shows
+					them (F8);</li>
+					<li>what was fixed is taken back when the user confirms, and the values
+					are what they were when she gives up (F9);</li>
+					<li>nothing is judged here: what a value may be is that service's to
+					answer, and what it means is the annotation's.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: <code>options</code>, when the user
+				confirms; E13, when the user confirms.</li>
+				</ul>
+
+				<h5>T07 &mdash; Delimit the batch</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E7, which is the person saying the workspace is
+				ready (<code>is_ready()</code>).</li>
+				<li><strong>Purpose</strong>: define the set of files to annotate.</li>
+				<li><strong>Inputs</strong>: the workspace the provision of files hands,
+				<code>files_for_app()</code>.</li>
+				<li><strong>Outputs</strong>: <code>batch</code>.</li>
+				<li><strong>Preconditions</strong>: none.</li>
+				<li><strong>Postconditions</strong>: <code>batch</code> is available to
+				T08.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>the batch is delimited by the user, not by the system: it is the
+					files she checked, in the container of the provision of files;</li>
+					<li>the system alters no file of the batch;</li>
+					<li>the batch may be empty, which forbids T08.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: <code>batch</code>, always; E13, always; F11
+				saying the set is empty, when it is [403].</li>
+				</ul>
+
+				<h5>T08 &mdash; Perform the annotations</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E8, and at least one annotation selected and a
+				batch which is not empty [031].</li>
+				<li><strong>Purpose</strong>: perform every selected annotation on the
+				batch, and write what happened.</li>
+				<li><strong>Inputs</strong>: <code>batch</code>, <code>selected</code>,
+				<code>lang</code>, <code>options</code>, <code>extensions</code>,
+				<code>merge</code>.</li>
+				<li><strong>Outputs</strong>: <code>report</code>, <code>progress</code>,
+				produced files.</li>
+				<li><strong>Preconditions</strong>: at least one annotation selected;
+				<code>batch</code> not empty; no performance going.</li>
+				<li><strong>Postconditions</strong>: the report is written; the produced
+				files are in the workspace which was handed.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>the report is named first, under a name no report bore before (F14),
+					and the name of the next one is prepared at once;</li>
+					<li>the whole of what was decided is handed to the API, which performs
+					the selected annotations in its own order (F15);</li>
+					<li>the annotations are performed one after another, and one which fails
+					does not undo the others: what was written before it was written;</li>
+					<li>the API says which annotation it is performing and how far it has
+					gone, and it is shown as it says it (F16, F17);</li>
+					<li>the report is written by the API, line by line, while the
+					annotations are performed;</li>
+					<li>where one file gathering everything was asked for, it is created by
+					the API at the end of its own work;</li>
+					<li>nothing else is started while the annotations are performed
+					[032];</li>
+					<li>the batch is the workspace <code>files_for_app()</code> hands at
+					this request; its files are locked while the annotations are performed,
+					<code>lock()</code>, and released when they have been,
+					<code>release()</code>;</li>
+					<li>this treatment alters no file of the batch: what is produced is
+					written beside them and added to the workspace which was handed.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: F17, while the annotations are performed;
+				E9, when they have been, whatever each of them did.</li>
+				</ul>
+
+				<h5>T09 &mdash; Show the report, and make the produced files reachable</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E9.</li>
+				<li><strong>Purpose</strong>: that the user reads what happened, and reaches
+				what was produced without knowing where it was written.</li>
+				<li><strong>Inputs</strong>: <code>report</code>; the workspace which was
+				handed, holding what was produced.</li>
+				<li><strong>Outputs</strong>: the report, shown and checked in the list;
+				what was produced, given back to the provision of files.</li>
+				<li><strong>Preconditions</strong>: the annotations have been
+				performed.</li>
+				<li><strong>Postconditions</strong>: the report of this performance is the
+				one which is read and the one which is checked; every produced file is
+				reachable through the provision of files [801], [802].</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>locally, the report is added at the top of the list of the reports,
+					and checked [702];</li>
+					<li>it is shown as T10 shows any report, in both contexts;</li>
+					<li>online, the report stands with the produced files and is given back
+					with them: it is downloaded on its own [605], and the provision of files
+					gathers every produced file in one archive,
+					<code>address_of_all()</code>, the report included [803];</li>
+					<li>this application does not say where a file stands: it gives what was
+					produced back to the provision of files, <code>produced()</code>, and
+					says it has finished;</li>
+					<li>this treatment writes nothing and moves nothing.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: F20, always; F21, locally; F19 and F25,
+				always.</li>
+				</ul>
+
+				<h5>T10 &mdash; Show a report</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E10, which happens locally only [707].</li>
+				<li><strong>Purpose</strong>: read what a performance wrote of itself, the
+				one which has just ended or an older one.</li>
+				<li><strong>Inputs</strong>: the checked report.</li>
+				<li><strong>Outputs</strong>: the report, shown.</li>
+				<li><strong>Preconditions</strong>: a report is checked, and its file is
+				there.</li>
+				<li><strong>Postconditions</strong>: the report which is read is the one
+				which is checked.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>the name of the file is shown first [602];</li>
+					<li>the lines are shown as they were written, each with the state it
+					carries: OK, ERROR, WARNING, INFO or IGNORED [603];</li>
+					<li>a report is read and not interpreted: nothing is counted from it and
+					nothing is decided from it;</li>
+					<li>a report which cannot be read is said to be not available, with the
+					reason [604];</li>
+					<li>when no report is checked, what was shown is emptied.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: F20, always.</li>
+				</ul>
+
+				<h5>T11 &mdash; Delete reports</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E11, which happens locally only [707].</li>
+				<li><strong>Purpose</strong>: remove the reports which are of no use any
+				more.</li>
+				<li><strong>Inputs</strong>: user choice: the checked report, or every
+				report which is not checked.</li>
+				<li><strong>Outputs</strong>: the reports which are left.</li>
+				<li><strong>Preconditions</strong>: none.</li>
+				<li><strong>Postconditions</strong>: the reports which were named are gone,
+				and the others are untouched.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>deleting the checked report leaves no report checked, and nothing to
+					show;</li>
+					<li>deleting every report which is not checked keeps the checked
+					one;</li>
+					<li>a report which cannot be deleted is said so, stays in the list, and
+					the others are deleted all the same;</li>
+					<li>nothing of what a performance produced is deleted with its report
+					[706].</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: F21, always.</li>
+				</ul>
+
+				<h5>T12 &mdash; Annotate another batch</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E12.</li>
+				<li><strong>Purpose</strong>: annotate other files, with the decisions
+				already taken.</li>
+				<li><strong>Inputs</strong>: user choice.</li>
+				<li><strong>Outputs</strong>: <code>batch</code>, undefined;
+				<code>extensions</code>, <code>selected</code>, <code>lang</code>,
+				<code>options</code> and <code>merge</code>, as they were.</li>
+				<li><strong>Preconditions</strong>: no performance going.</li>
+				<li><strong>Postconditions</strong>: no batch, and the decisions are those
+				the person had taken.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>the provision of files is asked to start over,
+					<code>start_over()</code>;</li>
+					<li>the reports are not touched;</li>
+					<li>nothing of what was written on disk is undone.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: F11, always; E13, always.</li>
+				</ul>
+
+				<h5>T13 &mdash; Reset the page</h5>
+				<ul class="mct">
+				<li><strong>Event</strong>: E14.</li>
+				<li><strong>Purpose</strong>: take the page back to what it was on arrival,
+				in one gesture. It is the other end of T12: this one puts back what that
+				one keeps.</li>
+				<li><strong>Inputs</strong>: user choice.</li>
+				<li><strong>Outputs</strong>: <code>extensions</code>,
+				<code>selected</code>, <code>lang</code>, <code>options</code> and
+				<code>merge</code>, as they were on arrival at the page [012];
+				<code>batch</code>, undefined.</li>
+				<li><strong>Preconditions</strong>: no performance going.</li>
+				<li><strong>Postconditions</strong>: the decisions are those the page
+				arrived with, and there is no batch.</li>
+				<li><strong>Rules</strong>:
+				  <ul>
+					<li>the provision of files is asked to start over,
+					<code>start_over()</code>: a person who resets the page does not keep
+					the files she had given it;</li>
+					<li>the reports are not touched;</li>
+					<li>nothing of what was written on disk is undone.</li>
+				  </ul>
+				</li>
+				<li><strong>Emission</strong>: F2, always; F11, always; E13, always.</li>
+				</ul>
+
+			</section>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Organisational level</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Organisational model of treatments</h3>
+
+			<p>One procedure per treatment, numbered as it is. There are two contexts of
+			execution and one organisation: what differs between the local server and the
+			wsgi service is who exposes the batch and where the reports stand, and nothing
+			of what is done. Annotate is served by the two, which is why there is one table
+			and not two.</p>
+
+			<table>
+			<thead>
+			  <tr><th scope="col">PF</th><th scope="col">What it does</th><th scope="col">Triggered by</th><th scope="col">In charge</th><th scope="col">Where</th><th scope="col">When</th><th scope="col">Nature</th></tr>
+			</thead>
+			<tbody>
+			  <tr><td>PF1 (T01)</td><td>Presents the annotations</td><td>E1</td><td>the server</td><td>the server</td><td>when the page is asked for</td><td>automated</td></tr>
+			  <tr><td>PF2 (T02)</td><td>Chooses an output extension</td><td>E2</td><td>the user</td><td>the browser</td><td>whenever she chooses one; it is sent with the performance</td><td>conversational</td></tr>
+			  <tr><td>PF3 (T03)</td><td>Fixes the language of the page</td><td>E3</td><td>the user, among the languages the server wrote in the page</td><td>the browser</td><td>whenever she fixes it; it is sent with the performance</td><td>conversational</td></tr>
+			  <tr><td>PF4 (T04)</td><td>Selects an annotation</td><td>E4</td><td>the user</td><td>the browser</td><td>whenever she selects one or takes it back; it is sent with the performance</td><td>conversational</td></tr>
+			  <tr><td>PF5 (T05)</td><td>Fixes the language of one annotation</td><td>E5</td><td>the user</td><td>the browser</td><td>whenever she fixes it; it is sent with the performance</td><td>conversational</td></tr>
+			  <tr><td>PF6 (T06)</td><td>Configures an annotation</td><td>E6</td><td>the service of the options</td><td>as that service says</td><td>before a performance, as often as she wants</td><td>conversational</td></tr>
+			  <tr><td>PF7 (T07)</td><td>Delimits the batch</td><td>E7</td><td>the provider of files, and never Annotate</td><td>outside this application</td><td>before Annotate is reached locally; when the files are given, online</td><td>automated</td></tr>
+			  <tr><td>PF8 (T08)</td><td>Performs the annotations</td><td>E8</td><td>the server, then the API</td><td>the server</td><td>when she asks, and only then</td><td>automated</td></tr>
+			  <tr><td>PF9 (T09)</td><td>Shows the report, and makes the produced files reachable</td><td>E9</td><td>the server, then the provider of files</td><td>the server, then her machine</td><td>as soon as the annotations have been performed, then when she follows</td><td>automated, then conversational</td></tr>
+			  <tr><td>PF10 (T10)</td><td>Shows a report</td><td>E10</td><td>the server</td><td>the server</td><td>when she asks, locally</td><td>conversational</td></tr>
+			  <tr><td>PF11 (T11)</td><td>Deletes reports</td><td>E11</td><td>the server</td><td>the server</td><td>when she asks, locally</td><td>conversational</td></tr>
+			  <tr><td>PF12 (T12)</td><td>Annotates another batch</td><td>E12</td><td>the server</td><td>the server</td><td>when she asks</td><td>automated</td></tr>
+			  <tr><td>PF13 (T13)</td><td>Resets the page</td><td>E14</td><td>the server</td><td>the server</td><td>when she asks</td><td>automated</td></tr>
+			</tbody>
+			</table>
+
+			<p><b>Four procedures end in the browser, and they are four gestures.</b> The
+			extension picked, the language of the page fixed, the annotation selected, the
+			language of one annotation fixed: each of them keeps or shows what the server
+			already wrote in the page, and sends nothing. The languages of every annotation
+			were written by the server in the choice of that annotation; fixing the
+			language of the page sets each of those choices to that language where it holds
+			it, and to <code>---</code> where it does not. Which types hold a selected
+			annotation, and which language the selected annotations hold, are read on those
+			same fields. Nothing of what she is reading is replaced while she decides
+			[1005]. What she decided is sent once, with the performance. RO1, RO8</p>
+
+			<p><b>PF7 is in nobody's charge here.</b> The batch is exposed by a neighbour in
+			both contexts, and this application reads it. It appears in this table so that
+			the one procedure Annotate does not perform is written down. RO4</p>
+
+			<p><b>PF8 is the only long procedure, and it is followed.</b> The request which
+			asks for it starts the annotations on the server, in a thread, and answers at
+			once; the page is not reloaded. It is what the Setup does with the installation
+			of the features. The API is given something to say where it is &mdash; a
+			progress, as every long operation of SPPAS is given one &mdash; and it sets on
+			it which annotation it is performing and how far that one has gone. The page
+			then asks, at regular intervals, where the performance stands, and is answered
+			what that progress holds: a percent, a header and a text. A progress bar says
+			it. When the hundred is reached, the page asks for the results, and what the
+			server wrote replaces what was shown: the report, and the container of the
+			provision of files. RO5</p>
+
+			<p><b>PF10 and PF11 exist locally only.</b> Locally, the reports stand in the
+			folder of the logs of SPPAS, where every performance of that machine wrote
+			its own, and the list is theirs. Online, the report of a performance is written
+			in the place the provision of files made for what the person sent, and it is
+			one of the produced files: it is shown by PF9, downloaded with them, and it
+			lasts as long as they do. RO7</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>What the user acts on</h3>
+
+			<h4>Client-side triggers</h4>
+
+			<ul>
+			<li>Choosing the extension of one kind of output file</li>
+			<li>Fixing the language of the page</li>
+			<li>Showing the list of the annotations of one type, and coming back from it</li>
+			<li>Selecting an annotation, or taking the selection back</li>
+			<li>Fixing the language of one annotation</li>
+			<li>Asking to configure an annotation (hands over to the service of the options)</li>
+			<li>Following a reference of an annotation, which opens in the browser</li>
+			<li>Setting the merge option</li>
+			<li>Requesting the annotations to be performed (triggers T08)</li>
+			<li>Showing the five steps, the reports, or both</li>
+			<li>Checking a report, and requesting it to be shown (T10)</li>
+			<li>Requesting the checked report, or every other one, to be deleted (T11)</li>
+			<li>Requesting another batch (T12), or a reset (T13)</li>
+			</ul>
+
+			<h4>Navigation</h4>
+
+			<p>Annotate is a single page. The page of the desktop interface shows one panel
+			at a time: the five steps with the reports beside them, one list of annotations
+			per type, and the procedure outcome report. This one holds the same panels as
+			sections of one page, shown and hidden where they stand: nothing is asked of the
+			server to go from one to another.</p>
+
+			<p>From the five steps:</p>
+
+			<ul>
+			<li>the button of a type shows the list of the annotations of that type, and
+			the button at the top of that list comes back to the five steps;</li>
+			<li>performing the annotations shows the progress, then the procedure outcome
+			report, and the button at its top comes back to the five steps;</li>
+			<li>showing the checked report shows the procedure outcome report the same
+			way.</li>
+			</ul>
+
+			<p>The five steps and the reports stand side by side. A group of three radio
+			buttons &mdash; the five steps alone, both, the reports alone &mdash; says how
+			much of each is shown, as on the page of the Journal: two half-width panels are
+			unreadable on a narrow window. Both is what the page opens on locally; online,
+			the reports are collapsed.</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Rules of organisation</h3>
+
+			<ul>
+			<li><b>RO1</b> &mdash; The client holds no knowledge of the annotations. What an
+			annotation is, which languages it has and what it requires were written in the
+			page by the server; the client shows and sets what is there.</li>
+			<li><b>RO2</b> &mdash; The two contexts of execution are one organisation, and
+			the two deployments are one implementation. What differs is who exposes the
+			batch, and where the reports stand.</li>
+			<li><b>RO3</b> &mdash; The decisions are taken in any order. The five steps are
+			numbered for the person to read; none of the first three is a precondition of
+			another, and only the performance requires them.</li>
+			<li><b>RO4</b> &mdash; The batch is exposed by a neighbour and read. Annotate
+			selects no file, in either context, and alters none [402].</li>
+			<li><b>RO5</b> &mdash; A performance is started by one request and runs on the
+			server, in a thread; where it stands is read on the progress the API was given,
+			and its results replace what was shown when it ends. The failure of one
+			annotation never ends it [503].</li>
+			<li><b>RO6</b> &mdash; One performance at a time. While one goes, the page offers
+			nothing which starts another, resets the page or asks for another batch, and
+			the server refuses what would [032].</li>
+			<li><b>RO7</b> &mdash; Locally, the reports are those of the folder of the logs
+			of SPPAS, and they are listed, shown and deleted. Online, the report is one of
+			the produced files, no list exists, and the panel of the reports is collapsed
+			[707].</li>
+			<li><b>RO8</b> &mdash; A decision is taken in the page and sent with the
+			performance. Choosing an extension, fixing a language and selecting an
+			annotation make no request, and replace nothing of what is read [1005].
+			Resetting and asking for another batch are of another kind: they take the batch
+			back, which is the server's.</li>
+			<li><b>RO9</b> &mdash; What was decided is carried between two requests by what
+			the page transmits. What the server holds between two requests is the
+			performance which is going &mdash; its thread and its progress &mdash; and the
+			manager of the provision of files.</li>
+			<li><b>RO10</b> &mdash; The order in which the selected annotations are
+			performed is the API's. What this application works out from what the
+			annotations require is the order they are shown in [307], [502].</li>
+			<li><b>RO11</b> &mdash; The options of an annotation are shown and checked by the
+			service of the options. Annotate hands them over and takes the values back; how
+			that is done, and where, is that service's to say.</li>
+			</ul>
+
+			<p>RO6 is what the desktop interface does without saying it: its progress is a
+			modal dialog, and nothing can be clicked under it. A web page has no modal
+			progress, so the rule is written.</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Constraints</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>What the code holds to</h3>
+
+			<p>Gathered from the rules of the treatments and from the requirements they
+			answer, and written here once so that each of them has one place and one only.
+			Nothing is added: what follows was already said, and what this chapter buys is
+			that a constraint can be pointed at.</p>
+
+			<table>
+			<thead>
+			  <tr><th scope="col">No.</th><th scope="col">Constraint</th><th scope="col">Imposed by</th></tr>
+			</thead>
+			<tbody>
+			  <tr><td>C1</td><td>Each kind of output file has one extension, and always one: its default one, until another is chosen.</td><td>[012], [101], [104], T02</td></tr>
+			  <tr><td>C2</td><td>An extension is one the API is able to write for that kind; a kind which has none is not shown.</td><td>[102], [103], T01</td></tr>
+			  <tr><td>C3</td><td>The language of an annotation is one it has resources for, or none.</td><td>[202], [203], T03, T05</td></tr>
+			  <tr><td>C4</td><td>Fixing the language of the page concerns every annotation which has language resources, selected or not, and never one which has none.</td><td>[202], T03</td></tr>
+			  <tr><td>C5</td><td>An annotation left without a language stays selected, and is not disabled.</td><td>T03, T04</td></tr>
+			  <tr><td>C6</td><td>Selecting an annotation selects no other, and no other is refused.</td><td>[306], T04</td></tr>
+			  <tr><td>C7</td><td>Every annotation is shown; one which cannot be performed on that machine is disabled, and cannot be selected.</td><td>[308], T01, T04</td></tr>
+			  <tr><td>C8</td><td>What is shown of an annotation is what it declares, and nothing this application wrote.</td><td>T01</td></tr>
+			  <tr><td>C9</td><td>An annotation is shown after the ones it requires, and the arrangement changes no performance.</td><td>[307], [502], RO10</td></tr>
+			  <tr><td>C10</td><td>A decision makes no request, replaces nothing on the page and never moves the focus.</td><td>[1005], RO8</td></tr>
+			  <tr><td>C11</td><td>The batch is read and no file of it is altered; no file is selected here.</td><td>[401], [402], T07, RO4</td></tr>
+			  <tr><td>C12</td><td>The annotations are performed only with at least one annotation selected and a batch which is not empty.</td><td>[031], T08</td></tr>
+			  <tr><td>C13</td><td>One performance at a time: nothing is started, reset or started over while one goes.</td><td>[032], RO6</td></tr>
+			  <tr><td>C14</td><td>What a performance was started with does not change while it goes.</td><td>T08, RO8</td></tr>
+			  <tr><td>C15</td><td>The order of a performance is the API's.</td><td>[502], RO10</td></tr>
+			  <tr><td>C16</td><td>The failure of one annotation never interrupts the others.</td><td>[503], T08</td></tr>
+			  <tr><td>C17</td><td>Each performance writes one report, under a name no report bore before.</td><td>[504], T08</td></tr>
+			  <tr><td>C18</td><td>Where a performance stands is what the API said on the progress it was given: nothing is counted here.</td><td>[505], RO5</td></tr>
+			  <tr><td>C19</td><td>A report is shown as it was written, each line with the state it carries; nothing is counted from it and nothing is decided from it.</td><td>[603], T10</td></tr>
+			  <tr><td>C20</td><td>Locally, one report at most is checked, and the report of the performance which has just ended is.</td><td>[702], T09</td></tr>
+			  <tr><td>C21</td><td>Deleting a report deletes nothing of what was produced.</td><td>[706], T11</td></tr>
+			  <tr><td>C22</td><td>Online, no report is listed: the report is one of the produced files, and it is reached as they are.</td><td>[707], [803], RO7</td></tr>
+			  <tr><td>C23</td><td>Where a produced file is reached is given by the provision of files, and shown by this application.</td><td>[802], T09</td></tr>
+			  <tr><td>C24</td><td>Nothing of what was decided is held on the server between two requests. What is held is the performance which is going, and the manager of the provision of files.</td><td>RO9</td></tr>
+			  <tr><td>C25</td><td>Which section of the page is shown is carried by nobody: the page shows and hides them where they stand.</td><td>[1006], the navigation</td></tr>
+			</tbody>
+			</table>
+
+			<p><b>C5 and C6 are the same decision seen twice.</b> Nothing is decided for the
+			person: an annotation is selected without what it requires, and it stays
+			selected without a language. What is done with it is the API's to say, in the
+			report.</p>
+
+			<p><b>C9 does not contradict C6.</b> It bears on what is shown and on nothing
+			else: the alignment is shown after the phonetization it requires, and selecting
+			the one never selects the other.</p>
+
+			<p><b>C24 is where Annotate departs from Convert.</b> A performance is held by
+			the server while it goes, because it is followed as the Setup follows an
+			installation: a thread advances it, and the progress it was given is read. What
+			the person decided is held by nothing but her page.</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.5 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Logical level</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The tables</h3>
+
+			<p>Each class of entities becomes a table, and its identifier becomes its key.
+			Nine tables: three are what the API declares and are permanent, five belong to
+			one performance, and one is what stays.</p>
+
+			<table>
+			<thead>
+			  <tr><th scope="col">Table</th><th scope="col">Columns</th><th scope="col">Comes from</th></tr>
+			</thead>
+			<tbody>
+			  <tr><td>ANNOTATION</td><td><u>annotation</u></td><td>The class ANNOTATION</td></tr>
+			  <tr><td>REQUIRES</td><td><u>annotation</u>, <u>required</u></td><td>R9, which is many to many</td></tr>
+			  <tr><td>KIND</td><td><u>kind</u></td><td>The class KIND</td></tr>
+			  <tr><td>PERFORMANCE</td><td><u>performance</u>, merge, report</td><td>The class PERFORMANCE, and R8</td></tr>
+			  <tr><td>SELECTION</td><td><u>performance</u>, <u>annotation</u>, language</td><td>The class SELECTION, and R1 with R2</td></tr>
+			  <tr><td>EXTENSION</td><td><u>performance</u>, <u>kind</u>, extension</td><td>The class EXTENSION, and R3 with R4</td></tr>
+			  <tr><td>VALUE</td><td><u>performance</u>, <u>annotation</u>, <u>option</u>, value</td><td>The class VALUE, and R5 with R6</td></tr>
+			  <tr><td>BATCH</td><td><u>performance</u>, <u>file</u></td><td>R7, which is many to many</td></tr>
+			  <tr><td>REPORT</td><td><u>report</u></td><td>The class REPORT</td></tr>
+			</tbody>
+			</table>
+
+			<p>R1 and R2 both have their low cardinality on the side of SELECTION, which is
+			(1,1): the table takes the two keys, and the two together identify it. One
+			performance holds one annotation at most once. The same holds of EXTENSION with
+			R3 and R4, which is C1 written as a key: one kind has one extension in one
+			performance.</p>
+
+			<p><b>The language of an annotation which is not selected has no table.</b> In
+			the model, it is on the selection; on the page, every annotation has its choice
+			of language, selected or not, and fixing the language of the page sets them
+			all. What the performance is handed is the language of the selected ones, and
+			the others are fields of the page.</p>
+
+			<p><b>The report is not keyed by its performance.</b> A report is read long
+			after the performance which wrote it, and a performance does not last. R8
+			reads (0,1) on both sides: the table PERFORMANCE takes the key of the report it
+			writes, and REPORT stands by itself.</p>
+
+			<p><b>Four tables are read and never written.</b> ANNOTATION, REQUIRES and KIND
+			are what the API answers. BATCH is what the provider of files exposes, read at
+			every request and altered by nothing here [402].</p>
+
+			<p>Not in the tables, and computed every time they are wanted: the annotations
+			of one type, whether a type holds a selected annotation, the languages of the
+			page, the language the selected annotations hold, the arrangement of a list,
+			whether an annotation can be performed on that machine, what is still missing
+			before the annotations can be performed, and the progress.</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.6 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Physical level</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Where each table stands</h3>
+
+			<p>Here the machines are named, and not before. There is no database: three
+			tables stand in the API of SPPAS, four in what the page transmits, one in a
+			neighbour and one on a disk.</p>
+
+			<table>
+			<thead>
+			  <tr><th scope="col">Table</th><th scope="col">Where it stands</th><th scope="col">Between two requests</th><th scope="col">What the user sees</th></tr>
+			</thead>
+			<tbody>
+			  <tr><td>ANNOTATION</td><td>The API of SPPAS: the steps of a <code>sppasParam</code>, read at every request</td><td>Its own</td><td>The annotations, in one list per type</td></tr>
+			  <tr><td>REQUIRES</td><td>The API of SPPAS <span class="api-ext">[API-EXT]</span></td><td>Its own</td><td>What an annotation requires, and the arrangement of its list</td></tr>
+			  <tr><td>KIND</td><td>The API of SPPAS: <code>sppasFiles.OUT_FORMATS</code>, read at every request</td><td>Its own</td><td>One choice of extension per kind</td></tr>
+			  <tr><td>PERFORMANCE</td><td>What the page transmits</td><td>Nothing: it is rebuilt at every request</td><td>Her decisions, as she took them</td></tr>
+			  <tr><td>SELECTION</td><td>What the page transmits</td><td>Nothing</td><td>The annotations she selected, and the language of each</td></tr>
+			  <tr><td>EXTENSION</td><td>What the page transmits</td><td>Nothing</td><td>The extension standing for each kind</td></tr>
+			  <tr><td>VALUE</td><td>What the page transmits, as the service of the options gives it</td><td>Nothing</td><td>The options of an annotation, when she configures it</td></tr>
+			  <tr><td>BATCH</td><td>What the provider of files exposes</td><td>That domain's</td><td>The files she is annotating</td></tr>
+			  <tr><td>REPORT</td><td>A file. Locally, in the folder of the logs of SPPAS; online, in the place the provision of files made for what she sent</td><td>The file</td><td>Locally, the list of the reports; in both contexts, the lines of the one which is shown</td></tr>
+			</tbody>
+			</table>
+
+			<p><b>The decisions change place when the performance starts.</b> While the
+			person decides, nothing is held on the server: the page carries what was
+			decided and transmits it with the performance. The request which starts the
+			performance writes all of it in a <code>sppasParam</code> &mdash; the
+			annotations activated, the language and the options of each, the extensions,
+			the workspace and the name of the report &mdash; and hands it to the thread. It
+			is the object the API is performed with, and it is held for as long as the
+			performance goes and no longer. C14, C24</p>
+
+			<p><b>The progress stands with the performance.</b> It is a
+			<code>swappProgressBar</code>, which is a <code>sppasBaseProgress</code>: the
+			API sets on it a percent, a header and a text, and the requests which follow
+			read them. It is made when the performance starts and dropped when it has
+			ended. C18</p>
+
+			<p><b>The report is the one thing which stays.</b> Locally, its name is given
+			by <code>sppasLogFile</code> with the pattern <code>report</code>, as the
+			desktop interface names it: the two interfaces list the same reports. Online,
+			it is written with the produced files, and which operation of the provision of
+			files gives that place is to be named in its dossier. C17, C22</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Operational model of treatments</h3>
+
+			<p>The organisational level said by what and when; this says in what tasks, and
+			what among them cannot be half done.</p>
+
+			<p><b>One request is one unit.</b> Every request begins by rebuilding what was
+			decided from what the page transmitted, runs the one treatment it was asked
+			for, and sends back what is to be shown. Nothing is begun in one request and
+			finished in another, except T08: it is started by one request, the requests
+			which follow ask where it stands, and the last one gives its report.</p>
+
+			<table>
+			<thead>
+			  <tr><th scope="col">PF</th><th scope="col">The tasks, in order</th><th scope="col">What cannot be half done</th></tr>
+			</thead>
+			<tbody>
+			  <tr><td>PF1</td><td>When the page is asked for: read the annotations from the API and, for each of them, what it declares; read the kinds of output file, their extensions and their default one; arrange each list; locally, list the reports; write all of it in the page</td><td>Nothing: nothing is written</td></tr>
+			  <tr><td>PF2, PF4, PF5</td><td>In the page: keep the extension, the selection or the language; it is sent with the performance</td><td>Nothing: nothing is sent</td></tr>
+			  <tr><td>PF3</td><td>In the page: set the choice of language of every annotation to the language fixed where it holds it, and to <code>---</code> where it does not; show the language the selected annotations hold</td><td>Nothing: nothing is sent</td></tr>
+			  <tr><td>PF6</td><td>Hand the options of the annotation to the service of the options; take back the values, or nothing when she gives up</td><td>Nothing of this application's</td></tr>
+			  <tr><td>PF8</td><td>Rebuild; ask the provision of files for the batch, and verify one annotation selected, a batch which is not empty and no performance going; name the report; write what was decided in a <code>sppasParam</code>; make the progress; lock the batch; start the thread and answer. In the thread: have the API perform the annotations; release the batch, give back what was produced, and say it has finished</td><td>The start: a performance is going, or none is. Not the performance itself</td></tr>
+			  <tr><td>PF9</td><td>Read the report; locally, add it to the list and check it; online, ask the provision of files for its address and for the address of the archive; write the section of the report and the container of the provision of files</td><td>Nothing</td></tr>
+			  <tr><td>PF10</td><td>Read the checked report, and write the section of the report</td><td>Nothing: nothing is written on a disk</td></tr>
+			  <tr><td>PF11</td><td>Delete the checked report, or each report which is not checked, one after another</td><td>The deletion of one report</td></tr>
+			  <tr><td>PF12</td><td>Rebuild; ask the provision of files to start over; answer the page with the decisions as they were</td><td>Nothing</td></tr>
+			  <tr><td>PF13</td><td>Rebuild nothing; ask the provision of files to start over; answer the page as PF1 does</td><td>Nothing</td></tr>
+			</tbody>
+			</table>
+
+			<h4>A performance is never half done, because nothing of it is undone</h4>
+
+			<p>What an annotation writes, it writes as it goes, beside the files. There is
+			no moment at which a performance is half made and has to be undone: an
+			annotation which failed stops nothing, and the ones performed before it wrote
+			what they wrote [503].</p>
+
+			<p><b>A performance which stops is not repaired.</b> Nothing more is written
+			and nothing more is said. The report was written line by line: it holds what
+			was done until then, and it is read as any other [603].</p>
+
+			<h4>The order is not this application's</h4>
+
+			<p>The selected annotations are performed in the order of the API. An
+			annotation which requires one which was not selected is performed all the same.
+			What is read of the requirements is read for the person: to show them, and to
+			arrange each list. C9, C15</p>
+
+			<h4>One performance at a time</h4>
+
+			<p>The thread which performs the annotations is what says a performance is
+			going. While it is alive, a request which would start another one, reset the
+			page or start over is refused, and the page, which shows the progress in place
+			of the five steps, offers none of them. C13</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Where the code goes</h3>
+
+			<p>In <code>sppas/ui/swapp/app_annotate/</code>. One module per kind of
+			knowledge, and every procedure has one module and one only.</p>
+
+			<table>
+			<thead>
+			  <tr><th scope="col">Module</th><th scope="col">What it does</th><th scope="col">Procedure</th></tr>
+			</thead>
+			<tbody>
+			  <tr><td>annotations</td><td>Knows which annotations there are and what each declares, which kinds of output file there are and their extensions; says which annotation is of which type, which languages the page offers, and arranges a list by what its annotations require. Reads no file of the user</td><td>PF1</td></tr>
+			  <tr><td>performance</td><td>Names the report, writes what was decided in what the API is performed with, makes the progress, starts the thread, and says whether a performance is going and where it stands</td><td>PF8</td></tr>
+			  <tr><td>reports</td><td>Lists the reports, reads one with the state of each of its lines, and deletes those which are named</td><td>PF9, PF10, PF11</td></tr>
+			  <tr><td>provision</td><td>Reads the batch the provision of files hands, says what it locks and releases, gives back what was produced, asks for the addresses, and says when it has finished. Alters nothing of the batch</td><td>PF7, PF8, PF9</td></tr>
+			  <tr><td>decisions</td><td>Rebuilds what was decided from what the page transmitted, and says what is still missing</td><td>PF12, PF13, and the beginning of every other</td></tr>
+			  <tr><td>presentation</td><td>Renders the state, collects the decisions, triggers the events</td><td>The view of every procedure; PF2 to PF5, which happen in the page</td></tr>
+			</tbody>
+			</table>
+
+			<p>What each one promises, which is the reason for the cutting:</p>
+
+			<ul>
+			<li>The <b>annotations</b> module is the only one which reads what an annotation declares. Arranging a list is the one thing it adds, and it is given everything it needs: it is tested with nothing installed.</li>
+			<li>The <b>performance</b> module is the only one which has the API perform annotations, so it is the only one to read again the day that API changes.</li>
+			<li>The <b>reports</b> module is the only one which touches a report. It does not write one: the API does.</li>
+			<li><b>Provision</b> is the only one which calls the provision of files on files. It is given the manager of that service by the response.</li>
+			<li><b>Decisions</b> is the only one which knows what the page transmits. It holds no state of its own between two requests.</li>
+			<li><b>Presentation</b> decides nothing. What it shows was decided before it was called, and the JavaScript it carries renders and nothing else.</li>
+			</ul>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The batch is provided, not constituted</h3>
+
+			<p>Annotate does not select files. It receives a batch from its execution
+			context and alters none of its files. In a local session, that context is the
+			SPPAS workspace, or the files the person designates with the file chooser of
+			the machine. In an online use, the batch results from files brought by the user
+			to the service.</p>
+
+			<p>Annotate therefore depends on the provision of files, a service of swapp
+			which has its own dossier, exactly as Convert does: a workspace holding the
+			files to be treated and them only is handed, what is produced is added to it,
+			and it is given back. The page of the desktop interface is given the workspace
+			by its parent and sends it back when the annotations have been performed; this
+			one asks the service, and gives back to the service.</p>
+
+			<p>Which files an annotation takes among those of the batch is not decided
+			here: an annotation which takes two files finds them from the workspace and
+			from what it declares.</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Implementation model: MVC</h3>
+
+			<ul>
+				<li><strong>Model</strong>: knows the annotations, performs T08, reads and
+				deletes the reports, and is the only one which calls the provision of files
+				on files. It is a fa&ccedil;ade over the automatic annotations of
+				SPPAS.</li>
+				<li><strong>Controller</strong>: identifies the task requested, checks its
+				preconditions, chooses the treatment to run, calls the model, and prepares
+				the data for display.</li>
+				<li><strong>View</strong>: renders the state, collects the decisions,
+				triggers the events. No business logic; JavaScript is rendering and
+				interaction support only.</li>
+			</ul>
+
+			<p>What receives a request is not the controller. The WhakerPy response handles
+			the URL, receives the GET or POST and the events it carries, calls the
+			controller once for that request, and bakes the returned tree &mdash; either a
+			full page or an update payload.</p>
+
+			<h5>Model</h5>
+
+			<p>The fa&ccedil;ade <code>AnnotateModel</code> exposes the single interface the
+			application expects and delegates to four specialised sub-models.</p>
+
+			<p><code>ModelAnnotations</code> holds the knowledge of the annotations. It
+			makes a <code>sppasParam</code> and reads its steps: for each annotation, its
+			key, its name, its description, its types, its languages, its references, how
+			far its development has gone and its options. It reads the kinds of output
+			file, their extensions and their default one from <code>sppasFiles</code>. It
+			gives the languages of the page, which are the languages of every annotation
+			put together, and it arranges a list by what its annotations require.</p>
+
+			<p><code>ModelPerformance</code> performs T08. It names the report, fills a
+			<code>sppasParam</code> with what was decided, makes the progress, and starts
+			a thread in which <code>sppasAnnotationsManager</code> performs the
+			annotations, the merge option being given to it first. It holds the thread and
+			the progress, and nothing else: it says whether a performance is going, and
+			where it stands.</p>
+
+			<p><code>ModelReports</code> lists the reports of the folder of the logs
+			&mdash; the text files whose name holds <code>report</code> &mdash;, reads one,
+			and deletes those it is named. Reading gives the lines as they were written,
+			each with the state it carries: a line which starts a result bears one of OK,
+			ERROR, WARNING, INFO and IGNORED, in the language of the interface, and that
+			word is what the state is read from.</p>
+
+			<p><code>ModelProvision</code> is the only class which calls the provision of
+			files on files, as in Convert: <code>files_for_app()</code>,
+			<code>lock()</code>, <code>release()</code>, <code>produced()</code>,
+			<code>address_of()</code>, <code>address_of_all()</code>, and
+			<code>finished</code>.</p>
+
+			<h5>Controller</h5>
+
+			<p>The controller is called once per request. It rebuilds the current state
+			exclusively from the data transmitted to it. What carries that state is one
+			object, <code>AnnotateRecord</code>: the view serialises it and the controller
+			parses it back, and neither of them holds it between two requests.</p>
+
+			<p>Tasks:</p>
+
+			<ul class="req">
+			<li><strong>start</strong> &mdash; transmitted: nothing. Preconditions: none.
+			Triggers: T01. Produces: the page in its initial state [012].</li>
+			<li><strong>perform</strong> &mdash; transmitted: the extensions, the selected
+			annotations, the language of each, the values of the options, the merge option.
+			Preconditions: at least one annotation selected; batch not empty; no
+			performance going. Triggers: T08. Produces: the progress.</li>
+			<li><strong>update</strong> &mdash; transmitted: nothing. Triggers: nothing.
+			Produces: the percent, the header and the text of the progress, alone.</li>
+			<li><strong>complete</strong> &mdash; transmitted: the decisions. Triggers:
+			T09. Produces: the report, the container of the provision of files and, online,
+			the addresses.</li>
+			<li><strong>show</strong> &mdash; transmitted: the checked report, the
+			decisions. Preconditions: a report is checked and can be read. Triggers: T10.
+			Produces: the report. Locally.</li>
+			<li><strong>delete_checked</strong>, <strong>delete_unchecked</strong> &mdash;
+			transmitted: the checked report, the decisions. Triggers: T11. Produces: the
+			list of the reports which are left. Locally.</li>
+			<li><strong>restart</strong> &mdash; transmitted: the decisions. Preconditions:
+			no performance going. Triggers: T12. Produces: the page without batch, the
+			decisions as they were. The provision of files starts over.</li>
+			<li><strong>reset</strong> &mdash; transmitted: nothing. Preconditions: no
+			performance going. Triggers: T13. Produces: the page in its initial state. The
+			provision of files starts over.</li>
+			</ul>
+
+			<p>Nine tasks for thirteen treatments. T02 to T05 happen in the page and make
+			no request RO8: what they decide is transmitted with <strong>perform</strong>.
+			T06 is handed to the service of the options, and T07 is the provision of
+			files'. <strong>update</strong> and <strong>complete</strong> are sent as the
+			Setup sends them: <code>event_name</code> carries the first, and
+			<code>event_bake</code> the second. The answer to <strong>update</strong> has
+			a status of 202 until the hundred is reached.</p>
+
+			<h5>What the page starts with</h5>
+
+			<table>
+			<caption>Default of each decision</caption>
+			<thead>
+			  <tr>
+				<th scope="col">Decision</th>
+				<th scope="col">Default</th>
+				<th scope="col">Reason</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr><th scope="row">extension of a kind</th><td>the default extension of that kind</td><td>what the API says</td></tr>
+			  <tr><th scope="row">language of the page</th><td><code>---</code></td><td>no initiative</td></tr>
+			  <tr><th scope="row">language of an annotation</th><td>the one its declaration holds, <code>---</code> when it holds none</td><td>what the API says</td></tr>
+			  <tr><th scope="row">annotation</th><td>not selected</td><td>no initiative</td></tr>
+			  <tr><th scope="row">merge option</th><td>off</td><td>no initiative</td></tr>
+			  <tr><th scope="row">panels shown</th><td>both locally; the five steps alone online</td><td>RO7</td></tr>
+			</tbody>
+			</table>
+
+			<h5>Views</h5>
+
+			<p>The WhakerPy response builds the whole HTML tree, and the structural elements
+			common to the application &mdash; head, header, nav, footer &mdash; are factored
+			there. The Annotate views build only the content of
+			<code>body &gt; main</code>.</p>
+
+			<p>Annotate has one applicative view, <code>AnnotateView</code>, built from the
+			panels of the page of the desktop interface, which bear its names. They are
+			sections of one page.</p>
+
+			<p><code>ActionAnnotatePanel</code> presents the five steps, each with its
+			title as the desktop interface writes it. Step 1: one choice of extension per
+			kind of output file. Step 2: the choice of the language of the page. Step 3: one
+			button per type, which shows the list of that type and says whether it holds a
+			selected annotation &mdash; an icon whose state has a text alternative. Step 4:
+			the merge option, and the button which performs the annotations; that button is
+			disabled as long as no annotation is selected. Step 5: the button which shows
+			the checked report, disabled as long as no report is checked. It holds the two
+			buttons of the form as well: the one which annotates another batch, and
+			Reset.</p>
+
+			<p><code>ReportsPanel</code> presents, beside the five steps, the reports which
+			are kept: one radio button per report, named after its file, the last one
+			written at the top; and two buttons, one which deletes the checked report and
+			one which deletes all the others. Online, it is collapsed.</p>
+
+			<p>A group of three radio buttons stands above the two panels and says which
+			of them are shown. It is the segmented control of Whakerexa the Journal uses,
+			a native radio group: reaching it with the keyboard and hearing which one
+			holds come from the buttons themselves and not from a script.</p>
+
+			<p><code>AnnotationsPanel</code> presents the annotations of one type: a button
+			which comes back to the five steps, a title naming the type, then one
+			<code>EnableAnnotation</code> per annotation of that type, arranged by what
+			they require. There are three of them, one per type.</p>
+
+			<p><code>EnableAnnotation</code> presents one annotation: what selects it, with
+			its name; what configures it; its references, one link each, telling a document
+			from a web page &mdash; or, when it has none and its development is known, a
+			gauge with its percent; the choice of its language, when it has language
+			resources; its description; and what it requires. An annotation which cannot be
+			performed on that machine is there, disabled.</p>
+
+			<p><code>LogAnnotatePanel</code> presents the progress while the annotations
+			are performed, then the procedure outcome report: a button which comes back to
+			the five steps, the title, the name of the file of the report, then its lines,
+			each result bearing the class of its state. The state is in the text of the
+			line as well, so the colour is never the only thing which says it. Online, a
+			link downloads the report, and another one the archive of every produced
+			file.</p>
+
+			<p>The container of the provision of files stands in the page as well. It is
+			not a panel of Annotate: the response places it under the node it chose.</p>
+
+			<p>JavaScript is interface support. It shows and hides the sections. When the
+			language of the page is fixed, it sets the choice of each annotation. When an
+			annotation is selected or its language fixed, it says again which types hold a
+			selected annotation and which language the selected annotations hold, the
+			entry <code>MIX</code> included, and enables or disables the button which
+			performs. When she asks for the annotations to be performed, it sends the
+			fields of the form without reloading the page, shows the progress and asks at
+			regular intervals where the performance stands; when the hundred is reached, it
+			asks for the results and puts in the page what the server wrote. It creates no
+			HTML and holds no knowledge of the annotations.</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The classes of the model</h3>
+
+			<p><code>/</code> marks what is derived and held by nobody. What the operations
+			promise is the chapter on the contracts.</p>
+
+			<table>
+			<thead><tr><th scope="col">Class</th><th scope="col">From</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
+			<tbody>
+			  <tr><td><code>AnnotateModel</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>annotations(), kinds(), languages(), batch(), start(batch, performance), is_performing(), progress(), reports(), read_report(name), delete_reports(names), address_of(filename), address_of_all(filenames)</td></tr>
+			  <tr><td><code>ModelAnnotations</code></td><td>module <i>annotations</i></td><td>&mdash;</td><td>annotations(), kinds(), languages(), arranged(annotations)</td></tr>
+			  <tr><td><code>ModelPerformance</code></td><td>module <i>performance</i></td><td>thread, progress</td><td>start(batch, performance), is_performing(), progress()</td></tr>
+			  <tr><td><code>ModelReports</code></td><td>module <i>reports</i></td><td>&mdash;</td><td>reports(), read(name), delete(names)</td></tr>
+			  <tr><td><code>ModelProvision</code></td><td>module <i>provision</i></td><td>&mdash;</td><td>batch(), lock(names), release(names), produced(workspace), address_of(filename), address_of_all(filenames), finished()</td></tr>
+			  <tr><td><code>Annotation</code></td><td>ANNOTATION, REQUIRES</td><td>key, name, description, types, languages, language, references, devel, requires, /can be performed</td><td>&mdash;</td></tr>
+			  <tr><td><code>Kind</code></td><td>KIND</td><td>kind, extensions, default</td><td>&mdash;</td></tr>
+			  <tr><td><code>Performance</code></td><td>PERFORMANCE, SELECTION, EXTENSION, VALUE</td><td>extensions, selected, lang, options, merge, report, /what is missing</td><td>what_is_missing(batch)</td></tr>
+			  <tr><td><code>ReportLine</code></td><td>REPORT</td><td>text, state</td><td>&mdash;</td></tr>
+			  <tr><td>none</td><td>BATCH</td><td colspan="2">The files are exposed by the provision of files, which names them already</td></tr>
+			</tbody>
+			</table>
+
+			<p><b>What the core of SPPAS already holds is not held again here.</b> Which
+			annotations there are and what each declares is <code>sppasParam</code>;
+			performing them is <code>sppasAnnotationsManager</code>; the kinds of output
+			file and their extensions are <code>sppasFiles</code>; the types are
+			<code>annots.types</code>; naming a report is <code>sppasLogFile</code>.
+			<code>Annotation</code> and <code>Kind</code> are what is read of them to be
+			shown, made at each request and kept by nobody.</p>
+
+			<p><b>What tells that an annotation cannot be performed on a machine is to be
+			named.</b> The API raises an exception for it; which one, and where, is not
+			written here yet. <code>Annotation</code> carries the answer, and
+			<code>ModelAnnotations</code> is the only class to read again the day it is
+			named.</p>
+
+			<p><code>Performance.what_is_missing()</code> is given the batch and does not
+			hold it: what may be missing is an annotation selected and a batch which is not
+			empty [031].</p>
+
+			<h4>What is tied to what</h4>
+
+			<table>
+			<thead><tr><th scope="col">Tie</th><th scope="col">Legs</th><th scope="col">What it is</th></tr></thead>
+			<tbody>
+			  <tr><td>holds</td><td><code>AnnotateModel</code> 1 &mdash; 1 each of the four sub-models</td><td>A composition: the fa&ccedil;ade makes them, and nothing else reaches them</td></tr>
+			  <tr><td>uses</td><td><code>ModelAnnotations</code> &rarr; <code>Annotation</code>, <code>Kind</code></td><td>A dependency: it makes them from the API, and keeps none</td></tr>
+			  <tr><td>uses</td><td><code>ModelAnnotations</code> &rarr; <code>sppasParam</code>, <code>sppasFiles</code></td><td>A dependency: what is read of the API to be shown</td></tr>
+			  <tr><td>uses</td><td><code>ModelPerformance</code> &rarr; <code>sppasParam</code>, <code>sppasAnnotationsManager</code>, <code>sppasLogFile</code></td><td>A dependency, and the only tie of this application to what performs annotations</td></tr>
+			  <tr><td>holds</td><td><code>ModelPerformance</code> 1 &mdash; 0..1 <code>swappProgressBar</code></td><td>A composition: made when a performance starts, dropped when it has ended</td></tr>
+			  <tr><td>uses</td><td><code>ModelPerformance</code> &rarr; <code>ModelProvision</code></td><td>A dependency: it locks, releases and gives back, in the thread</td></tr>
+			  <tr><td>uses</td><td><code>ModelReports</code> &rarr; <code>ReportLine</code></td><td>A dependency: it makes them from a file, and keeps none</td></tr>
+			  <tr><td>uses</td><td><code>ModelProvision</code> &rarr; the provision of files</td><td>A dependency, and the only tie of this application to that domain</td></tr>
+			</tbody>
+			</table>
+
+			<h4>In yUML</h4>
+
+			<p>To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
+			class diagram.</p>
+
+			<pre class="dark"><code>[AnnotateModel|annotations();kinds();languages();batch();start();is_performing();progress();reports();read_report();delete_reports();address_of();address_of_all()]++1-1&gt;[ModelAnnotations|annotations();kinds();languages();arranged()]
+[AnnotateModel]++1-1&gt;[ModelPerformance|thread;progress|start();is_performing();progress()]
+[AnnotateModel]++1-1&gt;[ModelReports|reports();read();delete()]
+[AnnotateModel]++1-1&gt;[ModelProvision|batch();lock();release();produced();address_of();address_of_all();finished()]
+
+[ModelAnnotations]-.-&gt;[Annotation|key;name;description;types;languages;language;references;devel;requires;/can be performed]
+[ModelAnnotations]-.-&gt;[Kind|kind;extensions;default]
+[ModelAnnotations]-.-&gt;[sppasParam]
+[ModelAnnotations]-.-&gt;[sppasFiles]
+[ModelPerformance]++1-0..1&gt;[swappProgressBar]
+[ModelPerformance]-.-&gt;[sppasParam]
+[ModelPerformance]-.-&gt;[sppasAnnotationsManager]
+[ModelPerformance]-.-&gt;[sppasLogFile]
+[ModelPerformance]-.-&gt;[ModelProvision]
+[ModelReports]-.-&gt;[ReportLine|text;state]</code></pre>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The classes of the view</h3>
+
+			<table>
+			<thead><tr><th scope="col">Class</th><th scope="col">Operations</th><th scope="col">What it shows</th></tr></thead>
+			<tbody>
+			  <tr><td><code>AnnotateView</code></td><td>populate_tree_content(record), section, info</td><td>The page, and the panels it holds. It is the module <i>presentation</i>: what is shown, and nothing of what it means</td></tr>
+			  <tr><td><code>ActionAnnotatePanel</code></td><td>&mdash;</td><td>The five steps: the extensions, the language of the page, one button per type, the merge option and what performs, what shows the checked report; and the two buttons which start again</td></tr>
+			  <tr><td><code>ReportsPanel</code></td><td>&mdash;</td><td>Locally, the reports which are kept, one of them checked at most, and the two buttons which delete. Collapsed online</td></tr>
+			  <tr><td><code>AnnotationsPanel</code></td><td>&mdash;</td><td>The annotations of one type, arranged by what they require</td></tr>
+			  <tr><td><code>EnableAnnotation</code></td><td>&mdash;</td><td>One annotation: what selects it, what configures it, its references or how far its development has gone, its language, its description, what it requires. Disabled when it cannot be performed on that machine</td></tr>
+			  <tr><td><code>LogAnnotatePanel</code></td><td>&mdash;</td><td>The progress, then the procedure outcome report: the name of its file and its lines, each with its state. Online, a link to the report and one to the archive</td></tr>
+			</tbody>
+			</table>
+
+			<h4>What is tied to what</h4>
+
+			<table>
+			<thead><tr><th scope="col">Tie</th><th scope="col">Legs</th><th scope="col">What it is</th></tr></thead>
+			<tbody>
+			  <tr><td>holds</td><td><code>AnnotateView</code> 1 &mdash; 1 <code>ActionAnnotatePanel</code>, 1 <code>ReportsPanel</code>, 1 <code>LogAnnotatePanel</code></td><td>A composition: a panel builds one part of one page and exists for it</td></tr>
+			  <tr><td>holds</td><td><code>AnnotateView</code> 1 &mdash; 3 <code>AnnotationsPanel</code></td><td>A composition: one per type</td></tr>
+			  <tr><td>holds</td><td><code>AnnotationsPanel</code> 1 &mdash; 0..n <code>EnableAnnotation</code></td><td>A composition: one per annotation of that type</td></tr>
+			  <tr><td>uses</td><td><code>AnnotateView</code> &rarr; <code>AnnotateRecord</code></td><td>A dependency: it is given it and builds from it</td></tr>
+			</tbody>
+			</table>
+
+			<h4>In yUML</h4>
+
+			<pre class="dark"><code>[AnnotateView|section;info|populate_tree_content()]++1-1&gt;[ActionAnnotatePanel]
+[AnnotateView]++1-1&gt;[ReportsPanel]
+[AnnotateView]++1-3&gt;[AnnotationsPanel]
+[AnnotateView]++1-1&gt;[LogAnnotatePanel]
+[AnnotationsPanel]++1-0..*&gt;[EnableAnnotation]
+
+[AnnotateView]-.-&gt;[AnnotateRecord]</code></pre>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The classes of the controller</h3>
+
+			<table>
+			<thead><tr><th scope="col">Class</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
+			<tbody>
+			  <tr><td><code>AnnotateController</code></td><td>record</td><td>is_a_task(events), handle(request_data), progress(), say_what_is_missing(), populate_view()</td></tr>
+			  <tr><td><code>AnnotateRecord</code></td><td>task, performance, checked report, to_be_shown</td><td>serialize(), parse(data), show(key, value)</td></tr>
+			  <tr><td><code>AnnotateResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
+			</tbody>
+			</table>
+
+			<p><code>AnnotateController</code> is the module <i>decisions</i>: what a
+			request transmits, and which task it carries.</p>
+
+			<p>The response of WhakerPy is named here
+			<code>AnnotateResponseRecipe</code>. It holds the model, which holds the
+			performance which is going, and the manager of the provision of files, which
+			that service requires an app to hold between two requests. It answers the
+			progress alone; it answers the tasks of this application first, and offers what
+			it does not recognise to the manager, <code>consumes()</code>; it places its
+			container in the page, <code>populate_view()</code> then
+			<code>container()</code>; it asks it whether the person said the workspace is
+			ready, <code>is_ready()</code>; and it asks it to start over when she resets or
+			asks for another batch, <code>start_over()</code>.</p>
+
+			<h4>What is tied to what</h4>
+
+			<table>
+			<thead><tr><th scope="col">Tie</th><th scope="col">Legs</th><th scope="col">What it is</th></tr></thead>
+			<tbody>
+			  <tr><td>holds</td><td><code>AnnotateResponseRecipe</code> 1 &mdash; 1 <code>AnnotateView</code>, 1 <code>AnnotateController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
+			  <tr><td>holds</td><td><code>AnnotateResponseRecipe</code> 1 &mdash; 1 the manager of the provision of files</td><td>Held between two requests, as that service requires</td></tr>
+			  <tr><td>holds</td><td><code>AnnotateController</code> 1 &mdash; 1 <code>AnnotateRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
+			  <tr><td>holds</td><td><code>AnnotateRecord</code> 1 &mdash; 1 <code>Performance</code></td><td>A composition: what was decided lives inside what one request carries</td></tr>
+			  <tr><td>uses</td><td><code>AnnotateController</code> &rarr; <code>AnnotateModel</code></td><td>A dependency: it calls the fa&ccedil;ade, once per request</td></tr>
+			  <tr><td>uses</td><td><code>AnnotateController</code> &rarr; <code>AnnotateView</code></td><td>A dependency: it hands it what to build from</td></tr>
+			</tbody>
+			</table>
+
+			<h4>In yUML</h4>
+
+			<pre class="dark"><code>[AnnotateResponseRecipe|bake();_process_events()]++1-1&gt;[AnnotateController|record|is_a_task();handle();progress();say_what_is_missing();populate_view()]
+[AnnotateResponseRecipe]++1-1&gt;[AnnotateView]
+[AnnotateController]++1-1&gt;[AnnotateRecord|task;performance;checked report;to_be_shown|serialize();parse();show()]
+[AnnotateRecord]++1-1&gt;[Performance|extensions;selected;lang;options;merge;report;/missing|what_is_missing()]
+
+[AnnotateController]-.-&gt;[AnnotateModel]
+[AnnotateController]-.-&gt;[AnnotateView]</code></pre>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The states</h3>
+
+			<table>
+			<caption>An annotation</caption>
+			<thead><tr><th scope="col">State</th><th scope="col">When</th><th scope="col">What is shown</th></tr></thead>
+			<tbody>
+			  <tr><td>disabled</td><td>It cannot be performed on that machine</td><td>Its line, disabled; nothing of it can be set</td></tr>
+			  <tr><td>not selected</td><td>Nothing was said of it</td><td>Its line, and what selects it</td></tr>
+			  <tr><td>selected</td><td>It is to be performed</td><td>Its line, that it is selected, and its language; the button of each of its types says a selected annotation is there</td></tr>
+			</tbody>
+			</table>
+
+			<p>Three states and no more. An annotation which is selected without a
+			language, or without what it requires, is selected: neither is a state, and
+			neither is a mistake. C5, C6</p>
+
+			<table>
+			<caption>A performance</caption>
+			<thead><tr><th scope="col">State</th><th scope="col">When</th></tr></thead>
+			<tbody>
+			  <tr><td>none</td><td>No thread is alive: the page shows the five steps</td></tr>
+			  <tr><td>going</td><td>The thread is alive: the page shows the progress, and nothing which starts anything</td></tr>
+			  <tr><td>ended</td><td>The thread is no longer alive: the page shows the report</td></tr>
+			</tbody>
+			</table>
+
+			<p>A line of a report which states a result has one of five states: OK, ERROR,
+			WARNING, INFO or IGNORED. They are the API's, and the line is what carries
+			them. A line which states no result has no state.</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The sequence, from the first request to the report</h3>
+
+			<ol>
+			<li>The page is asked for. The annotations are read with what each declares,
+			the kinds of output file with their extensions and, locally, the reports; all
+			of it is written in the page, in its initial state [012].</li>
+			<li>The batch is read from the provision of files. It is empty, and what is
+			missing is said [403].</li>
+			<li>The user chooses extensions and fixes the language of the page. Nothing is
+			sent, and the choice of language of every annotation follows [202].</li>
+			<li>She shows the list of a type, selects annotations, fixes the language of
+			one of them, configures another, and comes back. The button of that type says
+			a selected annotation is there [302].</li>
+			<li>She designates her files in the container of the provision of files, and
+			says they are ready.</li>
+			<li>She asks for the annotations to be performed. Everything decided is sent at
+			once, and the page is not reloaded; the preconditions are read on what was
+			transmitted and on the batch.</li>
+			<li>The report is named, the batch is locked, and the API performs the selected
+			annotations, in its own order, in a thread. The page shows the progress and
+			asks where the performance stands until the hundred is reached.</li>
+			<li>The page asks for the results. The report is shown, with the name of its
+			file; locally, it is at the top of the list of the reports, and checked.</li>
+			<li>What was produced is reached through the provision of files: online, by a
+			link to the report and a link to the archive of every produced file.</li>
+			<li>She comes back to the five steps, and performs other annotations on the
+			same batch, or asks for another batch, or resets the page.</li>
+			</ol>
+
+			<p>Steps 3 to 5 happen in any order, and any of them may happen twice. The only
+			thing which requires them is step 6.</p>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The error policy</h3>
+
+			<table>
+			<thead><tr><th scope="col">Level</th><th scope="col">What happens</th><th scope="col">What is done</th></tr></thead>
+			<tbody>
+			  <tr><td>1</td><td>What was asked cannot be done now: no annotation selected, an empty batch, a performance already going</td><td>No treatment runs, and what is missing or what stands in the way is said [022]. It is not an error and nothing is raised</td></tr>
+			  <tr><td>2</td><td>One annotation is concerned: it failed</td><td>Nothing of this application's: the API writes it in the report, with the state of the line which says it, and goes on to the next</td></tr>
+			  <tr><td>3</td><td>A report cannot be read, or cannot be deleted</td><td>It is said, with the reason; a report which cannot be deleted stays in the list, and the others are deleted all the same</td></tr>
+			  <tr><td>4</td><td>Whoever runs the machine has to know: the annotations cannot be read, a performance cannot be started</td><td>Said where he reads it, and the person is told that the annotations could not be performed</td></tr>
+			</tbody>
+			</table>
+
+			<p>What is raised is caught by the response which answers the request, and by
+			nothing below it. What an annotation writes about its own difficulties is not
+			an error of this application: it is what that annotation said, and it is shown
+			as such.</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.7 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The contracts</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>How to read them</h3>
+
+			<p><i>pre</i> is what has to be true on the way in, and what the operation does
+			not check; <i>post</i> is what the caller can count on without looking. The
+			treatments state their preconditions for one treatment; these state them for one
+			operation, and the two say the same thing at two levels.</p>
+
+			<h4>What holds everywhere</h4>
+
+			<ul>
+			<li>What is absent gives back an empty thing &mdash; an empty list, no
+			language, no report &mdash; and never nothing at all.</li>
+			<li>Nothing of what was decided is held between two requests. What is held is
+			the performance which is going, and the manager of the provision of files.
+			C24</li>
+			<li>Only <code>ModelPerformance</code> has the API perform annotations, and
+			only <code>ModelAnnotations</code> reads what an annotation declares.</li>
+			<li>Only <code>ModelReports</code> touches a report, and it writes none.</li>
+			<li>Only <code>ModelProvision</code> calls the provision of files on
+			files.</li>
+			<li>A view decides nothing: what it shows was decided before it was
+			called.</li>
+			<li>What is raised is caught by the response which answers the request, and no
+			class below it writes a catch. What an annotation says of its own difficulties
+			is not raised: it is in the report.</li>
+			</ul>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Class by class</h3>
+
+			<table>
+			<caption>AnnotateModel</caption>
+			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
+			<tbody>
+			  <tr><td>Give the annotations</td><td>pre: none. post: every annotation the API declares, each with what it declares and whether it can be performed on that machine; none is left out. C7, C8</td></tr>
+			  <tr><td>Give the kinds of output file</td><td>pre: none. post: every kind which has at least one extension, with its extensions and its default one. C1, C2</td></tr>
+			  <tr><td>Give the languages of the page</td><td>pre: none. post: every language at least one annotation has resources for, each of them once</td></tr>
+			  <tr><td>Give the batch</td><td>pre: none. post: the workspace the provision of files hands, possibly empty. C11</td></tr>
+			  <tr><td>Start a performance</td><td>pre: a batch which is not empty, at least one annotation selected. post: a performance is going, and it is answered without waiting for it; when one was going already, nothing is started and it is said. C12, C13</td></tr>
+			  <tr><td>Say whether a performance is going</td><td>pre: none. post: true while the thread which performs is alive, false otherwise</td></tr>
+			  <tr><td>Give the progress</td><td>pre: none. post: the percent, the header and the text the API set; the hundred, and nothing else, when no performance is going. C18</td></tr>
+			  <tr><td>Give the reports</td><td>pre: none. post: the names of the reports which are kept, the last one written first; empty when there are none, and empty online. C22</td></tr>
+			  <tr><td>Read a report</td><td>pre: the name of a report. post: its lines as they were written, each with its state or with none. C19</td></tr>
+			  <tr><td>Delete reports</td><td>pre: names of reports. post: those which could be deleted are gone, the names of the others are given back, and nothing else was touched. C21</td></tr>
+			  <tr><td>Give the address of a produced file, or of all of them</td><td>pre: names of produced files. post: what the provision of files answers; empty where the person reaches them where they stand. C23</td></tr>
+			</tbody>
+			</table>
+
+			<table>
+			<caption>ModelAnnotations</caption>
+			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
+			<tbody>
+			  <tr><td>Give the annotations</td><td>pre: none. post: one <code>Annotation</code> per step of a <code>sppasParam</code>, in the order of the API, holding what that step answers and nothing this application wrote. The references are given with their address; how far the development has gone is given between 0 and 100. C8</td></tr>
+			  <tr><td>Give the kinds</td><td>pre: none. post: what <code>sppasFiles</code> answers, relayed; a kind which has no extension is not given. C2</td></tr>
+			  <tr><td>Give the languages</td><td>pre: none. post: the languages of every annotation put together, each of them once</td></tr>
+			  <tr><td>Arrange a list</td><td>pre: annotations, each with what it requires. post: those annotations and no others, each standing after every one of the list it requires; an annotation whose requirement is not in the list keeps its place. It reads nothing and changes no performance. C9</td></tr>
+			</tbody>
+			</table>
+
+			<p>Arranging is the one operation of this application which rests on nothing
+			installed: what it is given comes back, in another order, nothing added and
+			nothing removed.</p>
+
+			<table>
+			<caption>ModelPerformance</caption>
+			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
+			<tbody>
+			  <tr><td>Start</td><td>pre: the preconditions of the performance are verified. post: the report is named, under a name no report bore before, and the name of the next one is prepared; a <code>sppasParam</code> holds what was decided and that only &mdash; the selected annotations activated and no other, the language and the options of each, the extensions, the workspace, the name of the report; the progress is made; the batch is locked; a thread is started, and the name of the report is given back. Raises when a performance is going. C13, C14, C17</td></tr>
+			  <tr><td>What the thread does</td><td>pre: started. post: the merge option was given to the API, then the annotations were performed in the order of the API; whatever each of them did, the batch is released, what was produced is given back, and that it has finished is said. C15, C16</td></tr>
+			  <tr><td>Say whether a performance is going</td><td>pre: none. post: true while the thread is alive</td></tr>
+			  <tr><td>Give the progress</td><td>pre: none. post: what the API set on the progress it was given; nothing is counted here. C18</td></tr>
+			</tbody>
+			</table>
+
+			<table>
+			<caption>ModelReports</caption>
+			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
+			<tbody>
+			  <tr><td>Give the reports</td><td>pre: none. post: the names of the text files of the folder of the logs whose name holds <code>report</code>, and no other file of that folder</td></tr>
+			  <tr><td>Read a report</td><td>pre: the name of a report, without its path. post: one <code>ReportLine</code> per line, in the order of the file; a line which states a result bears its state, any other bears none; nothing is counted and nothing is decided from it. Raises when the file cannot be read. C19</td></tr>
+			  <tr><td>Delete reports</td><td>pre: names of reports, without their path. post: each of them is deleted on its own, and one which cannot be does not keep the others from being; the names of those which are left are given back. No file which is not a report is deleted. C21</td></tr>
+			</tbody>
+			</table>
+
+			<table>
+			<caption>ModelProvision</caption>
+			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
+			<tbody>
+			  <tr><td>Give the batch</td><td>pre: none. post: the workspace the provision of files hands, holding the files to be treated and them only, possibly empty; the workspace of the person never reached. C11</td></tr>
+			  <tr><td>Lock and release</td><td>pre: files of the batch. post: they are locked while the annotations are performed, and released when they have been; none is still locked afterwards</td></tr>
+			  <tr><td>Give back what was produced</td><td>pre: the annotations have been performed. post: what was written is in the workspace which was handed, that workspace is given back, and that the batch has been treated is said. C23</td></tr>
+			  <tr><td>Give an address</td><td>pre: the name of a produced file, or of several. post: what the provision of files answers, relayed. C23</td></tr>
+			</tbody>
+			</table>
+
+			<table>
+			<caption>Performance, AnnotateRecord</caption>
+			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
+			<tbody>
+			  <tr><td>Say what is missing</td><td>pre: a batch is given to it. post: an annotation when none is selected, the batch when it is empty, nothing when the annotations may be performed. It holds no batch. C12</td></tr>
+			  <tr><td>Serialise a record</td><td>pre: none. post: everything a next request needs in order to rebuild what was decided, and nothing of the machine</td></tr>
+			  <tr><td>Parse a record</td><td>pre: what a page transmitted. post: what was decided as it was, or the defaults when nothing was transmitted. An annotation is selected only if it was transmitted as such: selecting one selects no other. Parsed twice, it gives the same. C1, C6, C24</td></tr>
+			  <tr><td>Put what is to be shown</td><td>pre: none. post: it is in what is to be shown, and it is never serialised</td></tr>
+			</tbody>
+			</table>
+
+			<table>
+			<caption>AnnotateController</caption>
+			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
+			<tbody>
+			  <tr><td>Handle a request</td><td>pre: called once for that request. post: the record is rebuilt from what was transmitted; the language transmitted for an annotation is kept only if that annotation has it, and a disabled annotation is never selected; the task is identified, its preconditions are read; the treatment ran, or none ran and what is missing or stands in the way is stated. C3, C5, C7</td></tr>
+			  <tr><td>Say whether events carry a task</td><td>pre: none. post: true when the events carry a task of this application</td></tr>
+			  <tr><td>Give the progress</td><td>pre: none. post: the percent, the header and the text, as the model gives them</td></tr>
+			  <tr><td>Have what is missing said again</td><td>pre: the request was handled, and the provision of files says the workspace is ready. post: what is still missing is put in the dialog of information when the view is populated</td></tr>
+			  <tr><td>Populate the view</td><td>pre: the request was handled. post: the view has the record; locally it holds the reports, online it holds none. C22</td></tr>
+			</tbody>
+			</table>
+
+			<table>
+			<caption>AnnotateView and its panels</caption>
+			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
+			<tbody>
+			  <tr><td>Populate the tree</td><td>pre: a record. post: a tree holding what that record says and nothing more. Every field of a decision belongs to the form of the performance, wherever it stands in the page. C10</td></tr>
+			  <tr><td>Give the section and what was said</td><td>pre: the tree was populated. post: the section of this application as it was built, and the text put in the dialog of information, empty if nothing was</td></tr>
+			  <tr><td><code>ActionAnnotatePanel</code></td><td>post: the five steps, in their order and with their titles; one choice per kind of output file, the extension which holds selected; the choice of the language of the page; one button per type, saying whether it holds a selected annotation; the merge option; the button which performs, disabled when no annotation is selected; the button which shows the checked report, disabled when none is; the buttons which start again</td></tr>
+			  <tr><td><code>ReportsPanel</code></td><td>post: locally, one radio button per report, at most one checked, and the two buttons which delete; online, collapsed and empty. C20, C22</td></tr>
+			  <tr><td><code>AnnotationsPanel</code></td><td>post: the button which comes back, the title naming the type, and one <code>EnableAnnotation</code> per annotation of that type, in the order it was given them</td></tr>
+			  <tr><td><code>EnableAnnotation</code></td><td>post: the annotation it stands for, as it declares itself: what selects it, what configures it, one link per reference or the gauge of its development or neither, the choice of its language when it has language resources and no choice otherwise, its description, what it requires. Disabled when the annotation cannot be performed on that machine. C7, C8</td></tr>
+			  <tr><td><code>LogAnnotatePanel</code></td><td>post: the progress while a performance goes; then the name of the file of the report and its lines, each result bearing its state; that the report is not available, with the reason, when it could not be read; online, the link to the report and the link to the archive. C19, C23</td></tr>
+			</tbody>
+			</table>
+
+			<table>
+			<caption>AnnotateResponseRecipe</caption>
+			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
+			<tbody>
+			  <tr><td>Answer the events</td><td>pre: the events of a request. post: the progress is answered alone, with a status of 202 until the hundred is reached; the tasks of this application are answered first; the rest is offered to the provision of files, and when it says the workspace is ready, what is still missing is said again; the provision of files is asked to start over on a reset and on another batch</td></tr>
+			  <tr><td>Bake</td><td>pre: a request, carrying a task or carrying none. post: the tree of the page, or the payload of an update, holding the container of the provision of files</td></tr>
+			</tbody>
+			</table>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>Where each constraint is held</h3>
+
+			<p>One place each. A constraint held in two would be a constraint held in
+			neither.</p>
+
+			<table>
+			<thead><tr><th scope="col">No.</th><th scope="col">Held by</th></tr></thead>
+			<tbody>
+			  <tr><td>C1</td><td><code>AnnotateRecord</code>, which gives a kind its default extension when none was transmitted</td></tr>
+			  <tr><td>C2</td><td><code>ModelAnnotations</code>, giving the kinds</td></tr>
+			  <tr><td>C3</td><td><code>AnnotateController</code>, which keeps a language only if the annotation has it</td></tr>
+			  <tr><td>C4</td><td>The page: the script sets the choices <code>EnableAnnotation</code> wrote, and an annotation which has no language resource has no choice to set</td></tr>
+			  <tr><td>C5</td><td><code>AnnotateController</code>, which takes no selection back and disables nothing for a language</td></tr>
+			  <tr><td>C6</td><td><code>AnnotateRecord</code>, parsing: what is selected is what was transmitted as such</td></tr>
+			  <tr><td>C7</td><td><code>ModelAnnotations</code>, which says it of each annotation; <code>EnableAnnotation</code> shows it</td></tr>
+			  <tr><td>C8</td><td><code>EnableAnnotation</code>, which writes nothing of its own</td></tr>
+			  <tr><td>C9</td><td><code>ModelAnnotations</code>, arranging a list</td></tr>
+			  <tr><td>C10</td><td><code>AnnotateView</code>, which ties every field of a decision to the form of the performance; the script sends that form and nothing before</td></tr>
+			  <tr><td>C11</td><td><code>ModelProvision</code>, which is what reads the batch</td></tr>
+			  <tr><td>C12</td><td><code>Performance</code>, saying what is missing, read by <code>AnnotateController</code> before it starts anything</td></tr>
+			  <tr><td>C13</td><td><code>ModelPerformance</code>, which starts nothing while its thread is alive; <code>AnnotateController</code> reads it before a reset or another batch</td></tr>
+			  <tr><td>C14</td><td><code>ModelPerformance</code>, which fills its own <code>sppasParam</code> when it starts and is given nothing afterwards</td></tr>
+			  <tr><td>C15</td><td><code>ModelPerformance</code>, which hands the whole to the API and orders nothing</td></tr>
+			  <tr><td>C16</td><td>The API; <code>ModelPerformance</code> stops nothing</td></tr>
+			  <tr><td>C17</td><td><code>ModelPerformance</code>, naming the report</td></tr>
+			  <tr><td>C18</td><td><code>ModelPerformance</code>, giving the progress</td></tr>
+			  <tr><td>C19</td><td><code>ModelReports</code>, reading a report; <code>LogAnnotatePanel</code> shows it as it was given</td></tr>
+			  <tr><td>C20</td><td><code>ReportsPanel</code>, whose reports are one group of radio buttons</td></tr>
+			  <tr><td>C21</td><td><code>ModelReports</code>, deleting reports</td></tr>
+			  <tr><td>C22</td><td><code>AnnotateController</code>, which gives the view no report when the server is not the local one</td></tr>
+			  <tr><td>C23</td><td><code>ModelProvision</code></td></tr>
+			  <tr><td>C24</td><td><code>AnnotateRecord</code>, and <code>AnnotateController</code>, which keeps nothing after the request</td></tr>
+			  <tr><td>C25</td><td>The page: no field carries which section is shown</td></tr>
+			</tbody>
+			</table>
+
+			<p><b>C4, C10 and C25 are held by the page.</b> They are what [1005] costs: a
+			decision which makes no request is a decision the server does not see until
+			the performance is asked for, and what it then reads is checked again &mdash;
+			C3, C6 and C7 are that check.</p>
+
+		</section>
+
+	</section>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 3.8 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What is tested, and where</h2>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>The models and the view</h3>
+
+			<p>Thirty-eight tests: thirty-three for the sub-models and what was decided,
+			and five for the view. The controller is not covered here and is owed.</p>
+
+			<h4>Arranging a list, with nothing installed</h4>
+
+			<table>
+			<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
+			<tbody>
+			  <tr><td>TE1</td><td>What comes back is what was given: not one annotation added, not one removed</td><td>The contract of arranging</td></tr>
+			  <tr><td>TE2</td><td>An annotation stands after every annotation of the list it requires</td><td>C9</td></tr>
+			  <tr><td>TE3</td><td>An annotation whose requirement is not in the list is in the list all the same</td><td>C9</td></tr>
+			  <tr><td>TE4</td><td>A chain of three is arranged the same way whatever order it was given in, the reverse included</td><td>C9</td></tr>
+			  <tr><td>TE5</td><td>A requirement which names no annotation changes nothing of the arrangement</td><td>C9</td></tr>
+			  <tr><td>TE6</td><td>The same list given twice is arranged the same way</td><td>The contract of arranging</td></tr>
+			</tbody>
+			</table>
+
+			<h4>ModelAnnotations, with the API and no file</h4>
+
+			<table>
+			<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
+			<tbody>
+			  <tr><td>TE7</td><td>Every annotation the API declares is given, and no other</td><td>[308], C7</td></tr>
+			  <tr><td>TE8</td><td>What is given of an annotation is what it declares: its name, its description, its types, its languages, its references, how far its development has gone</td><td>C8</td></tr>
+			  <tr><td>TE9</td><td>An annotation which has two types is given for each of them</td><td>[301]</td></tr>
+			  <tr><td>TE10</td><td>A kind of output file which has no extension is not given; the default extension of a kind is one of its extensions</td><td>C1, C2</td></tr>
+			  <tr><td>TE11</td><td>The languages of the page are those of every annotation put together, each of them once</td><td>[201]</td></tr>
+			  <tr><td>TE12</td><td>What an annotation requires is read from its declaration, and one which declares none requires nothing</td><td>[307]</td></tr>
+			  <tr><td>TE13</td><td>An annotation which cannot be performed on that machine is given all the same, and said so</td><td>C7</td></tr>
+			</tbody>
+			</table>
+
+			<p><b>TE12 fails until the field is read.</b> It is written that way on
+			purpose: this test is what says whether the extension of the annex was
+			made.</p>
+
+			<h4>What was decided</h4>
+
+			<table>
+			<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
+			<tbody>
+			  <tr><td>TE14</td><td>What is missing is an annotation when none is selected, the batch when it is empty, and nothing when the annotations may be performed</td><td>C12</td></tr>
+			  <tr><td>TE15</td><td>A record parsed twice gives the same decisions; nothing transmitted gives the defaults</td><td>C1, C24</td></tr>
+			  <tr><td>TE16</td><td>An annotation transmitted as selected, with no language, is selected</td><td>C5</td></tr>
+			  <tr><td>TE17</td><td>Selecting an annotation which requires another selects that one only</td><td>C6</td></tr>
+			</tbody>
+			</table>
+
+			<h4>ModelPerformance, with annotations which really are performed</h4>
+
+			<p>These need annotations to perform, and the ones they perform are written for
+			the tests: one which writes a file, one which fails, one which takes its time.
+			What is tested is this application, never an annotation of SPPAS.</p>
+
+			<table>
+			<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
+			<tbody>
+			  <tr><td>TE18</td><td>Starting answers before the performance has ended, and the performance goes on after the answer</td><td>RO5</td></tr>
+			  <tr><td>TE19</td><td>A second start while one is going is refused</td><td>C13</td></tr>
+			  <tr><td>TE20</td><td>What is handed to the API holds every selected annotation activated, and no other</td><td>C6, C14</td></tr>
+			  <tr><td>TE21</td><td>What is decided after the start does not change what that performance is performed with</td><td>C14</td></tr>
+			  <tr><td>TE22</td><td>An annotation which fails stops nothing: the performance reaches its end, and the report holds both</td><td>C16</td></tr>
+			  <tr><td>TE23</td><td>While a performance goes, the progress is what the API set; when none goes, it is the hundred</td><td>C18</td></tr>
+			  <tr><td>TE24</td><td>Two performances write two reports, and the second one replaces nothing of the first</td><td>C17</td></tr>
+			</tbody>
+			</table>
+
+			<h4>ModelReports, with a disk</h4>
+
+			<table>
+			<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
+			<tbody>
+			  <tr><td>TE25</td><td>The reports given are the text files whose name holds <code>report</code>, and no other file of the folder</td><td>[701]</td></tr>
+			  <tr><td>TE26</td><td>A line which states a result bears its state, for each of the five; a line which states none bears no state</td><td>C19</td></tr>
+			  <tr><td>TE27</td><td>A report which is not there is said so, and nothing is given in its place</td><td>[604]</td></tr>
+			  <tr><td>TE28</td><td>Deleting reports deletes those which were named, and no other file</td><td>C21</td></tr>
+			  <tr><td>TE29</td><td>A report which cannot be deleted does not keep the others from being, and its name is given back</td><td>T11</td></tr>
+			</tbody>
+			</table>
+
+			<h4>ModelProvision, against the neighbour</h4>
+
+			<table>
+			<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
+			<tbody>
+			  <tr><td>TE30</td><td>The batch is the workspace the provision of files hands, empty when nothing is checked, and the workspace of the person has not moved</td><td>C11</td></tr>
+			  <tr><td>TE31</td><td>The files of the batch are locked while the annotations are performed, and none is still locked afterwards</td><td>T08</td></tr>
+			  <tr><td>TE32</td><td>What was produced is given back once, when the annotations have been performed, and not at each of them</td><td>T09</td></tr>
+			  <tr><td>TE33</td><td>Online, the report is among what the archive holds</td><td>[803], C22</td></tr>
+			</tbody>
+			</table>
+
+			<h4>AnnotateView, the page as the server writes it</h4>
+
+			<table>
+			<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
+			<tbody>
+			  <tr><td>TE34</td><td>Every field of a decision belongs to the form of the performance: the extensions, the languages, the selections, the merge option</td><td>C10</td></tr>
+			  <tr><td>TE35</td><td>The page holds one list per type, and an annotation which has two types is in both</td><td>[301]</td></tr>
+			  <tr><td>TE36</td><td>An annotation which cannot be performed on that machine is in the page, disabled</td><td>C7</td></tr>
+			  <tr><td>TE37</td><td>Online, the panel of the reports is collapsed and holds no report</td><td>C22</td></tr>
+			  <tr><td>TE38</td><td>The page of a first request has no annotation selected, the button which performs disabled, and the default extension of each kind selected</td><td>[012]</td></tr>
+			</tbody>
+			</table>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>What no test covers, and where they stand</h3>
+
+			<ul>
+			<li><b>The controller.</b> It is owed, and it is what will check that a language
+			an annotation has not is not kept, and that a disabled annotation is never
+			selected.</li>
+			<li><b>The JavaScript.</b> That fixing the language of the page sets the choice
+			of every annotation, that the entry <code>MIX</code> appears and goes, and that
+			the sections are shown and hidden, is checked in a browser and not here.</li>
+			<li><b>What an annotation does.</b> It belongs to the API and is tested there;
+			this application is answerable for what it handed over.</li>
+			<li><b>The two services</b>, which have their own dossiers and their own tests.
+			What is checked here is the tie.</li>
+			<li><b>The wording, and the WCAG rules</b>, which are verified on the page and
+			not on a fragment of it.</li>
+			</ul>
+
+			<p>Six of the thirty-eight need nothing at all, eleven need nothing but the
+			API, seven need annotations written for the tests, five need a disk, four need
+			the neighbouring domain, and five the view.</p>
+
+			<p>They stand where the project puts its own: in <code>tests/swapp/</code>,
+			which follows the shape of the sources.</p>
+
+		</section>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== ANNEXES ================================ -->
+
+
+<section class="chapter nonumber">
+
+<h1>Annexes</h1>
+
+<!-- =============================================================== -->
+
+	<section>
+	<h2>Annex: Extension of the SPPAS API</h2>
+
+		<p>One extension is required by this document, and it is required by [307]
+		alone.</p>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>E1 &mdash; What an annotation requires, read <span class="api-ext">[API-EXT]</span></h3>
+
+			<table>
+			<tbody>
+			  <tr>
+				<th scope="row">What</th>
+				<td>The identifier of the annotation which has to have been performed
+				before, carried by the declaration of an annotation and read with the rest
+				of it.</td>
+			  </tr>
+			  <tr>
+				<th scope="row">Why</th>
+				<td>The field is already written in the declarations &mdash; the
+				phonetization says it requires the text normalization, the alignment says
+				it requires the phonetization, the time group analysis says it requires the
+				syllabification &mdash; and what reads a declaration does not read it. It
+				reads the identifier, the name, the description, the type, the interface to
+				run, the references, the degree of development, the options and the
+				resources, and it passes over that one field. [307] asks for a value which
+				is written and never loaded.</td>
+			  </tr>
+			  <tr>
+				<th scope="row">Bound to</th>
+				<td>What an annotation requires &mdash; Requirements. Requirement
+				[307].</td>
+			  </tr>
+			  <tr>
+				<th scope="row">What it costs</th>
+				<td>One field read where the others are read. Nothing of what exists
+				changes, and an annotation which declares nothing there requires nothing,
+				which is what most of them say already.</td>
+			  </tr>
+			  <tr>
+				<th scope="row">What it is not</th>
+				<td>It says what has to have been performed before, and never what will be
+				made of an annotation afterwards: what follows one is read on the
+				others.</td>
+			  </tr>
+			  <tr>
+				<th scope="row">Note</th>
+				<td>What is written there is not all sound. One declaration names a
+				requirement which no annotation bears, and one writes a requirement with a
+				mark in front of it which no other has. Both are read the day the field is
+				read, and neither is settled here.</td>
+			  </tr>
+			</tbody>
+			</table>
+
+		</section>
+
+		<!-- ------------------------------------------------------- -->
+
+		<section class="subssection">
+		<h3>What the current API already provides</h3>
+
+			<p>For contrast, and to bound the extension above, the following are available
+			and require nothing <span class="api-ok">[API-OK]</span>:</p>
+
+			<ul>
+			<li>the annotations and what each declares, the activation, the language and
+			the options of each, the output extensions, the workspace and the name of the
+			report: <code>sppasParam</code>;</li>
+			<li>performing the activated annotations, with a progress and the merge option:
+			<code>sppasAnnotationsManager</code>;</li>
+			<li>the kinds of output file, their extensions and their default one:
+			<code>sppasFiles</code>;</li>
+			<li>the types of annotation: <code>annots.types</code>;</li>
+			<li>a name for each report, which replaces no other:
+			<code>sppasLogFile</code>.</li>
+			</ul>
+
+		</section>
+
+	</section>
+
+	<!-- ------------------------------------------------------- -->
+
+	<section>
+	<h2>Annex: Mockup of the interface</h2>
+
+		<p>
+			<b>Not written yet.</b> This annex is the page itself: the HTML the
+			application writes, generated by it and styled by Whakerexa.
+		</p>
+
+	</section>
+
+	<!-- ------------------------------------------------------- -->
+
+	<section>
+	<h2>Annex: Legal notices</h2>
+
+	<ul>
+		<li>Author: Brigitte Bigi</li>
+		<li>Document License: GNU Free Documentation License (GFDL) 1.3</li>
+		<li>Copyright (C) 2026 Brigitte Bigi, CNRS</li>
+		<li>Creation Date: 2026-09-19</li>
+		<li>Last update: 2026-11-10</li>
+	</ul>
+
+	</section>
+
+</section>
