@@ -26,9 +26,9 @@
 		</p>
 
 		<p>
-			The body holds two parts, one under the other: the files to convert, then the options of
-			the conversion. You go through them in that order. Each part is shown below as you see
-			it on the page.
+			The body holds three parts, one under the other: the format to write into, the files to
+			convert, then the options of the conversion with its buttons. You go through them in
+			that order. Each part is shown below as you see it on the page.
 		</p>
 
 	</section>
@@ -39,162 +39,16 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>Giving the files</h2>
-
-		<p>
-			The first part of the body is where the files wait before being converted. What it
-			shows depends on where SPPAS runs: on your own computer, it reads the files where
-			they stand; on the web, you have to send them to it first.
-		</p>
-
-		<section class="subssection">
-		<h3>SPPAS on your computer</h3>
-
-			<p>
-				Your files are already within reach, so nothing is sent anywhere. Click
-				<b>Select files</b> and SPPAS opens its own window to choose them, among the
-				files of your computer:
-			</p>
-
-			    <section aria-label="Files" aria-hidden="true">
-			        <div>
-			            <input tabindex="-1" type="hidden" value="True" />
-			            <input tabindex="-1" type="hidden" value="False" />
-			            <input tabindex="-1" type="hidden" value="" />
-			            <input tabindex="-1" type="hidden" value="[]" />
-			            <input tabindex="-1" type="hidden" value="[]" />
-			            <div class="dropzone">
-			                <button tabindex="-1" type="submit" value="">
-			                                Select files
-			                </button>
-			                <ul class="cards-panel">
-			                    <li>
-			                        <article class="card">
-			                            <div class="card-header">
-			                                <span class="file-status" data-icon="upload" role="img" aria-label="Deposited">
-			                                </span>
-			                            </div>
-			                            <div class="card-body">
-			                                <span class="dropzone-name" title="/home/you/corpus/entretien-01.TextGrid">
-			                                                                entretien-01.TextGrid
-			                                </span>
-			                            </div>
-			                            <div class="card-footer">
-			                                <button tabindex="-1" type="submit" value="/home/you/corpus/entretien-01.TextGrid">
-			                                                                Take back
-			                                </button>
-			                            </div>
-			                        </article>
-			                    </li>
-			                </ul>
-			            </div>
-			        </div>
-			    </section>
-
-			<p>
-				Each file you chose is one rectangle holding its name. Rest the mouse on the
-				name and the whole path is shown. The <b>Take back</b> button removes the file
-				from the list: nothing of the file itself is touched.
-			</p>
-
-		</section>
-
-		<section class="subssection">
-		<h3>SPPAS on the web</h3>
-
-			<p>
-				Your files are on your computer and SPPAS is on the web, so they travel to it.
-				The frame is drawn with a dashed border, and you drop the files into it:
-			</p>
-
-			    <section aria-label="Files" aria-hidden="true">
-			        <div>
-			            <input tabindex="-1" type="hidden" value="False" />
-			            <input tabindex="-1" type="hidden" value="False" />
-			            <input tabindex="-1" type="hidden" value="" />
-			            <input tabindex="-1" type="hidden" value="[[&quot;entretien-01.TextGrid&quot;, 35840]]" />
-			            <input tabindex="-1" type="hidden" value="[]" />
-			            <div class="dropzone">
-			                <label>
-			                                Select files, or drag and drop files here.
-			                                <input tabindex="-1" type="file" multiple="multiple" />
-			                </label>
-			                <ul class="cards-panel">
-			                    <li>
-			                        <article class="card">
-			                            <div class="card-header">
-			                                <span class="file-status" data-icon="upload" role="img" aria-label="Deposited">
-			                                </span>
-			                            </div>
-			                            <div class="card-body">
-			                                <span class="dropzone-size">
-			                                                                35840
-			                                </span>
-			                                <span class="dropzone-name">
-			                                                                entretien-01.TextGrid
-			                                </span>
-			                            </div>
-			                            <div class="card-footer">
-			                                <button tabindex="-1" type="submit" value="entretien-01.TextGrid">
-			                                                                Take back
-			                                </button>
-			                            </div>
-			                        </article>
-			                    </li>
-			                </ul>
-			            </div>
-			            <button tabindex="-1" type="submit" value="" class="cta-button">
-			                        Send
-			            </button>
-			        </div>
-			    </section>
-
-			<p>
-				Click <b>Select files</b> and your computer opens its own window to choose them;
-				you can choose several at once. You can also drag files from a window of your
-				computer and drop them into the frame.
-			</p>
-
-			<p>
-				Each file you gave is one rectangle: its size, its name, and a <b>Take back</b>
-				button, which removes it from the list before anything is sent.
-			</p>
-
-			<p class="abstract">
-				A file may be refused -- too large, or of a kind SPPAS does not take. Its
-				rectangle then says why, under the name. A refused file stays in the list so
-				that you can read the reason; take it back when you have.
-			</p>
-
-			<p>
-				Once the list is the one you want, click <b>Send</b>, at the bottom of the
-				frame. The files travel to SPPAS, and the frame is replaced by the list of what
-				it holds.
-			</p>
-
-		</section>
-
-	</section>
-
-
-	<!-- ----------------------------------------------------------- -->
-	<!-- 1.3 -->
-	<!-- ----------------------------------------------------------- -->
-
-	<section class="ssection">
 	<h2>Choosing the format to write into</h2>
 
 		<p>
-			The second part of the body is titled <b>Conversion options</b>. On its left, under
-			<b>Write into</b>, one line per format SPPAS can write, with the software which reads
+			The first part of the body is titled <b>Destination format</b>. On its left, one line
+			per format SPPAS can write, with the software which reads
 			it. Click the line of the format you want -- here, three of them, Elan being the one
 			chosen:
 		</p>
 
 		    <section class="flex-item width_50" aria-hidden="true">
-		        <h4>
-		                Write into
-		        </h4>
 		        <table>
 		            <thead>
 		                <tr>
@@ -374,6 +228,149 @@
 
 
 	<!-- ----------------------------------------------------------- -->
+	<!-- 1.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Giving the files</h2>
+
+		<p>
+			The second part of the body is where the files wait before being converted. What it
+			shows depends on where SPPAS runs: on your own computer, it reads the files where
+			they stand; on the web, you have to send them to it first.
+		</p>
+
+		<section class="subssection">
+		<h3>SPPAS on your computer</h3>
+
+			<p>
+				Your files are already within reach, so nothing is sent anywhere. Click
+				<b>Select files</b> and SPPAS opens its own window to choose them, among the
+				files of your computer:
+			</p>
+
+			    <section aria-label="Files" aria-hidden="true">
+			        <div>
+			            <input tabindex="-1" type="hidden" value="True" />
+			            <input tabindex="-1" type="hidden" value="False" />
+			            <input tabindex="-1" type="hidden" value="" />
+			            <input tabindex="-1" type="hidden" value="[]" />
+			            <input tabindex="-1" type="hidden" value="[]" />
+			            <div class="dropzone">
+			                <button tabindex="-1" type="submit" value="">
+			                                Select files
+			                </button>
+			                <ul class="cards-panel">
+			                    <li>
+			                        <article class="card">
+			                            <div class="card-header">
+			                                <span class="file-status" data-icon="upload" role="img" aria-label="Deposited">
+			                                </span>
+			                            </div>
+			                            <div class="card-body">
+			                                <span class="dropzone-name" title="/home/you/corpus/entretien-01.TextGrid">
+			                                                                entretien-01.TextGrid
+			                                </span>
+			                            </div>
+			                            <div class="card-footer">
+			                                <button tabindex="-1" type="submit" value="/home/you/corpus/entretien-01.TextGrid">
+			                                                                Take back
+			                                </button>
+			                            </div>
+			                        </article>
+			                    </li>
+			                </ul>
+			            </div>
+			        </div>
+			    </section>
+
+			<p>
+				Each file you chose is one rectangle holding its name. Rest the mouse on the
+				name and the whole path is shown. The <b>Take back</b> button removes the file
+				from the list: nothing of the file itself is touched.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>SPPAS on the web</h3>
+
+			<p>
+				Your files are on your computer and SPPAS is on the web, so they travel to it.
+				The frame is drawn with a dashed border, and you drop the files into it:
+			</p>
+
+			    <section aria-label="Files" aria-hidden="true">
+			        <div>
+			            <input tabindex="-1" type="hidden" value="False" />
+			            <input tabindex="-1" type="hidden" value="False" />
+			            <input tabindex="-1" type="hidden" value="" />
+			            <input tabindex="-1" type="hidden" value="[[&quot;entretien-01.TextGrid&quot;, 35840]]" />
+			            <input tabindex="-1" type="hidden" value="[]" />
+			            <div class="dropzone">
+			                <label>
+			                                Select files, or drag and drop files here.
+			                                <input tabindex="-1" type="file" multiple="multiple" />
+			                </label>
+			                <ul class="cards-panel">
+			                    <li>
+			                        <article class="card">
+			                            <div class="card-header">
+			                                <span class="file-status" data-icon="upload" role="img" aria-label="Deposited">
+			                                </span>
+			                            </div>
+			                            <div class="card-body">
+			                                <span class="dropzone-size">
+			                                                                35840
+			                                </span>
+			                                <span class="dropzone-name">
+			                                                                entretien-01.TextGrid
+			                                </span>
+			                            </div>
+			                            <div class="card-footer">
+			                                <button tabindex="-1" type="submit" value="entretien-01.TextGrid">
+			                                                                Take back
+			                                </button>
+			                            </div>
+			                        </article>
+			                    </li>
+			                </ul>
+			            </div>
+			            <button tabindex="-1" type="submit" value="" class="cta-button">
+			                        Send
+			            </button>
+			        </div>
+			    </section>
+
+			<p>
+				Click <b>Select files</b> and your computer opens its own window to choose them;
+				you can choose several at once. You can also drag files from a window of your
+				computer and drop them into the frame.
+			</p>
+
+			<p>
+				Each file you gave is one rectangle: its size, its name, and a <b>Take back</b>
+				button, which removes it from the list before anything is sent.
+			</p>
+
+			<p class="abstract">
+				A file may be refused -- too large, or of a kind SPPAS does not take. Its
+				rectangle then says why, under the name. A refused file stays in the list so
+				that you can read the reason; take it back when you have.
+			</p>
+
+			<p>
+				Once the list is the one you want, click <b>Send</b>, at the bottom of the
+				frame. The files travel to SPPAS, and the frame is replaced by the list of what
+				it holds.
+			</p>
+
+		</section>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
 	<!-- 1.4 -->
 	<!-- ----------------------------------------------------------- -->
 
@@ -381,8 +378,8 @@
 	<h2>The two switches, and the buttons</h2>
 
 		<p>
-			Under the formats, two switches and two buttons. Both switches are off when the page
-			opens:
+			The third part of the body is titled <b>Conversion options</b>: two switches and two
+			buttons. Both switches are off when the page opens:
 		</p>
 
 		    <section aria-hidden="true">
@@ -729,13 +726,15 @@
 		<h3>The panels</h3>
 
 			<p>
-				The body is built by <code>swappConvertView</code>: the introduction, the title of the
-				files, the container of the service of the files, then one section holding the panels
-				of <code>convert_panels.py</code> -- <code>swappComparePanel</code> (the table of the
-				formats, in a dialog), <code>swappFormatsPanel</code> and
+				The body is built by <code>swappConvertView</code>, with the panels of
+				<code>convert_panels.py</code>, in the order the person goes through it: the
+				introduction; the section of the destination format -- <code>swappComparePanel</code>
+				(the table of the formats, in a dialog), <code>swappFormatsPanel</code> and
 				<code>swappDestinationPanel</code> side by side (the formats, and what the chosen one
-				does not support), <code>swappGeneralPanel</code> (the two switches and the buttons),
-				and <code>swappResultsPanel</code> once a conversion has run.
+				does not support); the title of the files and the container of the service of the
+				files; then the section of the conversion -- <code>swappGeneralPanel</code> (the two
+				switches and the buttons), and <code>swappResultsPanel</code> once a conversion has
+				run.
 			</p>
 
 			<p>
@@ -2695,7 +2694,7 @@
 			it. <strong>update</strong> and <strong>complete</strong> are sent as the
 			Setup sends them: <code>event_name</code> carries the first, and
 			<code>event_bake</code> the second. The page is not reloaded: the server
-			writes again the section of the conversion and the container of the
+			writes again the section of the destination format, the section of the conversion and the container of the
 			provision of files, and the page puts them in place.</p>
 
 			<p>The controller is implemented by a single class
@@ -2725,8 +2724,16 @@
 			makes a matrix of formats by properties both indispensable and unreadable.</p>
 
 			<p>The page opens with three lines saying what Convert does and in which order:
-			add the files, choose the destination format, convert. They are written by
-			<code>ConvertView</code>, before the container of the provision of files.</p>
+			choose the destination format, add the files, convert. They are written by
+			<code>ConvertView</code>, at the top of the page.</p>
+
+			<p>The page follows that order. <code>ConvertView</code> builds two sections: the
+			one of the destination format, which holds <code>ComparePanel</code>,
+			<code>FormatsPanel</code> and <code>DestinationPanel</code>, and the one of the
+			conversion, which holds <code>GeneralPanel</code> and <code>ResultsPanel</code>.
+			The response places the container of the provision of files between the two: the
+			destination is known before the files are given, and the button which converts
+			stands after them.</p>
 
 			<p><code>FormatsPanel</code> presents the formats that can be written, and
 			lets one of them be selected. It is a table of two columns: the software, then
@@ -2804,7 +2811,7 @@
 			fields of the form without reloading the page, shows the progress bar and
 			asks at regular intervals where the conversion stands; when every file has
 			its result, it asks for the results and puts in the page what the server
-			wrote &mdash; the panel of the conversion and the container of the provision
+			wrote &mdash; the panel of the destination format, the panel of the conversion and the container of the provision
 			of files &mdash; then opens the dialog of information if something is said.
 			When she starts over, the button she used is replaced: the page is brought
 			back to its top, and the focus is given to its main content, where the skip
@@ -2925,7 +2932,7 @@
 		<table>
 		<thead><tr><th scope="col">Class</th><th scope="col">Operations</th><th scope="col">What it shows</th></tr></thead>
 		<tbody>
-		  <tr><td><code>ConvertView</code></td><td>populate_tree_content(record), section, info</td><td>The page, and the panels it holds. It is the module <i>presentation</i>: what is shown, and nothing of what it means</td></tr>
+		  <tr><td><code>ConvertView</code></td><td>populate_tree_content(record), populate_conversion(), section, destination, info</td><td>The page, and the panels it holds. It is the module <i>presentation</i>: what is shown, and nothing of what it means</td></tr>
 		  <tr><td><code>FormatsPanel</code></td><td>&mdash;</td><td>The formats which can be written, in a table: the software, then one radio button per format</td></tr>
 		  <tr><td><code>DestinationPanel</code></td><td>&mdash;</td><td>What reaching the chosen format costs: what it cannot hold at all, and the decisions it raises. Beside the table of the formats, one block per format</td></tr>
 		  <tr><td><code>ComparePanel</code></td><td>&mdash;</td><td>The formats by properties, one against another</td></tr>
@@ -2949,7 +2956,7 @@
 
 		<h4>In yUML</h4>
 
-		<pre class="dark"><code>[ConvertView|section;info|populate_tree_content()]++1-1&gt;[FormatsPanel]
+		<pre class="dark"><code>[ConvertView|section;destination;info|populate_tree_content();populate_conversion()]++1-1&gt;[FormatsPanel]
 [ConvertView]++1-1&gt;[DestinationPanel]
 [ConvertView]++1-1&gt;[ComparePanel]
 [ConvertView]++1-1&gt;[GeneralPanel]
@@ -3280,8 +3287,8 @@
 		<caption>ConvertView and its panels</caption>
 		<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 		<tbody>
-		  <tr><td>Populate the tree</td><td>pre: a record. post: a tree holding what that record says and nothing more — no refusal it invented, no total it counted. It reaches no disk and no neighbour</td></tr>
-		  <tr><td>Give the section and what was said</td><td>pre: the tree was populated. post: the panel of the conversion as it was built, and the text put in the dialog of information, empty if nothing was; they are what the response answers to a request asking for data</td></tr>
+		  <tr><td>Populate the tree</td><td>pre: a record. post: a tree holding what that record says and nothing more — no refusal it invented, no total it counted. It reaches no disk and no neighbour. The panel of the destination format is appended; the panel of the conversion is built, and appended when the response asks for it, after the container of the provision of files</td></tr>
+		  <tr><td>Give the section and what was said</td><td>pre: the tree was populated. post: the panel of the destination format and the panel of the conversion as they were built, and the text put in the dialog of information, empty if nothing was; they are what the response answers to a request asking for data</td></tr>
 		  <tr><td><code>FormatsPanel</code></td><td>post: the formats which can be written, in a table: the software, then one radio button per format of that software; it carries no property</td></tr>
 		  <tr><td><code>DestinationPanel</code></td><td>post: a section beside the table of the formats, kept when nothing is shown in it, what appears in it announced to a screen reader; one block per format which loses something or raises a decision, and only the one of the destination shown; in a block, the line of what is lost, then one decision per option</td></tr>
 		  <tr><td><code>ComparePanel</code></td><td>post: the matrix of formats by properties, in a modal dialog named by its title; it sorts on each column, and the columns of the properties are shown or hidden from a list; it decides nothing</td></tr>
@@ -6316,7 +6323,7 @@
 		<li>Document License: GNU Free Documentation License (GFDL) 1.3</li>
 		<li>Copyright (C) 2026 Brigitte Bigi, CNRS</li>
 		<li>Creation Date: 2026-07-16</li>
-		<li>Last update: 2026-09-17</li>
+		<li>Last update: 2026-11-10</li>
 	</ul>
 	
 	</section>

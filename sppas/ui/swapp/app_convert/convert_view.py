@@ -61,16 +61,19 @@ from .convert_panels import swappDestinationPanel
 from .convert_panels import swappComparePanel
 from .convert_panels import swappGeneralPanel
 from .convert_panels import ID_FORM
+from .convert_panels import ID_FORMATS
 from .convert_panels import swappResultsPanel
 
 # ---------------------------------------------------------------------------
 
 ID_SECTION = "convert_section"
+ID_DESTINATION_SECTION = "convert_destination_section"
 
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Convert")
 MSG_TITLE = _("Conversion options")
-MSG_INTRO = _("Convert writes annotated files into another format. Add the files to convert, "
-              "choose the destination format, then convert. What the chosen format does not "
+MSG_DESTINATION_TITLE = _("Destination format")
+MSG_INTRO = _("Convert writes annotated files into another format. Choose the destination "
+              "format, add the files to convert, then convert. What the chosen format does not "
               "support is said beside the list of formats.")
 MSG_MISSING = {MISSING_BATCH: _("No file is checked to be converted.")}
 
@@ -107,6 +110,7 @@ class swappConvertView(swappBaseView):
             raise TypeError("swappConvertView: tree must be an instance of HTMLTree. "
                             "Got {} instead.".format(type(tree)))
         self.__section = None
+        self.__destination = None
         self.__info = ""
         # Set before the base view populates the nav with it.
         self.__help_page = help_page
@@ -127,6 +131,16 @@ class swappConvertView(swappBaseView):
 
         """
         return self.__section
+
+    # -----------------------------------------------------------------------
+
+    def get_destination(self) -> TagNode:
+        """Return the panel of the destination format, as it was last built.
+
+        :return: (TagNode) None before it was built
+
+        """
+        return self.__destination
 
     # -----------------------------------------------------------------------
     # Populate the tree
@@ -189,8 +203,22 @@ class swappConvertView(swappBaseView):
 
     # -----------------------------------------------------------------------
 
+    def populate_conversion(self) -> None:
+        """Append the panel of the conversion, as it was last built.
+
+        The files are given between the destination format and the
+        conversion: the page which places their container appends this panel
+        after it.
+
+        """
+        self._htree.body_main.append_child(self.__section)
+
+    # -----------------------------------------------------------------------
+
     def populate_tree_content(self, record: swappConvertRecord) -> None:
-        """Append the panel of the conversion to the main content.
+        """Append the panel of the destination format, and build the one of the conversion.
+
+        The panel of the conversion is appended by populate_conversion().
 
         :param record: (swappConvertRecord) What is to be shown
         :raises: TypeError: The given record is not a swappConvertRecord
@@ -204,19 +232,24 @@ class swappConvertView(swappBaseView):
 
         _shown = record.to_be_shown
         _conversion = record.conversion
-        _section = TagNode(self._htree.body_main.identifier, ID_SECTION, "section",
-                           attributes={"id": ID_SECTION, "class": "panel"})
-        self._htree.body_main.append_child(_section)
-        _section.append_child(HTMLNode(_section.identifier, None, "h2", value=MSG_TITLE))
+        _destination = TagNode(self._htree.body_main.identifier, ID_DESTINATION_SECTION, "section",
+                               attributes={"id": ID_DESTINATION_SECTION, "class": "panel"})
+        self._htree.body_main.append_child(_destination)
+        _destination.append_child(HTMLNode(_destination.identifier, None, "h2", value=MSG_DESTINATION_TITLE,
+                                           attributes={"id": ID_FORMATS}))
 
-        _section.append_child(swappComparePanel(_section.identifier, _shown.get("formats", list())))
+        _destination.append_child(swappComparePanel(_destination.identifier, _shown.get("formats", list())))
 
-        _flex = TagNode(_section.identifier, None, "div", attributes={"class": "flex-panel"})
-        _section.append_child(_flex)
+        _flex = TagNode(_destination.identifier, None, "div", attributes={"class": "flex-panel"})
+        _destination.append_child(_flex)
         _flex.append_child(swappFormatsPanel(_flex.identifier, _shown.get("formats", list()),
                                              _conversion.destination))
         _flex.append_child(swappDestinationPanel(_flex.identifier, _shown.get("formats", list()),
                                                  _conversion.destination))
+
+        _section = TagNode(self._htree.body_main.identifier, ID_SECTION, "section",
+                           attributes={"id": ID_SECTION, "class": "panel"})
+        _section.append_child(HTMLNode(_section.identifier, None, "h2", value=MSG_TITLE))
 
         _section.append_child(swappGeneralPanel(_section.identifier, _conversion.override, _conversion.heuristic))
 
@@ -238,6 +271,7 @@ class swappConvertView(swappBaseView):
             self.__say_what_is_missing(_shown.get("missing", list()))
 
         self.__section = _section
+        self.__destination = _destination
 
     # -----------------------------------------------------------------------
     # Private
@@ -264,4 +298,5 @@ class swappConvertView(swappBaseView):
     # -----------------------------------------------------------------------
 
     section = property(get_section, None)
+    destination = property(get_destination, None)
     info = property(get_info, None)

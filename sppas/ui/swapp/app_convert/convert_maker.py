@@ -69,6 +69,7 @@ MSG_TITLE = f"SPPAS {sg.__release__} " + _("Convert")
 
 # The names of what is answered to a request asking for data, and not for a page.
 DATA_CONVERT = "convert"
+DATA_DESTINATION = "destination"
 DATA_CONTAINER = "container"
 DATA_INFO = "info"
 
@@ -192,9 +193,10 @@ class swappConvertResponseRecipe(swappBaseResponse):
     def _bake(self) -> None:
         """Override. Create the dynamic page content in HTML.
 
-        The container of the provision of files is appended first, then the
-        section of the conversion. Both are answered alone as well, to
-        whoever asks for data rather than for a page.
+        The section of the destination format is appended first, then the
+        container of the provision of files, then the section of the
+        conversion. The three are answered alone as well, to whoever asks
+        for data rather than for a page.
 
         """
         self.comment("Body content")
@@ -206,13 +208,15 @@ class swappConvertResponseRecipe(swappBaseResponse):
 
         self._htree.body_main.clear_children()
         self.__view.populate_introduction()
+        self.__controller.populate_view()
         self.__view.populate_files_title()
         self.__manager.populate_view()
         _container = self.__manager.container()
         self._htree.body_main.append_child(_container)
-        self.__controller.populate_view()
+        self.__view.populate_conversion()
 
         self._data[DATA_CONTAINER] = _container.serialize()
+        self._data[DATA_DESTINATION] = self.__view.destination.serialize()
         self._data[DATA_CONVERT] = self.__view.section.serialize()
         if len(self.__view.info) > 0:
             self._data[DATA_INFO] = self.__view.info

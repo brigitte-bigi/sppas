@@ -43,12 +43,13 @@
 
 /* The formats are grouped by software, and a group is told apart by the cell
    of its software: the rows are not striped. */
-#convert_section table[aria-labelledby="convert_formats_h"] tbody tr:nth-child(even) * {
+#convert_destination_section table[aria-labelledby="convert_formats_h"] tbody tr:nth-child(even) * {
     background-color: var(--table-cell-bg-color);
 }
 
 /* What a format supports is marked with the color of success, in the aside
    of the format chosen as in the dialog which compares the formats. */
+#convert_destination_section [data-icon="yes"],
 #convert_section [data-icon="yes"] {
     color: var(--success-color);
 }

@@ -54,7 +54,6 @@ from .convert_record import TASK_RESTART
 
 # ---------------------------------------------------------------------------
 
-MSG_WRITE_INTO = _("Write into")
 MSG_UNSUPPORTED = _("Not supported by this format:")
 MSG_SUPPORTED = _("supported")
 MSG_NOT_SUPPORTED = _("not supported")
@@ -215,8 +214,6 @@ class swappFormatsPanel(TagNode):
                                                 attributes={"class": "flex-item width_50",
                                                             "aria-labelledby": ID_FORMATS})
 
-        self.append_child(HTMLNode(self.identifier, None, "h4", value=MSG_WRITE_INTO,
-                                   attributes={"id": ID_FORMATS}))
         _table = TagNode(self.identifier, None, "table", attributes={"aria-labelledby": ID_FORMATS})
         self.append_child(_table)
         _head = TagNode(_table.identifier, None, "thead")

@@ -207,7 +207,7 @@ msgid "Add comments here"
 msgstr "Ajouter vos commentaires ici"
 
 msgid "Add files"
-msgstr "Ajouter fichier"
+msgstr "Ajouter des fichiers"
 
 msgid "Add dir"
 msgstr "Ajouter dossier"
@@ -781,9 +781,6 @@ msgstr "Le fichier n'a pas pu être lu."
 msgid "The file could not be written."
 msgstr "Le fichier n'a pas pu être écrit."
 
-msgid "Write into"
-msgstr "Écrire en"
-
 msgid "Not supported by this format: {}."
 msgstr "Non supporté par ce format : {}."
 
@@ -898,8 +895,11 @@ msgstr "Étiq. géom."
 msgid "Conversion options"
 msgstr "Options de conversion"
 
-msgid "Convert writes annotated files into another format. Add the files to convert, choose the destination format, then convert. What the chosen format does not support is said beside the list of formats."
-msgstr "Convert écrit des fichiers annotés dans un autre format. Ajoutez les fichiers à convertir, choisissez le format de destination, puis convertissez. Ce que le format choisi ne supporte pas est indiqué à côté de la liste des formats."
+msgid "Destination format"
+msgstr "Format de destination"
+
+msgid "Convert writes annotated files into another format. Choose the destination format, add the files to convert, then convert. What the chosen format does not support is said beside the list of formats."
+msgstr "Convert écrit des fichiers annotés dans un autre format. Choisissez le format de destination, ajoutez les fichiers à convertir, puis convertissez. Ce que le format choisi ne supporte pas est indiqué à côté de la liste des formats."
 
 msgid "No file is checked to be converted."
 msgstr "Aucun fichier n'est coché pour être converti."

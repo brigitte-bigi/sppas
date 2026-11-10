@@ -51,6 +51,7 @@ const { ProgressBar } = await import(`${wexa_statics_js}/progressbar.js`);
 // --------------------------------------------------------------------------
 
 const SECTION_ID = 'convert_section';
+const DESTINATION_SECTION_ID = 'convert_destination_section';
 const ID_DESTINATION = 'convert_destination';
 const FORM_ID = 'convert_form';
 const ID_INFO_DIALOG = 'info_dialog';
@@ -69,6 +70,7 @@ const TASK_RESET = 'reset';
 const TASK_RESTART = 'restart';
 const MAIN_ID = 'main-content';
 const DATA_CONVERT = 'convert';
+const DATA_DESTINATION = 'destination';
 const DATA_CONTAINER = 'container';
 const ID_PROGRESS = 'progress_section';
 const DEPOSIT_CONTAINER_ID = 'files_deposit';
@@ -165,9 +167,14 @@ export default class ConvertManager extends BaseManager {
             return;
         }
 
-        const radios = section.querySelectorAll('input[type="radio"]');
+        const destination = document.getElementById(DESTINATION_SECTION_ID);
+        if (destination === null) {
+            WexaLogger.error('ConvertManager: the section of the destination format was not found.');
+            return;
+        }
+        const radios = destination.querySelectorAll('input[type="radio"]');
         for (const radio of radios) {
-            radio.addEventListener('change', () => this.#show(section, radio));
+            radio.addEventListener('change', () => this.#show(destination, radio));
         }
 
         const form = document.getElementById(FORM_ID);
@@ -176,7 +183,7 @@ export default class ConvertManager extends BaseManager {
             return;
         }
         // The fields are put back after the event: the format checked is read then.
-        form.addEventListener('reset', () => setTimeout(() => this.#showChecked(section), 0));
+        form.addEventListener('reset', () => setTimeout(() => this.#showChecked(destination), 0));
         // A task of the conversion is sent without reloading the page.
         section.addEventListener('submit', (event) => this.#onSubmitted(event));
     }
@@ -222,7 +229,7 @@ export default class ConvertManager extends BaseManager {
     /**
      * Show the block of the format which is checked.
      *
-     * @param {HTMLElement} section - The section of the conversion.
+     * @param {HTMLElement} section - The section of the destination format.
      * @returns {void}
      */
     #showChecked(section) {
@@ -241,7 +248,7 @@ export default class ConvertManager extends BaseManager {
      *
      * A format which loses nothing controls no block: none is shown.
      *
-     * @param {HTMLElement} section - The section of the conversion.
+     * @param {HTMLElement} section - The section of the destination format.
      * @param {HTMLInputElement} radio - The radio button of a format.
      * @returns {void}
      */
@@ -372,6 +379,13 @@ export default class ConvertManager extends BaseManager {
     // -----------------------------------------------------------------------
 
     #replace(answered) {
+        if (DATA_DESTINATION in answered) {
+            const destination = document.getElementById(DESTINATION_SECTION_ID);
+            if (destination !== null) {
+                destination.outerHTML = answered[DATA_DESTINATION];
+                this.#placeIcons(DESTINATION_SECTION_ID);
+            }
+        }
         if (DATA_CONVERT in answered) {
             const section = document.getElementById(SECTION_ID);
             if (section !== null) {
@@ -391,7 +405,7 @@ export default class ConvertManager extends BaseManager {
         }
         // The icons of what the server wrote are placed, as the ones of the page were.
         if (window.Wexa && window.Wexa.icons) {
-            for (const id of [SECTION_ID, DEPOSIT_CONTAINER_ID]) {
+            for (const id of [DESTINATION_SECTION_ID, SECTION_ID, DEPOSIT_CONTAINER_ID]) {
                 const written = document.getElementById(id);
                 if (written !== null) {
                     window.Wexa.icons.run(written);
