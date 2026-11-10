@@ -273,7 +273,7 @@ class SPPASAppLauncher:
             self.write_error_report()
         else:
             try:
-                url = f"https://sppas.org/book_08_annexes.html#error-{self.__status:04d}"
+                url = f"https://sppas.org/book_annexes.html#error-{self.__status:04d}"
                 if not webbrowser.open_new_tab(url=url):
                     print(f"Visit the following URL for error details: {url}")
             except Exception as _e:

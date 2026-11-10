@@ -38,6 +38,7 @@
 
 """
 
+from __future__ import annotations
 import json
 
 from sppas.core.coreutils import sppasTypeError

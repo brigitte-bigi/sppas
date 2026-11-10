@@ -991,3 +991,6 @@ msgid ""
 msgstr ""
 "Cet ordinateur ne peut pas ouvrir la fenêtre de choix des fichiers. "
 "Envoyez-les, comme sur un service en ligne."
+
+msgid "Documentation of the source code"
+msgstr "Documentation du code source"

@@ -329,11 +329,11 @@ class sppasGlobalSettings(sppasBaseSettings):
             m = metadata("sppas")
         except:
             m = dict()
-        v = m.get("Version", "5.0")
+        v = m.get("Version", "5.1")
         r = v.split(".")
         if len(r) < 2:
             r[0] = "5"
-            r[1] = "0"
+            r[1] = "1"
 
         with sppasPathSettings() as sp:
             # Fill in the config dict

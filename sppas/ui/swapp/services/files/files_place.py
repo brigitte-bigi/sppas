@@ -38,6 +38,7 @@
 
 """
 
+from __future__ import annotations
 from sppas.core.coreutils import sppasTypeError
 
 from ..deposit.deposit_space import swappDepositSpace

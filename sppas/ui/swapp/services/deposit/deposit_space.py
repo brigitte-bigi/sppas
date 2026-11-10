@@ -38,6 +38,7 @@
 
 """
 
+from __future__ import annotations
 import time
 
 from sppas.core.coreutils import sppasTypeError

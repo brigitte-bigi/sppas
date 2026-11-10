@@ -38,6 +38,7 @@
 
 """
 
+from __future__ import annotations
 from sppas.core.coreutils import sppasTypeError
 from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States

@@ -38,6 +38,7 @@
 
 """
 
+from __future__ import annotations
 from sppas.core.config import sppasExtensionsSettings
 from sppas.core.coreutils import sppasTypeError
 from sppas.src.anndata.aio import extensions as annot_extensions
