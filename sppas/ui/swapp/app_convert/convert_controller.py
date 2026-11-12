@@ -137,6 +137,12 @@ class swappConvertController:
 
     # -----------------------------------------------------------------------
 
+    def is_converting(self) -> bool:
+        """Return True if the request which was handled started a conversion (bool)."""
+        return self.__record.to_be_shown.get("converting", False) is True
+
+    # -----------------------------------------------------------------------
+
     def progress(self) -> tuple:
         """Return where the conversion the page follows stands, as its report says it.
 

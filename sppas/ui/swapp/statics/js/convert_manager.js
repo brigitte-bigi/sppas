@@ -74,7 +74,7 @@ const DATA_DESTINATION = 'destination';
 const DATA_CONTAINER = 'container';
 const ID_PROGRESS = 'progress_section';
 const DEPOSIT_CONTAINER_ID = 'files_deposit';
-const INTERVAL_MS = 1000;
+const INTERVAL_MS = 200;
 
 /**
  * This class shows, among what the server wrote, the part of the format chosen.

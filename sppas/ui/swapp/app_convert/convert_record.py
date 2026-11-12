@@ -178,9 +178,9 @@ class swappConversion:
 class swappConvertRecord:
     """What one request holds: its task, what was decided, and what is shown.
 
-    The view serialises it at each action and the controller parses it back,
+    The view serializes it at each action and the controller parses it back,
     and neither of them holds it between two requests. What is to be shown is
-    not serialised: it is decided by the request which shows it.
+    not serialized: it is decided by the request which shows it.
 
     """
 

@@ -72,6 +72,7 @@ ID_DESTINATION_SECTION = "convert_destination_section"
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Convert")
 MSG_TITLE = _("Conversion options")
 MSG_DESTINATION_TITLE = _("Destination format")
+MSG_PROGRESS = _("Conversion:")
 MSG_INTRO = _("Convert writes annotated files into another format. Choose the destination "
               "format, add the files to convert, then convert. What the chosen format does not "
               "support is said beside the list of formats.")
@@ -256,7 +257,14 @@ class swappConvertView(swappBaseView):
         # While the conversion runs, the page follows it: the progress, and the
         # name of the report it reads, which the form transmits.
         if _shown.get("converting", False) is True:
-            _section.append_child(swappProgressBar(_section.identifier).get_node())
+            # The text of the progress is given its node: the page writes in
+            # it how many files have their result. The bar is named by a label.
+            _progress = swappProgressBar(_section.identifier)
+            _progress.update(message="")
+            _bar = _progress.get_node()
+            _bar.insert_child(0, HTMLNode(_bar.identifier, None, "label", value=MSG_PROGRESS,
+                                          attributes={"for": "percent_progress"}))
+            _section.append_child(_bar)
             _section.append_child(EmptyNode(_section.identifier, None, "input",
                                             attributes={"type": "hidden", "form": ID_FORM,
                                                         "name": FIELD_REPORT, "value": record.report}))

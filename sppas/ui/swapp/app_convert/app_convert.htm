@@ -336,6 +336,9 @@
 			                    </li>
 			                </ul>
 			            </div>
+			            <p role="status">
+			                        Files on the server: 0.
+			            </p>
 			            <button tabindex="-1" type="submit" value="" class="cta-button">
 			                        Send
 			            </button>
@@ -363,6 +366,13 @@
 				Once the list is the one you want, click <b>Send</b>, at the bottom of the
 				frame. The files travel to SPPAS, and the frame is replaced by the list of what
 				it holds.
+			</p>
+
+			<p>
+				Under the frame, a sentence says how many of your files SPPAS holds:
+				<b>Files on the server: 0.</b> as long as nothing was sent. The number changes
+				once you clicked <b>Send</b>: a file which is listed in the frame and is not
+				counted there has not traveled yet, and it will not be converted.
 			</p>
 
 		</section>
@@ -420,7 +430,7 @@
 				SPPAS cannot give it back.</li>
 			<li><b>Guess the format of a file whose extension is unknown.</b> Off, SPPAS reads a
 				file by its extension and refuses one it does not know. On, it looks inside the file
-				to recognise it. Use it for a file whose name says nothing of its format.</li>
+				to recognize it. Use it for a file whose name says nothing of its format.</li>
 		</ul>
 
 		<p>
@@ -682,12 +692,12 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>Organisation</h2>
+	<h2>Organization</h2>
 
 		<p>
 			The application lives in <code>sppas/ui/swapp/app_convert/</code>. It follows the MVC
 			pattern shared by every application of the swapp package. What each class holds, and why,
-			is the subject of the Modelling chapter; this section says where to look.
+			is the subject of the Modeling chapter; this section says where to look.
 		</p>
 
 		<ul>
@@ -759,10 +769,18 @@
 			</p>
 
 			<p>
+				A <code>convert</code> which finds no file to convert starts nothing: what is
+				missing is said in the dialog of information, and the container of the service of
+				the files is not written again. On the web, the files a person selected and did not
+				send yet are in her page only, and a container written again would empty them.
+			</p>
+
+			<p>
 				While the conversion runs, <code>convert_manager.js</code> asks for
-				<code>event_name=update</code> every second. The bakery answers that one alone, with
-				the percent, a header and a text, and a status of 202 until the hundred is reached:
-				the page is not built again for a progress bar. The name of the report travels in a
+				<code>event_name=update</code> five times a second. The bakery answers that one alone,
+				with the percent, a header and a text, and a status of 202 until the hundred is
+				reached: the page is not built again for a progress bar. The text says how many files
+				have their result, and it is written under the bar; a label names the bar. The name of the report travels in a
 				hidden field, so that the server reads the account of the conversion the page follows
 				and not another.
 			</p>
@@ -789,11 +807,11 @@
 
 
 
-<!-- ====================== MODELLING ============================== -->
+<!-- ====================== MODELING ============================== -->
 
 
 <section class="chapter">
-<h1>Modelling</h1>
+<h1>Modeling</h1>
 
 <!-- =============================================================== -->
 
@@ -816,9 +834,9 @@
 
 		<p>
 			Annotated speech corpora circulate between tools. A corpus is transcribed in one software, 
-			aligned in another, analysed in a third, archived in a fourth. Each of these tools defines
+			aligned in another, analyzed in a third, archived in a fourth. Each of these tools defines
 			its own file format, and each format embodies a particular view of what an annotation is: 
-			a label on a point in time, a labelled interval, a hierarchy of tiers, a document carrying
+			a label on a point in time, a labeled interval, a hierarchy of tiers, a document carrying
 			metadata. No format is a superset of the others. Moving annotations from one tool to another
 			is therefore not a matter of translation, but of transposition: what the source expresses
 			and the destination cannot hold has to be left behind.
@@ -837,7 +855,7 @@
 		<p>
 			The application "Convert" takes the opposite stance. Its purpose is not only to produce a
 			file in another format, but to make the transposition itself intelligible. What a format 
-			is able to hold is stated before the conversion is launched, not discovered afterwards. 
+			is able to hold is stated before the conversion is launched, not discovered afterward. 
 			What a format is unable to hold is expressed as a choice offered to the user, at the moment 
 			where the target format is selected, and applied uniformly to the whole set of files. What
 			cannot be transposed at all is reported explicitly, file by file, with its cause.
@@ -885,7 +903,7 @@
 				but epistemic: the user must decide, before anything happens, what to do with information
 				that the destination cannot receive. Formats differ in what they are able to express, and
 				those differences are not documented anywhere the user is likely to look. The decision is
-				therefore taken blindly, and its consequences appear only afterwards — as a file that fails
+				therefore taken blindly, and its consequences appear only afterward — as a file that fails
 				to be written, or worse, as a file that is written and silently amputated.
 			</p>
 			
@@ -895,8 +913,8 @@
 			
 			<blockquote role="region" aria-label="Key Idea" class="info">
 				<p>how to let a user convert a set of annotation files to a chosen format, while making 
-				the cost of that choice knowable in advance and the outcome verifiable afterwards, without
-				requiring any knowledge of how formats are internally organised.</p>
+				the cost of that choice knowable in advance and the outcome verifiable afterward, without
+				requiring any knowledge of how formats are internally organized.</p>
 			</blockquote>
 
 			<p>
@@ -1329,13 +1347,13 @@
 		<!-- ------------------------------------------------------- -->
 
 		<section>
-		<h4>Organising the needs</h4>
+		<h4>Organizing the needs</h4>
 
 			<h5>[010] Starting a conversion</h5>
 			<ul class="req">
 			<li>[011] The user can initiate a conversion of a set of annotation
 			files.</li>
-			<li>[012] The system initialises a conversion with the default format of the
+			<li>[012] The system initializes a conversion with the default format of the
 			annotated files of SPPAS as destination, and no batch.</li>
 			</ul>
 
@@ -1536,7 +1554,7 @@
 			workspace made for Convert, and never of the one of the person, which never
 			leaves that domain: the batch is never altered all the same [202].</p>
 
-			<p>A3 is the only neighbour which is written to, and what is written there is
+			<p>A3 is the only neighbor which is written to, and what is written there is
 			a file, never a state: Convert relies on the reading and writing capabilities
 			of SPPAS and never exposes them.</p>
 
@@ -1561,7 +1579,7 @@
 			<tbody>
 			  <tr><td>FORMAT</td><td># format, extension, software, can be written</td><td>A way of writing annotations on disk (D1). What it holds is R1, and it is read from the API</td></tr>
 			  <tr><td>PROPERTY</td><td># property</td><td>A boolean characteristic of a format, stating what that format is able to hold (D2). It belongs to formats, never to files</td></tr>
-			  <tr><td>OPTION</td><td># option, question, default answer, alters the annotations</td><td>The question raised by what a destination cannot hold (D5). It is the catalogue, and it is data of the model</td></tr>
+			  <tr><td>OPTION</td><td># option, question, default answer, alters the annotations</td><td>The question raised by what a destination cannot hold (D5). It is the catalog, and it is data of the model</td></tr>
 			  <tr><td>ANSWER</td><td># option, # answer, remediation</td><td>One of the answers an option offers (D6). It exists only inside its option, and names the remediation it asks for (D8)</td></tr>
 			  <tr><td>CONVERSION</td><td># conversion, destination, override, heuristic</td><td>One conversion in progress: the destination chosen and the two general options (D3, D7). It exists while it is decided upon</td></tr>
 			  <tr><td>FILE</td><td># file</td><td>One file of the batch (D4). It is exposed by A2, and this domain holds its identity and nothing else</td></tr>
@@ -1643,7 +1661,7 @@
 			<li><code>(batch ∧ destination ∧ answers ∧ general_options) → results</code></li>
 			</ul>
 
-			<h5>What is not modelled, and why</h5>
+			<h5>What is not modeled, and why</h5>
 
 			<ul>
 			<li>The annotations themselves, which are the API's: this domain reads them, transforms them through a remediation, and writes them back, holding none.</li>
@@ -1693,7 +1711,7 @@
 			or removed when a new conversion starts.</p>
 
 			<p>Nothing here waits for two events. T06 is the only treatment with a
-			condition on its synchronisation, and that condition is read on the data it
+			condition on its synchronization, and that condition is read on the data it
 			already holds, not on a second event.</p>
 
 			<h5>T01 — Set the destination format</h5>
@@ -1965,11 +1983,11 @@
 </section>
 
 
-<!-- ====================== ORGANISATIONAL ========================= -->
+<!-- ====================== ORGANIZATIONAL ========================= -->
 
 
 <section class="ssection">
-<h2>Organisational level</h2>
+<h2>Organizational level</h2>
 
 <!-- =============================================================== -->
 
@@ -1978,10 +1996,10 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>Organisational model of treatments</h3>
+	<h3>Organizational model of treatments</h3>
 
 		<p>One procedure per treatment, numbered as it is. There are two contexts of
-		execution and one organisation: what differs between the local server and uwsgi
+		execution and one organization: what differs between the local server and uwsgi
 		is who exposes the batch, and nothing of what is done. Convert is served
 		identically by the two, which is why there is one table and not two.</p>
 
@@ -2012,7 +2030,7 @@
 		of what she is reading is replaced while she decides [1005]. What she decided is
 		sent once, with the conversion. RO1, RO9</p>
 
-		<p><b>PF5 is in nobody's charge here.</b> The batch is exposed by a neighbour in
+		<p><b>PF5 is in nobody's charge here.</b> The batch is exposed by a neighbor in
 		both contexts, and this application reads it. It appears in this table so that
 		the one procedure Convert does not perform is written down, and not passed over
 		in silence. RO5</p>
@@ -2083,14 +2101,14 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>Rules of organisation</h3>
+	<h3>Rules of organization</h3>
 
 		<ul>
 		<li><b>RO1</b> — The client holds no knowledge of formats. Every derivation is
 		made by the server, for every format, when the page is asked for, the
 		correspondence between properties and options being data of the model; the
 		client shows the part written for the format chosen.</li>
-		<li><b>RO2</b> — The two contexts of execution are one organisation. What
+		<li><b>RO2</b> — The two contexts of execution are one organization. What
 		differs is who exposes the batch, never what is done with it, and the two
 		deployments are one implementation.</li>
 		<li><b>RO3</b> — The decisions are taken in any order. None of them is a step,
@@ -2099,7 +2117,7 @@
 		<li><b>RO4</b> — A decision is never refused because another is missing. What is
 		still missing is said [022], and running is forbidden until it is not
 		[031].</li>
-		<li><b>RO5</b> — The batch is exposed by a neighbour and read. Convert selects
+		<li><b>RO5</b> — The batch is exposed by a neighbor and read. Convert selects
 		no file, in either context, and alters none [202].</li>
 		<li><b>RO6</b> — The conversion is started by one request and runs on the
 		server; where it stands is read in the report of the conversion, and its results
@@ -2117,7 +2135,7 @@
 		another kind: it takes the batch back as well, which is the server's.</li>
 		</ul>
 
-		<p>RO8 is what makes the two contexts one organisation: a conversion which keeps
+		<p>RO8 is what makes the two contexts one organization: a conversion which keeps
 		nothing on the server is served the same way by a server which knows the person
 		and by one which does not. It is also what T07 rests on &mdash; starting again is
 		transmitting nothing rather than undoing something.</p>
@@ -2337,7 +2355,7 @@
 	<section class="subssection">
 	<h3>Operational model of treatments</h3>
 
-		<p>The organisational level said by what and when; this says in what tasks, and
+		<p>The organizational level said by what and when; this says in what tasks, and
 		what among them cannot be half done.</p>
 
 		<p><b>One request is one unit.</b> Every request begins by rebuilding the
@@ -2446,7 +2464,7 @@
 
 		<p>Convert holds no persistent data of its own. Everything it manipulates
 		belongs to one conversion in progress. The implementation is therefore
-		organised around a chain of treatments, each producing clearly typed derived
+		organized around a chain of treatments, each producing clearly typed derived
 		data, and each answering an identified requirement.</p>
 
 		<p>The implementation must keep a strict separation between:</p>
@@ -2536,7 +2554,7 @@
 			<p>The model is the functional core. It holds the knowledge of formats and the
 			transformation of annotations, and exposes neither to the rest of the
 			application. The façade <code>ConvertModel</code> exposes the single interface
-			the application expects and delegates to three specialised sub-models.</p>
+			the application expects and delegates to three specialized sub-models.</p>
 
 			<p><code>ModelFormats</code> holds the knowledge of formats. It exposes the
 			formats that can be written, their properties, and derives from a destination
@@ -2576,15 +2594,15 @@
 			change.</p>
 
 			<p>This structure lets the knowledge of formats, the transformation of
-			annotations, the conversion of files and the dependency on a neighbour evolve
+			annotations, the conversion of files and the dependency on a neighbor evolve
 			separately, behind one stable façade.</p>
 
 			<h5>Controller</h5>
 
 			<p>The controller is called once per request, in a stateless context. It
-			initialises an empty state, then rebuilds the current state exclusively from
+			initializes an empty state, then rebuilds the current state exclusively from
 			the data transmitted to it. What carries that state is one object,
-			<code>ConvertRecord</code>: the view serialises it at each user action and the
+			<code>ConvertRecord</code>: the view serializes it at each user action and the
 			controller parses it back, and neither of them holds it between two requests
 			C21. The controller identifies the task requested, checks its preconditions,
 			calls the model, and prepares the data for display.</p>
@@ -2624,7 +2642,7 @@
 			<h5>Default answers</h5>
 
 			<p>An option left unanswered takes a default. Two principles apply, in this
-			order: the default reproduces the current behaviour of the SPPAS API where one
+			order: the default reproduces the current behavior of the SPPAS API where one
 			exists; failing that, it takes no initiative.</p>
 
 			<table>
@@ -2640,7 +2658,7 @@
 			  <tr>
 				<th scope="row">preservation</th>
 				<td>yes</td>
-				<td>current behaviour</td>
+				<td>current behavior</td>
 			  </tr>
 			  <tr>
 				<th scope="row"><code>multi_tiers</code></th>
@@ -2655,7 +2673,7 @@
 			  <tr>
 				<th scope="row"><code>alt_tag</code></th>
 				<td>keep all</td>
-				<td>current behaviour</td>
+				<td>current behavior</td>
 			  </tr>
 			  <tr>
 				<th scope="row"><code>tag_types</code></th>
@@ -2674,7 +2692,7 @@
 			today: it writes as comments what a format cannot hold, wherever comments are
 			allowed. Where the destination allows neither comments nor a tier, the option
 			is not offered and the information is lost — which is, again, the current
-			behaviour.</p>
+			behavior.</p>
 
 			<p>Where a precondition is not satisfied, the controller runs no treatment and
 			states which decision is missing. A decision is never refused because another
@@ -2867,12 +2885,12 @@
 		<code>Conversion</code> is what was decided &mdash; the destination, the two
 		general options, and one answer per option &mdash; rebuilt at every request and
 		held between none. The four sub-models are what the fa&ccedil;ade holds, and the
-		fourth is <code>ModelProvision</code>: the batch is asked of a neighbour, what
+		fourth is <code>ModelProvision</code>: the batch is asked of a neighbor, what
 		was produced is given back to it, and one class is what does it.</p>
 
 		<p><code>Conversion.what_is_missing()</code> is given the batch and does not hold
 		it: what is missing is a batch which is not empty [031], and
-		the batch belongs to a neighbour. A class which held it would hold what it is
+		the batch belongs to a neighbor. A class which held it would hold what it is
 		forbidden to alter.</p>
 
 		<p><code>ModelRemediation</code> is given a content and gives back a content. It
@@ -2898,7 +2916,7 @@
 		  <tr><td>uses</td><td><code>ModelConversion</code> &rarr; the API of SPPAS</td><td>A dependency, and the only tie of this application to what reads and writes files</td></tr>
 		  <tr><td>uses</td><td><code>ModelConversion</code> &rarr; <code>sppasWorkspace</code></td><td>A dependency: the batch is a workspace; it reads the files checked in it and adds there what it wrote</td></tr>
 		  <tr><td>uses</td><td><code>ModelProvision</code> &rarr; the provision of files</td><td>A dependency, and the only tie of this application to that domain</td></tr>
-		  <tr><td>none</td><td><code>ModelRemediation</code></td><td>Tied to no file and to no neighbour: a content in, a content out</td></tr>
+		  <tr><td>none</td><td><code>ModelRemediation</code></td><td>Tied to no file and to no neighbor: a content in, a content out</td></tr>
 		</tbody>
 		</table>
 
@@ -2976,7 +2994,7 @@
 		<table>
 		<thead><tr><th scope="col">Class</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 		<tbody>
-		  <tr><td><code>ConvertController</code></td><td>record</td><td>is_a_task(events), handle(request_data), say_what_is_missing(), populate_view()</td></tr>
+		  <tr><td><code>ConvertController</code></td><td>record</td><td>is_a_task(events), handle(request_data), is_converting(), progress(), say_what_is_missing(), populate_view()</td></tr>
 		  <tr><td><code>ConvertRecord</code></td><td>task, conversion, to_be_shown</td><td>serialize(), parse(data), show(key, value)</td></tr>
 		  <tr><td><code>ConvertResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
 		</tbody>
@@ -2987,7 +3005,7 @@
 		and what the settings say.</p>
 
 		<p><b><code>ConvertRecord</code> is the class RO8 asks for and which no section
-		named.</b> The view serialises the state at each action and the controller
+		named.</b> The view serializes the state at each action and the controller
 		rebuilds it: between the two there is an object, and it is better named than
 		implied. It comes from no table. It is what makes the two contexts of execution
 		one implementation.</p>
@@ -3000,7 +3018,7 @@
 
 		<p>The response holds as well the manager of the provision of files, which that
 		service requires an app to hold between two requests. It answers the tasks of
-		this application first, and offers what it does not recognise to the manager,
+		this application first, and offers what it does not recognize to the manager,
 		<code>consumes()</code>; it places its container in the page,
 		<code>populate_view()</code> then <code>container()</code>; and it asks it
 		whether the person said the workspace is ready, <code>is_ready()</code>; and it
@@ -3025,7 +3043,7 @@
 
 		<h4>In yUML</h4>
 
-		<pre class="dark"><code>[ConvertResponseRecipe|bake();_process_events()]++1-1&gt;[ConvertController|record|is_a_task();handle();say_what_is_missing();populate_view()]
+		<pre class="dark"><code>[ConvertResponseRecipe|bake();_process_events()]++1-1&gt;[ConvertController|record|is_a_task();handle();is_converting();progress();say_what_is_missing();populate_view()]
 [ConvertResponseRecipe]++1-1&gt;[ConvertView]
 [ConvertController]++1-1&gt;[ConvertRecord|task;conversion;to_be_shown|serialize();parse();show()]
 [ConvertRecord]++1-1&gt;[Conversion|destination;override;heuristic;answers;/missing|answer_of();what_is_missing()]
@@ -3263,9 +3281,9 @@
 		<tbody>
 		  <tr><td>Give the answer of an option</td><td>pre: none. post: the answer which was chosen, or the default of that option; never nothing. C8</td></tr>
 		  <tr><td>Say what is missing</td><td>pre: a batch is given to it. post: the batch when it is empty, nothing when the conversion may run. It holds no batch: what it is forbidden to alter, it does not keep. C12</td></tr>
-		  <tr><td>Serialise a record</td><td>pre: none. post: everything a next request needs in order to rebuild this conversion, and nothing of the machine</td></tr>
+		  <tr><td>Serialize a record</td><td>pre: none. post: everything a next request needs in order to rebuild this conversion, and nothing of the machine</td></tr>
 		  <tr><td>Parse a record</td><td>pre: what a page transmitted. post: the conversion as it was, or an empty conversion when nothing was transmitted. Parsed twice, it gives the same conversion. C21</td></tr>
-		  <tr><td>Put what is to be shown</td><td>pre: none. post: it is in what is to be shown, and it is never serialised: it is decided by the request which shows it</td></tr>
+		  <tr><td>Put what is to be shown</td><td>pre: none. post: it is in what is to be shown, and it is never serialized: it is decided by the request which shows it</td></tr>
 		</tbody>
 		</table>
 
@@ -3275,6 +3293,7 @@
 		<tbody>
 		  <tr><td>Handle a request</td><td>pre: called once for that request, and never twice. post: the record is rebuilt from what was transmitted, the task is identified, its preconditions are read; the treatment ran, or no treatment ran and the missing decision is stated. Nothing derived from a decision which changed is reused. C3, RO4</td></tr>
 		  <tr><td>Say whether events carry a task</td><td>pre: none. post: true when the events carry a task of this application, false otherwise; it is what lets the response answer the tasks of this application first</td></tr>
+		  <tr><td>Say whether a conversion was started</td><td>pre: the request was handled. post: true when that request started a conversion, false when it asked for none or when something was missing. It is what lets the response leave the container of the provision of files as the page shows it</td></tr>
 		  <tr><td>Have what is missing said again</td><td>pre: the request was handled, and the provision of files says the workspace is ready. post: what is still missing is put in the dialog of information when the view is populated</td></tr>
 		  <tr><td>Populate the view</td><td>pre: the request was handled. post: the view has the record; nothing is decided here and nothing is read back but a tree</td></tr>
 		</tbody>
@@ -3287,7 +3306,7 @@
 		<caption>ConvertView and its panels</caption>
 		<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 		<tbody>
-		  <tr><td>Populate the tree</td><td>pre: a record. post: a tree holding what that record says and nothing more — no refusal it invented, no total it counted. It reaches no disk and no neighbour. The panel of the destination format is appended; the panel of the conversion is built, and appended when the response asks for it, after the container of the provision of files</td></tr>
+		  <tr><td>Populate the tree</td><td>pre: a record. post: a tree holding what that record says and nothing more — no refusal it invented, no total it counted. It reaches no disk and no neighbor. The panel of the destination format is appended; the panel of the conversion is built, and appended when the response asks for it, after the container of the provision of files</td></tr>
 		  <tr><td>Give the section and what was said</td><td>pre: the tree was populated. post: the panel of the destination format and the panel of the conversion as they were built, and the text put in the dialog of information, empty if nothing was; they are what the response answers to a request asking for data</td></tr>
 		  <tr><td><code>FormatsPanel</code></td><td>post: the formats which can be written, in a table: the software, then one radio button per format of that software; it carries no property</td></tr>
 		  <tr><td><code>DestinationPanel</code></td><td>post: a section beside the table of the formats, kept when nothing is shown in it, what appears in it announced to a screen reader; one block per format which loses something or raises a decision, and only the one of the destination shown; in a block, the line of what is lost, then one decision per option</td></tr>
@@ -3302,7 +3321,7 @@
 		<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 		<tbody>
 		  <tr><td>Answer the events</td><td>pre: the events of a request. post: the tasks of this application are answered first; the rest is offered to the provision of files, and when it says the workspace is ready, what is still missing is said again</td></tr>
-		  <tr><td>Bake</td><td>pre: a request, carrying a task or carrying none. post: the tree of the page, or the payload of an update, holding the container of the provision of files. The view and the controller were built, the controller was called once, and neither of them outlives the request</td></tr>
+		  <tr><td>Bake</td><td>pre: a request, carrying a task or carrying none. post: the tree of the page, or the payload of an update, holding the container of the provision of files &mdash; except when a conversion was asked for and did not start: nothing of the files changed, and the page keeps the container it shows, with what the person selected and did not send yet. The view and the controller were built, the controller was called once, and neither of them outlives the request</td></tr>
 		</tbody>
 		</table>
 
@@ -3430,7 +3449,7 @@
 		  <tr><td>TE17</td><td>A file whose output exists is skipped; with <code>override</code> it is written</td><td>C17</td></tr>
 		  <tr><td>TE18</td><td>A write which fails on a typed cause is attempted once more, and never a third time</td><td>C16</td></tr>
 		  <tr><td>TE19</td><td>A refused file carries a cause, and that cause names what was in her file and not what is in the format</td><td>C18</td></tr>
-		  <tr><td>TE20</td><td>What a failed write left on the disk is still there afterwards</td><td>C23</td></tr>
+		  <tr><td>TE20</td><td>What a failed write left on the disk is still there afterward</td><td>C23</td></tr>
 		  <tr><td>TE21</td><td>One file of the batch may produce several converted files, and it has one result all the same</td><td>C19</td></tr>
 		</tbody>
 		</table>
@@ -3439,7 +3458,7 @@
 		purpose: C23 is a renouncement, and a renouncement which is not tested becomes,
 		six months later, a bug somebody fixes.</p>
 
-		<h4>ModelProvision, against the neighbour</h4>
+		<h4>ModelProvision, against the neighbor</h4>
 
 		<table>
 		<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
@@ -6308,7 +6327,7 @@
 
 		<p>A third was open when this markup was drawn and is now settled elsewhere:
 		the results replace what was shown, because they are what the server answers
-		once the conversion has ended. The organisational level says it and the
+		once the conversion has ended. The organizational level says it and the
 		sequence repeats it; the mockup is read with that settled.</p>
 
 	</section>

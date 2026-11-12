@@ -58,6 +58,7 @@ from .convert_model import swappConvertModel
 from .convert_view import swappConvertView
 from .convert_controller import swappConvertController
 from .convert_record import EVENT_TASK
+from .convert_record import TASK_CONVERT
 from .convert_record import TASK_RESET
 from .convert_record import TASK_RESTART
 from .convert_record import TASK_UPDATE
@@ -81,7 +82,7 @@ class swappConvertResponseRecipe(swappBaseResponse):
 
     It holds the manager of the provision of files, which that service
     requires an app to hold between two requests. It answers the tasks of
-    Convert first, and offers what it does not recognise to the manager. The
+    Convert first, and offers what it does not recognize to the manager. The
     operations on files are handed to the model, which gives them to the
     only class of Convert calling that service on files.
 
@@ -100,6 +101,7 @@ class swappConvertResponseRecipe(swappBaseResponse):
         self.__manager = None
         self.__view = None
         self.__controller = None
+        self.__refused = False
         super(swappConvertResponseRecipe, self).__init__(name, tree, title)
 
     # -----------------------------------------------------------------------
@@ -168,6 +170,9 @@ class swappConvertResponseRecipe(swappBaseResponse):
 
         # The record is rebuilt at every request from what was transmitted.
         self.__controller.handle(events)
+        # A conversion which was asked for and did not start changed nothing
+        # of the files: the page keeps the container it shows.
+        self.__refused = events.get(EVENT_TASK) == TASK_CONVERT and self.__controller.is_converting() is False
         # Where the conversion stands is answered alone: the page is not rebuilt.
         if events.get(EVENT_NAME) == TASK_UPDATE:
             self._data["percent"], self._data["header"], self._data["text"] = self.__controller.progress()
@@ -196,7 +201,9 @@ class swappConvertResponseRecipe(swappBaseResponse):
         The section of the destination format is appended first, then the
         container of the provision of files, then the section of the
         conversion. The three are answered alone as well, to whoever asks
-        for data rather than for a page.
+        for data rather than for a page. The container is not answered when
+        a conversion was asked for and did not start: what the person
+        selected and did not send yet is in the page only.
 
         """
         self.comment("Body content")
@@ -215,7 +222,8 @@ class swappConvertResponseRecipe(swappBaseResponse):
         self._htree.body_main.append_child(_container)
         self.__view.populate_conversion()
 
-        self._data[DATA_CONTAINER] = _container.serialize()
+        if self.__refused is False:
+            self._data[DATA_CONTAINER] = _container.serialize()
         self._data[DATA_DESTINATION] = self.__view.destination.serialize()
         self._data[DATA_CONVERT] = self.__view.section.serialize()
         if len(self.__view.info) > 0:
