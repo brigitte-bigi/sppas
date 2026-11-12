@@ -291,11 +291,17 @@ class swappDepositView(swappFilesBaseView):
             _zone.append_child(HTMLNode(_zone.identifier, None, "p",
                                             value=_shown["accepted"]))
 
+        # How many files stand on the server is said under the frame, from
+        # the first request: none, as long as nothing was sent.
+        if "on_server" in _shown:
+            _form.append_child(HTMLNode(_form.identifier, None, "p", value=_shown["on_server"],
+                                        attributes={"role": "status"}))
+
         if "no_place" in _shown:
             return
 
         # Nothing added, nothing to send: the control is shown and it does
-        # not answer. She gave no file, or every one of them has travelled.
+        # not answer. She gave no file, or every one of them has traveled.
         _attributes = {"type": "submit", "name": TASK_SEND,
                        "value": "", "class": "cta-button"}
         if _to_send == 0:
@@ -451,7 +457,7 @@ class swappDepositView(swappFilesBaseView):
 
         The state is an icon whose shape says it, and whose text alternative
         says it to a screen reader. A file she designated is added: nothing
-        of it has travelled, and she may still take it back. It is deposited
+        of it has traveled, and she may still take it back. It is deposited
         once it was sent, and treated once an app made something of it. The
         card carries the state too, so that it is seen before it is read.
 

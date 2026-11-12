@@ -115,7 +115,7 @@ class swappFilesManager:
     def consumes(self, events: dict) -> bool:
         """Answer whether the events of a request were for this service.
 
-        An app offers what it did not recognise; nothing is changed when the
+        An app offers what it did not recognize; nothing is changed when the
         answer is false, and what nobody consumed is the app's to answer.
 
         :param events: (dict) The events a request carries

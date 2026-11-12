@@ -279,7 +279,7 @@ class swappFileProvision:
     def take_out(self, filenames: list, place: str = "") -> int:
         """Take files out of the workspace, and out of the place they stand in.
 
-        A file which was deposited has travelled: taking it back erases the
+        A file which was deposited has traveled: taking it back erases the
         copy which was made of it, so that what she takes back is gone from
         the place as it is gone from the list. A file which was only added
         has nothing in a place, and the place is left alone.

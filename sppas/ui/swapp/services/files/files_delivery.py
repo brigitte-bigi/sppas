@@ -55,7 +55,7 @@ class swappResultDelivery:
 
     Nothing calls this class yet. Where the files stand already, a produced
     file is reached where it was written and no address is made -- which is
-    what the organisational model says of PF5 in that case. The address of a
+    what the organizational model says of PF5 in that case. The address of a
     produced file, and the hour at which it goes, are what the deposit brings
     with it: they are to be asked for when the files have to be brought, and
     given to the app, which shows them.

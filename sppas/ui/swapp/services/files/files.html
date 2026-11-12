@@ -91,7 +91,7 @@
 
 	<p>
 		This chapter is for whoever reads or changes the code. What the code is
-		for, and why it is cut this way, is the chapter on the modelling; what
+		for, and why it is cut this way, is the chapter on the modeling; what
 		follows is what a developer has to know to use it, and what is refused to
 		him.
 	</p>
@@ -101,7 +101,7 @@
 
 
 <section class="ssection">
-<h2>How the code is organised</h2>
+<h2>How the code is organized</h2>
 
 	<p>
 		In <code>sppas/ui/swapp/services/files/</code>, one module per kind of
@@ -150,7 +150,7 @@
 
 	<ol>
 		<li><b>Build it</b>, with the identifier of the node it will append the container to &mdash; the identifier, and not the node: a node of WhakerPy carries the identifier of its parent, and one built under another is refused. It takes as well the workspace it works on, when the app holds one.</li>
-		<li><b>Offer it what was not recognised</b>: <code>consumes(events)</code> answers true when the request was of this service, false when it was not. Nothing is changed in that second case.</li>
+		<li><b>Offer it what was not recognized</b>: <code>consumes(events)</code> answers true when the request was of this service, false when it was not. Nothing is changed in that second case.</li>
 		<li><b>Ask whether the person has said the workspace is ready</b>: <code>is_ready()</code>, after <code>consumes()</code>. When it is, ask for the files: <code>files_for_app()</code>.</li>
 		<li><b>Have it build</b>: <code>populate_view()</code>, then <code>container()</code>, which is appended where the app chose. In that order: the container is what the last request made. The container carries no title: the app writes its own, at the level its page calls for, and the container names itself for whoever reads the page without seeing it.</li>
 		<li><b>Ask for the files</b> when the app is about to work: <code>files_for_app()</code>. And give back what was produced: <code>produced(workspace)</code>, which answers where each produced file is reached &mdash; where it stands, or at an address &mdash; and until when: the app shows them, this service shows nothing of them.</li>
@@ -262,11 +262,11 @@
 
 
 
-<!-- ====================== MODELLING ============================== -->
+<!-- ====================== MODELING ============================== -->
 
 
 <section class="chapter">
-<h1>Modelling</h1>
+<h1>Modeling</h1>
 
 <!-- =============================================================== -->
 
@@ -349,7 +349,7 @@
 			B5 is the need which holds the two situations together without naming either:
 			where SPPAS runs on the machine of the person the file is already there and
 			there is nothing to do; where it does not, the file has to get there — and
-			the place it gets to is asked of a neighbour, which is all this domain knows
+			the place it gets to is asked of a neighbor, which is all this domain knows
 			of it.
 		</p>
 
@@ -369,11 +369,13 @@
 			produced, but where each file she gave stands. Locally a file is deposited,
 			then treated; online it is added, then deposited or refused once it was sent,
 			then treated, and no longer reachable once its time is over. A file which was
-			treated can be neither taken back nor handed again.
+			treated can be neither taken back nor handed again. Online, how many files
+			stand on the server is said under the frame from the first request: none,
+			as long as nothing was sent.
 
 			The difference between added and deposited is what the person acts on: what is
 			added may still be taken back and is what sending sends, what is deposited
-			has travelled and is what an app is given. A deposit holding nothing added has
+			has traveled and is what an app is given. A deposit holding nothing added has
 			nothing to send, and the control which sends says so by not answering.
 		</p>
 
@@ -396,7 +398,7 @@
 		<p>
 			The two directions are one design and not two. A file is in place and the
 			workspace says where it is, or it has to travel and it stands in a place a
-			neighbour gave, bounded and perishable, which the person reaches at an
+			neighbor gave, bounded and perishable, which the person reaches at an
 			address. An app says what it has produced and says when it has finished, and
 			what this domain gives back holds to those two.
 		</p>
@@ -414,7 +416,7 @@
 </section>
 
 
-<!-- ====================== MODELLING ============================== -->
+<!-- ====================== MODELING ============================== -->
 
 
 <section class="ssection">
@@ -544,7 +546,7 @@
 	<h3>Conceptual model of data</h3>
 
 		<p>
-			Four classes. The workspace is one of them without being modelled here: its
+			Four classes. The workspace is one of them without being modeled here: its
 			functioning is established, and it belongs to the domain of the workspaces.
 			It appears with its identifier and no property. What it holds — the three
 			levels, the states, the references — is read where it is written, and this
@@ -585,7 +587,7 @@
 			A copy is in its deposit from the moment the file is taken in, and before the
 			deposit is sent it carries a name and a size and no content: that is what the
 			verifications of T08 are made on. Such a copy is said <b>added</b>: the person
-			designated the file, nothing of it has travelled, and she may still take it
+			designated the file, nothing of it has traveled, and she may still take it
 			back. A copy becomes <b>deposited</b> when the deposit it belongs to was sent
 			and the place answered for it.
 		</p>
@@ -627,9 +629,9 @@
 		</p>
 
 		<p>
-			FILE and COPY carry the same verb towards the workspace, and that is what is
+			FILE and COPY carry the same verb toward the workspace, and that is what is
 			not written here: a copy is a file which perishes, D5 saying so in as many
-			words, and the two ought to be one class and its specialisation. They are
+			words, and the two ought to be one class and its specialization. They are
 			written as two classes for want of it.
 		</p>
 
@@ -651,12 +653,12 @@
 			<li>Only a deposit is added to a workspace: what is delivered to the person is added to none.</li>
 		</ul>
 
-		<h4>What is not modelled, and why</h4>
+		<h4>What is not modeled, and why</h4>
 
 		<ul>
 			<li>The state and checked (D2, D3), which the workspace carries at its three levels. This domain asks for the checking (T02) and reads it (T03); it does not hold it.</li>
 			<li>The bounds and the duration, which belong to the deposit API; and the extensions, which are SPPAS's (C4).</li>
-			<li>What names a place and what authorises reaching it, which are the deposit API's and are never read here.</li>
+			<li>What names a place and what authorizes reaching it, which are the deposit API's and are never read here.</li>
 			<li>What was not deposited, and why (F10): said to the person, and not kept (B6).</li>
 			<li>The apps, which are actors (A2): an app asks this domain for what it needs and treats what it receives, so nothing of them is held here.</li>
 		</ul>
@@ -673,7 +675,7 @@
 		<p>
 			Eleven treatments, and they are all that the domain does. They say what is
 			done, on what, and on which event — not when, not where, not by whom, which
-			belongs to the organisational level. Nothing here says which case one is in:
+			belongs to the organizational level. Nothing here says which case one is in:
 			the conceptual model is the same in all of them, and that is what makes them
 			one design and not three.
 		</p>
@@ -725,7 +727,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E3</td></tr>
+					<tr><td>Synchronization</td><td>E3</td></tr>
 					<tr><td>Actions</td><td>Make reachable, where an app will read it, every file of what is sent which is not; verify its type on its bytes</td></tr>
 					<tr><td>Result</td><td>One copy for every file which was not reachable. When its type is accepted</td></tr>
 					<tr><td>Result</td><td>What was not deposited, and why (F10). When a type is refused</td></tr>
@@ -738,7 +740,7 @@
 				What is verified here is what needs the content: the type of a file, read on
 				its bytes and not on its name, an executable or a script not being deposited.
 				The name, the size and the volume were verified when the file was taken in,
-				on what was known of it before anything travelled. T08
+				on what was known of it before anything traveled. T08
 			</p>
 
 		</section>
@@ -751,7 +753,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E6</td></tr>
+					<tr><td>Synchronization</td><td>E6</td></tr>
 					<tr><td>Actions</td><td>Make a workspace when none exists; make it know the files which are reachable; check those the person said are to be treated</td></tr>
 					<tr><td>Result</td><td>The files to be known, and their checking (F4). Always</td></tr>
 					<tr><td>Result</td><td>E7, the workspace is ready. Always</td></tr>
@@ -780,7 +782,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E1 OR E7</td></tr>
+					<tr><td>Synchronization</td><td>E1 OR E7</td></tr>
 					<tr><td>Actions</td><td>Read the workspace; make a workspace holding the files to be treated and them only; hand it to the app which asked</td></tr>
 					<tr><td>Result</td><td>A workspace holding the files to be treated (F6). When a workspace exists</td></tr>
 					<tr><td>Result</td><td>E5, there is no workspace. When none exists</td></tr>
@@ -811,7 +813,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E4</td></tr>
+					<tr><td>Synchronization</td><td>E4</td></tr>
 					<tr><td>Actions</td><td>Take from what the app gives back the files it produced, write them into the workspace with the grouping they carry, and check them; take as well, for a file it made nothing of, the cause it states</td></tr>
 					<tr><td>Result</td><td>The files produced, added and checked (F7). Always</td></tr>
 					<tr><td>Result</td><td>E8, files have been produced. When the app produced any</td></tr>
@@ -853,7 +855,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E8</td></tr>
+					<tr><td>Synchronization</td><td>E8</td></tr>
 					<tr><td>Actions</td><td>Make every produced file reachable by the person, where an app wrote it: beside the file it was made from</td></tr>
 					<tr><td>Result</td><td>Where every produced file stands, given to the app (F10). When the person reaches it there</td></tr>
 					<tr><td>Result</td><td>An address at which every produced file is reached, and until when, given to the app (F10). When she cannot reach it where it is</td></tr>
@@ -885,7 +887,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E2 OR E5</td></tr>
+					<tr><td>Synchronization</td><td>E2 OR E5</td></tr>
 					<tr><td>Actions</td><td>Say the bounds, the extensions which are accepted, and that nothing of what is sent is kept</td></tr>
 					<tr><td>Result</td><td>The announcement (F3). Always</td></tr>
 					<tr><td>Result</td><td>That nothing can be deposited now, and when to come back (F3). When the deposit API says it has no place</td></tr>
@@ -910,7 +912,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E10</td></tr>
+					<tr><td>Synchronization</td><td>E10</td></tr>
 					<tr><td>Actions</td><td>Read the name and the size of the file designated; verify that the name is not already taken, that the size does not exceed what the machine accepts, and that the volume of what is to be sent stays within its bound; take it in</td></tr>
 					<tr><td>Result</td><td>The file is in what is to be sent, and the volume it now makes. When the three verifications pass</td></tr>
 					<tr><td>Result</td><td>What was not taken in, and why (F10). When one of them fails</td></tr>
@@ -921,13 +923,13 @@
 				Nothing of the content is read here. A name and a size are known before
 				anything travels, and they are enough for these three verifications; what
 				needs the content is T01's. It is also why the person is told at the moment
-				she adds a file, and not once everything has travelled.
+				she adds a file, and not once everything has traveled.
 			</p>
 
 			<p>
 				What came with a refused file may fall in the root of the one which stays,
 				and nothing shows it: the domain cannot tell them apart, the folder the
-				person took them from not travelling with them. What groups the files is
+				person took them from not traveling with them. What groups the files is
 				read in the results of the app, where the associations are seen.
 			</p>
 
@@ -941,15 +943,15 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E11</td></tr>
+					<tr><td>Synchronization</td><td>E11</td></tr>
 					<tr><td>Actions</td><td>Take it out of what is to be sent; where it was deposited, erase the copy too</td></tr>
 					<tr><td>Result</td><td>What is to be sent, without it, and the volume it now makes. Always</td></tr>
 				</tbody>
 			</table>
 
 			<p>
-				A file which is added has not travelled, so taking it back undoes the
-				taking in and nothing more. A file which is deposited has travelled, and
+				A file which is added has not traveled, so taking it back undoes the
+				taking in and nothing more. A file which is deposited has traveled, and
 				taking it back erases the copy which was made of it: what she takes back
 				is gone from the place as it is gone from the list, and giving the same
 				file again gives it added, as the first time. RO8
@@ -972,7 +974,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E12</td></tr>
+					<tr><td>Synchronization</td><td>E12</td></tr>
 					<tr><td>Actions</td><td>Pass the file from checked to locked, in the workspace</td></tr>
 					<tr><td>Result</td><td>The file is locked (F4). Always</td></tr>
 				</tbody>
@@ -1002,7 +1004,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E13</td></tr>
+					<tr><td>Synchronization</td><td>E13</td></tr>
 					<tr><td>Actions</td><td>Pass the file from locked to checked, in the workspace</td></tr>
 					<tr><td>Result</td><td>The file is free (F4). Always</td></tr>
 				</tbody>
@@ -1022,7 +1024,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E14</td></tr>
+					<tr><td>Synchronization</td><td>E14</td></tr>
 					<tr><td>Actions</td><td>Release every file the app still holds</td></tr>
 					<tr><td>Result</td><td>Those files are free (F4). Always</td></tr>
 				</tbody>
@@ -1041,11 +1043,11 @@
 </section>
 
 
-<!-- ====================== ORGANISATIONAL LEVEL =================== -->
+<!-- ====================== ORGANIZATIONAL LEVEL =================== -->
 
 
 <section class="ssection">
-<h2>Organisational level</h2>
+<h2>Organizational level</h2>
 
 <!-- =============================================================== -->
 
@@ -1055,7 +1057,7 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>Organisational model of treatments</h3>
+	<h3>Organizational model of treatments</h3>
 
 		<p>
 			One procedure per treatment, numbered as it is, and each one triggered by one
@@ -1155,7 +1157,7 @@
 
 		<p>
 			The resources differ for one procedure only, PF1: where files have to be
-			brought it works on the contents which travelled and on the bounds; where they
+			brought it works on the contents which traveled and on the bounds; where they
 			are in place there is nothing to bring.
 		</p>
 
@@ -1208,7 +1210,7 @@
 
 		<p>
 			<b>No treatment of the conceptual level carries it.</b> F4 and F9 are flows
-			of that level and this procedure realises them, but the rule above &mdash;
+			of that level and this procedure realizes them, but the rule above &mdash;
 			one procedure per treatment, numbered as it is &mdash; is not held by PF13,
 			which is numbered alone. Either a treatment is to be named for it, or that
 			rule admits a procedure which is a moment rather than a treatment.
@@ -1293,7 +1295,7 @@
 			In both cases what the person is shown is an interface of the domain: the
 			short path locally, the interface of deposit remotely. She is not taken away
 			from the app she asked for — where that interface is shown, beside the app or
-			inside its page, is settled below the organisational level and changes
+			inside its page, is settled below the organizational level and changes
 			nothing here.
 		</p>
 
@@ -1323,7 +1325,7 @@
 			Whoever has one file to treat does not want to find herself in a complete
 			interface for managing workspaces and references. The axis is therefore not
 			the deployment but what the person intends: one file to treat now, or a
-			corpus to organise. The occasional use exists locally too, and the short path
+			corpus to organize. The occasional use exists locally too, and the short path
 			is it.
 		</p>
 
@@ -1356,7 +1358,7 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>Rules of organisation</h3>
+	<h3>Rules of organization</h3>
 
 		<ul>
 			<li><b>RO1</b> — The checking is done by the domain, and never by an app which treats files: in the short path, or in what manages the workspaces.</li>
@@ -1401,7 +1403,7 @@
 		<p>
 			What imposes them is not one thing but four, and the difference matters, a
 			constraint being revised where it comes from: the needs of the person; the
-			model itself, a treatment, a relation or a rule of organisation; the
+			model itself, a treatment, a relation or a rule of organization; the
 			neighbouring domain which gives the place; and whoever runs SPPAS on the
 			machine, who will not have anything written there.
 		</p>
@@ -1432,7 +1434,7 @@
 				<tr><td>C9</td><td>The type of a deposited file is verified on its bytes and not on its name: an executable or a script is not deposited.</td><td>Whoever runs SPPAS on the machine</td></tr>
 				<tr><td>C12</td><td>A file whose name is already taken is not deposited: the first of the name stays, the others are refused.</td><td>The root: the workspace is made with the names which were deposited, and two files of one name would fall in one root</td></tr>
 				<tr><td>C14</td><td>A file an app produced is a sibling of the one it was made from: same path, same root, the extension the person asked for. Remotely, that is the folder of the deposit.</td><td>The apps, every one of which writes there — the workspace giving the notion of sibling files, not the obligation</td></tr>
-				<tr><td>C15</td><td>Where the files stand already, nothing of the deposit API is built, reached or required: the local use works when that domain is absent.</td><td>The first table of the organisational model: PF1, PF5 and PF7 never</td></tr>
+				<tr><td>C15</td><td>Where the files stand already, nothing of the deposit API is built, reached or required: the local use works when that domain is absent.</td><td>The first table of the organizational model: PF1, PF5 and PF7 never</td></tr>
 			</tbody>
 		</table>
 
@@ -1650,7 +1652,7 @@
 				<tr><td>handing</td><td>Makes the workspace an app receives, and gives it</td><td>PF3</td></tr>
 				<tr><td>delivery</td><td>Makes the address of a produced file, and serves it when it is followed</td><td>PF5</td></tr>
 				<tr><td>provision</td><td>The fa&ccedil;ade: it puts the tasks of a request in order and calls what does them</td><td>None of its own: it is the order of every other</td></tr>
-				<tr><td>record</td><td>What one request holds, serialised for the page and parsed back from it</td><td>None of its own: every procedure passes through it</td></tr>
+				<tr><td>record</td><td>What one request holds, serialized for the page and parsed back from it</td><td>None of its own: every procedure passes through it</td></tr>
 				<tr><td>view</td><td>The view, building its tree from a record</td><td>What PF2, PF7, PF8 and PF9 show, and where each file stands</td></tr>
 				<tr><td>controller</td><td>Reads the task, rebuilds the record, calls the fa&ccedil;ade once, has a view populate its tree</td><td>None of its own</td></tr>
 				<tr><td>manager</td><td>The entry class: builds the model, the view and the controller, and answers an app</td><td>None of its own</td></tr>
@@ -1662,7 +1664,7 @@
 			classes it holds carry the prefix of the project: the tests name eight of
 			them that way already, from <code>files_acceptance.py</code> to
 			<code>files_view.py</code>. The four last carry no procedure of their own,
-			which is why the organisational level never named them: they are how a
+			which is why the organizational level never named them: they are how a
 			request is read and answered, not what it does.
 		</p>
 
@@ -1689,14 +1691,14 @@
 		<p>
 			An interface here is not an app, and not a page: it is a piece of page, a
 			container an app places in its own. That is what RO7 says in the language of
-			organisation — the domain requires no place of its own — and this is the same
+			organization — the domain requires no place of its own — and this is the same
 			thing said in the language of the code.
 		</p>
 
 		<p>
 			Where the files are already reachable, three modules have nothing to do — the
 			place, acceptance and the delivery. They carry exactly the three procedures
-			the organisational model leaves empty there. They are therefore not built,
+			the organizational model leaves empty there. They are therefore not built,
 			and the deposit API they lean on is neither reached nor required. C15
 		</p>
 
@@ -1732,7 +1734,7 @@
 				<tr>
 					<td>A view</td>
 					<td>Builds an object — a tree — which whatever answers the request bakes. It is given what it shows</td>
-					<td>Decide anything, count anything, refuse anything, reach a disk or a neighbour, or write a string of its own</td>
+					<td>Decide anything, count anything, refuse anything, reach a disk or a neighbor, or write a string of its own</td>
 				</tr>
 				<tr>
 					<td>The controller</td>
@@ -1818,7 +1820,7 @@
 
 		<p>
 			By asking, and by no convention of names. An app receives the events of a
-			request and consumes what is its own; what it does not recognise, it offers to
+			request and consumes what is its own; what it does not recognize, it offers to
 			its services, and a service either consumes it or says it did not. What
 			nobody consumed is an error, and the request is answered as such.
 		</p>
@@ -1850,9 +1852,9 @@
 
 		<p>
 			<b>Consuming an event is answering that it was for this domain.</b> An app
-			offers what it did not recognise; the manager answers true when it took it
+			offers what it did not recognize; the manager answers true when it took it
 			and false when it did not, and nothing else is given back — what is to be
-			shown is read from the record afterwards. An event which nobody consumed is
+			shown is read from the record afterward. An event which nobody consumed is
 			the app's to answer.
 		</p>
 
@@ -1910,7 +1912,7 @@
 
 		<p>
 			<b>The record carries the answer to the second question as well</b> &mdash;
-			whether a workspace holds the files to be treated. The organisational
+			whether a workspace holds the files to be treated. The organizational
 			level says that question is answered by looking; what looks is the one
 			module which reads the workspaces, and what the record carries is its
 			answer. A view which counted a list to tell the two apart would be a view
@@ -1958,8 +1960,8 @@
 		<h4>What a view owes the next request</h4>
 
 		<p>
-			A record serialises itself for transport and parses itself back. What a view
-			builds therefore carries the serialised record with it, so that the next
+			A record serializes itself for transport and parses itself back. What a view
+			builds therefore carries the serialized record with it, so that the next
 			request brings it back. <b>A view which omits it breaks the request which
 			follows</b> — the controller would rebuild an empty record, and a person would
 			see her list vanish without having touched it.
@@ -2130,7 +2132,7 @@
 			stand already where SPPAS reads them: they are made known and checked, and
 			nothing is copied and nothing is asked of the deposit API. It is
 			<code>send()</code> without the half which brings the files, which is what
-			the organisational level says of the first of its two tables.
+			the organizational level says of the first of its two tables.
 		</p>
 
 		<p>
@@ -2220,7 +2222,7 @@
 
 		<p>
 			A view builds a tree and does nothing else &mdash; it decides nothing, counts
-			nothing, refuses nothing, and reaches neither a disk nor a neighbour. What it
+			nothing, refuses nothing, and reaches neither a disk nor a neighbor. What it
 			shows was decided before it was called. There are two and not one because what
 			a person sends and what she takes back are asked for at different moments, by
 			different apps, and one of them without the other.
@@ -2267,7 +2269,7 @@
 			<tbody>
 				<tr><td><code>FilesController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
 				<tr><td><code>FilesRecord</code></td><td>task, reachable, has_workspace, workspace, fed, to_be_shown</td><td>serialize(), parse(data)</td></tr>
-				<tr><td colspan="3">A record comes from no table: it is what one request holds, it serialises itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
+				<tr><td colspan="3">A record comes from no table: it is what one request holds, it serializes itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
 				<tr><td><code>FilesManager</code></td><td>&mdash;</td><td>files_for_app(), lock(), release(), produced(), consumes(events), is_ready(), start_over(), populate_view()</td></tr>
 			</tbody>
 		</table>
@@ -2474,7 +2476,7 @@
 			<caption>feeding</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
-				<tr><td>Feed a file in</td><td>pre: a name and a size. post: the file is in what is to be sent, and the volume is that much greater — or nothing has changed and the refusal is said with its reason. Nothing of the file has travelled</td></tr>
+				<tr><td>Feed a file in</td><td>pre: a name and a size. post: the file is in what is to be sent, and the volume is that much greater — or nothing has changed and the refusal is said with its reason. Nothing of the file has traveled</td></tr>
 				<tr><td>Take a file back out</td><td>pre: none. post: it is no longer in what is to be sent, and the volume is that much less. Taking back what is not there does nothing wrong</td></tr>
 				<tr><td>Give the volume</td><td>post: the sum of the sizes fed, zero when nothing was fed</td></tr>
 				<tr><td>Give what is to be sent</td><td>post: the names and the sizes, in the order they were fed. May be empty</td></tr>
@@ -2589,7 +2591,7 @@
 			<caption>the record</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
-				<tr><td>Serialise itself</td><td>pre: none. post: what a page can carry and a next request bring back, holding names, sizes, a task and what is to be shown — and no content, ever</td></tr>
+				<tr><td>Serialize itself</td><td>pre: none. post: what a page can carry and a next request bring back, holding names, sizes, a task and what is to be shown — and no content, ever</td></tr>
 				<tr><td>Parse what came back</td><td>pre: none. post: the record holds what was transmitted; what was not transmitted takes its default value, and what is not understood is ignored rather than guessed</td></tr>
 				<tr><td>Be made with nothing</td><td>pre: none. post: no task, nothing fed, nothing to show — which is a first request</td></tr>
 			</tbody>
@@ -2607,12 +2609,12 @@
 			<tbody>
 				<tr><td>Populate the tree of a deposit</td><td>pre: the record comes from the controller. post: what is accepted, what has been fed, the volume against the bound, every refusal with its reason, and what sends — and nothing the record did not say</td></tr>
 				<tr><td>Populate the tree of a workspace which is there</td><td>pre: the record says the files stand where SPPAS reads them, and that a workspace holds some. post: the name of the workspace, and nothing else: no list of files, no control which designates, none which validates, no bound. A workspace which is there is used, so nothing is asked of her &mdash; she is told which one it is</td></tr>
-				<tr><td>Populate the tree of a deposit which goes into the workspace</td><td>pre: the record says the files stand where SPPAS reads them. post: a control which designates a file by its path, the list of what was designated, and what validates it. No bound of any kind is shown, and no file is marked refused: C4 binds what is deposited, C7 to C12 bind what is deposited, and nothing is deposited here &mdash; the organisational level saying it in one line, « the announcement exists only where there is a refusal, and nothing is refused here »</td></tr>
+				<tr><td>Populate the tree of a deposit which goes into the workspace</td><td>pre: the record says the files stand where SPPAS reads them. post: a control which designates a file by its path, the list of what was designated, and what validates it. No bound of any kind is shown, and no file is marked refused: C4 binds what is deposited, C7 to C12 bind what is deposited, and nothing is deposited here &mdash; the organizational level saying it in one line, « the announcement exists only where there is a refusal, and nothing is refused here »</td></tr>
 				<tr><td>Populate it when no deposit can be made</td><td>pre: the record says there is no place. post: no control which sends is built at all. Not one which is built and disabled: one which is not there</td></tr>
 				<tr><td>Show where each file stands</td><td>pre: the record comes from the controller. post: every card carries the state of its file &mdash; deposited, refused, treated, or no longer reachable &mdash; as an icon whose text alternative is the word; a treated file cannot be taken back, and once the batch was treated, Done is disabled. B17</td></tr>
 				<tr><td>Give what was built</td><td>pre: the tree was populated. post: the HTML of its node and of what stands under it, and nothing of a page: no head, no header, no footer. It is the node of the view which is serialized, and WhakerPy which serializes it</td></tr>
 				<tr><td>Empty what was built before</td><td>pre: none. post: the container holds what this request says and nothing of the request before. The node is the same from one request to the next, and what it held is cleared before it is built again</td></tr>
-				<tr><td>Carry the record back</td><td>pre: none. post: what is built holds the serialised record, so that the next request brings it back. A tree without it breaks the request which follows</td></tr>
+				<tr><td>Carry the record back</td><td>pre: none. post: what is built holds the serialized record, so that the next request brings it back. A tree without it breaks the request which follows</td></tr>
 			</tbody>
 		</table>
 
@@ -2682,7 +2684,7 @@
 				<tr><td>TE27</td><td>Where the files stand already: the paths are listed, no bound is shown, no file carries a mark of validity, and the control is not the one which gives a content &mdash; before anything is designated as well as after</td><td>C5, C6</td></tr>
 				<tr><td>TE29</td><td>Where the files stand already, the service is built and answers every task with no deposit API: nothing of it is built, no place is asked for, nothing is announced</td><td>C15</td></tr>
 				<tr><td>TE30</td><td><code>ready</code> sends nothing and asks nothing of the deposit API; <code>is_ready()</code> answers true after it, and false after any other task</td><td>E7</td></tr>
-				<tr><td>TE31</td><td><code>start_over()</code> gives a container which shows the deposit again, and <code>files_for_app()</code> hands no file afterwards</td><td>The contract of the manager</td></tr>
+				<tr><td>TE31</td><td><code>start_over()</code> gives a container which shows the deposit again, and <code>files_for_app()</code> hands no file afterward</td><td>The contract of the manager</td></tr>
 			</tbody>
 		</table>
 
@@ -2778,7 +2780,7 @@
 		<p>
 			TE1 to TE15 are the ones to write first. They need nothing to run, and they
 			hold the whole of what was decided: what is accepted, what is counted, and the
-			door. The seven others need a disk or a neighbour, and they check that what was
+			door. The seven others need a disk or a neighbor, and they check that what was
 			decided was also done.
 		</p>
 
@@ -2881,7 +2883,7 @@
 				</tr>
 				<tr>
 					<td>Refusing a whole deposit because two of its files bear one name</td>
-					<td>The domain cannot see how files group in any case, the folder they were taken from not travelling with them. Refusing everything would cost two hundred files for one collision, and would not buy what it was meant to buy</td>
+					<td>The domain cannot see how files group in any case, the folder they were taken from not traveling with them. Refusing everything would cost two hundred files for one collision, and would not buy what it was meant to buy</td>
 				</tr>
 				<tr>
 					<td>Refusing to enter an app, before it is entered, for want of files</td>
@@ -3269,7 +3271,7 @@
 		nothing of it is optional: a fragment built without them is a page
 		which loses the list of the person at her next gesture. The values
 		above are cut short for reading; what a page carries is what the
-		record serialised, whole.</p>
+		record serialized, whole.</p>
 
 	</section>
 

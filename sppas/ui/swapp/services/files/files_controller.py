@@ -60,6 +60,7 @@ from .files_workspace import swappWorkspaceFiles
 MSG_FAILED = _("What you asked could not be done. Nothing has changed.")
 MSG_NO_FILE = _("No file was obtained.")
 MSG_ACCEPTED_HERE = _("{:d} of {:d} bytes accepted here. Up to {:d} bytes per file.")
+MSG_ON_SERVER = _("Files on the server: {:d}.")
 
 # ---------------------------------------------------------------------------
 
@@ -197,7 +198,7 @@ class swappFilesController:
         # it says it has finished, or it asks for the files. What it did not
         # send is what the page last transmitted, and not nothing -- a record
         # rebuilt from nothing would forget where the deposit stands, which
-        # files travelled, and which ones she gave.
+        # files traveled, and which ones she gave.
         if "place" not in data:
             self.__record.place = _before.place
         if "fed" not in data:
@@ -240,6 +241,8 @@ class swappFilesController:
             self.__record.workspace = self.__model.workspace()
         if self.__record.has_workspace is True:
             self.__to_be_shown("workspace_name", self.__model.workspace_name())
+        if self.__reachable is False:
+            self.__to_be_shown("on_server", MSG_ON_SERVER.format(len(self.__record.deposited)))
 
         self.__deposit_view.populate_tree_content(self.__record)
 
@@ -398,7 +401,7 @@ class swappFilesController:
             else:
                 self.__refused(_name, _refused[_name])
 
-        # What travelled is deposited, and is no longer what sending sends.
+        # What traveled is deposited, and is no longer what sending sends.
         # What was refused stays as it was: it is said, and the person takes
         # it back when she has read why.
         _deposited = list(self.__record.deposited)

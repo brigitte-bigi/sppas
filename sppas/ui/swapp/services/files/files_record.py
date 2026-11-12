@@ -346,7 +346,7 @@ class swappFilesRecord:
         """Return the names of the files which were sent (list of str).
 
         A file she designated is added: it carries a name and a size, and
-        nothing of it has travelled. It is deposited once the deposit it
+        nothing of it has traveled. It is deposited once the deposit it
         belongs to was sent. What is added is what sending sends, and what
         is deposited is what an app is given.
 
