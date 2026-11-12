@@ -52,7 +52,7 @@ class swappFileAddress:
 
     An address leads to a file of a place and to nothing else of the machine:
     it is made of a place and of a name, and both are read again when it is
-    followed. What authorises it is verified by the front of the machine,
+    followed. What authorizes it is verified by the front of the machine,
     which holds the secret; this class neither holds it nor reads it.
 
     """
@@ -121,7 +121,7 @@ class swappFileAddress:
     # -----------------------------------------------------------------------
 
     def signature_life(self) -> float:
-        """Return how long what authorises an address lasts, in seconds.
+        """Return how long what authorizes an address lasts, in seconds.
 
         :return: (float) Never less than the duration of a place
 

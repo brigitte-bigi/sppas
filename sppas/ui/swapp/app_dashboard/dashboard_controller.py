@@ -63,7 +63,7 @@ class swappDashboardController:
     This class represents the *Controller* component in the MVC pattern.
     It coordinates interactions between the model (list of applications)
     and the view (HTML representation). It also maintains internal state,
-    such as whether the user has accepted the licence agreement.
+    such as whether the user has accepted the license agreement.
 
     """
 
@@ -82,9 +82,9 @@ class swappDashboardController:
     # -----------------------------------------------------------------------
 
     def has_agreed(self) -> bool:
-        """Return the licence agreement state.
+        """Return the license agreement state.
 
-        :return: (bool) True if the licence agreement is accepted, False otherwise.
+        :return: (bool) True if the license agreement is accepted, False otherwise.
 
         """
         return swapp_settings.license_agreement
@@ -122,14 +122,14 @@ class swappDashboardController:
     # -----------------------------------------------------------------------
 
     def handle_licence_agreement(self) -> bool:
-        """Process the licence agreement acceptance.
+        """Process the license agreement acceptance.
 
         This method updates the internal agreement state and logs the event.
         :return: (bool) True if the page has to be refreshed.
 
         """
         swapp_settings.license_agreement = True
-        logging.info("Licence agreement is satisfied.")
+        logging.info("License agreement is satisfied.")
         return False
 
     # -----------------------------------------------------------------------

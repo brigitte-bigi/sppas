@@ -84,7 +84,7 @@
 
 		<p>
 			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 16H5V5h14v14z"/> <path d="M11 7h2v2h-2zm0 4h2v6h-2z"/> </svg> &nbsp; <b>Journal.</b> Opens a page where SPPAS writes what it is doing, and
-			why. Read it while an annotation is running to follow where it is, afterwards to see
+			why. Read it while an annotation is running to follow where it is, afterward to see
 			what was produced and what was left aside, and the day something goes wrong to
 			understand what happened -- and to say it precisely when reporting a problem.
 		</p>
@@ -183,7 +183,7 @@
 		<p>
 			Leaving protects what you are working on. If the <b>Desktop</b> window has files
 			you changed without saving them, SPPAS does not stop: it asks you there, and this
-			page turns grey and waits, with a box telling you where to answer. Answer in the
+			page turns gray and waits, with a box telling you where to answer. Answer in the
 			Desktop window -- save, or leave without saving -- and SPPAS stops. Say no, and
 			nothing is closed: your work is untouched, and you can go on.
 		</p>
@@ -210,11 +210,11 @@
 	<h2>The body, in the middle</h2>
 
 		<section class="subssection">
-		<h3>The first time: the licence</h3>
+		<h3>The first time: the license</h3>
 
 			<p>
 				At the very first start, the page shows a text and waits for you to accept it.
-				It is the licence: what you are allowed to do with SPPAS, which is free and
+				It is the license: what you are allowed to do with SPPAS, which is free and
 				open-source. Nothing else is shown until you have answered. The question is asked
 				once and never again.
 			</p>
@@ -233,7 +233,7 @@
 		<h3>The box asking for the Journal</h3>
 
 			<p>
-				Once the licence is agreed, SPPAS watches whether the tab of the Journal is open.
+				Once the license is agreed, SPPAS watches whether the tab of the Journal is open.
 				As long as it is not, a box stays at the top of the page:
 			</p>
 
@@ -280,7 +280,7 @@
 			</p>
 
 			<p>
-				When a part cannot be started, its drawing is grey and its Launch button does not
+				When a part cannot be started, its drawing is gray and its Launch button does not
 				answer: what this part needs is not installed on your computer. Run Setup to
 				install it.
 			</p>
@@ -377,7 +377,7 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>Organisation</h2>
+	<h2>Organization</h2>
 
 		<p>
 			The application lives in <code>sppas/ui/swapp/app_dashboard/</code>. It follows the
@@ -459,7 +459,7 @@
 			<li><code>workspace_name</code> -- the periodic request of the JavaScript. It returns
 				the name of the workspace, the path of its file and whether the Journal tab is
 				alive. The page is not baked again: the browser updates what changed.</li>
-			<li><code>handle_licence_agreement</code> -- the licence is agreed, the page is built
+			<li><code>handle_licence_agreement</code> -- the license is agreed, the page is built
 				again without the dialog.</li>
 			<li><code>handle_start_sppas</code> -- the wx interface is launched. The answer is the
 				error, if any, or the state saying it started.</li>
@@ -513,7 +513,7 @@
 		<p>
 			<code>dashboard_manager.js</code> attaches what the page needs: the click on a card of
 			an application, the periodic request refreshing the workspace and the Journal dialog,
-			and the buttons of the dialogs. The links towards the internal pages are not handled
+			and the buttons of the dialogs. The links toward the internal pages are not handled
 			there: they are <code>a</code> elements, followed by <code>goToLink()</code> of
 			Whakerexa, which carries the accessibility parameters over to the page.
 		</p>

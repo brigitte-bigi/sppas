@@ -215,7 +215,7 @@ class TestFileAddress(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_te9_what_authorises_outlives_a_place(self):
-        """TE9. What authorises an address never runs out before the place
+        """TE9. What authorizes an address never runs out before the place
         does, whatever moment of the life of that place it was made at. It is
         the only thing of the front of the machine this domain answers for. C3
 

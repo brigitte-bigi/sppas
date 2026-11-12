@@ -93,7 +93,7 @@
     --link-award-border-color: rgb(60, 40, 150);
 
     /* The About page leads to two of the same places, under other names:
-       downloading is the colour of the resources, the sources their own. */
+       downloading is the color of the resources, the sources their own. */
     --link-download-border-color: var(--link-res-border-color);
     --link-source-border-color: var(--link-src-border-color);
 

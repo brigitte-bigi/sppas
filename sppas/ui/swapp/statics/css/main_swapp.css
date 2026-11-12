@@ -335,8 +335,8 @@ body.exit-waiting > footer {
     background-color: var(--bg-color-alt);
 }
 
-/* The drawing is a block centred by its own margins: a width in percent
-   and margins in length can't be centred by the inline flow. */
+/* The drawing is a block centered by its own margins: a width in percent
+   and margins in length can't be centered by the inline flow. */
 .link-button-icon {
     display: block;
     width: 80%;
@@ -364,7 +364,7 @@ body.exit-waiting > footer {
 
 /* Each destination has a color of its own, worn by the border of its card
    and by the ground of its label. Shared by the Dashboard and the About
-   page: the same place is named the same colour on both. */
+   page: the same place is named the same color on both. */
 
 /* The two cards the About page adds to the ones above. */
 #download_button {
@@ -987,7 +987,7 @@ dialog[role="alertdialog"] button:hover {
 
 /* The border of a card says where its file stands, in the color of the icon
    which says it: added keeps the border of any card, deposited is the color
-   of what travelled, refused and treated are the two of the icons. */
+   of what traveled, refused and treated are the two of the icons. */
 
 .card.file-deposited {
     border-color: var(--info-color);

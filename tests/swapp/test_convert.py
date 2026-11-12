@@ -634,7 +634,7 @@ class TestModelProvision(unittest.TestCase):
 
     def test_te23_what_was_produced_is_given_back(self):
         """TE23. In the workspace it handed: the provision of files knows it
-        afterwards, and hands it as a file to be treated. C22
+        afterward, and hands it as a file to be treated. C22
 
         """
         batch = self.provision.batch()

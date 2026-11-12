@@ -351,10 +351,10 @@ export default class DashboardManager extends BaseManager {
     // ----------------------------------------------------------------------
 
     /**
-    * Send the licence agreement event to the server and close the dialog.
+    * Send the license agreement event to the server and close the dialog.
     *
     * This method sends an event notifying the server that the user has accepted
-    * the licence agreement. If the server responds successfully, the associated
+    * the license agreement. If the server responds successfully, the associated
     * dialog is visually hidden and closed using the DialogManager API to ensure
     * proper cleanup of accessibility states and focus handling. If the dialog
     * element is not found or the server does not respond, a warning or info

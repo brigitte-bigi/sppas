@@ -207,7 +207,7 @@ class swappBaseResponse(BaseResponseRecipe):
             else:
                 dialog.set_attribute("class", "hidden-alert info")
 
-        # While the exit waits, the page is grey and answers nothing: the
+        # While the exit waits, the page is gray and answers nothing: the
         # dialog can be dismissed -- Escape closes any modal dialog -- and
         # a page which would then act on a click would be in a state its
         # reader decided nothing about.

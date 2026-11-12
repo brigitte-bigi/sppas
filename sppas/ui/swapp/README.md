@@ -46,6 +46,15 @@ Their unit tests are already written, in `tests/swapp/`. They fail until the
 modules they import exist: a failure there is expected, not a regression.
 
 
+## Language
+
+Everything written in this package is in American English: the comments and
+the docstrings, as the `CODE_STYLE_GUIDE.md` of SPPAS requires, and the design
+documents, the manuals and the messages of the interface as well. It is
+*recognize*, *organization*, *color*, *modeling*, *traveled*; never
+*recognise*, *organisation*, *colour*, *modelling*, *travelled*.
+
+
 ## Naming conventions
 
 The package has a single radical: `swapp` -- SPPAS Web APPlication, as opposed
@@ -253,7 +262,7 @@ The Exit button of the Dashboard closes SPPAS, which is both interfaces or
 neither. When the Desktop is not running, the server answers 410 and stops,
 as before. When it is running, it is asked first: it answers right away when
 nothing holds it back, and acknowledges when it has to put the question to
-its own reader. The acknowledgement leaves an exit waiting, and the Dashboard
+its own reader. The acknowledgment leaves an exit waiting, and the Dashboard
 shows a modal dialog until the answer comes -- the state belongs to the
 server, so a second tab and a reloaded page find the same one.
 
@@ -264,7 +273,7 @@ written with its dialog open, so it arrives blocked instead of leaving a gap
 to click through. Nothing dismisses that dialog: Escape is refused, a close
 reopens it, and any click or key is taken in the capture phase -- the
 shortcuts of the page are registered on the document too, and a key would
-otherwise open the Journal under the dialog. The page behind it is grey and
+otherwise open the Journal under the dialog. The page behind it is gray and
 inert, and the server clears the events it receives while waiting: a click
 which would get through acts on nothing.
 

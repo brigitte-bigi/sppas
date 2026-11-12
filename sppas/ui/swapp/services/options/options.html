@@ -86,7 +86,7 @@
 <!-- =============================================================== -->
 
 	<p>
-		<b>Not written yet.</b> This chapter is for whoever reads or changes the code: how it is organised,
+		<b>Not written yet.</b> This chapter is for whoever reads or changes the code: how it is organized,
 		what an app has to do to use this service, the events it consumes, and the
 		stylesheets.
 	</p>
@@ -96,11 +96,11 @@
 
 
 
-<!-- ====================== MODELLING ============================== -->
+<!-- ====================== MODELING ============================== -->
 
 
 <section class="chapter">
-<h1>Modelling</h1>
+<h1>Modeling</h1>
 
 <!-- =============================================================== -->
 
@@ -281,7 +281,7 @@
 				a number is not a string which happens to hold digits, a file is not a path
 				to be copied by hand. The need is that what is offered to act on matches
 				what is being decided, so that a whole class of mistakes cannot be made
-				rather than being caught afterwards.
+				rather than being caught afterward.
 			</p>
 
 			<p>
@@ -462,7 +462,7 @@
 			<p>
 				It is expressed here as the <i>value on arrival</i>: the value every option
 				of a set holds at the moment the set arrives, written down then and never
-				afterwards. Going back is reading it, for one option or for all of them,
+				afterward. Going back is reading it, for one option or for all of them,
 				and it costs nothing.
 			</p>
 
@@ -514,7 +514,7 @@
 		<!-- ------------------------------------------------------- -->
 
 		<section>
-		<h4>Organising the needs</h4>
+		<h4>Organizing the needs</h4>
 
 			<h5>[010] The options which are shown</h5>
 			<ul class="req">
@@ -606,8 +606,8 @@
 
 		<p>
 			<code>sppasOption</code> and <code>sppasBaseOption</code> are read and not
-			modelled. Their functioning is established, and this document names them as it
-			names a neighbour.
+			modeled. Their functioning is established, and this document names them as it
+			names a neighbor.
 		</p>
 
 	</section>
@@ -615,7 +615,7 @@
 </section>
 
 
-<!-- ====================== MODELLING ============================== -->
+<!-- ====================== MODELING ============================== -->
 
 
 <section class="ssection">
@@ -650,7 +650,7 @@
 		<p>
 			<code>sppasOption</code> is not one of them. Its functioning is established, it
 			is read and its value is changed, and this document adds nothing to it: it is
-			named here as a neighbour, as the dossier of Convert names the API which reads
+			named here as a neighbor, as the dossier of Convert names the API which reads
 			and writes annotations.
 		</p>
 
@@ -728,7 +728,7 @@
 	<h3>Conceptual model of data</h3>
 
 		<p>
-			Three classes. The option is one of them without being modelled: it is an
+			Three classes. The option is one of them without being modeled: it is an
 			object of SPPAS, its functioning is established, and what is held here is its
 			identity inside a set and the value it had on arrival.
 		</p>
@@ -785,7 +785,7 @@
 		<p>
 			<b>The value on arrival is the one thing this domain adds to an option of
 			SPPAS.</b> It is what going back goes back to, and without it nothing could.
-			It is written when the set arrives and never afterwards.
+			It is written when the set arrives and never afterward.
 		</p>
 
 		<h4>Computed, and never held</h4>
@@ -796,7 +796,7 @@
 			<li>What is handed back to an app, which is the set itself.</li>
 		</ul>
 
-		<h4>What is not modelled, and why</h4>
+		<h4>What is not modeled, and why</h4>
 
 		<ul>
 			<li>The option itself &mdash; its kind, its label, its description, its value. All four are established, read where they are written, and nothing here adds to them.</li>
@@ -846,7 +846,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E1</td></tr>
+					<tr><td>Synchronization</td><td>E1</td></tr>
 					<tr><td>Actions</td><td>Write the value on arrival of every option of the set</td></tr>
 					<tr><td>Result</td><td>The label of every option (F2). Always</td></tr>
 					<tr><td>Result</td><td>The value of every option, and what it takes to change that value (F4). Always</td></tr>
@@ -867,7 +867,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E2</td></tr>
+					<tr><td>Synchronization</td><td>E2</td></tr>
 					<tr><td>Actions</td><td>Give the long description of that option</td></tr>
 					<tr><td>Result</td><td>The description (F3). Always</td></tr>
 				</tbody>
@@ -886,7 +886,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E3</td></tr>
+					<tr><td>Synchronization</td><td>E3</td></tr>
 					<tr><td>Actions</td><td>For every value given: verify it against the kind of its option and against the bounds of that option; set it on the option</td></tr>
 					<tr><td>Result</td><td>The option holds that value (F4). For every value which suits the kind and the bounds</td></tr>
 					<tr><td>Result</td><td>A refusal naming the option and the value which is expected (F7). For every other value &mdash; and that option keeps the value it held</td></tr>
@@ -913,7 +913,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E4</td></tr>
+					<tr><td>Synchronization</td><td>E4</td></tr>
 					<tr><td>Actions</td><td>Set the value on arrival back on the option; drop the refusal that option carries, if it carries one</td></tr>
 					<tr><td>Result</td><td>The option holds its value on arrival (F4). Always</td></tr>
 				</tbody>
@@ -932,7 +932,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E5</td></tr>
+					<tr><td>Synchronization</td><td>E5</td></tr>
 					<tr><td>Actions</td><td>Do what T04 does, for every option of the set</td></tr>
 					<tr><td>Result</td><td>Every option holds its value on arrival, and the set carries no refusal (F4). Always</td></tr>
 				</tbody>
@@ -946,7 +946,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E6</td></tr>
+					<tr><td>Synchronization</td><td>E6</td></tr>
 					<tr><td>Actions</td><td>Ask the provision of files for a file of the person</td></tr>
 					<tr><td>Result</td><td>The request (F11). Always</td></tr>
 				</tbody>
@@ -962,7 +962,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E7</td></tr>
+					<tr><td>Synchronization</td><td>E7</td></tr>
 					<tr><td>Actions</td><td>Set what came back as the value of the option it was asked for</td></tr>
 					<tr><td>Result</td><td>The option holds it (F4). Always</td></tr>
 				</tbody>
@@ -983,7 +983,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E8</td></tr>
+					<tr><td>Synchronization</td><td>E8</td></tr>
 					<tr><td>Actions</td><td>Give back the set, every option holding the value it holds</td></tr>
 					<tr><td>Result</td><td>The set with its values (F13). Always</td></tr>
 				</tbody>
@@ -1002,11 +1002,11 @@
 </section>
 
 
-<!-- ====================== ORGANISATIONAL ========================= -->
+<!-- ====================== ORGANIZATIONAL ========================= -->
 
 
 <section class="ssection">
-<h2>Organisational level</h2>
+<h2>Organizational level</h2>
 
 <!-- =============================================================== -->
 
@@ -1016,7 +1016,7 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>Organisational model of treatments</h3>
+	<h3>Organizational model of treatments</h3>
 
 		<p>
 			One procedure per treatment, numbered as it is. One table and not two: what
@@ -1058,7 +1058,7 @@
 
 		<p>
 			PF6 is the one procedure this domain does not perform. It appears in the table
-			so that the request it makes to a neighbour is written down, and so that the
+			so that the request it makes to a neighbor is written down, and so that the
 			one moment something happens outside the server is visible.
 		</p>
 
@@ -1069,15 +1069,15 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>Rules of organisation</h3>
+	<h3>Rules of organization</h3>
 
 		<ul>
 			<li><b>RO1</b> &mdash; The values already given are carried from one request to the next by the page, and nothing of a set is held on the server between two requests.</li>
 			<li><b>RO2</b> &mdash; A value is verified where it is taken in, on the server. The browser holds no knowledge of what an option accepts, and refuses nothing of its own.</li>
 			<li><b>RO3</b> &mdash; Every request carries the whole set: the option which is being acted upon, and the values of all the others.</li>
-			<li><b>RO4</b> &mdash; The two contexts of execution are one organisation. Nothing here is done in one and not in the other.</li>
+			<li><b>RO4</b> &mdash; The two contexts of execution are one organization. Nothing here is done in one and not in the other.</li>
 			<li><b>RO5</b> &mdash; This domain has no page of its own. What it produces is a piece of page an app places in its own, and where that piece stands belongs to that app.</li>
-			<li><b>RO6</b> &mdash; A set of options exists for the time an app is being set up, and this domain keeps none of it afterwards.</li>
+			<li><b>RO6</b> &mdash; A set of options exists for the time an app is being set up, and this domain keeps none of it afterward.</li>
 		</ul>
 
 		<p>
@@ -1187,7 +1187,7 @@
 			</thead>
 			<tbody>
 				<tr><td>OPTION SET</td><td>What the page transmits</td><td>Nothing: it is rebuilt at every request</td><td>The options of the app she is setting up</td></tr>
-				<tr><td>OPTION</td><td>The same, the value on arrival travelling with the rest</td><td>Nothing</td><td>One line, with what she may act on</td></tr>
+				<tr><td>OPTION</td><td>The same, the value on arrival traveling with the rest</td><td>Nothing</td><td>One line, with what she may act on</td></tr>
 				<tr><td>REFUSAL</td><td>Made when a value is taken in, and sent back with the answer</td><td>Nothing</td><td>What was expected, where she gave the value</td></tr>
 			</tbody>
 		</table>
@@ -1219,7 +1219,7 @@
 	<h3>Operational model of treatments</h3>
 
 		<p>
-			The organisational level said by what and when; this says in what tasks. One
+			The organizational level said by what and when; this says in what tasks. One
 			request is one unit: the set is rebuilt from what the page transmitted, the
 			one thing which was asked is done, and what is to be shown is sent back.
 		</p>
@@ -1305,7 +1305,7 @@
 
 		<p>
 			The request for a file is made to the provision of files and to nothing else.
-			It is the only tie of this domain to a neighbour, and the <b>set</b> module
+			It is the only tie of this domain to a neighbor, and the <b>set</b> module
 			carries it: what comes back is a value like any other.
 		</p>
 
@@ -1322,7 +1322,7 @@
 			The model holds the set, the value every option arrived with and the rules of
 			what a value may be, and it exposes neither the objects of SPPAS nor the
 			provision of files to the rest of the domain. The controller is called once per
-			request, reads the task the app dispatched, and holds nothing afterwards. The
+			request, reads the task the app dispatched, and holds nothing afterward. The
 			view renders and collects, and takes no decision. Three components, three class
 			diagrams.
 		</p>
@@ -1374,7 +1374,7 @@
 			OPTION SET and OPTION are one class and not two: an option of a set has no
 			existence outside that set. <code>OptionSet</code> is the only class which
 			touches an <code>sppasOption</code>, and <code>FileForOption</code> the only
-			tie of this domain to a neighbour.
+			tie of this domain to a neighbor.
 		</p>
 
 		<p>
@@ -1405,7 +1405,7 @@
 			<tbody>
 				<tr><td>holds</td><td><code>OptionSet</code> 1 &mdash; 0..n <code>OptionRefusal</code></td><td>A composition: a refusal exists only inside the set whose option it is about</td></tr>
 				<tr><td>uses</td><td><code>OptionSet</code> &rarr; <code>sppasOption</code></td><td>A dependency, and the only tie of this domain to the objects of SPPAS</td></tr>
-				<tr><td>uses</td><td><code>FileForOption</code> &rarr; the provision of files</td><td>A dependency, and the only tie of this domain to a neighbour</td></tr>
+				<tr><td>uses</td><td><code>FileForOption</code> &rarr; the provision of files</td><td>A dependency, and the only tie of this domain to a neighbor</td></tr>
 				<tr><td>none</td><td><code>ValueAcceptance</code></td><td>Tied to nothing at all: it answers on a kind, bounds and a value handed to it</td></tr>
 			</tbody>
 		</table>
@@ -1441,7 +1441,7 @@
 
 		<p>
 			A view builds a tree and does nothing else: it decides nothing, refuses
-			nothing, and reaches neither a disk nor a neighbour. What it shows was decided
+			nothing, and reaches neither a disk nor a neighbor. What it shows was decided
 			before it was called, and the texts it shows are the ones the options carry.
 			There is one part and not several: what this domain shows is one container, and
 			the page it stands in belongs to the app which placed it.
@@ -1474,7 +1474,7 @@
 			<tbody>
 				<tr><td><code>OptionsController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
 				<tr><td><code>OptionsRecord</code></td><td>task, set, to_be_shown</td><td>serialize(), parse(data)</td></tr>
-				<tr><td colspan="3">A record comes from no table: it is what one request holds, it serialises itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
+				<tr><td colspan="3">A record comes from no table: it is what one request holds, it serializes itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
 				<tr><td><code>OptionsManager</code></td><td>&mdash;</td><td>container(), consumes(events), options_for_app()</td></tr>
 			</tbody>
 		</table>
@@ -1685,7 +1685,7 @@
 			<caption>OptionsRecord</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
-				<tr><td>Serialise</td><td>pre: none. post: everything a next request needs in order to rebuild this set, and nothing of the machine</td></tr>
+				<tr><td>Serialize</td><td>pre: none. post: everything a next request needs in order to rebuild this set, and nothing of the machine</td></tr>
 				<tr><td>Parse</td><td>pre: what a page transmitted. post: the set as it was, or an empty set when nothing was transmitted. Parsed twice, it gives the same set</td></tr>
 			</tbody>
 		</table>
@@ -1712,7 +1712,7 @@
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
 				<tr><td>Give the container</td><td>pre: an app handed over a set of options. post: a piece of page holding every option of that set and no other, ready to be placed by the app in its own page</td></tr>
-				<tr><td>Consume an event</td><td>pre: an event an app did not recognise. post: true and the event is treated, when the event is this domain's; false and nothing is touched, when it is not</td></tr>
+				<tr><td>Consume an event</td><td>pre: an event an app did not recognize. post: true and the event is treated, when the event is this domain's; false and nothing is touched, when it is not</td></tr>
 				<tr><td>Give the options for the app</td><td>pre: none. post: the options the app handed over, every one holding the value it holds</td></tr>
 			</tbody>
 		</table>
@@ -1750,7 +1750,7 @@
 		<p>
 			<b>[501] is the only requirement of this dossier held nowhere in it</b>, and it
 			is written down so that nobody looks for it here. [401] is held by one class
-			which asks a neighbour, which is another thing.
+			which asks a neighbor, which is another thing.
 		</p>
 
 	</section>
@@ -1775,7 +1775,7 @@
 	<h3>Without anything installed</h3>
 
 		<p>
-			No disk, no server, no browser, no neighbour. Sixteen tests out of twenty-one
+			No disk, no server, no browser, no neighbor. Sixteen tests out of twenty-one
 			run here, which is what the cutting into three modules was for.
 		</p>
 
@@ -1788,7 +1788,7 @@
 				<tr><td>TE4</td><td>What is expected is said for an option, whether or not anything was refused</td><td>[202]</td></tr>
 				<tr><td>TE5</td><td>Nothing is refused on what a value means: two values which contradict each other are both accepted</td><td>[201], and what this domain does not judge</td></tr>
 				<tr><td>TE6</td><td>A set rebuilt from what a page transmitted holds the same options, the same values and the same values on arrival</td><td>RO1</td></tr>
-				<tr><td>TE7</td><td>A record serialised and parsed twice gives the same set</td><td>RO1</td></tr>
+				<tr><td>TE7</td><td>A record serialized and parsed twice gives the same set</td><td>RO1</td></tr>
 				<tr><td>TE8</td><td>An empty transport gives an empty set, and nothing is raised</td><td>RO1</td></tr>
 				<tr><td>TE9</td><td>Setting a value changes the value of the option and leaves the value on arrival untouched</td><td>[104]</td></tr>
 				<tr><td>TE10</td><td>Setting a value changes nothing else of the option: not its kind, not its label, not its description</td><td>[101]</td></tr>
@@ -1820,7 +1820,7 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>With a view, and with a neighbour</h3>
+	<h3>With a view, and with a neighbor</h3>
 
 		<table>
 			<thead><tr><th>No.</th><th>What is checked</th><th>What it holds</th></tr></thead>
@@ -1836,8 +1836,8 @@
 		<p>
 			TE21 is the only test which needs the provision of files. What it checks on
 			this side is the tie: which option a file was asked for, and which option gets
-			it. What the neighbour does with the request is tested in the dossier of that
-			neighbour.
+			it. What the neighbor does with the request is tested in the dossier of that
+			neighbor.
 		</p>
 
 	</section>

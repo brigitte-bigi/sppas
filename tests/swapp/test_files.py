@@ -212,7 +212,7 @@ class TestDepositAcceptance(unittest.TestCase):
 
 
 class TestDeposit(unittest.TestCase):
-    """TE8 to TE11. What is fed, before anything has travelled."""
+    """TE8 to TE11. What is fed, before anything has traveled."""
 
     def setUp(self):
         self.deposit = swappDataFiles()
@@ -453,7 +453,7 @@ class TestViews(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_te32_a_file_added_is_not_a_file_deposited(self):
-        """TE32. A file she designated is added: nothing of it travelled.
+        """TE32. A file she designated is added: nothing of it traveled.
         It is deposited once the deposit it belongs to was sent. B17
 
         """
@@ -493,12 +493,12 @@ class TestViews(unittest.TestCase):
         view.populate_tree_content(record)
         self.assertNotIn("disabled", sending_control(view))
 
-        # One of them travelled, the other did not.
+        # One of them traveled, the other did not.
         record.deposited = ["a.wav"]
         view.populate_tree_content(record)
         self.assertNotIn("disabled", sending_control(view))
 
-        # Both travelled.
+        # Both traveled.
         record.deposited = ["a.wav", "b.TextGrid"]
         view.populate_tree_content(record)
         self.assertIn("disabled", sending_control(view))
@@ -542,7 +542,7 @@ class TestInternalCall(unittest.TestCase):
 
     def test_te38_what_a_caller_does_not_send_is_not_erased(self):
         """TE38. An app says it has finished, and sends nothing of the page:
-        where the deposit stands, what she gave and what travelled are what
+        where the deposit stands, what she gave and what traveled are what
         the page last transmitted, and not nothing. T12
 
         """
@@ -820,7 +820,7 @@ class TestLocalUse(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_te31_start_over(self):
-        """TE31. The deposit is shown again, and no file is handed afterwards:
+        """TE31. The deposit is shown again, and no file is handed afterward:
         the files are known to a new workspace, holding none.
 
         """

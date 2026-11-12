@@ -121,7 +121,7 @@ class swappDepositSettings:
     # -----------------------------------------------------------------------
 
     def get_signature_life(self) -> float:
-        """Return how long what authorises an address lasts, in seconds.
+        """Return how long what authorizes an address lasts, in seconds.
 
         :return: (float) Never less than the duration of a place
 
@@ -131,7 +131,7 @@ class swappDepositSettings:
     # -----------------------------------------------------------------------
 
     def set_signature_life(self, life: int | float) -> None:
-        """Set how long what authorises an address lasts, in seconds.
+        """Set how long what authorizes an address lasts, in seconds.
 
         :param life: (int|float) Life of a signature
         :raises: sppasTypeError: The given life is not a number

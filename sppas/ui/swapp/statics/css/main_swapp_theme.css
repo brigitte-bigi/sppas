@@ -69,7 +69,7 @@
 
     /* The grounds of the panels: the same two gradients in both modes, a
        shade lighter on a light page, a shade darker on a dark one. They are
-       what keeps a page of choices from being a grey one. */
+       what keeps a page of choices from being a gray one. */
     --apps-panel-bg-image: linear-gradient(120deg, rgb(25, 108, 140) 0%, rgb(192, 100, 229) 60%, rgb(255, 255, 186) 100%);
     --links-panel-bg-image: linear-gradient(90deg, rgb(25, 108, 140) 0%, rgb(153, 229, 158) 40%, rgb(227, 239, 255) 100%);
 

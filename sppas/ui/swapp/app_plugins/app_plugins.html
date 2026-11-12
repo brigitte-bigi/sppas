@@ -85,7 +85,7 @@
 <!-- =============================================================== -->
 
 	<p>
-		<b>Not written yet.</b> This chapter is for whoever reads or changes the code: how it is organised,
+		<b>Not written yet.</b> This chapter is for whoever reads or changes the code: how it is organized,
 		what the page is made of, the events it answers, and the stylesheets.
 	</p>
 
@@ -94,11 +94,11 @@
 
 
 
-<!-- ====================== MODELLING ============================== -->
+<!-- ====================== MODELING ============================== -->
 
 
 <section class="chapter">
-<h1>Modelling</h1>
+<h1>Modeling</h1>
 
 <!-- =============================================================== -->
 
@@ -434,7 +434,7 @@
 		<!-- ------------------------------------------------------- -->
 
 		<section>
-		<h4>Organising the needs</h4>
+		<h4>Organizing the needs</h4>
 
 			<p>
 				The needs above, written as what the person can do and what the system does
@@ -511,7 +511,7 @@
 </section>
 
 
-<!-- ====================== MODELLING ============================== -->
+<!-- ====================== MODELING ============================== -->
 
 
 <section class="ssection">
@@ -598,7 +598,7 @@
 		</p>
 
 		<p>
-			<b>F11 and F18 are the same neighbour at the two ends of a run.</b> The files
+			<b>F11 and F18 are the same neighbor at the two ends of a run.</b> The files
 			a plugin works on and the files it produced are both the person's, and both
 			are known by the domain which knows her files. This application holds neither.
 		</p>
@@ -613,7 +613,7 @@
 	<h3>Conceptual model of data</h3>
 
 		<p>
-			Four classes. The plugin is one of them without being modelled: it belongs to
+			Four classes. The plugin is one of them without being modeled: it belongs to
 			the domain of the plugins, and it appears here with its identifier and no
 			property.
 		</p>
@@ -677,7 +677,7 @@
 		<p>
 			<b>The values set belong to the run and not to the plugin.</b> They are what
 			the options held when the run started: a plugin set differently an hour later
-			does not change what a run did, and a result read a week afterwards is read
+			does not change what a run did, and a result read a week afterward is read
 			beside the values it was obtained with.
 		</p>
 
@@ -689,7 +689,7 @@
 			<li>Whether a run is over, which is one result per file of it.</li>
 		</ul>
 
-		<h4>What is not modelled, and why</h4>
+		<h4>What is not modeled, and why</h4>
 
 		<ul>
 			<li>What a plugin declares of itself, where it stands, and how it is started: the domain of the plugins', and read from there.</li>
@@ -735,7 +735,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E1</td></tr>
+					<tr><td>Synchronization</td><td>E1</td></tr>
 					<tr><td>Actions</td><td>Read what the domain of the plugins holds; read, of every plugin, whether it can be started on this machine</td></tr>
 					<tr><td>Result</td><td>One line per plugin (F2). Always</td></tr>
 					<tr><td>Result</td><td>That a plugin cannot be run here (F3). For every plugin whose command names what this machine does not have</td></tr>
@@ -752,7 +752,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E2</td></tr>
+					<tr><td>Synchronization</td><td>E2</td></tr>
 					<tr><td>Actions</td><td>Give the archive to the domain of the plugins</td></tr>
 					<tr><td>Result</td><td>The plugin stands among the installed ones (F2). When it was installed</td></tr>
 					<tr><td>Result</td><td>What stood in the way, said in the words of what was attempted (F2). When the archive is not one, or when that plugin is already there</td></tr>
@@ -772,7 +772,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E3</td></tr>
+					<tr><td>Synchronization</td><td>E3</td></tr>
 					<tr><td>Actions</td><td>Ask the domain of the plugins to remove it</td></tr>
 					<tr><td>Result</td><td>The plugin is no longer among the installed ones (F2). When it was removed</td></tr>
 					<tr><td>Result</td><td>What stood in the way (F2). Otherwise</td></tr>
@@ -792,7 +792,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E4</td></tr>
+					<tr><td>Synchronization</td><td>E4</td></tr>
 					<tr><td>Actions</td><td>Hand the options that plugin declares to the service of the options (F9); take back what was set (F10)</td></tr>
 					<tr><td>Result</td><td>The options of that plugin hold the values which were set. Always</td></tr>
 				</tbody>
@@ -814,7 +814,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E5, and a plugin which can be run here and files which are not none</td></tr>
+					<tr><td>Synchronization</td><td>E5, and a plugin which can be run here and files which are not none</td></tr>
 					<tr><td>Actions</td><td>Write the moment the run started and the values the options hold; then, for every file: start the plugin on that file, and take back what it said</td></tr>
 					<tr><td>Result</td><td>Which file is being treated and how many remain (F16). For every file, before it is treated</td></tr>
 					<tr><td>Result</td><td>E6, a file has been treated. For every file, whatever came of it</td></tr>
@@ -842,7 +842,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E6</td></tr>
+					<tr><td>Synchronization</td><td>E6</td></tr>
 					<tr><td>Actions</td><td>Make the result of that file: whether the plugin ran on it, what it said about it, and which files appeared</td></tr>
 					<tr><td>Result</td><td>The result of that file (F17). Always</td></tr>
 				</tbody>
@@ -862,7 +862,7 @@
 			<table>
 				<thead><tr><th>What</th><th>Says</th></tr></thead>
 				<tbody>
-					<tr><td>Synchronisation</td><td>E7</td></tr>
+					<tr><td>Synchronization</td><td>E7</td></tr>
 					<tr><td>Actions</td><td>Give the files which appeared to the provision of files, to be made known among the files of the person</td></tr>
 					<tr><td>Result</td><td>The files which were produced (F18). When at least one appeared</td></tr>
 					<tr><td>Result</td><td>Nothing at all. When none did</td></tr>
@@ -881,11 +881,11 @@
 </section>
 
 
-<!-- ====================== ORGANISATIONAL ========================= -->
+<!-- ====================== ORGANIZATIONAL ========================= -->
 
 
 <section class="ssection">
-<h2>Organisational level</h2>
+<h2>Organizational level</h2>
 
 <!-- =============================================================== -->
 
@@ -895,7 +895,7 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>Organisational model of treatments</h3>
+	<h3>Organizational model of treatments</h3>
 
 		<p>
 			One procedure per treatment, numbered as it is. There are two tables, and the
@@ -983,7 +983,7 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="subssection">
-	<h3>Rules of organisation</h3>
+	<h3>Rules of organization</h3>
 
 		<ul>
 			<li><b>RO1</b> &mdash; Installing and removing a plugin happen where SPPAS runs on the machine of the person, and nowhere else [025].</li>
@@ -1149,7 +1149,7 @@
 	<h3>Operational model of treatments</h3>
 
 		<p>
-			The organisational level said by what and when; this says in what tasks, and
+			The organizational level said by what and when; this says in what tasks, and
 			what among them cannot be half done.
 		</p>
 
@@ -1261,7 +1261,7 @@
 			The model holds the plugins, the run which is going and what came of it, and
 			exposes neither the domain of the plugins nor the two services to the rest of
 			the application. The controller is called once per request, reads the task it
-			carries, and holds nothing afterwards. The view renders and collects, and takes
+			carries, and holds nothing afterward. The view renders and collects, and takes
 			no decision. Three components, three class diagrams.
 		</p>
 
@@ -1571,7 +1571,7 @@
 				<tr><td>Give the options of a plugin to be set</td><td>pre: a plugin. post: the options that plugin declares are handed to the service of the options, with the values they hold</td></tr>
 				<tr><td>Take back the values</td><td>pre: the options were set. post: the values which were set, as that service gives them. Nothing of them is judged here</td></tr>
 				<tr><td>Start a run</td><td>pre: a plugin which can run here, files which are not none, and the values as they stand. post: the run exists, holding its moment, its plugin, its values and its files, and holding no result yet; and a thread advances it, one file at a time. When a run of that person is already going, nothing is started and the refusal says so</td></tr>
-				<tr><td>Say whether a run is going</td><td>pre: none. post: true while the thread which advances the run is alive, false afterwards. It is what tells a run which stopped from a run which is slow</td></tr>
+				<tr><td>Say whether a run is going</td><td>pre: none. post: true while the thread which advances the run is alive, false afterward. It is what tells a run which stopped from a run which is slow</td></tr>
 				<tr><td>Give the run</td><td>pre: none. post: the run with the results it holds now, which file is being treated and how many remain. Answered while the run goes, and answered after it is over. A run read twice in a row gives what it had each time, and never less</td></tr>
 				<tr><td>Give back what was produced</td><td>pre: the files which appeared. post: they are known among the files of the person, and reachable as her own. This application holds none of them</td></tr>
 			</tbody>
@@ -1591,7 +1591,7 @@
 				<tr><td>Add a result</td><td>pre: the result of one file of this run. post: the run holds it, with the files which came of it; what it held before is untouched, and the order the results were added in is kept</td></tr>
 				<tr><td>Say how many remain</td><td>pre: none. post: the files the run was given, less the results it holds</td></tr>
 				<tr><td>Say whether a run is over</td><td>pre: none. post: true when the run holds one result per file it was given</td></tr>
-				<tr><td>Serialise, parse</td><td>pre: none. post: everything a page needs to show a run, and nothing of the machine. A run parsed twice gives the same run</td></tr>
+				<tr><td>Serialize, parse</td><td>pre: none. post: everything a page needs to show a run, and nothing of the machine. A run parsed twice gives the same run</td></tr>
 			</tbody>
 		</table>
 

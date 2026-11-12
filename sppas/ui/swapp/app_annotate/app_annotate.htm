@@ -25,18 +25,18 @@
 
 	<p>
 		<b>Not written yet.</b> This chapter is for whoever reads or changes the code:
-		how it is organised, what the page is made of, the events it answers, and the
+		how it is organized, what the page is made of, the events it answers, and the
 		stylesheets.
 	</p>
 
 </section>
 
 
-<!-- ====================== MODELLING ============================== -->
+<!-- ====================== MODELING ============================== -->
 
 
 <section class="chapter">
-<h1>Modelling</h1>
+<h1>Modeling</h1>
 
 <!-- =============================================================== -->
 
@@ -117,7 +117,7 @@
 					annotations to perform, in which language, with which configuration and
 					into which file formats &mdash; among a score of annotations whose names
 					say little to whoever did not write them. The decision is taken on a
-					list, and the consequences are read afterwards, file by file, in a
+					list, and the consequences are read afterward, file by file, in a
 					report.
 				</p>
 
@@ -166,7 +166,7 @@
 				<p>
 					"Annotate" does not aim to say what an annotation does or how: that is
 					established in the API of SPPAS, whose classes are read here and not
-					modelled. It does not aim to select the files, which are given by the
+					modeled. It does not aim to select the files, which are given by the
 					provision of files, nor to show and check the options of an annotation,
 					which is the service of the options'. What is left is the annotations as
 					a set: which can be performed, which are selected, what they are
@@ -466,13 +466,13 @@
 			<!-- --------------------------------------------------- -->
 
 			<section>
-			<h4>Organising the needs</h4>
+			<h4>Organizing the needs</h4>
 
 				<h5>[010] Starting</h5>
 				<ul class="req">
 				<li>[011] The user can initiate the automatic annotation of a set of
 				files.</li>
-				<li>[012] The system initialises the page with the default extension of
+				<li>[012] The system initializes the page with the default extension of
 				every kind of output file, no language, no annotation selected, the merge
 				option off, and no batch.</li>
 				</ul>
@@ -723,7 +723,7 @@
 			<section>
 			<h4>Conceptual model of data</h4>
 
-				<p>Eight classes. Three are read from a neighbour and appear here with their
+				<p>Eight classes. Three are read from a neighbor and appear here with their
 				identifier and nothing else; four belong to one performance being decided;
 				one is what stays.</p>
 
@@ -771,7 +771,7 @@
 				<p><b>The language is on the selection and not on the annotation.</b> The
 				language of the page is not a property of anything: it is a gesture which
 				writes the language of every annotation concerned [202], and what the page
-				shows afterwards is read on the selected annotations [204].</p>
+				shows afterward is read on the selected annotations [204].</p>
 
 				<p><b>A value is tied to an annotation and not to a selection.</b> An
 				annotation is configured whether it is selected or not, and what was fixed
@@ -823,7 +823,7 @@
 				<li><code>(batch &and; selected &and; lang &and; options &and; extensions &and; merge) &rarr; report, produced files</code></li>
 				</ul>
 
-				<h5>What is not modelled, and why</h5>
+				<h5>What is not modeled, and why</h5>
 
 				<ul>
 				<li>What an annotation declares of itself, which is the API's: it is read where it is written, and nothing here adds to it.</li>
@@ -877,7 +877,7 @@
 				them.</p>
 
 				<p>Nothing here waits for two events. T08 is the only treatment with a
-				condition on its synchronisation, and that condition is read on the data it
+				condition on its synchronization, and that condition is read on the data it
 				already holds.</p>
 
 				<h5>T01 &mdash; Present the annotations</h5>
@@ -997,7 +997,7 @@
 				  <ul>
 					<li>the language is one that annotation has resources for;</li>
 					<li>no other annotation is changed;</li>
-					<li>the language of the page fixed afterwards replaces it.</li>
+					<li>the language of the page fixed afterward replaces it.</li>
 				  </ul>
 				</li>
 				<li><strong>Emission</strong>: <code>lang</code>, always; E13, always; F7,
@@ -1242,15 +1242,15 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>Organisational level</h2>
+	<h2>Organizational level</h2>
 
 		<!-- ------------------------------------------------------- -->
 
 		<section class="subssection">
-		<h3>Organisational model of treatments</h3>
+		<h3>Organizational model of treatments</h3>
 
 			<p>One procedure per treatment, numbered as it is. There are two contexts of
-			execution and one organisation: what differs between the local server and the
+			execution and one organization: what differs between the local server and the
 			wsgi service is who exposes the batch and where the reports stand, and nothing
 			of what is done. Annotate is served by the two, which is why there is one table
 			and not two.</p>
@@ -1287,7 +1287,7 @@
 			same fields. Nothing of what she is reading is replaced while she decides
 			[1005]. What she decided is sent once, with the performance. RO1, RO8</p>
 
-			<p><b>PF7 is in nobody's charge here.</b> The batch is exposed by a neighbour in
+			<p><b>PF7 is in nobody's charge here.</b> The batch is exposed by a neighbor in
 			both contexts, and this application reads it. It appears in this table so that
 			the one procedure Annotate does not perform is written down. RO4</p>
 
@@ -1365,19 +1365,19 @@
 		<!-- ------------------------------------------------------- -->
 
 		<section class="subssection">
-		<h3>Rules of organisation</h3>
+		<h3>Rules of organization</h3>
 
 			<ul>
 			<li><b>RO1</b> &mdash; The client holds no knowledge of the annotations. What an
 			annotation is, which languages it has and what it requires were written in the
 			page by the server; the client shows and sets what is there.</li>
-			<li><b>RO2</b> &mdash; The two contexts of execution are one organisation, and
+			<li><b>RO2</b> &mdash; The two contexts of execution are one organization, and
 			the two deployments are one implementation. What differs is who exposes the
 			batch, and where the reports stand.</li>
 			<li><b>RO3</b> &mdash; The decisions are taken in any order. The five steps are
 			numbered for the person to read; none of the first three is a precondition of
 			another, and only the performance requires them.</li>
-			<li><b>RO4</b> &mdash; The batch is exposed by a neighbour and read. Annotate
+			<li><b>RO4</b> &mdash; The batch is exposed by a neighbor and read. Annotate
 			selects no file, in either context, and alters none [402].</li>
 			<li><b>RO5</b> &mdash; A performance is started by one request and runs on the
 			server, in a thread; where it stands is read on the progress the API was given,
@@ -1561,7 +1561,7 @@
 
 			<p>Here the machines are named, and not before. There is no database: three
 			tables stand in the API of SPPAS, four in what the page transmits, one in a
-			neighbour and one on a disk.</p>
+			neighbor and one on a disk.</p>
 
 			<table>
 			<thead>
@@ -1608,7 +1608,7 @@
 		<section class="subssection">
 		<h3>Operational model of treatments</h3>
 
-			<p>The organisational level said by what and when; this says in what tasks, and
+			<p>The organizational level said by what and when; this says in what tasks, and
 			what among them cannot be half done.</p>
 
 			<p><b>One request is one unit.</b> Every request begins by rebuilding what was
@@ -1747,7 +1747,7 @@
 			<h5>Model</h5>
 
 			<p>The fa&ccedil;ade <code>AnnotateModel</code> exposes the single interface the
-			application expects and delegates to four specialised sub-models.</p>
+			application expects and delegates to four specialized sub-models.</p>
 
 			<p><code>ModelAnnotations</code> holds the knowledge of the annotations. It
 			makes a <code>sppasParam</code> and reads its steps: for each annotation, its
@@ -1781,7 +1781,7 @@
 
 			<p>The controller is called once per request. It rebuilds the current state
 			exclusively from the data transmitted to it. What carries that state is one
-			object, <code>AnnotateRecord</code>: the view serialises it and the controller
+			object, <code>AnnotateRecord</code>: the view serializes it and the controller
 			parses it back, and neither of them holds it between two requests.</p>
 
 			<p>Tasks:</p>
@@ -1889,7 +1889,7 @@
 			are performed, then the procedure outcome report: a button which comes back to
 			the five steps, the title, the name of the file of the report, then its lines,
 			each result bearing the class of its state. The state is in the text of the
-			line as well, so the colour is never the only thing which says it. Online, a
+			line as well, so the color is never the only thing which says it. Online, a
 			link downloads the report, and another one the archive of every produced
 			file.</p>
 
@@ -2053,7 +2053,7 @@
 			performance which is going, and the manager of the provision of files, which
 			that service requires an app to hold between two requests. It answers the
 			progress alone; it answers the tasks of this application first, and offers what
-			it does not recognise to the manager, <code>consumes()</code>; it places its
+			it does not recognize to the manager, <code>consumes()</code>; it places its
 			container in the page, <code>populate_view()</code> then
 			<code>container()</code>; it asks it whether the person said the workspace is
 			ready, <code>is_ready()</code>; and it asks it to start over when she resets or
@@ -2284,7 +2284,7 @@
 			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 			<tbody>
 			  <tr><td>Give the batch</td><td>pre: none. post: the workspace the provision of files hands, holding the files to be treated and them only, possibly empty; the workspace of the person never reached. C11</td></tr>
-			  <tr><td>Lock and release</td><td>pre: files of the batch. post: they are locked while the annotations are performed, and released when they have been; none is still locked afterwards</td></tr>
+			  <tr><td>Lock and release</td><td>pre: files of the batch. post: they are locked while the annotations are performed, and released when they have been; none is still locked afterward</td></tr>
 			  <tr><td>Give back what was produced</td><td>pre: the annotations have been performed. post: what was written is in the workspace which was handed, that workspace is given back, and that the batch has been treated is said. C23</td></tr>
 			  <tr><td>Give an address</td><td>pre: the name of a produced file, or of several. post: what the provision of files answers, relayed. C23</td></tr>
 			</tbody>
@@ -2295,9 +2295,9 @@
 			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 			<tbody>
 			  <tr><td>Say what is missing</td><td>pre: a batch is given to it. post: an annotation when none is selected, the batch when it is empty, nothing when the annotations may be performed. It holds no batch. C12</td></tr>
-			  <tr><td>Serialise a record</td><td>pre: none. post: everything a next request needs in order to rebuild what was decided, and nothing of the machine</td></tr>
+			  <tr><td>Serialize a record</td><td>pre: none. post: everything a next request needs in order to rebuild what was decided, and nothing of the machine</td></tr>
 			  <tr><td>Parse a record</td><td>pre: what a page transmitted. post: what was decided as it was, or the defaults when nothing was transmitted. An annotation is selected only if it was transmitted as such: selecting one selects no other. Parsed twice, it gives the same. C1, C6, C24</td></tr>
-			  <tr><td>Put what is to be shown</td><td>pre: none. post: it is in what is to be shown, and it is never serialised</td></tr>
+			  <tr><td>Put what is to be shown</td><td>pre: none. post: it is in what is to be shown, and it is never serialized</td></tr>
 			</tbody>
 			</table>
 
@@ -2362,7 +2362,7 @@
 			  <tr><td>C11</td><td><code>ModelProvision</code>, which is what reads the batch</td></tr>
 			  <tr><td>C12</td><td><code>Performance</code>, saying what is missing, read by <code>AnnotateController</code> before it starts anything</td></tr>
 			  <tr><td>C13</td><td><code>ModelPerformance</code>, which starts nothing while its thread is alive; <code>AnnotateController</code> reads it before a reset or another batch</td></tr>
-			  <tr><td>C14</td><td><code>ModelPerformance</code>, which fills its own <code>sppasParam</code> when it starts and is given nothing afterwards</td></tr>
+			  <tr><td>C14</td><td><code>ModelPerformance</code>, which fills its own <code>sppasParam</code> when it starts and is given nothing afterward</td></tr>
 			  <tr><td>C15</td><td><code>ModelPerformance</code>, which hands the whole to the API and orders nothing</td></tr>
 			  <tr><td>C16</td><td>The API; <code>ModelPerformance</code> stops nothing</td></tr>
 			  <tr><td>C17</td><td><code>ModelPerformance</code>, naming the report</td></tr>
@@ -2478,13 +2478,13 @@
 			</tbody>
 			</table>
 
-			<h4>ModelProvision, against the neighbour</h4>
+			<h4>ModelProvision, against the neighbor</h4>
 
 			<table>
 			<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
 			<tbody>
 			  <tr><td>TE30</td><td>The batch is the workspace the provision of files hands, empty when nothing is checked, and the workspace of the person has not moved</td><td>C11</td></tr>
-			  <tr><td>TE31</td><td>The files of the batch are locked while the annotations are performed, and none is still locked afterwards</td><td>T08</td></tr>
+			  <tr><td>TE31</td><td>The files of the batch are locked while the annotations are performed, and none is still locked afterward</td><td>T08</td></tr>
 			  <tr><td>TE32</td><td>What was produced is given back once, when the annotations have been performed, and not at each of them</td><td>T09</td></tr>
 			  <tr><td>TE33</td><td>Online, the report is among what the archive holds</td><td>[803], C22</td></tr>
 			</tbody>
@@ -2592,7 +2592,7 @@
 			  <tr>
 				<th scope="row">What it is not</th>
 				<td>It says what has to have been performed before, and never what will be
-				made of an annotation afterwards: what follows one is read on the
+				made of an annotation afterward: what follows one is read on the
 				others.</td>
 			  </tr>
 			  <tr>

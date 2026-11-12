@@ -208,7 +208,7 @@ class swappHeadNode(HTMLHeadNode):
         """Name the theme the page is shown with when the address names none.
 
         An application declares its theme while its head is populated: what
-        the page shows afterwards, the link leading back to SPPAS included,
+        the page shows afterward, the link leading back to SPPAS included,
         is written knowing it.
 
         :param name: (str) The name of one of the declared themes
@@ -303,7 +303,7 @@ class swappHeadNode(HTMLHeadNode):
         """Name the icon set the page draws from when the address names none.
 
         An application declares its drawings while its head is populated:
-        what the page shows afterwards is drawn knowing it. The fallback is
+        what the page shows afterward is drawn knowing it. The fallback is
         left to SPPAS, so that a name its set does not carry still answers.
 
         :param name: (str) The name of one of the declared sets

@@ -212,7 +212,7 @@ def request_wx_exit() -> int:
     """Ask the wx interface whether it accepts to close.
 
     The interface answers its verdict when it has one right away -- nothing
-    opened, nothing modified -- and an acknowledgement when it has to ask
+    opened, nothing modified -- and an acknowledgment when it has to ask
     its own reader: the verdict then comes later, in a message of its own.
     A silence is an interface which is not there any more, and an interface
     which is not there does not hold an exit back.
