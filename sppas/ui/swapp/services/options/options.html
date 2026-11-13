@@ -1283,6 +1283,7 @@
 			<tbody>
 				<tr><td>acceptance</td><td>Says whether a value suits the kind of an option and its bounds, and what was expected when it does not. Reads nothing, writes nothing</td><td>What PF3 asks of it</td></tr>
 				<tr><td>set</td><td>Rebuilds a set from what the page transmitted, holds the value every option arrived with, sets values, puts options back, and gives the set to an app</td><td>PF1, PF3, PF4, PF5, PF7, PF8</td></tr>
+				<tr><td>file</td><td>Asks the provision of files for the file an option takes, and takes in what comes back</td><td>PF6, PF7</td></tr>
 				<tr><td>presentation</td><td>Builds the piece of page an app places in its own: one line per option, and what the person acts on</td><td>PF2, and the view of every other</td></tr>
 			</tbody>
 		</table>
@@ -1305,7 +1306,7 @@
 
 		<p>
 			The request for a file is made to the provision of files and to nothing else.
-			It is the only tie of this domain to a neighbor, and the <b>set</b> module
+			It is the only tie of this domain to a neighbor, and the <b>file</b> module
 			carries it: what comes back is a value like any other.
 		</p>
 
@@ -1363,10 +1364,11 @@
 		<table>
 			<thead><tr><th>Class</th><th>From</th><th>Attributes</th><th>Operations</th></tr></thead>
 			<tbody>
-				<tr><td><code>OptionSet</code></td><td>OPTION SET, OPTION; module <i>set</i></td><td>options, values on arrival, /changed</td><td>rebuild(data), value_on_arrival_of(key), set_value(key, value), put_back(key), put_all_back(), refusals(), for_app()</td></tr>
+				<tr><td><code>OptionSet</code></td><td>OPTION SET, OPTION; module <i>set</i></td><td>options, values on arrival, /changed</td><td>rebuild(data), serialize(), value_of(key), value_on_arrival_of(key), set_value(key, value), validate(given), put_back(key), put_all_back(), refusals(), for_app()</td></tr>
 				<tr><td><code>OptionRefusal</code></td><td>REFUSAL</td><td>option, expected</td><td>&mdash;</td></tr>
 				<tr><td><code>ValueAcceptance</code></td><td>module <i>acceptance</i></td><td>&mdash;</td><td>accepts(option, value), what_is_expected(option)</td></tr>
-				<tr><td><code>FileForOption</code></td><td>module <i>set</i></td><td>&mdash;</td><td>ask_for(option), take_in(option, file)</td></tr>
+				<tr><td><code>FileForOption</code></td><td>module <i>file</i></td><td>&mdash;</td><td>ask_for(option), file_of(request), take_in(set, key, file)</td></tr>
+				<tr><td><code>FileRequest</code></td><td>module <i>file</i></td><td>option</td><td>&mdash;</td></tr>
 			</tbody>
 		</table>
 
@@ -1385,10 +1387,11 @@
 		</p>
 
 		<p>
-			<code>OptionSet.set_value()</code> sets and does not judge: whether a value may
-			be set is <code>ValueAcceptance</code>'s answer, and the controller asks it
-			first. A class which decided what it may hold would hold the rules as well as
-			the data, and the rules would then be in two places.
+			<code>OptionSet.set_value()</code> sets and does not judge.
+			<code>OptionSet.validate()</code> is what takes in the values a person gave: it
+			asks <code>ValueAcceptance</code> for each of them, and sets the ones which
+			were accepted. A class which decided what it may hold would hold the rules as
+			well as the data: the rules stay in one class, and the set holds none of them.
 		</p>
 
 		<p>
@@ -1405,7 +1408,9 @@
 			<tbody>
 				<tr><td>holds</td><td><code>OptionSet</code> 1 &mdash; 0..n <code>OptionRefusal</code></td><td>A composition: a refusal exists only inside the set whose option it is about</td></tr>
 				<tr><td>uses</td><td><code>OptionSet</code> &rarr; <code>sppasOption</code></td><td>A dependency, and the only tie of this domain to the objects of SPPAS</td></tr>
+				<tr><td>uses</td><td><code>OptionSet</code> &rarr; <code>ValueAcceptance</code></td><td>A dependency: it asks for each value before it sets it</td></tr>
 				<tr><td>uses</td><td><code>FileForOption</code> &rarr; the provision of files</td><td>A dependency, and the only tie of this domain to a neighbor</td></tr>
+				<tr><td>uses</td><td><code>FileForOption</code> &rarr; <code>FileRequest</code></td><td>A dependency: it makes the request which says which option a file is for</td></tr>
 				<tr><td>none</td><td><code>ValueAcceptance</code></td><td>Tied to nothing at all: it answers on a kind, bounds and a value handed to it</td></tr>
 			</tbody>
 		</table>
@@ -1417,11 +1422,12 @@
 			class diagram.
 		</p>
 
-		<pre class="dark"><code>[OptionSet|options;values on arrival;/changed|rebuild();value_on_arrival_of();set_value();put_back();put_all_back();refusals();for_app()]++1-0..*&gt;[OptionRefusal|option;expected]
+		<pre class="dark"><code>[OptionSet|options;values on arrival;/changed|rebuild();serialize();value_of();value_on_arrival_of();set_value();validate();put_back();put_all_back();refusals();for_app()]++1-0..*&gt;[OptionRefusal|option;expected]
 
 [OptionSet]-.-&gt;[sppasOption]
 [ValueAcceptance|accepts();what_is_expected()]
-[FileForOption|ask_for();take_in()]</code></pre>
+[OptionSet]-.-&gt;[ValueAcceptance]
+[FileForOption|ask_for();file_of();take_in()]-.-&gt;[FileRequest|option]</code></pre>
 
 	</section>
 
@@ -1472,8 +1478,8 @@
 		<table>
 			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
 			<tbody>
-				<tr><td><code>OptionsController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
-				<tr><td><code>OptionsRecord</code></td><td>task, set, to_be_shown</td><td>serialize(), parse(data)</td></tr>
+				<tr><td><code>OptionsController</code></td><td>record</td><td>is_a_task(data), handle(data), populate_view(), options_for_app()</td></tr>
+				<tr><td><code>OptionsRecord</code></td><td>task, asked, set, given, said, to_be_shown</td><td>serialize(), parse(data)</td></tr>
 				<tr><td colspan="3">A record comes from no table: it is what one request holds, it serializes itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
 				<tr><td><code>OptionsManager</code></td><td>&mdash;</td><td>container(), consumes(events), options_for_app()</td></tr>
 			</tbody>
@@ -1495,7 +1501,7 @@
 				<tr><td>holds</td><td><code>OptionsManager</code> 1 &mdash; 1 <code>OptionsView</code>, 1 <code>OptionsController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
 				<tr><td>holds</td><td><code>OptionsController</code> 1 &mdash; 1 <code>OptionsRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
 				<tr><td>holds</td><td><code>OptionsRecord</code> 1 &mdash; 1 <code>OptionSet</code></td><td>A composition: the set lives inside what one request carries</td></tr>
-				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>ValueAcceptance</code></td><td>A dependency: it asks before it sets</td></tr>
+				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>OptionSet</code></td><td>A dependency: it has the set take in the values a person gave</td></tr>
 				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>FileForOption</code></td><td>A dependency: it asks for a file and takes back what comes</td></tr>
 				<tr><td>uses</td><td><code>OptionsController</code> &rarr; <code>OptionsView</code></td><td>A dependency: it hands over what to build from</td></tr>
 			</tbody>
@@ -1503,12 +1509,11 @@
 
 		<h4>In yUML</h4>
 
-		<pre class="dark"><code>[OptionsManager|container();consumes();options_for_app()]++1-1&gt;[OptionsController|record|handle();populate_view()]
+		<pre class="dark"><code>[OptionsManager|container();consumes();options_for_app()]++1-1&gt;[OptionsController|record|is_a_task();handle();populate_view();options_for_app()]
 [OptionsManager]++1-1&gt;[OptionsView]
-[OptionsController]++1-1&gt;[OptionsRecord|task;set;to_be_shown|serialize();parse()]
+[OptionsController]++1-1&gt;[OptionsRecord|task;asked;set;given;said;to_be_shown|serialize();parse()]
 [OptionsRecord]++1-1&gt;[OptionSet]
 
-[OptionsController]-.-&gt;[ValueAcceptance]
 [OptionsController]-.-&gt;[FileForOption]
 [OptionsController]-.-&gt;[OptionsView]</code></pre>
 
@@ -1622,7 +1627,7 @@
 		<ul>
 			<li>Nothing is held between two requests. Every operation is given what it works on, and keeps none of it. RO1</li>
 			<li>What is absent gives back an empty thing &mdash; no refusal, an empty set, an empty description &mdash; and never nothing at all.</li>
-			<li>Only <code>OptionSet</code> touches an <code>sppasOption</code>. No other class of this domain knows that such an object exists.</li>
+			<li>Only <code>OptionSet</code> sets a value on an <code>sppasOption</code>. The other classes read what an option carries, and change nothing of it.</li>
 			<li>Only <code>FileForOption</code> speaks to the provision of files.</li>
 			<li>Nothing here reads what a value means, and nothing opens a file.</li>
 			<li>What is raised is caught by whatever answers a request, and no class below it writes a catch.</li>
@@ -1647,14 +1652,17 @@
 				<tr><td>Put an option back</td><td>pre: the key names an option of the set. post: the option holds the value it arrived with, and carries no refusal</td></tr>
 				<tr><td>Put every option back</td><td>pre: none. post: every option holds the value it arrived with, and the set carries no refusal</td></tr>
 				<tr><td>Give the refusals</td><td>pre: none. post: one refusal per option which was given a value it could not hold, at the last validation; empty when there is none</td></tr>
+				<tr><td>Take in the values</td><td>pre: values, by key of option. post: every value which suits its option is set; an option whose value was refused keeps the value it held; a key which names no option is dropped</td></tr>
+				<tr><td>Give the value an option holds</td><td>pre: the key names an option of the set. post: the value, as it was given</td></tr>
+				<tr><td>Serialize</td><td>pre: none. post: everything a next request needs in order to rebuild the set &mdash; the key, the kind, the value, the value on arrival and the label of every option. The description does not travel: it is not in the page as long as nobody asked for it</td></tr>
 				<tr><td>Give the set for an app</td><td>pre: none. post: the options, every one holding the value it holds. No refusal, and no value on arrival</td></tr>
 			</tbody>
 		</table>
 
 		<p>
-			It sets and it does not judge: what may be set was answered before. It is also
-			the only class which knows that an option is an <code>sppasOption</code>, so it
-			is the only one to be read again the day that object changes.
+			It is the only class which changes an option, and it changes its value and
+			nothing else. What may be set is asked of <code>ValueAcceptance</code>, value by
+			value: the set holds no rule of its own.
 		</p>
 
 		<table>
@@ -1677,6 +1685,7 @@
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
 				<tr><td>Ask for a file</td><td>pre: an option whose kind takes a file. post: the request is made to the provision of files, carrying which option the file is for. Nothing is opened on any machine</td></tr>
+				<tr><td>Give the file of a request</td><td>pre: a request. post: the file the person designated through the provision of files; empty when no file was obtained</td></tr>
 				<tr><td>Take in the file which came back</td><td>pre: a file, and the option it was asked for. post: that file stands as the value of that option. The file is not opened, and what it holds is not read</td></tr>
 			</tbody>
 		</table>
@@ -1696,6 +1705,8 @@
 			<tbody>
 				<tr><td>Handle a request</td><td>pre: called once for that request, and never twice. post: the record is rebuilt from what was transmitted, the task is read, and one treatment ran. Every value of a validation was judged, and every value which was accepted was set. Nothing is held after the request</td></tr>
 				<tr><td>Populate the view</td><td>pre: the request was handled. post: the view has the record; nothing is decided here</td></tr>
+				<tr><td>Say whether data carries a task</td><td>pre: none. post: true when what a page sent carries a task of this domain</td></tr>
+				<tr><td>Give the options for the app</td><td>pre: none. post: the options, every one holding the value it holds</td></tr>
 			</tbody>
 		</table>
 
@@ -1703,7 +1714,7 @@
 			<caption>OptionsView</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
-				<tr><td>Populate the tree</td><td>pre: a record. post: one line per option of the set, holding the label of that option, the value it holds, what it takes to change that value, its bounds where it has any, and its refusal where it has one. Nothing which the record does not say, and no text this class wrote</td></tr>
+				<tr><td>Populate the tree</td><td>pre: a record. post: one line per option of the set, holding the label of that option, the value it holds, what it takes to change that value, its bounds where it has any, and its refusal where it has one. A field of a number which has no bounds of its own takes those of the desktop interface, 0 and 2000. The field of a file and what asks for one stand side by side, in one group named by the label of the option; what asks for a file is named by its own text followed by that label. What is said to the person &mdash; that no file was obtained &mdash; is shown once. Nothing which the record does not say; the only words of this class are the names of what validates and of what asks for a file</td></tr>
 			</tbody>
 		</table>
 

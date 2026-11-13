@@ -33,17 +33,31 @@ Nothing else is ever added to the root.
 
 ## Work in progress
 
-Some directories hold no implementation yet. Each one holds the design
-document of what is to be written there -- a single `.html` file, finished or
-being written. They are in the tree because their place in the package is
-already decided:
+Each app and each service has a design document in its own directory: a
+single `.htm` or `.html` file, finished or being written. A document designs
+everything which is worth doing; the code may do a part of it only, and what
+is designed and not written yet raises `NotImplementedError` where it is to be
+written. A place is kept that way, and nothing is patched in later.
 
-- `app_convert/`, `app_plugins/`, `app_annotate/`: apps to come;
-- `services/deposit/`, `services/files/`, `services/options/`;
-- `app_wkps/` is the only one with code; it is being reworked.
+- `app_plugins/`, `app_annotate/`: the design document only, no code yet;
+- `app_convert/`: holds its code; the remediation of what a format cannot
+  hold is designed and not written;
+- `services/deposit/`, `services/files/`: hold their code;
+- `services/options/`: holds the code of what the options panel of the
+  desktop interface does -- one field per option, suited to its kind, and the
+  values handed back to the app. The description on demand, the way back to
+  the value an option arrived with, the bounds of an option, what is said of
+  a refused value, and the file of an option where SPPAS answers from a
+  server, are designed and not written;
+- `app_wkps/` is being reworked.
 
-Their unit tests are already written, in `tests/swapp/`. They fail until the
-modules they import exist: a failure there is expected, not a regression.
+A service has no page of its own: it is tried alone on a page of `app_test/`,
+`test_files.html` for the provision of files and `test_options.html` for the
+options.
+
+The unit tests are in `tests/swapp/`. The ones of what is not written yet
+fail: a failure there is expected, not a regression. The ones of the options
+need the bounds of an option, which the API of SPPAS does not hold yet.
 
 
 ## Language

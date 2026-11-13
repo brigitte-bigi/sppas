@@ -40,6 +40,7 @@
 
 from .tests_page_swapp import swappTestSwappResponseRecipe
 from .tests_page_files import swappTestFilesResponseRecipe
+from .tests_page_options import swappTestOptionsResponseRecipe
 
 # ---------------------------------------------------------------------------
 
@@ -56,7 +57,8 @@ class swappTestsModel:
     def __init__(self):
         """Create the model with the tests this app knows."""
         self.__recipes = [swappTestSwappResponseRecipe,
-                          swappTestFilesResponseRecipe]
+                          swappTestFilesResponseRecipe,
+                          swappTestOptionsResponseRecipe]
 
     # -----------------------------------------------------------------------
 
