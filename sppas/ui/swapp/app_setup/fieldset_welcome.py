@@ -39,13 +39,10 @@
 """
 
 from __future__ import annotations
-import logging
 from whakerpy.htmlmaker import HTMLNode
 
 from sppas.core.config import sg
-from sppas.core.config import cfg
 from sppas.core.coreutils import info
-from sppas.ui.swapp.swapp_core.swapp_exc import swappHTMLIncompleteFieldset
 from sppas.ui.swapp.nodes import swappHTMLCheckboxNode
 
 from ..swapp_core.swappsg import swapp_settings
@@ -71,21 +68,24 @@ class swappSetupHomeFieldset(swappSetupBaseFieldset):
 
     """
 
-    def __init__(self, parent: str, uri: str = ""):
+    def __init__(self, parent: str, uri: str = "", ref: bool = False, prod: bool = False):
         """Create the fieldset node.
 
         :param parent: (str) The parent 'id' of the fieldset.
+        :param uri: (str) Name of the page
+        :param ref: (bool) Whether citing SPPAS is accepted
+        :param prod: (bool) Whether the conditions on what is produced are accepted
 
         """
         field_title = LEGEND_WELCOME + " " + str(sg.__version__)
         super(swappSetupHomeFieldset, self).__init__(parent, "home_field", field_title, uri=uri)
 
         self._msg = MSG_WELCOME
-        self.__create_content()
+        self.__create_content(ref, prod)
 
     # -----------------------------------------------------------------------
 
-    def __create_content(self):
+    def __create_content(self, ref: bool, prod: bool):
 
         # --Welcome messages
         txt = HTMLNode(self.identifier, None, "p",
@@ -116,56 +116,12 @@ class swappSetupHomeFieldset(swappSetupBaseFieldset):
         auth = HTMLNode(self.identifier, None, "p", value=MSG_WELCOME3)
         self.append_child(auth)
 
-        # -- Agreements
-        # They are pre-checked at the log level of the author only -- 1, below
-        # any standard level and out of reach of the Configuration page: an
-        # engagement is taken by the user, never by the software, and this is
-        # what makes the tests bearable for the one who writes them.
-        AUTHOR_LOG_LEVEL = 1
+        # -- Agreements: each one is checked when the model holds it accepted.
         box = swappHTMLCheckboxNode(self.identifier, "check_ref", MSG_ACCEPT_REF, self._uri)
         self.append_child(box)
-        if cfg.log_level <= AUTHOR_LOG_LEVEL:
+        if ref is True:
             box.check()
         box = swappHTMLCheckboxNode(self.identifier, "check_prod", MSG_ACCEPT_PROD, self._uri)
         self.append_child(box)
-        if cfg.log_level <= AUTHOR_LOG_LEVEL:
+        if prod is True:
             box.check()
-
-    # -----------------------------------------------------------------------
-
-    @property
-    def __checkbox_ref(self):
-        return self.get_child("check_ref")
-
-    @property
-    def __checkbox_prod(self):
-        return self.get_child("check_prod")
-
-    # -----------------------------------------------------------------------
-
-    def validate(self):
-        """Raise an exception if the input are not checked.
-
-        """
-        if self.__checkbox_ref.is_checked() is False or self.__checkbox_prod.is_checked() is False:
-            logging.error("Checkbox validation failed.")
-            raise swappHTMLIncompleteFieldset("Accept citation")
-
-    # -----------------------------------------------------------------------
-
-    def process_event(self, event_name: str) -> int:
-        """Process a received event.
-
-        :param event_name: (str) Identifier name of the posted data
-        :return: (int) status 200 if event handled or 205 if unknown
-
-        """
-        if event_name == "check_ref_input":
-            self.__checkbox_ref.check(not self.__checkbox_ref.is_checked())
-            return 200
-
-        elif event_name == "check_prod_input":
-            self.__checkbox_prod.check(not self.__checkbox_prod.is_checked())
-            return 200
-
-        return 205

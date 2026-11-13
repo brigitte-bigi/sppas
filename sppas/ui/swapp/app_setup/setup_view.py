@@ -185,9 +185,9 @@ class swappSetupView(swappBaseView):
 
         # Create a new ones
         if len(self.__fieldsets) > 0:
-            for i, field_node in enumerate(self.__fieldsets):
+            for i in range(len(self.__fieldsets)):
                 li = HTMLNode(self.__breadcrumb.identifier, "wizarditem_%d" % i, "li",
-                              value=field_node.get_msg())
+                              value=self.__fieldsets.get_msg(i))
                 if i < cur_idx:
                     li.set_attribute("class", "visited")
                 elif i == cur_idx:

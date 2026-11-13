@@ -49,6 +49,17 @@ from sppas.core.preinstall import sppasInstallerDeps
 
 # ---------------------------------------------------------------------------
 
+# What a person accepts before anything is installed.
+ACCEPTANCES = ("check_ref", "check_prod", "check_license")
+
+# They are accepted beforehand at the log level of the author only -- 1,
+# below any standard level and out of reach of the Configuration page: an
+# engagement is taken by the user, never by the software, and this is what
+# makes the tests bearable for the one who writes them.
+AUTHOR_LOG_LEVEL = 1
+
+# ---------------------------------------------------------------------------
+
 
 class swappSetupModel:
 
@@ -64,6 +75,7 @@ class swappSetupModel:
         # Declare members
         self.__installer = None
         self.__errors = ""
+        self.__accepted = dict()
         self.reset()
 
     # -----------------------------------------------------------------------
@@ -87,6 +99,9 @@ class swappSetupModel:
 
         self.__installer = None
         self.__errors = ""
+        self.__accepted = dict()
+        for _name in ACCEPTANCES:
+            self.__accepted[_name] = cfg.log_level <= AUTHOR_LOG_LEVEL
 
         # Create the SPPAS installer system for dependencies
         try:
@@ -114,6 +129,49 @@ class swappSetupModel:
         do_enable = not self.__installer.enable(feature_name)
         self.__installer.enable(feature_name, do_enable)
         logging.debug(" - feature {} enable is: {}".format(feature_name, do_enable))
+
+    # -----------------------------------------------------------------------
+
+    def is_available(self, feature_name: str) -> bool:
+        """Return True if the feature can be installed on this machine.
+
+        :param feature_name: (str) Name of the feature
+        :return: (bool)
+
+        """
+        if feature_name == "sppas" and cfg.update_info.get('update') is False:
+            return False
+        if feature_name == "mactools" and sys.platform != "darwin":
+            return False
+        if feature_name == "wintools" and sys.platform.startswith("win") is False:
+            return False
+        return True
+
+    # -----------------------------------------------------------------------
+
+    def is_accepted(self, name: str) -> bool:
+        """Return True if the person accepted what the given name stands for.
+
+        :param name: (str) One of the acceptances
+        :return: (bool) False for a name which is not an acceptance
+
+        """
+        return self.__accepted.get(name, False)
+
+    # -----------------------------------------------------------------------
+
+    def accept(self, name: str) -> bool:
+        """Accept what the given name stands for, or take the acceptance back.
+
+        :param name: (str) One of the acceptances
+        :raises: KeyError: The given name is not an acceptance
+        :return: (bool) Whether it is accepted now
+
+        """
+        if name not in self.__accepted:
+            raise KeyError("Unknown acceptance: {:s}".format(name))
+        self.__accepted[name] = self.__accepted[name] is False
+        return self.__accepted[name]
 
     # -----------------------------------------------------------------------
     # Installation processing

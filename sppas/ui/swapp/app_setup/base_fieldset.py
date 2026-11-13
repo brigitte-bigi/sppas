@@ -66,24 +66,3 @@ class swappSetupBaseFieldset(HTMLNode):
     def get_msg(self):
         """Return the title message of the fieldset (str)."""
         return self._msg
-
-    # -----------------------------------------------------------------------
-
-    def validate(self):
-        """Raise an exception if the fieldset is not fulfilled or return None.
-
-        :raises: IncompleteFieldset
-
-        """
-        return None
-
-    # -----------------------------------------------------------------------
-
-    def process_event(self, event):
-        """Process a received event.
-
-        :param event: The received event.
-        :return: (int) Status value (default: 205)
-
-        """
-        return 205

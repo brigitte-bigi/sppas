@@ -60,9 +60,9 @@ class swappSetupDepsFieldset(swappSetupFeatureTypeFieldset):
 
     """
 
-    def __init__(self, parent, installer, uri: str = ""):
+    def __init__(self, parent, model, uri: str = ""):
         super(swappSetupDepsFieldset, self).__init__(
-            parent, "fieldset_deps", installer, "deps", DEPS_FEATURES, uri)
+            parent, "fieldset_deps", model, "deps", DEPS_FEATURES, uri)
         self._msg = msg("Tools", "install")
 
 # ---------------------------------------------------------------------------
@@ -73,9 +73,9 @@ class swappSetupLangFieldset(swappSetupFeatureTypeFieldset):
 
     """
 
-    def __init__(self, parent, installer, uri: str = ""):
+    def __init__(self, parent, model, uri: str = ""):
         super(swappSetupLangFieldset, self).__init__(
-            parent, "fieldset_lang", installer, "lang", LANG_FEATURES, uri)
+            parent, "fieldset_lang", model, "lang", LANG_FEATURES, uri)
         self._msg = msg("Langs", "install")
 
 # ---------------------------------------------------------------------------
@@ -86,9 +86,9 @@ class swappSetupAnnotFieldset(swappSetupFeatureTypeFieldset):
 
     """
 
-    def __init__(self, parent, installer, uri: str = ""):
+    def __init__(self, parent, model, uri: str = ""):
         super(swappSetupAnnotFieldset, self).__init__(
-            parent, "fieldset_annot", installer, "annot", ANNOT_FEATURES, uri)
+            parent, "fieldset_annot", model, "annot", ANNOT_FEATURES, uri)
         self._msg = msg("Models", "install")
 
 # ---------------------------------------------------------------------------
@@ -99,8 +99,8 @@ class swappSetupSpinOffFieldset(swappSetupFeatureTypeFieldset):
 
     """
 
-    def __init__(self, parent, installer, uri: str = ""):
+    def __init__(self, parent, model, uri: str = ""):
         super(swappSetupSpinOffFieldset, self).__init__(
-            parent, "fieldset_spinoff", installer, "spin", SPIN_FEATURES, uri)
+            parent, "fieldset_spinoff", model, "spin", SPIN_FEATURES, uri)
         self._msg = msg("Extras", "install")
 

@@ -40,13 +40,10 @@
 """
 
 from __future__ import annotations
-import sys
 from whakerpy.htmlmaker import HTMLNode
 
-from sppas.core import cfg
 from sppas.core.coreutils import msg
 from sppas.core.coreutils import info
-from sppas.core.preinstall import Installer
 
 from sppas.ui.swapp.nodes import swappHTMLCheckboxNode
 
@@ -72,53 +69,22 @@ class swappSetupFeatureTypeFieldset(swappSetupBaseFieldset):
     def __init__(self,
                  parent_id: str,
                  fieldset_id: str,
-                 installer: Installer,
+                 model,
                  feature_type: str,
                  legend: str = LEGEND_FEATURES,
                  uri: str = ""
                  ):
         super(swappSetupFeatureTypeFieldset, self).__init__(parent_id, fieldset_id, legend, uri)
 
-        self._installer = installer
+        self.__model = model
+        self._installer = model.installer
         self.__feature_type = feature_type
-        self._checkables = dict()
 
         # A default message to shortly describe the fieldset
         self._msg = MSG_FEATURES
 
         # Create the content of the fieldset
         self._create_content()
-
-    # -----------------------------------------------------------------------
-
-    def process_event(self, event_name: str) -> dict:
-        """Process a received event.
-
-        :param event_name: (str) Identifier name of the posted data
-        :return: (dict[str, bool] or None) dict if event handled or None if unknown
-
-        """
-        check_name = event_name.replace("_input", "")
-        checkbox_to_change = None
-
-        for checkable in self._checkables.values():
-            if checkable.identifier == check_name:
-                checkbox_to_change = dict()
-                checkable.check(not checkable.is_checked())
-
-                # update all checkbox that depends on this checkable
-                # it can happen when two features are "linked" (enabling one implied
-                # to enable/disable another one)
-                for feature_id in self._installer.features_ids(self.__feature_type):
-                    current_checkable = self._checkables[feature_id]
-
-                    if current_checkable.is_checked() != self._installer.enable(feature_id):
-                        current_checkable.check(self._installer.enable(feature_id))
-
-                        key_name = f"feature_{feature_id}_input"
-                        checkbox_to_change[key_name] = checkable.is_checked()
-
-        return checkbox_to_change
 
     # -----------------------------------------------------------------------
     # Private: construct the nodes
@@ -171,20 +137,12 @@ class swappSetupFeatureTypeFieldset(swappSetupBaseFieldset):
         tr_node.append_child(td1)
         checkable = swappHTMLCheckboxNode(td1.identifier, "feature_" + fid, fid, self._uri)
 
-        # -------------------------------
-        # This should not be here because the view should not decide anything!
-        disabled = (
-                (fid == "sppas" and cfg.update_info.get('update') is False)
-                or (fid == "mactools" and sys.platform != "darwin")
-                or (fid == "wintools" and sys.platform.startswith("win") is False)
-        )
-        if disabled is True:
+        if self.__model.is_available(fid) is False:
             checkable.add_input_attribute("disabled", None)
         else:
             checkable.check(self._installer.enable(fid))
         # -------------------------------
         td1.append_child(checkable)
-        self._checkables[fid] = checkable
 
         td2 = HTMLNode(tr_node.identifier, None, "td")
         tr_node.append_child(td2)

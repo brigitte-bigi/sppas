@@ -188,22 +188,12 @@ class swappSetupResponseRecipe(swappBaseResponse):
 
         elif "check_name" in events:
 
-            # Other possible events (checkboxes)
-            event_value = events["check_name"]
-
-            # --- Feature events to choose what to install ---
-            # The event is some data posted via requests.js
-            if event_value.startswith("feature_"):
-                feature_name = event_value.split("_")[1]
-                checkbox_to_change = self.__controller.handle_feature_event(feature_name)
-                if checkbox_to_change is not None:
-                    self._data = checkbox_to_change
-                # ignore else: event not handled
-                self.status.code = 200
-
-            else:
-                # Communicate the event to the controller
-                self._status.code = self.__controller.handle_feature_event(event_value)
+            # A checkbox was clicked: the controller changes what the model
+            # holds, and what is answered is the state of each checkbox the
+            # page has to show. Nothing is answered for an unknown checkbox.
+            self._data = self.__controller.handle_feature_event(events["check_name"])
+            if len(self._data) == 0:
+                self._status.code = 205
 
             return False
 
@@ -282,7 +272,7 @@ class swappSetupResponseRecipe(swappBaseResponse):
             _prev_fieldset_id = self.__controller.get_fieldset_id(_idx)
             _success = self.__controller.handle_next_fieldset(_idx)
             if _success is True:
-                if self.__controller.get_fieldset_id(_idx) == "install_field":
+                if self.__controller.get_current_fieldset_id() == "install_field":
                     # HTTP 202 - Accepted: The installation started.
                     self._status.code = 202
                 else:

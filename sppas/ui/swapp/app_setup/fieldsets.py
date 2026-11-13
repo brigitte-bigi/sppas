@@ -54,39 +54,72 @@ from .fieldset_install import swappSetupInstallFieldset
 
 
 class swappSetupFieldsets:
-    """Create all fieldset node instances for the Setup HTML tree.
+    """Create the fieldset nodes of the Setup, each one written from the model.
+
+    A fieldset which holds choices is made anew each time it is asked for:
+    what it shows is what the model holds at that moment, and no fieldset
+    keeps a state of its own. The fieldset of the installation is made once:
+    it shows an operation which is running, and its progress.
 
     """
 
-    def __init__(self, installer, uri: str = ""):
-        """Create a SetupFieldsMaker instance.
+    # The number of fieldsets, in the order a person goes through them.
+    NUMBER = 7
+
+    def __init__(self, model, uri: str = ""):
+        """Create the maker of the fieldsets.
+
+        :param model: (swappSetupModel) What the fieldsets are written from
+        :param uri: (str) Name of the page
 
         """
-        self._installer = installer
+        self.__model = model
+        self.__uri = uri
+        self.__install = swappSetupInstallFieldset(None)
 
-        self.__fields = list()
-        self.__fields.append(swappSetupHomeFieldset(None, uri))
-        self.__fields.append(swappSetupLicenseFieldset(None, uri))
-        self.__fields.append(swappSetupDepsFieldset(None, self._installer, "deps"))
-        self.__fields.append(swappSetupLangFieldset(None, self._installer, "lang"))
-        self.__fields.append(swappSetupAnnotFieldset(None, self._installer, "annot"))
-        self.__fields.append(swappSetupSpinOffFieldset(None, self._installer, "spin"))
-        self.__fields.append(swappSetupInstallFieldset(None))
-
-        self.__keys = tuple([f.identifier for f in self.__fields])
-        self.__current = 0
-
-    # -----------------------------------------------------------------------
-
-    def get_current(self) -> int:
-        """Return the index of the current fieldset."""
-        return self.__current
+        _keys = list()
+        _messages = list()
+        for i in range(swappSetupFieldsets.NUMBER):
+            _field = self.create(i)
+            _keys.append(_field.identifier)
+            _messages.append(_field.get_msg())
+        self.__keys = tuple(_keys)
+        self.__messages = tuple(_messages)
 
     # -----------------------------------------------------------------------
 
-    def get_current_identifier(self) -> str:
-        """Return the identifier of the current fieldset."""
-        return self.__keys[self.__current]
+    def create(self, idx: int) -> swappSetupBaseFieldset:
+        """Return the fieldset of the given index, written from the model.
+
+        :param idx: (int) Index of the fieldset
+        :raises: IndexError: No fieldset has this index
+        :return: (swappSetupBaseFieldset)
+
+        """
+        if idx == 0:
+            return swappSetupHomeFieldset(None, self.__uri,
+                                          self.__model.is_accepted("check_ref"),
+                                          self.__model.is_accepted("check_prod"))
+        if idx == 1:
+            return swappSetupLicenseFieldset(None, self.__uri, self.__model.is_accepted("check_license"))
+        if idx == 2:
+            return swappSetupDepsFieldset(None, self.__model, self.__uri)
+        if idx == 3:
+            return swappSetupLangFieldset(None, self.__model, self.__uri)
+        if idx == 4:
+            return swappSetupAnnotFieldset(None, self.__model, self.__uri)
+        if idx == 5:
+            return swappSetupSpinOffFieldset(None, self.__model, self.__uri)
+        if idx == 6:
+            return self.__install
+
+        raise IndexError("No fieldset of index {:d}".format(idx))
+
+    # -----------------------------------------------------------------------
+
+    def get_msg(self, idx: int) -> str:
+        """Return the title message of the fieldset of the given index (str)."""
+        return self.__messages[idx]
 
     # -----------------------------------------------------------------------
 
@@ -97,7 +130,7 @@ class swappSetupFieldsets:
         :raises: ValueError: if field is unknown
 
         """
-        return self.__fields.index(field)
+        return self.__keys.index(field.identifier)
 
     # -----------------------------------------------------------------------
 
@@ -117,20 +150,6 @@ class swappSetupFieldsets:
 
     # -----------------------------------------------------------------------
 
-    def browse_next(self) -> int:
-        """Get the index of the current field and offset it by +1."""
-        self.__current = min(self.__current + 1, len(self.__fields)-1)
-        return self.__current
-
-    # -----------------------------------------------------------------------
-
-    def browse_previous(self) -> int:
-        """Get the index of the current field and offset it by -1."""
-        self.__current = max(0, self.__current - 1)
-        return self.__current
-
-    # -----------------------------------------------------------------------
-
     def next_field(self, current):
         """Return the next field.
 
@@ -141,12 +160,10 @@ class swappSetupFieldsets:
             raise TypeError
         if current.identifier not in self.__keys:
             raise KeyError
-
         # Get the index of the given field and offset it by +1
         next_index = min(self.__keys.index(current.identifier) + 1, len(self.__keys)-1)
-
-        # Return the previous key's value, or the current if no prev
-        return self.__fields[next_index]
+        # Return the next field, or the current if no next
+        return self.create(next_index)
 
     # -----------------------------------------------------------------------
 
@@ -160,38 +177,33 @@ class swappSetupFieldsets:
             raise TypeError
         if current.identifier not in self.__keys:
             raise KeyError
-
         # Get the index of the given field and offset it by -1
         prev_index = max(0, self.__keys.index(current.identifier) - 1)
-
-        # return the next key's value, or the current if no next
-        return self.__fields[prev_index]
+        # Return the previous field, or the current if no previous
+        return self.create(prev_index)
 
     # -----------------------------------------------------------------------
 
     def get_progress(self) -> object:
-        """Return the progress of the current fieldset or None."""
-        field = self.__fields[self.__current]
-        if hasattr(field, "get_progress"):
-            return field.get_progress()
-        return None
+        """Return the progress of the installation or None."""
+        return self.__install.get_progress()
 
     # -----------------------------------------------------------------------
     # Overloads
     # -----------------------------------------------------------------------
 
     def __contains__(self, field):
-        return field in self.__fields
+        return field.identifier in self.__keys
 
     def __iter__(self):
-        for f in self.__fields:
-            yield f
+        for i in range(len(self.__keys)):
+            yield self.create(i)
 
     def __getitem__(self, i):
-        return self.__fields[i]
+        return self.create(i)
 
     def __len__(self):
         return len(self.__keys)
 
     def __index__(self, field):
-        return self.__fields.index(field)
+        return self.__keys.index(field.identifier)

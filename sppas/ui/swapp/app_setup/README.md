@@ -19,7 +19,18 @@ representation follows the current state provided by the controller.
 
 - **swappSetupModel** represents the application data.
 It encapsulates the dependency objects (sppasInstallerDeps) and exposes the
-state required by the controller and the view.
+state required by the controller and the view. It is the only place where a
+choice is held: what is to be installed, what the person accepted, and which
+feature can be installed on the machine.
+
+- **swappSetupFieldsets** creates the fieldset nodes for the view. A fieldset
+holding choices is created anew each time it is shown, and written from the
+model: no fieldset keeps a state of its own. The index of the fieldset which
+is shown is held by the controller.
+
+A click on a checkbox is sent to the server, which changes the model and
+answers the state of each checkbox the page has to show. The JavaScript of
+the page displays that answer and decides nothing.
 
 This architecture ensures a strict separation between transport (HTTP),
 application logic (Controller), data (Model), and presentation (View).

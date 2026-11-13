@@ -41,9 +41,7 @@
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import HTMLHr
 
-from sppas.core.config import cfg
 from sppas.core.coreutils import info
-from sppas.ui.swapp.swapp_core.swapp_exc import swappHTMLIncompleteFieldset
 from sppas.ui.swapp.nodes import swappHTMLCheckboxNode
 
 from .base_fieldset import swappSetupBaseFieldset
@@ -137,7 +135,14 @@ class swappSetupLicenseFieldset(swappSetupBaseFieldset):
 
     """
 
-    def __init__(self, parent, uri: str = ""):
+    def __init__(self, parent, uri: str = "", accepted: bool = False):
+        """Create the fieldset node.
+
+        :param parent: (str) The parent 'id' of the fieldset.
+        :param uri: (str) Name of the page
+        :param accepted: (bool) Whether the licenses are accepted
+
+        """
         super(swappSetupLicenseFieldset, self).__init__(parent, "license_field", LEGEND_LICENSE)
         self._msg = MSG_LICENSE
 
@@ -149,13 +154,9 @@ class swappSetupLicenseFieldset(swappSetupBaseFieldset):
                               value=limsg)
             lilist.append_child(linode)
 
-        # --- The licenses agreement
-        # Pre-checked at the log level of the author only -- 1, below any
-        # standard level and out of reach of the Configuration page: an
-        # engagement is taken by the user, never by the software.
-        AUTHOR_LOG_LEVEL = 1
+        # --- The licenses agreement: checked when the model holds it accepted.
         checkbox = swappHTMLCheckboxNode(self.identifier, "check_license", MSG_ACCEPT_LICENSE, uri=uri)
-        if cfg.log_level <= AUTHOR_LOG_LEVEL:
+        if accepted is True:
             checkbox.check()
         self.append_child(checkbox)
 
@@ -164,32 +165,3 @@ class swappSetupLicenseFieldset(swappSetupBaseFieldset):
         license_text = (LICENSE_AGPL, LICENSE_FDL, LICENSE_CC_BY_NC)
         text = HTMLNode(self.identifier, None, "article", value="<hr/>\n".join(license_text))
         self.append_child(text)
-
-    # -----------------------------------------------------------------------
-
-    @property
-    def __checkbox(self):
-        return self.get_child("check_license")
-
-    # -----------------------------------------------------------------------
-
-    def validate(self):
-        """Raise an exception if the input is not checked.
-
-        """
-        if self.__checkbox.is_checked() is False:
-            raise swappHTMLIncompleteFieldset("Accept License")
-
-    # -----------------------------------------------------------------------
-
-    def process_event(self, event_name):
-        """Process a received event.
-
-        :param event_name: (str) Identifier name of the posted data
-        :return: (int) status 200 if event handled or 205 if unknown
-
-        """
-        if event_name == "check_license_input":
-            self.__checkbox.check(not self.__checkbox.is_checked())
-            return 200
-        return 205

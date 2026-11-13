@@ -39,13 +39,37 @@
 """
 
 from __future__ import annotations
+import logging
+
+from sppas.ui.swapp.swapp_core.swapp_exc import swappHTMLIncompleteFieldset
 
 from .fieldsets import swappSetupFieldsets
 
 # ---------------------------------------------------------------------------
 
+# What has to be accepted in a fieldset before the next one is shown, and
+# what is said when it is not.
+REQUIRED = {"home_field": ("check_ref", "check_prod"), "license_field": ("check_license",)}
+MSG_REQUIRED = {"home_field": "Accept citation", "license_field": "Accept License"}
+
+# The name of the checkbox of a feature is made of its name, between these.
+FEATURE_PREFIX = "feature_"
+INPUT_SUFFIX = "_input"
+
+# The types of features, in the order of their fieldsets.
+FEATURE_TYPES = ("deps", "lang", "annot", "spin")
+
+# ---------------------------------------------------------------------------
+
 
 class swappSetupController:
+    """Controller of the Setup: where the person is, and what she chose.
+
+    It holds the index of the fieldset which is shown. What is accepted and
+    what is to be installed are held by the model, and by the model only: a
+    fieldset is written from it each time it is shown.
+
+    """
 
     def __init__(self, model, view, page_name: str = "setup.html"):
         """Initialize the controller with a model and a view.
@@ -57,7 +81,8 @@ class swappSetupController:
         """
         self.__model = model
         self.__view = view
-        self.__fieldsets = swappSetupFieldsets(self.__model.installer, page_name)
+        self.__current = 0
+        self.__fieldsets = swappSetupFieldsets(self.__model, page_name)
 
         # Assign the fieldsets to the view
         self.__view.set_fieldsets(self.__fieldsets)
@@ -74,7 +99,8 @@ class swappSetupController:
         self.__model.reset()
 
         # The wizard pages are fieldset tags
-        self.__fieldsets = swappSetupFieldsets(self.__model.installer, page_name)
+        self.__current = 0
+        self.__fieldsets = swappSetupFieldsets(self.__model, page_name)
 
         # Assign the fieldsets to the view
         self.__view.set_fieldsets(self.__fieldsets)
@@ -93,7 +119,7 @@ class swappSetupController:
 
         """
         install_index = self.__fieldsets.get_index_from_name("install_field")
-        return self.__fieldsets.get_current() + 1 == install_index
+        return self.__current + 1 == install_index
 
     # -----------------------------------------------------------------------
 
@@ -113,7 +139,7 @@ class swappSetupController:
     # -----------------------------------------------------------------------
 
     def get_current_fieldset_id(self):
-        return self.__fieldsets.get_current_identifier()
+        return self.__fieldsets.get_identifier(self.__current)
 
     def get_fieldset_id(self, idx):
         return self.__fieldsets.get_identifier(idx)
@@ -131,9 +157,9 @@ class swappSetupController:
         """
         # Does the client re-ask the same page and is sending the data
         # of the previously posted request???
-        if self.__fieldsets.get_current() == current_index:
-            cur = self.__fieldsets.browse_previous()
-            self.__view.update_header_breadcrumb(cur)
+        if self.__current == current_index:
+            self.__current = max(0, self.__current - 1)
+            self.__view.update_header_breadcrumb(self.__current)
             self.update_tree_content(actions=True, install=self.is_installation_next())
             return True
 
@@ -145,17 +171,18 @@ class swappSetupController:
         """Process a browse event: next of prev action.
 
         :param current_index: (int) The current fieldset index
-        :raises: HTMLincompleteFieldset: Some required checkbox is not checked
+        :raises: swappHTMLIncompleteFieldset: What the fieldset requires is not accepted
         :return: (bool) Success or not
 
         """
         # does the client re-ask the same page and is sending the data
         # of the previously posted request???
-        if self.__fieldsets.get_current() == current_index:
-            self.__fieldsets[current_index].validate()
-            cur = self.__fieldsets.browse_next()
+        if self.__current == current_index:
+            self.__validate(current_index)
+            self.__current = min(self.__current + 1, len(self.__fieldsets) - 1)
+            cur = self.__current
 
-            if self.__fieldsets.get_current_identifier() == "install_field":
+            if self.get_current_fieldset_id() == "install_field":
                 if self.__model.is_installation_running() is False:
                     # Update the main content for the fieldset and actions
                     self.update_tree_content(actions=False, install=True)
@@ -164,7 +191,6 @@ class swappSetupController:
                     self.__model.installation_start(progress)
             else:
                 # Update the main content for the fieldset and actions
-                # cur = self.__fieldsets.browse_next()
                 can_install = self.is_installation_next()
                 self.update_tree_content(actions=True, install=can_install)
 
@@ -180,7 +206,7 @@ class swappSetupController:
         """Process the given event coming from the POST of install.
 
         """
-        field = self.__fieldsets[self.__fieldsets.get_current()]
+        field = self.__fieldsets[self.__current]
         # The JS of the page informed the installation is completed,
         if hasattr(field, "completed") and callable(getattr(field, "completed")):
             field.completed(self.__model.errors, self.__model.installer)
@@ -191,16 +217,38 @@ class swappSetupController:
 
     # -----------------------------------------------------------------------
 
-    def handle_feature_event(self, feature_name: str) -> dict:
-        """Process a feature event: enable or disable a feature in the page.
+    def handle_feature_event(self, event_name: str) -> dict:
+        """Process the click on a checkbox: a feature, or an acceptance.
 
-        :param feature_name: (str) Name of the checked feature element
-        :return: (dict[str, bool] or None)
+        The model is what changes. What is returned is the state the page
+        has to show: the one of the checkbox, and the one of every feature
+        of the same type, enabling a feature being able to change another.
+
+        :param event_name: (str) Name of the checkbox which was clicked
+        :return: (dict[str, bool]) Empty when the checkbox is unknown
 
         """
-        field = self.__fieldsets[self.__fieldsets.get_current()]
-        self.__model.enable_feature(feature_name)
-        return field.process_event(feature_name)
+        _states = dict()
+        if event_name.endswith(INPUT_SUFFIX) is False:
+            return _states
+        _name = event_name[:-len(INPUT_SUFFIX)]
+
+        if _name.startswith(FEATURE_PREFIX) is True:
+            _feature = _name[len(FEATURE_PREFIX):]
+            _installer = self.__model.installer
+            for _type in FEATURE_TYPES:
+                _features = _installer.features_ids(_type)
+                if _feature in _features:
+                    self.__model.enable_feature(_feature)
+                    for _other in _features:
+                        _states[FEATURE_PREFIX + _other + INPUT_SUFFIX] = _installer.enable(_other)
+
+        else:
+            for _required in REQUIRED.values():
+                if _name in _required:
+                    _states[event_name] = self.__model.accept(_name)
+
+        return _states
 
     # -----------------------------------------------------------------------
     # Manage the tree
@@ -215,5 +263,22 @@ class swappSetupController:
         :param install: (bool) Whether the button "Install" is displayed or not
 
         """
-        field = self.__fieldsets[self.__fieldsets.get_current()]
+        field = self.__fieldsets[self.__current]
         self.__view.update_tree_content(field, actions, install)
+
+    # -----------------------------------------------------------------------
+    # Private
+    # -----------------------------------------------------------------------
+
+    def __validate(self, index: int) -> None:
+        """Verify that what the fieldset of the given index requires is accepted.
+
+        :param index: (int) Index of a fieldset
+        :raises: swappHTMLIncompleteFieldset: Something it requires is not accepted
+
+        """
+        _identifier = self.__fieldsets.get_identifier(index)
+        for _name in REQUIRED.get(_identifier, tuple()):
+            if self.__model.is_accepted(_name) is False:
+                logging.error("Checkbox validation failed.")
+                raise swappHTMLIncompleteFieldset(MSG_REQUIRED[_identifier])
