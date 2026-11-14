@@ -38,3 +38,13 @@
     -------------------------------------------------------------------------
 
 """
+
+from .annotate_maker import swappAnnotateResponseRecipe
+from .app_annotate import swappAnnotateWebData
+
+# -----------------------------------------------------------------------
+
+__all__ = (
+    "swappAnnotateResponseRecipe",
+    "swappAnnotateWebData"
+)

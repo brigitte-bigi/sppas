@@ -26,6 +26,9 @@ msgstr "Fichiers"
 msgid "Annotate"
 msgstr "Annoter"
 
+msgid "Performs the automatic annotations of SPPAS on files."
+msgstr "Effectue les annotations automatiques de SPPAS sur des fichiers."
+
 msgid "Analyze"
 msgstr "Analyser"
 

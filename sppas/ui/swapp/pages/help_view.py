@@ -122,8 +122,13 @@ class swappHelpView(swappBaseView):
         the very elements of its app -- a card, a link -- and they are drawn
         by that sheet, not by the shared one.
 
+        Whakerexa's toggle group is loaded too: an app may hold one, and its
+        document shows it as the app does.
+
         """
         self._htree.head.link("stylesheet", swapp_settings.wexa_statics + "css/extras/book.css",
+                              link_type="text/css")
+        self._htree.head.link("stylesheet", swapp_settings.wexa_statics + "css/togglegroup.css",
                               link_type="text/css")
         if len(self.__css) > 0:
             self._htree.head.link("stylesheet", swapp_settings.css + self.__css,

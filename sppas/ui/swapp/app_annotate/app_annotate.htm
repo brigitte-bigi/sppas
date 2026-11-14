@@ -79,7 +79,7 @@
 			<p>
 				"Annotate" is the page "Annotate" of the desktop interface of SPPAS, brought
 				to the web. A person who knows the one must find her way in the other: the
-				same five steps, the same lists, the same report. What differs is how the
+				same steps, the same lists, the same report. What differs is how the
 				files are given and how what was produced is reached, because a web page
 				does not read the disk of the person who looks at it.
 			</p>
@@ -438,7 +438,7 @@
 			<h4>The reports</h4>
 
 				<p>Each performance writes one report, under a name no report bore before.
-				The reports which are kept are listed beside the five steps, and one of them
+				The reports which are kept are listed beside the six steps, and one of them
 				at most is checked: checking one unchecks the other. The report of the
 				performance which has just ended is added at the top of the list, and
 				checked.</p>
@@ -479,9 +479,9 @@
 
 				<h5>[020] Understanding the process</h5>
 				<ul class="req">
-				<li>[021] The system presents five steps, in this order: choose the output
-				file formats, fix the languages, select and configure annotations, perform
-				the annotations, read the procedure outcome report.</li>
+				<li>[021] The system presents six steps, in this order: choose the output
+				file formats, fix the languages, select and configure annotations, add
+				files, perform the annotations, read the procedure outcome report.</li>
 				<li>[022] The system states what is missing before the annotations can be
 				performed.</li>
 				</ul>
@@ -619,7 +619,7 @@
 				point.</li>
 				<li>[1005] Choosing an extension, fixing a language or selecting an
 				annotation replaces nothing on the page and never moves the focus.</li>
-				<li>[1006] The user can show the five steps, the reports, or both; online,
+				<li>[1006] The user can show the six steps, the reports, or both; online,
 				the reports are collapsed.</li>
 				</ul>
 
@@ -671,7 +671,7 @@
 
 				<ul>
 				<li><b>F1. A3 &rarr; Annotate</b> &mdash; the annotations, and what each declares of itself; the kinds of output file, the extensions of each and its default one.</li>
-				<li><b>F2. Annotate &rarr; A1</b> &mdash; the five steps; the extensions of each kind; the languages; the annotations in one list per type, each with its name, its description, its references or how far its development has gone, its languages, what it requires, and whether it can be performed on that machine [021], [102] to [104], [201], [301], [303], [304], [307], [308].</li>
+				<li><b>F2. Annotate &rarr; A1</b> &mdash; the six steps; the extensions of each kind; the languages; the annotations in one list per type, each with its name, its description, its references or how far its development has gone, its languages, what it requires, and whether it can be performed on that machine [021], [102] to [104], [201], [301], [303], [304], [307], [308].</li>
 				<li><b>F3. A1 &rarr; Annotate</b> &mdash; the extension of one kind of output file [101].</li>
 				<li><b>F4. A1 &rarr; Annotate</b> &mdash; the language of the page [201].</li>
 				<li><b>F5. A1 &rarr; Annotate</b> &mdash; an annotation selected, or a selection taken back [305].</li>
@@ -887,7 +887,7 @@
 				order.</li>
 				<li><strong>Inputs</strong>: what the API declares (F1); the reports which
 				are kept.</li>
-				<li><strong>Outputs</strong>: the five steps, the lists of annotations, the
+				<li><strong>Outputs</strong>: the six steps, the lists of annotations, the
 				list of reports.</li>
 				<li><strong>Preconditions</strong>: none.</li>
 				<li><strong>Postconditions</strong>: every decision can be taken.</li>
@@ -1329,7 +1329,7 @@
 			<li>Following a reference of an annotation, which opens in the browser</li>
 			<li>Setting the merge option</li>
 			<li>Requesting the annotations to be performed (triggers T08)</li>
-			<li>Showing the five steps, the reports, or both</li>
+			<li>Showing the six steps, the reports, or both</li>
 			<li>Checking a report, and requesting it to be shown (T10)</li>
 			<li>Requesting the checked report, or every other one, to be deleted (T11)</li>
 			<li>Requesting another batch (T12), or a reset (T13)</li>
@@ -1338,25 +1338,25 @@
 			<h4>Navigation</h4>
 
 			<p>Annotate is a single page. The page of the desktop interface shows one panel
-			at a time: the five steps with the reports beside them, one list of annotations
+			at a time: the six steps with the reports beside them, one list of annotations
 			per type, and the procedure outcome report. This one holds the same panels as
 			sections of one page, shown and hidden where they stand: nothing is asked of the
 			server to go from one to another.</p>
 
-			<p>From the five steps:</p>
+			<p>From the six steps:</p>
 
 			<ul>
 			<li>the button of a type shows the list of the annotations of that type, and
-			the button at the top of that list comes back to the five steps;</li>
+			the button at the top of that list comes back to the six steps;</li>
 			<li>performing the annotations shows the progress, then the procedure outcome
-			report, and the button at its top comes back to the five steps;</li>
+			report, and the button at its top comes back to the six steps;</li>
 			<li>showing the checked report shows the procedure outcome report the same
 			way.</li>
 			</ul>
 
-			<p>The five steps and the reports stand side by side. A group of three radio
-			buttons &mdash; the five steps alone, both, the reports alone &mdash; says how
-			much of each is shown, as on the page of the Journal: two half-width panels are
+			<p>The six steps and the reports stand side by side. A group of three radio
+			buttons &mdash; the six steps alone, both, the reports alone &mdash; says how
+			much of each is shown, as on the page of the Journal: two panels side by side are
 			unreadable on a narrow window. Both is what the page opens on locally; online,
 			the reports are collapsed.</p>
 
@@ -1374,7 +1374,7 @@
 			<li><b>RO2</b> &mdash; The two contexts of execution are one organization, and
 			the two deployments are one implementation. What differs is who exposes the
 			batch, and where the reports stand.</li>
-			<li><b>RO3</b> &mdash; The decisions are taken in any order. The five steps are
+			<li><b>RO3</b> &mdash; The decisions are taken in any order. The six steps are
 			numbered for the person to read; none of the first three is a precondition of
 			another, and only the performance requires them.</li>
 			<li><b>RO4</b> &mdash; The batch is exposed by a neighbor and read. Annotate
@@ -1658,7 +1658,7 @@
 			<p>The thread which performs the annotations is what says a performance is
 			going. While it is alive, a request which would start another one, reset the
 			page or start over is refused, and the page, which shows the progress in place
-			of the five steps, offers none of them. C13</p>
+			of the six steps, offers none of them. C13</p>
 
 		</section>
 
@@ -1837,7 +1837,7 @@
 			  <tr><th scope="row">language of an annotation</th><td>the one its declaration holds, <code>---</code> when it holds none</td><td>what the API says</td></tr>
 			  <tr><th scope="row">annotation</th><td>not selected</td><td>no initiative</td></tr>
 			  <tr><th scope="row">merge option</th><td>off</td><td>no initiative</td></tr>
-			  <tr><th scope="row">panels shown</th><td>both locally; the five steps alone online</td><td>RO7</td></tr>
+			  <tr><th scope="row">panels shown</th><td>both locally; the six steps alone online</td><td>RO7</td></tr>
 			</tbody>
 			</table>
 
@@ -1852,18 +1852,18 @@
 			panels of the page of the desktop interface, which bear its names. They are
 			sections of one page.</p>
 
-			<p><code>ActionAnnotatePanel</code> presents the five steps, each with its
+			<p><code>ActionAnnotatePanel</code> presents the six steps, each with its
 			title as the desktop interface writes it. Step 1: one choice of extension per
 			kind of output file. Step 2: the choice of the language of the page. Step 3: one
 			button per type, which shows the list of that type and says whether it holds a
 			selected annotation &mdash; an icon whose state has a text alternative. Step 4:
-			the merge option, and the button which performs the annotations; that button is
-			disabled as long as no annotation is selected. Step 5: the button which shows
-			the checked report, disabled as long as no report is checked. It holds the two
-			buttons of the form as well: the one which annotates another batch, and
-			Reset.</p>
+			the container of the provision of files. Step 5: the merge option, and the
+			button which performs the annotations; that button is disabled as long as no
+			annotation is selected. Step 6: the button which shows
+			the checked report, disabled as long as no report is checked. It holds the
+			Reset button as well.</p>
 
-			<p><code>ReportsPanel</code> presents, beside the five steps, the reports which
+			<p><code>ReportsPanel</code> presents, beside the six steps, the reports which
 			are kept: one radio button per report, named after its file, the last one
 			written at the top; and two buttons, one which deletes the checked report and
 			one which deletes all the others. Online, it is collapsed.</p>
@@ -1874,7 +1874,7 @@
 			holds come from the buttons themselves and not from a script.</p>
 
 			<p><code>AnnotationsPanel</code> presents the annotations of one type: a button
-			which comes back to the five steps, a title naming the type, then one
+			which comes back to the six steps, a title naming the type, then one
 			<code>EnableAnnotation</code> per annotation of that type, arranged by what
 			they require. There are three of them, one per type.</p>
 
@@ -1887,11 +1887,12 @@
 
 			<p><code>LogAnnotatePanel</code> presents the progress while the annotations
 			are performed, then the procedure outcome report: a button which comes back to
-			the five steps, the title, the name of the file of the report, then its lines,
+			the six steps, the title, the name of the file of the report, then its lines,
 			each result bearing the class of its state. The state is in the text of the
 			line as well, so the color is never the only thing which says it. Online, a
 			link downloads the report, and another one the archive of every produced
-			file.</p>
+			file. Under the report, the Start over button annotates another batch with
+			the decisions already taken.</p>
 
 			<p>The container of the provision of files stands in the page as well. It is
 			not a panel of Annotate: the response places it under the node it chose.</p>
@@ -1999,11 +2000,11 @@
 			<thead><tr><th scope="col">Class</th><th scope="col">Operations</th><th scope="col">What it shows</th></tr></thead>
 			<tbody>
 			  <tr><td><code>AnnotateView</code></td><td>populate_tree_content(record), section, info</td><td>The page, and the panels it holds. It is the module <i>presentation</i>: what is shown, and nothing of what it means</td></tr>
-			  <tr><td><code>ActionAnnotatePanel</code></td><td>&mdash;</td><td>The five steps: the extensions, the language of the page, one button per type, the merge option and what performs, what shows the checked report; and the two buttons which start again</td></tr>
+			  <tr><td><code>ActionAnnotatePanel</code></td><td>&mdash;</td><td>The six steps: the extensions, the language of the page, one button per type, the merge option and what performs, what shows the checked report; and the Reset button</td></tr>
 			  <tr><td><code>ReportsPanel</code></td><td>&mdash;</td><td>Locally, the reports which are kept, one of them checked at most, and the two buttons which delete. Collapsed online</td></tr>
 			  <tr><td><code>AnnotationsPanel</code></td><td>&mdash;</td><td>The annotations of one type, arranged by what they require</td></tr>
 			  <tr><td><code>EnableAnnotation</code></td><td>&mdash;</td><td>One annotation: what selects it, what configures it, its references or how far its development has gone, its language, its description, what it requires. Disabled when it cannot be performed on that machine</td></tr>
-			  <tr><td><code>LogAnnotatePanel</code></td><td>&mdash;</td><td>The progress, then the procedure outcome report: the name of its file and its lines, each with its state. Online, a link to the report and one to the archive</td></tr>
+			  <tr><td><code>LogAnnotatePanel</code></td><td>&mdash;</td><td>The progress, then the procedure outcome report: the name of its file and its lines, each with its state. Online, a link to the report and one to the archive. Under the report, the Start over button</td></tr>
 			</tbody>
 			</table>
 
@@ -2108,7 +2109,7 @@
 			<caption>A performance</caption>
 			<thead><tr><th scope="col">State</th><th scope="col">When</th></tr></thead>
 			<tbody>
-			  <tr><td>none</td><td>No thread is alive: the page shows the five steps</td></tr>
+			  <tr><td>none</td><td>No thread is alive: the page shows the six steps</td></tr>
 			  <tr><td>going</td><td>The thread is alive: the page shows the progress, and nothing which starts anything</td></tr>
 			  <tr><td>ended</td><td>The thread is no longer alive: the page shows the report</td></tr>
 			</tbody>
@@ -2148,7 +2149,7 @@
 			file; locally, it is at the top of the list of the reports, and checked.</li>
 			<li>What was produced is reached through the provision of files: online, by a
 			link to the report and a link to the archive of every produced file.</li>
-			<li>She comes back to the five steps, and performs other annotations on the
+			<li>She comes back to the six steps, and performs other annotations on the
 			same batch, or asks for another batch, or resets the page.</li>
 			</ol>
 
@@ -2319,11 +2320,11 @@
 			<tbody>
 			  <tr><td>Populate the tree</td><td>pre: a record. post: a tree holding what that record says and nothing more. Every field of a decision belongs to the form of the performance, wherever it stands in the page. C10</td></tr>
 			  <tr><td>Give the section and what was said</td><td>pre: the tree was populated. post: the section of this application as it was built, and the text put in the dialog of information, empty if nothing was</td></tr>
-			  <tr><td><code>ActionAnnotatePanel</code></td><td>post: the five steps, in their order and with their titles; one choice per kind of output file, the extension which holds selected; the choice of the language of the page; one button per type, saying whether it holds a selected annotation; the merge option; the button which performs, disabled when no annotation is selected; the button which shows the checked report, disabled when none is; the buttons which start again</td></tr>
+			  <tr><td><code>ActionAnnotatePanel</code></td><td>post: the six steps, in their order and with their titles; one choice per kind of output file, the extension which holds selected; the choice of the language of the page; one button per type, saying whether it holds a selected annotation; the merge option; the button which performs, disabled when no annotation is selected; the button which shows the checked report, disabled when none is; the Reset button</td></tr>
 			  <tr><td><code>ReportsPanel</code></td><td>post: locally, one radio button per report, at most one checked, and the two buttons which delete; online, collapsed and empty. C20, C22</td></tr>
 			  <tr><td><code>AnnotationsPanel</code></td><td>post: the button which comes back, the title naming the type, and one <code>EnableAnnotation</code> per annotation of that type, in the order it was given them</td></tr>
 			  <tr><td><code>EnableAnnotation</code></td><td>post: the annotation it stands for, as it declares itself: what selects it, what configures it, one link per reference or the gauge of its development or neither, the choice of its language when it has language resources and no choice otherwise, its description, what it requires. Disabled when the annotation cannot be performed on that machine. C7, C8</td></tr>
-			  <tr><td><code>LogAnnotatePanel</code></td><td>post: the progress while a performance goes; then the name of the file of the report and its lines, each result bearing its state; that the report is not available, with the reason, when it could not be read; online, the link to the report and the link to the archive. C19, C23</td></tr>
+			  <tr><td><code>LogAnnotatePanel</code></td><td>post: the progress while a performance goes; then the name of the file of the report and its lines, each result bearing its state; that the report is not available, with the reason, when it could not be read; online, the link to the report and the link to the archive; under the report, the Start over button. C19, C23</td></tr>
 			</tbody>
 			</table>
 
@@ -2638,9 +2639,167 @@
 	<h2>Annex: Mockup of the interface</h2>
 
 		<p>
-			<b>Not written yet.</b> This annex is the page itself: the HTML the
-			application writes, generated by it and styled by Whakerexa.
+			This annex is the page itself: the HTML the application writes, styled by
+			Whakerexa. What is unreadable here will be unreadable there.
 		</p>
+
+		<p>
+			It shows the page the person arrives on: the six steps on the left, the
+			reports on the right, and above them what says which of the two panels is
+			shown &mdash; the same three radio buttons as the page of the Journal, written
+			the same way. The fourth step is the files, the container of the provision of
+			files: they are given after the decisions, and before what uses them. What
+			that container holds is written by its service, and is not drawn here.
+		</p>
+
+		<p>
+			It shows one state: SPPAS on the machine of the person, two kinds of file
+			which can be written, no annotation selected, and two reports kept. The
+			names of the reports and the languages are examples.
+		</p>
+
+		<!-- ============ BEGIN MOCKUP ============ -->
+
+<section id="annotate_toggle" class="toggle-group center" role="radiogroup" aria-label="Panels to display">
+    <label class="menuitem" for="annotate_view_left">
+        <input type="radio" name="annotate_panel_view" id="annotate_view_left" value="left" />
+        <span>Left</span>
+    </label>
+    <label class="menuitem" for="annotate_view_both">
+        <input type="radio" name="annotate_panel_view" id="annotate_view_both" value="both" checked />
+        <span>Both</span>
+    </label>
+    <label class="menuitem" for="annotate_view_right">
+        <input type="radio" name="annotate_panel_view" id="annotate_view_right" value="right" />
+        <span>Right</span>
+    </label>
+</section>
+
+<section id="annotate_panels" class="flex-panel">
+
+    <section id="annotate_actions_panel" class="width_70">
+        <form id="annotate_form" method="post"></form>
+
+        <table role="presentation">
+            <tbody>
+                <tr>
+                    <td><p id="annotate_step1_h">Step 1: choose the output file format(s)</p></td>
+                    <td>
+                        <div role="group" aria-labelledby="annotate_step1_h">
+                            <div class="wrap-panel width_full">
+                            <span class="wrap-item width_50"><select id="annotate_ext_ANNOT" name="annotate_ext_ANNOT" form="annotate_form" aria-label="ANNOT">
+                                <option value=".xra" selected>.xra</option>
+                                <option value=".TextGrid">.TextGrid</option>
+                                <option value=".eaf">.eaf</option>
+                            </select></span>
+                            <span class="wrap-item width_50"><select id="annotate_ext_AUDIO" name="annotate_ext_AUDIO" form="annotate_form" aria-label="AUDIO">
+                                <option value=".wav" selected>.wav</option>
+                            </select></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p id="annotate_step2_h">Step 2: fix the language(s)</p></td>
+                    <td>
+                        <div>
+                            <span class="wrap-item"><select id="annotate_lang" name="annotate_lang" form="annotate_form" aria-labelledby="annotate_step2_h">
+                                <option value="---" selected>---</option>
+                                <option value="eng">eng</option>
+                                <option value="fra">fra</option>
+                                <option value="ita">ita</option>
+                            </select></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p id="annotate_step3_h">Step 3: select and configure annotations</p></td>
+                    <td>
+                        <div role="group" aria-labelledby="annotate_step3_h">
+                            <button type="button" class="width_full" id="annotate_type_STANDALONE">
+                                <span data-icon="no" role="img" aria-label="no annotation selected"></span>
+                                <span>STANDALONE annotations</span>
+                            </button>
+                            <button type="button" class="width_full" id="annotate_type_SPEAKER">
+                                <span data-icon="no" role="img" aria-label="no annotation selected"></span>
+                                <span>SPEAKER annotations</span>
+                            </button>
+                            <button type="button" class="width_full" id="annotate_type_INTERACTION">
+                                <span data-icon="no" role="img" aria-label="no annotation selected"></span>
+                                <span>INTERACTION annotations</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p id="annotate_step4_h">Step 4: add files</p></td>
+                    <td>
+                        <div role="group" aria-labelledby="annotate_step4_h">
+                            <section id="files_deposit" class="width_full" aria-label="Files">
+                                <!-- The container of the provision of files, as that service writes it. -->
+                            </section>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p id="annotate_step5_h">Step 5: perform the annotations</p></td>
+                    <td>
+                        <div role="group" aria-labelledby="annotate_step5_h">
+                            <p>
+                                <input type="checkbox" id="annotate_merge" name="annotate_merge" value="True" form="annotate_form" />
+                                <label for="annotate_merge">Create -merge files</label>
+                            </p>
+                            <button type="submit" form="annotate_form" name="annotate_task" value="perform" class="action-button width_full" aria-disabled="true" aria-describedby="annotate_perform_state" data-icon="play">
+                                <span>Let's go!</span>
+                            </button>
+                            <p id="annotate_perform_state">No annotation is selected.</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p id="annotate_step6_h">Step 6: read the procedure outcome report</p></td>
+                    <td>
+                        <div role="group" aria-labelledby="annotate_step6_h">
+                            <button type="submit" form="annotate_form" name="annotate_task" value="show" class="action-button width_full" aria-disabled="true" aria-describedby="annotate_show_state" data-icon="file">
+                                <span>Show report</span>
+                            </button>
+                            <p id="annotate_show_state">No report is checked.</p>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            <button type="submit" form="annotate_form" name="annotate_task" value="reset">Reset</button>
+        </p>
+    </section>
+
+    <section id="annotate_reports_panel" class="width_30">
+        <h3 id="annotate_reports_h">Reports:</h3>
+        <p>
+            <button type="submit" form="annotate_form" name="annotate_task" value="delete_checked" data-icon="delete-checked">
+                <span>Del checked</span>
+            </button>
+            <button type="submit" form="annotate_form" name="annotate_task" value="delete_unchecked" data-icon="delete-unchecked">
+                <span>Del all</span>
+            </button>
+        </p>
+        <ul class="scrolled-panel" role="radiogroup" aria-labelledby="annotate_reports_h">
+            <li>
+                <input type="radio" id="annotate_report_1" name="annotate_report" value="report-2026-11-14-002.txt" form="annotate_form" />
+                <label for="annotate_report_1">report-2026-11-14-002.txt</label>
+            </li>
+            <li>
+                <input type="radio" id="annotate_report_2" name="annotate_report" value="report-2026-11-14-001.txt" form="annotate_form" />
+                <label for="annotate_report_2">report-2026-11-14-001.txt</label>
+            </li>
+        </ul>
+    </section>
+
+</section>
+
+		<!-- ============ END MOCKUP ============ -->
 
 	</section>
 

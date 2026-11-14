@@ -61,7 +61,7 @@ JS_MIME_TYPE = "application/javascript"
 # It is declared empty as long as the framework answers every name asked for:
 # a drawing of its own is one more file in this list.
 ICONS_SET_NAME = "icons"
-ICONS_SET_FILES = ""
+ICONS_SET_FILES = "delete-checked.svg,delete-unchecked.svg"
 ICONS_SET = f"{ICONS_SET_NAME}:/{swapp_settings.icons}:{ICONS_SET_FILES}"
 
 # The theme of SPPAS, declared to the loader: it is registered before the

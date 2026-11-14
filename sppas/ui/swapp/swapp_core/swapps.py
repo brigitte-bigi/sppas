@@ -48,6 +48,7 @@ from ..app_setup import swappSetupWebData
 from ..app_dashboard import swappDashboardWebData
 from ..app_wkps import swappWkpsWebData
 from ..app_convert import swappConvertWebData
+from ..app_annotate import swappAnnotateWebData
 from ..app_test.app_test import swappTestsWebData
 # Install all installed application -- the spin-offs ones
 from ..spinoff import *
@@ -68,6 +69,7 @@ WEB_APPLICATIONS = [
     swappWebApplicationInfo('Dashboard', swappDashboardWebData, True),
     swappWebApplicationInfo('Setup', swappSetupWebData, True),
     swappWebApplicationInfo('Convert', swappConvertWebData, True),
+    swappWebApplicationInfo('Annotate', swappAnnotateWebData, DEBUG_MODE),
     swappWebApplicationInfo('Test', swappTestsWebData, DEBUG_MODE),
     swappWebApplicationInfo('Wkps', swappWkpsWebData, DEBUG_MODE),
 ]
