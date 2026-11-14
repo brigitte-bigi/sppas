@@ -119,14 +119,14 @@ class Installer:
         >>>         self._features = Features(req="", cmdos="")
         >>> SubInstaller().install()
 
-        # TODO:
-        # Update this class for Python >= 3.9 only.
-        # Remove legacy Python 2.7 compatibility code.
-        # Replace any "pip show" / subprocess-based package inspection
-        # with importlib.metadata for installed package versions.
-        # Use urllib.request to query PyPI.
-
     """
+
+    # TODO:
+    # Update this class for Python >= 3.9 only.
+    # Remove legacy Python 2.7 compatibility code.
+    # Replace any "pip show" / subprocess-based package inspection
+    # with importlib.metadata for installed package versions.
+    # Use urllib.request to query PyPI.
 
     def __init__(self):
         """Create a new Installer instance. """

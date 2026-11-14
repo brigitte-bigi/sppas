@@ -88,7 +88,7 @@ opts_export.url = 'https://sppas.org/'
 opts_export.copyright = sppas.config.sg.__copyright__
 opts_export.title = 'sppas doc'
 opts_export.theme = 'light'
-opts_export.favicon = 'icons/sppas.ico'   # relative path to statics
+opts_export.favicon = 'logos/sppas-logo-v5.png'   # relative path to statics
 opts_export.icon = 'logos/sppas-logo-v5.png'   # relative path to statics
 opts_export.readme = True
 # New in ClammingPy 3.1
