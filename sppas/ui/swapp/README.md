@@ -99,6 +99,25 @@ The two registry entry classes are named as a pair: `swapp_app_info.py` holds
 `swappWebApplicationInfo`, `swapp_page_info.py` holds `swappWebPageInfo`.
 
 
+## Where the logic lives
+
+Three languages are used here, and each one has one charge. **Python holds every
+rule of the business**: what is offered, what a decision implies, what is refused,
+what is computed. **HTML is what is shown**, and it is written by Python, which is
+what `WhakerPy` is for. **JavaScript sends what the page holds and puts in place
+what the server wrote**, and it is written only where nothing else can do it.
+
+The criterion is not the amount of JavaScript, it is what it is allowed to know:
+**JavaScript computes nothing the model knows.** It shows, it hides, it sends a
+form, it puts a fragment in place, it asks again at intervals while something
+lasts. Whatever has to be *decided* is decided in Python, even when that costs a
+request: a request answered locally costs nothing a reader can feel.
+
+The test which settles the doubtful cases: **a rule which would have to be
+written twice -- once in Python, once in JavaScript -- is written in Python
+only.** A rule in two languages is two rules, and the day one of them changes,
+the other stays. Whoever maintains this package maintains Python.
+
 ## Taxonomy: App / Page / Dialog
 
 The user interface is made of three kinds of objects. The single decision

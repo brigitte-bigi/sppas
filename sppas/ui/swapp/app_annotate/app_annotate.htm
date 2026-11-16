@@ -612,8 +612,8 @@
 				<li>[1001] The system provides text alternatives to any graphical encoding:
 				an annotation which is selected, a type which holds a selected annotation,
 				the state of a line of a report.</li>
-				<li>[1002] The system uses consistent terminology between interface and
-				concepts, and the terminology of the page of the desktop interface.</li>
+				<li>[1002] The system uses one term per concept, in the interface as in the
+				dossier, and that term is the one the users of SPPAS already read.</li>
 				<li>[1003] The system is operable by keyboard and by screen reader.</li>
 				<li>[1004] The system provides explicit messages at every decision
 				point.</li>
@@ -1278,14 +1278,12 @@
 
 			<p><b>Four procedures end in the browser, and they are four gestures.</b> The
 			extension picked, the language of the page fixed, the annotation selected, the
-			language of one annotation fixed: each of them keeps or shows what the server
-			already wrote in the page, and sends nothing. The languages of every annotation
-			were written by the server in the choice of that annotation; fixing the
-			language of the page sets each of those choices to that language where it holds
-			it, and to <code>---</code> where it does not. Which types hold a selected
-			annotation, and which language the selected annotations hold, are read on those
-			same fields. Nothing of what she is reading is replaced while she decides
-			[1005]. What she decided is sent once, with the performance. RO1, RO8</p>
+			language of one annotation fixed: each of them holds a field of the page and
+			sends nothing. Nothing of what she is reading is replaced while she decides
+			[1005]. What a decision implies elsewhere is not computed here: the server
+			computes it and writes it in the panel where it is read, when that panel is
+			asked for. What she decided is sent with the next request, whether that request
+			asks for a panel or for the performance. RO1, RO8</p>
 
 			<p><b>PF7 is in nobody's charge here.</b> The batch is exposed by a neighbor in
 			both contexts, and this application reads it. It appears in this table so that
@@ -1337,22 +1335,43 @@
 
 			<h4>Navigation</h4>
 
-			<p>Annotate is a single page. The page of the desktop interface shows one panel
-			at a time: the six steps with the reports beside them, one list of annotations
-			per type, and the procedure outcome report. This one holds the same panels as
-			sections of one page, shown and hidden where they stand: nothing is asked of the
-			server to go from one to another.</p>
+			<p>Annotate is a single page, and it is made of six panels: the six steps,
+			the reports, one list of annotations per type, and the procedure outcome
+			report. The page holds the panel which is under the eye, and the reports
+			beside the six steps; it holds no other.</p>
+
+			<p><b>Going from one panel to another is a request.</b> The button which asks
+			for a panel sends the fields of the page to the server; the server writes the
+			panel which was asked for and the page puts it in place of the one it held.
+			Nothing of what the user decided is lost, because the request carries every
+			field of the page, and the panel which arrives is written from what it
+			carried. The spin-off of SPPAS does it that way already.</p>
+
+			<p><b>What a decision implies is therefore computed by the server, in one
+			place.</b> The language of the page, once fixed, holds for every annotation
+			which has resources for it: the list of a type says so when it is written.
+			Which types hold a selected annotation, which language the selected
+			annotations hold &mdash; the entry <code>MIX</code> included &mdash; and
+			whether anything can be performed: the six steps say so when they are written.
+			None of it is computed twice, and none of it is computed in the browser.</p>
 
 			<p>From the six steps:</p>
 
 			<ul>
-			<li>the button of a type shows the list of the annotations of that type, and
-			the button at the top of that list comes back to the six steps;</li>
-			<li>performing the annotations shows the progress, then the procedure outcome
-			report, and the button at its top comes back to the six steps;</li>
-			<li>showing the checked report shows the procedure outcome report the same
+			<li>the button of a type asks for the list of the annotations of that type,
+			and the button at the top of that list asks for the six steps;</li>
+			<li>performing the annotations puts the progress in place of the six steps,
+			then the procedure outcome report, and the button at its top asks for the six
+			steps;</li>
+			<li>showing the checked report asks for the procedure outcome report the same
 			way.</li>
 			</ul>
+
+			<p><b>A panel which arrives takes the focus by its title.</b> What was
+			focused stood in the panel which is gone, and a focus which falls back to the
+			top of the document says nothing about what happened. The title of the panel
+			which arrives is where it is put, so that what is read aloud is the panel which
+			was asked for.</p>
 
 			<p>The six steps and the reports stand side by side. A group of three radio
 			buttons &mdash; the six steps alone, both, the reports alone &mdash; says how
@@ -1390,9 +1409,10 @@
 			of SPPAS, and they are listed, shown and deleted. Online, the report is one of
 			the produced files, no list exists, and the panel of the reports is collapsed
 			[707].</li>
-			<li><b>RO8</b> &mdash; A decision is taken in the page and sent with the
-			performance. Choosing an extension, fixing a language and selecting an
-			annotation make no request, and replace nothing of what is read [1005].
+			<li><b>RO8</b> &mdash; A decision is taken in the page and sent with the next
+			request, which asks either for another panel or for the performance. Choosing
+			an extension, fixing a language and selecting an annotation make no request of
+			their own, and replace nothing of what is read [1005].
 			Resetting and asking for another batch are of another kind: they take the batch
 			back, which is the server's.</li>
 			<li><b>RO9</b> &mdash; What was decided is carried between two requests by what
@@ -1407,9 +1427,9 @@
 			that is done, and where, is that service's to say.</li>
 			</ul>
 
-			<p>RO6 is what the desktop interface does without saying it: its progress is a
-			modal dialog, and nothing can be clicked under it. A web page has no modal
-			progress, so the rule is written.</p>
+			<p>RO6 is written because a page offers everything at once. A dialog which
+			covers the page while a performance goes would hold the rule by itself; a page
+			has to hold it in what it offers, and the server in what it accepts.</p>
 
 		</section>
 
@@ -1461,7 +1481,7 @@
 			  <tr><td>C22</td><td>Online, no report is listed: the report is one of the produced files, and it is reached as they are.</td><td>[707], [803], RO7</td></tr>
 			  <tr><td>C23</td><td>Where a produced file is reached is given by the provision of files, and shown by this application.</td><td>[802], T09</td></tr>
 			  <tr><td>C24</td><td>Nothing of what was decided is held on the server between two requests. What is held is the performance which is going, and the manager of the provision of files.</td><td>RO9</td></tr>
-			  <tr><td>C25</td><td>Which section of the page is shown is carried by nobody: the page shows and hides them where they stand.</td><td>[1006], the navigation</td></tr>
+			  <tr><td>C25</td><td>Which panel the page holds is the one the last request asked for: it holds no other, and carries none between two requests.</td><td>[1006], the navigation</td></tr>
 			</tbody>
 			</table>
 
@@ -1596,8 +1616,8 @@
 			ended. C18</p>
 
 			<p><b>The report is the one thing which stays.</b> Locally, its name is given
-			by <code>sppasLogFile</code> with the pattern <code>report</code>, as the
-			desktop interface names it: the two interfaces list the same reports. Online,
+			by <code>sppasLogFile</code> with the pattern <code>report</code>: the reports of
+			a user are the reports of that user, whichever interface performed them. Online,
 			it is written with the produced files, and which operation of the provision of
 			files gives that place is to be named in its dossier. C17, C22</p>
 
@@ -1711,9 +1731,8 @@
 			<p>Annotate therefore depends on the provision of files, a service of swapp
 			which has its own dossier, exactly as Convert does: a workspace holding the
 			files to be treated and them only is handed, what is produced is added to it,
-			and it is given back. The page of the desktop interface is given the workspace
-			by its parent and sends it back when the annotations have been performed; this
-			one asks the service, and gives back to the service.</p>
+			and it is given back. Annotate asks the service for it and gives it back to the
+			service: it is handed no workspace, and hands none to anybody else.</p>
 
 			<p>Which files an annotation takes among those of the batch is not decided
 			here: an annotation which takes two files finds them from the workspace and
@@ -1848,12 +1867,12 @@
 			there. The Annotate views build only the content of
 			<code>body &gt; main</code>.</p>
 
-			<p>Annotate has one applicative view, <code>AnnotateView</code>, built from the
-			panels of the page of the desktop interface, which bear its names. They are
-			sections of one page.</p>
+			<p>Annotate has one applicative view, <code>AnnotateView</code>, which holds
+			six panels: the six steps, the reports, one list of annotations per type, and
+			the procedure outcome report. They are sections of one page.</p>
 
-			<p><code>ActionAnnotatePanel</code> presents the six steps, each with its
-			title as the desktop interface writes it. Step 1: one choice of extension per
+			<p><code>ActionAnnotatePanel</code> presents the six steps, each under its own
+			title. Step 1: one choice of extension per
 			kind of output file. Step 2: the choice of the language of the page. Step 3: one
 			button per type, which shows the list of that type and says whether it holds a
 			selected annotation &mdash; an icon whose state has a text alternative. Step 4:
@@ -1897,16 +1916,21 @@
 			<p>The container of the provision of files stands in the page as well. It is
 			not a panel of Annotate: the response places it under the node it chose.</p>
 
-			<p>JavaScript is interface support. It shows and hides the sections. When the
-			language of the page is fixed, it sets the choice of each annotation. When an
-			annotation is selected or its language fixed, it says again which types hold a
-			selected annotation and which language the selected annotations hold, the
-			entry <code>MIX</code> included, and enables or disables the button which
-			performs. When she asks for the annotations to be performed, it sends the
-			fields of the form without reloading the page, shows the progress and asks at
+			<p>JavaScript carries what a request carries, and nothing else. When a panel
+			is asked for, it sends the fields of the page without reloading it, and puts
+			in place of the panel which was there the one the server wrote; then it puts
+			the focus on the title of that panel. When she asks for the annotations to be
+			performed, it sends the same fields, puts the progress in place, and asks at
 			regular intervals where the performance stands; when the hundred is reached, it
-			asks for the results and puts in the page what the server wrote. It creates no
-			HTML and holds no knowledge of the annotations.</p>
+			asks for the results and puts in the page what the server wrote.</p>
+
+			<p><b>It computes nothing of the annotations.</b> Which types hold a selected
+			annotation, which language the selected annotations hold &mdash; the entry
+			<code>MIX</code> included &mdash; whether anything can be performed, and the
+			language every annotation takes from the language of the page: all of it is
+			written by the server in the panel which shows it. The rules of this
+			application are written once, where the model is, and never again in the
+			browser. It creates no HTML and holds no knowledge of the annotations.</p>
 
 		</section>
 
@@ -2353,7 +2377,7 @@
 			  <tr><td>C1</td><td><code>AnnotateRecord</code>, which gives a kind its default extension when none was transmitted</td></tr>
 			  <tr><td>C2</td><td><code>ModelAnnotations</code>, giving the kinds</td></tr>
 			  <tr><td>C3</td><td><code>AnnotateController</code>, which keeps a language only if the annotation has it</td></tr>
-			  <tr><td>C4</td><td>The page: the script sets the choices <code>EnableAnnotation</code> wrote, and an annotation which has no language resource has no choice to set</td></tr>
+			  <tr><td>C4</td><td><code>ModelAnnotations</code>, which gives the language of the page to every annotation which has resources for it, and leaves without one every annotation which has none</td></tr>
 			  <tr><td>C5</td><td><code>AnnotateController</code>, which takes no selection back and disables nothing for a language</td></tr>
 			  <tr><td>C6</td><td><code>AnnotateRecord</code>, parsing: what is selected is what was transmitted as such</td></tr>
 			  <tr><td>C7</td><td><code>ModelAnnotations</code>, which says it of each annotation; <code>EnableAnnotation</code> shows it</td></tr>
@@ -2374,7 +2398,7 @@
 			  <tr><td>C22</td><td><code>AnnotateController</code>, which gives the view no report when the server is not the local one</td></tr>
 			  <tr><td>C23</td><td><code>ModelProvision</code></td></tr>
 			  <tr><td>C24</td><td><code>AnnotateRecord</code>, and <code>AnnotateController</code>, which keeps nothing after the request</td></tr>
-			  <tr><td>C25</td><td>The page: no field carries which section is shown</td></tr>
+			  <tr><td>C25</td><td><code>AnnotateView</code>, which writes the panel the request named, and the page, which puts it in place of the one it held</td></tr>
 			</tbody>
 			</table>
 
@@ -2515,9 +2539,10 @@
 			<li><b>The controller.</b> It is owed, and it is what will check that a language
 			an annotation has not is not kept, and that a disabled annotation is never
 			selected.</li>
-			<li><b>The JavaScript.</b> That fixing the language of the page sets the choice
-			of every annotation, that the entry <code>MIX</code> appears and goes, and that
-			the sections are shown and hidden, is checked in a browser and not here.</li>
+			<li><b>The JavaScript.</b> That a button sends the fields of the page, that the
+			panel the server wrote takes the place of the one which was there, and that the
+			focus lands on its title, is checked in a browser and not here. What that panel
+			holds is checked here, because the server writes it.</li>
 			<li><b>What an annotation does.</b> It belongs to the API and is tested there;
 			this application is answerable for what it handed over.</li>
 			<li><b>The two services</b>, which have their own dossiers and their own tests.
