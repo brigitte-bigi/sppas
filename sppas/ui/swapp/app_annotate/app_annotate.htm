@@ -1338,10 +1338,10 @@
 
 			<h4>Navigation</h4>
 
-			<p>Annotate is a single page, and it is made of six panels: the six steps,
-			the reports, one list of annotations per type, and the procedure outcome
-			report. The page holds the panel which is under the eye, and the reports
-			beside the six steps; it holds no other.</p>
+			<p>Annotate is a single page, and it is made of seven panels: the six steps,
+			the reports, one list of annotations per type, the files, and the procedure
+			outcome report. The page holds the panel which is under the eye, and the
+			reports beside the six steps; it holds no other.</p>
 
 			<p><b>Going from one panel to another is a request.</b> The button which asks
 			for a panel sends the fields of the page to the server; the server writes the
@@ -1363,6 +1363,11 @@
 			<ul>
 			<li>the button of a type asks for the list of the annotations of that type,
 			and the button at the top of that list asks for the six steps;</li>
+			<li>the button of the fourth step asks for the files, and the button at the
+			top of that panel asks for the six steps. The step itself says how many files
+			were chosen; where a workspace is already there, it says what it holds and
+			offers no way in. What a batch holds is unbounded, and a step which held it
+			would be a step the five others are read around;</li>
 			<li>performing the annotations puts the progress in place of the six steps,
 			then the procedure outcome report, and the button at its top asks for the six
 			steps;</li>
@@ -1407,7 +1412,10 @@
 			annotation never ends it [503].</li>
 			<li><b>RO6</b> &mdash; One performance at a time. While one goes, the page offers
 			nothing which starts another, resets the page or asks for another batch, and
-			the server refuses what would [032].</li>
+			the server refuses what would [032]. The way back is one of those: coming back
+			to the six steps is asking for another batch, which a performance going
+			forbids. It is therefore offered and not available, as everything else which
+			cannot answer is.</li>
 			<li><b>RO7</b> &mdash; Locally, the reports are those of the folder of the logs
 			of SPPAS, and they are listed, shown and deleted. Online, the report is one of
 			the produced files, no list exists, and the panel of the reports is collapsed
@@ -1909,7 +1917,14 @@
 
 			<p><code>LogAnnotatePanel</code> presents the progress while the annotations
 			are performed, then the procedure outcome report: a button which comes back to
-			the six steps, the title, and the report itself.</p>
+			the six steps, the title, and under it what the API says of its work.</p>
+
+			<p><b>One panel, and two moments.</b> While a performance goes, under the
+			title stand the three things the API sets on the progress it was given: which
+			annotation is running, how far it has gone, and what it is doing. The report
+			is under them, folded: the person unfolds it to watch it fill, or leaves it
+			folded and waits. When the performance has ended, the report is what the panel
+			shows.</p>
 
 			<p><b>The report is shown as it was written, and nothing of it is rebuilt.</b>
 			The API writes a text: its headers are centered with spaces, its sections are
@@ -2039,6 +2054,7 @@
 			  <tr><td><code>ActionAnnotatePanel</code></td><td>&mdash;</td><td>The six steps: the extensions, the language of the page, one button per type, the merge option and what performs, what shows the checked report; and the Reset button</td></tr>
 			  <tr><td><code>ReportsPanel</code></td><td>&mdash;</td><td>Locally, the reports which are kept, one of them checked at most, and the two buttons which delete. Collapsed online</td></tr>
 			  <tr><td><code>AnnotationsPanel</code></td><td>&mdash;</td><td>The annotations of one type, arranged by what they require</td></tr>
+			  <tr><td><code>FilesAnnotatePanel</code></td><td>&mdash;</td><td>The container the provision of files writes, and nothing of this application but the way back</td></tr>
 			  <tr><td><code>EnableAnnotation</code></td><td>&mdash;</td><td>One annotation: what selects it, what configures it, its references or how far its development has gone, its language, its description, what it requires. Disabled when it cannot be performed on that machine</td></tr>
 			  <tr><td><code>LogAnnotatePanel</code></td><td>&mdash;</td><td>The progress, then the procedure outcome report, line for line as the API wrote it and in a font of one width. Online, a link to the report and one to the archive</td></tr>
 			</tbody>
@@ -2049,7 +2065,7 @@
 			<table>
 			<thead><tr><th scope="col">Tie</th><th scope="col">Legs</th><th scope="col">What it is</th></tr></thead>
 			<tbody>
-			  <tr><td>holds</td><td><code>AnnotateView</code> 1 &mdash; 1 <code>ActionAnnotatePanel</code>, 1 <code>ReportsPanel</code>, 1 <code>LogAnnotatePanel</code></td><td>A composition: a panel builds one part of one page and exists for it</td></tr>
+			  <tr><td>holds</td><td><code>AnnotateView</code> 1 &mdash; 1 <code>ActionAnnotatePanel</code>, 1 <code>ReportsPanel</code>, 1 <code>FilesAnnotatePanel</code>, 1 <code>LogAnnotatePanel</code></td><td>A composition: a panel builds one part of one page and exists for it</td></tr>
 			  <tr><td>holds</td><td><code>AnnotateView</code> 1 &mdash; 3 <code>AnnotationsPanel</code></td><td>A composition: one per type</td></tr>
 			  <tr><td>holds</td><td><code>AnnotationsPanel</code> 1 &mdash; 0..n <code>EnableAnnotation</code></td><td>A composition: one per annotation of that type</td></tr>
 			  <tr><td>uses</td><td><code>AnnotateView</code> &rarr; <code>AnnotateRecord</code></td><td>A dependency: it is given it and builds from it</td></tr>
@@ -2061,6 +2077,7 @@
 			<pre class="dark"><code>[AnnotateView|section;info|populate_tree_content()]++1-1&gt;[ActionAnnotatePanel]
 [AnnotateView]++1-1&gt;[ReportsPanel]
 [AnnotateView]++1-3&gt;[AnnotationsPanel]
+[AnnotateView]++1-1&gt;[FilesAnnotatePanel]
 [AnnotateView]++1-1&gt;[LogAnnotatePanel]
 [AnnotationsPanel]++1-0..*&gt;[EnableAnnotation]
 
@@ -2359,8 +2376,9 @@
 			  <tr><td><code>ActionAnnotatePanel</code></td><td>post: the six steps, in their order and with their titles; one choice per kind of output file, the extension which holds selected; the choice of the language of the page; one button per type, saying whether it holds a selected annotation; the merge option; the button which performs, disabled when no annotation is selected; the button which shows the checked report, disabled when none is; the Reset button</td></tr>
 			  <tr><td><code>ReportsPanel</code></td><td>post: locally, one radio button per report, at most one checked, and the two buttons which delete; online, collapsed and empty. C20, C22</td></tr>
 			  <tr><td><code>AnnotationsPanel</code></td><td>post: the button which comes back, the title naming the type, and one <code>EnableAnnotation</code> per annotation of that type, in the order it was given them</td></tr>
+			  <tr><td><code>FilesAnnotatePanel</code></td><td>post: the button which comes back, the title, and the container the provision of files gives, placed as that service wrote it and altered in nothing. C10</td></tr>
 			  <tr><td><code>EnableAnnotation</code></td><td>post: the annotation it stands for, as it declares itself: what selects it, what configures it, one link per reference or the gauge of its development or neither, the choice of its language when it has language resources and no choice otherwise, its description, what it requires. Disabled when the annotation cannot be performed on that machine. C7, C8</td></tr>
-			  <tr><td><code>LogAnnotatePanel</code></td><td>post: the progress while a performance goes; then the report, line for line as the API wrote it, in a font of one width, every line of a result beginning with the state that API wrote in it; that the report is not available, with the reason, when it could not be read; online, the link to the report and the link to the archive. C19, C23</td></tr>
+			  <tr><td><code>LogAnnotatePanel</code></td><td>post: while a performance goes, what the API set on the progress &mdash; the annotation, how far, what it is doing &mdash; and the report as it fills, folded; the way back is not available for as long. Once it has ended, the report, line for line as the API wrote it, in a font of one width, every line of a result beginning with the state that API wrote in it; that the report is not available, with the reason, when it could not be read; online, the link to the report and the link to the archive. C19, C23, RO6</td></tr>
 			</tbody>
 			</table>
 
@@ -2686,7 +2704,9 @@
 			shown &mdash; the same three radio buttons as the page of the Journal, written
 			the same way. The fourth step is the files, the container of the provision of
 			files: they are given after the decisions, and before what uses them. What
-			that container holds is written by its service, and is not drawn here.
+			that container holds is written by its service, and what stands here is copied
+			from the document of that service: a step of the six is never empty &mdash;
+			either a workspace is there, or files are to be chosen.
 		</p>
 
 		<p>
@@ -2714,15 +2734,13 @@
 
 <section id="annotate_panels" class="flex-panel">
 
-    <section id="annotate_actions_panel" class="width_70">
+    <section id="annotate_actions_panel" class="width_70 annotate-steps">
         <form id="annotate_form" method="post"></form>
 
-        <table role="presentation">
-            <tbody>
-                <tr>
-                    <td><p id="annotate_step1_h">Step 1: choose the output file format(s)</p></td>
-                    <td>
-                        <div role="group" aria-labelledby="annotate_step1_h">
+    <ol class="enumerate-cards">
+            <li class="enumerate-cards-item">
+                <p id="annotate_step1_h">Choose the output file format(s)</p>
+                <div role="group" aria-labelledby="annotate_step1_h">
                             <div class="wrap-panel width_full">
                             <span class="wrap-item width_50"><select id="annotate_ext_ANNOT" name="annotate_ext_ANNOT" form="annotate_form" aria-label="ANNOT">
                                 <option value=".xra" selected>.xra</option>
@@ -2734,12 +2752,10 @@
                             </select></span>
                             </div>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><p id="annotate_step2_h">Step 2: fix the language(s)</p></td>
-                    <td>
-                        <div>
+            </li>
+            <li class="enumerate-cards-item">
+                <p id="annotate_step2_h">Fix the language(s)</p>
+                    <div>
                             <span class="wrap-item"><select id="annotate_lang" name="annotate_lang" form="annotate_form" aria-labelledby="annotate_step2_h">
                                 <option value="---" selected>---</option>
                                 <option value="eng">eng</option>
@@ -2747,12 +2763,10 @@
                                 <option value="ita">ita</option>
                             </select></span>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><p id="annotate_step3_h">Step 3: select and configure annotations</p></td>
-                    <td>
-                        <div role="group" aria-labelledby="annotate_step3_h">
+            </li>
+            <li class="enumerate-cards-item">
+                <p id="annotate_step3_h">Select and configure annotations</p>
+                <div role="group" aria-labelledby="annotate_step3_h">
                             <button type="button" class="width_full" id="annotate_type_STANDALONE">
                                 <span data-icon="no" role="img" aria-label="no annotation selected"></span>
                                 <span>STANDALONE annotations</span>
@@ -2766,22 +2780,19 @@
                                 <span>INTERACTION annotations</span>
                             </button>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><p id="annotate_step4_h">Step 4: add files</p></td>
-                    <td>
-                        <div role="group" aria-labelledby="annotate_step4_h">
-                            <section id="files_deposit" class="width_full" aria-label="Files">
-                                <!-- The container of the provision of files, as that service writes it. -->
-                            </section>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><p id="annotate_step5_h">Step 5: perform the annotations</p></td>
-                    <td>
-                        <div role="group" aria-labelledby="annotate_step5_h">
+            </li>
+            <li class="enumerate-cards-item">
+                <p id="annotate_step4_h">Add files</p>
+                <div role="group" aria-labelledby="annotate_step4_h">
+                    <p id="annotate_files_state">5 files selected</p>
+                    <button type="submit" form="annotate_form" name="annotate_task" value="files" class="width_full">
+                        <span>Choose the files</span>
+                    </button>
+                </div>
+            </li>
+            <li class="enumerate-cards-item">
+                <p id="annotate_step5_h">Perform the annotations</p>
+                <div role="group" aria-labelledby="annotate_step5_h">
                             <p>
                                 <input type="checkbox" id="annotate_merge" name="annotate_merge" value="True" form="annotate_form" />
                                 <label for="annotate_merge">Create -merge files</label>
@@ -2789,23 +2800,19 @@
                             <button type="submit" form="annotate_form" name="annotate_task" value="perform" class="action-button width_full" aria-disabled="true" aria-describedby="annotate_perform_state" data-icon="play">
                                 <span>Let's go!</span>
                             </button>
-                            <p id="annotate_perform_state">No annotation is selected.</p>
+                            <p id="annotate_perform_state" class="annotate-missing">No annotation is selected.</p>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><p id="annotate_step6_h">Step 6: read the procedure outcome report</p></td>
-                    <td>
-                        <div role="group" aria-labelledby="annotate_step6_h">
+            </li>
+            <li class="enumerate-cards-item">
+                <p id="annotate_step6_h">Read the procedure outcome report</p>
+                <div role="group" aria-labelledby="annotate_step6_h">
                             <button type="submit" form="annotate_form" name="annotate_task" value="show" class="action-button width_full" aria-disabled="true" aria-describedby="annotate_show_state" data-icon="file">
                                 <span>Show report</span>
                             </button>
-                            <p id="annotate_show_state">No report is checked.</p>
+                            <p id="annotate_show_state" class="annotate-missing">No report is checked.</p>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            </li>
+    </ol>
 
         <p>
             <button type="submit" form="annotate_form" name="annotate_task" value="reset">Reset</button>
@@ -2822,7 +2829,7 @@
                 <span>Del all</span>
             </button>
         </p>
-        <ul role="radiogroup" aria-labelledby="annotate_reports_h">
+        <ul class="annotate-reports" role="radiogroup" aria-labelledby="annotate_reports_h">
             <li>
                 <input type="radio" id="annotate_report_1" name="annotate_report" value="report-2026-11-14-002.txt" form="annotate_form" />
                 <label for="annotate_report_1">report-2026-11-14-002.txt</label>
@@ -2837,6 +2844,7 @@
 </section>
 
 		<!-- ============ END MOCKUP ============ -->
+
 
 		<p>
 			It shows next the panel of one type, which takes the place of the one above
@@ -2876,8 +2884,8 @@
                     </p>
                 </div>
                 <div class="flex-item width_10">
-                    <a href="https://sppas.org/" class="icon-button" data-icon="external-link" aria-label="Published work, on the web" title="Published work, on the web"></a>
-                    <a href="https://sppas.org/" class="icon-button" data-icon="external-link" aria-label="Published work, on the web" title="Published work, on the web"></a>
+                    <a href="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" class="icon-button" data-icon="external-link" aria-label="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" title="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42"></a>
+                    <a href="https://ieeexplore.ieee.org/document/7357891" class="icon-button" data-icon="external-link" aria-label="https://ieeexplore.ieee.org/document/7357891" title="https://ieeexplore.ieee.org/document/7357891"></a>
                 </div>
                 <div class="flex-item width_10">
                     <select id="annotate_lang_textnorm" name="annotate_lang_textnorm" form="annotate_form" aria-label="Language of Text normalization">
@@ -2909,8 +2917,8 @@
                     </p>
                 </div>
                 <div class="flex-item width_10">
-                    <a href="https://sppas.org/" class="icon-button" data-icon="file" aria-label="Published work, a PDF" title="Published work, a PDF"></a>
-                    <a href="https://sppas.org/" class="icon-button" data-icon="external-link" aria-label="Published work, on the web" title="Published work, on the web"></a>
+                    <a href="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" class="icon-button" data-icon="external-link" aria-label="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" title="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf"></a>
+                    <a href="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" class="icon-button" data-icon="external-link" aria-label="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" title="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30"></a>
                 </div>
                 <div class="flex-item width_10">
                     <select id="annotate_lang_phonetize" name="annotate_lang_phonetize" form="annotate_form" aria-label="Language of Phonetization">
@@ -2972,7 +2980,10 @@
                     </p>
                 </div>
                 <div class="flex-item width_10">
-                    <a href="https://sppas.org/" class="icon-button" data-icon="file" aria-label="Published work, a PDF" title="Published work, a PDF"></a>
+                    <p class="annotate-ann-devel">
+                        <progress id="annotate_devel_facedetect" value="70" max="100" aria-label="Development"></progress>
+                        <span>70%</span>
+                    </p>
                 </div>
                 <div class="flex-item width_10">
                 </div>
@@ -3038,6 +3049,135 @@
 			annotations performed, one of which said something about a file. The lines and
 			their states are examples.
 		</p>
+
+		<p>
+			It shows the same panel while the annotations are performed: the annotation
+			which is running, how far it has gone and what it is doing &mdash; the three
+			things the API sets on the progress it was given &mdash; and, folded under
+			them, the report as it fills. The person unfolds it to watch, or leaves it
+			folded and waits.
+		</p>
+
+		<p>
+			It shows then the panel of the files, which the fourth step asks for. What
+			it holds is written by the provision of files and copied here from the
+			document of that service; where SPPAS runs on the machine of the person
+			and a workspace is already there, the step says what it holds and offers
+			no way in.
+		</p>
+
+		<!-- ============ BEGIN MOCKUP: the files ============ -->
+
+<section id="annotate_files_panel" aria-labelledby="annotate_files_h">
+
+    <div class="annotate-head">
+        <button type="submit" form="annotate_form" name="annotate_task" value="steps" data-icon="arrow-up">
+            <span>Back</span>
+        </button>
+        <h3 id="annotate_files_h">Add files</h3>
+    </div>
+
+    <!-- The container of the provision of files, copied from its own document:
+         it is written by that service and not by this one. -->
+<section id="files_deposit" aria-label="Files">
+                <form method="post">
+                <input type="hidden" name="task" value="send" />
+                <input type="hidden" name="fed" value="[[&quot;record-01.wav&quot;, 3355443]]" />
+                <div class="dropzone">
+                <label for="files_input">
+                Select files, or drag and drop files here.
+                <input id="files_input" type="file" multiple="multiple" />
+                </label>
+                <ul class="cards-panel">
+                <li>
+                <article class="card">
+                <div class="card-header">
+                <span class="file-status" data-icon="upload" role="img" aria-label="Deposited"></span>
+                </div>
+                <div class="card-body">
+                <span class="dropzone-size">
+                3355443
+                </span>
+                <span class="dropzone-name">
+                record-01.wav
+                </span>
+                </div>
+                <div class="card-footer">
+                <button type="button" name="record-01.wav">
+                Take back
+                </button>
+                </div>
+                </article>
+                </li>
+                <li>
+                <article class="card">
+                <div class="card-header">
+                <span class="file-status file-status-error" data-icon="no" role="img" aria-label="Refused"></span>
+                </div>
+                <div class="card-body">
+                <span class="dropzone-size">
+                0
+                </span>
+                <span class="dropzone-name">
+                record-02.wav
+                </span>
+                <p class="file-status file-status-error">
+                This name is already taken.
+                </p>
+                </div>
+                <div class="card-footer">
+                <button type="button" name="record-02.wav">
+                Take back
+                </button>
+                </div>
+                </article>
+                </li>
+                </ul>
+                <p>
+                3.2 MB of 100 MB accepted here. Up to 10 MB per file.
+                </p>
+                </div>
+                <button type="button" class="cta-button">
+                Send
+                </button>
+                </form>
+                </section>
+
+</section>
+
+		<!-- ============ END MOCKUP: the files ============ -->
+
+		<!-- ============ BEGIN MOCKUP: a performance going ============ -->
+
+<section id="annotate_log_panel_going" aria-labelledby="annotate_going_h">
+
+    <div class="annotate-head">
+        <button type="submit" form="annotate_form" name="annotate_task" value="steps" data-icon="arrow-up" disabled>
+            <span>Back</span>
+        </button>
+        <h3 id="annotate_going_h">Procedure outcome report</h3>
+    </div>
+
+    <h4 id="progress_header">Phonetization</h4>
+    <progress id="percent_progress" value="40" max="100"></progress>
+    <p id="progress_text">AC track_0379-token.xra (2/5)</p>
+
+    <details>
+        <summary>Details</summary>
+        <pre class="annotate-report"><code>-------------------------------------------------------------------------------
+ Normaliser la transcription
+-------------------------------------------------------------------------------
+  AC track_0379.xra: <span class="ok">[    OK    ]</span> 
+  AC track_0380.xra: <span class="warning">[ WARNING  ]</span> two tokens were not normalized
+-------------------------------------------------------------------------------
+ Phonetiser
+-------------------------------------------------------------------------------
+</code></pre>
+    </details>
+
+</section>
+
+		<!-- ============ END MOCKUP: a performance going ============ -->
 
 		<!-- ============ BEGIN MOCKUP: the procedure outcome report ============ -->
 

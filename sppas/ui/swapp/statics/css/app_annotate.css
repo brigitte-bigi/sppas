@@ -41,15 +41,6 @@
 =================================  STEPS  =====================================
 */
 
-/* What acts on a step stands against the right edge of its cell: the lists
-   and the buttons are blocks, which a text alignment does not move. */
-#annotate_actions_panel table[role=presentation] td:last-child > div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    row-gap: var(--wrap-panel-gap);
-}
-
 /* The drawing of a button is set apart from its text. */
 #annotate_panels [data-icon] > svg {
     margin-right: calc(0.5 * var(--font-size));
@@ -63,21 +54,9 @@
     width: 100%;
 }
 
-/* Each step is a block of its own: a ground on its cells, and a space
-   between two steps. */
-#annotate_actions_panel table[role=presentation] {
-    border-collapse: separate;
-    border-spacing: 0 var(--typography-spacing-vertical);
-}
-
-#annotate_actions_panel table[role=presentation] td {
-    background-color: var(--table-row-stripped-bg-color);
-}
-
 /* What is missing for a button to answer is written in the color of an
    error. */
-#annotate_perform_state,
-#annotate_show_state {
+.annotate-missing {
     color: var(--error-color);
 }
 
@@ -129,10 +108,15 @@
    stands on and the space around it: a list of lines of unequal height is
    read as one block of text when nothing says where one ends. */
 .annotate-annotations li {
-    list-style: none;
     margin-bottom: var(--typography-spacing-vertical);
     padding: var(--wrap-panel-gap);
     background-color: var(--table-row-stripped-bg-color);
+}
+
+/* An annotation is not an item read in a text: it carries no marker. The
+   marker is drawn by a pseudo-element, which no list-style reaches. */
+.annotate-annotations > ul > li::before {
+    content: none;
 }
 
 /* The way back and the name of a panel are one line, in every panel which
@@ -249,4 +233,70 @@
    it stands in. */
 .annotate-report .ignore {
     color: inherit;
+}
+
+/* A switch which no longer answers says it as everything else does. What
+   carries the state is the input, and it is the one nobody sees: what is
+   dimmed is the slider drawn beside it. */
+.annotate-annotations .switch input:disabled + .switch-slider {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* The reports are options of one choice and not items read in a text: they
+   take no marker, and no room for one. */
+.annotate-reports > li::before {
+    content: none;
+}
+
+.annotate-reports > li {
+    padding-inline-start: 0;
+}
+
+/*
+=========================  THE SIX STEPS  ====================================
+*/
+
+/* A step is a card: its number, its name against it, and what acts on it
+   against the right edge. */
+.annotate-steps .enumerate-cards-item > p {
+    flex: 1 1 auto;
+    margin: 0;
+}
+
+/* What acts takes a share of the card and no more: a button as wide as the
+   card is read as a band and not as a command. */
+.annotate-steps .enumerate-cards-item > div {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    row-gap: var(--wrap-panel-gap);
+}
+
+/* The weight of a card is the weight of what names it, and not of what is
+   set on it. */
+.annotate-steps .enumerate-cards-item > div {
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size);
+}
+
+/* The buttons of the types and the two which act take the width of their
+   column. */
+.annotate-steps button.action-button,
+.annotate-steps .enumerate-cards-item > div > div > button {
+    width: 100%;
+}
+
+/* A card of a step holds a line and not a paragraph: half the inner margin
+   of a card is enough, and the six steps come back above the fold. */
+.annotate-steps .enumerate-cards-item {
+    padding: calc(var(--font-size) * 0.55);
+}
+
+/* The steps stand in a column which is already narrower than the page: a
+   card takes the width of that column, and is not narrowed again. */
+.annotate-steps .enumerate-cards-item {
+    max-width: 100%;
+    width: 100%;
 }
