@@ -105,13 +105,16 @@ class swappAppsNode(HTMLNode):
             article.add_attribute("class", "app-disabled")
         self.append_child(article)
 
-        # Define the background image
-        attributes = dict()
-        attributes["class"] = "app-background-img"
-        attributes["src"] = icon_name
-        attributes["alt"] = name + " logo"
-        img = EmptyNode(article.identifier, ident+"_img", "img", attributes=attributes)
-        article.append_child(img)
+        # Define the background image. An application without one has no
+        # image node: an <img> with no source is a request for the page
+        # itself, which the browser asks for again.
+        if icon_name is not None and len(icon_name) > 0:
+            attributes = dict()
+            attributes["class"] = "app-background-img"
+            attributes["src"] = icon_name
+            attributes["alt"] = name + " logo"
+            img = EmptyNode(article.identifier, ident+"_img", "img", attributes=attributes)
+            article.append_child(img)
 
         # Define the content of the card: a container and a button
         content = HTMLNode(article.identifier, ident + "_content", "div")

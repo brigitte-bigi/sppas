@@ -689,11 +689,10 @@
 				<li><b>F17. Annotate &rarr; A1</b> &mdash; the same [505].</li>
 				<li><b>F18. A3 &rarr; Annotate</b> &mdash; the annotations have been performed: the batch, holding what was produced, and the report, written.</li>
 				<li><b>F19. Annotate &rarr; A2</b> &mdash; the files it takes and gives back while the annotations are performed, <code>lock()</code> and <code>release()</code>; what was produced, in the workspace it was handed, <code>produced()</code>; and that it has finished [801], [802].</li>
-				<li><b>F20. Annotate &rarr; A1</b> &mdash; a report: the name of its file, and its lines with the state each carries; or that it cannot be read; online, a link to download it [601] to [605].</li>
+				<li><b>F20. Annotate &rarr; A1</b> &mdash; a report: the text the API wrote, line for line, the state of a result being written in its line; or that it cannot be read; online, a link to download it [601] to [605].</li>
 				<li><b>F21. Annotate &rarr; A1</b> &mdash; locally, the reports which are kept, and the one which is checked [701], [702], [707].</li>
 				<li><b>F22. A1 &rarr; Annotate</b> &mdash; a report checked; show the checked report [702], [703].</li>
 				<li><b>F23. A1 &rarr; Annotate</b> &mdash; delete the checked report, or every report which is not checked [704], [705].</li>
-				<li><b>F24. A1 &rarr; Annotate</b> &mdash; annotate another batch [901].</li>
 				<li><b>F25. Annotate &rarr; A1</b> &mdash; the produced files, reached without her knowing where they were written: online, the address of one archive holding all of them, the report included [801] to [803].</li>
 				<li><b>F26. A1 &rarr; Annotate</b> &mdash; reset the page [902].</li>
 				</ul>
@@ -829,7 +828,7 @@
 				<li>What an annotation declares of itself, which is the API's: it is read where it is written, and nothing here adds to it.</li>
 				<li>The options of an annotation and what a value may be, which the service of the options shows and checks. What is held here is the values which were fixed.</li>
 				<li>The files of the batch beyond their identity, which are A2's [402].</li>
-				<li>What a report says, which is written by the API. This application shows its lines, and the state each carries, as they stand.</li>
+				<li>What a report says, which is written by the API. This application shows that text line for line, as it stands, and writes nothing of its own in it.</li>
 				<li>The order of a performance, which is the API's [502].</li>
 				</ul>
 
@@ -863,7 +862,7 @@
 				  <tr><td>E9</td><td>The annotations have been performed</td><td>internal</td><td>T08</td></tr>
 				  <tr><td>E10</td><td>The user asks to show the checked report</td><td>external</td><td>F22</td></tr>
 				  <tr><td>E11</td><td>The user asks to delete reports</td><td>external</td><td>F23</td></tr>
-				  <tr><td>E12</td><td>The user asks to annotate another batch</td><td>external</td><td>F24</td></tr>
+				  <tr><td>E12</td><td>The user comes back to the six steps, a performance having ended</td><td>external</td><td>F14</td></tr>
 				  <tr><td>E13</td><td>A decision has changed</td><td>internal</td><td>T02 to T07, T12, T13</td></tr>
 				  <tr><td>E14</td><td>The user resets the page</td><td>external</td><td>F26</td></tr>
 				</tbody>
@@ -1184,10 +1183,14 @@
 
 				<h5>T12 &mdash; Annotate another batch</h5>
 				<ul class="mct">
-				<li><strong>Event</strong>: E12.</li>
+				<li><strong>Event</strong>: E12, which is the way back to the six steps
+				once a performance has ended. Annotating another batch is asked for by
+				coming back, and by nothing else: the files which were just treated are
+				treated, and the decisions are where the person left them. No command of
+				its own is offered for it.</li>
 				<li><strong>Purpose</strong>: annotate other files, with the decisions
 				already taken.</li>
-				<li><strong>Inputs</strong>: user choice.</li>
+				<li><strong>Inputs</strong>: the way back.</li>
 				<li><strong>Outputs</strong>: <code>batch</code>, undefined;
 				<code>extensions</code>, <code>selected</code>, <code>lang</code>,
 				<code>options</code> and <code>merge</code>, as they were.</li>
@@ -1475,7 +1478,7 @@
 			  <tr><td>C16</td><td>The failure of one annotation never interrupts the others.</td><td>[503], T08</td></tr>
 			  <tr><td>C17</td><td>Each performance writes one report, under a name no report bore before.</td><td>[504], T08</td></tr>
 			  <tr><td>C18</td><td>Where a performance stands is what the API said on the progress it was given: nothing is counted here.</td><td>[505], RO5</td></tr>
-			  <tr><td>C19</td><td>A report is shown as it was written, each line with the state it carries; nothing is counted from it and nothing is decided from it.</td><td>[603], T10</td></tr>
+			  <tr><td>C19</td><td>A report is shown as it was written, line for line and alignment kept; nothing is counted from it and nothing is decided from it.</td><td>[603], T10</td></tr>
 			  <tr><td>C20</td><td>Locally, one report at most is checked, and the report of the performance which has just ended is.</td><td>[702], T09</td></tr>
 			  <tr><td>C21</td><td>Deleting a report deletes nothing of what was produced.</td><td>[706], T11</td></tr>
 			  <tr><td>C22</td><td>Online, no report is listed: the report is one of the produced files, and it is reached as they are.</td><td>[707], [803], RO7</td></tr>
@@ -1697,7 +1700,7 @@
 			<tbody>
 			  <tr><td>annotations</td><td>Knows which annotations there are and what each declares, which kinds of output file there are and their extensions; says which annotation is of which type, which languages the page offers, and arranges a list by what its annotations require. Reads no file of the user</td><td>PF1</td></tr>
 			  <tr><td>performance</td><td>Names the report, writes what was decided in what the API is performed with, makes the progress, starts the thread, and says whether a performance is going and where it stands</td><td>PF8</td></tr>
-			  <tr><td>reports</td><td>Lists the reports, reads one with the state of each of its lines, and deletes those which are named</td><td>PF9, PF10, PF11</td></tr>
+			  <tr><td>reports</td><td>Lists the reports, gives back the text of one as it was written, and deletes those which are named</td><td>PF9, PF10, PF11</td></tr>
 			  <tr><td>provision</td><td>Reads the batch the provision of files hands, says what it locks and releases, gives back what was produced, asks for the addresses, and says when it has finished. Alters nothing of the batch</td><td>PF7, PF8, PF9</td></tr>
 			  <tr><td>decisions</td><td>Rebuilds what was decided from what the page transmitted, and says what is still missing</td><td>PF12, PF13, and the beginning of every other</td></tr>
 			  <tr><td>presentation</td><td>Renders the state, collects the decisions, triggers the events</td><td>The view of every procedure; PF2 to PF5, which happen in the page</td></tr>
@@ -1906,12 +1909,21 @@
 
 			<p><code>LogAnnotatePanel</code> presents the progress while the annotations
 			are performed, then the procedure outcome report: a button which comes back to
-			the six steps, the title, the name of the file of the report, then its lines,
-			each result bearing the class of its state. The state is in the text of the
-			line as well, so the color is never the only thing which says it. Online, a
-			link downloads the report, and another one the archive of every produced
-			file. Under the report, the Start over button annotates another batch with
-			the decisions already taken.</p>
+			the six steps, the title, and the report itself.</p>
+
+			<p><b>The report is shown as it was written, and nothing of it is rebuilt.</b>
+			The API writes a text: its headers are centered with spaces, its sections are
+			parted by rows of dashes, and what it says of a file is set out in columns. It
+			is therefore shown line for line, in a font of one width, where a font of
+			several would undo every alignment it holds. Every line of a result begins
+			with the state the API wrote in it &mdash; <code>[&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;]</code>,
+			<code>[&nbsp;WARNING&nbsp;&nbsp;]</code>, <code>[&nbsp;IGNORE&nbsp;&nbsp;]</code>,
+			<code>[&nbsp;&nbsp;ERROR&nbsp;&nbsp;]</code>, <code>[&nbsp;&nbsp;&nbsp;INFO&nbsp;&nbsp;&nbsp;]</code>
+			&mdash; so the state is read in the text itself; the class the line bears
+			colors it, and says nothing the text does not say already.</p>
+
+			<p>Online, a link downloads the report, and another one the archive of every
+			produced file.</p>
 
 			<p>The container of the provision of files stands in the page as well. It is
 			not a panel of Annotate: the response places it under the node it chose.</p>
@@ -2028,7 +2040,7 @@
 			  <tr><td><code>ReportsPanel</code></td><td>&mdash;</td><td>Locally, the reports which are kept, one of them checked at most, and the two buttons which delete. Collapsed online</td></tr>
 			  <tr><td><code>AnnotationsPanel</code></td><td>&mdash;</td><td>The annotations of one type, arranged by what they require</td></tr>
 			  <tr><td><code>EnableAnnotation</code></td><td>&mdash;</td><td>One annotation: what selects it, what configures it, its references or how far its development has gone, its language, its description, what it requires. Disabled when it cannot be performed on that machine</td></tr>
-			  <tr><td><code>LogAnnotatePanel</code></td><td>&mdash;</td><td>The progress, then the procedure outcome report: the name of its file and its lines, each with its state. Online, a link to the report and one to the archive. Under the report, the Start over button</td></tr>
+			  <tr><td><code>LogAnnotatePanel</code></td><td>&mdash;</td><td>The progress, then the procedure outcome report, line for line as the API wrote it and in a font of one width. Online, a link to the report and one to the archive</td></tr>
 			</tbody>
 			</table>
 
@@ -2262,7 +2274,7 @@
 			  <tr><td>Say whether a performance is going</td><td>pre: none. post: true while the thread which performs is alive, false otherwise</td></tr>
 			  <tr><td>Give the progress</td><td>pre: none. post: the percent, the header and the text the API set; the hundred, and nothing else, when no performance is going. C18</td></tr>
 			  <tr><td>Give the reports</td><td>pre: none. post: the names of the reports which are kept, the last one written first; empty when there are none, and empty online. C22</td></tr>
-			  <tr><td>Read a report</td><td>pre: the name of a report. post: its lines as they were written, each with its state or with none. C19</td></tr>
+			  <tr><td>Read a report</td><td>pre: the name of a report. post: the text of that report as it was written, line for line, nothing added and nothing left out. C19</td></tr>
 			  <tr><td>Delete reports</td><td>pre: names of reports. post: those which could be deleted are gone, the names of the others are given back, and nothing else was touched. C21</td></tr>
 			  <tr><td>Give the address of a produced file, or of all of them</td><td>pre: names of produced files. post: what the provision of files answers; empty where the person reaches them where they stand. C23</td></tr>
 			</tbody>
@@ -2348,7 +2360,7 @@
 			  <tr><td><code>ReportsPanel</code></td><td>post: locally, one radio button per report, at most one checked, and the two buttons which delete; online, collapsed and empty. C20, C22</td></tr>
 			  <tr><td><code>AnnotationsPanel</code></td><td>post: the button which comes back, the title naming the type, and one <code>EnableAnnotation</code> per annotation of that type, in the order it was given them</td></tr>
 			  <tr><td><code>EnableAnnotation</code></td><td>post: the annotation it stands for, as it declares itself: what selects it, what configures it, one link per reference or the gauge of its development or neither, the choice of its language when it has language resources and no choice otherwise, its description, what it requires. Disabled when the annotation cannot be performed on that machine. C7, C8</td></tr>
-			  <tr><td><code>LogAnnotatePanel</code></td><td>post: the progress while a performance goes; then the name of the file of the report and its lines, each result bearing its state; that the report is not available, with the reason, when it could not be read; online, the link to the report and the link to the archive; under the report, the Start over button. C19, C23</td></tr>
+			  <tr><td><code>LogAnnotatePanel</code></td><td>post: the progress while a performance goes; then the report, line for line as the API wrote it, in a font of one width, every line of a result beginning with the state that API wrote in it; that the report is not available, with the reason, when it could not be read; online, the link to the report and the link to the archive. C19, C23</td></tr>
 			</tbody>
 			</table>
 
@@ -2810,7 +2822,7 @@
                 <span>Del all</span>
             </button>
         </p>
-        <ul class="scrolled-panel" role="radiogroup" aria-labelledby="annotate_reports_h">
+        <ul role="radiogroup" aria-labelledby="annotate_reports_h">
             <li>
                 <input type="radio" id="annotate_report_1" name="annotate_report" value="report-2026-11-14-002.txt" form="annotate_form" />
                 <label for="annotate_report_1">report-2026-11-14-002.txt</label>
@@ -2825,6 +2837,264 @@
 </section>
 
 		<!-- ============ END MOCKUP ============ -->
+
+		<p>
+			It shows next the panel of one type, which takes the place of the one above
+			when the button of that type is asked for. The state is: four annotations
+			offered, one of them selected, one which has no language resource, and one
+			whose development is not finished. The names, the descriptions and the
+			languages are examples.
+		</p>
+
+		<!-- ============ BEGIN MOCKUP: a list of annotations ============ -->
+
+<section id="annotate_annotations_panel" class="annotate-annotations" aria-labelledby="annotate_standalone_h">
+
+    <div class="annotate-head">
+        <button type="submit" form="annotate_form" name="annotate_task" value="steps" data-icon="arrow-up">
+            <span>Back</span>
+        </button>
+        <h3 id="annotate_standalone_h">Select annotations of type STANDALONE</h3>
+    </div>
+
+    <ul>
+
+        <li>
+            <div class="flex-panel">
+                <div class="flex-item width_25">
+                    <p class="annotate-ann-name">
+                        <label class="switch" for="annotate_ann_textnorm">
+                            <input type="checkbox" role="switch" id="annotate_ann_textnorm" name="annotate_ann" value="textnorm" form="annotate_form" checked />
+                            <span class="switch-slider switch-no-text round"></span>
+                        </label>
+                        <label for="annotate_ann_textnorm" id="annotate_name_textnorm">Text normalization</label>
+                    </p>
+                    <p>
+                        <button type="button" class="text-reveal-button" data-icon="parameters" onclick="Wexa.dialog.open('annotate_options_textnorm', true)">
+                            <span>Configure...</span>
+                        </button>
+                    </p>
+                </div>
+                <div class="flex-item width_10">
+                    <a href="https://sppas.org/" class="icon-button" data-icon="external-link" aria-label="Published work, on the web" title="Published work, on the web"></a>
+                    <a href="https://sppas.org/" class="icon-button" data-icon="external-link" aria-label="Published work, on the web" title="Published work, on the web"></a>
+                </div>
+                <div class="flex-item width_10">
+                    <select id="annotate_lang_textnorm" name="annotate_lang_textnorm" form="annotate_form" aria-label="Language of Text normalization">
+                        <option value="eng">eng</option>
+                        <option value="fra" selected>fra</option>
+                        <option value="ita">ita</option>
+                    </select>
+                </div>
+                <div class="flex-item width_45">
+                    <p>Converts orthography of transcribed IPUs into a normalized tokenized form: word segmented, numerals converted into words, expanded abbreviations, punctuation removed. Requires IPUs with the orthographic transcription. Produces the IPUs with normalized tokens.</p>
+                </div>
+            </div>
+        </li>
+
+        <li>
+            <div class="flex-panel">
+                <div class="flex-item width_25">
+                    <p class="annotate-ann-name">
+                        <label class="switch" for="annotate_ann_phonetize">
+                            <input type="checkbox" role="switch" id="annotate_ann_phonetize" name="annotate_ann" value="phonetize" form="annotate_form" />
+                            <span class="switch-slider switch-no-text round"></span>
+                        </label>
+                        <label for="annotate_ann_phonetize" id="annotate_name_phonetize">Phonetization</label>
+                    </p>
+                    <p>
+                        <button type="button" class="text-reveal-button" data-icon="parameters" onclick="Wexa.dialog.open('annotate_options_phonetize', true)">
+                            <span>Configure...</span>
+                        </button>
+                    </p>
+                </div>
+                <div class="flex-item width_10">
+                    <a href="https://sppas.org/" class="icon-button" data-icon="file" aria-label="Published work, a PDF" title="Published work, a PDF"></a>
+                    <a href="https://sppas.org/" class="icon-button" data-icon="external-link" aria-label="Published work, on the web" title="Published work, on the web"></a>
+                </div>
+                <div class="flex-item width_10">
+                    <select id="annotate_lang_phonetize" name="annotate_lang_phonetize" form="annotate_form" aria-label="Language of Phonetization">
+                        <option value="eng">eng</option>
+                        <option value="fra" selected>fra</option>
+                        <option value="ita">ita</option>
+                    </select>
+                </div>
+                <div class="flex-item width_45">
+                    <p>Converts a tokenized text into phonetic signs from a pronunciation dictionary. Requires the result of Text normalization. Produces the IPUs with a grammar of phonemes.</p>
+                </div>
+            </div>
+        </li>
+
+        <li>
+            <div class="flex-panel">
+                <div class="flex-item width_25">
+                    <p class="annotate-ann-name">
+                        <label class="switch" for="annotate_ann_activity">
+                            <input type="checkbox" role="switch" id="annotate_ann_activity" name="annotate_ann" value="activity" form="annotate_form" />
+                            <span class="switch-slider switch-no-text round"></span>
+                        </label>
+                        <label for="annotate_ann_activity" id="annotate_name_activity">Activity</label>
+                    </p>
+                    <p>
+                        <button type="button" class="text-reveal-button" data-icon="parameters" onclick="Wexa.dialog.open('annotate_options_activity', true)">
+                            <span>Configure...</span>
+                        </button>
+                    </p>
+                </div>
+                <div class="flex-item width_10">
+                    <p class="annotate-ann-devel">
+                        <progress id="annotate_devel_activity" value="85" max="100" aria-label="Development"></progress>
+                        <span>85%</span>
+                    </p>
+                </div>
+                <div class="flex-item width_10">
+                </div>
+                <div class="flex-item width_45">
+                    <p>Creates a tier with the speech activities and their duration. The current version is limited to a pre-defined list of activities: silence, pause, laughter, speech. Requires time-aligned tokens.</p>
+                </div>
+            </div>
+        </li>
+
+        <li>
+            <div class="flex-panel">
+                <div class="flex-item width_25">
+                    <p class="annotate-ann-name">
+                        <label class="switch" for="annotate_ann_facedetect">
+                            <input type="checkbox" role="switch" id="annotate_ann_facedetect" name="annotate_ann" value="facedetect" form="annotate_form" disabled />
+                            <span class="switch-slider switch-no-text round"></span>
+                        </label>
+                        <label for="annotate_ann_facedetect" id="annotate_name_facedetect">Face detection</label>
+                    </p>
+                    <p>
+                        <button type="button" class="text-reveal-button" data-icon="parameters" disabled>
+                            <span>Configure...</span>
+                        </button>
+                    </p>
+                </div>
+                <div class="flex-item width_10">
+                    <a href="https://sppas.org/" class="icon-button" data-icon="file" aria-label="Published work, a PDF" title="Published work, a PDF"></a>
+                </div>
+                <div class="flex-item width_10">
+                </div>
+                <div class="flex-item width_45">
+                    <p>Not installed on this machine. Detects faces in an image or a video. Produces the coordinates of the faces.</p>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+
+    <!-- One dialog per annotation: the options need the width of the page,
+         which a column of the list cannot give them. -->
+
+    <dialog id="annotate_options_textnorm" aria-labelledby="annotate_options_textnorm_h">
+        <h4 id="annotate_options_textnorm_h">Options of Text normalization</h4>
+        <section aria-label="Options">
+            <!-- The container of the service of the options, as that service writes it. -->
+        </section>
+        <p>
+            <button type="button" onclick="Wexa.dialog.close('annotate_options_textnorm')">Close</button>
+        </p>
+    </dialog>
+
+    <dialog id="annotate_options_phonetize" aria-labelledby="annotate_options_phonetize_h">
+        <h4 id="annotate_options_phonetize_h">Options of Phonetization</h4>
+        <section aria-label="Options">
+            <!-- The container of the service of the options, as that service writes it. -->
+        </section>
+        <p>
+            <button type="button" onclick="Wexa.dialog.close('annotate_options_phonetize')">Close</button>
+        </p>
+    </dialog>
+
+    <dialog id="annotate_options_activity" aria-labelledby="annotate_options_activity_h">
+        <h4 id="annotate_options_activity_h">Options of Activity</h4>
+        <section aria-label="Options">
+            <!-- The container of the service of the options, as that service writes it. -->
+        </section>
+        <p>
+            <button type="button" onclick="Wexa.dialog.close('annotate_options_activity')">Close</button>
+        </p>
+    </dialog>
+
+    <dialog id="annotate_options_facedetect" aria-labelledby="annotate_options_facedetect_h">
+        <h4 id="annotate_options_facedetect_h">Options of Face detection</h4>
+        <section aria-label="Options">
+            <!-- The container of the service of the options, as that service writes it. -->
+        </section>
+        <p>
+            <button type="button" onclick="Wexa.dialog.close('annotate_options_facedetect')">Close</button>
+        </p>
+    </dialog>
+
+</section>
+
+		<!-- ============ END MOCKUP: a list of annotations ============ -->
+
+		<p>
+			It shows last the panel of the procedure outcome report, which takes the place
+			of the six steps when the annotations are performed, and when a report which
+			was kept is asked for. The state is: a performance which has ended, two
+			annotations performed, one of which said something about a file. The lines and
+			their states are examples.
+		</p>
+
+		<!-- ============ BEGIN MOCKUP: the procedure outcome report ============ -->
+
+<section id="annotate_log_panel" aria-labelledby="annotate_log_h">
+
+    <div class="annotate-head">
+        <button type="submit" form="annotate_form" name="annotate_task" value="steps" data-icon="arrow-up">
+            <span>Back</span>
+        </button>
+        <h3 id="annotate_log_h">Procedure outcome report</h3>
+    </div>
+
+    <p id="annotate_report_file">
+        Report file:
+        <a href="reports/sppas_report_2026-11-17_50222_0001.txt" data-icon="file" title="Open the file of this report">sppas_report_2026-11-17_50222_0001.txt</a>
+    </p>
+
+    <pre id="annotate_report" class="annotate-report"><code>-------------------------------------------------------------------------------
+
+                             Compte-rendu d'execution
+
+                             Annotations automatiques
+
+-------------------------------------------------------------------------------
+
+sppas version 5.1.2
+Copyright (C) 2011-2026  Brigitte Bigi, CNRS
+Site web: https://sppas.org/
+Contact: Brigitte Bigi (contact@sppas.org)
+
+-------------------------------------------------------------------------------
+Date: 2026-11-17T11:13:05+01:00
+Langages selectionnes:
+  - Normaliser la transcription: fra
+  - Phonetiser: fra
+  - Aligner: fra
+  - Activity: ---
+
+Fichiers et dossiers selectionnes:
+  - /Users/bigi/Projects/sppas-code/resources/samples/samples-fra/AC track_0379
+
+-------------------------------------------------------------------------------
+ Normaliser la transcription
+-------------------------------------------------------------------------------
+  AC track_0379.xra: <span class="ok">[    OK    ]</span> 
+  AC track_0380.xra: <span class="warning">[ WARNING  ]</span> two tokens were not normalized
+-------------------------------------------------------------------------------
+ Phonetiser
+-------------------------------------------------------------------------------
+  AC track_0379.xra: <span class="ok">[    OK    ]</span> 
+  AC track_0380.xra: <span class="error">[  ERROR  ]</span> no pronunciation found for a token
+  AC track_0381.xra: <span class="ignore">[ IGNORE  ]</span> no transcription beside it
+</code></pre>
+
+</section>
+
+		<!-- ============ END MOCKUP: the procedure outcome report ============ -->
 
 	</section>
 

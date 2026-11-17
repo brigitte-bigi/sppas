@@ -243,7 +243,7 @@ This banner notice must not be removed.
         justify-content: space-evenly;
         row-gap: calc(0.42 * var(--typography-spacing-vertical));
         column-gap: calc(0.62 * var(--typography-spacing-horizontal));
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
     }
 
     .flex-panel > * {

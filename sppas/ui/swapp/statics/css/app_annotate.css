@@ -80,3 +80,173 @@
 #annotate_show_state {
     color: var(--error-color);
 }
+
+/*
+==========================  LIST OF ANNOTATIONS  =============================
+*/
+
+/* The four parts of an annotation line up from one annotation to the next.
+   Their width is said here, because a part which takes the width of what it
+   holds gives every line its own, and there is no column left. What is not
+   taken stands at the end of the line, and never between two parts. Below
+   the breakpoint a line becomes a column, and the whole width is given back
+   to each part: nothing of this holds there. */
+@media only screen and (min-width: 1024px) {
+
+    .annotate-annotations li > .flex-panel {
+        justify-content: flex-start;
+    }
+
+    .annotate-annotations li > .flex-panel > .flex-item {
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+
+    .annotate-annotations li > .flex-panel > .width_10 {
+        width: 10%;
+    }
+
+    .annotate-annotations li > .flex-panel > .width_25 {
+        width: 25%;
+    }
+
+    .annotate-annotations li > .flex-panel > .width_45 {
+        width: 45%;
+    }
+
+}
+
+/* The switch of an annotation and its name stand on one line, and their
+   middles meet: a text which sits on the baseline of a box drawn beside it
+   lands higher or lower from one line to the next. */
+.annotate-annotations .annotate-ann-name {
+    display: flex;
+    align-items: center;
+    column-gap: var(--wrap-panel-gap);
+}
+
+/* One annotation is one block, told apart from the next by the ground it
+   stands on and the space around it: a list of lines of unequal height is
+   read as one block of text when nothing says where one ends. */
+.annotate-annotations li {
+    list-style: none;
+    margin-bottom: var(--typography-spacing-vertical);
+    padding: var(--wrap-panel-gap);
+    background-color: var(--table-row-stripped-bg-color);
+}
+
+/* The way back and the name of a panel are one line, in every panel which
+   has a way back: it is read before the name, and a line of its own for a
+   single command says that something else was there. */
+.annotate-head {
+    display: flex;
+    align-items: center;
+    column-gap: var(--typography-spacing-horizontal);
+}
+
+.annotate-head > h3 {
+    margin: 0;
+}
+
+/* What the head names begins below it, and not against it. */
+.annotate-head {
+    margin-bottom: var(--typography-spacing-vertical);
+}
+
+/* A line which centers what it holds centers the margins with it: the margin
+   a label carries under it would raise the switch above the name it is read
+   with. */
+.annotate-annotations .annotate-ann-name > .switch {
+    margin: 0;
+}
+
+/* What selects an annotation stands beside its name and is read with it: it
+   takes the size Whakerexa gives a switch posed in a line of text. */
+.annotate-annotations .switch {
+    --switch-width: calc(var(--font-size) * 3);
+    --switch-height: calc(var(--font-size) * 1.6);
+}
+
+/* A drawing which leads to a published work is reached like any command, so
+   it is drawn at the size of one. It is a link and not a button: what gives
+   a button the space between its border and what it holds does not reach it,
+   and the outline of the focus would be drawn on the drawing itself. */
+.annotate-annotations .icon-button {
+    --icon-button-size: calc(var(--font-size) * 3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(0.3 * var(--font-size));
+}
+
+/* How far a development has gone is read in the bar which shows it: a number
+   written under a bar is read as a second thing. */
+.annotate-annotations .annotate-ann-devel {
+    display: grid;
+    margin: 0;
+}
+
+/* The bar and the number are the same cell of the grid: the number is then
+   centered on the bar itself, and not on the line which holds it. */
+.annotate-annotations .annotate-ann-devel > progress,
+.annotate-annotations .annotate-ann-devel > span {
+    grid-area: 1 / 1;
+}
+
+.annotate-annotations .annotate-ann-devel > progress {
+    width: 100%;
+}
+
+.annotate-annotations .annotate-ann-devel > span {
+    align-self: center;
+    justify-self: center;
+    /* A bar is drawn by the browser itself, and it is drawn over what shares
+       its cell: the number says it comes after. */
+    position: relative;
+    z-index: 1;
+    font-size: calc(0.8 * var(--font-size));
+    font-weight: var(--font-weight-semibold);
+    /* The number is read on what is done as well as on what is left: it takes
+       the color of the track, and the color of the bar draws its outline. */
+    color: var(--progress-bg-color);
+    text-shadow: 0 0 calc(0.12 * var(--font-size)) var(--progress-fg-color);
+}
+
+/* What configures an annotation stands under its name and against it: the
+   two are one thing, and a line of space between them makes two. */
+.annotate-annotations li > .flex-panel > .flex-item > p {
+    margin: 0;
+}
+
+.annotate-annotations li > .flex-panel > .flex-item > p + p {
+    margin-top: calc(0.5 * var(--wrap-panel-gap));
+}
+
+/*
+=====================  PROCEDURE OUTCOME REPORT  =============================
+*/
+
+/* The API writes the state at the head of a line of result, and the color
+   only says again what the text says: it is carried by the mark alone, as
+   the interface of the desktop carries it, and never by the whole line. */
+.annotate-report .ok {
+    color: var(--success-color);
+}
+
+.annotate-report .warning {
+    color: var(--warning-color);
+}
+
+.annotate-report .error {
+    color: var(--error-color);
+}
+
+.annotate-report .info {
+    color: var(--info-color);
+}
+
+/* What was passed over is said and not shown: it keeps the color of the text
+   it stands in. */
+.annotate-report .ignore {
+    color: inherit;
+}

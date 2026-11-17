@@ -85,7 +85,7 @@ class swappWkpsWebData(swappWebData):
     @staticmethod
     def icon() -> str:
         """Return the page icon name."""
-        return swappImagesAccess.get_image_filename("app_wkps")
+        return swappImagesAccess.get_image_filename("app_workspace")
 
     # -----------------------------------------------------------------------
 
