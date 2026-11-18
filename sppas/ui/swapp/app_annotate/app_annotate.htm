@@ -1969,6 +1969,13 @@
 			<p><code>/</code> marks what is derived and held by nobody. What the operations
 			promise is the chapter on the contracts.</p>
 
+			<p><b>The model is held by what answers the URL, and by nothing else.</b> A
+			performance is longer than the request which started it: what holds its thread
+			has to outlive that request, and what outlives it is
+			<code>AnnotateResponseRecipe</code>, which is built once and kept. The
+			controller is built and dropped at every request, and it is handed the model it
+			is to call.</p>
+
 			<table>
 			<thead><tr><th scope="col">Class</th><th scope="col">From</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 			<tbody>
@@ -2050,7 +2057,8 @@
 			<table>
 			<thead><tr><th scope="col">Class</th><th scope="col">Operations</th><th scope="col">What it shows</th></tr></thead>
 			<tbody>
-			  <tr><td><code>AnnotateView</code></td><td>populate_tree_content(record), section, info</td><td>The page, and the panels it holds. It is the module <i>presentation</i>: what is shown, and nothing of what it means</td></tr>
+			  <tr><td><code>AnnotateView</code></td><td>populate_tree_content(record)</td><td>The page, and the panels it holds. It is the module <i>presentation</i>: what is shown, and nothing of what it means. One node is its own, <code>section</code>, where the panel which was asked for is written</td></tr>
+			  <tr><td>none</td><td>&mdash;</td><td>The two dialogs which say something to the person are those every view of swapp is given, <code>info_dialog</code> and <code>error_dialog</code>: this application writes neither, and puts its text in them. What is missing for a task to answer goes in the first, which is level 1 of the error policy; what was asked and could not be done, with the reason, goes in the second, which is levels 3 and 4</td></tr>
 			  <tr><td><code>ActionAnnotatePanel</code></td><td>&mdash;</td><td>The six steps: the extensions, the language of the page, one button per type, the merge option and what performs, what shows the checked report; and the Reset button</td></tr>
 			  <tr><td><code>ReportsPanel</code></td><td>&mdash;</td><td>Locally, the reports which are kept, one of them checked at most, and the two buttons which delete. Collapsed online</td></tr>
 			  <tr><td><code>AnnotationsPanel</code></td><td>&mdash;</td><td>The annotations of one type, arranged by what they require</td></tr>
@@ -2060,13 +2068,23 @@
 			</tbody>
 			</table>
 
+			<p><b>Three things of the page are placed by the view and written
+			elsewhere.</b> The group of three choices which says which of the two panels
+			is shown is a node of swapp, shared by every page which holds two panels, and
+			this view places it. The options of an annotation
+			are the container the service of the options writes, which this view places in
+			a dialog of its own, one per annotation. The progress is the three nodes
+			<code>swappProgressBar</code> writes &mdash; the header, the bar and the text
+			&mdash; which <code>LogAnnotatePanel</code> places and the script of the
+			framework fills.</p>
+
 			<h4>What is tied to what</h4>
 
 			<table>
 			<thead><tr><th scope="col">Tie</th><th scope="col">Legs</th><th scope="col">What it is</th></tr></thead>
 			<tbody>
 			  <tr><td>holds</td><td><code>AnnotateView</code> 1 &mdash; 1 <code>ActionAnnotatePanel</code>, 1 <code>ReportsPanel</code>, 1 <code>FilesAnnotatePanel</code>, 1 <code>LogAnnotatePanel</code></td><td>A composition: a panel builds one part of one page and exists for it</td></tr>
-			  <tr><td>holds</td><td><code>AnnotateView</code> 1 &mdash; 3 <code>AnnotationsPanel</code></td><td>A composition: one per type</td></tr>
+			  <tr><td>holds</td><td><code>AnnotateView</code> 1 &mdash; 0..n <code>AnnotationsPanel</code></td><td>A composition: one per type the domain of the annotations declares</td></tr>
 			  <tr><td>holds</td><td><code>AnnotationsPanel</code> 1 &mdash; 0..n <code>EnableAnnotation</code></td><td>A composition: one per annotation of that type</td></tr>
 			  <tr><td>uses</td><td><code>AnnotateView</code> &rarr; <code>AnnotateRecord</code></td><td>A dependency: it is given it and builds from it</td></tr>
 			</tbody>
@@ -2074,11 +2092,14 @@
 
 			<h4>In yUML</h4>
 
-			<pre class="dark"><code>[AnnotateView|section;info|populate_tree_content()]++1-1&gt;[ActionAnnotatePanel]
+			<pre class="dark"><code>[AnnotateView|section|populate_tree_content()]++1-1&gt;[ActionAnnotatePanel]
 [AnnotateView]++1-1&gt;[ReportsPanel]
-[AnnotateView]++1-3&gt;[AnnotationsPanel]
+[AnnotateView]++1-0..*&gt;[AnnotationsPanel]
 [AnnotateView]++1-1&gt;[FilesAnnotatePanel]
 [AnnotateView]++1-1&gt;[LogAnnotatePanel]
+
+[AnnotateView]-.-&gt;[info_dialog]
+[AnnotateView]-.-&gt;[error_dialog]
 [AnnotationsPanel]++1-0..*&gt;[EnableAnnotation]
 
 [AnnotateView]-.-&gt;[AnnotateRecord]</code></pre>
@@ -2094,13 +2115,24 @@
 			<thead><tr><th scope="col">Class</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 			<tbody>
 			  <tr><td><code>AnnotateController</code></td><td>record</td><td>is_a_task(events), handle(request_data), progress(), say_what_is_missing(), populate_view()</td></tr>
-			  <tr><td><code>AnnotateRecord</code></td><td>task, performance, checked report, to_be_shown</td><td>serialize(), parse(data), show(key, value)</td></tr>
+			  <tr><td><code>AnnotateRecord</code></td><td>task, parameters, performance, checked report, to_be_shown</td><td>serialize(), parse(data), show(key, value)</td></tr>
 			  <tr><td><code>AnnotateResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
 			</tbody>
 			</table>
 
 			<p><code>AnnotateController</code> is the module <i>decisions</i>: what a
 			request transmits, and which task it carries.</p>
+
+			<p><b>What was decided is held by the record, and it is held there as a
+			<code>sppasParam</code>.</b> That object already carries every decision this
+			application takes &mdash; which annotations are offered and which are
+			activated, the language of each, the extension of every kind of file, the
+			workspace, the name of the report &mdash; and it is what the domain of the
+			annotations is performed with. The record holds one, serialises it with the
+			rest of what it carries, and parses it back at the next request. Nothing is
+			copied from it into a second shape: what the page transmits goes into that
+			object, and what starts a performance is that same object, handed over as it
+			stands.</p>
 
 			<p>The response of WhakerPy is named here
 			<code>AnnotateResponseRecipe</code>. It holds the model, which holds the
@@ -2131,7 +2163,8 @@
 
 			<pre class="dark"><code>[AnnotateResponseRecipe|bake();_process_events()]++1-1&gt;[AnnotateController|record|is_a_task();handle();progress();say_what_is_missing();populate_view()]
 [AnnotateResponseRecipe]++1-1&gt;[AnnotateView]
-[AnnotateController]++1-1&gt;[AnnotateRecord|task;performance;checked report;to_be_shown|serialize();parse();show()]
+[AnnotateController]++1-1&gt;[AnnotateRecord|task;parameters;performance;checked report;to_be_shown|serialize();parse();show()]
+[AnnotateRecord]++1-1&gt;[sppasParam]
 [AnnotateRecord]++1-1&gt;[Performance|extensions;selected;lang;options;merge;report;/missing|what_is_missing()]
 
 [AnnotateController]-.-&gt;[AnnotateModel]
@@ -2221,8 +2254,8 @@
 			<tbody>
 			  <tr><td>1</td><td>What was asked cannot be done now: no annotation selected, an empty batch, a performance already going</td><td>No treatment runs, and what is missing or what stands in the way is said [022]. It is not an error and nothing is raised</td></tr>
 			  <tr><td>2</td><td>One annotation is concerned: it failed</td><td>Nothing of this application's: the API writes it in the report, with the state of the line which says it, and goes on to the next</td></tr>
-			  <tr><td>3</td><td>A report cannot be read, or cannot be deleted</td><td>It is said, with the reason; a report which cannot be deleted stays in the list, and the others are deleted all the same</td></tr>
-			  <tr><td>4</td><td>Whoever runs the machine has to know: the annotations cannot be read, a performance cannot be started</td><td>Said where he reads it, and the person is told that the annotations could not be performed</td></tr>
+			  <tr><td>3</td><td>A report cannot be read, or cannot be deleted</td><td>It is said in <code>error_dialog</code>, with the reason; a report which cannot be deleted stays in the list, and the others are deleted all the same</td></tr>
+			  <tr><td>4</td><td>Whoever runs the machine has to know: the annotations cannot be read, a performance cannot be started</td><td>Said where he reads it, and the person is told in <code>error_dialog</code> that the annotations could not be performed</td></tr>
 			</tbody>
 			</table>
 
@@ -2349,7 +2382,7 @@
 			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 			<tbody>
 			  <tr><td>Say what is missing</td><td>pre: a batch is given to it. post: an annotation when none is selected, the batch when it is empty, nothing when the annotations may be performed. It holds no batch. C12</td></tr>
-			  <tr><td>Serialize a record</td><td>pre: none. post: everything a next request needs in order to rebuild what was decided, and nothing of the machine</td></tr>
+			  <tr><td>Serialize a record</td><td>pre: none. post: everything a next request needs in order to rebuild what was decided, and nothing of the machine: the task, the parameters of the set of annotations as a <code>sppasParam</code> carries them, the performance which is followed, the report which is checked, and what is to be shown. A record parsed from what was serialized holds what it held. RO8</td></tr>
 			  <tr><td>Parse a record</td><td>pre: what a page transmitted. post: what was decided as it was, or the defaults when nothing was transmitted. An annotation is selected only if it was transmitted as such: selecting one selects no other. Parsed twice, it gives the same. C1, C6, C24</td></tr>
 			  <tr><td>Put what is to be shown</td><td>pre: none. post: it is in what is to be shown, and it is never serialized</td></tr>
 			</tbody>
