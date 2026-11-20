@@ -1003,3 +1003,84 @@ msgstr ""
 
 msgid "Documentation of the source code"
 msgstr "Documentation du code source"
+
+msgid "Choose the output file format(s)"
+msgstr "Choisir le ou les formats des fichiers produits"
+
+msgid "Fix the language(s)"
+msgstr "Fixer la ou les langues"
+
+msgid "Select and configure annotations"
+msgstr "Sélectionner et configurer les annotations"
+
+msgid "Perform the annotations"
+msgstr "Effectuer les annotations"
+
+msgid "Read the procedure outcome report"
+msgstr "Lire le compte rendu d'exécution"
+
+msgid "{:s} annotations"
+msgstr "Annotations {:s}"
+
+msgid "no annotation selected"
+msgstr "aucune annotation sélectionnée"
+
+msgid "{:d} files selected"
+msgstr "{:d} fichiers sélectionnés"
+
+msgid "Choose the files"
+msgstr "Choisir les fichiers"
+
+msgid "Create -merge files"
+msgstr "Créer les fichiers -merge"
+
+msgid "Let's go!"
+msgstr "C'est parti !"
+
+msgid "No annotation is selected."
+msgstr "Aucune annotation n'est sélectionnée."
+
+msgid "Show report"
+msgstr "Afficher le compte rendu"
+
+msgid "No report is checked."
+msgstr "Aucun compte rendu n'est coché."
+
+msgid "Reports:"
+msgstr "Comptes rendus :"
+
+msgid "The report {:s} could not be deleted: {:s}"
+msgstr "Le compte rendu {:s} n'a pas pu être supprimé : {:s}"
+
+msgid "Del checked"
+msgstr "Supprimer le coché"
+
+msgid "Del all"
+msgstr "Tout supprimer"
+
+msgid "Select annotations of type {:s}"
+msgstr "Sélectionner les annotations de type {:s}"
+
+msgid "Configure..."
+msgstr "Configurer..."
+
+msgid "Development"
+msgstr "Développement"
+
+msgid "Not installed on this machine."
+msgstr "Non installée sur cette machine."
+
+msgid "Language of {:s}"
+msgstr "Langue de {:s}"
+
+msgid "Options of {:s}"
+msgstr "Options de {:s}"
+
+msgid "Procedure outcome report"
+msgstr "Compte rendu d'exécution"
+
+msgid "Report file:"
+msgstr "Fichier du compte rendu :"
+
+msgid "The report is not available...\nError is: {:s}"
+msgstr "Le compte rendu n'est pas disponible...\nL'erreur est : {:s}"

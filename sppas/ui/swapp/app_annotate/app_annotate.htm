@@ -1858,7 +1858,7 @@
 			carried by one field each, and they travel with every request whatever its
 			task: <code>annotate_ext_&lt;kind&gt;</code>, one per kind of output file;
 			<code>annotate_lang</code>, the language of the page;
-			<code>annotate_ann</code>, which bears the key of every selected annotation;
+			<code>annotate_ann_&lt;key&gt;</code>, one per selected annotation, of value <code>True</code>;
 			<code>annotate_lang_&lt;key&gt;</code>, the language of one annotation;
 			<code>annotate_merge</code>; and <code>annotate_report</code>, the report
 			which is checked. The task <strong>annotations</strong> carries the type it
@@ -1869,8 +1869,10 @@
 			no request RO8: what they decide is transmitted with <strong>perform</strong>.
 			T06 is handed to the service of the options, and T07 is the provision of
 			files'. <strong>update</strong> and <strong>complete</strong> are sent as the
-			Setup sends them: <code>event_name</code> carries the first, and
-			<code>event_bake</code> the second. The answer to <strong>update</strong> has
+			Setup sends them: <code>event_name=annotate_update</code> carries the first,
+			and <code>event_bake=annotate_complete</code> the second. Since the
+			applications multiply, the name of an event begins with the name of its
+			application: here, <code>annotate_</code>. The answer to <strong>update</strong> has
 			a status of 202 until the hundred is reached.</p>
 
 			<h5>What the page starts with</h5>
@@ -2928,7 +2930,7 @@
                 <div class="flex-item width_25">
                     <p class="annotate-ann-name">
                         <label class="switch" for="annotate_ann_textnorm">
-                            <input type="checkbox" role="switch" id="annotate_ann_textnorm" name="annotate_ann" value="textnorm" form="annotate_form" checked />
+                            <input type="checkbox" role="switch" id="annotate_ann_textnorm" name="annotate_ann_textnorm" value="True" form="annotate_form" checked />
                             <span class="switch-slider switch-no-text round"></span>
                         </label>
                         <label for="annotate_ann_textnorm" id="annotate_name_textnorm">Text normalization</label>
@@ -2961,7 +2963,7 @@
                 <div class="flex-item width_25">
                     <p class="annotate-ann-name">
                         <label class="switch" for="annotate_ann_phonetize">
-                            <input type="checkbox" role="switch" id="annotate_ann_phonetize" name="annotate_ann" value="phonetize" form="annotate_form" />
+                            <input type="checkbox" role="switch" id="annotate_ann_phonetize" name="annotate_ann_phonetize" value="True" form="annotate_form" />
                             <span class="switch-slider switch-no-text round"></span>
                         </label>
                         <label for="annotate_ann_phonetize" id="annotate_name_phonetize">Phonetization</label>
@@ -2994,7 +2996,7 @@
                 <div class="flex-item width_25">
                     <p class="annotate-ann-name">
                         <label class="switch" for="annotate_ann_activity">
-                            <input type="checkbox" role="switch" id="annotate_ann_activity" name="annotate_ann" value="activity" form="annotate_form" />
+                            <input type="checkbox" role="switch" id="annotate_ann_activity" name="annotate_ann_activity" value="True" form="annotate_form" />
                             <span class="switch-slider switch-no-text round"></span>
                         </label>
                         <label for="annotate_ann_activity" id="annotate_name_activity">Activity</label>
@@ -3024,7 +3026,7 @@
                 <div class="flex-item width_25">
                     <p class="annotate-ann-name">
                         <label class="switch" for="annotate_ann_facedetect">
-                            <input type="checkbox" role="switch" id="annotate_ann_facedetect" name="annotate_ann" value="facedetect" form="annotate_form" disabled />
+                            <input type="checkbox" role="switch" id="annotate_ann_facedetect" name="annotate_ann_facedetect" value="True" form="annotate_form" disabled />
                             <span class="switch-slider switch-no-text round"></span>
                         </label>
                         <label for="annotate_ann_facedetect" id="annotate_name_facedetect">Face detection</label>
