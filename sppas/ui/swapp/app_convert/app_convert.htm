@@ -759,7 +759,8 @@
 		<h3>The events the page answers</h3>
 
 			<p>
-				Every button of the two forms posts <code>convert_task</code>:
+				Every button of the two forms posts <code>event_bake</code>, as the buttons of
+				the Setup and of the Dashboard do:
 				<code>convert</code> starts the conversion, <code>reset</code> takes the page
 				back to what it was on arrival -- the decisions and the files together -- and
 				<code>restart</code> empties the files and the results while keeping the
@@ -2639,6 +2640,40 @@
 			decisions as they were. The provision of files starts over.</li>
 			</ul>
 
+			<p><b>What a request is made of.</b> The task is carried by one field,
+			<code>event_bake</code>, whose value is the name of the task:
+			<code>convert</code>, <code>reset</code>, <code>restart</code>, or
+			<code>complete</code>, which bakes the results. Where the conversion stands is
+			asked by <code>event_name=update</code>. A request which carries neither
+			carries no task of this application. The decisions are carried by one field each, and they
+			travel with every request whatever its task:
+			<code>convert_destination</code>, the extension of the destination format,
+			its dot included; <code>convert_opt_&lt;ext&gt;_&lt;option&gt;</code>, one
+			per option a format raises, <code>&lt;ext&gt;</code> being the extension
+			without its dot and <code>&lt;option&gt;</code> the key of the option — no
+			extension holds an underscore, so what stands between the prefix and the
+			first underscore after it is the format; <code>convert_override</code> and
+			<code>convert_heuristic</code>, the two general options; and
+			<code>convert_report</code>, the name of the report of the conversion the
+			page follows, so that where it stands is read in the account of that
+			conversion and not another.</p>
+
+			<p>Every field of this application is named after it, and that is the
+			reason for the prefix. The server is reached by any POST at any time, and
+			the page a request was sent from names nothing: what says which service a
+			value is addressed to is the name of the field which carries it.</p>
+
+			<p>An option is a switch, and a switch which is off sends nothing. The
+			default of an option [304] is the position its switch is written in when the
+			server writes the page; from there on, a field which is absent is the answer
+			its switch carries when it is off, and not an option left unanswered. A
+			field which is present carries the answer of the position the switch is on,
+			in the words the option offers: <code>no</code> for the preservation,
+			<code>best</code> for <code>alt_tag</code>, <code>skip</code> for the four
+			others. The answers given for the formats which are not the destination
+			travel as well, which is what [309] rests on, and the conversion uses those
+			of the destination alone C3.</p>
+
 			<h5>Default answers</h5>
 
 			<p>An option left unanswered takes a default. Two principles apply, in this
@@ -2994,7 +3029,7 @@
 		<table>
 		<thead><tr><th scope="col">Class</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 		<tbody>
-		  <tr><td><code>ConvertController</code></td><td>record</td><td>is_a_task(events), handle(request_data), is_converting(), progress(), say_what_is_missing(), populate_view()</td></tr>
+		  <tr><td><code>ConvertController</code></td><td>record</td><td>handle(request_data), is_converting(), progress(), say_what_is_missing(), populate_view()</td></tr>
 		  <tr><td><code>ConvertRecord</code></td><td>task, conversion, to_be_shown</td><td>serialize(), parse(data), show(key, value)</td></tr>
 		  <tr><td><code>ConvertResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
 		</tbody>
@@ -3043,7 +3078,7 @@
 
 		<h4>In yUML</h4>
 
-		<pre class="dark"><code>[ConvertResponseRecipe|bake();_process_events()]++1-1&gt;[ConvertController|record|is_a_task();handle();is_converting();progress();say_what_is_missing();populate_view()]
+		<pre class="dark"><code>[ConvertResponseRecipe|bake();_process_events()]++1-1&gt;[ConvertController|record|handle();is_converting();progress();say_what_is_missing();populate_view()]
 [ConvertResponseRecipe]++1-1&gt;[ConvertView]
 [ConvertController]++1-1&gt;[ConvertRecord|task;conversion;to_be_shown|serialize();parse();show()]
 [ConvertRecord]++1-1&gt;[Conversion|destination;override;heuristic;answers;/missing|answer_of();what_is_missing()]
@@ -5747,7 +5782,7 @@
                                                     SPPAS4
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_xra" value=".xra" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_xra" value=".xra" />
                               <label for="convert_dest_xra">
                                                             xra
                               </label>
@@ -5755,7 +5790,7 @@
                       </tr>
                       <tr>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_tra" value=".tra" aria-controls="convert_holds_tra" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_tra" value=".tra" aria-controls="convert_holds_tra" />
                               <label for="convert_dest_tra">
                                                             tra
                               </label>
@@ -5768,7 +5803,7 @@
                                                     Praat
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_TextGrid" value=".TextGrid" aria-controls="convert_holds_TextGrid" checked />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_TextGrid" value=".TextGrid" aria-controls="convert_holds_TextGrid" checked />
                               <label for="convert_dest_TextGrid">
                                                             TextGrid
                               </label>
@@ -5776,7 +5811,7 @@
                       </tr>
                       <tr>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_IntensityTier" value=".IntensityTier" aria-controls="convert_holds_IntensityTier" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_IntensityTier" value=".IntensityTier" aria-controls="convert_holds_IntensityTier" />
                               <label for="convert_dest_IntensityTier">
                                                             IntensityTier
                               </label>
@@ -5784,7 +5819,7 @@
                       </tr>
                       <tr>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_PitchTier" value=".PitchTier" aria-controls="convert_holds_PitchTier" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_PitchTier" value=".PitchTier" aria-controls="convert_holds_PitchTier" />
                               <label for="convert_dest_PitchTier">
                                                             PitchTier
                               </label>
@@ -5797,7 +5832,7 @@
                                                     Elan
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_eaf" value=".eaf" aria-controls="convert_holds_eaf" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_eaf" value=".eaf" aria-controls="convert_holds_eaf" />
                               <label for="convert_dest_eaf">
                                                             eaf
                               </label>
@@ -5810,7 +5845,7 @@
                                                     AnnotationPro
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_ant" value=".ant" aria-controls="convert_holds_ant" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_ant" value=".ant" aria-controls="convert_holds_ant" />
                               <label for="convert_dest_ant">
                                                             ant
                               </label>
@@ -5818,7 +5853,7 @@
                       </tr>
                       <tr>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_antx" value=".antx" aria-controls="convert_holds_antx" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_antx" value=".antx" aria-controls="convert_holds_antx" />
                               <label for="convert_dest_antx">
                                                             antx
                               </label>
@@ -5831,7 +5866,7 @@
                                                     Phonedit
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_mrk" value=".mrk" aria-controls="convert_holds_mrk" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_mrk" value=".mrk" aria-controls="convert_holds_mrk" />
                               <label for="convert_dest_mrk">
                                                             mrk
                               </label>
@@ -5844,7 +5879,7 @@
                                                     Und
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_hz" value=".hz" aria-controls="convert_holds_hz" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_hz" value=".hz" aria-controls="convert_holds_hz" />
                               <label for="convert_dest_hz">
                                                             hz
                               </label>
@@ -5857,7 +5892,7 @@
                                                     HTK
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_lab" value=".lab" aria-controls="convert_holds_lab" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_lab" value=".lab" aria-controls="convert_holds_lab" />
                               <label for="convert_dest_lab">
                                                             lab
                               </label>
@@ -5870,7 +5905,7 @@
                                                     SubRip
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_srt" value=".srt" aria-controls="convert_holds_srt" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_srt" value=".srt" aria-controls="convert_holds_srt" />
                               <label for="convert_dest_srt">
                                                             srt
                               </label>
@@ -5883,7 +5918,7 @@
                                                     SubViewer
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_sub" value=".sub" aria-controls="convert_holds_sub" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_sub" value=".sub" aria-controls="convert_holds_sub" />
                               <label for="convert_dest_sub">
                                                             sub
                               </label>
@@ -5896,7 +5931,7 @@
                                                     Subs for Web
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_vtt" value=".vtt" aria-controls="convert_holds_vtt" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_vtt" value=".vtt" aria-controls="convert_holds_vtt" />
                               <label for="convert_dest_vtt">
                                                             vtt
                               </label>
@@ -5909,7 +5944,7 @@
                                                     Karaoke LRC
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_lrc" value=".lrc" aria-controls="convert_holds_lrc" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_lrc" value=".lrc" aria-controls="convert_holds_lrc" />
                               <label for="convert_dest_lrc">
                                                             lrc
                               </label>
@@ -5922,7 +5957,7 @@
                                                     TeiCorpo
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_tei" value=".tei" aria-controls="convert_holds_tei" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_tei" value=".tei" aria-controls="convert_holds_tei" />
                               <label for="convert_dest_tei">
                                                             tei
                               </label>
@@ -5935,7 +5970,7 @@
                                                     SCTK
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_ctm" value=".ctm" aria-controls="convert_holds_ctm" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_ctm" value=".ctm" aria-controls="convert_holds_ctm" />
                               <label for="convert_dest_ctm">
                                                             ctm
                               </label>
@@ -5943,7 +5978,7 @@
                       </tr>
                       <tr>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_stm" value=".stm" aria-controls="convert_holds_stm" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_stm" value=".stm" aria-controls="convert_holds_stm" />
                               <label for="convert_dest_stm">
                                                             stm
                               </label>
@@ -5956,7 +5991,7 @@
                                                     
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_csv" value=".csv" aria-controls="convert_holds_csv" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_csv" value=".csv" aria-controls="convert_holds_csv" />
                               <label for="convert_dest_csv">
                                                             csv
                               </label>
@@ -5964,7 +5999,7 @@
                       </tr>
                       <tr>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_txt" value=".txt" aria-controls="convert_holds_txt" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_txt" value=".txt" aria-controls="convert_holds_txt" />
                               <label for="convert_dest_txt">
                                                             txt
                               </label>
@@ -5977,7 +6012,7 @@
                                                     weka
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_arff" value=".arff" aria-controls="convert_holds_arff" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_arff" value=".arff" aria-controls="convert_holds_arff" />
                               <label for="convert_dest_arff">
                                                             arff
                               </label>
@@ -5990,7 +6025,7 @@
                                                     none
                           </th>
                           <td>
-                              <input type="radio" form="convert_form" name="destination" id="convert_dest_xrff" value=".xrff" aria-controls="convert_holds_xrff" />
+                              <input type="radio" form="convert_form" name="convert_destination" id="convert_dest_xrff" value=".xrff" aria-controls="convert_holds_xrff" />
                               <label for="convert_dest_xrff">
                                                             xrff
                               </label>
@@ -6013,7 +6048,7 @@
                   <th scope="row">Keep what TextGrid cannot hold</th>
                   <td>
                       <label class="switch">
-                          <input type="checkbox" form="convert_form" aria-label="Keep what TextGrid cannot hold">
+                          <input type="checkbox" form="convert_form" id="convert_opt_TextGrid_preservation" name="convert_opt_TextGrid_preservation" value="no" aria-label="Keep what TextGrid cannot hold">
                           <span class="switch-slider">
                               <span class="switch-off-text">YES</span>
                               <span class="switch-on-text">NO</span>
@@ -6026,7 +6061,7 @@
                   <th scope="row">Alternative labels</th>
                   <td>
                       <label class="switch">
-                          <input type="checkbox" form="convert_form" aria-label="Alternative labels: keep all or best scored only">
+                          <input type="checkbox" form="convert_form" id="convert_opt_TextGrid_alt_tag" name="convert_opt_TextGrid_alt_tag" value="best" aria-label="Alternative labels: keep all or best scored only">
                           <span class="switch-slider">
                               <span class="switch-off-text">ALL</span>
                               <span class="switch-on-text">BEST</span>
@@ -6038,7 +6073,7 @@
                   <th scope="row">Typed labels</th>
                   <td>
                       <label class="switch">
-                          <input type="checkbox" form="convert_form" aria-label="Typed labels: write as text or skip the tier" checked>
+                          <input type="checkbox" form="convert_form" id="convert_opt_TextGrid_tag_types" name="convert_opt_TextGrid_tag_types" value="skip" aria-label="Typed labels: write as text or skip the tier" checked>
                           <span class="switch-slider">
                               <span class="switch-off-text">TEXT</span>
                               <span class="switch-on-text">SKIP</span>
@@ -6050,7 +6085,7 @@
                   <th scope="row">Geometric labels</th>
                   <td>
                       <label class="switch">
-                          <input type="checkbox" form="convert_form" aria-label="Geometric labels: write as text or skip the tier" checked>
+                          <input type="checkbox" form="convert_form" id="convert_opt_TextGrid_tag_geometry" name="convert_opt_TextGrid_tag_geometry" value="skip" aria-label="Geometric labels: write as text or skip the tier" checked>
                           <span class="switch-slider">
                               <span class="switch-off-text">TEXT</span>
                               <span class="switch-on-text">SKIP</span>
@@ -6167,7 +6202,7 @@
           <form id="convert_form" method="post">
               <p>
                   <label class="switch" for="convert_override">
-                      <input type="checkbox" id="convert_override" name="override" value="True" aria-label="Replace an output file that already exists" />
+                      <input type="checkbox" id="convert_override" name="convert_override" value="True" aria-label="Replace an output file that already exists" />
                       <span class="switch-slider round switch-no-text">
                                             
                       </span>
@@ -6178,7 +6213,7 @@
               </p>
               <p>
                   <label class="switch" for="convert_heuristic">
-                      <input type="checkbox" id="convert_heuristic" name="heuristic" value="True" aria-label="Guess the format of a file whose extension is unknown" />
+                      <input type="checkbox" id="convert_heuristic" name="convert_heuristic" value="True" aria-label="Guess the format of a file whose extension is unknown" />
                       <span class="switch-slider round switch-no-text">
                                             
                       </span>
@@ -6187,10 +6222,10 @@
                                     Guess the format of a file whose extension is unknown
                   </span>
               </p>
-              <button type="submit" class="cta-button" name="convert_task" value="convert">
+              <button type="submit" class="cta-button" name="event_bake" value="convert">
                             Convert
               </button>
-              <button type="reset">
+              <button type="submit" name="event_bake" value="reset">
                             Reset
               </button>
           </form>
@@ -6286,7 +6321,7 @@
               <a href="#" download="" class="action-button" role="button">
                             Download all the files
               </a>
-              <button type="submit" name="convert_task" value="restart">
+              <button type="submit" name="event_bake" value="restart">
                             Start over
               </button>
           </form>

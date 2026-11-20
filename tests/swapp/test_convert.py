@@ -74,7 +74,7 @@ from sppas.ui.swapp.app_convert.convert_conversion import swappModelConversion
 from sppas.ui.swapp.app_convert.convert_provision import swappModelProvision
 from sppas.ui.swapp.app_convert.convert_record import swappConversion
 from sppas.ui.swapp.app_convert.convert_record import MISSING_BATCH
-from sppas.ui.swapp.app_convert.convert_record import EVENT_TASK
+from sppas.ui.swapp.app_convert.convert_record import EVENT_BAKE
 from sppas.ui.swapp.app_convert.convert_record import TASK_CONVERT
 from sppas.ui.swapp.app_convert.convert_panels import FIELD_DESTINATION
 from sppas.ui.swapp.app_convert.convert_panels import GENERAL_OPTIONS
@@ -786,7 +786,7 @@ class TestConvertView(unittest.TestCase):
         """Return the element of the button which sends the task convert."""
         for element in self.reader.elements:
             tag, attributes, enclosing = element
-            if tag == "button" and attributes.get("name") == EVENT_TASK \
+            if tag == "button" and attributes.get("name") == EVENT_BAKE \
                     and attributes.get("value") == TASK_CONVERT:
                 return element
         return None

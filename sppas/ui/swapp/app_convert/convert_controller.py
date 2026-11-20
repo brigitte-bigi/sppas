@@ -45,13 +45,10 @@ from sppas.core.coreutils import sppasTypeError
 
 from .convert_model import swappConvertModel
 from .convert_record import swappConvertRecord
-from .convert_record import EVENT_TASK
 from .convert_record import TASK_CONVERT
 from .convert_record import TASK_RESET
 from .convert_record import TASK_RESTART
 from .convert_record import TASK_COMPLETE
-from .convert_record import EVENT_BAKE
-from .convert_record import TASKS
 from .convert_view import swappConvertView
 
 # ---------------------------------------------------------------------------
@@ -86,23 +83,6 @@ class swappConvertController:
 
     # -----------------------------------------------------------------------
 
-    @staticmethod
-    def is_a_task(events: dict) -> bool:
-        """Return True if the given events carry a task of Convert.
-
-        :param events: (dict) What a page sent
-        :return: (bool)
-
-        """
-        if isinstance(events, dict) is False:
-            return False
-
-        if events.get(EVENT_BAKE) == TASK_COMPLETE:
-            return True
-        return events.get(EVENT_TASK, "") in TASKS
-
-    # -----------------------------------------------------------------------
-
     def handle(self, data: dict) -> None:
         """Rebuild the record from what a page sent, and do the task it asks.
 
@@ -115,8 +95,10 @@ class swappConvertController:
 
         if _record.task == TASK_CONVERT:
             self.__start(_record)
+
         elif _record.task == TASK_COMPLETE:
             self.__complete(_record)
+
         elif _record.task == TASK_RESET:
             # A reset is a reset: the decisions and the batch go together,
             # and the page is the one she arrived at.

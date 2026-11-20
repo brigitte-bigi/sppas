@@ -61,7 +61,6 @@ const ID_COMPARE_DIALOG = 'convert_compare_dialog';
 const ID_COMPARE_COLUMNS = 'convert_compare_columns';
 const ID_COMPARE_APPLY = 'convert_compare_apply';
 const ID_COMPARE_TABLE = 'convert_compare_table';
-const EVENT_TASK = 'convert_task';
 const EVENT_NAME = 'event_name';
 const EVENT_BAKE = 'event_bake';
 const TASK_UPDATE = 'update';
@@ -282,7 +281,7 @@ export default class ConvertManager extends BaseManager {
      */
     async #onSubmitted(event) {
         const submitter = event.submitter;
-        if (submitter === null || submitter.name !== EVENT_TASK) {
+        if (submitter === null || submitter.name !== EVENT_BAKE) {
             return;
         }
         event.preventDefault();

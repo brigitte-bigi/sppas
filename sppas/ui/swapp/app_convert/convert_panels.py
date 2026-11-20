@@ -47,7 +47,10 @@ from whakerpy.htmlmaker import TagNode
 
 from sppas.ui import _
 
-from .convert_record import EVENT_TASK
+from .convert_record import EVENT_BAKE
+from .convert_record import FIELD_DESTINATION
+from .convert_record import FIELD_OVERRIDE
+from .convert_record import FIELD_HEURISTIC
 from .convert_record import TASK_CONVERT
 from .convert_record import TASK_RESET
 from .convert_record import TASK_RESTART
@@ -100,11 +103,9 @@ MSG_PROPERTIES = {
     "tag_geometry": _("Geom. tags")
 }
 
-# The name the page sends the destination under.
-FIELD_DESTINATION = "destination"
-
-# The two general options, by the name the page sends them under.
-GENERAL_OPTIONS = (("override", MSG_OVERRIDE), ("heuristic", MSG_HEURISTIC))
+# The two general options, by the name the page sends them under, which is
+# also the identifier of the field.
+GENERAL_OPTIONS = ((FIELD_OVERRIDE, MSG_OVERRIDE), (FIELD_HEURISTIC, MSG_HEURISTIC))
 
 ID_FORMATS = "convert_formats_h"
 ID_DESTINATION = "convert_destination"
@@ -454,15 +455,14 @@ class swappGeneralPanel(TagNode):
         _form = TagNode(self.identifier, ID_FORM, "form", attributes={"id": ID_FORM, "method": "post"})
         self.append_child(_form)
 
-        _values = {"override": override, "heuristic": heuristic}
-        for _name, _text in GENERAL_OPTIONS:
-            _id = "convert_" + _name
+        _values = {FIELD_OVERRIDE: override, FIELD_HEURISTIC: heuristic}
+        for _field, _text in GENERAL_OPTIONS:
             _p = TagNode(_form.identifier, None, "p")
             _form.append_child(_p)
-            _label = TagNode(_p.identifier, None, "label", attributes={"class": "switch", "for": _id})
+            _label = TagNode(_p.identifier, None, "label", attributes={"class": "switch", "for": _field})
             _p.append_child(_label)
-            _attributes = {"type": "checkbox", "id": _id, "name": _name, "value": "True"}
-            if _values[_name] is True:
+            _attributes = {"type": "checkbox", "id": _field, "name": _field, "value": "True"}
+            if _values[_field] is True:
                 _attributes["checked"] = None
             _label.append_child(EmptyNode(_label.identifier, None, "input", attributes=_attributes))
             _label.append_child(HTMLNode(_label.identifier, None, "span", value="",
@@ -472,17 +472,17 @@ class swappGeneralPanel(TagNode):
             # stands beside it. A label, and not a span: it says the name
             # once instead of twice, and clicking the text switches it.
             _p.append_child(HTMLNode(_p.identifier, None, "label", value=_text,
-                                     attributes={"for": _id}))
+                                     attributes={"for": _field}))
 
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_CONVERT,
                                     attributes={"type": "submit", "class": "action-button",
-                                                "name": EVENT_TASK, "value": TASK_CONVERT}))
+                                                "name": EVENT_BAKE, "value": TASK_CONVERT}))
         # A reset is a reset: the decisions and the files go together, so it
         # is asked of the server -- the files are its to take back. A reset
         # of the browser would put the fields of this form back and leave
         # the files where they are.
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_RESET,
-                                    attributes={"type": "submit", "name": EVENT_TASK,
+                                    attributes={"type": "submit", "name": EVENT_BAKE,
                                                 "value": TASK_RESET}))
 
 # ---------------------------------------------------------------------------
@@ -571,5 +571,5 @@ class swappResultsPanel(TagNode):
                                                     "class": "action-button",
                                                     "role": "button"}))
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_RESTART,
-                                    attributes={"type": "submit", "name": EVENT_TASK,
+                                    attributes={"type": "submit", "name": EVENT_BAKE,
                                                 "value": TASK_RESTART}))

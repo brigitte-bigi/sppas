@@ -1828,6 +1828,15 @@
 			<li><strong>complete</strong> &mdash; transmitted: the decisions. Triggers:
 			T09. Produces: the report, the container of the provision of files and, online,
 			the addresses.</li>
+			<li><strong>annotations</strong> &mdash; transmitted: the decisions, and the
+			type which is asked for. Preconditions: none. Triggers: T01. Produces: the
+			panel of the annotations of that type.</li>
+			<li><strong>files</strong> &mdash; transmitted: the decisions. Preconditions:
+			none. Triggers: T07. Produces: the panel of the files, holding the container
+			the provision of files writes.</li>
+			<li><strong>steps</strong> &mdash; transmitted: the decisions. Preconditions:
+			no performance going. Triggers: T12 when a performance has ended. Produces:
+			the panel of the six steps.</li>
 			<li><strong>show</strong> &mdash; transmitted: the checked report, the
 			decisions. Preconditions: a report is checked and can be read. Triggers: T10.
 			Produces: the report. Locally.</li>
@@ -1842,7 +1851,21 @@
 			provision of files starts over.</li>
 			</ul>
 
-			<p>Nine tasks for thirteen treatments. T02 to T05 happen in the page and make
+			<p><b>What a request is made of.</b> The task is carried by one field,
+			<code>annotate_task</code>, whose value is the name of the task; a request
+			which carries no such field carries no task of this application, and
+			<code>is_a_task()</code> answers on that field alone. The decisions are
+			carried by one field each, and they travel with every request whatever its
+			task: <code>annotate_ext_&lt;kind&gt;</code>, one per kind of output file;
+			<code>annotate_lang</code>, the language of the page;
+			<code>annotate_ann</code>, which bears the key of every selected annotation;
+			<code>annotate_lang_&lt;key&gt;</code>, the language of one annotation;
+			<code>annotate_merge</code>; and <code>annotate_report</code>, the report
+			which is checked. The task <strong>annotations</strong> carries the type it
+			asks for in its own value: <code>annotations_STANDALONE</code>,
+			<code>annotations_SPEAKER</code>, <code>annotations_INTERACTION</code>.</p>
+
+			<p>Twelve tasks for thirteen treatments. T02 to T05 happen in the page and make
 			no request RO8: what they decide is transmitted with <strong>perform</strong>.
 			T06 is handed to the service of the options, and T07 is the provision of
 			files'. <strong>update</strong> and <strong>complete</strong> are sent as the
@@ -2800,15 +2823,15 @@
             <li class="enumerate-cards-item">
                 <p id="annotate_step3_h">Select and configure annotations</p>
                 <div role="group" aria-labelledby="annotate_step3_h">
-                            <button type="button" class="width_full" id="annotate_type_STANDALONE">
+                            <button type="submit" form="annotate_form" name="annotate_task" value="annotations_STANDALONE" class="width_full" id="annotate_type_STANDALONE">
                                 <span data-icon="no" role="img" aria-label="no annotation selected"></span>
                                 <span>STANDALONE annotations</span>
                             </button>
-                            <button type="button" class="width_full" id="annotate_type_SPEAKER">
+                            <button type="submit" form="annotate_form" name="annotate_task" value="annotations_SPEAKER" class="width_full" id="annotate_type_SPEAKER">
                                 <span data-icon="no" role="img" aria-label="no annotation selected"></span>
                                 <span>SPEAKER annotations</span>
                             </button>
-                            <button type="button" class="width_full" id="annotate_type_INTERACTION">
+                            <button type="submit" form="annotate_form" name="annotate_task" value="annotations_INTERACTION" class="width_full" id="annotate_type_INTERACTION">
                                 <span data-icon="no" role="img" aria-label="no annotation selected"></span>
                                 <span>INTERACTION annotations</span>
                             </button>

@@ -57,12 +57,6 @@ from ..services.files import swappWorkspaceFiles
 from .convert_model import swappConvertModel
 from .convert_view import swappConvertView
 from .convert_controller import swappConvertController
-from .convert_record import EVENT_TASK
-from .convert_record import TASK_CONVERT
-from .convert_record import TASK_RESET
-from .convert_record import TASK_RESTART
-from .convert_record import TASK_UPDATE
-from .convert_record import EVENT_NAME
 
 # ---------------------------------------------------------------------------
 
@@ -167,27 +161,56 @@ class swappConvertResponseRecipe(swappBaseResponse):
         logging.debug(f" >>>>> Page Application Convert -- Process events: {events} <<<<<< ")
         self._data = dict()
         self._status.code = 200
+        self.__refused = False
 
-        # The record is rebuilt at every request from what was transmitted.
+        # The record is rebuilt at every request from what was transmitted,
+        # and the controller does the task it carries.
         self.__controller.handle(events)
-        # A conversion which was asked for and did not start changed nothing
-        # of the files: the page keeps the container it shows.
-        self.__refused = events.get(EVENT_TASK) == TASK_CONVERT and self.__controller.is_converting() is False
-        # Where the conversion stands is answered alone: the page is not rebuilt.
-        if events.get(EVENT_NAME) == TASK_UPDATE:
-            self._data["percent"], self._data["header"], self._data["text"] = self.__controller.progress()
-            self._status.code = 202
-            if self._data["percent"] >= 100:
-                self._status.code = 200
-            return False
-        if swappConvertController.is_a_task(events) is True:
-            if events.get(EVENT_TASK) in (TASK_RESET, TASK_RESTART):
-                self.__manager.start_over()
-            return True
 
-        if self.__manager.consumes(events) is False and len(events) > 0:
+        # Received events from an HTTP Post.
+        if "event_bake" in events:
+            e = events["event_bake"]
+
+            # --- Action event to convert the files ---
+            if e == "convert":
+                # A conversion which did not start changed nothing of the
+                # files: the page keeps the container it shows.
+                self.__refused = self.__controller.is_converting() is False
+
+            # --- Action events to start over ---
+            elif e == "reset" or e == "restart":
+                self.__manager.start_over()
+
+            # --- Unknown event_bake ---
+            # The progress event to complete asks nothing more than what the
+            # controller did.
+            elif e != "complete":
+                logging.error(f"Unknown event_bake={e}")
+                self._status.code = 205  # Reset Content
+
+        # Received events from the progress bar, which is waiting for the
+        # server response, filled in self._data.
+        elif "event_name" in events:
+
+            # --- Progress event to update the page ---
+            if events["event_name"] == "update":
+                self._data["percent"], self._data["header"], self._data["text"] = self.__controller.progress()
+                self._status.code = 202
+                if self._data["percent"] >= 100:
+                    self._status.code = 200
+
+            # --- Unknown event_name ---
+            else:
+                logging.error(f"Unknown event_name={events['event_name']}")
+                self._status.code = 205  # Reset Content
+
+            return False
+
+        # Received events of the provision of files.
+        elif self.__manager.consumes(events) is False and len(events) > 0:
             logging.error(f"Unknown events={events}")
-            self._status.code = 205
+            self._status.code = 205  # Reset Content
+
         elif self.__manager.is_ready() is True:
             self.__controller.say_what_is_missing()
 
