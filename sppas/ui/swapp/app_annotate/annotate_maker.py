@@ -84,6 +84,7 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
 
         """
         self.__manager = None
+        self.__model = None
         self.__view = None
         self.__controller = None
         super(swappAnnotateResponseRecipe, self).__init__(name, tree, title)
@@ -133,7 +134,10 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
                                            _workspace,
                                            reachable=_local,
                                            has_workspace=len(_workspace.name()) > 0)
-        self.__controller = swappAnnotateController(swappAnnotateModel(self.__manager), self.__view)
+
+        # The model is held by the response: a performance is longer than
+        # the request which started it.
+        self.__model = swappAnnotateModel(self.__manager)
 
     # -----------------------------------------------------------------------
     # Callbacks
@@ -150,6 +154,11 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
         self._data = dict()
         self._status.code = 200
 
+        # The controller is built at every request and handed the model: it
+        # is dropped once the request is answered, and nothing of what was
+        # decided is kept.
+        self.__controller = swappAnnotateController(self.__model, self.__view)
+
         # Received events from an HTTP Post.
         if "event_name" in events:
             e_name = events["event_name"]
@@ -158,6 +167,7 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
             else:
                 self._status.code = 400
                 self._data["error"] = f"The server received an unknown event name: {e_name}."
+            self.__controller = None
             return False
 
         else:
@@ -201,6 +211,8 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
             logging.error(msg)
             p = self._htree.element("p")
             p.set_value(msg)
+
+        self.__controller = None
 
     # -----------------------------------------------------------------------
     # PRIVATE

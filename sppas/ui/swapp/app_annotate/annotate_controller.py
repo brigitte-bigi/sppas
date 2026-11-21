@@ -102,22 +102,6 @@ class swappAnnotateController:
             if self.__model.can_be_performed(_key) is False:
                 self.__record.unselect(_key)
 
-        # A kind which was not transmitted takes its default extension, and
-        # an annotation which has language resources the language the API
-        # gives it.
-        _kinds = self.__model.kinds()
-        for _kind in _kinds:
-            if (_kind in self.__record.extensions) is False:
-                _extensions, _default = _kinds[_kind]
-                self.__record.set_extension(_kind, _default)
-        for _annotation in self.__model.annotations():
-            _key = _annotation.get_key()
-            if len(_annotation.get_langlist()) > 0 and (_key in self.__record.annotation_langs) is False:
-                _lang = _annotation.get_lang()
-                if _lang is None:
-                    _lang = ""
-                self.__record.set_annotation_lang(_key, _lang)
-
         # The page of the six steps sent the language of the page. When it is
         # not the one of the selected annotations, the person chose it: it is
         # given to every annotation which has resources for it.
