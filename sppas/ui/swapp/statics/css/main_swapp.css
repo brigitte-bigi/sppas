@@ -252,6 +252,40 @@ body.exit-waiting > footer {
     user-select: none;
 }
 
+/* ── Progress with no value ──────────────────────────────── */
+
+/* A progress which has no value says that something is awaited, and not how
+   far it has gone: a segment of the color of the value goes from one end of
+   the track to the other, and starts again. What the browser draws of the
+   bar is not drawn, so that this segment is the only thing on the track. */
+progress:not([value]) {
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    background-color: var(--progress-bg-color);
+    background-image: linear-gradient(var(--progress-fg-color), var(--progress-fg-color));
+    background-size: 30% 100%;
+    background-repeat: no-repeat;
+    animation: progress-endless 1.2s ease-in-out infinite;
+}
+
+progress:not([value])::-webkit-progress-bar {
+    background-color: transparent;
+}
+
+progress:not([value])::-moz-progress-bar {
+    background-color: transparent;
+}
+
+@keyframes progress-endless {
+    from {
+        background-position: -50% 0;
+    }
+    to {
+        background-position: 150% 0;
+    }
+}
+
 /* ── Mobile: header padding to clear the nav toggle button ── */
 
 @media only screen and (max-width: 1023.98px) {

@@ -2038,7 +2038,8 @@
 
 		<p><b>PF6 is the only long procedure, and it is followed.</b> The request which
 		asks for it starts the conversion on the server and answers at once, and the
-		page is not reloaded. The page then asks, at regular intervals, where the
+		page is not reloaded. The page then asks, at regular intervals &mdash; every
+		200 ms from the local server, every second from a distant one &mdash;, where the
 		conversion stands: how many files of the batch have their result. That is read
 		in the report of the conversion, and not in what a process of the server holds;
 		the answer is the same locally and online, whatever process gives it. The

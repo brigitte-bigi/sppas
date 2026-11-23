@@ -73,7 +73,6 @@ const DATA_DESTINATION = 'destination';
 const DATA_CONTAINER = 'container';
 const ID_PROGRESS = 'progress_section';
 const DEPOSIT_CONTAINER_ID = 'files_deposit';
-const INTERVAL_MS = 200;
 
 /**
  * This class shows, among what the server wrote, the part of the format chosen.
@@ -107,12 +106,16 @@ export default class ConvertManager extends BaseManager {
 
     #files;
 
+    #intervalMs;
+
     /**
      * @param {Object|null} swappFiles - The manager of the container of the provision of files.
+     * @param {number} intervalMs - How often the page asks where a conversion stands, in milliseconds.
      */
-    constructor(swappFiles = null) {
+    constructor(swappFiles = null, intervalMs) {
         super();
         this.#files = swappFiles;
+        this.#intervalMs = intervalMs;
     }
 
     // ------------------------------------------------------------------------
@@ -439,7 +442,7 @@ export default class ConvertManager extends BaseManager {
             // Nothing given back is said as null: the bar then asks for the results.
             updateCallback: async () => (await this.postEvents(updated)) ?? null,
             completeCallback: async () => await this.#post(completed),
-            intervalMs: INTERVAL_MS
+            intervalMs: this.#intervalMs
         });
         progressBar.start();
     }

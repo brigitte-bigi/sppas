@@ -79,6 +79,7 @@ class swappAnnotateController:
         self.__view = view
         self.__record = swappAnnotateRecord()
         self.__options = None
+        self.__starts_over = False
 
     # -----------------------------------------------------------------------
 
@@ -94,7 +95,7 @@ class swappAnnotateController:
         # An annotation which can't be performed on that machine is never
         # selected.
         for _key in self.__record.selected:
-            if self.__model.can_be_performed(_key) is False:
+            if self.__model.is_installed(_key) is False:
                 self.__record.unselect(_key)
 
         # The page of the six steps sends the language of the page: a
@@ -112,10 +113,42 @@ class swappAnnotateController:
             if "options_validate" in events:
                 self.__record.set_options(_key, self.__options.options_for_app())
 
+        # One run at a time: while one goes, nothing starts another,
+        # resets the page or asks for another batch, and it is said.
+        self.__starts_over = False
+        if self.__model.is_running() is True and \
+                self.__record.task in ("annotate_perform", "annotate_reset", "annotate_steps"):
+            self.__record.show("going", True)
+
         # A reset takes the page back to what it was on arrival: nothing of
-        # what was transmitted is kept.
-        if self.__record.task == "annotate_reset":
+        # what was transmitted is kept, and the provision of files starts over.
+        elif self.__record.task == "annotate_reset":
             self.__record = swappAnnotateRecord()
+            self.__starts_over = True
+
+        # Coming back to the six steps once a run has ended is asking
+        # for another batch: the decisions are kept, and the provision of
+        # files starts over.
+        elif self.__record.task == "annotate_steps" and len(self.__record.followed) > 0:
+            self.__record.followed = ""
+            self.__starts_over = True
+
+        # The annotations are performed with at least one selected and a
+        # batch which is not empty; what is missing is said otherwise.
+        elif self.__record.task == "annotate_perform":
+            _batch = self.__model.batch()
+            _missing = self.__record.what_is_missing(_batch)
+            if len(_missing) > 0:
+                self.__record.show("missing", _missing)
+            else:
+                self.__record.followed = self.__model.start(_batch, self.__record.parameters, self.__record.merge)
+
+        # Once the annotations have been performed, the report of that
+        # run is the one which is checked, and what came of every root of
+        # the batch is shown.
+        elif self.__record.task == "annotate_complete":
+            self.__record.report = self.__record.followed
+            self.__show_results()
 
         # Locally, the checked report is deleted, or every report which is
         # not checked. Those which could not be deleted are said.
@@ -140,12 +173,33 @@ class swappAnnotateController:
     # -----------------------------------------------------------------------
 
     def progress(self) -> tuple:
-        """Return where the performance the page follows stands.
+        """Return where the run the page follows stands.
 
         :return: (tuple) The percent, a header and a text
 
         """
-        return 100, "", ""
+        return self.__model.progress()
+
+    # -----------------------------------------------------------------------
+
+    def followed_report(self) -> list:
+        """Return the lines of the report of the run the page follows, as they are written.
+
+        What is not written yet is not there to be read.
+
+        :return: (list of swappReportLine) Empty when nothing is written yet
+
+        """
+        try:
+            return self.__model.read_report(self.__record.followed)
+        except (ValueError, IOError):
+            return list()
+
+    # -----------------------------------------------------------------------
+
+    def starts_over(self) -> bool:
+        """Return True if the provision of files is to start over: a reset, or another batch (bool)."""
+        return self.__starts_over
 
     # -----------------------------------------------------------------------
 
@@ -153,9 +207,11 @@ class swappAnnotateController:
         """Have the view build its tree from the record.
 
         What the page shows is asked to the model at every request: the
-        annotations of one type when the task asks for them, with the options
-        of one of them when it is configured, the six steps otherwise, and the
-        reports beside. Online, the view is given no report.
+        progress while a run goes; the annotations of one type when
+        the task asks for them, with the options of one of them when it is
+        configured; the report once the annotations have been performed, or
+        when it is asked for; the six steps otherwise, and the reports beside.
+        Online, the view is given no report.
 
         """
         _type = ""
@@ -171,18 +227,25 @@ class swappAnnotateController:
             self.__record.show("configured", _key)
             self.__record.show("options", self.__options.container())
 
-        if len(_type) > 0:
+        # While the annotations are performed, the page shows the progress,
+        # and the report under it as it fills: what is not written yet is
+        # not there to be read.
+        if self.__model.is_running() is True or \
+                (self.__record.task == "annotate_perform" and len(self.__record.followed) > 0):
+            self.__record.show("running", True)
+            self.__record.show("report", self.followed_report())
+        elif len(_type) > 0:
             _annotations = list()
             _disabled = list()
             for _annotation in self.__model.annotations():
                 if _type in _annotation.get_types():
                     _annotations.append(_annotation)
-                    if self.__model.can_be_performed(_annotation.get_key()) is False:
+                    if self.__model.is_installed(_annotation.get_key()) is False:
                         _disabled.append(_annotation.get_key())
             self.__record.show("type", _type)
             self.__record.show("annotations", _annotations)
             self.__record.show("disabled", _disabled)
-        elif self.__record.task == "annotate_show":
+        elif self.__record.task in ("annotate_show", "annotate_complete"):
             try:
                 self.__record.show("report", self.__model.read_report(self.__record.report))
             except Exception as e:
@@ -206,3 +269,29 @@ class swappAnnotateController:
             self.__record.show("reports", self.__model.reports())
 
         self.__view.populate_tree_content(self.__record)
+
+    # -----------------------------------------------------------------------
+    # Private
+    # -----------------------------------------------------------------------
+
+    def __show_results(self) -> None:
+        """Show what came of every root of the batch, and where each produced file is reached."""
+        _results = self.__model.results()
+        self.__record.show("results", _results)
+
+        # Where the person is not on the machine which wrote them, each
+        # produced file is reached at an address: the page leads to it.
+        _addresses = dict()
+        _all = list()
+        for _result in _results:
+            for _produced in _result.produced:
+                _address = self.__model.address_of(_produced)
+                if len(_address) > 0:
+                    _addresses[_produced] = _address
+                _all.append(_produced)
+        self.__record.show("addresses", _addresses)
+
+        # Ten files are got back in one gesture and not in ten: they are
+        # gathered in one archive, which is reached like any of them.
+        if len(_addresses) > 0:
+            self.__record.show("archive", self.__model.address_of_all(_all))

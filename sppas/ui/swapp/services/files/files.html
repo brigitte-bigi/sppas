@@ -2114,7 +2114,11 @@
 			server runs on, by the file chooser of SPPAS, which one class of this
 			domain calls and no other. What a dialog gives back is read and never
 			guessed &mdash; one name, several, or nothing &mdash; and a person who
-			chose nothing adds nothing.
+			chose nothing adds nothing. While the dialog is open, the page says it
+			waits for the files in the selection window, with a progress which has no
+			end: the dialog may open behind the browser, and the page would otherwise
+			seem to do nothing. The button which opens the dialog does not answer
+			until then, so that only one dialog is opened. The answer replaces both.
 		</p>
 
 		<p>
@@ -2216,7 +2220,7 @@
 		<table>
 			<thead><tr><th>Class</th><th>Operations</th><th>What it shows</th></tr></thead>
 			<tbody>
-				<tr><td><code>DepositView</code></td><td>populate_tree_content(record), serialize()</td><td><code>DepositView</code></td><td>populate_tree_content(record)</td><td>What a person feeds: what is accepted, the button, the list, the volume against the bound, what sends, and where each file stands</td></tr>
+				<tr><td><code>DepositView</code></td><td>populate_tree_content(record), serialize()</td><td><code>DepositView</code></td><td>populate_tree_content(record)</td><td>What a person feeds: what is accepted, the button, the list, the volume against the bound, what sends, and where each file stands; where the files stand already, that the page waits for the selection window</td></tr>
 			</tbody>
 		</table>
 

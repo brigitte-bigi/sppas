@@ -40,12 +40,15 @@
 
 from __future__ import annotations
 import html
+import os
 
 from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import TagNode
 
 from sppas.ui import _
+
+from ..nodes import swappProgressBar
 
 from .annotate_annotations import LANG_NONE
 from .annotate_annotations import LANG_MIX
@@ -79,10 +82,20 @@ MSG_DISABLED = _("Not installed on this machine.")
 MSG_LANG_OF = _("Language of {:s}")
 MSG_OPTIONS_OF = _("Options of {:s}")
 MSG_OPTIONS = _("Options")
-MSG_CLOSE = _("Close")
 MSG_FILES_TITLE = _("Add files")
 MSG_LOG_TITLE = _("Procedure outcome report")
+MSG_PROGRESS = _("Progress:")
 MSG_REPORT_FILE = _("Report file:")
+MSG_RESULTS = _("Results")
+MSG_RESULTS_CAPTION = _("One line per root of the batch")
+MSG_ROOT = _("Root")
+MSG_STATUS = _("Status")
+MSG_RESULT = _("Result")
+MSG_DOWNLOAD_ALL = _("Download all the files")
+MSG_STATUSES = {"written": _("written"), "refused": _("refused")}
+
+# The icon which says the status of a root: its shape says it, its text alternative is the word.
+STATUS_ICONS = {"written": "yes", "refused": "no"}
 
 # The class of the line of each state a line of a report bears.
 STATE_CLASSES = {"OK": "ok",
@@ -94,19 +107,22 @@ STATE_CLASSES = {"OK": "ok",
 # ---------------------------------------------------------------------------
 
 
-def append_head(panel: TagNode, title_id: str, title: str) -> None:
+def append_head(panel: TagNode, title_id: str, title: str, available: bool = True) -> None:
     """Append the button which comes back to the six steps, and the title of a panel.
 
     :param panel: (TagNode) The panel
     :param title_id: (str) Identifier of the title
     :param title: (str) The title
+    :param available: (bool) The way back is available; it is offered and not available otherwise
 
     """
     _head = TagNode(panel.identifier, None, "div", attributes={"class": "annotate-head"})
     panel.append_child(_head)
-    _back = TagNode(_head.identifier, None, "button",
-                    attributes={"type": "submit", "form": "annotate_form", "name": "event_bake",
-                                "value": "annotate_steps", "data-icon": "arrow-up"})
+    _attributes = {"type": "submit", "form": "annotate_form", "name": "event_bake",
+                   "value": "annotate_steps", "data-icon": "arrow-up"}
+    if available is False:
+        _attributes["aria-disabled"] = "true"
+    _back = TagNode(_head.identifier, None, "button", attributes=_attributes)
     _head.append_child(_back)
     _back.append_child(HTMLNode(_back.identifier, None, "span", value=MSG_BACK))
     _head.append_child(HTMLNode(_head.identifier, None, "h3", value=title, attributes={"id": title_id}))
@@ -117,7 +133,7 @@ def append_head(panel: TagNode, title_id: str, title: str) -> None:
 class swappActionAnnotatePanel(TagNode):
     """The six steps, in their order and with their titles, and the Reset button.
 
-    Every field belongs to the form of the performance, which the view
+    Every field belongs to the form of the run, which the view
     writes first: a field is tied to it by its attribute "form".
 
     """
@@ -523,10 +539,13 @@ class swappAnnotationsPanel(TagNode):
                 _icon = "external-link"
                 if _url.endswith("pdf") is True:
                     _icon = "file"
+                # A published work is opened in a tab of its own: this page
+                # stays where it is, and one comes back to it by closing that tab.
                 _column.append_child(HTMLNode(_column.identifier, None, "a",
                                               attributes={"href": _url, "class": "icon-button",
                                                           "data-icon": _icon,
-                                                          "aria-label": _url, "title": _url}))
+                                                          "aria-label": _url, "title": _url,
+                                                          "target": "_blank", "rel": "noopener"}))
         else:
             _devel = min(100, max(0, annotation.get_devel()))
             _p = TagNode(_column.identifier, None, "p", attributes={"class": "annotate-ann-devel"})
@@ -624,47 +643,147 @@ class swappLogAnnotatePanel(TagNode):
     The report is written line for line as the API wrote it, in a font of one
     width, the mark of the state a line bears in the class of that state.
 
+    One panel, and two moments. While a run goes, the way back is
+    offered and not available; under the title stand the nodes of the
+    progress, which the page fills with what the API sets, and the report
+    under them, folded. Once it has ended, the report is what the panel shows.
+
     """
 
-    def __init__(self, parent: str, name: str, report: list, unavailable: str):
+    def __init__(self, parent: str, name: str, report: list, unavailable: str, running: bool):
         """Create the panel of the procedure outcome report.
 
         :param parent: (str) Identifier of the node the panel is appended to
         :param name: (str) Name of the report
         :param report: (list of swappReportLine) The lines of the report
         :param unavailable: (str) Why the report is not available, empty if it is
+        :param running: (bool) A run is going
 
         """
-        super(swappLogAnnotatePanel, self).__init__(parent, None, "section",
+        super(swappLogAnnotatePanel, self).__init__(parent, "annotate_log_panel", "section",
                                                     attributes={"id": "annotate_log_panel",
                                                                 "aria-labelledby": "annotate_log_h"})
-        append_head(self, "annotate_log_h", MSG_LOG_TITLE)
-        self.append_child(HTMLNode(self.identifier, None, "p", value=MSG_REPORT_FILE + " " + html.escape(name),
-                                   attributes={"id": "annotate_report_file"}))
-        if len(unavailable) > 0:
-            _code = html.escape(unavailable)
+        append_head(self, "annotate_log_h", MSG_LOG_TITLE, running is False)
+
+        _holder = self
+        if running is True:
+            # The text of the progress is given its node, and the bar is named
+            # by a label. The header is given its node as well: it holds the
+            # annotation which is running, and nothing before the first one.
+            _progress = swappProgressBar(self.identifier)
+            _progress.update(message="")
+            _bar = _progress.get_node()
+            _bar.insert_child(0, HTMLNode(_bar.identifier, None, "label", value=MSG_PROGRESS,
+                                          attributes={"for": "percent_progress"}))
+            _bar.insert_child(0, HTMLNode(_bar.identifier, "progress_header", "h3",
+                                          attributes={"id": "progress_header"}))
+            self.append_child(_bar)
+            _holder = TagNode(self.identifier, None, "details")
+            self.append_child(_holder)
+            _holder.append_child(HTMLNode(_holder.identifier, None, "summary",
+                                          value=MSG_REPORT_FILE + " " + html.escape(name),
+                                          attributes={"id": "annotate_report_file"}))
         else:
-            _code = swappLogAnnotatePanel.__written(report)
-        # The spaces of a pre are shown: the code it holds is its value, which
-        # is written without indentation, and not a child, which would be.
-        self.append_child(HTMLNode(self.identifier, None, "pre", value="<code>" + _code + "</code>",
-                                   attributes={"id": "annotate_report", "class": "annotate-report"}))
+            self.append_child(HTMLNode(self.identifier, None, "p", value=MSG_REPORT_FILE + " " + html.escape(name),
+                                       attributes={"id": "annotate_report_file"}))
 
-    # -----------------------------------------------------------------------
-    # Private
-    # -----------------------------------------------------------------------
+        _holder.append_child(report_node(_holder.identifier, report, unavailable))
 
-    @staticmethod
-    def __written(report: list) -> str:
-        """Return the lines of the report escaped, the mark of the state a line bears in a span of its class.
+# ---------------------------------------------------------------------------
 
-        The mark is what stands from "[ " to the next "]": the color is carried
-        by it alone, and never by the whole line.
 
-        :param report: (list of swappReportLine) The lines of the report
-        :return: (str)
+class swappResultsPanel(TagNode):
+    """What came of every root of the batch: its status, then the files produced under it.
+
+    """
+
+    def __init__(self, parent: str, results: list, addresses: dict, archive: str):
+        """Create the panel of the results.
+
+        :param parent: (str) Identifier of the node the panel is appended to
+        :param results: (list of swappRootResult) One result per root of the batch
+        :param addresses: (dict) The address of a produced file, by name, when
+        the person is not on the machine which wrote it
+        :param archive: (str) The address of the archive holding them all, empty if none
 
         """
+        super(swappResultsPanel, self).__init__(parent, None, "section",
+                                                attributes={"aria-labelledby": "annotate_results_h"})
+
+        self.append_child(HTMLNode(self.identifier, None, "h4", value=MSG_RESULTS,
+                                   attributes={"id": "annotate_results_h"}))
+        _table = TagNode(self.identifier, None, "table")
+        self.append_child(_table)
+        _table.append_child(HTMLNode(_table.identifier, None, "caption", value=MSG_RESULTS_CAPTION))
+
+        _head = TagNode(_table.identifier, None, "thead")
+        _table.append_child(_head)
+        _tr = TagNode(_head.identifier, None, "tr")
+        _head.append_child(_tr)
+        for _text in (MSG_ROOT, MSG_STATUS, MSG_RESULT):
+            _tr.append_child(HTMLNode(_tr.identifier, None, "th", value=_text, attributes={"scope": "col"}))
+
+        _body = TagNode(_table.identifier, None, "tbody")
+        _table.append_child(_body)
+        for _result in results:
+            _tr = TagNode(_body.identifier, None, "tr")
+            _body.append_child(_tr)
+            _tr.append_child(HTMLNode(_tr.identifier, None, "th", value=os.path.basename(_result.root),
+                                      attributes={"scope": "row"}))
+            _status = TagNode(_tr.identifier, None, "td")
+            _tr.append_child(_status)
+            _status.append_child(HTMLNode(_status.identifier, None, "span", value="",
+                                          attributes={"data-icon": STATUS_ICONS[_result.status],
+                                                      "role": "img",
+                                                      "aria-label": MSG_STATUSES[_result.status]}))
+            _td = TagNode(_tr.identifier, None, "td")
+            _tr.append_child(_td)
+            if len(_result.produced) > 0:
+                _ul = TagNode(_td.identifier, None, "ul")
+                _td.append_child(_ul)
+                for _produced in _result.produced:
+                    _li = TagNode(_ul.identifier, None, "li")
+                    _ul.append_child(_li)
+                    _name = os.path.basename(_produced)
+                    if _produced in addresses:
+                        # The file was written where the person is not: the
+                        # name leads to it, and the browser is told to keep
+                        # it under that name instead of showing it.
+                        _li.append_child(HTMLNode(_li.identifier, None, "a", value=_name,
+                                                  attributes={"href": addresses[_produced],
+                                                              "download": _name}))
+                    else:
+                        _li.set_value(_name)
+
+        # Ten files are got back in one gesture and not in ten.
+        if len(archive) > 0:
+            _p = TagNode(self.identifier, None, "p")
+            self.append_child(_p)
+            _p.append_child(HTMLNode(_p.identifier, None, "a", value=MSG_DOWNLOAD_ALL,
+                                     attributes={"href": archive,
+                                                 "download": "",
+                                                 "class": "action-button",
+                                                 "role": "button"}))
+
+# ---------------------------------------------------------------------------
+
+
+def report_node(parent: str, report: list, unavailable: str) -> HTMLNode:
+    """Return the procedure outcome report, line for line, in a font of one width.
+
+    The mark of the state a line bears is in a span of its class: the mark is
+    what stands from "[ " to the next "]", and the color is carried by it
+    alone, never by the whole line.
+
+    :param parent: (str) Identifier of the node the report is appended to
+    :param report: (list of swappReportLine) The lines of the report
+    :param unavailable: (str) Why the report is not available, empty if it is
+    :return: (HTMLNode)
+
+    """
+    if len(unavailable) > 0:
+        _code = html.escape(unavailable)
+    else:
         _lines = list()
         for _line in report:
             _text = html.escape(_line.text)
@@ -677,5 +796,9 @@ class swappLogAnnotatePanel(TagNode):
                              + html.escape(_line.text[_start:_end + 1]) + "</span>"
                              + html.escape(_line.text[_end + 1:]))
             _lines.append(_text)
+        _code = "\n".join(_lines)
 
-        return "\n".join(_lines)
+    # The spaces of a pre are shown: the code it holds is its value, which is
+    # written without indentation, and not a child, which would be.
+    return HTMLNode(parent, None, "pre", value="<code>" + _code + "</code>",
+                    attributes={"id": "annotate_report", "class": "annotate-report"})

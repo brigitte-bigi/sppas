@@ -50,6 +50,7 @@ from sppas.ui import _
 
 from ..swapp_base.swapp_view import swappBaseView
 from ..swapp_core.swappsg import swapp_settings
+from ..swapp_core.swappsg import swapp_serverstate
 
 from .annotate_record import swappAnnotateRecord
 from .annotate_panels import swappActionAnnotatePanel
@@ -57,6 +58,8 @@ from .annotate_panels import swappAnnotationsPanel
 from .annotate_panels import swappFilesAnnotatePanel
 from .annotate_panels import swappLogAnnotatePanel
 from .annotate_panels import swappReportsPanel
+from .annotate_panels import swappResultsPanel
+from .annotate_panels import report_node
 
 # ---------------------------------------------------------------------------
 
@@ -66,12 +69,30 @@ MSG_VIEW_BOTH = _("Both")
 MSG_VIEW_RIGHT = _("Right")
 MSG_VIEW_LABEL = _("Panels to display")
 MSG_UNDELETED = _("The report {:s} could not be deleted: {:s}")
+MSG_MISSING = {"annotation": _("No annotation is selected."),
+               "batch": _("No file is selected.")}
+MSG_GOING = _("The annotations are running: nothing else can be started until they end.")
 
-BODY_SCRIPT = f"""
-        import {{ AnnotateManager }} from '/{swapp_settings.js}sppas.js';
+# How often the page asks where a long treatment stands, in milliseconds: the
+# local server answers at once, a distant one is asked less often.
+INTERVAL_LOCAL_MS = 200
+INTERVAL_DISTANT_MS = 1000
 
-        const annotateManager = new AnnotateManager();
+# The script of the page, filled in with the folder of the scripts and the interval.
+BODY_SCRIPT = """
+        import {{ AnnotateManager }} from '/{js}sppas.js';
+        import SwappFiles from '/{js}swapp_files.js';
+
+        const annotateManager = new AnnotateManager({interval});
         annotateManager.handleAnnotateManagerOnLoad();
+
+        // The container of the provision of files stands in the panel of the
+        // files only: what is done in it is sent without reloading the page,
+        // which keeps every decision the form of the page carries.
+        if (document.getElementById('annotate_files_panel') !== null) {{
+            const swappFiles = new SwappFiles();
+            swappFiles.handleSwappFilesOnLoad();
+        }}
 """
 
 # ---------------------------------------------------------------------------
@@ -137,9 +158,15 @@ class swappAnnotateView(swappBaseView):
     def populate_body_script(self):
         """Override. Populate the script body section.
 
+        The page asks where a run stands at the interval of the server
+        which serves it.
+
         """
+        _interval = INTERVAL_DISTANT_MS
+        if swapp_serverstate.local is True:
+            _interval = INTERVAL_LOCAL_MS
         self._htree.body_script.add_attribute("type", "module")
-        self._htree.body_script.set_value(BODY_SCRIPT)
+        self._htree.body_script.set_value(BODY_SCRIPT.format(js=swapp_settings.js, interval=_interval))
 
     # -----------------------------------------------------------------------
     # Update the tree -- for baking the page
@@ -171,7 +198,20 @@ class swappAnnotateView(swappBaseView):
                 _dialog.append_child(HTMLNode(_dialog.identifier, None, "p",
                                               value=MSG_UNDELETED.format(_name, _undeleted[_name])))
 
-        # The form of the performance: every field and every button of the
+        # What is missing before the annotations can be performed, or the
+        # run which stands in the way, is said in the one of the
+        # information.
+        _said = list()
+        for _what in _shown.get("missing", list()):
+            _said.append(MSG_MISSING[_what])
+        if _shown.get("going", False) is True:
+            _said.append(MSG_GOING)
+        if len(_said) > 0:
+            _dialog = self._htree.body_main.get_child("info_dialog")
+            for _text in _said:
+                _dialog.append_child(HTMLNode(_dialog.identifier, None, "p", value=_text))
+
+        # The form of the run: every field and every button of the
         # page is tied to it by its attribute "form", whichever panel is
         # written.
         _form = TagNode(self._htree.body_main.identifier, None, "form",
@@ -204,9 +244,21 @@ class swappAnnotateView(swappBaseView):
             self.__files = swappFilesAnnotatePanel(self._htree.body_main.identifier)
             self._htree.body_main.append_child(self.__files)
         elif "report" in _shown:
-            self._htree.body_main.append_child(swappLogAnnotatePanel(self._htree.body_main.identifier,
-                                                                     record.report, _shown["report"],
-                                                                     _shown.get("unavailable", "")))
+            # While a run goes, its report is the one the page follows;
+            # otherwise, it is the checked one.
+            _running = _shown.get("running", False)
+            _name = record.report
+            if _running is True:
+                _name = record.followed
+            _log = swappLogAnnotatePanel(self._htree.body_main.identifier, _name, _shown["report"],
+                                         _shown.get("unavailable", ""), _running)
+            self._htree.body_main.append_child(_log)
+            # Once the annotations have been performed, what came of every
+            # root of the batch is written under the report.
+            if "results" in _shown:
+                _log.append_child(swappResultsPanel(_log.identifier, _shown["results"],
+                                                    _shown.get("addresses", dict()),
+                                                    _shown.get("archive", "")))
         else:
             self.__populate_steps(_shown, record)
             for _kind in record.extensions:
@@ -229,6 +281,17 @@ class swappAnnotateView(swappBaseView):
     def get_files(self) -> TagNode | None:
         """Return the panel of the files, None when it was not written."""
         return self.__files
+
+    # -----------------------------------------------------------------------
+
+    def report(self, report: list) -> str:
+        """Return the procedure outcome report alone, line for line, in HTML.
+
+        :param report: (list of swappReportLine) The lines of the report
+        :return: (str)
+
+        """
+        return report_node(self._htree.body_main.identifier, report, "").serialize()
 
     # -----------------------------------------------------------------------
 

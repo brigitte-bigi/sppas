@@ -80,14 +80,17 @@ class swappModelAnnotations:
 
     # -----------------------------------------------------------------------
 
-    def can_be_performed(self, key: str) -> bool:
-        """Return True if the annotation of that key can be performed on that machine.
+    def is_installed(self, key: str) -> bool:
+        """Return True if the annotation of that key is installed on that machine.
+
+        It can when the API instantiates it without error.
 
         :param key: (str) Key of an annotation
+        :raises: KeyError: No annotation has that key
         :return: (bool)
 
         """
-        return True
+        return self.__parameters.test_step(self.__parameters.get_step_idx(key))
 
     # -----------------------------------------------------------------------
 

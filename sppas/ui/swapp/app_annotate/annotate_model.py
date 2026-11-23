@@ -46,6 +46,7 @@ from ..services.files import swappFilesManager
 from .annotate_annotations import swappModelAnnotations
 from .annotate_reports import swappModelReports
 from .annotate_provision import swappModelProvision
+from .annotate_run import swappModelRun
 
 # ---------------------------------------------------------------------------
 
@@ -54,8 +55,8 @@ class swappAnnotateModel:
     """Model for the Annotate application.
 
     The single interface the controller reaches: it makes the models of the
-    annotations, of the reports and of the access to the provision of files,
-    and nothing else reaches them.
+    annotations, of the run, of the reports and of the access to the
+    provision of files, and nothing else reaches them.
 
     """
 
@@ -69,6 +70,71 @@ class swappAnnotateModel:
         self.__annotations = swappModelAnnotations()
         self.__reports = swappModelReports()
         self.__provision = swappModelProvision(manager)
+        self.__run = swappModelRun(self.__provision)
+
+    # -----------------------------------------------------------------------
+
+    def start(self, batch, parameters, merge: bool) -> str:
+        """Start a run, and return the name of its report.
+
+        It is answered without waiting for the run to end.
+
+        :param batch: (sppasWorkspace) The workspace the provision of files handed
+        :param parameters: (sppasParam) What was decided
+        :param merge: (bool) One file gathering everything is to be created
+        :raises: RuntimeError: A run is going
+        :return: (str) Name of the report, without its path
+
+        """
+        return self.__run.start(batch, parameters, merge)
+
+    # -----------------------------------------------------------------------
+
+    def is_running(self) -> bool:
+        """Return True while a run is going (bool)."""
+        return self.__run.is_running()
+
+    # -----------------------------------------------------------------------
+
+    def progress(self) -> tuple:
+        """Return where the run stands.
+
+        :return: (tuple) The percent, the header and the text; the hundred when no run is going
+
+        """
+        return self.__run.progress()
+
+    # -----------------------------------------------------------------------
+
+    def results(self) -> list:
+        """Return what came of every root of the batch of the last run which ended.
+
+        :return: (list of swappRootResult) Empty while a run goes, and before the first one has ended
+
+        """
+        return self.__run.results()
+
+    # -----------------------------------------------------------------------
+
+    def address_of(self, filename: str) -> str:
+        """Return the address a produced file is reached at.
+
+        :param filename: (str) Name of the produced file, with its path
+        :return: (str) Empty when the file is reached at no address
+
+        """
+        return self.__provision.address_of(filename)
+
+    # -----------------------------------------------------------------------
+
+    def address_of_all(self, filenames: list) -> str:
+        """Return the address of one archive holding the produced files.
+
+        :param filenames: (list of str) Names of the files, with their path
+        :return: (str) Empty when no archive is to be made
+
+        """
+        return self.__provision.address_of_all(filenames)
 
     # -----------------------------------------------------------------------
 
@@ -92,14 +158,14 @@ class swappAnnotateModel:
 
     # -----------------------------------------------------------------------
 
-    def can_be_performed(self, key: str) -> bool:
-        """Return True if the annotation of that key can be performed on that machine.
+    def is_installed(self, key: str) -> bool:
+        """Return True if the annotation of that key is installed on that machine.
 
         :param key: (str) Key of an annotation
         :return: (bool)
 
         """
-        return self.__annotations.can_be_performed(key)
+        return self.__annotations.is_installed(key)
 
     # -----------------------------------------------------------------------
 

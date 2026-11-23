@@ -73,6 +73,7 @@ MSG_REFUSED = _("Refused")
 MSG_ADDED = _("Added")
 MSG_DEPOSITED = _("Deposited")
 MSG_TREATED = _("Treated")
+MSG_WAITING = _("Waiting for the files in the selection window...")
 
 
 # ---------------------------------------------------------------------------
@@ -352,6 +353,19 @@ class swappDepositView(swappFilesBaseView):
                            attributes={"id": "files_browse", "type": "submit",
                                        "name": TASK_DESIGNATE, "value": ""})
         _zone.append_child(_browse)
+
+        # The selection window may open behind the browser, and the page
+        # would seem to do nothing: while the server waits for what is
+        # chosen in it, the page says so, with a progress which has no end.
+        # It is hidden until the button is pressed, and the answer replaces
+        # it with the whole container.
+        _waiting = TagNode(_zone.identifier, None, "div",
+                           attributes={"id": "files_waiting", "role": "status", "hidden": None})
+        _zone.append_child(_waiting)
+        _waiting.append_child(HTMLNode(_waiting.identifier, None, "p", value=MSG_WAITING,
+                                       attributes={"id": "files_waiting_text"}))
+        _waiting.append_child(HTMLNode(_waiting.identifier, None, "progress",
+                                       attributes={"aria-labelledby": "files_waiting_text"}))
 
         _panel = TagNode(_zone.identifier, None, "ul",
                          attributes={"class": "cards-panel"})

@@ -546,10 +546,13 @@ class sppasParam(object):
         step = self.__check_step(step)
         a = self.annotations[step]
         try:
-            inst_name = getattr(sys.modules[__name__], a.get_api())
+            # The classes of the annotations are imported by the package.
+            inst_name = getattr(sys.modules[__package__], a.get_api())
             inst_name()
         except:
             return False
+
+        return True
 
     def get_step_status(self, step):
         step = self.__check_step(step)

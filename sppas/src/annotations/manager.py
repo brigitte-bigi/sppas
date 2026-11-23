@@ -74,24 +74,53 @@ class sppasAnnotationsManager(Thread):
 
     """
 
-    def __init__(self):
+    def __init__(self, parameters=None, progress=None, do_merge=False):
         """Create a new instance.
 
-        Initialize a Thread.
+        Initialize a Thread. When parameters are given, the thread executes
+        the activated annotations: is_alive() is True until they have been
+        executed. Otherwise, the thread has nothing to execute, and
+        annotate() executes them in the thread of its caller.
+
+        :param parameters: (sppasParam) The parameters of the annotations to execute in the thread
+        :param progress: (sppasBaseProgress) The progress the thread sets where it stands on
+        :param do_merge: (bool) if set to True, a merged file will be created
 
         """
         Thread.__init__(self)
 
         # fix members that are required to run annotations
-        self._parameters = None
-        self._progress = None
+        self._parameters = parameters
+        self._progress = progress
         self._logfile = sppasAnnReport()
 
         # fix optional members
-        self.__do_merge = False
+        self.__do_merge = do_merge
+
+        # the files the last execution wrote, the merged ones included
+        self.__out_files = list()
 
         # start threading
         self.start()
+
+    # -----------------------------------------------------------------------
+
+    def run(self):
+        """Override. Execute the activated annotations, when parameters were given at creation."""
+        if self._parameters is not None:
+            self.annotate(self._parameters, self._progress)
+
+    # -----------------------------------------------------------------------
+
+    def get_out_files(self) -> list:
+        """Return the names of the files the last execution wrote, the merged ones included.
+
+        A file which stood already and was written again is one of them.
+
+        :return: (list of str) Empty before the first execution
+
+        """
+        return list(self.__out_files)
 
     # -----------------------------------------------------------------------
     # Options of the manager
@@ -119,6 +148,7 @@ class sppasAnnotationsManager(Thread):
         """
         self._parameters = parameters
         self._progress = progress
+        self.__out_files = list()
 
         # Print header message in the log-report file or in the logging
         report_file = self._parameters.get_report_filename()
@@ -282,6 +312,7 @@ class sppasAnnotationsManager(Thread):
 
         # Add newly created files to the workspace
         self._parameters.add_to_workspace(out_files)
+        self.__out_files.extend(out_files)
         return len(out_files)
 
     # -----------------------------------------------------------------------
@@ -347,6 +378,7 @@ class sppasAnnotationsManager(Thread):
                     parser.write(trs)
                     self._logfile.print_message(out_file, indent=1, status=0)
                     self._parameters.add_to_workspace([out_file])
+                    self.__out_files.append(out_file)
                 except Exception as e:
                     self._logfile.print_message(str(e), indent=1, status=-1)
             else:

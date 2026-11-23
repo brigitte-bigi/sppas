@@ -135,7 +135,7 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
                                            reachable=_local,
                                            has_workspace=len(_workspace.name()) > 0)
 
-        # The model is held by the response: a performance is longer than
+        # The model is held by the response: a run is longer than
         # the request which started it.
         self.__model = swappAnnotateModel(self.__manager)
 
@@ -164,11 +164,10 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
 
         # Received events from an HTTP Post.
         if "event_bake" in events:
-            e = events["event_bake"]
             self.__controller.handle(events)
 
-            # --- Action event to start over ---
-            if e == "annotate_reset":
+            # --- Action event to start over: a reset, or another batch ---
+            if self.__controller.starts_over() is True:
                 self.__manager.start_over()
 
         # Received events from the progress bar, which is waiting for the
@@ -181,6 +180,12 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
                 self._status.code = 202
                 if self._data["percent"] >= 100:
                     self._status.code = 200
+
+            # --- Report event: the report of the run the page follows, as
+            # it is written, answered alone by its identifier ---
+            elif events["event_name"] == "annotate_report":
+                self.__controller.handle(events)
+                self._data["annotate_report"] = self.__view.report(self.__controller.followed_report())
 
             # --- Unknown event_name ---
             else:
@@ -219,16 +224,25 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
             self._htree.body_main.clear_children()
             self.__controller.populate_view()
             # The container of the provision of files, in the panel of the
-            # files when the view wrote it.
+            # files when the view wrote it. It is answered alone as well, to
+            # the requests of that service: what is done in it replaces it,
+            # and the page stays the one it is.
+            self.__manager.populate_view()
+            _container = self.__manager.container()
             if self.__view.files is not None:
-                self.__manager.populate_view()
-                self.__view.files.append_child(self.__manager.container())
+                self.__view.files.append_child(_container)
+            self._data["container"] = _container.serialize()
             # The container of the options, and the values the page carries
             # for them, answered alone as well to whoever asks for data
             # rather than for a page.
             if self.__view.options is not None:
                 self._data["options"] = self.__view.options.serialize()
                 self._data["values"] = self.__view.values
+            # The main content of the page is answered as well, by its
+            # identifier, to whoever asks for data rather than for a page: the
+            # progress, then the report of a run, or what is missing.
+            _main = self._htree.body_main
+            self._data[_main.get_attribute_value("id")] = _main.serialize()
 
         else:
             msg = f"Unexpected status '{self._status.code}' while baking the page content."

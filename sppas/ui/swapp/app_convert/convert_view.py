@@ -48,6 +48,7 @@ from sppas.ui import _
 
 from ..swapp_base.swapp_view import swappBaseView
 from ..swapp_core.swappsg import swapp_settings
+from ..swapp_core.swappsg import swapp_serverstate
 from ..nodes import swappProgressBar
 
 from .convert_record import swappConvertRecord
@@ -75,12 +76,18 @@ MSG_INTRO = _("Convert writes annotated files into another format. Choose the de
               "support is said beside the list of formats.")
 MSG_MISSING = {"batch": _("No file is checked to be converted.")}
 
-BODY_SCRIPT = f"""
-        import {{ ConvertManager }} from '/{swapp_settings.js}sppas.js';
-        import SwappFiles from '/{swapp_settings.js}swapp_files.js';
+# How often the page asks where a long treatment stands, in milliseconds: the
+# local server answers at once, a distant one is asked less often.
+INTERVAL_LOCAL_MS = 200
+INTERVAL_DISTANT_MS = 1000
+
+# The script of the page, filled in with the folder of the scripts and the interval.
+BODY_SCRIPT = """
+        import {{ ConvertManager }} from '/{js}sppas.js';
+        import SwappFiles from '/{js}swapp_files.js';
         const swappFiles = new SwappFiles();
         swappFiles.handleSwappFilesOnLoad();
-        const convertManager = new ConvertManager(swappFiles);
+        const convertManager = new ConvertManager(swappFiles, {interval});
         convertManager.handleConvertManagerOnLoad();
 """
 
@@ -174,9 +181,17 @@ class swappConvertView(swappBaseView):
     # -----------------------------------------------------------------------
 
     def populate_body_script(self):
-        """Override. Populate the script body section."""
+        """Override. Populate the script body section.
+
+        The page asks where a conversion stands at the interval of the
+        server which serves it.
+
+        """
+        _interval = INTERVAL_DISTANT_MS
+        if swapp_serverstate.local is True:
+            _interval = INTERVAL_LOCAL_MS
         self._htree.body_script.add_attribute("type", "module")
-        self._htree.body_script.set_value(BODY_SCRIPT)
+        self._htree.body_script.set_value(BODY_SCRIPT.format(js=swapp_settings.js, interval=_interval))
 
     # -----------------------------------------------------------------------
     # Update the tree -- for baking the page

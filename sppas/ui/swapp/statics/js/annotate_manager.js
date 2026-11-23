@@ -2,9 +2,20 @@ const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
 const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
 const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
+const { ProgressBar } = await import(`${wexa_statics_js}/progressbar.js`);
 const dialogManager = new DialogManager();
 
 const ID_ERROR_DIALOG = 'error_dialog';
+const ID_INFO_DIALOG = 'info_dialog';
+const ID_PROGRESS = 'percent_progress';
+const ID_LOG_TITLE = 'annotate_log_h';
+const EVENT_NAME = 'event_name';
+const TASK_PERFORM = 'annotate_perform';
+const TASK_UPDATE = 'annotate_update';
+const TASK_COMPLETE = 'annotate_complete';
+const TASK_REPORT = 'annotate_report';
+const ID_REPORT = 'annotate_report';
+const FIELD_FOLLOWED = 'annotate_followed';
 const ID_FORM = 'annotate_form';
 const ID_ANNOTATIONS_PANEL = 'annotate_annotations_panel';
 const ID_OPTIONS_CONTAINER = 'options_container';
@@ -70,6 +81,20 @@ const OPTIONS_VALIDATE = 'options_validate';
 export default class AnnotateManager extends BaseManager {
 
     // ------------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------------
+
+    #intervalMs;
+
+    /**
+     * @param {number} intervalMs - How often the page asks where a run stands, in milliseconds.
+     */
+    constructor(intervalMs) {
+        super();
+        this.#intervalMs = intervalMs;
+    }
+
+    // ------------------------------------------------------------------------
     // Initialization
     // ------------------------------------------------------------------------
 
@@ -99,7 +124,32 @@ export default class AnnotateManager extends BaseManager {
      * @returns {void}
      */
     #onLoad() {
+        this.#attach();
+        this.#say();
+
+        // A page asked for while a run goes follows it.
+        if (document.getElementById(ID_PROGRESS) !== null) {
+            this.#follow();
+        }
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Attach the listeners to what the server wrote in the main content of the page.
+     *
+     * @private
+     * @returns {void}
+     */
+    #attach() {
         this.#attachPanelToggle();
+
+        // The report of the run, folded under the progress, is asked for as
+        // soon as it is unfolded.
+        const report = document.getElementById(ID_REPORT);
+        if (report !== null && report.parentElement instanceof HTMLDetailsElement) {
+            report.parentElement.addEventListener('toggle', () => this.#askReport());
+        }
 
         // Checking a report makes no request: the button which shows it is
         // offered in the page, or disabled when no report is checked.
@@ -118,10 +168,144 @@ export default class AnnotateManager extends BaseManager {
         if (panel !== null) {
             panel.addEventListener('submit', (e) => this.#onOptionsSubmit(e));
         }
+    }
 
-        const errorDlg = document.getElementById(ID_ERROR_DIALOG);
-        if (errorDlg instanceof HTMLDialogElement && errorDlg.textContent.trim().length > 0) {
-            dialogManager.open(ID_ERROR_DIALOG, true);
+    // ------------------------------------------------------------------------
+
+    /**
+     * Open the dialog of the errors, then the one of the information, when the server wrote in it.
+     *
+     * @private
+     * @returns {void}
+     */
+    #say() {
+        for (const id of [ID_ERROR_DIALOG, ID_INFO_DIALOG]) {
+            const dialog = document.getElementById(id);
+            if (dialog instanceof HTMLDialogElement && dialog.textContent.trim().length > 0) {
+                dialogManager.open(id, true);
+                return;
+            }
+        }
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Send the request which performs the annotations, put in the page what the server wrote, and follow the run.
+     *
+     * @private
+     * @param {Object} fields - What is sent.
+     * @returns {Promise<void>}
+     */
+    async #perform(fields) {
+        await this.#post(fields);
+        if (document.getElementById(ID_PROGRESS) !== null) {
+            this.#follow();
+        }
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Ask where the run stands until the hundred is reached, then ask for its results.
+     *
+     * @private
+     * @returns {void}
+     */
+    #follow() {
+        const updated = {};
+        updated[EVENT_NAME] = TASK_UPDATE;
+        const progressBar = new ProgressBar({
+            // Nothing given back is said as null: the bar then asks for the results.
+            updateCallback: async () => {
+                const answered = (await this.postEvents(updated)) ?? null;
+                await this.#askReport();
+                return answered;
+            },
+            completeCallback: async () => await this.#complete(),
+            intervalMs: this.#intervalMs
+        });
+        progressBar.start();
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Ask for the report of the run the page follows, when it is unfolded, and put it in place of the one shown.
+     *
+     * @private
+     * @returns {Promise<void>}
+     */
+    async #askReport() {
+        const report = document.getElementById(ID_REPORT);
+        if (report === null || !(report.parentElement instanceof HTMLDetailsElement) || report.parentElement.open === false) {
+            return;
+        }
+        const form = document.getElementById(ID_FORM);
+        const fields = {};
+        fields[EVENT_NAME] = TASK_REPORT;
+        fields[FIELD_FOLLOWED] = form.elements.namedItem(FIELD_FOLLOWED).value;
+
+        const answered = await this.postEvents(fields);
+        if (answered === null || answered === undefined || !(ID_REPORT in answered)) {
+            return;
+        }
+        const shown = document.getElementById(ID_REPORT);
+        if (shown !== null) {
+            shown.outerHTML = answered[ID_REPORT];
+        }
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Ask for the results of the run, with the fields of the form of the page.
+     *
+     * @private
+     * @returns {Promise<void>}
+     */
+    async #complete() {
+        const fields = this.#fieldsOf(document.getElementById(ID_FORM), null);
+        fields[EVENT_BAKE] = TASK_COMPLETE;
+        await this.#post(fields);
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Send the fields, and put in the page what the server wrote, by identifier.
+     *
+     * The panel which arrives takes the focus by its title.
+     *
+     * @private
+     * @param {Object} fields - What is sent.
+     * @returns {Promise<void>}
+     */
+    async #post(fields) {
+        // Nothing is given back when the server said something: it was shown.
+        const answered = await this.postEvents(fields);
+        if (answered === null || answered === undefined) {
+            return;
+        }
+
+        for (const [id, html] of Object.entries(answered)) {
+            const former = document.getElementById(id);
+            if (former === null) {
+                continue;
+            }
+            former.outerHTML = html;
+            const fresh = document.getElementById(id);
+            if (fresh !== null && window.Wexa && window.Wexa.icons) {
+                window.Wexa.icons.run(fresh);
+            }
+        }
+
+        this.#attach();
+        this.#say();
+        const title = document.getElementById(ID_LOG_TITLE);
+        if (title !== null) {
+            title.setAttribute('tabindex', '-1');
+            title.focus();
         }
     }
 
@@ -148,6 +332,14 @@ export default class AnnotateManager extends BaseManager {
         if (submitter !== null && submitter.name === EVENT_BAKE && submitter.value.startsWith(TASK_OPTIONS)) {
             event.preventDefault();
             this.#configure(submitter.value, this.#fieldsOf(form, submitter), false);
+            return;
+        }
+
+        // The annotations are performed without reloading the page, and the
+        // run is followed.
+        if (submitter !== null && submitter.name === EVENT_BAKE && submitter.value === TASK_PERFORM) {
+            event.preventDefault();
+            this.#perform(this.#fieldsOf(form, submitter));
             return;
         }
 

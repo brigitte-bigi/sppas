@@ -140,7 +140,7 @@ class swappModelReports:
             _content = fp.read()
 
         _lines = list()
-        for _text in _content.split("\n"):
+        for _text in _content.splitlines():
             _lines.append(swappReportLine(_text, swappModelReports.__state_of(_text)))
 
         return _lines

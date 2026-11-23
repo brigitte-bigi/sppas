@@ -51,6 +51,7 @@ const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
 const DEPOSIT_CONTAINER_ID = 'files_deposit';
 const FILES_INPUT_ID = 'files_input';
 const FILES_BROWSE_ID = 'files_browse_button';
+const FILES_WAITING_ID = 'files_waiting';
 const DROPZONE_CLASS = 'dropzone';
 const TASK_DESIGNATE = 'designate';
 const TASK_SEND = 'send';
@@ -216,7 +217,24 @@ export default class SwappFiles {
         const posted = this.#transmittedFields();
         posted[FIELD_TASK] = pressed.name;
         posted[pressed.name] = pressed.value;
+
+        // Where the files stand already, the server waits for what is chosen
+        // in the selection window: the page says so until it answers, and the
+        // button which opens that window does not answer meanwhile, so that
+        // only one window is opened. The answer replaces the container, with
+        // what said it and the button; when nothing replaced it, both are
+        // given back as they were.
+        const waiting = document.getElementById(FILES_WAITING_ID);
+        const waits = pressed.name === TASK_DESIGNATE && waiting !== null;
+        if (waits === true) {
+            waiting.hidden = false;
+            pressed.disabled = true;
+        }
         await this.#post(posted);
+        if (waits === true) {
+            waiting.hidden = true;
+            pressed.disabled = false;
+        }
     }
 
     // ------------------------------------------------------------------------

@@ -43,6 +43,8 @@ from __future__ import annotations
 from sppas.core.coreutils import sppasTypeError
 from sppas.src.annotations import sppasFiles
 from sppas.src.annotations import sppasParam
+from sppas.src.wkps import sppasWorkspace
+from sppas.src.wkps import States
 
 from .annotate_annotations import LANG_NONE
 
@@ -62,8 +64,9 @@ class swappAnnotateRecord:
     What was decided is held in a sppasParam, which carries every decision
     the API performs with: which annotations are activated, the language of
     each, the values of their options, and the extension of every kind of
-    output file. A new one holds the defaults of the API. The merge option
-    and the checked report are not of it.
+    output file. A new one holds the defaults of the API. The merge option,
+    the checked report and the report of the run the page follows
+    are not of it.
 
     """
 
@@ -71,6 +74,7 @@ class swappAnnotateRecord:
         """Create a record with nothing in it."""
         self.__task = ""
         self.__report = ""
+        self.__followed = ""
         self.__parameters = sppasParam()
         self.__merge = False
         self.__to_be_shown = dict()
@@ -96,6 +100,7 @@ class swappAnnotateRecord:
             _data.update(self.serialize_options(self.__parameters.get_step_key(i)))
         _data["annotate_merge"] = str(self.__merge)
         _data["annotate_report"] = self.__report
+        _data["annotate_followed"] = self.__followed
 
         return _data
 
@@ -115,6 +120,7 @@ class swappAnnotateRecord:
 
         self.__task = ""
         self.__report = ""
+        self.__followed = ""
         self.__parameters = sppasParam()
         self.__merge = False
         self.__to_be_shown = dict()
@@ -123,6 +129,8 @@ class swappAnnotateRecord:
             self.__task = data["event_bake"]
         if isinstance(data.get("annotate_report"), str) is True:
             self.__report = data["annotate_report"]
+        if isinstance(data.get("annotate_followed"), str) is True:
+            self.__followed = data["annotate_followed"]
         self.__merge = str(data.get("annotate_merge", False)) == "True"
 
         for _name in data:
@@ -194,6 +202,45 @@ class swappAnnotateRecord:
 
         """
         self.__report = str(name)
+
+    # -----------------------------------------------------------------------
+
+    def get_followed(self) -> str:
+        """Return the name of the report of the run the page follows, empty if none (str)."""
+        return self.__followed
+
+    # -----------------------------------------------------------------------
+
+    def set_followed(self, name: str) -> None:
+        """Set the name of the report of the run the page follows.
+
+        :param name: (str) The name of the report, empty when the page follows none
+
+        """
+        self.__followed = str(name)
+
+    # -----------------------------------------------------------------------
+
+    def what_is_missing(self, batch: sppasWorkspace) -> list:
+        """Return what is still missing before the annotations can be performed.
+
+        The batch is given and not held: it belongs to the provision of files.
+
+        :param batch: (sppasWorkspace) The workspace the provision of files hands
+        :raises: sppasTypeError: The given batch is not a sppasWorkspace
+        :return: (list of str) "annotation" when none is selected, "batch" when it is empty
+
+        """
+        if isinstance(batch, sppasWorkspace) is False:
+            raise sppasTypeError(batch, "sppasWorkspace")
+
+        _missing = list()
+        if len(self.get_selected()) == 0:
+            _missing.append("annotation")
+        if len(batch.get_filename_from_state(States().CHECKED)) == 0:
+            _missing.append("batch")
+
+        return _missing
 
     # -----------------------------------------------------------------------
 
@@ -333,6 +380,7 @@ class swappAnnotateRecord:
 
     task = property(get_task, None)
     report = property(get_report, set_report)
+    followed = property(get_followed, set_followed)
     extensions = property(get_extensions, None)
     parameters = property(get_parameters, None)
     selected = property(get_selected, None)
