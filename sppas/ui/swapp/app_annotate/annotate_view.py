@@ -99,6 +99,8 @@ class swappAnnotateView(swappBaseView):
         # Set before the base view populates the nav with it.
         self.__help_page = help_page
         self.__files = None
+        self.__options = None
+        self.__values = dict()
         super(swappAnnotateView, self).__init__(tree, MSG_HEADER)
 
     # -----------------------------------------------------------------------
@@ -156,6 +158,8 @@ class swappAnnotateView(swappBaseView):
 
         _shown = record.to_be_shown
         self.__files = None
+        self.__options = None
+        self.__values = dict()
 
         # The dialogs of the messages. Each report which could not be deleted
         # is said in the one of the errors, with the reason.
@@ -180,21 +184,29 @@ class swappAnnotateView(swappBaseView):
         # of one type, the files, or the procedure outcome report. The six
         # steps are shown otherwise, beside the reports.
         if "annotations" in _shown:
+            # The options of the annotation which is configured: the container
+            # is placed in its dialog, and the values are given with it.
+            if "configured" in _shown:
+                self.__options = _shown["options"]
+                self.__values = record.serialize_options(_shown["configured"])
             self._htree.body_main.append_child(swappAnnotationsPanel(self._htree.body_main.identifier,
                                                                      _shown.get("type", ""),
                                                                      _shown["annotations"],
                                                                      record.selected,
                                                                      record.annotation_langs,
-                                                                     _shown.get("disabled", list())))
+                                                                     _shown.get("disabled", list()),
+                                                                     _shown.get("configured", ""),
+                                                                     self.__options))
             for _annotation in _shown["annotations"]:
                 _fields.append("annotate_ann_" + _annotation.get_key())
                 _fields.append("annotate_lang_" + _annotation.get_key())
-        elif record.task == "files":
+        elif record.task == "annotate_files":
             self.__files = swappFilesAnnotatePanel(self._htree.body_main.identifier)
             self._htree.body_main.append_child(self.__files)
         elif "report" in _shown:
             self._htree.body_main.append_child(swappLogAnnotatePanel(self._htree.body_main.identifier,
-                                                                     record.report, _shown["report"]))
+                                                                     record.report, _shown["report"],
+                                                                     _shown.get("unavailable", "")))
         else:
             self.__populate_steps(_shown, record)
             for _kind in record.extensions:
@@ -217,6 +229,18 @@ class swappAnnotateView(swappBaseView):
     def get_files(self) -> TagNode | None:
         """Return the panel of the files, None when it was not written."""
         return self.__files
+
+    # -----------------------------------------------------------------------
+
+    def get_options(self) -> TagNode | None:
+        """Return the container of the options which is placed, None when none is."""
+        return self.__options
+
+    # -----------------------------------------------------------------------
+
+    def get_values(self) -> dict:
+        """Return the values of the options which are configured, as the page carries them (dict)."""
+        return self.__values
 
     # -----------------------------------------------------------------------
     # Private
@@ -274,7 +298,7 @@ class swappAnnotateView(swappBaseView):
         _panels.append_child(swappActionAnnotatePanel(_panels.identifier, shown.get("kinds", dict()),
                                                       record.extensions,
                                                       shown.get("languages", list()),
-                                                      record.lang,
+                                                      shown.get("lang", ""),
                                                       shown.get("types", list()),
                                                       shown.get("holding", list()),
                                                       shown.get("files", 0),
@@ -291,3 +315,5 @@ class swappAnnotateView(swappBaseView):
     # -----------------------------------------------------------------------
 
     files = property(get_files, None)
+    options = property(get_options, None)
+    values = property(get_values, None)

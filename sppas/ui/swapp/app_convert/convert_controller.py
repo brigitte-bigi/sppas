@@ -45,10 +45,6 @@ from sppas.core.coreutils import sppasTypeError
 
 from .convert_model import swappConvertModel
 from .convert_record import swappConvertRecord
-from .convert_record import TASK_CONVERT
-from .convert_record import TASK_RESET
-from .convert_record import TASK_RESTART
-from .convert_record import TASK_COMPLETE
 from .convert_view import swappConvertView
 
 # ---------------------------------------------------------------------------
@@ -93,19 +89,19 @@ class swappConvertController:
         _record.parse(data)
         self.__set_destination(_record)
 
-        if _record.task == TASK_CONVERT:
+        if _record.task == "convert":
             self.__start(_record)
 
-        elif _record.task == TASK_COMPLETE:
+        elif _record.task == "complete":
             self.__complete(_record)
 
-        elif _record.task == TASK_RESET:
+        elif _record.task == "reset":
             # A reset is a reset: the decisions and the batch go together,
             # and the page is the one she arrived at.
             _record = swappConvertRecord()
             _record.conversion.destination = annots.annot_extension
 
-        elif _record.task == TASK_RESTART:
+        elif _record.task == "restart":
             # Another batch, into the same format: one converts a batch,
             # then another one, and taking every decision again at each
             # batch is what this treatment saves.

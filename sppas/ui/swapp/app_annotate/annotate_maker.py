@@ -146,7 +146,10 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
     def _process_events(self, events: dict, **kwargs) -> bool:
         """Override. Process the given events coming from the POST of any form.
 
-        :param events (dict): key=event_name, value=event_value
+        The tasks of Annotate are answered first; the other events are offered
+        to the provision of files.
+
+        :param events: (dict) key=event_name, value=event_value
         :return: (bool) True if the whole page must be re-created.
 
         """
@@ -160,24 +163,39 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
         self.__controller = swappAnnotateController(self.__model, self.__view)
 
         # Received events from an HTTP Post.
-        if "event_name" in events:
-            e_name = events["event_name"]
-            if e_name == "annotate_update":
-                self.__process_update_event()
+        if "event_bake" in events:
+            e = events["event_bake"]
+            self.__controller.handle(events)
+
+            # --- Action event to start over ---
+            if e == "annotate_reset":
+                self.__manager.start_over()
+
+        # Received events from the progress bar, which is waiting for the
+        # server response, filled in self._data.
+        elif "event_name" in events:
+
+            # --- Progress event to update the page ---
+            if events["event_name"] == "annotate_update":
+                self._data["percent"], self._data["header"], self._data["text"] = self.__controller.progress()
+                self._status.code = 202
+                if self._data["percent"] >= 100:
+                    self._status.code = 200
+
+            # --- Unknown event_name ---
             else:
-                self._status.code = 400
-                self._data["error"] = f"The server received an unknown event name: {e_name}."
+                logging.error(f"Unknown event_name={events['event_name']}")
+                self._status.code = 205  # Reset Content
+
             self.__controller = None
             return False
 
-        else:
-            # Events are propagated to the controller, and offered to the
-            # provision of files, which is asked to start over on a reset.
-            self.__controller.handle(events)
-            if events.get("annotate_task") == "reset":
-                self.__manager.start_over()
-            self.__manager.consumes(events)
-            return True
+        # Received events of the provision of files.
+        elif self.__manager.consumes(events) is False and len(events) > 0:
+            logging.error(f"Unknown events={events}")
+            self._status.code = 205  # Reset Content
+
+        return True
 
     # -----------------------------------------------------------------------
 
@@ -205,6 +223,12 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
             if self.__view.files is not None:
                 self.__manager.populate_view()
                 self.__view.files.append_child(self.__manager.container())
+            # The container of the options, and the values the page carries
+            # for them, answered alone as well to whoever asks for data
+            # rather than for a page.
+            if self.__view.options is not None:
+                self._data["options"] = self.__view.options.serialize()
+                self._data["values"] = self.__view.values
 
         else:
             msg = f"Unexpected status '{self._status.code}' while baking the page content."
@@ -216,20 +240,6 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
 
     # -----------------------------------------------------------------------
     # PRIVATE
-    # -----------------------------------------------------------------------
-
-    def __process_update_event(self):
-        """Process the given event coming from the POST of the progress.
-
-        """
-        logging.debug(" ******* Annotate update event ******* ")
-        self._data["percent"], self._data["header"], self._data["text"] = (
-            self.__controller.get_progress_values())
-
-        self._status.code = 202
-        if self._data["percent"] >= 100:
-            self._status.code = 200
-
     # -----------------------------------------------------------------------
 
     @staticmethod

@@ -73,10 +73,6 @@ from sppas.ui.swapp.app_convert.convert_remediation import swappModelRemediation
 from sppas.ui.swapp.app_convert.convert_conversion import swappModelConversion
 from sppas.ui.swapp.app_convert.convert_provision import swappModelProvision
 from sppas.ui.swapp.app_convert.convert_record import swappConversion
-from sppas.ui.swapp.app_convert.convert_record import MISSING_BATCH
-from sppas.ui.swapp.app_convert.convert_record import EVENT_BAKE
-from sppas.ui.swapp.app_convert.convert_record import TASK_CONVERT
-from sppas.ui.swapp.app_convert.convert_panels import FIELD_DESTINATION
 from sppas.ui.swapp.app_convert.convert_panels import GENERAL_OPTIONS
 from sppas.ui.swapp.app_convert.convert_panels import holds_id
 from sppas.ui.swapp.app_convert.convert_panels import unsupported_properties
@@ -695,7 +691,7 @@ class TestConversion(unittest.TestCase):
 
         """
         conversion = swappConversion()
-        self.assertEqual([MISSING_BATCH], conversion.what_is_missing(sppasWorkspace()))
+        self.assertEqual(["batch"], conversion.what_is_missing(sppasWorkspace()))
         self.assertEqual([], conversion.what_is_missing(a_batch([self.path])))
 
 # ---------------------------------------------------------------------------
@@ -786,8 +782,8 @@ class TestConvertView(unittest.TestCase):
         """Return the element of the button which sends the task convert."""
         for element in self.reader.elements:
             tag, attributes, enclosing = element
-            if tag == "button" and attributes.get("name") == EVENT_BAKE \
-                    and attributes.get("value") == TASK_CONVERT:
+            if tag == "button" and attributes.get("name") == "event_bake" \
+                    and attributes.get("value") == "convert":
                 return element
         return None
 
@@ -829,7 +825,7 @@ class TestConvertView(unittest.TestCase):
         form = self.reader.form_of(button)
         self.assertIsNotNone(form)
 
-        names = [FIELD_DESTINATION]
+        names = ["convert_destination"]
         for name, text in GENERAL_OPTIONS:
             names.append(name)
 

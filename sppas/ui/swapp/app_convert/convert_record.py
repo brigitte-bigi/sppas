@@ -44,30 +44,6 @@ from sppas.src.wkps import States
 
 # ---------------------------------------------------------------------------
 
-TASK_CONVERT = "convert"
-TASK_RESET = "reset"
-TASK_RESTART = "restart"
-
-# The events which follow a conversion, named as the ones of the Setup:
-# where it stands is asked by an event, its results by an event which bakes.
-EVENT_NAME = "event_name"
-EVENT_BAKE = "event_bake"
-TASK_UPDATE = "update"
-TASK_COMPLETE = "complete"
-
-# The name of the field which carries the name of the report of a conversion.
-FIELD_REPORT = "convert_report"
-
-# The names of the fields which carry the decisions. A field says which
-# application it is addressed to: any POST may reach the server at any time.
-FIELD_DESTINATION = "convert_destination"
-FIELD_OVERRIDE = "convert_override"
-FIELD_HEURISTIC = "convert_heuristic"
-
-MISSING_BATCH = "batch"
-
-# ---------------------------------------------------------------------------
-
 
 class swappConversion:
     """What was decided for one conversion.
@@ -101,7 +77,7 @@ class swappConversion:
 
         _missing = list()
         if len(batch.get_filename_from_state(States().CHECKED)) == 0:
-            _missing.append(MISSING_BATCH)
+            _missing.append("batch")
 
         return _missing
 
@@ -201,8 +177,8 @@ class swappConvertRecord:
 
         """
         _data = dict()
-        _data[FIELD_DESTINATION] = self.__conversion.destination
-        _data[FIELD_REPORT] = self.__report
+        _data["convert_destination"] = self.__conversion.destination
+        _data["convert_report"] = self.__report
 
         return _data
 
@@ -225,16 +201,16 @@ class swappConvertRecord:
         self.__conversion = swappConversion()
         self.__to_be_shown = dict()
 
-        if isinstance(data.get(EVENT_BAKE), str) is True:
-            self.__task = data[EVENT_BAKE]
-        elif data.get(EVENT_NAME) == TASK_UPDATE:
-            self.__task = TASK_UPDATE
-        if isinstance(data.get(FIELD_REPORT), str) is True:
-            self.__report = data[FIELD_REPORT]
-        if isinstance(data.get(FIELD_DESTINATION), str) is True:
-            self.__conversion.destination = data[FIELD_DESTINATION]
-        self.__conversion.override = str(data.get(FIELD_OVERRIDE, False)) == "True"
-        self.__conversion.heuristic = str(data.get(FIELD_HEURISTIC, False)) == "True"
+        if isinstance(data.get("event_bake"), str) is True:
+            self.__task = data["event_bake"]
+        elif data.get("event_name") == "update":
+            self.__task = "update"
+        if isinstance(data.get("convert_report"), str) is True:
+            self.__report = data["convert_report"]
+        if isinstance(data.get("convert_destination"), str) is True:
+            self.__conversion.destination = data["convert_destination"]
+        self.__conversion.override = str(data.get("convert_override", False)) == "True"
+        self.__conversion.heuristic = str(data.get("convert_heuristic", False)) == "True"
 
     # -----------------------------------------------------------------------
 

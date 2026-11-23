@@ -45,6 +45,12 @@ from sppas.src.annotations import sppasParam
 
 # ---------------------------------------------------------------------------
 
+# The choice of no language, and the one of several languages.
+LANG_NONE = "---"
+LANG_MIX = "MIX"
+
+# ---------------------------------------------------------------------------
+
 
 class swappModelAnnotations:
     """The annotations, the kinds of output file and the languages.
@@ -101,6 +107,56 @@ class swappModelAnnotations:
             _kinds[_kind] = (_extensions, sppasFiles.get_default_extension(_kind))
 
         return _kinds
+
+    # -----------------------------------------------------------------------
+
+    def language_of_selected(self, parameters: sppasParam) -> str:
+        """Return the language the selected annotations hold.
+
+        :param parameters: (sppasParam) What was decided
+        :return: (str) LANG_NONE when none has a language, LANG_MIX when they have several
+
+        """
+        _langs = list()
+        for i in range(parameters.get_step_numbers()):
+            _step = parameters.get_step(i)
+            if _step.get_activate() is True:
+                _lang = _step.get_lang()
+                if _lang is not None and len(_lang) > 0 and (_lang in _langs) is False:
+                    _langs.append(_lang)
+
+        if len(_langs) == 0:
+            return LANG_NONE
+        if len(_langs) == 1:
+            return _langs[0]
+        return LANG_MIX
+
+    # -----------------------------------------------------------------------
+
+    def fix_language(self, parameters: sppasParam, lang: str) -> None:
+        """Give the language of the page to every annotation which has resources for it.
+
+        An annotation which has language resources, but none for that
+        language, is left without a language; one which has no language
+        resources is not concerned. The page of the six steps sends the
+        language of the page with every request: when it is the one the
+        selected annotations hold, it was not changed, and nothing is done.
+
+        :param parameters: (sppasParam) What was decided
+        :param lang: (str) The language of the page, LANG_NONE or LANG_MIX
+
+        """
+        if lang == self.language_of_selected(parameters):
+            return
+
+        for i in range(parameters.get_step_numbers()):
+            _step = parameters.get_step(i)
+            _languages = _step.get_langlist()
+            if len(_languages) > 0:
+                if lang in _languages:
+                    _step.set_lang(lang)
+                else:
+                    _step.set_lang(None)
 
     # -----------------------------------------------------------------------
 

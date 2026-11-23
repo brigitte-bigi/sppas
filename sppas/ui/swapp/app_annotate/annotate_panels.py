@@ -47,8 +47,8 @@ from whakerpy.htmlmaker import TagNode
 
 from sppas.ui import _
 
-from .annotate_record import LANG_NONE
-from .annotate_record import LANG_MIX
+from .annotate_annotations import LANG_NONE
+from .annotate_annotations import LANG_MIX
 
 # ---------------------------------------------------------------------------
 
@@ -84,13 +84,12 @@ MSG_FILES_TITLE = _("Add files")
 MSG_LOG_TITLE = _("Procedure outcome report")
 MSG_REPORT_FILE = _("Report file:")
 
-# The states the API writes at the beginning of a line of a result, and the
-# class of each of them.
-REPORT_STATES = ((_("OK"), "ok"),
-                 (_("ERROR"), "error"),
-                 (_("WARNING"), "warning"),
-                 (_("INFO"), "info"),
-                 (_("IGNORED"), "ignore"))
+# The class of the line of each state a line of a report bears.
+STATE_CLASSES = {"OK": "ok",
+                 "ERROR": "error",
+                 "WARNING": "warning",
+                 "INFO": "info",
+                 "IGNORED": "ignore"}
 
 # ---------------------------------------------------------------------------
 
@@ -106,8 +105,8 @@ def append_head(panel: TagNode, title_id: str, title: str) -> None:
     _head = TagNode(panel.identifier, None, "div", attributes={"class": "annotate-head"})
     panel.append_child(_head)
     _back = TagNode(_head.identifier, None, "button",
-                    attributes={"type": "submit", "form": "annotate_form", "name": "annotate_task",
-                                "value": "steps", "data-icon": "arrow-up"})
+                    attributes={"type": "submit", "form": "annotate_form", "name": "event_bake",
+                                "value": "annotate_steps", "data-icon": "arrow-up"})
     _head.append_child(_back)
     _back.append_child(HTMLNode(_back.identifier, None, "span", value=MSG_BACK))
     _head.append_child(HTMLNode(_head.identifier, None, "h3", value=title, attributes={"id": title_id}))
@@ -162,7 +161,7 @@ class swappActionAnnotatePanel(TagNode):
         self.append_child(_p)
         _p.append_child(HTMLNode(_p.identifier, None, "button", value=MSG_RESET,
                                  attributes={"type": "submit", "form": "annotate_form",
-                                             "name": "annotate_task", "value": "reset"}))
+                                             "name": "event_bake", "value": "annotate_reset"}))
 
     # -----------------------------------------------------------------------
     # Private
@@ -197,7 +196,7 @@ class swappActionAnnotatePanel(TagNode):
         :return: (TagNode) The button
 
         """
-        _attributes = {"type": "submit", "form": "annotate_form", "name": "annotate_task", "value": value}
+        _attributes = {"type": "submit", "form": "annotate_form", "name": "event_bake", "value": value}
         for _key in attributes:
             _attributes[_key] = attributes[_key]
         _button = TagNode(parent.identifier, None, "button", attributes=_attributes)
@@ -274,8 +273,8 @@ class swappActionAnnotatePanel(TagNode):
 
         for _type in types:
             _button = TagNode(_group.identifier, None, "button",
-                              attributes={"type": "submit", "form": "annotate_form", "name": "annotate_task",
-                                          "value": "annotations_" + _type, "class": "width_full",
+                              attributes={"type": "submit", "form": "annotate_form", "name": "event_bake",
+                                          "value": "annotate_annotations_" + _type, "class": "width_full",
                                           "id": "annotate_type_" + _type})
             _group.append_child(_button)
             if (_type in holding) is False:
@@ -295,7 +294,7 @@ class swappActionAnnotatePanel(TagNode):
         _item.append_child(_group)
         _group.append_child(HTMLNode(_group.identifier, None, "p", value=MSG_FILES_STATE.format(files),
                                      attributes={"id": "annotate_files_state"}))
-        swappActionAnnotatePanel.__append_button(_group, "files", MSG_FILES_CHOOSE, {"class": "width_full"})
+        swappActionAnnotatePanel.__append_button(_group, "annotate_files", MSG_FILES_CHOOSE, {"class": "width_full"})
 
     # -----------------------------------------------------------------------
 
@@ -318,10 +317,10 @@ class swappActionAnnotatePanel(TagNode):
                                  attributes={"for": "annotate_merge"}))
 
         if selected is True:
-            swappActionAnnotatePanel.__append_button(_group, "perform", MSG_BTN_RUN,
+            swappActionAnnotatePanel.__append_button(_group, "annotate_perform", MSG_BTN_RUN,
                                                      {"class": "action-button width_full", "data-icon": "play"})
         else:
-            swappActionAnnotatePanel.__append_button(_group, "perform", MSG_BTN_RUN,
+            swappActionAnnotatePanel.__append_button(_group, "annotate_perform", MSG_BTN_RUN,
                                                      {"class": "action-button width_full", "aria-disabled": "true",
                                                       "aria-describedby": "annotate_perform_state",
                                                       "data-icon": "play"})
@@ -339,15 +338,21 @@ class swappActionAnnotatePanel(TagNode):
         _item.append_child(_group)
 
         if checked is True:
-            swappActionAnnotatePanel.__append_button(_group, "show", MSG_BTN_REPORT,
+            swappActionAnnotatePanel.__append_button(_group, "annotate_show", MSG_BTN_REPORT,
                                                      {"class": "action-button width_full", "data-icon": "file"})
         else:
-            swappActionAnnotatePanel.__append_button(_group, "show", MSG_BTN_REPORT,
+            swappActionAnnotatePanel.__append_button(_group, "annotate_show", MSG_BTN_REPORT,
                                                      {"class": "action-button width_full", "aria-disabled": "true",
                                                       "aria-describedby": "annotate_show_state",
                                                       "data-icon": "file"})
-            _group.append_child(HTMLNode(_group.identifier, None, "p", value=MSG_REPORT_MISSING,
-                                         attributes={"id": "annotate_show_state", "class": "annotate-missing"}))
+
+        # What says no report is checked is always written, and hidden when
+        # one is: checking a report in the page makes no request.
+        _class = "annotate-missing"
+        if checked is True:
+            _class = "annotate-missing hidden"
+        _group.append_child(HTMLNode(_group.identifier, None, "p", value=MSG_REPORT_MISSING,
+                                     attributes={"id": "annotate_show_state", "class": _class}))
 
 # ---------------------------------------------------------------------------
 
@@ -381,10 +386,10 @@ class swappReportsPanel(TagNode):
 
         _p = TagNode(self.identifier, None, "p")
         self.append_child(_p)
-        for _value, _icon, _text in (("delete_checked", "delete-checked", MSG_DEL_CHECKED),
-                                     ("delete_unchecked", "delete-unchecked", MSG_DEL_ALL)):
+        for _value, _icon, _text in (("annotate_delete_checked", "delete-checked", MSG_DEL_CHECKED),
+                                     ("annotate_delete_unchecked", "delete-unchecked", MSG_DEL_ALL)):
             _button = TagNode(_p.identifier, None, "button",
-                              attributes={"type": "submit", "form": "annotate_form", "name": "annotate_task",
+                              attributes={"type": "submit", "form": "annotate_form", "name": "event_bake",
                                           "value": _value, "data-icon": _icon})
             _p.append_child(_button)
             _button.append_child(HTMLNode(_button.identifier, None, "span", value=_text))
@@ -423,7 +428,7 @@ class swappAnnotationsPanel(TagNode):
     """
 
     def __init__(self, parent: str, ann_type: str, annotations: list, selected: list, langs: dict,
-                 disabled: list):
+                 disabled: list, configured: str, options: TagNode | None):
         """Create the panel of the annotations of one type.
 
         :param parent: (str) Identifier of the node the panel is appended to
@@ -432,6 +437,8 @@ class swappAnnotationsPanel(TagNode):
         :param selected: (list of str) The keys of the selected annotations
         :param langs: (dict) The language chosen for each annotation, by its key
         :param disabled: (list of str) The keys of the annotations which can't be performed on that machine
+        :param configured: (str) The key of the annotation which is configured, empty if none
+        :param options: (TagNode) The container of the service of the options for that annotation, None if none
 
         """
         _title_id = "annotate_{:s}_h".format(ann_type.lower())
@@ -449,7 +456,10 @@ class swappAnnotationsPanel(TagNode):
                                                       _key in disabled)
 
         for _annotation in annotations:
-            swappAnnotationsPanel.__append_options(self, _annotation)
+            if _annotation.get_key() == configured:
+                swappAnnotationsPanel.__append_options(self, _annotation, options)
+            else:
+                swappAnnotationsPanel.__append_options(self, _annotation, None)
 
     # -----------------------------------------------------------------------
     # Private
@@ -493,8 +503,9 @@ class swappAnnotationsPanel(TagNode):
                                  attributes={"for": "annotate_ann_" + _key, "id": "annotate_name_" + _key}))
         _p = TagNode(_column.identifier, None, "p")
         _column.append_child(_p)
-        _attributes = {"type": "button", "class": "text-reveal-button", "data-icon": "parameters",
-                       "onclick": "Wexa.dialog.open('annotate_options_" + _key + "', true)"}
+        _attributes = {"type": "submit", "form": "annotate_form", "name": "event_bake",
+                       "value": "annotate_options_" + _key,
+                       "class": "text-reveal-button", "data-icon": "parameters"}
         if disabled is True:
             _attributes["disabled"] = None
         _button = TagNode(_p.identifier, None, "button", attributes=_attributes)
@@ -559,25 +570,28 @@ class swappAnnotationsPanel(TagNode):
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def __append_options(parent: TagNode, annotation) -> None:
+    def __append_options(parent: TagNode, annotation, options: TagNode | None) -> None:
         """Append the dialog of the options of one annotation.
+
+        The container of the service of the options stands in it when that
+        annotation is configured; an empty section takes its place otherwise.
 
         :param parent: (TagNode) The panel
         :param annotation: What the step of the API answers
+        :param options: (TagNode) The container of the service of the options, None if not configured
 
         """
         _key = annotation.get_key()
         _id = "annotate_options_" + _key
-        _dialog = TagNode(parent.identifier, None, "dialog", attributes={"id": _id, "aria-labelledby": _id + "_h"})
+        _dialog = TagNode(parent.identifier, _id, "dialog", attributes={"id": _id, "aria-labelledby": _id + "_h"})
         parent.append_child(_dialog)
         _dialog.append_child(HTMLNode(_dialog.identifier, None, "h4",
                                       value=MSG_OPTIONS_OF.format(annotation.get_name()),
                                       attributes={"id": _id + "_h"}))
-        _dialog.append_child(TagNode(_dialog.identifier, None, "section", attributes={"aria-label": MSG_OPTIONS}))
-        _p = TagNode(_dialog.identifier, None, "p")
-        _dialog.append_child(_p)
-        _p.append_child(HTMLNode(_p.identifier, None, "button", value=MSG_CLOSE,
-                                 attributes={"type": "button", "onclick": "Wexa.dialog.close('" + _id + "')"}))
+        if options is None:
+            _dialog.append_child(TagNode(_dialog.identifier, None, "section", attributes={"aria-label": MSG_OPTIONS}))
+        else:
+            _dialog.append_child(options)
 
 # ---------------------------------------------------------------------------
 
@@ -608,17 +622,17 @@ class swappLogAnnotatePanel(TagNode):
     """The button which comes back to the six steps, the title, and the procedure outcome report.
 
     The report is written line for line as the API wrote it, in a font of one
-    width, the state at the beginning of every line of a result in the class
-    of that state.
+    width, the mark of the state a line bears in the class of that state.
 
     """
 
-    def __init__(self, parent: str, name: str, report: str):
+    def __init__(self, parent: str, name: str, report: list, unavailable: str):
         """Create the panel of the procedure outcome report.
 
         :param parent: (str) Identifier of the node the panel is appended to
         :param name: (str) Name of the report
-        :param report: (str) Text of the report, or why it is not available
+        :param report: (list of swappReportLine) The lines of the report
+        :param unavailable: (str) Why the report is not available, empty if it is
 
         """
         super(swappLogAnnotatePanel, self).__init__(parent, None, "section",
@@ -627,39 +641,41 @@ class swappLogAnnotatePanel(TagNode):
         append_head(self, "annotate_log_h", MSG_LOG_TITLE)
         self.append_child(HTMLNode(self.identifier, None, "p", value=MSG_REPORT_FILE + " " + html.escape(name),
                                    attributes={"id": "annotate_report_file"}))
-        _pre = TagNode(self.identifier, None, "pre", attributes={"id": "annotate_report", "class": "annotate-report"})
-        self.append_child(_pre)
-        _pre.append_child(HTMLNode(_pre.identifier, None, "code", value=swappLogAnnotatePanel.__colored(report)))
+        if len(unavailable) > 0:
+            _code = html.escape(unavailable)
+        else:
+            _code = swappLogAnnotatePanel.__written(report)
+        # The spaces of a pre are shown: the code it holds is its value, which
+        # is written without indentation, and not a child, which would be.
+        self.append_child(HTMLNode(self.identifier, None, "pre", value="<code>" + _code + "</code>",
+                                   attributes={"id": "annotate_report", "class": "annotate-report"}))
 
     # -----------------------------------------------------------------------
     # Private
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def __colored(report: str) -> str:
-        """Return the report escaped, the state of every line of a result in a span of its class.
+    def __written(report: list) -> str:
+        """Return the lines of the report escaped, the mark of the state a line bears in a span of its class.
 
-        A state is searched after the first "[ " of a line, within 14
-        characters, and its 12 characters are put in the span.
+        The mark is what stands from "[ " to the next "]": the color is carried
+        by it alone, and never by the whole line.
 
-        :param report: (str) Text of the report
+        :param report: (list of swappReportLine) The lines of the report
         :return: (str)
 
         """
         _lines = list()
-        for _line in report.split("\n"):
-            _start = _line.find("[ ")
-            _class = ""
-            if _start > -1:
-                for _word, _name in REPORT_STATES:
-                    if len(_class) == 0 and _line.find(_word, _start, _start + 14) > -1:
-                        _class = _name
-
-            if len(_class) > 0:
-                _lines.append(html.escape(_line[:_start]) +
-                              '<span class="' + _class + '">' + html.escape(_line[_start:_start + 12]) + "</span>" +
-                              html.escape(_line[_start + 12:]))
-            else:
-                _lines.append(html.escape(_line))
+        for _line in report:
+            _text = html.escape(_line.text)
+            if len(_line.state) > 0:
+                _start = _line.text.find("[ ")
+                _end = _line.text.find("]", _start)
+                if _end > -1:
+                    _text = (html.escape(_line.text[:_start])
+                             + '<span class="' + STATE_CLASSES[_line.state] + '">'
+                             + html.escape(_line.text[_start:_end + 1]) + "</span>"
+                             + html.escape(_line.text[_end + 1:]))
+            _lines.append(_text)
 
         return "\n".join(_lines)

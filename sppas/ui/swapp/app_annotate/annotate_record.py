@@ -44,11 +44,7 @@ from sppas.core.coreutils import sppasTypeError
 from sppas.src.annotations import sppasFiles
 from sppas.src.annotations import sppasParam
 
-# ---------------------------------------------------------------------------
-
-# The choice of no language, and the one of several languages.
-LANG_NONE = "---"
-LANG_MIX = "MIX"
+from .annotate_annotations import LANG_NONE
 
 # ---------------------------------------------------------------------------
 
@@ -58,16 +54,16 @@ class swappAnnotateRecord:
 
     The view serializes what was decided into the form of the page, and the
     controller parses it back at the next request: nobody holds it between
-    two requests. The language of the page is not serialized: it is the one
-    of the selected annotations, and it is transmitted only by the page of
-    the six steps, where it is a field. What is to be shown is not serialized: it is decided by
-    the request which shows it.
+    two requests. The language of the page is not held: it is a gesture of
+    the page of the six steps, which writes the language of the annotations.
+    What is to be shown is not serialized: it is decided by the request which
+    shows it.
 
     What was decided is held in a sppasParam, which carries every decision
     the API performs with: which annotations are activated, the language of
-    each, and the extension of every kind of output file. A new one holds
-    the defaults of the API. The merge option and the checked report are not
-    of it.
+    each, the values of their options, and the extension of every kind of
+    output file. A new one holds the defaults of the API. The merge option
+    and the checked report are not of it.
 
     """
 
@@ -76,7 +72,6 @@ class swappAnnotateRecord:
         self.__task = ""
         self.__report = ""
         self.__parameters = sppasParam()
-        self.__lang = ""
         self.__merge = False
         self.__to_be_shown = dict()
 
@@ -97,6 +92,8 @@ class swappAnnotateRecord:
         _langs = self.get_annotation_langs()
         for _key in _langs:
             _data["annotate_lang_" + _key] = _langs[_key]
+        for i in range(self.__parameters.get_step_numbers()):
+            _data.update(self.serialize_options(self.__parameters.get_step_key(i)))
         _data["annotate_merge"] = str(self.__merge)
         _data["annotate_report"] = self.__report
 
@@ -119,16 +116,13 @@ class swappAnnotateRecord:
         self.__task = ""
         self.__report = ""
         self.__parameters = sppasParam()
-        self.__lang = ""
         self.__merge = False
         self.__to_be_shown = dict()
 
-        if isinstance(data.get("annotate_task"), str) is True:
-            self.__task = data["annotate_task"]
+        if isinstance(data.get("event_bake"), str) is True:
+            self.__task = data["event_bake"]
         if isinstance(data.get("annotate_report"), str) is True:
             self.__report = data["annotate_report"]
-        if isinstance(data.get("annotate_lang"), str) is True:
-            self.__lang = data["annotate_lang"]
         self.__merge = str(data.get("annotate_merge", False)) == "True"
 
         for _name in data:
@@ -142,6 +136,31 @@ class swappAnnotateRecord:
                     self.__parameters.activate_step(self.__parameters.get_step_idx(_key))
             elif _name.startswith("annotate_lang_") is True:
                 self.set_annotation_lang(_name[len("annotate_lang_"):], data[_name])
+
+        # The field of an option is named after the key of its annotation and
+        # its own: the name is built from both, and never split.
+        for i in range(self.__parameters.get_step_numbers()):
+            _key = self.__parameters.get_step_key(i)
+            for _option in self.__parameters.get_options(i):
+                _name = "annotate_opt_" + _key + "_" + _option.get_key()
+                if isinstance(data.get(_name), str) is True:
+                    self.__parameters.set_option_value(i, _option.get_key(), data[_name])
+
+    # -----------------------------------------------------------------------
+
+    def serialize_options(self, key: str) -> dict:
+        """Return the values of the options of one annotation, as strings a page carries.
+
+        :param key: (str) The key of the annotation
+        :raises: KeyError: No annotation has that key
+        :return: (dict) One entry per option, each of them a string
+
+        """
+        _data = dict()
+        for _option in self.get_options(key):
+            _data["annotate_opt_" + key + "_" + _option.get_key()] = str(_option.get_value())
+
+        return _data
 
     # -----------------------------------------------------------------------
 
@@ -207,9 +226,9 @@ class swappAnnotateRecord:
 
     # -----------------------------------------------------------------------
 
-    def get_lang(self) -> str:
-        """Return the language of the page, empty if none (str)."""
-        return self.__lang
+    def get_parameters(self) -> sppasParam:
+        """Return what was decided, as the API performs with it (sppasParam)."""
+        return self.__parameters
 
     # -----------------------------------------------------------------------
 
@@ -232,16 +251,6 @@ class swappAnnotateRecord:
 
         """
         self.__parameters.disable_step(self.__parameters.get_step_idx(key))
-
-    # -----------------------------------------------------------------------
-
-    def set_lang(self, lang: str) -> None:
-        """Set the language of the page.
-
-        :param lang: (str) The language, LANG_NONE or LANG_MIX
-
-        """
-        self.__lang = str(lang)
 
     # -----------------------------------------------------------------------
 
@@ -282,6 +291,32 @@ class swappAnnotateRecord:
 
     # -----------------------------------------------------------------------
 
+    def get_options(self, key: str) -> list:
+        """Return the options of one annotation, every one holding its value.
+
+        :param key: (str) The key of the annotation
+        :raises: KeyError: No annotation has that key
+        :return: (list of sppasOption)
+
+        """
+        return self.__parameters.get_options(self.__parameters.get_step_idx(key))
+
+    # -----------------------------------------------------------------------
+
+    def set_options(self, key: str, options: list) -> None:
+        """Give the options of one annotation the values the given ones hold.
+
+        :param key: (str) The key of the annotation
+        :param options: (list of sppasOption) Options of that annotation
+        :raises: KeyError: No annotation has that key, or an option is not one of it
+
+        """
+        _idx = self.__parameters.get_step_idx(key)
+        for _option in options:
+            self.__parameters.set_option_value(_idx, _option.get_key(), _option.get_value())
+
+    # -----------------------------------------------------------------------
+
     def get_merge(self) -> bool:
         """Return True if the merge option is checked (bool)."""
         return self.__merge
@@ -299,7 +334,7 @@ class swappAnnotateRecord:
     task = property(get_task, None)
     report = property(get_report, set_report)
     extensions = property(get_extensions, None)
-    lang = property(get_lang, set_lang)
+    parameters = property(get_parameters, None)
     selected = property(get_selected, None)
     annotation_langs = property(get_annotation_langs, None)
     merge = property(get_merge, None)

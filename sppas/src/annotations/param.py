@@ -41,6 +41,7 @@
 import logging
 import json
 import os
+import sys
 
 from sppas.core.config import paths
 from sppas.core.config import annots
@@ -534,6 +535,21 @@ class sppasParam(object):
     def disable_step(self, step):
         step = self.__check_step(step)
         self.annotations[step].set_activate(False)
+
+    def test_step(self, step: int) -> bool:
+        """Test if an annotation step can be instantiated without error.
+
+        :param step: (int) Annotation step index.
+        :return: (bool) True if the annotation step can be instantiated without raising any exception.
+
+        """
+        step = self.__check_step(step)
+        a = self.annotations[step]
+        try:
+            inst_name = getattr(sys.modules[__name__], a.get_api())
+            inst_name()
+        except:
+            return False
 
     def get_step_status(self, step):
         step = self.__check_step(step)

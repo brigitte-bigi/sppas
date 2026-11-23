@@ -47,13 +47,6 @@ from whakerpy.htmlmaker import TagNode
 
 from sppas.ui import _
 
-from .convert_record import EVENT_BAKE
-from .convert_record import FIELD_DESTINATION
-from .convert_record import FIELD_OVERRIDE
-from .convert_record import FIELD_HEURISTIC
-from .convert_record import TASK_CONVERT
-from .convert_record import TASK_RESET
-from .convert_record import TASK_RESTART
 
 # ---------------------------------------------------------------------------
 
@@ -105,7 +98,7 @@ MSG_PROPERTIES = {
 
 # The two general options, by the name the page sends them under, which is
 # also the identifier of the field.
-GENERAL_OPTIONS = ((FIELD_OVERRIDE, MSG_OVERRIDE), (FIELD_HEURISTIC, MSG_HEURISTIC))
+GENERAL_OPTIONS = (("convert_override", MSG_OVERRIDE), ("convert_heuristic", MSG_HEURISTIC))
 
 ID_FORMATS = "convert_formats_h"
 ID_DESTINATION = "convert_destination"
@@ -248,7 +241,7 @@ class swappFormatsPanel(TagNode):
                 _td = TagNode(_tr.identifier, None, "td")
                 _tr.append_child(_td)
                 _id = "convert_dest_" + format_name(_format.extension)
-                _attributes = {"type": "radio", "form": ID_FORM, "name": FIELD_DESTINATION, "id": _id,
+                _attributes = {"type": "radio", "form": ID_FORM, "name": "convert_destination", "id": _id,
                                "value": _format.extension}
                 if len(unsupported_properties(_format)) > 0:
                     _attributes["aria-controls"] = holds_id(_format.extension)
@@ -455,7 +448,7 @@ class swappGeneralPanel(TagNode):
         _form = TagNode(self.identifier, ID_FORM, "form", attributes={"id": ID_FORM, "method": "post"})
         self.append_child(_form)
 
-        _values = {FIELD_OVERRIDE: override, FIELD_HEURISTIC: heuristic}
+        _values = {"convert_override": override, "convert_heuristic": heuristic}
         for _field, _text in GENERAL_OPTIONS:
             _p = TagNode(_form.identifier, None, "p")
             _form.append_child(_p)
@@ -476,14 +469,14 @@ class swappGeneralPanel(TagNode):
 
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_CONVERT,
                                     attributes={"type": "submit", "class": "action-button",
-                                                "name": EVENT_BAKE, "value": TASK_CONVERT}))
+                                                "name": "event_bake", "value": "convert"}))
         # A reset is a reset: the decisions and the files go together, so it
         # is asked of the server -- the files are its to take back. A reset
         # of the browser would put the fields of this form back and leave
         # the files where they are.
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_RESET,
-                                    attributes={"type": "submit", "name": EVENT_BAKE,
-                                                "value": TASK_RESET}))
+                                    attributes={"type": "submit", "name": "event_bake",
+                                                "value": "reset"}))
 
 # ---------------------------------------------------------------------------
 
@@ -571,5 +564,5 @@ class swappResultsPanel(TagNode):
                                                     "class": "action-button",
                                                     "role": "button"}))
         _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_RESTART,
-                                    attributes={"type": "submit", "name": EVENT_BAKE,
-                                                "value": TASK_RESTART}))
+                                    attributes={"type": "submit", "name": "event_bake",
+                                                "value": "restart"}))

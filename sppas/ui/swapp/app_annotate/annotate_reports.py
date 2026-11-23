@@ -44,6 +44,54 @@ import codecs
 
 from sppas.core.config import sg
 from sppas.core.config import paths
+from sppas.ui import _
+
+# ---------------------------------------------------------------------------
+
+# The states a line of a result bears, and the word the API writes for each
+# of them at the beginning of that line, in the language of the interface.
+REPORT_STATES = (("OK", _("OK")),
+                 ("ERROR", _("ERROR")),
+                 ("WARNING", _("WARNING")),
+                 ("INFO", _("INFO")),
+                 ("IGNORED", _("IGNORED")))
+
+# ---------------------------------------------------------------------------
+
+
+class swappReportLine:
+    """One line of a report, as it was written, and the state it bears.
+
+    """
+
+    def __init__(self, text: str, state: str):
+        """Create a line of a report.
+
+        :param text: (str) The line, as it was written
+        :param state: (str) One of the states of REPORT_STATES, empty if the line states no result
+
+        """
+        self.__text = str(text)
+        self.__state = str(state)
+
+    # -----------------------------------------------------------------------
+
+    def get_text(self) -> str:
+        """Return the line, as it was written (str)."""
+        return self.__text
+
+    # -----------------------------------------------------------------------
+
+    def get_state(self) -> str:
+        """Return the state the line bears, empty if none (str)."""
+        return self.__state
+
+    # -----------------------------------------------------------------------
+    # Properties
+    # -----------------------------------------------------------------------
+
+    text = property(get_text, None)
+    state = property(get_state, None)
 
 # ---------------------------------------------------------------------------
 
@@ -74,20 +122,28 @@ class swappModelReports:
 
     # -----------------------------------------------------------------------
 
-    def read(self, name: str) -> str:
-        """Return the text of a report as it was written, line for line.
+    def read(self, name: str) -> list:
+        """Return the lines of a report as they were written, each with the state it bears.
+
+        Nothing is counted, and nothing is decided from it.
 
         :param name: (str) Name of the report, one of those which are kept
         :raises: ValueError: The name is not the one of a report which is kept
         :raises: IOError: The report can't be read
-        :return: (str)
+        :return: (list of swappReportLine) One per line, in the order of the file
 
         """
         if (name in self.reports()) is False:
             raise ValueError("{:s} is not a report which is kept.".format(name))
 
         with codecs.open(os.path.join(paths.logs, name), "r", sg.__encoding__) as fp:
-            return fp.read()
+            _content = fp.read()
+
+        _lines = list()
+        for _text in _content.split("\n"):
+            _lines.append(swappReportLine(_text, swappModelReports.__state_of(_text)))
+
+        return _lines
 
     # -----------------------------------------------------------------------
 
@@ -113,3 +169,26 @@ class swappModelReports:
                 _left[_name] = "It is not a report which is kept."
 
         return _left
+
+    # -----------------------------------------------------------------------
+    # Private
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __state_of(text: str) -> str:
+        """Return the state a line of a result bears, empty if the line states no result.
+
+        The word of a state is searched after the first "[ " of the line,
+        within 14 characters.
+
+        :param text: (str) One line of a report
+        :return: (str)
+
+        """
+        _start = text.find("[ ")
+        if _start > -1:
+            for _state, _word in REPORT_STATES:
+                if text.find(_word, _start, _start + 14) > -1:
+                    return _state
+
+        return ""

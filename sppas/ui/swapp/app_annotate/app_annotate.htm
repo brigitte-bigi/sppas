@@ -1851,21 +1851,32 @@
 			provision of files starts over.</li>
 			</ul>
 
-			<p><b>What a request is made of.</b> The task is carried by one field,
-			<code>annotate_task</code>, whose value is the name of the task; a request
-			which carries no such field carries no task of this application, and
-			<code>is_a_task()</code> answers on that field alone. The decisions are
+			<p><b>What a request is made of.</b> The task is carried by
+			<code>event_bake</code>, as in Convert, whose value is the name of the task
+			preceded by the name of this application: <code>event_bake=annotate_perform</code>,
+			<code>event_bake=annotate_reset</code>. A request which carries no
+			<code>event_bake</code> carries no task of this application, and the response
+			offers it to the provision of files. The decisions are
 			carried by one field each, and they travel with every request whatever its
 			task: <code>annotate_ext_&lt;kind&gt;</code>, one per kind of output file;
 			<code>annotate_lang</code>, the language of the page;
 			<code>annotate_ann_&lt;key&gt;</code>, one per selected annotation, of value <code>True</code>;
 			<code>annotate_lang_&lt;key&gt;</code>, the language of one annotation;
+			<code>annotate_opt_&lt;key&gt;_&lt;option&gt;</code>, the value of one option of one annotation;
 			<code>annotate_merge</code>; and <code>annotate_report</code>, the report
 			which is checked. The task <strong>annotations</strong> carries the type it
-			asks for in its own value: <code>annotations_STANDALONE</code>,
-			<code>annotations_SPEAKER</code>, <code>annotations_INTERACTION</code>.</p>
+			asks for in its own value: <code>annotate_annotations_STANDALONE</code>,
+			<code>annotate_annotations_SPEAKER</code>, <code>annotate_annotations_INTERACTION</code>.
+			The task <strong>options</strong> carries the key of the annotation it
+			configures in its own value, <code>annotate_options_&lt;key&gt;</code>, which
+			is also the identifier of the dialog of that annotation. It is sent without
+			leaving the page: when Configure is clicked, and with each form of the
+			service of the options in that dialog, whose fields travel with the ones of
+			the page. It is answered with the container of that service and with the
+			values of the options of that annotation, which the page writes in its
+			hidden fields.</p>
 
-			<p>Twelve tasks for thirteen treatments. T02 to T05 happen in the page and make
+			<p>T02 to T05 happen in the page and make
 			no request RO8: what they decide is transmitted with <strong>perform</strong>.
 			T06 is handed to the service of the options, and T07 is the provision of
 			files'. <strong>update</strong> and <strong>complete</strong> are sent as the
@@ -1959,8 +1970,9 @@
 			with the state the API wrote in it &mdash; <code>[&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;]</code>,
 			<code>[&nbsp;WARNING&nbsp;&nbsp;]</code>, <code>[&nbsp;IGNORE&nbsp;&nbsp;]</code>,
 			<code>[&nbsp;&nbsp;ERROR&nbsp;&nbsp;]</code>, <code>[&nbsp;&nbsp;&nbsp;INFO&nbsp;&nbsp;&nbsp;]</code>
-			&mdash; so the state is read in the text itself; the class the line bears
-			colors it, and says nothing the text does not say already.</p>
+			&mdash; so the state is read in the text itself; the class that mark bears
+			colors the mark alone and never the whole line, and says nothing the text
+			does not say already.</p>
 
 			<p>Online, a link downloads the report, and another one the archive of every
 			produced file.</p>
@@ -2093,10 +2105,11 @@
 			</tbody>
 			</table>
 
-			<p><b>Three things of the page are placed by the view and written
-			elsewhere.</b> The group of three choices which says which of the two panels
-			is shown is a node of swapp, shared by every page which holds two panels, and
-			this view places it. The options of an annotation
+			<p>The group of three choices which says which of the two panels is shown is
+			written by this view.</p>
+
+			<p><b>Two things of the page are placed by the view and written
+			elsewhere.</b> The options of an annotation
 			are the container the service of the options writes, which this view places in
 			a dialog of its own, one per annotation. The progress is the three nodes
 			<code>swappProgressBar</code> writes &mdash; the header, the bar and the text
@@ -2139,7 +2152,7 @@
 			<table>
 			<thead><tr><th scope="col">Class</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 			<tbody>
-			  <tr><td><code>AnnotateController</code></td><td>record</td><td>is_a_task(events), handle(request_data), progress(), say_what_is_missing(), populate_view()</td></tr>
+			  <tr><td><code>AnnotateController</code></td><td>record</td><td>handle(request_data), progress(), say_what_is_missing(), populate_view()</td></tr>
 			  <tr><td><code>AnnotateRecord</code></td><td>task, parameters, performance, checked report, to_be_shown</td><td>serialize(), parse(data), show(key, value)</td></tr>
 			  <tr><td><code>AnnotateResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
 			</tbody>
@@ -2186,7 +2199,7 @@
 
 			<h4>In yUML</h4>
 
-			<pre class="dark"><code>[AnnotateResponseRecipe|bake();_process_events()]++1-1&gt;[AnnotateController|record|is_a_task();handle();progress();say_what_is_missing();populate_view()]
+			<pre class="dark"><code>[AnnotateResponseRecipe|bake();_process_events()]++1-1&gt;[AnnotateController|record|handle();progress();say_what_is_missing();populate_view()]
 [AnnotateResponseRecipe]++1-1&gt;[AnnotateView]
 [AnnotateController]++1-1&gt;[AnnotateRecord|task;parameters;performance;checked report;to_be_shown|serialize();parse();show()]
 [AnnotateRecord]++1-1&gt;[sppasParam]
@@ -2418,7 +2431,6 @@
 			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 			<tbody>
 			  <tr><td>Handle a request</td><td>pre: called once for that request. post: the record is rebuilt from what was transmitted; the language transmitted for an annotation is kept only if that annotation has it, and a disabled annotation is never selected; the task is identified, its preconditions are read; the treatment ran, or none ran and what is missing or stands in the way is stated. C3, C5, C7</td></tr>
-			  <tr><td>Say whether events carry a task</td><td>pre: none. post: true when the events carry a task of this application</td></tr>
 			  <tr><td>Give the progress</td><td>pre: none. post: the percent, the header and the text, as the model gives them</td></tr>
 			  <tr><td>Have what is missing said again</td><td>pre: the request was handled, and the provision of files says the workspace is ready. post: what is still missing is put in the dialog of information when the view is populated</td></tr>
 			  <tr><td>Populate the view</td><td>pre: the request was handled. post: the view has the record; locally it holds the reports, online it holds none. C22</td></tr>
@@ -2825,15 +2837,15 @@
             <li class="enumerate-cards-item">
                 <p id="annotate_step3_h">Select and configure annotations</p>
                 <div role="group" aria-labelledby="annotate_step3_h">
-                            <button type="submit" form="annotate_form" name="annotate_task" value="annotations_STANDALONE" class="width_full" id="annotate_type_STANDALONE">
+                            <button type="submit" form="annotate_form" name="event_bake" value="annotate_annotations_STANDALONE" class="width_full" id="annotate_type_STANDALONE">
                                 <span data-icon="no" role="img" aria-label="no annotation selected"></span>
                                 <span>STANDALONE annotations</span>
                             </button>
-                            <button type="submit" form="annotate_form" name="annotate_task" value="annotations_SPEAKER" class="width_full" id="annotate_type_SPEAKER">
+                            <button type="submit" form="annotate_form" name="event_bake" value="annotate_annotations_SPEAKER" class="width_full" id="annotate_type_SPEAKER">
                                 <span data-icon="no" role="img" aria-label="no annotation selected"></span>
                                 <span>SPEAKER annotations</span>
                             </button>
-                            <button type="submit" form="annotate_form" name="annotate_task" value="annotations_INTERACTION" class="width_full" id="annotate_type_INTERACTION">
+                            <button type="submit" form="annotate_form" name="event_bake" value="annotate_annotations_INTERACTION" class="width_full" id="annotate_type_INTERACTION">
                                 <span data-icon="no" role="img" aria-label="no annotation selected"></span>
                                 <span>INTERACTION annotations</span>
                             </button>
@@ -2843,7 +2855,7 @@
                 <p id="annotate_step4_h">Add files</p>
                 <div role="group" aria-labelledby="annotate_step4_h">
                     <p id="annotate_files_state">5 files selected</p>
-                    <button type="submit" form="annotate_form" name="annotate_task" value="files" class="width_full">
+                    <button type="submit" form="annotate_form" name="event_bake" value="annotate_files" class="width_full">
                         <span>Choose the files</span>
                     </button>
                 </div>
@@ -2855,7 +2867,7 @@
                                 <input type="checkbox" id="annotate_merge" name="annotate_merge" value="True" form="annotate_form" />
                                 <label for="annotate_merge">Create -merge files</label>
                             </p>
-                            <button type="submit" form="annotate_form" name="annotate_task" value="perform" class="action-button width_full" aria-disabled="true" aria-describedby="annotate_perform_state" data-icon="play">
+                            <button type="submit" form="annotate_form" name="event_bake" value="annotate_perform" class="action-button width_full" aria-disabled="true" aria-describedby="annotate_perform_state" data-icon="play">
                                 <span>Let's go!</span>
                             </button>
                             <p id="annotate_perform_state" class="annotate-missing">No annotation is selected.</p>
@@ -2864,7 +2876,7 @@
             <li class="enumerate-cards-item">
                 <p id="annotate_step6_h">Read the procedure outcome report</p>
                 <div role="group" aria-labelledby="annotate_step6_h">
-                            <button type="submit" form="annotate_form" name="annotate_task" value="show" class="action-button width_full" aria-disabled="true" aria-describedby="annotate_show_state" data-icon="file">
+                            <button type="submit" form="annotate_form" name="event_bake" value="annotate_show" class="action-button width_full" aria-disabled="true" aria-describedby="annotate_show_state" data-icon="file">
                                 <span>Show report</span>
                             </button>
                             <p id="annotate_show_state" class="annotate-missing">No report is checked.</p>
@@ -2873,17 +2885,17 @@
     </ol>
 
         <p>
-            <button type="submit" form="annotate_form" name="annotate_task" value="reset">Reset</button>
+            <button type="submit" form="annotate_form" name="event_bake" value="annotate_reset">Reset</button>
         </p>
     </section>
 
     <section id="annotate_reports_panel" class="width_30">
         <h3 id="annotate_reports_h">Reports:</h3>
         <p>
-            <button type="submit" form="annotate_form" name="annotate_task" value="delete_checked" data-icon="delete-checked">
+            <button type="submit" form="annotate_form" name="event_bake" value="annotate_delete_checked" data-icon="delete-checked">
                 <span>Del checked</span>
             </button>
-            <button type="submit" form="annotate_form" name="annotate_task" value="delete_unchecked" data-icon="delete-unchecked">
+            <button type="submit" form="annotate_form" name="event_bake" value="annotate_delete_unchecked" data-icon="delete-unchecked">
                 <span>Del all</span>
             </button>
         </p>
@@ -2917,7 +2929,7 @@
 <section id="annotate_annotations_panel" class="annotate-annotations" aria-labelledby="annotate_standalone_h">
 
     <div class="annotate-head">
-        <button type="submit" form="annotate_form" name="annotate_task" value="steps" data-icon="arrow-up">
+        <button type="submit" form="annotate_form" name="event_bake" value="annotate_steps" data-icon="arrow-up">
             <span>Back</span>
         </button>
         <h3 id="annotate_standalone_h">Select annotations of type STANDALONE</h3>
@@ -3129,7 +3141,7 @@
 <section id="annotate_files_panel" aria-labelledby="annotate_files_h">
 
     <div class="annotate-head">
-        <button type="submit" form="annotate_form" name="annotate_task" value="steps" data-icon="arrow-up">
+        <button type="submit" form="annotate_form" name="event_bake" value="annotate_steps" data-icon="arrow-up">
             <span>Back</span>
         </button>
         <h3 id="annotate_files_h">Add files</h3>
@@ -3210,7 +3222,7 @@
 <section id="annotate_log_panel_going" aria-labelledby="annotate_going_h">
 
     <div class="annotate-head">
-        <button type="submit" form="annotate_form" name="annotate_task" value="steps" data-icon="arrow-up" disabled>
+        <button type="submit" form="annotate_form" name="event_bake" value="annotate_steps" data-icon="arrow-up" disabled>
             <span>Back</span>
         </button>
         <h3 id="annotate_going_h">Procedure outcome report</h3>
@@ -3242,7 +3254,7 @@
 <section id="annotate_log_panel" aria-labelledby="annotate_log_h">
 
     <div class="annotate-head">
-        <button type="submit" form="annotate_form" name="annotate_task" value="steps" data-icon="arrow-up">
+        <button type="submit" form="annotate_form" name="event_bake" value="annotate_steps" data-icon="arrow-up">
             <span>Back</span>
         </button>
         <h3 id="annotate_log_h">Procedure outcome report</h3>

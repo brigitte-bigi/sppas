@@ -113,6 +113,28 @@ class swappAnnotateModel:
 
     # -----------------------------------------------------------------------
 
+    def language_of_selected(self, parameters) -> str:
+        """Return the language the selected annotations hold.
+
+        :param parameters: (sppasParam) What was decided
+        :return: (str) LANG_NONE when none has a language, LANG_MIX when they have several
+
+        """
+        return self.__annotations.language_of_selected(parameters)
+
+    # -----------------------------------------------------------------------
+
+    def fix_language(self, parameters, lang: str) -> None:
+        """Give the language of the page to every annotation which has resources for it.
+
+        :param parameters: (sppasParam) What was decided
+        :param lang: (str) The language of the page, LANG_NONE or LANG_MIX
+
+        """
+        self.__annotations.fix_language(parameters, lang)
+
+    # -----------------------------------------------------------------------
+
     def languages(self) -> list:
         """Return every language at least one annotation has resources for, each of them once.
 
@@ -136,13 +158,13 @@ class swappAnnotateModel:
 
     # -----------------------------------------------------------------------
 
-    def read_report(self, name: str) -> str:
-        """Return the text of a report as it was written, line for line.
+    def read_report(self, name: str) -> list:
+        """Return the lines of a report as they were written, each with the state it bears.
 
         :param name: (str) Name of the report
         :raises: ValueError: The name is not the one of a report which is kept
         :raises: IOError: The report can't be read
-        :return: (str)
+        :return: (list of swappReportLine)
 
         """
         return self.__reports.read(name)

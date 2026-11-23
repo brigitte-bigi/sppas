@@ -51,11 +51,8 @@ from ..swapp_core.swappsg import swapp_settings
 from ..nodes import swappProgressBar
 
 from .convert_record import swappConvertRecord
-from .convert_record import TASK_CONVERT
 from sppas.ui.swapp.services.files.files_view import MSG_ADD_FILES
 
-from .convert_record import MISSING_BATCH
-from .convert_record import FIELD_REPORT
 from .convert_panels import swappFormatsPanel
 from .convert_panels import swappDestinationPanel
 from .convert_panels import swappComparePanel
@@ -76,7 +73,7 @@ MSG_PROGRESS = _("Conversion:")
 MSG_INTRO = _("Convert writes annotated files into another format. Choose the destination "
               "format, add the files to convert, then convert. What the chosen format does not "
               "support is said beside the list of formats.")
-MSG_MISSING = {MISSING_BATCH: _("No file is checked to be converted.")}
+MSG_MISSING = {"batch": _("No file is checked to be converted.")}
 
 BODY_SCRIPT = f"""
         import {{ ConvertManager }} from '/{swapp_settings.js}sppas.js';
@@ -267,7 +264,7 @@ class swappConvertView(swappBaseView):
             _section.append_child(_bar)
             _section.append_child(EmptyNode(_section.identifier, None, "input",
                                             attributes={"type": "hidden", "form": ID_FORM,
-                                                        "name": FIELD_REPORT, "value": record.report}))
+                                                        "name": "convert_report", "value": record.report}))
 
         if "results" in _shown:
             _section.append_child(swappResultsPanel(_section.identifier, _shown["results"],
@@ -275,7 +272,7 @@ class swappConvertView(swappBaseView):
                                                     _shown.get("archive", "")))
 
         self.__info = ""
-        if record.task == TASK_CONVERT or _shown.get("ready", False) is True:
+        if record.task == "convert" or _shown.get("ready", False) is True:
             self.__say_what_is_missing(_shown.get("missing", list()))
 
         self.__section = _section
