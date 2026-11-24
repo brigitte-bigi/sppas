@@ -220,3 +220,17 @@ class sppasIntsint(sppasBaseAnnotation):
 
         """
         return [sppasFiles.get_informat_extensions("ANNOT")]
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def get_input_filetypes() -> list:
+        """Types of file the annotation expects for its inputs, one list per input.
+
+        The types are those of sppasFiles, and the inputs are in the order of
+        get_input_extensions().
+
+        :return: (list of list of str)
+
+        """
+        return [["ANNOT"]]

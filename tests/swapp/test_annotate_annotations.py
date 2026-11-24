@@ -37,7 +37,7 @@
 
     -------------------------------------------------------------------------
 
-    TE1 to TE13 of the dossier "Annotate - an app of SPPAS": arranging a list,
+    TE1 to TE13, TE43, TE45 and TE47 of the dossier "Annotate - an app of SPPAS": arranging a list,
     with nothing installed, then ModelAnnotations with the API and no file.
 
     Arranging, and what an annotation requires, wait for the extension of the
@@ -54,6 +54,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+import sppas.src.annotations
+from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.src.annotations import sppasParam
 from sppas.src.annotations.param import annotationParam
 
@@ -72,8 +74,15 @@ class AnnotationForTests:
     def get_key(self) -> str:
         return self.__key
 
-    def get_requires(self) -> list:
+    def get_required_annotations(self) -> list:
         return self.__requires
+
+
+class NotEnabledForTests:
+    """The class the package imports for an annotation whose feature is not enabled."""
+
+    def __init__(self, *args, **kwargs):
+        raise sppasEnableFeatureError("feature_for_tests")
 
 # ---------------------------------------------------------------------------
 
@@ -88,7 +97,7 @@ def make_annotation(where: str, key: str, anntype: list, requires: list | None =
              "options": [],
              "resources": []}
     if requires is not None:
-        _conf["required"] = requires
+        _conf["required_annotations"] = requires
     _filename = os.path.join(where, key + ".json")
     with open(_filename, "w") as fp:
         json.dump(_conf, fp)
@@ -168,7 +177,7 @@ class TestArranged(unittest.TestCase):
 
 
 class TestModelAnnotations(unittest.TestCase):
-    """TE7 to TE13. The annotations the API declares, and no file of a person."""
+    """TE7 to TE13, TE43, TE45, TE47. The annotations the API declares, and no file of a person."""
 
     def setUp(self):
         self.model = swappModelAnnotations()
@@ -245,20 +254,61 @@ class TestModelAnnotations(unittest.TestCase):
         """TE12. Read from its declaration; one which declares none requires nothing. [307]"""
         _requiring = annotationParam(make_annotation(self.folder, "requiring", ["STANDALONE"], ["textnorm"]))
         _alone = annotationParam(make_annotation(self.folder, "alone", ["STANDALONE"]))
-        self.assertEqual(["textnorm"], _requiring.get_requires())
-        self.assertEqual([], _alone.get_requires())
+        self.assertEqual(["textnorm"], _requiring.get_required_annotations())
+        self.assertEqual([], _alone.get_required_annotations())
 
     # -----------------------------------------------------------------------
 
     def test_te13_an_annotation_which_is_not_installed(self):
         """TE13. It is given all the same, and said so. C7"""
-        def _test_step(parameters, step):
-            return parameters.get_step_key(step) != "textnorm"
-
-        with patch.object(sppasParam, "test_step", _test_step):
+        _api = self.declared.get_step(self.declared.get_step_idx("textnorm")).get_api()
+        with patch.object(sppas.src.annotations, _api, NotEnabledForTests):
             self.assertIn("textnorm", keys_of(self.model.annotations()))
             self.assertFalse(self.model.is_installed("textnorm"))
             self.assertTrue(self.model.is_installed("phonetize"))
+
+    # -----------------------------------------------------------------------
+
+    def test_te47_why_an_annotation_is_not_installed(self):
+        """TE47. What the error of its instantiation says: the feature which is not enabled. C7"""
+        _api = self.declared.get_step(self.declared.get_step_idx("textnorm")).get_api()
+        with patch.object(sppas.src.annotations, _api, NotEnabledForTests):
+            self.assertIn("feature_for_tests", self.model.why_not_installed("textnorm"))
+            self.assertEqual("", self.model.why_not_installed("phonetize"))
+        with self.assertRaises(KeyError):
+            self.model.why_not_installed("nothing_bears_this_key")
+
+    # -----------------------------------------------------------------------
+
+    def test_te43_the_names_of_what_an_annotation_requires(self):
+        """TE43. The names the API declares for the required keys; none when none is required. [307]"""
+        _expected = list()
+        for _key in self.declared.get_required_annotations(self.declared.get_step_idx("phonetize")):
+            _expected.append(self.declared.get_step_name(self.declared.get_step_idx(_key)))
+        self.assertGreater(len(_expected), 0)
+        self.assertEqual(_expected, self.model.required_names("phonetize"))
+        self.assertEqual([], self.model.required_names("textnorm"))
+        with self.assertRaises(KeyError):
+            self.model.required_names("nothing_bears_this_key")
+
+        # A required annotation the API does not declare is given as it is written.
+        _filename = make_annotation(self.folder, "orphan", ["STANDALONE"], ["nothing_declared"])
+        self.model._swappModelAnnotations__parameters.annotations.append(annotationParam(_filename))
+        self.assertEqual(["nothing_declared"], self.model.required_names("orphan"))
+
+    # -----------------------------------------------------------------------
+
+    def test_te45_the_types_of_file_an_annotation_reads(self):
+        """TE45. Those of all its inputs, each once, in their order. [307]"""
+        self.assertEqual(["AUDIO", "ANNOT_ANNOT"], self.model.required_filetypes("alignment"))
+        self.assertEqual(["ANNOT_MEASURE"], self.model.required_filetypes("momel"))
+        with self.assertRaises(KeyError):
+            self.model.required_filetypes("nothing_bears_this_key")
+
+        # An annotation whose class the API does not know is given none.
+        _filename = make_annotation(self.folder, "unknown", ["STANDALONE"])
+        self.model._swappModelAnnotations__parameters.annotations.append(annotationParam(_filename))
+        self.assertEqual([], self.model.required_filetypes("unknown"))
 
 
 if __name__ == "__main__":

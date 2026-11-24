@@ -1,8 +1,8 @@
 {
   "id": "fillipus",
   "name": "Fill in IPUs",
-  "descr": "Searches for Inter-Pausal Units and fills in with a given transcription. Important: it can be used only for controlled speech. Requires an audio file and a .txt file with the transcription. Produces an annotated file with the IPUs filled with the transcription.",
-  "required": [],
+  "descr": "Searches for Inter-Pausal Units and fills in with a given transcription. Important: it can be used only for controlled speech. Produces an annotated file with the IPUs filled with the transcription.",
+  "required_annotations": [],
   "api": "sppasFillIPUs",
   "devel": 95,
 

@@ -1,8 +1,8 @@
 {
   "id": "selfrepet",
   "name": "Self-Repetitions",
-  "descr": "Searches for sources and echos of a speaker. The rules implemented in the algorithm were not validated by experts: this annotation needs to be evaluated. Requires time-aligned tokens.",
-  "required": ["alignment"],
+  "descr": "Searches for sources and echos of a speaker. The rules implemented in the algorithm were not validated by experts: this annotation needs to be evaluated.",
+  "required_annotations": ["alignment"],
   "api": "sppasSelfRepet",
   "devel": 60,
 

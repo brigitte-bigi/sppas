@@ -439,3 +439,17 @@ class sppasFaceDetection(sppasBaseAnnotation):
         for img_ext in sppasFiles.get_informat_extensions("IMAGE"):
             out_ext.append(img_ext)
         return [out_ext]
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def get_input_filetypes() -> list:
+        """Types of file the annotation expects for its inputs, one list per input.
+
+        The types are those of sppasFiles, and the inputs are in the order of
+        get_input_extensions().
+
+        :return: (list of list of str)
+
+        """
+        return [["VIDEO", "IMAGE"]]

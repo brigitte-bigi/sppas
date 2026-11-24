@@ -362,6 +362,20 @@ class sppasSpeechToText(sppasBaseAnnotation):
 
     # -----------------------------------------------------------------------
 
+    @staticmethod
+    def get_input_filetypes() -> list:
+        """Types of file the annotation expects for its inputs, one list per input.
+
+        The types are those of sppasFiles, and the inputs are in the order of
+        get_input_extensions().
+
+        :return: (list of list of str)
+
+        """
+        return [["AUDIO"], ["ANNOT_ANNOT"]]
+
+    # -----------------------------------------------------------------------
+
     def get_output_pattern(self):
         """Pattern this annotation uses in an output filename."""
         return self._options.get("outputpattern", "-stt")

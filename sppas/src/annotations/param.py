@@ -42,7 +42,6 @@ from __future__ import annotations
 import logging
 import json
 import os
-import sys
 
 from sppas.core.config import paths
 from sppas.core.config import annots
@@ -97,7 +96,7 @@ class annotationParam(object):
         # The references dict: key=id, value=url
         self.__refs = dict()
         # The keys of the annotations this annotation requires
-        self.__requires = list()
+        self.__required_annotations = list()
 
         # Fix all members from a given config file
         if filename is not None:
@@ -136,8 +135,8 @@ class annotationParam(object):
                 self.__refs = conf["refs"]
             if 'devel' in conf:
                 self.__devel = int(conf["devel"])
-            if 'required' in conf:
-                self.__requires = conf["required"]
+            if 'required_annotations' in conf:
+                self.__required_annotations = conf["required_annotations"]
 
             for new_option in conf['options']:
                 opt = sppasOption(new_option['id'])
@@ -255,9 +254,9 @@ class annotationParam(object):
 
     # -----------------------------------------------------------------------
 
-    def get_requires(self) -> list:
+    def get_required_annotations(self) -> list:
         """Return the keys of the annotations this annotation requires (list of str)."""
-        return list(self.__requires)
+        return list(self.__required_annotations)
 
     # -----------------------------------------------------------------------
 
@@ -604,24 +603,6 @@ class sppasParam(object):
         step = self.__check_step(step)
         self.annotations[step].set_activate(False)
 
-    def test_step(self, step: int) -> bool:
-        """Test if an annotation step can be instantiated without error.
-
-        :param step: (int) Annotation step index.
-        :return: (bool) True if the annotation step can be instantiated without raising any exception.
-
-        """
-        step = self.__check_step(step)
-        a = self.annotations[step]
-        try:
-            # The classes of the annotations are imported by the package.
-            inst_name = getattr(sys.modules[__package__], a.get_api())
-            inst_name()
-        except:
-            return False
-
-        return True
-
     def get_step_status(self, step: int) -> bool:
         """Return True if the annotation of a step is activated.
 
@@ -670,7 +651,7 @@ class sppasParam(object):
         step = self.__check_step(step)
         return self.annotations[step].get_descr()
 
-    def get_requires(self, step: int) -> list:
+    def get_required_annotations(self, step: int) -> list:
         """Return the keys of the annotations the annotation of a step requires.
 
         :param step: (int) Annotation step index
@@ -680,7 +661,7 @@ class sppasParam(object):
 
         """
         step = self.__check_step(step)
-        return self.annotations[step].get_requires()
+        return self.annotations[step].get_required_annotations()
 
     # ------------------------------------------------------------------------
 

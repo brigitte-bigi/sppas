@@ -1,8 +1,8 @@
 {
   "id": "handpose",
   "name": "Hands and Pose detection",
-  "descr": "Set the 21 sights on detected hands of an image or a video. This annotation is based on MediaPipe: https://google.github.io/mediapipe/solutions/hands. Requires an image/a video. Produces a video and a CSV/XRA file with the sights of the detected hands.",
-  "required": ["facedetect"],
+  "descr": "Set the 21 sights on detected hands of an image or a video. This annotation is based on MediaPipe: https://google.github.io/mediapipe/solutions/hands. Produces a video and a CSV/XRA file with the sights of the detected hands.",
+  "required_annotations": ["facedetect"],
   "api": "sppasHandPose",
   "devel": 95,
 

@@ -1,9 +1,9 @@
 {
   "id": "speechtotext",
   "name": "Speech-To-Text",
-  "descr": "Whisper Speech-To-Text aims to transcribe speech. Its result HAS TO BE manually VERIFIED. Requires IPUs. Produces an approx. standard ortho. transcription into IPUs.",
+  "descr": "Whisper Speech-To-Text aims to transcribe speech. Its result HAS TO BE manually VERIFIED. Produces an approx. standard ortho. transcription into IPUs.",
   "api": "sppasSpeechToText",
-  "required": ["searchipus"],
+  "required_annotations": ["searchipus"],
 
   "resources": [],
 

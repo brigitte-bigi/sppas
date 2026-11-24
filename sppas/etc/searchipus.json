@@ -1,8 +1,8 @@
 {
   "id": "searchipus",
   "name": "Search for IPUs",
-  "descr": "Automatic audio activity detection based on the analysis of energy of an audio signal: marks segments containing speech activity versus silent ones. Requires an audio file. Produces an annotated file with the silences vs sounding segments.",
-  "required": [],
+  "descr": "Automatic audio activity detection based on the analysis of energy of an audio signal: marks segments containing speech activity versus silent ones. Produces an annotated file with the silences vs sounding segments.",
+  "required_annotations": [],
   "api": "sppasSearchIPUs",
 
   "resources": [

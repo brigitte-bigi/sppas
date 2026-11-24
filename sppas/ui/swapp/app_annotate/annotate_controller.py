@@ -243,14 +243,28 @@ class swappAnnotateController:
         elif len(_type) > 0:
             _annotations = list()
             _disabled = list()
+            _reasons = dict()
+            _required = dict()
+            _filetypes = dict()
             for _annotation in self.__model.annotations():
                 if _type in _annotation.get_types():
+                    _key = _annotation.get_key()
                     _annotations.append(_annotation)
-                    if self.__model.is_installed(_annotation.get_key()) is False:
-                        _disabled.append(_annotation.get_key())
+                    # An annotation which can't be performed on that machine
+                    # says why, and nothing of what it requires.
+                    _why = self.__model.why_not_installed(_key)
+                    if len(_why) > 0:
+                        _disabled.append(_key)
+                        _reasons[_key] = _why
+                    else:
+                        _required[_key] = self.__model.required_names(_key)
+                        _filetypes[_key] = self.__model.required_filetypes(_key)
             self.__record.show("type", _type)
             self.__record.show("annotations", _annotations)
             self.__record.show("disabled", _disabled)
+            self.__record.show("reasons", _reasons)
+            self.__record.show("required", _required)
+            self.__record.show("filetypes", _filetypes)
         elif self.__record.task in ("annotate_show", "annotate_complete"):
             try:
                 self.__record.show("report", self.__model.read_report(self.__record.report))

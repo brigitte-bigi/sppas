@@ -93,7 +93,7 @@ class TestAnnotationParam(unittest.TestCase):
         self.assertIsNone(_param.get_key())
         self.assertEqual("", _param.get_name())
         self.assertEqual([], _param.get_types())
-        self.assertEqual([], _param.get_requires())
+        self.assertEqual([], _param.get_required_annotations())
         self.assertFalse(_param.get_activate())
 
     # -----------------------------------------------------------------------
@@ -102,14 +102,14 @@ class TestAnnotationParam(unittest.TestCase):
         """What the file declares is what is given."""
         _param = annotationParam(self.write({"id": "test", "name": "Test", "descr": "A test.",
                                              "api": "TestAnn", "anntype": ["SPEAKER"],
-                                             "required": ["textnorm", "phonetize"],
+                                             "required_annotations": ["textnorm", "phonetize"],
                                              "refs": {"ref": "https://sppas.org/"}, "devel": 50,
                                              "options": [], "resources": []}))
         self.assertEqual("test", _param.get_key())
         self.assertEqual("A test.", _param.get_descr())
         self.assertEqual("TestAnn", _param.get_api())
         self.assertEqual(["SPEAKER"], _param.get_types())
-        self.assertEqual(["textnorm", "phonetize"], _param.get_requires())
+        self.assertEqual(["textnorm", "phonetize"], _param.get_required_annotations())
         self.assertEqual(["ref"], _param.get_reference_identifiers())
         self.assertEqual("https://sppas.org/", _param.get_reference_url("ref"))
         self.assertEqual("", _param.get_reference_url("unknown"))
@@ -117,25 +117,25 @@ class TestAnnotationParam(unittest.TestCase):
 
     # -----------------------------------------------------------------------
 
-    def test_requires(self):
+    def test_required_annotations(self):
         """An annotation which declares nothing required requires nothing."""
         _param = annotationParam(self.write({"id": "alone", "api": "TestAnn",
                                              "options": [], "resources": []}))
-        self.assertEqual([], _param.get_requires())
+        self.assertEqual([], _param.get_required_annotations())
 
         # What is given back is a copy: changing it changes nothing.
-        _param = annotationParam(self.write({"id": "requiring", "api": "TestAnn", "required": ["textnorm"],
+        _param = annotationParam(self.write({"id": "requiring", "api": "TestAnn", "required_annotations": ["textnorm"],
                                              "options": [], "resources": []}))
-        _param.get_requires().append("phonetize")
-        self.assertEqual(["textnorm"], _param.get_requires())
+        _param.get_required_annotations().append("phonetize")
+        self.assertEqual(["textnorm"], _param.get_required_annotations())
 
     # -----------------------------------------------------------------------
 
-    def test_every_declared_annotation_requires_a_list(self):
+    def test_every_declared_annotation_requires_a_list_of_annotations(self):
         """In every configuration file of an annotation, what is required is a list."""
         _param = sppasParam()
         for i in range(_param.get_step_numbers()):
-            self.assertIsInstance(_param.get_step(i).get_requires(), list)
+            self.assertIsInstance(_param.get_step(i).get_required_annotations(), list)
 
     # -----------------------------------------------------------------------
 
@@ -239,13 +239,13 @@ class TestSppasParam(unittest.TestCase):
 
     # -----------------------------------------------------------------------
 
-    def test_requires(self):
+    def test_required_annotations(self):
         """What the annotation of a step requires, as its configuration file declares it."""
-        self.assertEqual([], self.param.get_requires(self.param.get_step_idx("textnorm")))
-        self.assertEqual(["textnorm"], self.param.get_requires(self.param.get_step_idx("phonetize")))
-        self.assertEqual(["phonetize"], self.param.get_requires(self.param.get_step_idx("alignment")))
+        self.assertEqual([], self.param.get_required_annotations(self.param.get_step_idx("textnorm")))
+        self.assertEqual(["textnorm"], self.param.get_required_annotations(self.param.get_step_idx("phonetize")))
+        self.assertEqual(["phonetize"], self.param.get_required_annotations(self.param.get_step_idx("alignment")))
         with self.assertRaises(ValueError):
-            self.param.get_requires(self.param.get_step_numbers())
+            self.param.get_required_annotations(self.param.get_step_numbers())
 
     # -----------------------------------------------------------------------
 
@@ -261,12 +261,6 @@ class TestSppasParam(unittest.TestCase):
         self.assertEqual(_idx, self.param.activate_annotation("textnorm"))
         self.assertTrue(self.param.get_step_status(_idx))
         self.assertEqual(-1, self.param.activate_annotation("nothing_bears_this_key"))
-
-    # -----------------------------------------------------------------------
-
-    def test_test_step(self):
-        """An annotation whose class is instantiated without error can be performed."""
-        self.assertTrue(self.param.test_step(self.param.get_step_idx("textnorm")))
 
     # -----------------------------------------------------------------------
 

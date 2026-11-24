@@ -1,8 +1,8 @@
 {
   "id": "otherrepet",
   "name": "Other-Repetitions",
-  "descr": "Searches for sources and echos of two speakers. Requires time-aligned tokens of two speakers in two different files.",
-  "required": ["alignment"],
+  "descr": "Searches for sources and echos of two speakers.",
+  "required_annotations": ["alignment"],
   "api": "sppasOtherRepet",
 
   "anntype": [

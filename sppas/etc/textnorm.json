@@ -1,9 +1,9 @@
 {
   "id": "textnorm",
   "name": "Text Normalization",
-  "descr": "Converts orthography of transcribed IPUs into a normalized tokenized form: word segmented, numerals converted into words, expanded abbreviations, punctuation removed, etc. Requires IPUs with the orthographic transcription, preferably en Enriched Orthographic Transcription. Produces the IPUs with normalized tokens.",
+  "descr": "Converts orthography of transcribed IPUs into a normalized tokenized form: word segmented, numerals converted into words, expanded abbreviations, punctuation removed, etc. Produces the IPUs with normalized tokens.",
   "api": "sppasTextNorm",
-  "required": [],
+  "required_annotations": [],
 
   "resources": [
     {

@@ -2,7 +2,7 @@
   "id": "rms",
   "name": "RMS",
   "descr": "Estimate the root-mean-square values of an audio channel in given intervals, i.e. sqrt(sum(S_i^2)/n). This is a measure of the power in an audio signal.",
-  "required": [],
+  "required_annotations": [],
   "api": "sppasRMS",
   "devel": 90,
 

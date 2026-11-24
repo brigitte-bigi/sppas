@@ -2046,8 +2046,8 @@
 			<table>
 			<thead><tr><th scope="col">Class</th><th scope="col">From</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 			<tbody>
-			  <tr><td><code>AnnotateModel</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>annotations(), kinds(), languages(), batch(), start(batch, run), is_running(), progress(), results(), reports(), read_report(name), delete_reports(names), address_of(filename), address_of_all(filenames)</td></tr>
-			  <tr><td><code>ModelAnnotations</code></td><td>module <i>annotations</i></td><td>&mdash;</td><td>annotations(), kinds(), languages(), arranged(annotations)</td></tr>
+			  <tr><td><code>AnnotateModel</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>annotations(), why_not_installed(key), required_names(key), required_filetypes(key), kinds(), languages(), batch(), start(batch, run), is_running(), progress(), results(), reports(), read_report(name), delete_reports(names), address_of(filename), address_of_all(filenames)</td></tr>
+			  <tr><td><code>ModelAnnotations</code></td><td>module <i>annotations</i></td><td>&mdash;</td><td>annotations(), why_not_installed(key), required_names(key), required_filetypes(key), kinds(), languages(), arranged(annotations)</td></tr>
 			  <tr><td><code>ModelRun</code></td><td>module <i>run</i></td><td>manager, progress, results</td><td>start(batch, run), is_running(), progress(), results()</td></tr>
 			  <tr><td><code>ModelReports</code></td><td>module <i>reports</i></td><td>&mdash;</td><td>reports(), read(name), delete(names)</td></tr>
 			  <tr><td><code>ModelProvision</code></td><td>module <i>provision</i></td><td>&mdash;</td><td>batch(), lock(names), release(names), produced(workspace), address_of(filename), address_of_all(filenames), finished()</td></tr>
@@ -2069,8 +2069,11 @@
 
 			<p><b>What tells that an annotation is installed on a machine is its
 			instantiation.</b> An annotation which cannot be instantiated raises an
-			exception: <code>sppasParam.test_step()</code> instantiates the class of a step,
-			and says whether it was without error. That is all which can be known before
+			exception: <code>ModelAnnotations</code> instantiates the class of an annotation
+			itself, found by the name its step declares among the classes the package
+			imports, and keeps what the error says. A feature which is not enabled says
+			which one, <code>sppasEnableFeatureError</code>, and that message is shown in
+			place of what the annotation requires. That is all which can be known before
 			every choice is made: the options and the language of an annotation are tested
 			by <code>sppasAnnotationsManager</code>, just before it performs it, and an
 			annotation which fails them is disabled there and said in the report.
@@ -2102,7 +2105,7 @@
 			<p>To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
 			class diagram.</p>
 
-			<pre class="dark"><code>[AnnotateModel|annotations();kinds();languages();batch();start();is_running();progress();results();reports();read_report();delete_reports();address_of();address_of_all()]++1-1&gt;[ModelAnnotations|annotations();kinds();languages();arranged()]
+			<pre class="dark"><code>[AnnotateModel|annotations();why_not_installed();required_names();required_filetypes();kinds();languages();batch();start();is_running();progress();results();reports();read_report();delete_reports();address_of();address_of_all()]++1-1&gt;[ModelAnnotations|annotations();why_not_installed();required_names();required_filetypes();kinds();languages();arranged()]
 [AnnotateModel]++1-1&gt;[ModelRun|manager;progress;results|start();is_running();progress();results()]
 [AnnotateModel]++1-1&gt;[ModelReports|reports();read();delete()]
 [AnnotateModel]++1-1&gt;[ModelProvision|batch();lock();release();produced();address_of();address_of_all();finished()]
@@ -2134,7 +2137,7 @@
 			  <tr><td><code>ReportsPanel</code></td><td>&mdash;</td><td>Locally, the reports which are kept, one of them checked at most, and the two buttons which delete. Collapsed online</td></tr>
 			  <tr><td><code>AnnotationsPanel</code></td><td>&mdash;</td><td>The annotations of one type, arranged by what they require</td></tr>
 			  <tr><td><code>FilesAnnotatePanel</code></td><td>&mdash;</td><td>The container the provision of files writes, and nothing of this application but the way back</td></tr>
-			  <tr><td><code>EnableAnnotation</code></td><td>&mdash;</td><td>One annotation: what selects it, what configures it, its references or how far its development has gone, its language, its description, what it requires. Disabled when it cannot be performed on that machine</td></tr>
+			  <tr><td><code>EnableAnnotation</code></td><td>&mdash;</td><td>One annotation: what selects it, what configures it, its references or how far its development has gone, its language, its description, the files it reads, the names of the annotations it requires. Disabled when it cannot be performed on that machine</td></tr>
 			  <tr><td><code>LogAnnotatePanel</code></td><td>&mdash;</td><td>The progress, then the procedure outcome report, line for line as the API wrote it and in a font of one width, and the results under it once the annotations have been performed. Online, a link to the report</td></tr>
 			  <tr><td><code>ResultsPanel</code></td><td>&mdash;</td><td>What came of every root of the batch: its status, then the files produced under it. Online, each produced file is a link to its address, and a link to the archive of all of them</td></tr>
 			</tbody>
@@ -2411,6 +2414,9 @@
 			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 			<tbody>
 			  <tr><td>Give the annotations</td><td>pre: none. post: one <code>Annotation</code> per step of a <code>sppasParam</code>, in the order of the API, holding what that step answers and nothing this application wrote. The references are given with their address; how far the development has gone is given between 0 and 100. C8</td></tr>
+			  <tr><td>Give what an annotation requires</td><td>pre: the key of an annotation. post: the names of the annotations its declaration says it requires, in that order; a required annotation which the API does not declare is given by what is written for it. Raises when no annotation has that key. [307]</td></tr>
+			  <tr><td>Say why an annotation is not installed</td><td>pre: the key of an annotation. post: what the error raised by the instantiation of its class says, the feature which is not enabled when it is that; empty when it is installed. Raises when no annotation has that key. C7</td></tr>
+			  <tr><td>Give the types of file an annotation reads</td><td>pre: the key of an annotation. post: the types of file of all its inputs, each once, in the order of its inputs, as its class declares them, which is not instantiated; none when the API does not know its class. Raises when no annotation has that key. [307]</td></tr>
 			  <tr><td>Give the kinds</td><td>pre: none. post: what <code>sppasFiles</code> answers, relayed; a kind which has no extension is not given. C2</td></tr>
 			  <tr><td>Give the languages</td><td>pre: none. post: the languages of every annotation put together, each of them once</td></tr>
 			  <tr><td>Arrange a list</td><td>pre: annotations, each with what it requires. post: those annotations and no others, each standing after every one of the list it requires; an annotation whose requirement is not in the list keeps its place. It reads nothing and changes no run. C9</td></tr>
@@ -2486,7 +2492,7 @@
 			  <tr><td><code>ReportsPanel</code></td><td>post: locally, one radio button per report, at most one checked, and the two buttons which delete; online, collapsed and empty. C20, C22</td></tr>
 			  <tr><td><code>AnnotationsPanel</code></td><td>post: the button which comes back, the title naming the type, and one <code>EnableAnnotation</code> per annotation of that type, in the order it was given them</td></tr>
 			  <tr><td><code>FilesAnnotatePanel</code></td><td>post: the button which comes back, the title, and the container the provision of files gives, placed as that service wrote it and altered in nothing. C10</td></tr>
-			  <tr><td><code>EnableAnnotation</code></td><td>post: the annotation it stands for, as it declares itself: what selects it, what configures it, one link per reference, opening in a tab of its own, or the gauge of its development or neither, the choice of its language when it has language resources and no choice otherwise, its description, what it requires. Disabled when the annotation cannot be performed on that machine. C7, C8</td></tr>
+			  <tr><td><code>EnableAnnotation</code></td><td>post: the annotation it stands for, as it declares itself: what selects it, what configures it, one link per reference, opening in a tab of its own, or the gauge of its development or neither, the choice of its language when it has language resources and no choice otherwise, its description, then a description list: &laquo;&nbsp;Required files&nbsp;&raquo; and the types of file it reads, each name once, then &laquo;&nbsp;Required annotation&nbsp;&raquo; and the names of the annotations it requires, when it requires one; when it is not installed, why, in place of that list. Disabled when the annotation cannot be performed on that machine. C7, C8</td></tr>
 			  <tr><td><code>LogAnnotatePanel</code></td><td>post: while a run goes, what the API set on the progress &mdash; the annotation, how far, what it is doing &mdash; and the report as it fills, folded; the way back is not available for as long. Once it has ended, the report, line for line as the API wrote it, in a font of one width, every line of a result beginning with the state that API wrote in it; that the report is not available, with the reason, when it could not be read; online, the link to the report; once it has ended, the results under the report. C19, C23, RO6</td></tr>
 			  <tr><td><code>ResultsPanel</code></td><td>post: one line per root of the batch, in the order it was given them: the root, its status as an icon whose text alternative is the word, then the files produced under it; online, each of them a link to its address, and the link to the archive under the table when there is one. C23, C25</td></tr>
 			</tbody>
@@ -2670,6 +2676,12 @@
 			  <tr><td>TE40</td><td>Once the annotations have been performed, the page shows the results under the report, one line per root, and no container of the provision of files</td><td>C25, T09</td></tr>
 			  <tr><td>TE41</td><td>A report which cannot be read is said in <code>error_dialog</code>, with the reason</td><td>The error policy, level 3</td></tr>
 			  <tr><td>TE42</td><td>A run which cannot be started is said in <code>error_dialog</code>: the annotations could not be performed</td><td>The error policy, level 4</td></tr>
+			  <tr><td>TE43</td><td>The names of the annotations an annotation requires are those the API declares for their keys; one which requires none is given none</td><td>[307]</td></tr>
+			  <tr><td>TE44</td><td>In the list of a type, an annotation which requires another says it after the files it reads, by its name; one which requires none says nothing of it</td><td>[307]</td></tr>
+			  <tr><td>TE45</td><td>The types of file an annotation reads are those of all its inputs, each once, in their order: an audio and an annotated file for the alignment, a measure file for momel</td><td>[307]</td></tr>
+			  <tr><td>TE46</td><td>In the list of a type, every annotation which is installed says the files it reads after its description, each name once</td><td>[307]</td></tr>
+			  <tr><td>TE47</td><td>Why an annotation is not installed is what the error of the instantiation of its class says: the feature which is not enabled; nothing for one which is installed</td><td>C7</td></tr>
+			  <tr><td>TE48</td><td>In the list of a type, an annotation which is not installed says why in place of what it requires; the others say what they require</td><td>C7</td></tr>
 			</tbody>
 			</table>
 
@@ -2797,8 +2809,14 @@
 			<code>annotate()</code> runs them in the thread of its caller. Once they have been
 			run, <code>get_out_files()</code> gives every file they wrote, the merged ones
 			included;</li>
-			<li>whether the annotation of a step can be instantiated on that machine:
-			<code>sppasParam.test_step()</code>;</li>
+			<li>the class of an annotation, by the name its step declares,
+			<code>get_api()</code>, among the classes the package imports: instantiated, it
+			raises <code>sppasEnableFeatureError</code> when a feature it needs is not
+			enabled, with the message which says which one;</li>
+			<li>the annotations an annotation requires, by their keys:
+			<code>sppasParam.get_required_annotations()</code>;</li>
+			<li>the types of file of the inputs of an annotation, read on its class, which
+			is not instantiated: <code>get_input_filetypes()</code>;</li>
 			<li>the kinds of output file, their extensions and their default one:
 			<code>sppasFiles</code>;</li>
 			<li>the types of annotation: <code>annots.types</code>;</li>

@@ -2,7 +2,7 @@
   "id": "overlaps",
   "name": "Activity overlaps",
   "descr": "Search for overlapped activities of two speakers.",
-  "required": ["-activity"],
+  "required_annotations": ["activity"],
   "api": "sppasOverActivity",
   "devel": 100,
 

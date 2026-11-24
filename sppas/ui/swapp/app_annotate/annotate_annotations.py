@@ -40,6 +40,8 @@
 
 from __future__ import annotations
 
+import sppas.src.annotations
+from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.src.annotations import sppasFiles
 from sppas.src.annotations import sppasParam
 
@@ -83,14 +85,89 @@ class swappModelAnnotations:
     def is_installed(self, key: str) -> bool:
         """Return True if the annotation of that key is installed on that machine.
 
-        It can when the API instantiates it without error.
+        It is when its class is instantiated without error.
 
         :param key: (str) Key of an annotation
         :raises: KeyError: No annotation has that key
         :return: (bool)
 
         """
-        return self.__parameters.test_step(self.__parameters.get_step_idx(key))
+        return len(self.why_not_installed(key)) == 0
+
+    # -----------------------------------------------------------------------
+
+    def why_not_installed(self, key: str) -> str:
+        """Return why the annotation of that key is not installed on that machine.
+
+        Its class is instantiated, as the API does to perform it: what the
+        error says is why. A feature which is not enabled says which one.
+
+        :param key: (str) Key of an annotation
+        :raises: KeyError: No annotation has that key
+        :return: (str) Empty when it is installed
+
+        """
+        _api = self.__parameters.get_step(self.__parameters.get_step_idx(key)).get_api()
+        try:
+            # The classes of the annotations are those the package imports.
+            getattr(sppas.src.annotations, _api)()
+        except sppasEnableFeatureError as e:
+            return e.parameter
+        except Exception as e:
+            return str(e)
+
+        return ""
+
+    # -----------------------------------------------------------------------
+
+    def required_names(self, key: str) -> list:
+        """Return the names of the annotations the annotation of that key requires.
+
+        A required annotation which the API does not declare is given by
+        what is written for it, since it has no name.
+
+        :param key: (str) Key of an annotation
+        :raises: KeyError: No annotation has that key
+        :return: (list of str) Empty when it requires none
+
+        """
+        _names = list()
+        for _required in self.__parameters.get_required_annotations(self.__parameters.get_step_idx(key)):
+            try:
+                _names.append(self.__parameters.get_step_name(self.__parameters.get_step_idx(_required)))
+            except KeyError:
+                _names.append(_required)
+
+        return _names
+
+    # -----------------------------------------------------------------------
+
+    def required_filetypes(self, key: str) -> list:
+        """Return the types of file the annotation of that key reads, each once.
+
+        They are in the order of its inputs. An annotation whose class the
+        API does not know is given none.
+
+        :param key: (str) Key of an annotation
+        :raises: KeyError: No annotation has that key
+        :return: (list of str)
+
+        """
+        _api = self.__parameters.get_step(self.__parameters.get_step_idx(key)).get_api()
+        _filetypes = list()
+        try:
+            # The classes of the annotations are those the package imports:
+            # what they declare is read on the class, which is not instantiated.
+            _inputs = getattr(sppas.src.annotations, _api).get_input_filetypes()
+        except (AttributeError, TypeError):
+            return _filetypes
+
+        for _types in _inputs:
+            for _type in _types:
+                if (_type in _filetypes) is False:
+                    _filetypes.append(_type)
+
+        return _filetypes
 
     # -----------------------------------------------------------------------
 

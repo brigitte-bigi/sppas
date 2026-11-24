@@ -2,7 +2,7 @@
   "id": "vowelfilter",
   "name": "VowelFilter",
   "descr": "Discard the F1/F2 formant values of the erroneous vowel tokens of a set of files. A token is described by its duration and its F1/F2 values, so an unexpected duration is discarding it too. The distributions of these three values are estimated for each file, each vowel class and each estimation method, then the tokens too far from the expected ones are discarded. Each file must contain the speech of one speaker only, in one speech activity only and at least 3 occurrences of each vowel. Proposed by M. Lancien et al. 2023.",
-  "required": ["formants"],
+  "required_annotations": ["formants"],
   "api": "sppasVowelFilter",
   "devel": 90,
 

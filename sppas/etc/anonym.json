@@ -1,8 +1,8 @@
 {
   "id": "anonym",
   "name": "Anonymization",
-  "descr": "Anonymization allows to modify segments of an annotation, of an audio file and/or of a video file in order to make their content un-understandable and un-identifiable. Requires a tier with intervals.",
-  "required": [],
+  "descr": "Anonymization allows to modify segments of an annotation, of an audio file and/or of a video file in order to make their content un-understandable and un-identifiable.",
+  "required_annotations": [],
   "api": "sppasAnonym",
   "devel": 90,
 

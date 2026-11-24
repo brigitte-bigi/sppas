@@ -1,8 +1,8 @@
 {
   "id": "phonetize",
   "name": "Phonetization",
-  "descr": "Converts a tokenized text into phonetic signs from a pronunciation dictionary. Requires Text Normalization result. Produces the IPUs with a grammar of phonemes.",
-  "required": ["textnorm"],
+  "descr": "Converts a tokenized text into phonetic signs from a pronunciation dictionary. Produces the IPUs with a grammar of phonemes.",
+  "required_annotations": ["textnorm"],
   "api": "sppasPhon",
 
   "resources": [

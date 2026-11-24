@@ -510,3 +510,17 @@ class sppasSpeechSeg(sppasBaseAnnotation):
             sppasFiles.get_informat_extensions("AUDIO"),
             sppasFiles.get_informat_extensions("ANNOT_ANNOT")
             ]
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def get_input_filetypes() -> list:
+        """Types of file the annotation expects for its inputs, one list per input.
+
+        The types are those of sppasFiles, and the inputs are in the order of
+        get_input_extensions().
+
+        :return: (list of list of str)
+
+        """
+        return [["AUDIO"], ["ANNOT_ANNOT"]]

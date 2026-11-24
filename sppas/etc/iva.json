@@ -1,8 +1,8 @@
 {
   "id": "iva",
   "name": "Interval Values Analysis",
-  "descr": "Calculates mean, median, sd, slope and intercept functions within segment of values. Requires two input tiers: one with the values (like F0 or intensities) and one with segments (like IPUs, tokens, ...). ",
-  "required": [],
+  "descr": "Calculates mean, median, sd, slope and intercept functions within segment of values. ",
+  "required_annotations": [],
   "api": "sppasIVA",
   "devel": 100,
 

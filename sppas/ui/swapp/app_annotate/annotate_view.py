@@ -248,6 +248,9 @@ class swappAnnotateView(swappBaseView):
                                                                      record.selected,
                                                                      record.annotation_langs,
                                                                      _shown.get("disabled", list()),
+                                                                     _shown.get("reasons", dict()),
+                                                                     _shown.get("required", dict()),
+                                                                     _shown.get("filetypes", dict()),
                                                                      _shown.get("configured", ""),
                                                                      self.__options))
             for _annotation in _shown["annotations"]:

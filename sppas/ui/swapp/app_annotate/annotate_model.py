@@ -169,6 +169,42 @@ class swappAnnotateModel:
 
     # -----------------------------------------------------------------------
 
+    def why_not_installed(self, key: str) -> str:
+        """Return why the annotation of that key is not installed on that machine.
+
+        :param key: (str) Key of an annotation
+        :raises: KeyError: No annotation has that key
+        :return: (str) Empty when it is installed
+
+        """
+        return self.__annotations.why_not_installed(key)
+
+    # -----------------------------------------------------------------------
+
+    def required_names(self, key: str) -> list:
+        """Return the names of the annotations the annotation of that key requires.
+
+        :param key: (str) Key of an annotation
+        :raises: KeyError: No annotation has that key
+        :return: (list of str) Empty when it requires none
+
+        """
+        return self.__annotations.required_names(key)
+
+    # -----------------------------------------------------------------------
+
+    def required_filetypes(self, key: str) -> list:
+        """Return the types of file the annotation of that key reads, each once.
+
+        :param key: (str) Key of an annotation
+        :raises: KeyError: No annotation has that key
+        :return: (list of str)
+
+        """
+        return self.__annotations.required_filetypes(key)
+
+    # -----------------------------------------------------------------------
+
     def kinds(self) -> dict:
         """Return every kind of output file which has at least one extension.
 

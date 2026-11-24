@@ -37,7 +37,7 @@
 
     -------------------------------------------------------------------------
 
-    TE34 to TE38, TE40 to TE42 of the dossier "Annotate - an app of SPPAS": AnnotateView,
+    TE34 to TE38, TE40 to TE42, TE44, TE46 and TE48 of the dossier "Annotate - an app of SPPAS": AnnotateView,
     the page as the server writes it. The page is the one the response bakes.
 
 """
@@ -51,7 +51,9 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+import sppas.src.annotations
 from sppas.core.config import annots
+from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.src.annotations import sppasParam
 from sppas.src.annotations.param import annotationParam
 
@@ -73,6 +75,21 @@ def keys_listed(page: str) -> list:
     return re.findall(r'<input[^>]*\bname="annotate_ann_(\w+)"', page)
 
 
+class NotEnabledForTests:
+    """The class the package imports for an annotation whose feature is not enabled."""
+
+    def __init__(self, *args, **kwargs):
+        raise sppasEnableFeatureError("feature_for_tests")
+
+# ---------------------------------------------------------------------------
+
+
+def item_of(page: str, key: str) -> str:
+    """Return the item of the list of annotations which holds the annotation of that key."""
+    _at = page.find('id="annotate_ann_' + key + '"')
+    return page[page.rfind("<li", 0, _at):page.find("</li>", _at)]
+
+
 def errors_said(page: str) -> str:
     """Return what the dialog of the errors of the page holds."""
     _start = page.find('id="error_dialog"')
@@ -82,7 +99,7 @@ def errors_said(page: str) -> str:
 
 
 class TestAnnotateView(unittest.TestCase):
-    """TE34 to TE38, TE40 to TE42. The page the response bakes."""
+    """TE34 to TE38, TE40 to TE42, TE44, TE46, TE48. The page the response bakes."""
 
     def setUp(self):
         self.local = swapp_serverstate.local
@@ -139,10 +156,9 @@ class TestAnnotateView(unittest.TestCase):
 
     def test_te36_an_annotation_which_is_not_installed(self):
         """TE36. It is in the page, disabled. C7"""
-        def _test_step(parameters, step):
-            return parameters.get_step_key(step) != "textnorm"
-
-        with patch.object(sppasParam, "test_step", _test_step):
+        _declared = sppasParam()
+        _api = _declared.get_step(_declared.get_step_idx("textnorm")).get_api()
+        with patch.object(sppas.src.annotations, _api, NotEnabledForTests):
             _page = self.recipe.bake({"event_bake": "annotate_annotations_STANDALONE",
                                       "annotate_ann_textnorm": "True"})
 
@@ -223,6 +239,55 @@ class TestAnnotateView(unittest.TestCase):
 
         self.assertIn("The disk is full.", " ".join(_logged.output))
         self.assertIn("The annotations could not be performed.", errors_said(_page))
+
+    # -----------------------------------------------------------------------
+
+    def test_te44_what_an_annotation_requires_in_the_list(self):
+        """TE44. After the files it reads, by its name; nothing for one which requires none. [307]"""
+        _declared = sppasParam()
+        _name = _declared.get_step_name(_declared.get_step_idx("textnorm"))
+        _page = self.recipe.bake({"event_bake": "annotate_annotations_STANDALONE"})
+
+        _item = item_of(_page, "phonetize")
+        _found = re.search(r"<dt>\s*Required annotation\s*</dt>\s*<dd>\s*" + re.escape(_name) + r"\s*</dd>", _item)
+        self.assertIsNotNone(_found)
+        _requires = _found.start()
+        self.assertLess(_item.find("Required files"), _requires)
+        self.assertEqual(-1, item_of(_page, "textnorm").find("Required annotation"))
+
+    # -----------------------------------------------------------------------
+
+    def test_te46_the_files_an_annotation_reads_in_the_list(self):
+        """TE46. Every installed annotation, after its description, each name once. [307]"""
+        _declared = sppasParam()
+        _page = self.recipe.bake({"event_bake": "annotate_annotations_STANDALONE"})
+
+        _item = item_of(_page, "alignment")
+        _found = re.search(r"<dt>\s*Required files\s*</dt>\s*<dd>\s*audio, annotated file\s*</dd>", _item)
+        self.assertIsNotNone(_found)
+        _files = _found.start()
+        _descr = _declared.get_step_descr(_declared.get_step_idx("alignment")).strip()[:20]
+        self.assertLess(_item.find(_descr), _files)
+        self.assertIsNotNone(re.search(r"<dt>\s*Required files\s*</dt>\s*<dd>\s*annotated file\s*</dd>",
+                                       item_of(_page, "textnorm")))
+        for _key in keys_listed(_page):
+            _item = item_of(_page, _key)
+            if _item.find('class="annotate-missing"') == -1:
+                self.assertGreater(_item.find("Required files"), -1, _key)
+
+    # -----------------------------------------------------------------------
+
+    def test_te48_why_an_annotation_is_not_installed_in_the_list(self):
+        """TE48. Said in place of what it requires; the others say what they require. C7"""
+        _declared = sppasParam()
+        _api = _declared.get_step(_declared.get_step_idx("textnorm")).get_api()
+        with patch.object(sppas.src.annotations, _api, NotEnabledForTests):
+            _page = self.recipe.bake({"event_bake": "annotate_annotations_STANDALONE"})
+
+        _item = item_of(_page, "textnorm")
+        self.assertIsNotNone(re.search(r'<p class="annotate-missing">[^<]*feature_for_tests', _item))
+        self.assertEqual(-1, _item.find("Required files"))
+        self.assertGreater(item_of(_page, "phonetize").find("Required files"), -1)
 
 
 if __name__ == "__main__":

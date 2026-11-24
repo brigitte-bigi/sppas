@@ -79,6 +79,17 @@ MSG_SELECT_TYPE = _("Select annotations of type {:s}")
 MSG_CONFIGURE = _("Configure...")
 MSG_DEVEL = _("Development")
 MSG_DISABLED = _("Not installed on this machine.")
+MSG_REQUIRED_FILES = _("Required files")
+MSG_REQUIRED_ANNOTATION = _("Required annotation")
+MSG_REQUIRED_ANNOTATIONS = _("Required annotations")
+
+# What a person reads of each type of file an annotation reads.
+MSG_FILETYPES = {"AUDIO": _("audio"),
+                 "VIDEO": _("video"),
+                 "IMAGE": _("image"),
+                 "ANNOT": _("annotated file"),
+                 "ANNOT_ANNOT": _("annotated file"),
+                 "ANNOT_MEASURE": _("measure file")}
 MSG_LANG_OF = _("Language of {:s}")
 MSG_OPTIONS_OF = _("Options of {:s}")
 MSG_OPTIONS = _("Options")
@@ -436,7 +447,9 @@ class swappAnnotationsPanel(TagNode):
     One item per annotation: what selects it, with its name, and what
     configures it; its references, or the gauge of its development when it
     has none; the choice of its language, when it has language resources;
-    its description. The options of an annotation are in a dialog of their
+    its description, then the files and the annotations it requires, or why
+    it is not installed. The
+    options of an annotation are in a dialog of their
     own: they need the width of the page, which a column of the list cannot
     give them. An annotation which can't be performed on that machine is
     shown, disabled: nothing of it can be set.
@@ -444,7 +457,8 @@ class swappAnnotationsPanel(TagNode):
     """
 
     def __init__(self, parent: str, ann_type: str, annotations: list, selected: list, langs: dict,
-                 disabled: list, configured: str, options: TagNode | None):
+                 disabled: list, reasons: dict, required: dict, filetypes: dict, configured: str,
+                 options: TagNode | None):
         """Create the panel of the annotations of one type.
 
         :param parent: (str) Identifier of the node the panel is appended to
@@ -453,6 +467,9 @@ class swappAnnotationsPanel(TagNode):
         :param selected: (list of str) The keys of the selected annotations
         :param langs: (dict) The language chosen for each annotation, by its key
         :param disabled: (list of str) The keys of the annotations which can't be performed on that machine
+        :param reasons: (dict) Why each one which can't be performed is not installed, by its key
+        :param required: (dict) The names of the annotations each one requires, by its key
+        :param filetypes: (dict) The types of file each one reads, by its key
         :param configured: (str) The key of the annotation which is configured, empty if none
         :param options: (TagNode) The container of the service of the options for that annotation, None if none
 
@@ -469,7 +486,8 @@ class swappAnnotationsPanel(TagNode):
         for _annotation in annotations:
             _key = _annotation.get_key()
             swappAnnotationsPanel.__append_annotation(_list, _annotation, _key in selected, langs.get(_key, ""),
-                                                      _key in disabled)
+                                                      _key in disabled, reasons.get(_key, ""),
+                                                      required.get(_key, list()), filetypes.get(_key, list()))
 
         for _annotation in annotations:
             if _annotation.get_key() == configured:
@@ -482,7 +500,8 @@ class swappAnnotationsPanel(TagNode):
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def __append_annotation(parent: TagNode, annotation, selected: bool, lang: str, disabled: bool) -> None:
+    def __append_annotation(parent: TagNode, annotation, selected: bool, lang: str, disabled: bool,
+                            reason: str, required: list, filetypes: list) -> None:
         """Append the item of one annotation.
 
         :param parent: (TagNode) The list of the annotations
@@ -490,6 +509,9 @@ class swappAnnotationsPanel(TagNode):
         :param selected: (bool) The annotation is selected
         :param lang: (str) The language chosen for it, empty if none
         :param disabled: (bool) The annotation can't be performed on that machine
+        :param reason: (str) Why it is not installed, empty if it is
+        :param required: (list of str) The names of the annotations it requires
+        :param filetypes: (list of str) The types of file it reads
 
         """
         _key = annotation.get_key()
@@ -585,6 +607,35 @@ class swappAnnotationsPanel(TagNode):
         if disabled is True:
             _descr = MSG_DISABLED + " " + _descr
         _column.append_child(HTMLNode(_column.identifier, None, "p", value=_descr))
+
+        # Why it is not installed is said where what it requires would be,
+        # in the color of what is missing.
+        if len(reason) > 0:
+            _column.append_child(HTMLNode(_column.identifier, None, "p", value=html.escape(reason),
+                                          attributes={"class": "annotate-missing"}))
+
+        # What it requires is a precision given after its description: a
+        # description list, one term and its description for the files it
+        # reads, by the names a person reads of their types, each name once
+        # since two types may be read under the same name; one for the
+        # annotations it requires, by their names.
+        _names = list()
+        for _type in filetypes:
+            _name = MSG_FILETYPES.get(_type, _type)
+            if (_name in _names) is False:
+                _names.append(_name)
+        if len(_names) > 0 or len(required) > 0:
+            _dl = TagNode(_column.identifier, None, "dl", attributes={"class": "annotate-ann-precision"})
+            _column.append_child(_dl)
+            if len(_names) > 0:
+                _dl.append_child(HTMLNode(_dl.identifier, None, "dt", value=MSG_REQUIRED_FILES))
+                _dl.append_child(HTMLNode(_dl.identifier, None, "dd", value=html.escape(", ".join(_names))))
+            if len(required) > 0:
+                _term = MSG_REQUIRED_ANNOTATION
+                if len(required) > 1:
+                    _term = MSG_REQUIRED_ANNOTATIONS
+                _dl.append_child(HTMLNode(_dl.identifier, None, "dt", value=_term))
+                _dl.append_child(HTMLNode(_dl.identifier, None, "dd", value=html.escape(", ".join(required))))
 
     # -----------------------------------------------------------------------
 

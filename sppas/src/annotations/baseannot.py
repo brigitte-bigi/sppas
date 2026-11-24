@@ -193,9 +193,18 @@ class sppasBaseAnnotation(object):
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def get_opt_input_extensions():
-        """Extensions that the annotation expects for its optional input filename."""
-        return ()
+    def get_input_filetypes() -> list:
+        """Types of file the annotation expects for its inputs, one list per input.
+
+        The types are those of sppasFiles, and the inputs are in the order of
+        get_input_extensions(): the extensions of an input are some of the
+        extensions of its types. By default, the input is an annotated file.
+        Can be overridden, together with get_input_extensions().
+
+        :return: (list of list of str)
+
+        """
+        return [["ANNOT_ANNOT"]]
 
     # -----------------------------------------------------------------------
 
