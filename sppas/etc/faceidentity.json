@@ -2,7 +2,7 @@
   "id": "faceident",
   "name": "Person Face Identity",
   "descr": "Assign a person identity to detected faces of a video. This annotation need to be evaluated. Requires a video and an XRA or CSV file with coordinates of the detected faces. Produces a video and an XRA file with coordinates of each identified person.",
-  "required": "facedetection",
+  "required": ["facedetection"],
   "api": "sppasFaceIdentifier",
   "devel": 55,
 

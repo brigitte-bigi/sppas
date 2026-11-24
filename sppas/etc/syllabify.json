@@ -2,7 +2,7 @@
   "id": "syllabify",
   "name": "Syllabification",
   "descr": "Applies rules to group time-aligned phonemes into syllables. Requires time-aligned phonemes. Produces time-aligned syllables and syllable classes.",
-  "required": "alignment",
+  "required": ["alignment"],
   "api": "sppasSyll",
 
   "resources": [

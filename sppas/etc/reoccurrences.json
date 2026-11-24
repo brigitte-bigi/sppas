@@ -2,7 +2,7 @@
   "id": "reoccurrences",
   "name": "Re-Occurrences",
   "descr": "Search for re-occurrences of an annotation of a speaker in the next N annotations of the interlocutor - re-implemented from an original idea of M. Karpinski et al. 2018.",
-  "required": "",
+  "required": [],
   "api": "sppasReOcc",
 
   "resources": [

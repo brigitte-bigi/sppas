@@ -2,7 +2,7 @@
   "id": "activity",
   "name": "Activity",
   "descr": "Create a tier with the speech activities and their duration. The current version is limited to annotate with a pre-defined list of activities (silence, pause, laughter, speech, ...).  Requires time-aligned tokens.",
-  "required": "alignment",
+  "required": ["alignment"],
   "api": "sppasActivity",
   "devel": 85,
 

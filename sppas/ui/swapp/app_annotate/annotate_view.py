@@ -72,6 +72,7 @@ MSG_UNDELETED = _("The report {:s} could not be deleted: {:s}")
 MSG_MISSING = {"annotation": _("No annotation is selected."),
                "batch": _("No file is selected.")}
 MSG_GOING = _("The annotations are running: nothing else can be started until they end.")
+MSG_NOT_PERFORMED = _("The annotations could not be performed.")
 
 # How often the page asks where a long treatment stands, in milliseconds: the
 # local server answers at once, a distant one is asked less often.
@@ -197,6 +198,18 @@ class swappAnnotateView(swappBaseView):
             for _name in _undeleted:
                 _dialog.append_child(HTMLNode(_dialog.identifier, None, "p",
                                               value=MSG_UNDELETED.format(_name, _undeleted[_name])))
+
+        # A report which cannot be read is said there as well, with the reason.
+        if "unavailable" in _shown:
+            _dialog = self._htree.body_main.get_child("error_dialog")
+            _dialog.append_child(HTMLNode(_dialog.identifier, None, "p", value=_shown["unavailable"]))
+
+        # What was asked raised: whoever runs the machine reads why in the
+        # log, and the person is told that the annotations could not be
+        # performed.
+        if _shown.get("not_performed", False) is True:
+            _dialog = self._htree.body_main.get_child("error_dialog")
+            _dialog.append_child(HTMLNode(_dialog.identifier, None, "p", value=MSG_NOT_PERFORMED))
 
         # What is missing before the annotations can be performed, or the
         # run which stands in the way, is said in the one of the

@@ -2,7 +2,7 @@
   "id": "lexmetric",
   "name": "Lexical Metric",
   "descr": "Estimate occurrences and ranks of annotation labels.",
-  "required": "",
+  "required": [],
   "api": "sppasLexMetric",
   "devel": 90,
 

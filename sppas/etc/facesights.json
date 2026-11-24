@@ -2,7 +2,7 @@
   "id": "facesights",
   "name": "Face Landmarks",
   "descr": "Estimates face landmarks as a set of 68 sights on detected faces of an image or a video. This annotation was not evaluated. Requires an image/a video and an XRA or CSV file with the coordinates of the faces. Produces a video and a CSV file with the sights of the faces.",
-  "required": "facedetect",
+  "required": ["facedetect"],
   "api": "sppasFaceSights",
   "devel": 60,
 

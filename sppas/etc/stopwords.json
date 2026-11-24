@@ -2,7 +2,7 @@
   "id": "stopwords",
   "name": "Stop Tags",
   "descr": "Estimates if tags of annotations are relevant or not.",
-  "required": "",
+  "required": [],
   "api": "sppasStopWords",
 
   "resources": [

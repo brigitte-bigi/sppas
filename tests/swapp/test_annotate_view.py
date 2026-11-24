@@ -37,7 +37,7 @@
 
     -------------------------------------------------------------------------
 
-    TE34 to TE38 and TE40 of the dossier "Annotate - an app of SPPAS": AnnotateView,
+    TE34 to TE38, TE40 to TE42 of the dossier "Annotate - an app of SPPAS": AnnotateView,
     the page as the server writes it. The page is the one the response bakes.
 
 """
@@ -58,6 +58,7 @@ from sppas.src.annotations.param import annotationParam
 from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
 from sppas.ui.swapp.app_annotate.annotate_maker import swappAnnotateResponseRecipe
 from sppas.ui.swapp.app_annotate.annotate_run import swappRootResult
+from sppas.ui.swapp.app_annotate.annotate_record import swappAnnotateRecord
 
 # ---------------------------------------------------------------------------
 
@@ -71,11 +72,17 @@ def keys_listed(page: str) -> list:
     """Return the keys of the annotations listed in a page of a type."""
     return re.findall(r'<input[^>]*\bname="annotate_ann_(\w+)"', page)
 
+
+def errors_said(page: str) -> str:
+    """Return what the dialog of the errors of the page holds."""
+    _start = page.find('id="error_dialog"')
+    return page[_start:page.find("</dialog>", _start)]
+
 # ---------------------------------------------------------------------------
 
 
 class TestAnnotateView(unittest.TestCase):
-    """TE34 to TE38 and TE40. The page the response bakes."""
+    """TE34 to TE38, TE40 to TE42. The page the response bakes."""
 
     def setUp(self):
         self.local = swapp_serverstate.local
@@ -195,6 +202,27 @@ class TestAnnotateView(unittest.TestCase):
         self.assertEqual(["first", "second"], re.findall(r'<th scope="row">\s*(\w+)\s*</th>', _body))
         self.assertIn("first-token.xra", _body)
         self.assertEqual(-1, _page.find('id="annotate_files_panel"'))
+
+    # -----------------------------------------------------------------------
+
+    def test_te41_a_report_which_cannot_be_read(self):
+        """TE41. It is said in the dialog of the errors, with the reason. The error policy, level 3"""
+        _page = self.recipe.bake({"event_bake": "annotate_show",
+                                  "annotate_report": "no_report_bears_this_name.txt"})
+        self.assertIn("The report is not available", errors_said(_page))
+
+    # -----------------------------------------------------------------------
+
+    def test_te42_a_run_which_cannot_be_started(self):
+        """TE42. It is written in the log, and said in the dialog of the errors. The error policy, level 4"""
+        _model = self.recipe._swappAnnotateResponseRecipe__model
+        with patch.object(swappAnnotateRecord, "what_is_missing", return_value=list()), \
+                patch.object(_model, "start", side_effect=OSError("The disk is full.")):
+            with self.assertLogs(level="ERROR") as _logged:
+                _page = self.recipe.bake({"event_bake": "annotate_perform", "annotate_ann_textnorm": "True"})
+
+        self.assertIn("The disk is full.", " ".join(_logged.output))
+        self.assertIn("The annotations could not be performed.", errors_said(_page))
 
 
 if __name__ == "__main__":

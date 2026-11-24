@@ -2,7 +2,7 @@
   "id": "spklexrep",
   "name" : "Speaker Lexical Repeated",
   "descr": "Detect repeated sequences in two distinct files of time-aligned tokens of a speaker. This annotation needs to be tested on several large corpora and evaluated.",
-  "required": "alignment",
+  "required": ["alignment"],
   "api": "sppasLexRep",
   "devel": 40,
 

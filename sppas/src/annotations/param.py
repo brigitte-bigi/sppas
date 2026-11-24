@@ -38,6 +38,7 @@
 
 """
 
+from __future__ import annotations
 import logging
 import json
 import os
@@ -95,6 +96,8 @@ class annotationParam(object):
         self.__options = list()
         # The references dict: key=id, value=url
         self.__refs = dict()
+        # The keys of the annotations this annotation requires
+        self.__requires = list()
 
         # Fix all members from a given config file
         if filename is not None:
@@ -133,6 +136,8 @@ class annotationParam(object):
                 self.__refs = conf["refs"]
             if 'devel' in conf:
                 self.__devel = int(conf["devel"])
+            if 'required' in conf:
+                self.__requires = conf["required"]
 
             for new_option in conf['options']:
                 opt = sppasOption(new_option['id'])
@@ -250,6 +255,12 @@ class annotationParam(object):
 
     # -----------------------------------------------------------------------
 
+    def get_requires(self) -> list:
+        """Return the keys of the annotations this annotation requires (list of str)."""
+        return list(self.__requires)
+
+    # -----------------------------------------------------------------------
+
     def get_lang(self):
         """Return the language or an empty string or None."""
         if len(self.__resources) > 0:
@@ -324,7 +335,7 @@ class sppasParam(object):
 
     """
 
-    def __init__(self, annotation_keys=None):
+    def __init__(self, annotation_keys: list | None = None):
         """Create a new sppasParam instance with default values.
 
         :param annotation_keys: (list) List of annotations to load. None=ALL.
@@ -348,7 +359,7 @@ class sppasParam(object):
 
     # ------------------------------------------------------------------------
 
-    def load_annotations(self, annotation_files=None):
+    def load_annotations(self, annotation_files: list | None = None) -> None:
         """Load the annotation configuration files.
 
         Load from a list of given file names (without path) or from the
@@ -367,11 +378,13 @@ class sppasParam(object):
 
     # ------------------------------------------------------------------------
 
-    def parse_config_file(self):
+    def parse_config_file(self) -> None:
         """Parse all the sppasui.*.json files and load annotation configuration files.
 
         Parse the file JSON config file and the ones of the spin-off to get the list
         of annotations and parse the corresponding "json" file.
+
+        :raises: IOError: The file sppasui.json does not exist
 
         """
         # Ensure that the main config file is available
@@ -401,8 +414,15 @@ class sppasParam(object):
 
     # -----------------------------------------------------------------------
 
-    def __load(self, cfg_file):
-        """Load parameters of an annotation from its configuration file."""
+    def __load(self, cfg_file: str) -> annotationParam | None:
+        """Load the parameters of an annotation from its configuration file.
+
+        An annotation which cannot be loaded is logged, and not appended.
+
+        :param cfg_file: (str) Name of the configuration file, with its path
+        :return: (annotationParam) None if the file could not be loaded
+
+        """
         try:
             a = annotationParam(cfg_file)
             self.annotations.append(a)
@@ -417,13 +437,19 @@ class sppasParam(object):
     # Input entries to annotate
     # -----------------------------------------------------------------------
 
-    def get_workspace(self):
-        """Return the workspace."""
+    def get_workspace(self) -> sppasWorkspace:
+        """Return the workspace (sppasWorkspace)."""
         return self._workspace
 
     # -----------------------------------------------------------------------
 
-    def set_workspace(self, wkp):
+    def set_workspace(self, wkp: sppasWorkspace) -> None:
+        """Set the workspace holding the files to annotate.
+
+        :param wkp: (sppasWorkspace) The workspace
+        :raises: sppasTypeError: The given workspace is not a sppasWorkspace
+
+        """
         if isinstance(wkp, sppasWorkspace) is False:
             raise sppasTypeError("sppasWorkspace", type(wkp))
         logging.debug('New data to set in sppasParam. '
@@ -432,7 +458,7 @@ class sppasParam(object):
 
     # -----------------------------------------------------------------------
 
-    def add_to_workspace(self, files):
+    def add_to_workspace(self, files: str | list) -> None:
         """Add a list of files or directories into the workspace.
 
         The state of all the added files is set to CHECKED.
@@ -471,8 +497,8 @@ class sppasParam(object):
     # deprecated:
     # -----------------------------------------------------------------------
 
-    def get_checked_roots(self):
-        """Return the list of entries to annotate."""
+    def get_checked_roots(self) -> list:
+        """Return the list of entries to annotate (list of str)."""
         roots = self._workspace.get_fileroot_from_state(States().CHECKED) + self._workspace.get_fileroot_from_state(States().AT_LEAST_ONE_CHECKED)
         return [r.id for r in roots]
 
@@ -480,7 +506,7 @@ class sppasParam(object):
     # Procedure Outcome Report file name
     # -----------------------------------------------------------------------
 
-    def set_report_filename(self, filename):
+    def set_report_filename(self, filename: str) -> None:
         """Fix the name of the file to save the report of the annotations.
 
         :param filename: (str) Filename for the Procedure Outcome Report
@@ -490,22 +516,38 @@ class sppasParam(object):
 
     # -----------------------------------------------------------------------
 
-    def get_report_filename(self):
-        """Return the name of the file for the Procedure Outcome Report."""
+    def get_report_filename(self) -> str | None:
+        """Return the name of the file for the Procedure Outcome Report, or None."""
         return self._report
 
     # -----------------------------------------------------------------------
     # selected language
     # -----------------------------------------------------------------------
 
-    def set_lang(self, language, step=None, forced=False):
+    def set_lang(self, language: str, step: int | None = None, forced: bool = False) -> None:
+        """Set the language of the annotation of a step, or of every annotation.
+
+        :param language: (str) The language
+        :param step: (int) Annotation step index, None for every annotation
+        :param forced: (bool) Force the language to be assigned
+
+        """
         if step is not None:
             self.annotations[step].set_lang(language, forced)
         else:
             for a in self.annotations:
                 a.set_lang(language, forced)
 
-    def get_lang(self, step=None):
+    def get_lang(self, step: int | None = None) -> str | None:
+        """Return the language of the annotation of a step, or the first one set.
+
+        Without a step, the language of the first annotation which has one,
+        other than the undetermined one, is returned, or the undetermined one.
+
+        :param step: (int) Annotation step index, None for any annotation
+        :return: (str) The language, empty or None when the annotation has none
+
+        """
         if step is None:
             for a in self.annotations:
                 lang = a.get_lang()
@@ -514,25 +556,51 @@ class sppasParam(object):
             return annots.UNDETERMINED
         return self.annotations[step].get_lang()
 
-    def get_langresource(self, step):
+    def get_langresource(self, step: int) -> list:
+        """Return the language resources of the annotation of a step.
+
+        :param step: (int) Annotation step index
+        :return: (list)
+
+        """
         return self.annotations[step].get_langresource()
 
     # ------------------------------------------------------------------------
     # annotations
     # ------------------------------------------------------------------------
 
-    def activate_annotation(self, stepname):
+    def activate_annotation(self, stepname: str) -> int:
+        """Activate the annotation of the given key, if it is valid.
+
+        :param stepname: (str) Key of the annotation
+        :return: (int) Index of its step, -1 if no annotation has that key
+
+        """
         for i, a in enumerate(self.annotations):
             if a.get_key() == stepname:
                 a.set_activate(True)
                 return i
         return -1
 
-    def activate_step(self, step):
+    def activate_step(self, step: int) -> None:
+        """Activate the annotation of a step, if it is valid.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+
+        """
         step = self.__check_step(step)
         self.annotations[step].set_activate(True)
 
-    def disable_step(self, step):
+    def disable_step(self, step: int) -> None:
+        """Disable the annotation of a step.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+
+        """
         step = self.__check_step(step)
         self.annotations[step].set_activate(False)
 
@@ -554,29 +622,74 @@ class sppasParam(object):
 
         return True
 
-    def get_step_status(self, step):
+    def get_step_status(self, step: int) -> bool:
+        """Return True if the annotation of a step is activated.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (bool)
+
+        """
         step = self.__check_step(step)
         return self.annotations[step].get_activate()
 
-    def get_step_name(self, step):
+    def get_step_name(self, step: int) -> str:
+        """Return the name of the annotation of a step.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (str)
+
+        """
         step = self.__check_step(step)
         return self.annotations[step].get_name()
 
-    def get_step_types(self, step):
+    def get_step_types(self, step: int) -> list:
+        """Return the types the annotation of a step supports.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (list of str)
+
+        """
         step = self.__check_step(step)
         return self.annotations[step].get_types()
 
-    def get_step_descr(self, step):
+    def get_step_descr(self, step: int) -> str:
+        """Return the description of the annotation of a step.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (str)
+
+        """
         step = self.__check_step(step)
         return self.annotations[step].get_descr()
 
+    def get_requires(self, step: int) -> list:
+        """Return the keys of the annotations the annotation of a step requires.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (list of str) Empty when it requires none
+
+        """
+        step = self.__check_step(step)
+        return self.annotations[step].get_requires()
+
     # ------------------------------------------------------------------------
 
-    def get_step_idx(self, annotation_key):
+    def get_step_idx(self, annotation_key: str) -> int:
         """Get the annotation step index from an annotation key.
 
         :param annotation_key: (str)
-        :raises: KeyError
+        :raises: KeyError: No annotation has that key
+        :return: (int)
 
         """
         for i, a in enumerate(self.annotations):
@@ -588,7 +701,15 @@ class sppasParam(object):
 
     # ------------------------------------------------------------------------
 
-    def __check_step(self, step):
+    def __check_step(self, step: int) -> int:
+        """Return the given step as an index of the annotations.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (int)
+
+        """
         try:
             step = int(step)
         except TypeError:
@@ -601,33 +722,76 @@ class sppasParam(object):
 
     # ------------------------------------------------------------------------
 
-    def get_step_key(self, step):
+    def get_step_key(self, step: int) -> str:
+        """Return the key of the annotation of a step.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (str)
+
+        """
         step = self.__check_step(step)
         return self.annotations[step].get_key()
 
-    def get_step_numbers(self):
+    def get_step_numbers(self) -> int:
+        """Return the number of annotations (int)."""
         return len(self.annotations)
 
-    def get_steplist(self):
+    def get_steplist(self) -> list:
+        """Return the names of the annotations, in their order (list of str)."""
         steps = []
         for i in range(len(self.annotations)):
             steps.append(self.annotations[i].get_name())
         return steps
 
-    def get_langlist(self, step=2):
+    def get_langlist(self, step: int = 2) -> list:
+        """Return the languages the annotation of a step has resources for.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (list of str)
+
+        """
         step = self.__check_step(step)
         return self.annotations[step].get_langlist()
 
-    def get_step(self, step):
-        """Return the 'sppasParam' instance of the annotation."""
+    def get_step(self, step: int) -> annotationParam:
+        """Return the parameters of the annotation of a step.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (annotationParam)
+
+        """
         step = self.__check_step(step)
         return self.annotations[step]
 
-    def get_options(self, step):
+    def get_options(self, step: int) -> list:
+        """Return the options of the annotation of a step.
+
+        :param step: (int) Annotation step index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (list of sppasOption)
+
+        """
         step = self.__check_step(step)
         return self.annotations[step].get_options()
 
-    def set_option_value(self, step, key, value):
+    def set_option_value(self, step: int, key: str, value: object) -> None:
+        """Change the value of an option of the annotation of a step.
+
+        :param step: (int) Annotation step index
+        :param key: (str) Identifier of the option
+        :param value: (any) New value of the option
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :raises: KeyError: The annotation has no option of that key
+
+        """
         step = self.__check_step(step)
         self.annotations[step].set_option_value(key, value)
 
@@ -635,19 +799,25 @@ class sppasParam(object):
     # Annotation file output format
     # -----------------------------------------------------------------------
 
-    def get_output_extension(self, out_format):
-        """Return the output extension defined for the given out_format."""
+    def get_output_extension(self, out_format: str) -> str:
+        """Return the output extension defined for the given out_format.
+
+        :param out_format: (str) Either ANNOT, AUDIO, VIDEO or IMAGE
+        :raises: KeyError: Unknown format
+        :return: (str) The extension, with its dot
+
+        """
         return self._out_extensions[out_format]
 
     # -----------------------------------------------------------------------
 
-    def set_output_extension(self, output_ext, output_format):
+    def set_output_extension(self, output_ext: str, output_format: str) -> str:
         """Fix the output extension of all the annotations of a given out_format.
 
         :param output_ext: (str) File extension (with or without a dot)
         :param output_format: (str) Either ANNOT, AUDIO, VIDEO OR IMAGE
+        :raises: ValueError: The extension is not one of that format
         :return: (str) the assigned extension
-        :raise: ValueError
 
         """
         if not output_ext.startswith("."):
@@ -667,10 +837,13 @@ class sppasParam(object):
     # Annotation references: URL of the papers // progress
     # -----------------------------------------------------------------------
 
-    def get_ref_ids(self, step):
+    def get_ref_ids(self, step: int) -> list:
         """Return a list of identifiers of the reference publications.
 
         :param step: (int) Annotation index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (list of str)
 
         """
         step = self.__check_step(step)
@@ -678,11 +851,14 @@ class sppasParam(object):
 
     # -----------------------------------------------------------------------
 
-    def get_ref_url(self, step, ref_id):
+    def get_ref_url(self, step: int, ref_id: str) -> str:
         """Return the URL of the reference publication.
 
         :param step: (int) Annotation index
         :param ref_id: (str) Identifier of a reference
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
+        :return: (str) Empty if the annotation has no reference of that identifier
 
         """
         step = self.__check_step(step)
@@ -690,13 +866,15 @@ class sppasParam(object):
 
     # -----------------------------------------------------------------------
 
-    def get_devel(self, step):
+    def get_devel(self, step: int) -> int:
         """Return a percentage of development.
 
         It is supposed that the annotations which have references are done,
         they're not under development anymore!
 
         :param step: (int) Annotation index
+        :raises: sppasTypeError: The step is not an unsigned integer
+        :raises: ValueError: The step is not a number, or it is out of range
         :return: (int) 0=unknown. 1-99=in progress value. 100=done.
 
         """

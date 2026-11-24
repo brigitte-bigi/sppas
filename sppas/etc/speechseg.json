@@ -2,7 +2,7 @@
   "id": "speechseg",
   "name": "Speech Segmentation",
   "descr": "Perform full process of speech segmentation: text normalization, phonetization, alignment and RMS. Requires audio and orthographic transcription.",
-  "required": "alignment",
+  "required": ["alignment"],
   "api": "sppasSpeechSeg",
   "devel": 100,
 

@@ -2,7 +2,7 @@
   "id": "alignment",
   "name": "Alignment",
   "descr": "Choose one of the pronunciation variants of a phonetization and performs the time-alignment of such phonemes to the related audio, and also the tokens if available. Requires the Phonetization grammar, and optionally the Normalized text. Produces time-aligned phonemes and optionally time-aligned tokens.",
-  "required": "phonetize",
+  "required": ["phonetize"],
   "api": "sppasAlign",
 
   "anntype": [

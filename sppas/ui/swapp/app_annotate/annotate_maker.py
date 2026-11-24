@@ -164,7 +164,15 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
 
         # Received events from an HTTP Post.
         if "event_bake" in events:
-            self.__controller.handle(events)
+            # What is raised is caught here, and by nothing below: the
+            # annotations cannot be read, or a run cannot be started.
+            # Whoever runs the machine reads it in the log, and the person is
+            # told that the annotations could not be performed.
+            try:
+                self.__controller.handle(events)
+            except Exception as e:
+                logging.error("The annotations could not be performed: {}".format(e))
+                self.__controller.say_not_performed()
 
             # --- Action event to start over: a reset, or another batch ---
             if self.__controller.starts_over() is True:

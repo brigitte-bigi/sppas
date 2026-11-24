@@ -197,6 +197,12 @@ class swappAnnotateController:
 
     # -----------------------------------------------------------------------
 
+    def say_not_performed(self) -> None:
+        """Have it said that the annotations could not be performed: what was asked raised."""
+        self.__record.show("not_performed", True)
+
+    # -----------------------------------------------------------------------
+
     def starts_over(self) -> bool:
         """Return True if the provision of files is to start over: a reset, or another batch (bool)."""
         return self.__starts_over

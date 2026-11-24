@@ -2,7 +2,7 @@
   "id": "facedetect",
   "name": "Face Detection",
   "descr": "Detect faces on an image or a video combining results of several methods depending on the models you choose. Two different types of models are available: the ones based on Artificial Neural Networks (ANN) and the other one based on Haar cascade classifiers. Requires an image or a video. Produces an image or a video and an annotated file with coordinates of the detected faces.",
-  "required": "",
+  "required": [],
   "api": "sppasFaceDetection",
   "devel": 70,
 

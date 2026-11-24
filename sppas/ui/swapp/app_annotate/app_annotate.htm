@@ -2189,7 +2189,7 @@
 			<table>
 			<thead><tr><th scope="col">Class</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 			<tbody>
-			  <tr><td><code>AnnotateController</code></td><td>record</td><td>handle(request_data), progress(), followed_report(), starts_over(), say_what_is_missing(), populate_view()</td></tr>
+			  <tr><td><code>AnnotateController</code></td><td>record</td><td>handle(request_data), progress(), followed_report(), starts_over(), say_what_is_missing(), say_not_performed(), populate_view()</td></tr>
 			  <tr><td><code>AnnotateRecord</code></td><td>task, parameters, run, checked report, to_be_shown</td><td>serialize(), parse(data), show(key, value)</td></tr>
 			  <tr><td><code>AnnotateResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
 			</tbody>
@@ -2236,7 +2236,7 @@
 
 			<h4>In yUML</h4>
 
-			<pre class="dark"><code>[AnnotateResponseRecipe|bake();_process_events()]++1-1&gt;[AnnotateController|record|handle();progress();followed_report();starts_over();say_what_is_missing();populate_view()]
+			<pre class="dark"><code>[AnnotateResponseRecipe|bake();_process_events()]++1-1&gt;[AnnotateController|record|handle();progress();followed_report();starts_over();say_what_is_missing();say_not_performed();populate_view()]
 [AnnotateResponseRecipe]++1-1&gt;[AnnotateView]
 [AnnotateController]++1-1&gt;[AnnotateRecord|task;parameters;run;checked report;to_be_shown|serialize();parse();show()]
 [AnnotateRecord]++1-1&gt;[sppasParam]
@@ -2330,8 +2330,8 @@
 			<tbody>
 			  <tr><td>1</td><td>What was asked cannot be done now: no annotation selected, an empty batch, a run already going</td><td>No treatment runs, and what is missing or what stands in the way is said [022]. It is not an error and nothing is raised</td></tr>
 			  <tr><td>2</td><td>One annotation is concerned: it failed</td><td>Nothing of this application's: the API writes it in the report, with the state of the line which says it, and goes on to the next</td></tr>
-			  <tr><td>3</td><td>A report cannot be read, or cannot be deleted</td><td>It is said in <code>error_dialog</code>, with the reason; a report which cannot be deleted stays in the list, and the others are deleted all the same</td></tr>
-			  <tr><td>4</td><td>Whoever runs the machine has to know: the annotations cannot be read, a run cannot be started</td><td>Said where he reads it, and the person is told in <code>error_dialog</code> that the annotations could not be performed</td></tr>
+			  <tr><td>3</td><td>A report cannot be read, or cannot be deleted</td><td>It is said in <code>error_dialog</code>, with the reason, and a report which cannot be read is said in the panel of the report as well; a report which cannot be deleted stays in the list, and the others are deleted all the same</td></tr>
+			  <tr><td>4</td><td>Whoever runs the machine has to know: the annotations cannot be read, a run cannot be started</td><td>Said where he reads it, the log of the server, and the person is told in <code>error_dialog</code> that the annotations could not be performed: the response catches what the controller raised, and has the controller say it, <code>say_not_performed()</code></td></tr>
 			</tbody>
 			</table>
 
@@ -2668,6 +2668,8 @@
 			  <tr><td>TE38</td><td>The page of a first request has no annotation selected, the button which performs disabled, and the default extension of each kind selected</td><td>[012]</td></tr>
 			  <tr><td>TE39</td><td>A batch of several roots gives one result per root, in the order of the batch: written with the files produced under it, refused when none was</td><td>C25</td></tr>
 			  <tr><td>TE40</td><td>Once the annotations have been performed, the page shows the results under the report, one line per root, and no container of the provision of files</td><td>C25, T09</td></tr>
+			  <tr><td>TE41</td><td>A report which cannot be read is said in <code>error_dialog</code>, with the reason</td><td>The error policy, level 3</td></tr>
+			  <tr><td>TE42</td><td>A run which cannot be started is said in <code>error_dialog</code>: the annotations could not be performed</td><td>The error policy, level 4</td></tr>
 			</tbody>
 			</table>
 
