@@ -47,6 +47,7 @@ from whakerpy.htmlmaker import HTMLNode
 
 from sppas.ui.swapp.swapp_base.swapp_view import swappBaseView
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+from sppas.ui.swapp.nodes.buttons.hbutton import swappHTMLLink
 
 # ---------------------------------------------------------------------------
 
@@ -72,20 +73,27 @@ class swappHelpView(swappBaseView):
 
     """
 
-    def __init__(self, tree: HTMLTree, title: str, css: str = ""):
+    def __init__(self, tree: HTMLTree, title: str, css: str = "",
+                 app_page: str = "", app_name: str = "", app_icon: str = ""):
         """Initialize and populate the help view structure.
 
         :param tree: (HTMLTree) An existing HTML tree to populate.
         :param title: (str) Title of the documented app.
         :param css: (str) Filename of the stylesheet of the documented app
+        :param app_page: (str) Name of the page of the documented app, empty when the menu already leads to it
+        :param app_name: (str) Name of the documented app
+        :param app_icon: (str) Name of the icon of the documented app
         :raises: TypeError: tree is not an instance of HTMLTree
 
         """
         if isinstance(tree, HTMLTree) is False:
             raise TypeError("swappHelpView: tree must be an instance of HTMLTree. "
                             "Got {}".format(type(tree)))
-        # Set before the base view populates the head with it.
+        # Set before the base view populates the head and the nav with them.
         self.__css = css
+        self.__app_page = app_page
+        self.__app_name = app_name
+        self.__app_icon = app_icon
         super().__init__(tree, title)
 
     # -----------------------------------------------------------------------
@@ -148,6 +156,10 @@ class swappHelpView(swappBaseView):
         self._htree.body_nav.append_child(_s)
 
         self.append_home_link_button(self._htree.body_nav, self._home_target())
+        # The document of an app leads back to that app, at the place its
+        # help button holds in the menu of the app.
+        if len(self.__app_page) > 0:
+            self.__append_app_link_button(self._htree.body_nav)
         self.append_trace_link_button(self._htree.body_nav)
 
     # -----------------------------------------------------------------------
@@ -158,3 +170,22 @@ class swappHelpView(swappBaseView):
         """
         self._htree.body_script.add_attribute("type", "module")
         self._htree.body_script.set_value(BODY_SCRIPT)
+
+    # -----------------------------------------------------------------------
+    # Private
+    # -----------------------------------------------------------------------
+
+    def __append_app_link_button(self, parent: HTMLNode) -> None:
+        """Create and append the button leading back to the documented app.
+
+        A link holding the icon and the name of the app.
+
+        :param parent: (HTMLNode) the parent HTML node to append the button in
+
+        """
+        _button = swappHTMLLink(parent.identifier, "link-app_button")
+        _button.add_attribute("href", self.__app_page)
+        _button.add_attribute("class", "menuitem")
+        _button.set_icon(self.__app_icon)
+        _button.set_text(None, self.__app_name)
+        parent.append_child(_button)

@@ -311,6 +311,14 @@ class swappAnnotateController:
                 _all.append(_produced)
         self.__record.show("addresses", _addresses)
 
+        # Online, the report stands with the produced files: it is reached at
+        # an address of its own, and the archive holds it with them.
+        _report = self.__model.report_path(self.__record.report)
+        _report_address = self.__model.address_of(_report)
+        if len(_report_address) > 0:
+            self.__record.show("report_address", _report_address)
+            _all.append(_report)
+
         # Ten files are got back in one gesture and not in ten: they are
         # gathered in one archive, which is reached like any of them.
         if len(_addresses) > 0:

@@ -18,6 +18,7 @@ const ID_REPORT = 'annotate_report';
 const FIELD_FOLLOWED = 'annotate_followed';
 const ID_FORM = 'annotate_form';
 const ID_ANNOTATIONS_PANEL = 'annotate_annotations_panel';
+const ID_FILES_PANEL = 'annotate_files_panel';
 const ID_OPTIONS_CONTAINER = 'options_container';
 const EVENT_BAKE = 'event_bake';
 const TASK_OPTIONS = 'annotate_options_';
@@ -84,13 +85,17 @@ export default class AnnotateManager extends BaseManager {
     // Constructor
     // ------------------------------------------------------------------------
 
+    #files;
+
     #intervalMs;
 
     /**
+     * @param {Object|null} swappFiles - The manager of the container of the provision of files.
      * @param {number} intervalMs - How often the page asks where a run stands, in milliseconds.
      */
-    constructor(intervalMs) {
+    constructor(swappFiles = null, intervalMs) {
         super();
+        this.#files = swappFiles;
         this.#intervalMs = intervalMs;
     }
 
@@ -298,6 +303,12 @@ export default class AnnotateManager extends BaseManager {
             if (fresh !== null && window.Wexa && window.Wexa.icons) {
                 window.Wexa.icons.run(fresh);
             }
+        }
+
+        // The container of the provision of files stands in the panel of the
+        // files only: its listeners are attached again when it is written.
+        if (this.#files !== null && document.getElementById(ID_FILES_PANEL) !== null) {
+            this.#files.handleSwappFilesOnLoad();
         }
 
         this.#attach();

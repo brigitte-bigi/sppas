@@ -69,7 +69,7 @@ WEB_APPLICATIONS = [
     swappWebApplicationInfo('Dashboard', swappDashboardWebData, True),
     swappWebApplicationInfo('Setup', swappSetupWebData, True),
     swappWebApplicationInfo('Convert', swappConvertWebData, True),
-    swappWebApplicationInfo('Annotate', swappAnnotateWebData, DEBUG_MODE),
+    swappWebApplicationInfo('Annotate', swappAnnotateWebData, True),
     swappWebApplicationInfo('Test', swappTestsWebData, DEBUG_MODE),
     swappWebApplicationInfo('Wkps', swappWkpsWebData, DEBUG_MODE),
 ]

@@ -49,7 +49,7 @@
 		</p>
 
 		<section class="subssection">
-		<h3>Step 1 -- Choose the output file format(s)</h3>
+		<h3>Choose the output file format(s)</h3>
 
 			<p>
 				The annotations write new files. This step has one list for each kind of file they
@@ -61,7 +61,7 @@
 			</p>
 
 		    <section class="annotate-steps" aria-hidden="true">
-		        <ol class="enumerate-cards" start="1">
+		        <ol class="enumerate-cards" start="1" style="counter-reset: list-item 0">
 		            <li class="enumerate-cards-item">
         		        <p>Choose the output file format(s)</p>
         		        <div role="group">
@@ -101,7 +101,7 @@
 		</section>
 
 		<section class="subssection">
-		<h3>Step 2 -- Fix the language(s)</h3>
+		<h3>Fix the language(s)</h3>
 
 			<p>
 				The list offers the languages for which at least one annotation has resources, and
@@ -117,7 +117,7 @@
 			</p>
 
 		    <section class="annotate-steps" aria-hidden="true">
-		        <ol class="enumerate-cards" start="2">
+		        <ol class="enumerate-cards" start="2" style="counter-reset: list-item 1">
 		            <li class="enumerate-cards-item">
         		        <p>Fix the language(s)</p>
         		        <div>
@@ -137,7 +137,7 @@
 		</section>
 
 		<section class="subssection">
-		<h3>Step 3 -- Select and configure annotations</h3>
+		<h3>Select and configure annotations</h3>
 
 			<p>
 				The annotations are sorted into three groups, with one button for each:
@@ -157,7 +157,7 @@
 			</p>
 
 		    <section class="annotate-steps" aria-hidden="true">
-		        <ol class="enumerate-cards" start="3">
+		        <ol class="enumerate-cards" start="3" style="counter-reset: list-item 2">
 		            <li class="enumerate-cards-item">
         		        <p>Select and configure annotations</p>
         		        <div role="group">
@@ -384,7 +384,7 @@
 		</section>
 
 		<section class="subssection">
-		<h3>Step 4 -- Add files</h3>
+		<h3>Add files</h3>
 
 			<p>
 				This step says how many files are selected. Click <b>Choose the files</b>: the
@@ -395,7 +395,7 @@
 			</p>
 
 		    <section class="annotate-steps" aria-hidden="true">
-		        <ol class="enumerate-cards" start="4">
+		        <ol class="enumerate-cards" start="4" style="counter-reset: list-item 3">
 		            <li class="enumerate-cards-item">
         		        <p>Add files</p>
         		        <div role="group">
@@ -455,7 +455,7 @@
 		</section>
 
 		<section class="subssection">
-		<h3>Step 5 -- Perform the annotations</h3>
+		<h3>Perform the annotations</h3>
 
 			<p>
 				Check <b>Create -merge files</b> to also get, for each recording which has at least
@@ -470,7 +470,7 @@
 			</p>
 
 		    <section class="annotate-steps" aria-hidden="true">
-		        <ol class="enumerate-cards" start="5">
+		        <ol class="enumerate-cards" start="5" style="counter-reset: list-item 4">
 		            <li class="enumerate-cards-item">
         		        <p>Perform the annotations</p>
         		        <div role="group">
@@ -490,7 +490,7 @@
 		</section>
 
 		<section class="subssection">
-		<h3>Step 6 -- Read the procedure outcome report</h3>
+		<h3>Read the procedure outcome report</h3>
 
 			<p>
 				<b>Show report</b> shows the report which is checked in the list of the reports, on
@@ -499,7 +499,7 @@
 			</p>
 
 		    <section class="annotate-steps" aria-hidden="true">
-		        <ol class="enumerate-cards" start="6">
+		        <ol class="enumerate-cards" start="6" style="counter-reset: list-item 5">
 		            <li class="enumerate-cards-item">
         		        <p>Read the procedure outcome report</p>
         		        <div role="group">
@@ -874,7 +874,7 @@
 			</p>
 
 			<p>
-				By default, the toggle of the two panels is written, then
+				By default, the toggle of the two panels is written locally, and not online, then
 				<code>swappActionAnnotatePanel</code> -- the six steps and <b>Reset</b> -- and
 				<code>swappReportsPanel</code> side by side. Otherwise, one panel takes the body, its
 				way back and its title written by <code>append_head()</code>:
@@ -2573,8 +2573,8 @@
 			<p><b>The report is the one thing which stays.</b> Locally, its name is given
 			by <code>sppasLogFile</code> with the pattern <code>report</code>: the reports of
 			a user are the reports of that user, whichever interface performed them. Online,
-			it is written with the produced files, and which operation of the provision of
-			files gives that place is to be named in its dossier. C17, C22</p>
+			it is written beside the files of the batch, in the folder <code>ModelProvision</code>
+			gives, and it is given back with the produced files. C17, C22</p>
 
 		</section>
 
@@ -2731,19 +2731,21 @@
 			gives the languages of the page, which are the languages of every annotation
 			put together.</p>
 
-			<p><code>ModelRun</code> performs T08. It names the report, fills a
+			<p><code>ModelRun</code> performs T08. It names the report, beside the files of
+			the batch online, fills a
 			<code>sppasParam</code> with what was decided, makes the progress, and creates a
 			<code>sppasAnnotationsManager</code> with them and the merge option: its
-			thread performs the annotations. It holds that manager and the progress, and
-			nothing else: it says whether a run is going, and where it stands. The first
-			time it finds the run ended, it releases the batch, gives back what was
-			produced, keeps as the results of that
+			thread performs the annotations. It holds that manager, the progress and,
+			online, the report it named: it says whether a run is going, and where it
+			stands. The first time it finds the run ended, it releases the batch, gives
+			back what was produced, the report included online, keeps as the results of that
 			run what the API wrote under each root of the batch, and says it has finished. The results are
 			those of the last run which ended, until another one starts.</p>
 
 			<p><code>ModelReports</code> lists the reports of the folder of the logs
-			&mdash; the text files whose name holds <code>report</code> &mdash;, reads one,
-			and deletes those it is named. Reading gives the lines as they were written,
+			&mdash; the text files whose name holds <code>report</code> &mdash;, reads one
+			in the folder it is given &mdash; the one of the logs locally, the one of the
+			files of the batch online &mdash;, and deletes those it is named. Reading gives the lines as they were written,
 			each with the state it carries: a line which starts a result bears one of OK,
 			ERROR, WARNING, INFO and IGNORED, in the language of the interface, and that
 			word is what the state is read from.</p>
@@ -2974,11 +2976,11 @@
 			<table>
 			<thead><tr><th scope="col">Class</th><th scope="col">From</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 			<tbody>
-			  <tr><td><code>AnnotateModel</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>annotations(), why_not_installed(key), required_names(key), required_filetypes(key), kinds(), languages(), batch(), start(batch, run), is_running(), progress(), results(), reports(), read_report(name), delete_reports(names), address_of(filename), address_of_all(filenames)</td></tr>
+			  <tr><td><code>AnnotateModel</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>annotations(), why_not_installed(key), required_names(key), required_filetypes(key), kinds(), languages(), batch(), start(batch, run), is_running(), progress(), results(), reports(), read_report(name), report_path(name), delete_reports(names), address_of(filename), address_of_all(filenames)</td></tr>
 			  <tr><td><code>ModelAnnotations</code></td><td>module <i>annotations</i></td><td>&mdash;</td><td>annotations(), why_not_installed(key), required_names(key), required_filetypes(key), kinds(), languages()</td></tr>
 			  <tr><td><code>ModelRun</code></td><td>module <i>run</i></td><td>manager, progress, results</td><td>start(batch, run), is_running(), progress(), results()</td></tr>
-			  <tr><td><code>ModelReports</code></td><td>module <i>reports</i></td><td>&mdash;</td><td>reports(), read(name), delete(names)</td></tr>
-			  <tr><td><code>ModelProvision</code></td><td>module <i>provision</i></td><td>&mdash;</td><td>batch(), lock(names), release(names), produced(workspace), address_of(filename), address_of_all(filenames), finished()</td></tr>
+			  <tr><td><code>ModelReports</code></td><td>module <i>reports</i></td><td>&mdash;</td><td>reports(), read(name, folder), delete(names)</td></tr>
+			  <tr><td><code>ModelProvision</code></td><td>module <i>provision</i></td><td>&mdash;</td><td>batch(), folder(), lock(names), release(names), produced(workspace), address_of(filename), address_of_all(filenames), finished()</td></tr>
 			  <tr><td><code>Annotation</code></td><td>ANNOTATION, REQUIRES</td><td>key, name, description, types, languages, language, references, devel, requires, /is installed</td><td>&mdash;</td></tr>
 			  <tr><td><code>Kind</code></td><td>KIND</td><td>kind, extensions, default</td><td>&mdash;</td></tr>
 			  <tr><td><code>Run</code></td><td>RUN, SELECTION, EXTENSION, VALUE</td><td>extensions, selected, lang, options, merge, report, /what is missing</td><td>what_is_missing(batch)</td></tr>
@@ -3033,10 +3035,10 @@
 			<p>To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
 			class diagram.</p>
 
-			<pre class="dark"><code>[AnnotateModel|annotations();why_not_installed();required_names();required_filetypes();kinds();languages();batch();start();is_running();progress();results();reports();read_report();delete_reports();address_of();address_of_all()]++1-1&gt;[ModelAnnotations|annotations();why_not_installed();required_names();required_filetypes();kinds();languages()]
+			<pre class="dark"><code>[AnnotateModel|annotations();why_not_installed();required_names();required_filetypes();kinds();languages();batch();start();is_running();progress();results();reports();read_report();report_path();delete_reports();address_of();address_of_all()]++1-1&gt;[ModelAnnotations|annotations();why_not_installed();required_names();required_filetypes();kinds();languages()]
 [AnnotateModel]++1-1&gt;[ModelRun|manager;progress;results|start();is_running();progress();results()]
 [AnnotateModel]++1-1&gt;[ModelReports|reports();read();delete()]
-[AnnotateModel]++1-1&gt;[ModelProvision|batch();lock();release();produced();address_of();address_of_all();finished()]
+[AnnotateModel]++1-1&gt;[ModelProvision|batch();folder();lock();release();produced();address_of();address_of_all();finished()]
 
 [ModelAnnotations]-.-&gt;[Annotation|key;name;description;types;languages;language;references;devel;requires;/is installed]
 [ModelAnnotations]-.-&gt;[Kind|kind;extensions;default]
@@ -3332,6 +3334,7 @@
 			  <tr><td>Give the progress</td><td>pre: none. post: the percent, the header and the text the API set; the hundred, and nothing else, when no run is going. C18</td></tr>
 			  <tr><td>Give the reports</td><td>pre: none. post: the names of the reports which are kept, the last one written first; empty when there are none, and empty online. C22</td></tr>
 			  <tr><td>Read a report</td><td>pre: the name of a report. post: the text of that report as it was written, line for line, nothing added and nothing left out. C19</td></tr>
+			  <tr><td>Give the path of a report</td><td>pre: the name of a report, without its path. post: that name in the folder of the logs locally, and beside the files of the batch online. C22</td></tr>
 			  <tr><td>Delete reports</td><td>pre: names of reports. post: those which could be deleted are gone, the names of the others are given back, and nothing else was touched. C21</td></tr>
 			  <tr><td>Give the address of a produced file, or of all of them</td><td>pre: names of produced files. post: what the provision of files answers; empty where the person reaches them where they stand. C23</td></tr>
 			</tbody>
@@ -3354,8 +3357,8 @@
 			<caption>ModelRun</caption>
 			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 			<tbody>
-			  <tr><td>Start</td><td>pre: the preconditions of the run are verified. post: the report is named, under a name no report bore before, and the name of the next one is prepared; a <code>sppasParam</code> holds what was decided and that only &mdash; the selected annotations activated and no other, the language and the options of each, the extensions, the workspace, the name of the report; the progress is made; the batch is locked; a <code>sppasAnnotationsManager</code> is created with that <code>sppasParam</code>, the progress and the merge option, and its thread performs the annotations in the order of the API; the name of the report is given back. Raises when a run is going. C13, C14, C15, C17</td></tr>
-			  <tr><td>Give back the batch</td><td>pre: the thread of the manager has ended. post: whatever each annotation did, the batch is released, what was produced is given back, the results are kept &mdash; one per root of the batch, in its order, with the files the API says it wrote under it &mdash;, and that it has finished is said; done once, the first time the run is found ended, whichever request finds it. C16, C25</td></tr>
+			  <tr><td>Start</td><td>pre: the preconditions of the run are verified. post: the report is named, under a name no report bore before, beside the files of the batch online, and the name of the next one is prepared; a <code>sppasParam</code> holds what was decided and that only &mdash; the selected annotations activated and no other, the language and the options of each, the extensions, the workspace, the name of the report; the progress is made; the batch is locked; a <code>sppasAnnotationsManager</code> is created with that <code>sppasParam</code>, the progress and the merge option, and its thread performs the annotations in the order of the API; the name of the report is given back. Raises when a run is going. C13, C14, C15, C17</td></tr>
+			  <tr><td>Give back the batch</td><td>pre: the thread of the manager has ended. post: whatever each annotation did, the batch is released, what was produced is given back, the report included online, the results are kept &mdash; one per root of the batch, in its order, with the files the API says it wrote under it &mdash;, and that it has finished is said; done once, the first time the run is found ended, whichever request finds it. C16, C25</td></tr>
 			  <tr><td>Give the results</td><td>pre: none. post: one result per root of the batch of the last run which ended, in the order of the batch; none while a run goes, and none before the first one has ended. C25</td></tr>
 			  <tr><td>Say whether a run is going</td><td>pre: none. post: true while the thread of the manager is alive</td></tr>
 			  <tr><td>Give the progress</td><td>pre: none. post: what the API set on the progress it was given; nothing is counted here. C18</td></tr>
@@ -3367,7 +3370,7 @@
 			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 			<tbody>
 			  <tr><td>Give the reports</td><td>pre: none. post: the names of the text files of the folder of the logs whose name holds <code>report</code>, and no other file of that folder</td></tr>
-			  <tr><td>Read a report</td><td>pre: the name of a report, without its path. post: one <code>ReportLine</code> per line, in the order of the file; a line which states a result bears its state, any other bears none; nothing is counted and nothing is decided from it. Raises when the file cannot be read. C19</td></tr>
+			  <tr><td>Read a report</td><td>pre: the name of a report, without its path, and the folder it stands in. post: one <code>ReportLine</code> per line, in the order of the file; a line which states a result bears its state, any other bears none; nothing is counted and nothing is decided from it. Raises when it is not a report of that folder, and when the file cannot be read. C19</td></tr>
 			  <tr><td>Delete reports</td><td>pre: names of reports, without their path. post: each of them is deleted on its own, and one which cannot be does not keep the others from being; the names of those which are left are given back. No file which is not a report is deleted. C21</td></tr>
 			</tbody>
 			</table>
@@ -3377,6 +3380,7 @@
 			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 			<tbody>
 			  <tr><td>Give the batch</td><td>pre: none. post: the workspace the provision of files hands, holding the files to be treated and them only, possibly empty; the workspace of the person never reached. C11</td></tr>
+			  <tr><td>Give the folder of the batch</td><td>pre: none. post: the folder the files of the batch stand in; online, the place the provision of files made for what the person sent; empty when the batch holds no file. C22</td></tr>
 			  <tr><td>Lock and release</td><td>pre: files of the batch. post: they are locked while the annotations are performed, and released when they have been; none is still locked afterward</td></tr>
 			  <tr><td>Give back what was produced</td><td>pre: the annotations have been performed. post: what was written is in the workspace which was handed, that workspace is given back, and that the batch has been treated is said. C23</td></tr>
 			  <tr><td>Give an address</td><td>pre: the name of a produced file, or of several. post: what the provision of files answers, relayed. C23</td></tr>

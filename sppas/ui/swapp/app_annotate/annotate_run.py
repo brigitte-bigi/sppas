@@ -48,6 +48,7 @@ from sppas.src.annotations import sppasParam
 from sppas.src.wkps import States
 
 from ..nodes import swappProgressBar
+from ..swapp_core.swappsg import swapp_serverstate
 
 from .annotate_provision import swappModelProvision
 
@@ -134,6 +135,9 @@ class swappModelRun:
         # them once the run has ended.
         self.__roots = list()
         self.__results = list()
+        # Online, the report written beside the files of the batch: it is
+        # given back with what was produced.
+        self.__report = ""
 
     # -----------------------------------------------------------------------
 
@@ -156,6 +160,10 @@ class swappModelRun:
 
         _report = self.__log_report.get_filename()
         self.__log_report.increment()
+        self.__report = ""
+        if swapp_serverstate.local is False:
+            _report = os.path.join(self.__provision.folder(), os.path.basename(_report))
+            self.__report = _report
         parameters.set_report_filename(_report)
         parameters.set_workspace(batch)
 
@@ -244,6 +252,8 @@ class swappModelRun:
             if self.__batch is None:
                 return
             self.__provision.release(self.__filenames)
+            if len(self.__report) > 0 and os.path.isfile(self.__report) is True:
+                self.__batch.add_file(self.__report)
             self.__provision.produced(self.__batch)
 
             # The API added what it wrote to the batch: each written file is
@@ -265,4 +275,5 @@ class swappModelRun:
             self.__batch = None
             self.__filenames = list()
             self.__roots = list()
+            self.__report = ""
             self.__progress = None

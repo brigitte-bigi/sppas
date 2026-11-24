@@ -55,12 +55,14 @@ class swappHelpResponseRecipe(swappBaseResponse):
     """The response bakery of the document of an app.
 
     One recipe for all of them: an app differs only by the document it
-    declares. The document holds both the user manual and the conceptual
-    folder of the app, written by hand and served as it is.
+    declares, and by the page its menu leads back to. The document holds
+    both the user manual and the conceptual folder of the app, written by
+    hand and served as it is.
 
     """
 
     def __init__(self, document: str, page: str, title: str, css: str = "",
+                 app_page: str = "", app_name: str = "", app_icon: str = "",
                  tree: HTMLTree | None = None):
         """Create the ResponseRecipe for the document of an app.
 
@@ -68,12 +70,18 @@ class swappHelpResponseRecipe(swappBaseResponse):
         :param page: (str) Name of the page serving the document
         :param title: (str) Title of the documented app
         :param css: (str) Filename of the stylesheet of the documented app
+        :param app_page: (str) Name of the page of the documented app, empty when the menu already leads to it
+        :param app_name: (str) Name of the documented app
+        :param app_icon: (str) Name of the icon of the documented app
 
         """
         self.__view = None
         self.__document = document
         self.__page = page
         self.__css = css
+        self.__app_page = app_page
+        self.__app_name = app_name
+        self.__app_icon = app_icon
 
         super(swappHelpResponseRecipe, self).__init__(page, tree, title)
 
@@ -95,7 +103,8 @@ class swappHelpResponseRecipe(swappBaseResponse):
 
         """
         super().create()
-        self.__view = swappHelpView(self._htree, self._title, self.__css)
+        self.__view = swappHelpView(self._htree, self._title, self.__css,
+                                    self.__app_page, self.__app_name, self.__app_icon)
 
     # -----------------------------------------------------------------------
     # Callbacks

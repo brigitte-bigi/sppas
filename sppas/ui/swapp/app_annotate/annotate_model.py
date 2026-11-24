@@ -39,6 +39,9 @@
 """
 
 from __future__ import annotations
+import os
+
+from sppas.core.config import paths
 
 from ..swapp_core.swappsg import swapp_serverstate
 from ..services.files import swappFilesManager
@@ -264,12 +267,23 @@ class swappAnnotateModel:
         """Return the lines of a report as they were written, each with the state it bears.
 
         :param name: (str) Name of the report
-        :raises: ValueError: The name is not the one of a report which is kept
+        :raises: ValueError: The name is not the one of a report of its folder
         :raises: IOError: The report can't be read
         :return: (list of swappReportLine)
 
         """
-        return self.__reports.read(name)
+        return self.__reports.read(name, self.__folder_of_reports())
+
+    # -----------------------------------------------------------------------
+
+    def report_path(self, name: str) -> str:
+        """Return the name of a report with its path.
+
+        :param name: (str) Name of the report, without its path
+        :return: (str) In the folder of the logs locally, beside the files of the batch online
+
+        """
+        return os.path.join(self.__folder_of_reports(), name)
 
     # -----------------------------------------------------------------------
 
@@ -281,3 +295,18 @@ class swappAnnotateModel:
 
         """
         return self.__reports.delete(names)
+
+    # -----------------------------------------------------------------------
+    # Private
+    # -----------------------------------------------------------------------
+
+    def __folder_of_reports(self) -> str:
+        """Return the folder the reports stand in.
+
+        :return: (str) The folder of the logs locally, the one of the files of the batch online
+
+        """
+        if swapp_serverstate.local is True:
+            return paths.logs
+
+        return self.__provision.folder()

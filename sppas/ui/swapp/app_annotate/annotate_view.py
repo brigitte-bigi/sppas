@@ -83,15 +83,15 @@ INTERVAL_DISTANT_MS = 1000
 BODY_SCRIPT = """
         import {{ AnnotateManager }} from '/{js}sppas.js';
         import SwappFiles from '/{js}swapp_files.js';
+        const swappFiles = new SwappFiles();
 
-        const annotateManager = new AnnotateManager({interval});
+        const annotateManager = new AnnotateManager(swappFiles, {interval});
         annotateManager.handleAnnotateManagerOnLoad();
 
         // The container of the provision of files stands in the panel of the
         // files only: what is done in it is sent without reloading the page,
         // which keeps every decision the form of the page carries.
         if (document.getElementById('annotate_files_panel') !== null) {{
-            const swappFiles = new SwappFiles();
             swappFiles.handleSwappFilesOnLoad();
         }}
 """
@@ -267,7 +267,8 @@ class swappAnnotateView(swappBaseView):
             if _running is True:
                 _name = record.followed
             _log = swappLogAnnotatePanel(self._htree.body_main.identifier, _name, _shown["report"],
-                                         _shown.get("unavailable", ""), _running)
+                                         _shown.get("unavailable", ""), _running,
+                                         _shown.get("report_address", ""))
             self._htree.body_main.append_child(_log)
             # Once the annotations have been performed, what came of every
             # root of the batch is written under the report.
@@ -333,40 +334,39 @@ class swappAnnotateView(swappBaseView):
 
         """
         # Locally, the reports stand beside the six steps. Online there is no
-        # list of reports: its panel is collapsed, and the six steps are alone.
+        # list of reports: its panel is collapsed, the six steps are alone,
+        # and there is no panel to choose.
         _local = "reports" in shown
-        _view = "both"
-        if _local is False:
-            _view = "left"
 
         # The toggle choosing which panel(s) to display: a narrow window
         # makes two panels side by side hard to read. A native radiogroup:
         # keyboard operation and the checked-state announcement come from
         # the radio inputs themselves, not from JavaScript.
-        _toggle = TagNode(self._htree.body_main.identifier, None, "section")
-        _toggle.set_attribute("id", "annotate_toggle")
-        _toggle.set_attribute("class", "toggle-group center")
-        _toggle.set_attribute("role", "radiogroup")
-        _toggle.set_attribute("aria-label", MSG_VIEW_LABEL)
-        self._htree.body_main.append_child(_toggle)
+        if _local is True:
+            _toggle = TagNode(self._htree.body_main.identifier, None, "section")
+            _toggle.set_attribute("id", "annotate_toggle")
+            _toggle.set_attribute("class", "toggle-group center")
+            _toggle.set_attribute("role", "radiogroup")
+            _toggle.set_attribute("aria-label", MSG_VIEW_LABEL)
+            self._htree.body_main.append_child(_toggle)
 
-        for value, msg in (("left", MSG_VIEW_LEFT),
-                           ("both", MSG_VIEW_BOTH),
-                           ("right", MSG_VIEW_RIGHT)):
-            _label = TagNode(_toggle.identifier, None, "label")
-            _label.set_attribute("class", "menuitem")
-            _label.set_attribute("for", "annotate_view_" + value)
-            _toggle.append_child(_label)
-            _radio = HTMLNode(_label.identifier, None, "input")
-            _radio.set_attribute("type", "radio")
-            _radio.set_attribute("name", "annotate_panel_view")
-            _radio.set_attribute("id", "annotate_view_" + value)
-            _radio.set_attribute("value", value)
-            if value == _view:
-                _radio.set_attribute("checked", None)
-            _label.append_child(_radio)
-            _text = HTMLNode(_label.identifier, None, "span", value=msg)
-            _label.append_child(_text)
+            for value, msg in (("left", MSG_VIEW_LEFT),
+                               ("both", MSG_VIEW_BOTH),
+                               ("right", MSG_VIEW_RIGHT)):
+                _label = TagNode(_toggle.identifier, None, "label")
+                _label.set_attribute("class", "menuitem")
+                _label.set_attribute("for", "annotate_view_" + value)
+                _toggle.append_child(_label)
+                _radio = HTMLNode(_label.identifier, None, "input")
+                _radio.set_attribute("type", "radio")
+                _radio.set_attribute("name", "annotate_panel_view")
+                _radio.set_attribute("id", "annotate_view_" + value)
+                _radio.set_attribute("value", value)
+                if value == "both":
+                    _radio.set_attribute("checked", None)
+                _label.append_child(_radio)
+                _text = HTMLNode(_label.identifier, None, "span", value=msg)
+                _label.append_child(_text)
 
         # The steps and the reports, in two side-by-side panels.
         _panels = TagNode(self._htree.body_main.identifier, None, "section")

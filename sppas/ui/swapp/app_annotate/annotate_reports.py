@@ -97,7 +97,10 @@ class swappReportLine:
 
 
 class swappModelReports:
-    """The reports of the annotations which are kept in the folder of the logs.
+    """The reports of the annotations.
+
+    Locally, the reports are kept in the folder of the logs. Online, the
+    report of a run is written beside the files of the batch.
 
     """
 
@@ -107,36 +110,26 @@ class swappModelReports:
         :return: (list of str) Empty when there are none
 
         """
-        _dated = list()
-        for _name in os.listdir(paths.logs):
-            _path = os.path.join(paths.logs, _name)
-            if os.path.isfile(_path) is True and _name.endswith(".txt") is True and "report" in _name:
-                _dated.append((os.path.getmtime(_path), _name))
-        _dated.sort(reverse=True)
-
-        _reports = list()
-        for _date, _name in _dated:
-            _reports.append(_name)
-
-        return _reports
+        return swappModelReports.__reports_in(paths.logs)
 
     # -----------------------------------------------------------------------
 
-    def read(self, name: str) -> list:
+    def read(self, name: str, folder: str) -> list:
         """Return the lines of a report as they were written, each with the state it bears.
 
         Nothing is counted, and nothing is decided from it.
 
-        :param name: (str) Name of the report, one of those which are kept
-        :raises: ValueError: The name is not the one of a report which is kept
+        :param name: (str) Name of the report, without its path
+        :param folder: (str) The folder of the logs locally, the one of the files of the batch online
+        :raises: ValueError: The name is not the one of a report of that folder
         :raises: IOError: The report can't be read
         :return: (list of swappReportLine) One per line, in the order of the file
 
         """
-        if (name in self.reports()) is False:
-            raise ValueError("{:s} is not a report which is kept.".format(name))
+        if (name in swappModelReports.__reports_in(folder)) is False:
+            raise ValueError("{:s} is not a report of {:s}.".format(name, folder))
 
-        with codecs.open(os.path.join(paths.logs, name), "r", sg.__encoding__) as fp:
+        with codecs.open(os.path.join(folder, name), "r", sg.__encoding__) as fp:
             _content = fp.read()
 
         _lines = list()
@@ -172,6 +165,29 @@ class swappModelReports:
 
     # -----------------------------------------------------------------------
     # Private
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __reports_in(folder: str) -> list:
+        """Return the names of the reports of a folder, the last one written first.
+
+        :param folder: (str) The folder the reports stand in
+        :return: (list of str) Empty when there are none
+
+        """
+        _dated = list()
+        for _name in os.listdir(folder):
+            _path = os.path.join(folder, _name)
+            if os.path.isfile(_path) is True and _name.endswith(".txt") is True and "report" in _name:
+                _dated.append((os.path.getmtime(_path), _name))
+        _dated.sort(reverse=True)
+
+        _reports = list()
+        for _date, _name in _dated:
+            _reports.append(_name)
+
+        return _reports
+
     # -----------------------------------------------------------------------
 
     @staticmethod

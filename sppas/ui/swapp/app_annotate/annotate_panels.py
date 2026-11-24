@@ -701,7 +701,7 @@ class swappLogAnnotatePanel(TagNode):
 
     """
 
-    def __init__(self, parent: str, name: str, report: list, unavailable: str, running: bool):
+    def __init__(self, parent: str, name: str, report: list, unavailable: str, running: bool, address: str):
         """Create the panel of the procedure outcome report.
 
         :param parent: (str) Identifier of the node the panel is appended to
@@ -709,6 +709,7 @@ class swappLogAnnotatePanel(TagNode):
         :param report: (list of swappReportLine) The lines of the report
         :param unavailable: (str) Why the report is not available, empty if it is
         :param running: (bool) A run is going
+        :param address: (str) The address the report is reached at online, empty locally
 
         """
         super(swappLogAnnotatePanel, self).__init__(parent, "annotate_log_panel", "section",
@@ -734,6 +735,14 @@ class swappLogAnnotatePanel(TagNode):
             _holder.append_child(HTMLNode(_holder.identifier, None, "summary",
                                           value=MSG_REPORT_FILE + " " + html.escape(name),
                                           attributes={"id": "annotate_report_file"}))
+        elif len(address) > 0:
+            # Online, the name of the report leads to it, and the browser is
+            # told to keep it under that name instead of showing it.
+            _p = TagNode(self.identifier, None, "p", attributes={"id": "annotate_report_file"})
+            self.append_child(_p)
+            _p.append_child(HTMLNode(_p.identifier, None, "span", value=MSG_REPORT_FILE))
+            _p.append_child(HTMLNode(_p.identifier, None, "a", value=html.escape(name),
+                                     attributes={"href": address, "download": name}))
         else:
             self.append_child(HTMLNode(self.identifier, None, "p", value=MSG_REPORT_FILE + " " + html.escape(name),
                                        attributes={"id": "annotate_report_file"}))

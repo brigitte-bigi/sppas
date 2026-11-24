@@ -134,6 +134,9 @@ class swappAnnotateWebData(swappWebData):
             return swappHelpResponseRecipe(swappAnnotateResponseRecipe.help_document(),
                                            swappAnnotateResponseRecipe.help_page(),
                                            MSG_HELP_TITLE,
-                                           "app_annotate.css")
+                                           "app_annotate.css",
+                                           swappAnnotateResponseRecipe.page(),
+                                           MSG_NAME,
+                                           "app_annotate")
 
         return None

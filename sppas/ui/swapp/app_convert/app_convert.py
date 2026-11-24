@@ -134,6 +134,9 @@ class swappConvertWebData(swappWebData):
             return swappHelpResponseRecipe(swappConvertResponseRecipe.help_document(),
                                            swappConvertResponseRecipe.help_page(),
                                            MSG_HELP_TITLE,
-                                           "app_convert.css")
+                                           "app_convert.css",
+                                           swappConvertResponseRecipe.page(),
+                                           MSG_NAME,
+                                           "app_convert")
 
         return None

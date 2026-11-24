@@ -110,7 +110,7 @@ class TestModelReports(unittest.TestCase):
         _lines.append("A line which states no result.")
         write_file(self.logs, "sppas_report_0001.txt", _lines)
 
-        _read = self.reports.read("sppas_report_0001.txt")
+        _read = self.reports.read("sppas_report_0001.txt", self.logs)
         self.assertEqual(len(_lines), len(_read))
         for i in range(len(REPORT_STATES)):
             self.assertEqual(REPORT_STATES[i][0], _read[i].state)
@@ -122,7 +122,7 @@ class TestModelReports(unittest.TestCase):
     def test_te27_a_report_which_is_not_there(self):
         """TE27. It is said so, and nothing is given in its place. [604]"""
         with self.assertRaises(ValueError):
-            self.reports.read("sppas_report_0001.txt")
+            self.reports.read("sppas_report_0001.txt", self.logs)
 
     # -----------------------------------------------------------------------
 

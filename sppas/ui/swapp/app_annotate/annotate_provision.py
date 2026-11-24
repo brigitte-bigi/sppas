@@ -79,6 +79,23 @@ class swappModelProvision:
 
     # -----------------------------------------------------------------------
 
+    def folder(self) -> str:
+        """Return the folder the files of the batch stand in.
+
+        Online, it is the place the provision of files made for what the
+        person sent: the report of a run is written there, beside them.
+
+        :return: (str) Empty when the batch holds no file
+
+        """
+        _paths = self.__manager.files_for_app().get_paths()
+        if len(_paths) == 0:
+            return ""
+
+        return _paths[0].get_id()
+
+    # -----------------------------------------------------------------------
+
     def lock(self, filenames: list) -> int:
         """Say the files are taken, to be annotated.
 
