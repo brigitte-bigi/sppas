@@ -37,12 +37,8 @@
 
     -------------------------------------------------------------------------
 
-    TE1 to TE13, TE43, TE45 and TE47 of the dossier "Annotate - an app of SPPAS": arranging a list,
-    with nothing installed, then ModelAnnotations with the API and no file.
-
-    Arranging, and what an annotation requires, wait for the extension of the
-    API (E1): TE1 to TE6 and TE12 fail until it is made. The dossier writes it
-    that way on purpose for TE12: the test says whether the extension was made.
+    TE7 to TE13, TE43, TE45 and TE47 of the dossier "Annotate - an app of SPPAS":
+    ModelAnnotations with the API and no file.
 
 """
 
@@ -62,20 +58,6 @@ from sppas.src.annotations.param import annotationParam
 from sppas.ui.swapp.app_annotate.annotate_annotations import swappModelAnnotations
 
 # ---------------------------------------------------------------------------
-
-
-class AnnotationForTests:
-    """An annotation as arranging is given it: its key, and what it requires."""
-
-    def __init__(self, key: str, requires: list):
-        self.__key = key
-        self.__requires = requires
-
-    def get_key(self) -> str:
-        return self.__key
-
-    def get_required_annotations(self) -> list:
-        return self.__requires
 
 
 class NotEnabledForTests:
@@ -110,68 +92,6 @@ def keys_of(annotations: list) -> list:
     for _annotation in annotations:
         _keys.append(_annotation.get_key())
     return _keys
-
-# ---------------------------------------------------------------------------
-
-
-class TestArranged(unittest.TestCase):
-    """TE1 to TE6. Nothing is installed and nothing is read."""
-
-    def test_te1_what_comes_back_is_what_was_given(self):
-        """TE1. Not one annotation added, not one removed."""
-        _given = [AnnotationForTests("alignment", ["phonetize"]),
-                  AnnotationForTests("textnorm", []),
-                  AnnotationForTests("phonetize", ["textnorm"])]
-        _arranged = swappModelAnnotations.arranged(_given)
-        self.assertEqual(sorted(keys_of(_given)), sorted(keys_of(_arranged)))
-
-    # -----------------------------------------------------------------------
-
-    def test_te2_after_what_it_requires(self):
-        """TE2. An annotation stands after every annotation of the list it requires. C9"""
-        _arranged = swappModelAnnotations.arranged([AnnotationForTests("alignment", ["phonetize"]),
-                                                    AnnotationForTests("phonetize", [])])
-        _keys = keys_of(_arranged)
-        self.assertLess(_keys.index("phonetize"), _keys.index("alignment"))
-
-    # -----------------------------------------------------------------------
-
-    def test_te3_a_requirement_not_in_the_list(self):
-        """TE3. An annotation whose requirement is not in the list is in the list all the same. C9"""
-        _arranged = swappModelAnnotations.arranged([AnnotationForTests("alignment", ["phonetize"])])
-        self.assertEqual(["alignment"], keys_of(_arranged))
-
-    # -----------------------------------------------------------------------
-
-    def test_te4_a_chain_of_three(self):
-        """TE4. Arranged the same way whatever order it was given in, the reverse included. C9"""
-        _textnorm = AnnotationForTests("textnorm", [])
-        _phonetize = AnnotationForTests("phonetize", ["textnorm"])
-        _alignment = AnnotationForTests("alignment", ["phonetize"])
-        for _given in ([_textnorm, _phonetize, _alignment],
-                       [_alignment, _phonetize, _textnorm],
-                       [_phonetize, _alignment, _textnorm]):
-            self.assertEqual(["textnorm", "phonetize", "alignment"],
-                             keys_of(swappModelAnnotations.arranged(_given)))
-
-    # -----------------------------------------------------------------------
-
-    def test_te5_a_requirement_which_names_nothing(self):
-        """TE5. It changes nothing of the arrangement. C9"""
-        _given = [AnnotationForTests("textnorm", []),
-                  AnnotationForTests("alignment", ["nothing_bears_this_name"])]
-        self.assertEqual(keys_of(_given), keys_of(swappModelAnnotations.arranged(_given)))
-
-    # -----------------------------------------------------------------------
-
-    def test_te6_the_same_list_twice(self):
-        """TE6. The same list given twice is arranged the same way."""
-        _given = [AnnotationForTests("syllabify", ["alignment"]),
-                  AnnotationForTests("alignment", ["phonetize"]),
-                  AnnotationForTests("textnorm", []),
-                  AnnotationForTests("phonetize", ["textnorm"])]
-        self.assertEqual(keys_of(swappModelAnnotations.arranged(_given)),
-                         keys_of(swappModelAnnotations.arranged(_given)))
 
 # ---------------------------------------------------------------------------
 

@@ -6,11 +6,688 @@
 
 <!-- =============================================================== -->
 
-	<p>
-		<b>Not written yet.</b> This chapter is the help of the person who annotates:
-		what the page shows, how an annotation is chosen and set, what is done to the
-		files, and what is read of what came of it.
-	</p>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Overview</h2>
+
+		<p>
+			This page performs the automatic annotations of SPPAS on your files. You say into which
+			formats the files are to be written, in which language, which annotations are to be
+			performed and with which options, and on which files. SPPAS performs them, then says
+			what came of each of your recordings. Each annotation writes what it produced into new
+			files.
+		</p>
+
+		<p>
+			The four spaces of SPPAS are here as everywhere else -- the header, the menu along the
+			left edge, the body in the middle, the footer at the bottom. The help of the Dashboard
+			describes them, and the menu buttons do the same thing here.
+		</p>
+
+		<p>
+			The body holds three buttons above two panels: the six steps on the left, the reports on
+			the right. The steps are numbered in the order you go through them. Three of them open a
+			panel which takes the whole body -- the annotations of one type, the files, the report --
+			and the <b>Back</b> button, at the top of that panel, brings you back to the six steps.
+			Each part is shown below as you see it on the page.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The two panels</h2>
+
+		<p>
+			Above the two panels, three buttons say which one is shown:
+		</p>
+
+		    <section class="toggle-group center" role="radiogroup" aria-label="Panels to display" aria-hidden="true">
+		        <label class="menuitem">
+		            <input tabindex="-1" type="radio" value="left" />
+		            <span>Left</span>
+		        </label>
+		        <label class="menuitem">
+		            <input tabindex="-1" type="radio" value="both" checked />
+		            <span>Both</span>
+		        </label>
+		        <label class="menuitem">
+		            <input tabindex="-1" type="radio" value="right" />
+		            <span>Right</span>
+		        </label>
+		    </section>
+
+		<p>
+			<b>Left</b> shows the six steps alone, <b>Right</b> the reports alone, and <b>Both</b>
+			shows them side by side, as when the page opens. On a narrow window, one panel at a time
+			is easier to read. This changes what you see, and nothing of what is done.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The six steps</h2>
+
+		<p>
+			The left panel holds the six steps, with the <b>Reset</b> button under them. Here they
+			are when the page opens:
+		</p>
+
+		    <section class="width_70 annotate-steps" aria-hidden="true">
+		        <ol class="enumerate-cards">
+		            <li class="enumerate-cards-item">
+		                <p>Choose the output file format(s)</p>
+		                <div role="group">
+		                    <div class="wrap-panel width_full">
+		                        <span class="wrap-item width_50">
+		                            <select tabindex="-1" aria-label="ANNOT">
+		                                <option value=".xra" selected>.xra</option>
+		                                <option value=".TextGrid">.TextGrid</option>
+		                                <option value=".eaf">.eaf</option>
+		                                <option value=".csv">.csv</option>
+		                            </select>
+		                        </span>
+		                        <span class="wrap-item width_50">
+		                            <select tabindex="-1" aria-label="IMAGE">
+		                                <option value=".png">.png</option>
+		                                <option value=".jpg" selected>.jpg</option>
+		                            </select>
+		                        </span>
+		                        <span class="wrap-item width_50">
+		                            <select tabindex="-1" aria-label="VIDEO">
+		                                <option value=".mp4" selected>.mp4</option>
+		                                <option value=".avi">.avi</option>
+		                            </select>
+		                        </span>
+		                        <span class="wrap-item width_50">
+		                            <select tabindex="-1" aria-label="AUDIO">
+		                                <option value=".wav" selected>.wav</option>
+		                                <option value=".aiff">.aiff</option>
+		                            </select>
+		                        </span>
+		                    </div>
+		                </div>
+		            </li>
+		            <li class="enumerate-cards-item">
+		                <p>Fix the language(s)</p>
+		                <div>
+		                    <span class="wrap-item">
+		                        <select tabindex="-1">
+		                            <option value="---" selected>---</option>
+		                            <option value="eng">eng</option>
+		                            <option value="fra">fra</option>
+		                            <option value="ita">ita</option>
+		                        </select>
+		                    </span>
+		                </div>
+		            </li>
+		            <li class="enumerate-cards-item">
+		                <p>Select and configure annotations</p>
+		                <div role="group">
+		                    <button tabindex="-1" type="submit" value="annotate_annotations_STANDALONE" class="width_full">
+		                        <span data-icon="no" role="img" aria-label="no annotation selected"></span>
+		                        <span>STANDALONE annotations</span>
+		                    </button>
+		                    <button tabindex="-1" type="submit" value="annotate_annotations_SPEAKER" class="width_full">
+		                        <span data-icon="no" role="img" aria-label="no annotation selected"></span>
+		                        <span>SPEAKER annotations</span>
+		                    </button>
+		                    <button tabindex="-1" type="submit" value="annotate_annotations_INTERACTION" class="width_full">
+		                        <span data-icon="no" role="img" aria-label="no annotation selected"></span>
+		                        <span>INTERACTION annotations</span>
+		                    </button>
+		                </div>
+		            </li>
+		            <li class="enumerate-cards-item">
+		                <p>Add files</p>
+		                <div role="group">
+		                    <p>0 files selected</p>
+		                    <button tabindex="-1" type="submit" value="annotate_files" class="width_full">
+		                        <span>Choose the files</span>
+		                    </button>
+		                </div>
+		            </li>
+		            <li class="enumerate-cards-item">
+		                <p>Perform the annotations</p>
+		                <div role="group">
+		                    <p>
+		                        <input tabindex="-1" type="checkbox" value="True" />
+		                        <label>Create -merge files</label>
+		                    </p>
+		                    <button tabindex="-1" type="submit" value="annotate_perform" class="action-button width_full" aria-disabled="true" data-icon="play">
+		                        <span>Let's go!</span>
+		                    </button>
+		                    <p class="annotate-missing">No annotation is selected.</p>
+		                </div>
+		            </li>
+		            <li class="enumerate-cards-item">
+		                <p>Read the procedure outcome report</p>
+		                <div role="group">
+		                    <button tabindex="-1" type="submit" value="annotate_show" class="action-button width_full" aria-disabled="true" data-icon="file">
+		                        <span>Show report</span>
+		                    </button>
+		                    <p class="annotate-missing">No report is checked.</p>
+		                </div>
+		            </li>
+		        </ol>
+		        <p>
+		            <button tabindex="-1" type="submit" value="annotate_reset">Reset</button>
+		        </p>
+		    </section>
+
+		<p>
+			<b>Reset</b> takes the page back to what it was when it opened: your choices and the
+			files you gave go together.
+		</p>
+
+		<section class="subssection">
+		<h3>1. Choose the output file format(s)</h3>
+
+			<p>
+				The first step holds one list per kind of file the annotations write: annotated files,
+				images, videos and sounds, in that order. Each list offers the extensions SPPAS can
+				write that kind of file with; the usual one is chosen when the page opens. Every file
+				of that kind an annotation writes takes the extension chosen here: choose
+				<b>.TextGrid</b> in the first list, and the annotated files are written in the format
+				of Praat.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>2. Fix the language(s)</h3>
+
+			<p>
+				The second step offers the languages at least one annotation has resources for. The
+				one you choose is given to every annotation which has resources for it, and the others
+				are left as they are; <b>---</b> means that no language is chosen.
+			</p>
+
+			<p>
+				Each annotation has its own choice of language as well, in its line (step 3). When the
+				annotations you selected do not all have the same, this list says <b>MIX</b>.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>3. Select and configure annotations</h3>
+
+			<p>
+				The third step has one button per type of annotation:
+			</p>
+
+			<ul>
+				<li><b>STANDALONE</b> -- an annotation of one input file;</li>
+				<li><b>SPEAKER</b> -- an annotation of two input files of the same speaker;</li>
+				<li><b>INTERACTION</b> -- an annotation of two input files of two different
+					speakers.</li>
+			</ul>
+
+			<p>
+				A mark stands before the name of a type which holds no selected annotation. Click a
+				button: the annotations of that type take the body, one under the other. Here are
+				three of them, the first one selected:
+			</p>
+
+			    <section class="annotate-annotations" aria-hidden="true">
+			        <ul>
+			            <li>
+			                <div class="flex-panel">
+			                    <div class="flex-item width_25">
+			                        <p class="annotate-ann-name">
+			                            <label class="switch">
+			                                <input tabindex="-1" type="checkbox" role="switch" value="True" checked />
+			                                <span class="switch-slider switch-no-text round"></span>
+			                            </label>
+			                            <label>Text Normalization</label>
+			                        </p>
+			                        <p>
+			                            <button tabindex="-1" type="submit" value="annotate_options_textnorm" class="text-reveal-button" data-icon="parameters">
+			                                <span>Configure...</span>
+			                            </button>
+			                        </p>
+			                    </div>
+			                    <div class="flex-item width_10">
+			                        <a tabindex="-1" href="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" class="icon-button" data-icon="external-link" aria-label="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" title="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" target="_blank" rel="noopener"></a>
+			                        <a tabindex="-1" href="https://ieeexplore.ieee.org/document/7357891" class="icon-button" data-icon="external-link" aria-label="https://ieeexplore.ieee.org/document/7357891" title="https://ieeexplore.ieee.org/document/7357891" target="_blank" rel="noopener"></a>
+			                    </div>
+			                    <div class="flex-item width_10">
+			                        <select tabindex="-1" aria-label="Language of Text Normalization">
+			                            <option value="---">---</option>
+			                            <option value="eng">eng</option>
+			                            <option value="fra" selected>fra</option>
+			                            <option value="ita">ita</option>
+			                        </select>
+			                    </div>
+			                    <div class="flex-item width_45">
+			                        <p>Converts orthography of transcribed IPUs into a normalized tokenized form: word segmented, numerals converted into words, expanded abbreviations, punctuation removed, etc. Produces the IPUs with normalized tokens.</p>
+			                        <dl class="annotate-ann-precision">
+			                            <dt>Required files</dt>
+			                            <dd>annotated file</dd>
+			                        </dl>
+			                    </div>
+			                </div>
+			            </li>
+			            <li>
+			                <div class="flex-panel">
+			                    <div class="flex-item width_25">
+			                        <p class="annotate-ann-name">
+			                            <label class="switch">
+			                                <input tabindex="-1" type="checkbox" role="switch" value="True" />
+			                                <span class="switch-slider switch-no-text round"></span>
+			                            </label>
+			                            <label>Phonetization</label>
+			                        </p>
+			                        <p>
+			                            <button tabindex="-1" type="submit" value="annotate_options_phonetize" class="text-reveal-button" data-icon="parameters">
+			                                <span>Configure...</span>
+			                            </button>
+			                        </p>
+			                    </div>
+			                    <div class="flex-item width_10">
+			                        <a tabindex="-1" href="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" class="icon-button" data-icon="file" aria-label="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" title="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" target="_blank" rel="noopener"></a>
+			                        <a tabindex="-1" href="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" class="icon-button" data-icon="external-link" aria-label="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" title="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" target="_blank" rel="noopener"></a>
+			                    </div>
+			                    <div class="flex-item width_10">
+			                        <select tabindex="-1" aria-label="Language of Phonetization">
+			                            <option value="---" selected>---</option>
+			                            <option value="eng">eng</option>
+			                            <option value="fra">fra</option>
+			                            <option value="ita">ita</option>
+			                        </select>
+			                    </div>
+			                    <div class="flex-item width_45">
+			                        <p>Converts a tokenized text into phonetic signs from a pronunciation dictionary. Produces the IPUs with a grammar of phonemes.</p>
+			                        <dl class="annotate-ann-precision">
+			                            <dt>Required files</dt>
+			                            <dd>annotated file</dd>
+			                            <dt>Required annotation</dt>
+			                            <dd>Text Normalization</dd>
+			                        </dl>
+			                    </div>
+			                </div>
+			            </li>
+			            <li>
+			                <div class="flex-panel">
+			                    <div class="flex-item width_25">
+			                        <p class="annotate-ann-name">
+			                            <label class="switch">
+			                                <input tabindex="-1" type="checkbox" role="switch" value="True" disabled />
+			                                <span class="switch-slider switch-no-text round"></span>
+			                            </label>
+			                            <label>Face Detection</label>
+			                        </p>
+			                        <p>
+			                            <button tabindex="-1" type="submit" value="annotate_options_facedetect" class="text-reveal-button" data-icon="parameters" disabled>
+			                                <span>Configure...</span>
+			                            </button>
+			                        </p>
+			                    </div>
+			                    <div class="flex-item width_10">
+			                        <p class="annotate-ann-devel">
+			                            <progress value="70" max="100" aria-label="Development"></progress>
+			                            <span>70%</span>
+			                        </p>
+			                    </div>
+			                    <div class="flex-item width_10"></div>
+			                    <div class="flex-item width_45">
+			                        <p>Not installed on this machine. Detect faces on an image or a video combining results of several methods depending on the models you choose. Two different types of models are available: the ones based on Artificial Neural Networks (ANN) and the other one based on Haar cascade classifiers. Produces an image or a video and an annotated file with coordinates of the detected faces.</p>
+			                        <p class="annotate-missing">:ERROR 0520: Feature video is not enabled; its installation should be processed first.</p>
+			                    </div>
+			                </div>
+			            </li>
+			        </ul>
+			    </section>
+
+			<p>
+				Each annotation is one line:
+			</p>
+
+			<ul>
+				<li>The <b>switch</b> before its name selects it. Click the switch or the name: both do
+					the same thing.</li>
+				<li><b>Configure...</b> opens its options, in a window of their own. What you apply
+					there is kept for that annotation; when you leave without applying, its options stay
+					what they were.</li>
+				<li>The drawings after the name lead to the articles which describe the annotation.
+					Each one opens in a new tab of your browser, and this page stays where it is. The
+					drawing of a sheet is a document, the other one a web page.</li>
+				<li>An annotation which has no article shows a bar instead: how far its development
+					has gone.</li>
+				<li>The list after them chooses the language of that annotation, when it has resources
+					for languages.</li>
+				<li>Then comes its description, followed in italics by what it requires:
+					<b>Required files</b>, the kinds of file it reads -- audio, video, image, annotated
+					file, measure file; <b>Required annotation</b>, the annotation whose results it
+					reads.</li>
+			</ul>
+
+			<p class="abstract">
+				Selecting an annotation selects no other. The phonetization requires the text
+				normalization: select both, or give the files the text normalization already wrote --
+				you may have corrected them by hand.
+			</p>
+
+			<p>
+				An annotation which cannot be performed on your computer is shown all the same, and
+				nothing of it can be set: its switch and its button do not answer. Its description
+				begins with <b>Not installed on this machine.</b>, and a line, in the color of the
+				errors, says why -- for instance, a feature of SPPAS which has to be installed first.
+			</p>
+
+			<p>
+				<b>Back</b>, at the top of the panel, brings you back to the six steps. What you
+				selected is kept, and the button of a type which holds a selected annotation no longer
+				carries the mark.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>4. Add files</h3>
+
+			<p>
+				The fourth step says how many files are selected, and <b>Choose the files</b> opens the
+				panel where you give them. Give every file the annotations you selected require: the
+				sound and its transcription, for instance. What this panel shows depends on where SPPAS
+				runs.
+			</p>
+
+			<h4>SPPAS on your computer</h4>
+
+				<p>
+					Your files are already within reach, so nothing is sent anywhere. Click
+					<b>Select files</b> and SPPAS opens its own window to choose them, among the files
+					of your computer:
+				</p>
+
+				    <section aria-label="Files" aria-hidden="true">
+				        <div>
+				            <div class="dropzone">
+				                <button tabindex="-1" type="submit" value="">Select files</button>
+				                <div role="status" hidden>
+				                    <p>Waiting for the files in the selection window...</p>
+				                    <progress></progress>
+				                </div>
+				                <ul class="cards-panel"></ul>
+				            </div>
+				        </div>
+				    </section>
+
+				<p>
+					As long as that window is open, the page says <b>Waiting for the files in the
+					selection window...</b> and the button does not answer: one window at a time. The
+					files you chose are then listed under the button.
+				</p>
+
+			<h4>SPPAS on the web</h4>
+
+				<p>
+					<b>Not programmed yet.</b> SPPAS on the web does not annotate files yet. This
+					part will say how your files are sent to it.
+				</p>
+
+			<p>
+				<b>Back</b>, at the top of the panel, brings you back to the six steps, and the fourth
+				one says how many files are selected.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>5. Perform the annotations</h3>
+
+			<p>
+				<b>Create -merge files</b>, when it is checked, adds one file per recording: its name
+				ends with <b>-merge</b>, and it gathers all the annotated files of that recording into
+				one.
+			</p>
+
+			<p>
+				<b>Let's go!</b> performs the annotations. It does not answer while no annotation is
+				selected, and the page says so under it: <b>No annotation is selected.</b> When no file
+				is selected, the page says <b>No file is selected.</b> and nothing is started.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>6. Read the procedure outcome report</h3>
+
+			<p>
+				<b>Show report</b> shows the report which is checked in the right panel, in place of
+				the six steps. While none is checked, it does not answer, and the page says so under
+				it: <b>No report is checked.</b>
+			</p>
+
+		</section>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The reports</h2>
+
+		<p>
+			Each time annotations are performed, SPPAS writes a report: what was done to each file.
+			Where the reports are kept depends on where SPPAS runs.
+		</p>
+
+		<section class="subssection">
+		<h3>SPPAS on your computer</h3>
+
+			<p>
+				The right panel, titled <b>Reports:</b>, lists the reports which are kept, the last one
+				written first:
+			</p>
+
+			    <section class="width_30" aria-hidden="true">
+			        <p>
+			            <button tabindex="-1" type="submit" value="annotate_delete_checked" data-icon="delete-checked">
+			                <span>Del checked</span>
+			            </button>
+			            <button tabindex="-1" type="submit" value="annotate_delete_unchecked" data-icon="delete-unchecked">
+			                <span>Del all</span>
+			            </button>
+			        </p>
+			        <ul class="annotate-reports" role="radiogroup">
+			            <li>
+			                <input tabindex="-1" type="radio" value="sppas_report_2026-11-24_50222_0001.txt" checked />
+			                <label>sppas_report_2026-11-24_50222_0001.txt</label>
+			            </li>
+			            <li>
+			                <input tabindex="-1" type="radio" value="sppas_report_2026-11-17_48107_0001.txt" />
+			                <label>sppas_report_2026-11-17_48107_0001.txt</label>
+			            </li>
+			        </ul>
+			    </section>
+
+			<p>
+				Check one, then click <b>Show report</b>, in the sixth step. <b>Del checked</b> deletes
+				the checked report. <b>Del all</b> deletes every other one: the checked report is kept.
+				A report which could not be deleted is said, with the reason.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>SPPAS on the web</h3>
+
+			<p>
+				<b>Not programmed yet.</b> This part will say where the report of the annotations
+				performed on the web is to be read, and how it is kept.
+			</p>
+
+		</section>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.5 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Performing, and reading what happened</h2>
+
+		<p>
+			Click <b>Let's go!</b>. The panel of the report takes the body: the name of the
+			annotation being performed, and a bar which shows how far it has gone. Under them, the
+			report is folded; unfold it to read it as it is written:
+		</p>
+
+		    <section aria-hidden="true">
+		        <section>
+		            <label>Progress:</label>
+		            <progress max="100" value="40"></progress>
+		        </section>
+		        <details>
+		            <summary tabindex="-1">Report file: sppas_report_2026-11-24_50222_0001.txt</summary>
+		            <pre class="annotate-report">
+<code>-------------------------------------------------------------------------------
+ Text Normalization
+-------------------------------------------------------------------------------
+  entretien-01.xra: <span class="ok">[    OK    ]</span>
+  entretien-02.xra: <span class="warning">[ WARNING  ]</span> two tokens were not normalized</code>
+		            </pre>
+		        </details>
+		    </section>
+
+		<p>
+			While the annotations run, nothing else can be started: <b>Back</b> does not answer, and
+			the page says so if you ask for it. Let them finish.
+		</p>
+
+		<p>
+			When they end, the report is shown in full, and under it a table titled
+			<b>Results</b>:
+		</p>
+
+		    <section aria-hidden="true">
+		        <p>Report file: sppas_report_2026-11-24_50222_0001.txt</p>
+		        <pre class="annotate-report">
+<code>-------------------------------------------------------------------------------
+ Text Normalization
+-------------------------------------------------------------------------------
+  entretien-01.xra: <span class="ok">[    OK    ]</span>
+  entretien-02.xra: <span class="warning">[ WARNING  ]</span> two tokens were not normalized
+-------------------------------------------------------------------------------
+ Phonetization
+-------------------------------------------------------------------------------
+  entretien-01-token.xra: <span class="ok">[    OK    ]</span>
+  entretien-02-token.xra: <span class="error">[  ERROR   ]</span> no pronunciation found for a token</code>
+		        </pre>
+		        <section>
+		            <h4>Results</h4>
+		            <table>
+		                <caption>One line per root of the batch</caption>
+		                <thead>
+		                    <tr>
+		                        <th scope="col">Root</th>
+		                        <th scope="col">Status</th>
+		                        <th scope="col">Result</th>
+		                    </tr>
+		                </thead>
+		                <tbody>
+		                    <tr>
+		                        <th scope="row">entretien-01</th>
+		                        <td><span data-icon="yes" role="img" aria-label="written"></span></td>
+		                        <td>
+		                            <ul>
+		                                <li>entretien-01-token.xra</li>
+		                                <li>entretien-01-phon.xra</li>
+		                            </ul>
+		                        </td>
+		                    </tr>
+		                    <tr>
+		                        <th scope="row">entretien-02</th>
+		                        <td><span data-icon="yes" role="img" aria-label="written"></span></td>
+		                        <td>
+		                            <ul>
+		                                <li>entretien-02-token.xra</li>
+		                            </ul>
+		                        </td>
+		                    </tr>
+		                    <tr>
+		                        <th scope="row">notes</th>
+		                        <td><span data-icon="no" role="img" aria-label="refused"></span></td>
+		                        <td></td>
+		                    </tr>
+		                </tbody>
+		            </table>
+		        </section>
+		    </section>
+
+		<p>
+			The report holds one line per file and per annotation. The mark at the head of a line
+			says what became of that file, in its own color; a file which was ignored keeps the
+			color of the text.
+		</p>
+
+		<p>
+			The table holds one line per root: the name the files of one recording share, without
+			their extension. Its status is one of:
+		</p>
+
+		<ul>
+			<li><b>written</b> -- the annotations produced at least one file, and the line names
+				them;</li>
+			<li><b>refused</b> -- they produced none: the report says why.</li>
+		</ul>
+
+		<section class="subssection">
+		<h3>SPPAS on your computer</h3>
+
+			<p>
+				Each file was written in the folder of the files it was made from. The table names it,
+				and that is all it has to do: the file is already among your own files, and you open
+				it where you work.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>SPPAS on the web</h3>
+
+			<p>
+				<b>Not programmed yet.</b> This part will say how the files the annotations produced
+				are brought back to your computer, one by one or all at once.
+			</p>
+
+		</section>
+
+		<p>
+			<b>Back</b>, at the top of the panel, is for annotating other files with the same choices:
+			the files are emptied, and your choices are kept. Use <b>Reset</b>, under the six steps,
+			to take the page back to what it was when it opened.
+		</p>
+
+		<p class="abstract">
+			If something prevents the annotations from being performed, the page says <b>The
+			annotations could not be performed.</b> The reason is written in the log of SPPAS, for
+			whoever runs it.
+		</p>
+
+	</section>
+
 
 </section>
 
@@ -23,13 +700,179 @@
 
 <!-- =============================================================== -->
 
-	<p>
-		<b>Not written yet.</b> This chapter is for whoever reads or changes the code:
-		how it is organized, what the page is made of, the events it answers, and the
-		stylesheets.
-	</p>
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Organization</h2>
+
+		<p>
+			The application lives in <code>sppas/ui/swapp/app_annotate/</code>. It follows the MVC
+			pattern shared by every application of the swapp package. What each class holds, and why,
+			is the subject of the Modeling chapter; this section says where to look.
+		</p>
+
+		<ul>
+			<li><code>app_annotate.py</code> -- <code>swappAnnotateWebData</code>, which answers which
+				page it can bake: the page of the application, and the one of this document.</li>
+			<li><code>annotate_maker.py</code> -- <code>swappAnnotateResponseRecipe</code>, the bakery
+				of <code>annotate.html</code>: it holds the model, receives the events, answers the
+				progress and the report alone, and decides whether the page is created again.</li>
+			<li><code>annotate_controller.py</code> -- <code>swappAnnotateController</code>, built at
+				every request: it reads the task a request carries, does it, and has the view build
+				the page.</li>
+			<li><code>annotate_record.py</code> -- <code>swappAnnotateRecord</code>, what a page
+				transmits from one request to the next, the decisions held in a
+				<code>sppasParam</code>, and what is to be shown.</li>
+			<li><code>annotate_model.py</code> -- <code>swappAnnotateModel</code>, the only interface
+				the controller reaches. It makes the four models below, and nothing else reaches
+				them.</li>
+			<li><code>annotate_annotations.py</code> -- <code>swappModelAnnotations</code>: the
+				annotations and what each declares, whether it is installed and why not, the files
+				and the annotations it requires, the kinds of output file and the languages.</li>
+			<li><code>annotate_run.py</code> -- <code>swappModelRun</code>, which runs the annotations
+				in the thread of <code>sppasAnnotationsManager</code> and follows them, and
+				<code>swappRootResult</code>, what came of one root of the batch.</li>
+			<li><code>annotate_reports.py</code> -- <code>swappModelReports</code>, the reports which
+				are kept, and <code>swappReportLine</code>, one line of a report with the state it
+				bears.</li>
+			<li><code>annotate_provision.py</code> -- <code>swappModelProvision</code>, what the service
+				of the files is asked for: the batch, and the address a produced file is reached
+				at.</li>
+			<li><code>annotate_view.py</code> and <code>annotate_panels.py</code> -- the HTML tree, and
+				the panels it is made of.</li>
+		</ul>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What the page is made of</h2>
+
+		<section class="subssection">
+		<h3>The panels</h3>
+
+			<p>
+				The body is built by <code>swappAnnotateView</code>. The form of the run,
+				<code>annotate_form</code>, is written first: every field and every button of the page
+				is tied to it by its attribute <code>form</code>, whichever panel is written. What the
+				record holds and the written panel does not show is carried in that form, hidden, and
+				the next request rebuilds the record from all of it.
+			</p>
+
+			<p>
+				By default, the toggle of the two panels is written, then
+				<code>swappActionAnnotatePanel</code> -- the six steps and <b>Reset</b> -- and
+				<code>swappReportsPanel</code> side by side. Otherwise, one panel takes the body, its
+				way back and its title written by <code>append_head()</code>:
+				<code>swappAnnotationsPanel</code>, the annotations of one type, with one dialog of
+				options per annotation; <code>swappFilesAnnotatePanel</code>, the files;
+				<code>swappLogAnnotatePanel</code>, the procedure outcome report, with the progress
+				above it while a run goes, and <code>swappResultsPanel</code> under it once the run has
+				ended.
+			</p>
+
+			<p>
+				Two containers are not of this application. The one of the files is written by the
+				service of the files, <code>swappFilesManager</code>, which the bakery creates with the
+				identifier of the panel of the files: it is appended to that panel, altered in nothing,
+				and answered alone as well. The one of the options of an annotation is written by the
+				service of the options, <code>swappOptionsManager</code>, and placed in the dialog of
+				that annotation.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>The events the page answers</h3>
+
+			<p>
+				Every button of the page posts <code>event_bake</code>, and its value is the task:
+			</p>
+
+			<ul>
+				<li><code>annotate_annotations_</code> followed by a type -- the annotations of that
+					type;</li>
+				<li><code>annotate_options_</code> followed by a key -- the options of that annotation,
+					in its dialog;</li>
+				<li><code>annotate_files</code> -- the panel of the files;</li>
+				<li><code>annotate_perform</code> -- the run starts, when at least one annotation is
+					selected and the batch is not empty; what is missing is said otherwise;</li>
+				<li><code>annotate_complete</code> -- sent by the page once the run has ended: its
+					report, and what came of every root;</li>
+				<li><code>annotate_show</code> -- the report which is checked;</li>
+				<li><code>annotate_steps</code> -- back to the six steps; after a run, the files start
+					over and the decisions are kept;</li>
+				<li><code>annotate_reset</code> -- the page as it was on arrival: the decisions and the
+					files together;</li>
+				<li><code>annotate_delete_checked</code> and <code>annotate_delete_unchecked</code> --
+					locally, the checked report is deleted, or every other one.</li>
+			</ul>
+
+			<p>
+				One run at a time: while one goes, <code>annotate_perform</code>,
+				<code>annotate_reset</code> and <code>annotate_steps</code> start nothing, and it is
+				said. What the controller raises is caught by the bakery, and by nothing below: it is
+				written in the log, and the page says that the annotations could not be performed.
+			</p>
+
+			<p>
+				While a run goes, the page asks for <code>event_name=annotate_update</code>, every
+				200 ms on the local server and every second on a distant one. The bakery answers that
+				one alone, with the percent, a header and a text, and a status of 202 until the
+				hundred is reached: the page is not built again for a progress bar.
+				<code>event_name=annotate_report</code> is answered alone as well, with the report of
+				the run the page follows, as it is written. Any other event is offered to the service
+				of the files.
+			</p>
+
+			<p>
+				The model is held by the bakery, and the controller is built at every request: a run
+				is longer than the request which started it.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>The client</h3>
+
+			<p>
+				<code>statics/js/annotate_manager.js</code>, <code>AnnotateManager</code>, is given the
+				interval by the view. It drives the three buttons which choose the panels; it opens the
+				dialog of the errors, or the one of the information, when the server wrote in it; it
+				offers the button of the sixth step when a report is checked, without any request. It
+				asks for the options of an annotation, and for the run, without leaving the page: what
+				the server answers is put in place by identifier, and the panel of the report takes the
+				focus by its title when it arrives. It follows the run, asks for the report as it is
+				written and each time it is unfolded, then for the results.
+			</p>
+
+			<p>
+				<code>statics/js/swapp_files.js</code> is the client of the service of the files. It is
+				started when the panel of the files is written, and only then: what is done in the
+				container is sent without reloading the page.
+			</p>
+
+			<p>
+				The stylesheets of the page are <code>statics/css/main_swapp.css</code>, the toggle group
+				of Whakerexa, and <code>statics/css/app_annotate.css</code>, which holds what belongs to
+				this page alone. The last one is loaded by this document as well: the parts of the page
+				shown in the user manual are drawn by it.
+			</p>
+
+		</section>
+
+	</section>
+
 
 </section>
+
 
 
 <!-- ====================== MODELING ============================== -->
@@ -213,8 +1056,7 @@
 				<p>
 					In a list, each annotation says what it does, and gives the way to the
 					published work it rests on &mdash; or, where there is none yet, how far
-					its development has gone. It says what it requires, and the list is
-					arranged so that an annotation comes after the ones it requires. Every
+					its development has gone. It says what it requires. Every
 					annotation is shown, including the ones which cannot be selected on that
 					machine: they are disabled and not hidden, so that two users have the
 					same page, and what differs between them is what is installed.
@@ -306,14 +1148,6 @@
 			<p>
 				The previous sections state what users need and why; this section states
 				what the system does to answer it, and what it manipulates in order to do so.
-			</p>
-
-			<p>
-				Two markers are used throughout. <span class="api-ok">[API-OK]</span> denotes
-				what is achievable with the current SPPAS API.
-				<span class="api-ext">[API-EXT]</span> denotes what requires an extension of
-				that API. A requirement marked <span class="api-ext">[API-EXT]</span> is part
-				of the model; it remains inactive until the API supports it.
 			</p>
 
 			<!-- --------------------------------------------------- -->
@@ -416,10 +1250,7 @@
 			<h4>What an annotation requires</h4>
 
 				<p>Every annotation declares the ones it requires. The page shows it on the
-				line of each annotation, and each list is arranged so that an annotation
-				comes after the ones it requires
-				<span class="api-ext">[API-EXT]</span>: what requires what is written in the
-				declarations, and the annex states what reading it asks of the API.</p>
+				line of each annotation.</p>
 
 				<p>What is shown is not what is done. Selecting an annotation selects no
 				other: one annotation is performed, what it wrote is corrected by hand, and
@@ -533,9 +1364,7 @@
 				<li>[305] The user can select an annotation, or take the selection
 				back.</li>
 				<li>[306] Selecting an annotation selects no other.</li>
-				<li>[307] The system shows what each annotation requires, and arranges each
-				list so that an annotation comes after the ones it requires
-				<span class="api-ext">[API-EXT]</span>.</li>
+				<li>[307] The system shows what each annotation requires.</li>
 				<li>[308] The system shows every annotation, and disables the ones which
 				cannot be performed on that machine.</li>
 				<li>[309] The user can configure an annotation: its options are shown with
@@ -794,7 +1623,6 @@
 				<li>Whether a type holds a selected annotation [302].</li>
 				<li>The languages of the page, which are every language at least one annotation has resources for [201].</li>
 				<li>The language the selected annotations hold: the one they share, none, or that they differ [204].</li>
-				<li>The arrangement of a list, which follows from R9 [307].</li>
 				<li>Whether an annotation can be performed on that machine [308].</li>
 				<li>What is still missing before the annotations can be performed: an annotation selected, a batch which is not empty [031].</li>
 				<li>The progress, which the API says while it works [505].</li>
@@ -900,8 +1728,6 @@
 					gone when it has no reference and that is known, or neither;</li>
 					<li>an annotation which has language resources shows its languages, and
 					one which has none shows no choice;</li>
-					<li>each list is arranged so that an annotation comes after the ones it
-					requires; one whose requirement is not in the list keeps its place;</li>
 					<li>every annotation is shown, and the ones which cannot be performed on
 					that machine are disabled;</li>
 					<li>a kind of output file which has no extension is not shown;</li>
@@ -1490,7 +2316,6 @@
 			  <tr><td>C6</td><td>Selecting an annotation selects no other, and no other is refused.</td><td>[306], T04</td></tr>
 			  <tr><td>C7</td><td>Every annotation is shown; one which cannot be performed on that machine is disabled, and cannot be selected.</td><td>[308], T01, T04</td></tr>
 			  <tr><td>C8</td><td>What is shown of an annotation is what it declares, and nothing this application wrote.</td><td>T01</td></tr>
-			  <tr><td>C9</td><td>An annotation is shown after the ones it requires, and the arrangement changes no run.</td><td>[307], [502], RO10</td></tr>
 			  <tr><td>C10</td><td>A decision makes no request, replaces nothing on the page and never moves the focus.</td><td>[1005], RO8</td></tr>
 			  <tr><td>C11</td><td>The batch is read and no file of it is altered; no file is selected here.</td><td>[401], [402], T07, RO4</td></tr>
 			  <tr><td>C12</td><td>The annotations are performed only with at least one annotation selected and a batch which is not empty.</td><td>[031], T08</td></tr>
@@ -1515,10 +2340,6 @@
 			person: an annotation is selected without what it requires, and it stays
 			selected without a language. What is done with it is the API's to say, in the
 			report.</p>
-
-			<p><b>C9 does not contradict C6.</b> It bears on what is shown and on nothing
-			else: the alignment is shown after the phonetization it requires, and selecting
-			the one never selects the other.</p>
 
 			<p><b>C24 holds one thing on the server, and only one.</b> A run is held
 			by the server while it goes, because it lasts longer than the request which
@@ -1585,7 +2406,7 @@
 
 			<p>Not in the tables, and computed every time they are wanted: the annotations
 			of one type, whether a type holds a selected annotation, the languages of the
-			page, the language the selected annotations hold, the arrangement of a list,
+			page, the language the selected annotations hold,
 			whether an annotation can be performed on that machine, what is still missing
 			before the annotations can be performed, and the progress.</p>
 
@@ -1615,7 +2436,7 @@
 			</thead>
 			<tbody>
 			  <tr><td>ANNOTATION</td><td>The API of SPPAS: the steps of a <code>sppasParam</code>, read at every request</td><td>Its own</td><td>The annotations, in one list per type</td></tr>
-			  <tr><td>REQUIRES</td><td>The API of SPPAS <span class="api-ext">[API-EXT]</span></td><td>Its own</td><td>What an annotation requires, and the arrangement of its list</td></tr>
+			  <tr><td>REQUIRES</td><td>The API of SPPAS: <code>sppasParam.get_required_annotations()</code>, read at every request</td><td>Its own</td><td>What an annotation requires</td></tr>
 			  <tr><td>KIND</td><td>The API of SPPAS: <code>sppasFiles.OUT_FORMATS</code>, read at every request</td><td>Its own</td><td>One choice of extension per kind</td></tr>
 			  <tr><td>RUN</td><td>What the page transmits</td><td>Nothing: it is rebuilt at every request</td><td>Her decisions, as she took them</td></tr>
 			  <tr><td>SELECTION</td><td>What the page transmits</td><td>Nothing</td><td>The annotations she selected, and the language of each</td></tr>
@@ -1669,7 +2490,7 @@
 			  <tr><th scope="col">PF</th><th scope="col">The tasks, in order</th><th scope="col">What cannot be half done</th></tr>
 			</thead>
 			<tbody>
-			  <tr><td>PF1</td><td>When the page is asked for: read the annotations from the API and, for each of them, what it declares; read the kinds of output file, their extensions and their default one; arrange each list; locally, list the reports; write all of it in the page</td><td>Nothing: nothing is written</td></tr>
+			  <tr><td>PF1</td><td>When the page is asked for: read the annotations from the API and, for each of them, what it declares; read the kinds of output file, their extensions and their default one; locally, list the reports; write all of it in the page</td><td>Nothing: nothing is written</td></tr>
 			  <tr><td>PF2, PF4, PF5</td><td>In the page: keep the extension, the selection or the language; it is sent with the run</td><td>Nothing: nothing is sent</td></tr>
 			  <tr><td>PF3</td><td>In the page: set the choice of language of every annotation to the language fixed where it holds it, and to <code>---</code> where it does not; show the language the selected annotations hold</td><td>Nothing: nothing is sent</td></tr>
 			  <tr><td>PF6</td><td>Hand the options of the annotation to the service of the options; take back the values, or nothing when she gives up</td><td>Nothing of this application's</td></tr>
@@ -1697,8 +2518,8 @@
 
 			<p>The selected annotations are performed in the order of the API. An
 			annotation which requires one which was not selected is performed all the same.
-			What is read of the requirements is read for the person: to show them, and to
-			arrange each list. C9, C15</p>
+			What is read of the requirements is read for the person, to show them.
+			C15</p>
 
 			<h4>One run at a time</h4>
 
@@ -1722,7 +2543,7 @@
 			  <tr><th scope="col">Module</th><th scope="col">What it does</th><th scope="col">Procedure</th></tr>
 			</thead>
 			<tbody>
-			  <tr><td>annotations</td><td>Knows which annotations there are and what each declares, which kinds of output file there are and their extensions; says which annotation is of which type, which languages the page offers, and arranges a list by what its annotations require. Reads no file of the user</td><td>PF1</td></tr>
+			  <tr><td>annotations</td><td>Knows which annotations there are and what each declares, which kinds of output file there are and their extensions; says which annotation is of which type and which languages the page offers. Reads no file of the user</td><td>PF1</td></tr>
 			  <tr><td>run</td><td>Names the report, writes what was decided in what the API is performed with, makes the progress, creates the manager whose thread runs the annotations, says whether a run is going and where it stands, and gives the batch back once it has ended</td><td>PF8</td></tr>
 			  <tr><td>reports</td><td>Lists the reports, gives back the text of one as it was written, and deletes those which are named</td><td>PF9, PF10, PF11</td></tr>
 			  <tr><td>provision</td><td>Reads the batch the provision of files hands, says what it locks and releases, gives back what was produced, asks for the addresses, and says when it has finished. Alters nothing of the batch</td><td>PF7, PF8, PF9</td></tr>
@@ -1734,7 +2555,7 @@
 			<p>What each one promises, which is the reason for the cutting:</p>
 
 			<ul>
-			<li>The <b>annotations</b> module is the only one which reads what an annotation declares. Arranging a list is the one thing it adds, and it is given everything it needs: it is tested with nothing installed.</li>
+			<li>The <b>annotations</b> module is the only one which reads what an annotation declares.</li>
 			<li>The <b>run</b> module is the only one which has the API perform annotations, so it is the only one to read again the day that API changes.</li>
 			<li>The <b>reports</b> module is the only one which touches a report. It does not write one: the API does.</li>
 			<li><b>Provision</b> is the only one which calls the provision of files on files. It is given the manager of that service by the response.</li>
@@ -1801,7 +2622,7 @@
 			far its development has gone and its options. It reads the kinds of output
 			file, their extensions and their default one from <code>sppasFiles</code>. It
 			gives the languages of the page, which are the languages of every annotation
-			put together, and it arranges a list by what its annotations require.</p>
+			put together.</p>
 
 			<p><code>ModelRun</code> performs T08. It names the report, fills a
 			<code>sppasParam</code> with what was decided, makes the progress, and creates a
@@ -1965,8 +2786,8 @@
 
 			<p><code>AnnotationsPanel</code> presents the annotations of one type: a button
 			which comes back to the six steps, a title naming the type, then one
-			<code>EnableAnnotation</code> per annotation of that type, arranged by what
-			they require. There are three of them, one per type.</p>
+			<code>EnableAnnotation</code> per annotation of that type. There are three of
+			them, one per type.</p>
 
 			<p><code>EnableAnnotation</code> presents one annotation: what selects it, with
 			its name; what configures it; its references, one link each, telling a document
@@ -2047,7 +2868,7 @@
 			<thead><tr><th scope="col">Class</th><th scope="col">From</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 			<tbody>
 			  <tr><td><code>AnnotateModel</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>annotations(), why_not_installed(key), required_names(key), required_filetypes(key), kinds(), languages(), batch(), start(batch, run), is_running(), progress(), results(), reports(), read_report(name), delete_reports(names), address_of(filename), address_of_all(filenames)</td></tr>
-			  <tr><td><code>ModelAnnotations</code></td><td>module <i>annotations</i></td><td>&mdash;</td><td>annotations(), why_not_installed(key), required_names(key), required_filetypes(key), kinds(), languages(), arranged(annotations)</td></tr>
+			  <tr><td><code>ModelAnnotations</code></td><td>module <i>annotations</i></td><td>&mdash;</td><td>annotations(), why_not_installed(key), required_names(key), required_filetypes(key), kinds(), languages()</td></tr>
 			  <tr><td><code>ModelRun</code></td><td>module <i>run</i></td><td>manager, progress, results</td><td>start(batch, run), is_running(), progress(), results()</td></tr>
 			  <tr><td><code>ModelReports</code></td><td>module <i>reports</i></td><td>&mdash;</td><td>reports(), read(name), delete(names)</td></tr>
 			  <tr><td><code>ModelProvision</code></td><td>module <i>provision</i></td><td>&mdash;</td><td>batch(), lock(names), release(names), produced(workspace), address_of(filename), address_of_all(filenames), finished()</td></tr>
@@ -2105,7 +2926,7 @@
 			<p>To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
 			class diagram.</p>
 
-			<pre class="dark"><code>[AnnotateModel|annotations();why_not_installed();required_names();required_filetypes();kinds();languages();batch();start();is_running();progress();results();reports();read_report();delete_reports();address_of();address_of_all()]++1-1&gt;[ModelAnnotations|annotations();why_not_installed();required_names();required_filetypes();kinds();languages();arranged()]
+			<pre class="dark"><code>[AnnotateModel|annotations();why_not_installed();required_names();required_filetypes();kinds();languages();batch();start();is_running();progress();results();reports();read_report();delete_reports();address_of();address_of_all()]++1-1&gt;[ModelAnnotations|annotations();why_not_installed();required_names();required_filetypes();kinds();languages()]
 [AnnotateModel]++1-1&gt;[ModelRun|manager;progress;results|start();is_running();progress();results()]
 [AnnotateModel]++1-1&gt;[ModelReports|reports();read();delete()]
 [AnnotateModel]++1-1&gt;[ModelProvision|batch();lock();release();produced();address_of();address_of_all();finished()]
@@ -2135,7 +2956,7 @@
 			  <tr><td>none</td><td>&mdash;</td><td>The two dialogs which say something to the person are those every view of swapp is given, <code>info_dialog</code> and <code>error_dialog</code>: this application writes neither, and puts its text in them. What is missing for a task to answer goes in the first, which is level 1 of the error policy; what was asked and could not be done, with the reason, goes in the second, which is levels 3 and 4</td></tr>
 			  <tr><td><code>ActionAnnotatePanel</code></td><td>&mdash;</td><td>The six steps: the extensions, the language of the page, one button per type, the merge option and what performs, what shows the checked report; and the Reset button</td></tr>
 			  <tr><td><code>ReportsPanel</code></td><td>&mdash;</td><td>Locally, the reports which are kept, one of them checked at most, and the two buttons which delete. Collapsed online</td></tr>
-			  <tr><td><code>AnnotationsPanel</code></td><td>&mdash;</td><td>The annotations of one type, arranged by what they require</td></tr>
+			  <tr><td><code>AnnotationsPanel</code></td><td>&mdash;</td><td>The annotations of one type</td></tr>
 			  <tr><td><code>FilesAnnotatePanel</code></td><td>&mdash;</td><td>The container the provision of files writes, and nothing of this application but the way back</td></tr>
 			  <tr><td><code>EnableAnnotation</code></td><td>&mdash;</td><td>One annotation: what selects it, what configures it, its references or how far its development has gone, its language, its description, the files it reads, the names of the annotations it requires. Disabled when it cannot be performed on that machine</td></tr>
 			  <tr><td><code>LogAnnotatePanel</code></td><td>&mdash;</td><td>The progress, then the procedure outcome report, line for line as the API wrote it and in a font of one width, and the results under it once the annotations have been performed. Online, a link to the report</td></tr>
@@ -2419,13 +3240,8 @@
 			  <tr><td>Give the types of file an annotation reads</td><td>pre: the key of an annotation. post: the types of file of all its inputs, each once, in the order of its inputs, as its class declares them, which is not instantiated; none when the API does not know its class. Raises when no annotation has that key. [307]</td></tr>
 			  <tr><td>Give the kinds</td><td>pre: none. post: what <code>sppasFiles</code> answers, relayed; a kind which has no extension is not given. C2</td></tr>
 			  <tr><td>Give the languages</td><td>pre: none. post: the languages of every annotation put together, each of them once</td></tr>
-			  <tr><td>Arrange a list</td><td>pre: annotations, each with what it requires. post: those annotations and no others, each standing after every one of the list it requires; an annotation whose requirement is not in the list keeps its place. It reads nothing and changes no run. C9</td></tr>
 			</tbody>
 			</table>
-
-			<p>Arranging is the one operation of this application which rests on nothing
-			installed: what it is given comes back, in another order, nothing added and
-			nothing removed.</p>
 
 			<table>
 			<caption>ModelRun</caption>
@@ -2528,7 +3344,6 @@
 			  <tr><td>C6</td><td><code>AnnotateRecord</code>, parsing: what is selected is what was transmitted as such</td></tr>
 			  <tr><td>C7</td><td><code>ModelAnnotations</code>, which says it of each annotation; <code>EnableAnnotation</code> shows it</td></tr>
 			  <tr><td>C8</td><td><code>EnableAnnotation</code>, which writes nothing of its own</td></tr>
-			  <tr><td>C9</td><td><code>ModelAnnotations</code>, arranging a list</td></tr>
 			  <tr><td>C10</td><td><code>AnnotateView</code>, which ties every field of a decision to the form of the run; the script sends that form and nothing before</td></tr>
 			  <tr><td>C11</td><td><code>ModelProvision</code>, which is what reads the batch</td></tr>
 			  <tr><td>C12</td><td><code>Run</code>, saying what is missing, read by <code>AnnotateController</code> before it starts anything</td></tr>
@@ -2573,20 +3388,6 @@
 			<p>Thirty-eight tests: thirty-three for the sub-models and what was decided,
 			and five for the view. The controller is not covered here and is owed.</p>
 
-			<h4>Arranging a list, with nothing installed</h4>
-
-			<table>
-			<thead><tr><th scope="col">No.</th><th scope="col">What is checked</th><th scope="col">What it holds</th></tr></thead>
-			<tbody>
-			  <tr><td>TE1</td><td>What comes back is what was given: not one annotation added, not one removed</td><td>The contract of arranging</td></tr>
-			  <tr><td>TE2</td><td>An annotation stands after every annotation of the list it requires</td><td>C9</td></tr>
-			  <tr><td>TE3</td><td>An annotation whose requirement is not in the list is in the list all the same</td><td>C9</td></tr>
-			  <tr><td>TE4</td><td>A chain of three is arranged the same way whatever order it was given in, the reverse included</td><td>C9</td></tr>
-			  <tr><td>TE5</td><td>A requirement which names no annotation changes nothing of the arrangement</td><td>C9</td></tr>
-			  <tr><td>TE6</td><td>The same list given twice is arranged the same way</td><td>The contract of arranging</td></tr>
-			</tbody>
-			</table>
-
 			<h4>ModelAnnotations, with the API and no file</h4>
 
 			<table>
@@ -2601,10 +3402,6 @@
 			  <tr><td>TE13</td><td>An annotation which cannot be performed on that machine is given all the same, and said so</td><td>C7</td></tr>
 			</tbody>
 			</table>
-
-			<p><b>TE12 fails until the field is read.</b> It is written that way on
-			purpose: this test is what says whether the extension of the annex was
-			made.</p>
 
 			<h4>What was decided</h4>
 
@@ -2732,71 +3529,12 @@
 <!-- =============================================================== -->
 
 	<section>
-	<h2>Annex: Extension of the SPPAS API</h2>
-
-		<p>One extension is required by this document, and it is required by [307]
-		alone.</p>
-
-		<!-- ------------------------------------------------------- -->
+	<h2>Annex: What the SPPAS API provides</h2>
 
 		<section class="subssection">
-		<h3>E1 &mdash; What an annotation requires, read <span class="api-ext">[API-EXT]</span></h3>
+		<h3>What this document rests on</h3>
 
-			<table>
-			<tbody>
-			  <tr>
-				<th scope="row">What</th>
-				<td>The identifier of the annotation which has to have been performed
-				before, carried by the declaration of an annotation and read with the rest
-				of it.</td>
-			  </tr>
-			  <tr>
-				<th scope="row">Why</th>
-				<td>The field is already written in the declarations &mdash; the
-				phonetization says it requires the text normalization, the alignment says
-				it requires the phonetization, the time group analysis says it requires the
-				syllabification &mdash; and what reads a declaration does not read it. It
-				reads the identifier, the name, the description, the type, the interface to
-				run, the references, the degree of development, the options and the
-				resources, and it passes over that one field. [307] asks for a value which
-				is written and never loaded.</td>
-			  </tr>
-			  <tr>
-				<th scope="row">Bound to</th>
-				<td>What an annotation requires &mdash; Requirements. Requirement
-				[307].</td>
-			  </tr>
-			  <tr>
-				<th scope="row">What it costs</th>
-				<td>One field read where the others are read. Nothing of what exists
-				changes, and an annotation which declares nothing there requires nothing,
-				which is what most of them say already.</td>
-			  </tr>
-			  <tr>
-				<th scope="row">What it is not</th>
-				<td>It says what has to have been performed before, and never what will be
-				made of an annotation afterward: what follows one is read on the
-				others.</td>
-			  </tr>
-			  <tr>
-				<th scope="row">Note</th>
-				<td>What is written there is not all sound. One declaration names a
-				requirement which no annotation bears, and one writes a requirement with a
-				mark in front of it which no other has. Both are read the day the field is
-				read, and neither is settled here.</td>
-			  </tr>
-			</tbody>
-			</table>
-
-		</section>
-
-		<!-- ------------------------------------------------------- -->
-
-		<section class="subssection">
-		<h3>What the current API already provides</h3>
-
-			<p>For contrast, and to bound the extension above, the following are available
-			and require nothing <span class="api-ok">[API-OK]</span>:</p>
+			<p>Everything this document asks of the API is available:</p>
 
 			<ul>
 			<li>the annotations and what each declares, the activation, the language and
@@ -2825,556 +3563,6 @@
 			</ul>
 
 		</section>
-
-	</section>
-
-	<!-- ------------------------------------------------------- -->
-
-	<section>
-	<h2>Annex: Mockup of the interface</h2>
-
-		<p>
-			This annex is the page itself: the HTML the application writes, styled by
-			Whakerexa. What is unreadable here will be unreadable there.
-		</p>
-
-		<p>
-			It shows the page the person arrives on: the six steps on the left, the
-			reports on the right, and above them what says which of the two panels is
-			shown &mdash; the same three radio buttons as the page of the Journal, written
-			the same way. The fourth step is the files, the container of the provision of
-			files: they are given after the decisions, and before what uses them. What
-			that container holds is written by its service, and what stands here is copied
-			from the document of that service: a step of the six is never empty &mdash;
-			either a workspace is there, or files are to be chosen.
-		</p>
-
-		<p>
-			It shows one state: SPPAS on the machine of the person, two kinds of file
-			which can be written, no annotation selected, and two reports kept. The
-			names of the reports and the languages are examples.
-		</p>
-
-		<!-- ============ BEGIN MOCKUP ============ -->
-
-<section id="annotate_toggle" class="toggle-group center" role="radiogroup" aria-label="Panels to display">
-    <label class="menuitem" for="annotate_view_left">
-        <input type="radio" name="annotate_panel_view" id="annotate_view_left" value="left" />
-        <span>Left</span>
-    </label>
-    <label class="menuitem" for="annotate_view_both">
-        <input type="radio" name="annotate_panel_view" id="annotate_view_both" value="both" checked />
-        <span>Both</span>
-    </label>
-    <label class="menuitem" for="annotate_view_right">
-        <input type="radio" name="annotate_panel_view" id="annotate_view_right" value="right" />
-        <span>Right</span>
-    </label>
-</section>
-
-<section id="annotate_panels" class="flex-panel">
-
-    <section id="annotate_actions_panel" class="width_70 annotate-steps">
-        <form id="annotate_form" method="post"></form>
-
-    <ol class="enumerate-cards">
-            <li class="enumerate-cards-item">
-                <p id="annotate_step1_h">Choose the output file format(s)</p>
-                <div role="group" aria-labelledby="annotate_step1_h">
-                            <div class="wrap-panel width_full">
-                            <span class="wrap-item width_50"><select id="annotate_ext_ANNOT" name="annotate_ext_ANNOT" form="annotate_form" aria-label="ANNOT">
-                                <option value=".xra" selected>.xra</option>
-                                <option value=".TextGrid">.TextGrid</option>
-                                <option value=".eaf">.eaf</option>
-                            </select></span>
-                            <span class="wrap-item width_50"><select id="annotate_ext_AUDIO" name="annotate_ext_AUDIO" form="annotate_form" aria-label="AUDIO">
-                                <option value=".wav" selected>.wav</option>
-                            </select></span>
-                            </div>
-                        </div>
-            </li>
-            <li class="enumerate-cards-item">
-                <p id="annotate_step2_h">Fix the language(s)</p>
-                    <div>
-                            <span class="wrap-item"><select id="annotate_lang" name="annotate_lang" form="annotate_form" aria-labelledby="annotate_step2_h">
-                                <option value="---" selected>---</option>
-                                <option value="eng">eng</option>
-                                <option value="fra">fra</option>
-                                <option value="ita">ita</option>
-                            </select></span>
-                        </div>
-            </li>
-            <li class="enumerate-cards-item">
-                <p id="annotate_step3_h">Select and configure annotations</p>
-                <div role="group" aria-labelledby="annotate_step3_h">
-                            <button type="submit" form="annotate_form" name="event_bake" value="annotate_annotations_STANDALONE" class="width_full" id="annotate_type_STANDALONE">
-                                <span data-icon="no" role="img" aria-label="no annotation selected"></span>
-                                <span>STANDALONE annotations</span>
-                            </button>
-                            <button type="submit" form="annotate_form" name="event_bake" value="annotate_annotations_SPEAKER" class="width_full" id="annotate_type_SPEAKER">
-                                <span data-icon="no" role="img" aria-label="no annotation selected"></span>
-                                <span>SPEAKER annotations</span>
-                            </button>
-                            <button type="submit" form="annotate_form" name="event_bake" value="annotate_annotations_INTERACTION" class="width_full" id="annotate_type_INTERACTION">
-                                <span data-icon="no" role="img" aria-label="no annotation selected"></span>
-                                <span>INTERACTION annotations</span>
-                            </button>
-                        </div>
-            </li>
-            <li class="enumerate-cards-item">
-                <p id="annotate_step4_h">Add files</p>
-                <div role="group" aria-labelledby="annotate_step4_h">
-                    <p id="annotate_files_state">5 files selected</p>
-                    <button type="submit" form="annotate_form" name="event_bake" value="annotate_files" class="width_full">
-                        <span>Choose the files</span>
-                    </button>
-                </div>
-            </li>
-            <li class="enumerate-cards-item">
-                <p id="annotate_step5_h">Perform the annotations</p>
-                <div role="group" aria-labelledby="annotate_step5_h">
-                            <p>
-                                <input type="checkbox" id="annotate_merge" name="annotate_merge" value="True" form="annotate_form" />
-                                <label for="annotate_merge">Create -merge files</label>
-                            </p>
-                            <button type="submit" form="annotate_form" name="event_bake" value="annotate_perform" class="action-button width_full" aria-disabled="true" aria-describedby="annotate_perform_state" data-icon="play">
-                                <span>Let's go!</span>
-                            </button>
-                            <p id="annotate_perform_state" class="annotate-missing">No annotation is selected.</p>
-                        </div>
-            </li>
-            <li class="enumerate-cards-item">
-                <p id="annotate_step6_h">Read the procedure outcome report</p>
-                <div role="group" aria-labelledby="annotate_step6_h">
-                            <button type="submit" form="annotate_form" name="event_bake" value="annotate_show" class="action-button width_full" aria-disabled="true" aria-describedby="annotate_show_state" data-icon="file">
-                                <span>Show report</span>
-                            </button>
-                            <p id="annotate_show_state" class="annotate-missing">No report is checked.</p>
-                        </div>
-            </li>
-    </ol>
-
-        <p>
-            <button type="submit" form="annotate_form" name="event_bake" value="annotate_reset">Reset</button>
-        </p>
-    </section>
-
-    <section id="annotate_reports_panel" class="width_30">
-        <h3 id="annotate_reports_h">Reports:</h3>
-        <p>
-            <button type="submit" form="annotate_form" name="event_bake" value="annotate_delete_checked" data-icon="delete-checked">
-                <span>Del checked</span>
-            </button>
-            <button type="submit" form="annotate_form" name="event_bake" value="annotate_delete_unchecked" data-icon="delete-unchecked">
-                <span>Del all</span>
-            </button>
-        </p>
-        <ul class="annotate-reports" role="radiogroup" aria-labelledby="annotate_reports_h">
-            <li>
-                <input type="radio" id="annotate_report_1" name="annotate_report" value="report-2026-11-14-002.txt" form="annotate_form" />
-                <label for="annotate_report_1">report-2026-11-14-002.txt</label>
-            </li>
-            <li>
-                <input type="radio" id="annotate_report_2" name="annotate_report" value="report-2026-11-14-001.txt" form="annotate_form" />
-                <label for="annotate_report_2">report-2026-11-14-001.txt</label>
-            </li>
-        </ul>
-    </section>
-
-</section>
-
-		<!-- ============ END MOCKUP ============ -->
-
-
-		<p>
-			It shows next the panel of one type, which takes the place of the one above
-			when the button of that type is asked for. The state is: four annotations
-			offered, one of them selected, one which has no language resource, and one
-			whose development is not finished. The names, the descriptions and the
-			languages are examples.
-		</p>
-
-		<!-- ============ BEGIN MOCKUP: a list of annotations ============ -->
-
-<section id="annotate_annotations_panel" class="annotate-annotations" aria-labelledby="annotate_standalone_h">
-
-    <div class="annotate-head">
-        <button type="submit" form="annotate_form" name="event_bake" value="annotate_steps" data-icon="arrow-up">
-            <span>Back</span>
-        </button>
-        <h3 id="annotate_standalone_h">Select annotations of type STANDALONE</h3>
-    </div>
-
-    <ul>
-
-        <li>
-            <div class="flex-panel">
-                <div class="flex-item width_25">
-                    <p class="annotate-ann-name">
-                        <label class="switch" for="annotate_ann_textnorm">
-                            <input type="checkbox" role="switch" id="annotate_ann_textnorm" name="annotate_ann_textnorm" value="True" form="annotate_form" checked />
-                            <span class="switch-slider switch-no-text round"></span>
-                        </label>
-                        <label for="annotate_ann_textnorm" id="annotate_name_textnorm">Text normalization</label>
-                    </p>
-                    <p>
-                        <button type="button" class="text-reveal-button" data-icon="parameters" onclick="Wexa.dialog.open('annotate_options_textnorm', true)">
-                            <span>Configure...</span>
-                        </button>
-                    </p>
-                </div>
-                <div class="flex-item width_10">
-                    <a href="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" class="icon-button" data-icon="external-link" aria-label="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" title="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42"></a>
-                    <a href="https://ieeexplore.ieee.org/document/7357891" class="icon-button" data-icon="external-link" aria-label="https://ieeexplore.ieee.org/document/7357891" title="https://ieeexplore.ieee.org/document/7357891"></a>
-                </div>
-                <div class="flex-item width_10">
-                    <select id="annotate_lang_textnorm" name="annotate_lang_textnorm" form="annotate_form" aria-label="Language of Text normalization">
-                        <option value="eng">eng</option>
-                        <option value="fra" selected>fra</option>
-                        <option value="ita">ita</option>
-                    </select>
-                </div>
-                <div class="flex-item width_45">
-                    <p>Converts orthography of transcribed IPUs into a normalized tokenized form: word segmented, numerals converted into words, expanded abbreviations, punctuation removed. Requires IPUs with the orthographic transcription. Produces the IPUs with normalized tokens.</p>
-                </div>
-            </div>
-        </li>
-
-        <li>
-            <div class="flex-panel">
-                <div class="flex-item width_25">
-                    <p class="annotate-ann-name">
-                        <label class="switch" for="annotate_ann_phonetize">
-                            <input type="checkbox" role="switch" id="annotate_ann_phonetize" name="annotate_ann_phonetize" value="True" form="annotate_form" />
-                            <span class="switch-slider switch-no-text round"></span>
-                        </label>
-                        <label for="annotate_ann_phonetize" id="annotate_name_phonetize">Phonetization</label>
-                    </p>
-                    <p>
-                        <button type="button" class="text-reveal-button" data-icon="parameters" onclick="Wexa.dialog.open('annotate_options_phonetize', true)">
-                            <span>Configure...</span>
-                        </button>
-                    </p>
-                </div>
-                <div class="flex-item width_10">
-                    <a href="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" class="icon-button" data-icon="external-link" aria-label="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" title="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf"></a>
-                    <a href="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" class="icon-button" data-icon="external-link" aria-label="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" title="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30"></a>
-                </div>
-                <div class="flex-item width_10">
-                    <select id="annotate_lang_phonetize" name="annotate_lang_phonetize" form="annotate_form" aria-label="Language of Phonetization">
-                        <option value="eng">eng</option>
-                        <option value="fra" selected>fra</option>
-                        <option value="ita">ita</option>
-                    </select>
-                </div>
-                <div class="flex-item width_45">
-                    <p>Converts a tokenized text into phonetic signs from a pronunciation dictionary. Requires the result of Text normalization. Produces the IPUs with a grammar of phonemes.</p>
-                </div>
-            </div>
-        </li>
-
-        <li>
-            <div class="flex-panel">
-                <div class="flex-item width_25">
-                    <p class="annotate-ann-name">
-                        <label class="switch" for="annotate_ann_activity">
-                            <input type="checkbox" role="switch" id="annotate_ann_activity" name="annotate_ann_activity" value="True" form="annotate_form" />
-                            <span class="switch-slider switch-no-text round"></span>
-                        </label>
-                        <label for="annotate_ann_activity" id="annotate_name_activity">Activity</label>
-                    </p>
-                    <p>
-                        <button type="button" class="text-reveal-button" data-icon="parameters" onclick="Wexa.dialog.open('annotate_options_activity', true)">
-                            <span>Configure...</span>
-                        </button>
-                    </p>
-                </div>
-                <div class="flex-item width_10">
-                    <p class="annotate-ann-devel">
-                        <progress id="annotate_devel_activity" value="85" max="100" aria-label="Development"></progress>
-                        <span>85%</span>
-                    </p>
-                </div>
-                <div class="flex-item width_10">
-                </div>
-                <div class="flex-item width_45">
-                    <p>Creates a tier with the speech activities and their duration. The current version is limited to a pre-defined list of activities: silence, pause, laughter, speech. Requires time-aligned tokens.</p>
-                </div>
-            </div>
-        </li>
-
-        <li>
-            <div class="flex-panel">
-                <div class="flex-item width_25">
-                    <p class="annotate-ann-name">
-                        <label class="switch" for="annotate_ann_facedetect">
-                            <input type="checkbox" role="switch" id="annotate_ann_facedetect" name="annotate_ann_facedetect" value="True" form="annotate_form" disabled />
-                            <span class="switch-slider switch-no-text round"></span>
-                        </label>
-                        <label for="annotate_ann_facedetect" id="annotate_name_facedetect">Face detection</label>
-                    </p>
-                    <p>
-                        <button type="button" class="text-reveal-button" data-icon="parameters" disabled>
-                            <span>Configure...</span>
-                        </button>
-                    </p>
-                </div>
-                <div class="flex-item width_10">
-                    <p class="annotate-ann-devel">
-                        <progress id="annotate_devel_facedetect" value="70" max="100" aria-label="Development"></progress>
-                        <span>70%</span>
-                    </p>
-                </div>
-                <div class="flex-item width_10">
-                </div>
-                <div class="flex-item width_45">
-                    <p>Not installed on this machine. Detects faces in an image or a video. Produces the coordinates of the faces.</p>
-                </div>
-            </div>
-        </li>
-
-    </ul>
-
-    <!-- One dialog per annotation: the options need the width of the page,
-         which a column of the list cannot give them. -->
-
-    <dialog id="annotate_options_textnorm" aria-labelledby="annotate_options_textnorm_h">
-        <h4 id="annotate_options_textnorm_h">Options of Text normalization</h4>
-        <section aria-label="Options">
-            <!-- The container of the service of the options, as that service writes it. -->
-        </section>
-        <p>
-            <button type="button" onclick="Wexa.dialog.close('annotate_options_textnorm')">Close</button>
-        </p>
-    </dialog>
-
-    <dialog id="annotate_options_phonetize" aria-labelledby="annotate_options_phonetize_h">
-        <h4 id="annotate_options_phonetize_h">Options of Phonetization</h4>
-        <section aria-label="Options">
-            <!-- The container of the service of the options, as that service writes it. -->
-        </section>
-        <p>
-            <button type="button" onclick="Wexa.dialog.close('annotate_options_phonetize')">Close</button>
-        </p>
-    </dialog>
-
-    <dialog id="annotate_options_activity" aria-labelledby="annotate_options_activity_h">
-        <h4 id="annotate_options_activity_h">Options of Activity</h4>
-        <section aria-label="Options">
-            <!-- The container of the service of the options, as that service writes it. -->
-        </section>
-        <p>
-            <button type="button" onclick="Wexa.dialog.close('annotate_options_activity')">Close</button>
-        </p>
-    </dialog>
-
-    <dialog id="annotate_options_facedetect" aria-labelledby="annotate_options_facedetect_h">
-        <h4 id="annotate_options_facedetect_h">Options of Face detection</h4>
-        <section aria-label="Options">
-            <!-- The container of the service of the options, as that service writes it. -->
-        </section>
-        <p>
-            <button type="button" onclick="Wexa.dialog.close('annotate_options_facedetect')">Close</button>
-        </p>
-    </dialog>
-
-</section>
-
-		<!-- ============ END MOCKUP: a list of annotations ============ -->
-
-		<p>
-			It shows last the panel of the procedure outcome report, which takes the place
-			of the six steps when the annotations are performed, and when a report which
-			was kept is asked for. The state is: a run which has ended, two
-			annotations performed, one of which said something about a file. The lines and
-			their states are examples.
-		</p>
-
-		<p>
-			It shows the same panel while the annotations are performed: the annotation
-			which is running, how far it has gone and what it is doing &mdash; the three
-			things the API sets on the progress it was given &mdash; and, folded under
-			them, the report as it fills. The person unfolds it to watch, or leaves it
-			folded and waits.
-		</p>
-
-		<p>
-			It shows then the panel of the files, which the fourth step asks for. What
-			it holds is written by the provision of files and copied here from the
-			document of that service; where SPPAS runs on the machine of the person
-			and a workspace is already there, the step says what it holds and offers
-			no way in.
-		</p>
-
-		<!-- ============ BEGIN MOCKUP: the files ============ -->
-
-<section id="annotate_files_panel" aria-labelledby="annotate_files_h">
-
-    <div class="annotate-head">
-        <button type="submit" form="annotate_form" name="event_bake" value="annotate_steps" data-icon="arrow-up">
-            <span>Back</span>
-        </button>
-        <h3 id="annotate_files_h">Add files</h3>
-    </div>
-
-    <!-- The container of the provision of files, copied from its own document:
-         it is written by that service and not by this one. -->
-<section id="files_deposit" aria-label="Files">
-                <form method="post">
-                <input type="hidden" name="task" value="send" />
-                <input type="hidden" name="fed" value="[[&quot;record-01.wav&quot;, 3355443]]" />
-                <div class="dropzone">
-                <label for="files_input">
-                Select files, or drag and drop files here.
-                <input id="files_input" type="file" multiple="multiple" />
-                </label>
-                <ul class="cards-panel">
-                <li>
-                <article class="card">
-                <div class="card-header">
-                <span class="file-status" data-icon="upload" role="img" aria-label="Deposited"></span>
-                </div>
-                <div class="card-body">
-                <span class="dropzone-size">
-                3355443
-                </span>
-                <span class="dropzone-name">
-                record-01.wav
-                </span>
-                </div>
-                <div class="card-footer">
-                <button type="button" name="record-01.wav">
-                Take back
-                </button>
-                </div>
-                </article>
-                </li>
-                <li>
-                <article class="card">
-                <div class="card-header">
-                <span class="file-status file-status-error" data-icon="no" role="img" aria-label="Refused"></span>
-                </div>
-                <div class="card-body">
-                <span class="dropzone-size">
-                0
-                </span>
-                <span class="dropzone-name">
-                record-02.wav
-                </span>
-                <p class="file-status file-status-error">
-                This name is already taken.
-                </p>
-                </div>
-                <div class="card-footer">
-                <button type="button" name="record-02.wav">
-                Take back
-                </button>
-                </div>
-                </article>
-                </li>
-                </ul>
-                <p>
-                3.2 MB of 100 MB accepted here. Up to 10 MB per file.
-                </p>
-                </div>
-                <button type="button" class="cta-button">
-                Send
-                </button>
-                </form>
-                </section>
-
-</section>
-
-		<!-- ============ END MOCKUP: the files ============ -->
-
-		<!-- ============ BEGIN MOCKUP: a run going ============ -->
-
-<section id="annotate_log_panel_going" aria-labelledby="annotate_going_h">
-
-    <div class="annotate-head">
-        <button type="submit" form="annotate_form" name="event_bake" value="annotate_steps" data-icon="arrow-up" disabled>
-            <span>Back</span>
-        </button>
-        <h3 id="annotate_going_h">Procedure outcome report</h3>
-    </div>
-
-    <h4 id="progress_header">Phonetization</h4>
-    <progress id="percent_progress" value="40" max="100"></progress>
-    <p id="progress_text">AC track_0379-token.xra (2/5)</p>
-
-    <details>
-        <summary>Details</summary>
-        <pre class="annotate-report"><code>-------------------------------------------------------------------------------
- Normaliser la transcription
--------------------------------------------------------------------------------
-  AC track_0379.xra: <span class="ok">[    OK    ]</span> 
-  AC track_0380.xra: <span class="warning">[ WARNING  ]</span> two tokens were not normalized
--------------------------------------------------------------------------------
- Phonetiser
--------------------------------------------------------------------------------
-</code></pre>
-    </details>
-
-</section>
-
-		<!-- ============ END MOCKUP: a run going ============ -->
-
-		<!-- ============ BEGIN MOCKUP: the procedure outcome report ============ -->
-
-<section id="annotate_log_panel" aria-labelledby="annotate_log_h">
-
-    <div class="annotate-head">
-        <button type="submit" form="annotate_form" name="event_bake" value="annotate_steps" data-icon="arrow-up">
-            <span>Back</span>
-        </button>
-        <h3 id="annotate_log_h">Procedure outcome report</h3>
-    </div>
-
-    <p id="annotate_report_file">
-        Report file:
-        <a href="reports/sppas_report_2026-11-17_50222_0001.txt" data-icon="file" title="Open the file of this report">sppas_report_2026-11-17_50222_0001.txt</a>
-    </p>
-
-    <pre id="annotate_report" class="annotate-report"><code>-------------------------------------------------------------------------------
-
-                             Compte-rendu d'execution
-
-                             Annotations automatiques
-
--------------------------------------------------------------------------------
-
-sppas version 5.1.2
-Copyright (C) 2011-2026  Brigitte Bigi, CNRS
-Site web: https://sppas.org/
-Contact: Brigitte Bigi (contact@sppas.org)
-
--------------------------------------------------------------------------------
-Date: 2026-11-17T11:13:05+01:00
-Langages selectionnes:
-  - Normaliser la transcription: fra
-  - Phonetiser: fra
-  - Aligner: fra
-  - Activity: ---
-
-Fichiers et dossiers selectionnes:
-  - /Users/bigi/Projects/sppas-code/resources/samples/samples-fra/AC track_0379
-
--------------------------------------------------------------------------------
- Normaliser la transcription
--------------------------------------------------------------------------------
-  AC track_0379.xra: <span class="ok">[    OK    ]</span> 
-  AC track_0380.xra: <span class="warning">[ WARNING  ]</span> two tokens were not normalized
--------------------------------------------------------------------------------
- Phonetiser
--------------------------------------------------------------------------------
-  AC track_0379.xra: <span class="ok">[    OK    ]</span> 
-  AC track_0380.xra: <span class="error">[  ERROR  ]</span> no pronunciation found for a token
-  AC track_0381.xra: <span class="ignore">[ IGNORE  ]</span> no transcription beside it
-</code></pre>
-
-</section>
-
-		<!-- ============ END MOCKUP: the procedure outcome report ============ -->
 
 	</section>
 
