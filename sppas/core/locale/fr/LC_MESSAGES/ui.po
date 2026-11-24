@@ -1084,3 +1084,135 @@ msgstr "Fichier du compte rendu :"
 
 msgid "The report is not available...\nError is: {:s}"
 msgstr "Le compte rendu n'est pas disponible...\nL'erreur est : {:s}"
+
+msgid "Access restricted"
+msgstr "Accès restreint"
+
+msgid "Color"
+msgstr "Couleur"
+
+msgid "Export to"
+msgstr "Exporter vers"
+
+msgid "For a new session, restart SPPAS from your file explorer."
+msgstr "Pour une nouvelle session, relancez SPPAS depuis votre explorateur de fichiers."
+
+msgid "If you believe you should have access, please contact Brigitte Bigi."
+msgstr "Si vous pensez devoir y avoir accès, contactez Brigitte Bigi."
+
+msgid "If you experience difficulties accessing a resource, contact Brigitte Bigi."
+msgstr "Si vous avez des difficultés à accéder à une ressource, contactez Brigitte Bigi."
+
+msgid "Import from"
+msgstr "Importer depuis"
+
+msgid "Links"
+msgstr "Liens"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "New name of the workspace: "
+msgstr "Nouveau nom de l'espace de travail : "
+
+msgid "No file is selected."
+msgstr "Aucun fichier n'est sélectionné."
+
+msgid "One line per root of the batch"
+msgstr "Une ligne par racine du lot"
+
+msgid "Oops... something is missing"
+msgstr "Oups... il manque quelque chose"
+
+msgid "Organizes the files of SPPAS into workspaces."
+msgstr "Organise les fichiers de SPPAS en espaces de travail."
+
+msgid "Pin & Save"
+msgstr "Épingler et enregistrer"
+
+msgid "Progress:"
+msgstr "Progression :"
+
+msgid "References"
+msgstr "Références"
+
+msgid "Rename"
+msgstr "Renommer"
+
+msgid "Required annotation"
+msgstr "Annotation requise"
+
+msgid "Required annotations"
+msgstr "Annotations requises"
+
+msgid "Required files"
+msgstr "Fichiers requis"
+
+msgid "Root"
+msgstr "Racine"
+
+msgid "Session ended"
+msgstr "Session terminée"
+
+msgid "Sorry. This content is restricted."
+msgstr "Désolé. L'accès à ce contenu est restreint."
+
+msgid "Sorry. We searched carefully but could not find it."
+msgstr "Désolé. Nous avons cherché avec soin, sans le trouver."
+
+msgid "The annotations are running: nothing else can be started until they end."
+msgstr "Les annotations sont en cours : rien d'autre ne peut être lancé avant leur fin."
+
+msgid "The annotations could not be performed."
+msgstr "Les annotations n'ont pas pu être effectuées."
+
+msgid "The content you are looking for may have disappeared or may never have existed."
+msgstr "Le contenu que vous cherchez a peut-être disparu, ou n'a peut-être jamais existé."
+
+msgid "The current workspace contains locked files. You need to close files first."
+msgstr "L'espace de travail courant contient des fichiers verrouillés. Fermez d'abord ces fichiers."
+
+msgid "Waiting for the files in the selection window..."
+msgstr "En attente des fichiers dans la fenêtre de sélection..."
+
+msgid "Workspace"
+msgstr "Espace de travail"
+
+msgid "Workspaces: "
+msgstr "Espaces de travail : "
+
+msgid "You can close this tab."
+msgstr "Vous pouvez fermer cet onglet."
+
+msgid "You can close this tab. [...]"
+msgstr "Vous pouvez fermer cet onglet. [...]"
+
+msgid "annotated file"
+msgstr "fichier annoté"
+
+msgid "audio"
+msgstr "audio"
+
+msgid "image"
+msgstr "image"
+
+msgid "measure file"
+msgstr "fichier de mesures"
+
+msgid "video"
+msgstr "vidéo"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "ERROR"
+msgstr "ERREUR"
+
+msgid "WARNING"
+msgstr "WARNING"
+
+msgid "INFO"
+msgstr "INFO"
+
+msgid "IGNORED"
+msgstr "IGNORE"

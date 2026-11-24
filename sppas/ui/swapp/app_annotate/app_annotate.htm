@@ -12,28 +12,24 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>Overview</h2>
+	<h2>What this page does for you</h2>
 
 		<p>
-			This page performs the automatic annotations of SPPAS on your files. You say into which
-			formats the files are to be written, in which language, which annotations are to be
-			performed and with which options, and on which files. SPPAS performs them, then says
-			what came of each of your recordings. Each annotation writes what it produced into new
-			files.
+			This page annotates your recordings automatically. You choose the annotations and the
+			files; SPPAS performs the annotations, writes what they produce into new files, then
+			tells you, file by file, what it did.
 		</p>
 
 		<p>
-			The four spaces of SPPAS are here as everywhere else -- the header, the menu along the
-			left edge, the body in the middle, the footer at the bottom. The help of the Dashboard
-			describes them, and the menu buttons do the same thing here.
+			The home page of Annotate shows, on the left, six numbered steps: they are what you do
+			to annotate your files, in that order. On the right, it lists the reports of the
+			annotations already performed. Some steps open another page, which takes the place of
+			the home page; its <b>Back</b> button, at the top, brings you back to the home page.
 		</p>
 
 		<p>
-			The body holds three buttons above two panels: the six steps on the left, the reports on
-			the right. The steps are numbered in the order you go through them. Three of them open a
-			panel which takes the whole body -- the annotations of one type, the files, the report --
-			and the <b>Back</b> button, at the top of that panel, brings you back to the six steps.
-			Each part is shown below as you see it on the page.
+			The header, the menu along the left edge and the footer are the same as on every page
+			of SPPAS: the help of the Dashboard describes them.
 		</p>
 
 	</section>
@@ -44,32 +40,479 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>The two panels</h2>
+	<h2>Annotate your files</h2>
 
 		<p>
-			Above the two panels, three buttons say which one is shown:
+			Go through the six steps of the home page in their order. Under them, <b>Reset</b>
+			starts everything again at any time: your choices and the files you gave are
+			forgotten.
 		</p>
 
-		    <section class="toggle-group center" role="radiogroup" aria-label="Panels to display" aria-hidden="true">
-		        <label class="menuitem">
-		            <input tabindex="-1" type="radio" value="left" />
-		            <span>Left</span>
-		        </label>
-		        <label class="menuitem">
-		            <input tabindex="-1" type="radio" value="both" checked />
-		            <span>Both</span>
-		        </label>
-		        <label class="menuitem">
-		            <input tabindex="-1" type="radio" value="right" />
-		            <span>Right</span>
-		        </label>
+		<section class="subssection">
+		<h3>Step 1 -- Choose the output file format(s)</h3>
+
+			<p>
+				The annotations write new files. This step has one list for each kind of file they
+				write, in this order: annotated files (<b>ANNOT</b>), images (<b>IMAGE</b>),
+				videos (<b>VIDEO</b>) and sounds (<b>AUDIO</b>). In each list, choose the format of
+				the new files of that kind; the usual one is already chosen. For instance, choose
+				<b>.TextGrid</b> in the first list, and the annotated files are written in the
+				format of Praat.
+			</p>
+
+		    <section class="annotate-steps" aria-hidden="true">
+		        <ol class="enumerate-cards" start="1">
+		            <li class="enumerate-cards-item">
+        		        <p>Choose the output file format(s)</p>
+        		        <div role="group">
+        		            <div class="wrap-panel width_full">
+        		                <span class="wrap-item width_50">
+        		                    <select tabindex="-1" aria-label="ANNOT">
+        		                        <option value=".xra" selected>.xra</option>
+        		                        <option value=".TextGrid">.TextGrid</option>
+        		                        <option value=".eaf">.eaf</option>
+        		                        <option value=".csv">.csv</option>
+        		                    </select>
+        		                </span>
+        		                <span class="wrap-item width_50">
+        		                    <select tabindex="-1" aria-label="IMAGE">
+        		                        <option value=".png">.png</option>
+        		                        <option value=".jpg" selected>.jpg</option>
+        		                    </select>
+        		                </span>
+        		                <span class="wrap-item width_50">
+        		                    <select tabindex="-1" aria-label="VIDEO">
+        		                        <option value=".mp4" selected>.mp4</option>
+        		                        <option value=".avi">.avi</option>
+        		                    </select>
+        		                </span>
+        		                <span class="wrap-item width_50">
+        		                    <select tabindex="-1" aria-label="AUDIO">
+        		                        <option value=".wav" selected>.wav</option>
+        		                        <option value=".aiff">.aiff</option>
+        		                    </select>
+        		                </span>
+        		            </div>
+        		        </div>
+		            </li>
+		        </ol>
 		    </section>
 
-		<p>
-			<b>Left</b> shows the six steps alone, <b>Right</b> the reports alone, and <b>Both</b>
-			shows them side by side, as when the page opens. On a narrow window, one panel at a time
-			is easier to read. This changes what you see, and nothing of what is done.
-		</p>
+		</section>
+
+		<section class="subssection">
+		<h3>Step 2 -- Fix the language(s)</h3>
+
+			<p>
+				The list offers the languages for which at least one annotation has resources, and
+				<b>---</b>, which means no language. The language you choose is given to every
+				annotation which has resources for it. An annotation which has resources for other
+				languages only is left without a language; an annotation which does not depend on
+				the language is not concerned.
+			</p>
+
+			<p>
+				Each annotation also has its own list of languages, at step 3. When the selected
+				annotations do not all have the same language, this list says <b>MIX</b>.
+			</p>
+
+		    <section class="annotate-steps" aria-hidden="true">
+		        <ol class="enumerate-cards" start="2">
+		            <li class="enumerate-cards-item">
+        		        <p>Fix the language(s)</p>
+        		        <div>
+        		            <span class="wrap-item">
+        		                <select tabindex="-1">
+        		                    <option value="---" selected>---</option>
+        		                    <option value="eng">eng</option>
+        		                    <option value="fra">fra</option>
+        		                    <option value="ita">ita</option>
+        		                </select>
+        		            </span>
+        		        </div>
+		            </li>
+		        </ol>
+		    </section>
+
+		</section>
+
+		<section class="subssection">
+		<h3>Step 3 -- Select and configure annotations</h3>
+
+			<p>
+				The annotations are sorted into three groups, with one button for each:
+			</p>
+
+			<ul>
+				<li><b>STANDALONE annotations</b> -- the annotations of one file at a time;</li>
+				<li><b>SPEAKER annotations</b> -- the annotations of two files of the same
+					speaker;</li>
+				<li><b>INTERACTION annotations</b> -- the annotations of two files of two different
+					speakers.</li>
+			</ul>
+
+			<p>
+				The mark at the beginning of a button says that no annotation of that group is
+				selected.
+			</p>
+
+		    <section class="annotate-steps" aria-hidden="true">
+		        <ol class="enumerate-cards" start="3">
+		            <li class="enumerate-cards-item">
+        		        <p>Select and configure annotations</p>
+        		        <div role="group">
+        		            <button tabindex="-1" type="submit" value="annotate_annotations_STANDALONE" class="width_full">
+        		                <span data-icon="no" role="img" aria-label="no annotation selected"></span>
+        		                <span>STANDALONE annotations</span>
+        		            </button>
+        		            <button tabindex="-1" type="submit" value="annotate_annotations_SPEAKER" class="width_full">
+        		                <span data-icon="no" role="img" aria-label="no annotation selected"></span>
+        		                <span>SPEAKER annotations</span>
+        		            </button>
+        		            <button tabindex="-1" type="submit" value="annotate_annotations_INTERACTION" class="width_full">
+        		                <span data-icon="no" role="img" aria-label="no annotation selected"></span>
+        		                <span>INTERACTION annotations</span>
+        		            </button>
+        		        </div>
+		            </li>
+		        </ol>
+		    </section>
+
+			<p>
+				Click a button: the annotations of that group take the place of the home page, one
+				per line. The <b>Back</b> button, at the top, brings you back to the home page:
+				what you selected is kept, and the button of a group which holds a selected
+				annotation no longer has the mark.
+			</p>
+
+			<p>
+				On the line of an annotation, from left to right:
+			</p>
+
+			<ul>
+				<li>the <b>switch</b> before its name selects it; in the example, the text
+					normalization is selected;</li>
+				<li><b>Configure...</b> opens the window of its options, described below;</li>
+				<li>the links open, in a new tab of your browser, the articles which describe the
+					annotation. An annotation which has no article yet shows instead a bar, with
+					how far its development has gone: 70% for the face detection, in the
+					example;</li>
+				<li>the list of the languages of this annotation, when it depends on the
+					language;</li>
+				<li>what the annotation does, then what it needs: <b>Required files</b>, the kinds
+					of file it reads -- audio, video, image, annotated file, measure file; and
+					<b>Required annotation</b>, the annotation whose results it reads.</li>
+			</ul>
+
+			<p>
+				An annotation which is not installed on your computer cannot be selected: its
+				switch and its <b>Configure...</b> button are inactive, its description begins with
+				<b>Not installed on this machine.</b>, and the reason is shown in red under it --
+				in the example, the face detection, which needs a feature of SPPAS to be installed
+				first.
+			</p>
+
+			<p>
+				Here are three of them:
+			</p>
+
+		    <section class="annotate-annotations" aria-hidden="true">
+		        <div class="annotate-head">
+		            <button tabindex="-1" type="submit" value="annotate_steps" data-icon="arrow-up">
+		                <span>Back</span>
+		            </button>
+		            <h3>Select annotations of type STANDALONE</h3>
+		        </div>
+		        <ul>
+		            <li>
+		                <div class="flex-panel">
+		                    <div class="flex-item width_25">
+		                        <p class="annotate-ann-name">
+		                            <label class="switch">
+		                                <input tabindex="-1" type="checkbox" role="switch" value="True" checked />
+		                                <span class="switch-slider switch-no-text round"></span>
+		                            </label>
+		                            <label>Text Normalization</label>
+		                        </p>
+		                        <p>
+		                            <button tabindex="-1" type="submit" value="annotate_options_textnorm" class="text-reveal-button" data-icon="parameters">
+		                                <span>Configure...</span>
+		                            </button>
+		                        </p>
+		                    </div>
+		                    <div class="flex-item width_10">
+		                        <a tabindex="-1" href="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" class="icon-button" data-icon="external-link" aria-label="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" title="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" target="_blank" rel="noopener"></a>
+		                        <a tabindex="-1" href="https://ieeexplore.ieee.org/document/7357891" class="icon-button" data-icon="external-link" aria-label="https://ieeexplore.ieee.org/document/7357891" title="https://ieeexplore.ieee.org/document/7357891" target="_blank" rel="noopener"></a>
+		                    </div>
+		                    <div class="flex-item width_10">
+		                        <select tabindex="-1" aria-label="Language of Text Normalization">
+		                            <option value="---">---</option>
+		                            <option value="eng">eng</option>
+		                            <option value="fra" selected>fra</option>
+		                            <option value="ita">ita</option>
+		                        </select>
+		                    </div>
+		                    <div class="flex-item width_45">
+		                        <p>Converts orthography of transcribed IPUs into a normalized tokenized form: word segmented, numerals converted into words, expanded abbreviations, punctuation removed, etc. Produces the IPUs with normalized tokens.</p>
+		                        <dl class="annotate-ann-precision">
+		                            <dt>Required files</dt>
+		                            <dd>annotated file</dd>
+		                        </dl>
+		                    </div>
+		                </div>
+		            </li>
+		            <li>
+		                <div class="flex-panel">
+		                    <div class="flex-item width_25">
+		                        <p class="annotate-ann-name">
+		                            <label class="switch">
+		                                <input tabindex="-1" type="checkbox" role="switch" value="True" />
+		                                <span class="switch-slider switch-no-text round"></span>
+		                            </label>
+		                            <label>Phonetization</label>
+		                        </p>
+		                        <p>
+		                            <button tabindex="-1" type="submit" value="annotate_options_phonetize" class="text-reveal-button" data-icon="parameters">
+		                                <span>Configure...</span>
+		                            </button>
+		                        </p>
+		                    </div>
+		                    <div class="flex-item width_10">
+		                        <a tabindex="-1" href="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" class="icon-button" data-icon="file" aria-label="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" title="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" target="_blank" rel="noopener"></a>
+		                        <a tabindex="-1" href="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" class="icon-button" data-icon="external-link" aria-label="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" title="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" target="_blank" rel="noopener"></a>
+		                    </div>
+		                    <div class="flex-item width_10">
+		                        <select tabindex="-1" aria-label="Language of Phonetization">
+		                            <option value="---" selected>---</option>
+		                            <option value="eng">eng</option>
+		                            <option value="fra">fra</option>
+		                            <option value="ita">ita</option>
+		                        </select>
+		                    </div>
+		                    <div class="flex-item width_45">
+		                        <p>Converts a tokenized text into phonetic signs from a pronunciation dictionary. Produces the IPUs with a grammar of phonemes.</p>
+		                        <dl class="annotate-ann-precision">
+		                            <dt>Required files</dt>
+		                            <dd>annotated file</dd>
+		                            <dt>Required annotation</dt>
+		                            <dd>Text Normalization</dd>
+		                        </dl>
+		                    </div>
+		                </div>
+		            </li>
+		            <li>
+		                <div class="flex-panel">
+		                    <div class="flex-item width_25">
+		                        <p class="annotate-ann-name">
+		                            <label class="switch">
+		                                <input tabindex="-1" type="checkbox" role="switch" value="True" disabled />
+		                                <span class="switch-slider switch-no-text round"></span>
+		                            </label>
+		                            <label>Face Detection</label>
+		                        </p>
+		                        <p>
+		                            <button tabindex="-1" type="submit" value="annotate_options_facedetect" class="text-reveal-button" data-icon="parameters" disabled>
+		                                <span>Configure...</span>
+		                            </button>
+		                        </p>
+		                    </div>
+		                    <div class="flex-item width_10">
+		                        <p class="annotate-ann-devel">
+		                            <progress value="70" max="100" aria-label="Development"></progress>
+		                            <span>70%</span>
+		                        </p>
+		                    </div>
+		                    <div class="flex-item width_10"></div>
+		                    <div class="flex-item width_45">
+		                        <p>Not installed on this machine. Detect faces on an image or a video combining results of several methods depending on the models you choose. Two different types of models are available: the ones based on Artificial Neural Networks (ANN) and the other one based on Haar cascade classifiers. Produces an image or a video and an annotated file with coordinates of the detected faces.</p>
+		                        <p class="annotate-missing">:ERROR 0520: Feature video is not enabled; its installation should be processed first.</p>
+		                    </div>
+		                </div>
+		            </li>
+		        </ul>
+		    </section>
+
+			<h4>The options of an annotation</h4>
+
+				<p>
+					<b>Configure...</b> opens the window of the options of the annotation. It
+					holds one line per option, and each option is shown as suits its value: a box
+					to check, a number, a number with decimals, a text, or the name of a file with
+					a <b>Browse</b> button beside it.
+				</p>
+
+				<p>
+					Click <b>Apply</b> to keep what you changed, for that annotation. If you close
+					the window without applying, its options stay what they were. Here is such a
+					window, with one option of each kind:
+				</p>
+
+			    <dialog open aria-hidden="true">
+			        <h4>Options of an annotation</h4>
+			        <section aria-label="Options">
+			            <div>
+			                <p>
+			                    <label>An option of type str</label>
+			                    <input tabindex="-1" type="text" value="a text">
+			                </p>
+			                <p>
+			                    <input tabindex="-1" type="checkbox" value="True" checked>
+			                    <label>An option of type bool</label>
+			                </p>
+			                <p>
+			                    <label>An option of type int</label>
+			                    <input tabindex="-1" type="number" value="50" min="0" max="2000" step="1">
+			                </p>
+			                <p>
+			                    <label>An option of type float</label>
+			                    <input tabindex="-1" type="number" value="0.5" min="0" max="2000" step="0.01">
+			                </p>
+			                <p>
+			                    <label>An option of type file</label>
+			                    <span class="wrap-panel" role="group">
+			                        <span class="wrap-item width_70">
+			                            <input tabindex="-1" type="text" value="/home/you/corpus/file.txt">
+			                        </span>
+			                        <button tabindex="-1" type="submit" class="wrap-item width_20" value="file">Browse</button>
+			                    </span>
+			                </p>
+			                <button tabindex="-1" type="submit" value="" class="action-button">Apply</button>
+			            </div>
+			        </section>
+			    </dialog>
+
+		</section>
+
+		<section class="subssection">
+		<h3>Step 4 -- Add files</h3>
+
+			<p>
+				This step says how many files are selected. Click <b>Choose the files</b>: the
+				files take the place of the home page. The <b>Back</b> button, at the top, brings
+				you back to the home page, where this step then says how many files are
+				selected. Give every file the annotations need: the sound and its
+				transcription, for instance. How you give them depends on where SPPAS runs.
+			</p>
+
+		    <section class="annotate-steps" aria-hidden="true">
+		        <ol class="enumerate-cards" start="4">
+		            <li class="enumerate-cards-item">
+        		        <p>Add files</p>
+        		        <div role="group">
+        		            <p>0 files selected</p>
+        		            <button tabindex="-1" type="submit" value="annotate_files" class="width_full">
+        		                <span>Choose the files</span>
+        		            </button>
+        		        </div>
+		            </li>
+		        </ol>
+		    </section>
+
+			<h4>SPPAS on your computer</h4>
+
+				<p>
+					Your files are already on your computer, so nothing is sent anywhere. Click
+					<b>Select files</b>: SPPAS opens a window where you choose them among your
+					files. While it is open, the page says <b>Waiting for the files in the
+					selection window...</b>. That window may open behind your browser: if nothing
+					seems to happen, look for it there.
+				</p>
+
+				<p>
+					Each file you chose is then shown in a rectangle, with its name; rest the mouse
+					on the name to see where the file is. <b>Take back</b> removes the file from
+					the list: the file itself is not touched.
+				</p>
+
+			    <section aria-hidden="true">
+			        <div class="annotate-head">
+			            <button tabindex="-1" type="submit" value="annotate_steps" data-icon="arrow-up">
+			                <span>Back</span>
+			            </button>
+			            <h3>Add files</h3>
+			        </div>
+			        <section aria-label="Files">
+			            <div>
+			                <div class="dropzone">
+			                    <button tabindex="-1" type="submit" value="">Select files</button>
+			                    <div role="status" hidden>
+			                        <p>Waiting for the files in the selection window...</p>
+			                        <progress></progress>
+			                    </div>
+			                    <ul class="cards-panel"></ul>
+			                </div>
+			            </div>
+			        </section>
+			    </section>
+
+			<h4>SPPAS on the web</h4>
+
+				<p>
+					<b>Not programmed yet.</b> SPPAS on the web does not annotate files yet. This
+					part will say how to send your files to it.
+				</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>Step 5 -- Perform the annotations</h3>
+
+			<p>
+				Check <b>Create -merge files</b> to also get, for each recording which has at least
+				two annotated files, one file which gathers them: its name is the one of the
+				recording, followed by <b>-merge</b>.
+			</p>
+
+			<p>
+				<b>Let's go!</b> performs the annotations. As long as no annotation is selected, it
+				is inactive, and the page says <b>No annotation is selected.</b> under it. If no
+				file is selected, the page says <b>No file is selected.</b> and nothing starts.
+			</p>
+
+		    <section class="annotate-steps" aria-hidden="true">
+		        <ol class="enumerate-cards" start="5">
+		            <li class="enumerate-cards-item">
+        		        <p>Perform the annotations</p>
+        		        <div role="group">
+        		            <p>
+        		                <input tabindex="-1" type="checkbox" value="True" />
+        		                <label>Create -merge files</label>
+        		            </p>
+        		            <button tabindex="-1" type="submit" value="annotate_perform" class="action-button width_full" aria-disabled="true" data-icon="play">
+        		                <span>Let's go!</span>
+        		            </button>
+        		            <p class="annotate-missing">No annotation is selected.</p>
+        		        </div>
+		            </li>
+		        </ol>
+		    </section>
+
+		</section>
+
+		<section class="subssection">
+		<h3>Step 6 -- Read the procedure outcome report</h3>
+
+			<p>
+				<b>Show report</b> shows the report which is checked in the list of the reports, on
+				the right of the home page. As long as no report is checked, it is inactive, and
+				the page says <b>No report is checked.</b> under it.
+			</p>
+
+		    <section class="annotate-steps" aria-hidden="true">
+		        <ol class="enumerate-cards" start="6">
+		            <li class="enumerate-cards-item">
+        		        <p>Read the procedure outcome report</p>
+        		        <div role="group">
+        		            <button tabindex="-1" type="submit" value="annotate_show" class="action-button width_full" aria-disabled="true" data-icon="file">
+        		                <span>Show report</span>
+        		            </button>
+        		            <p class="annotate-missing">No report is checked.</p>
+        		        </div>
+		            </li>
+		        </ol>
+		    </section>
+
+		</section>
 
 	</section>
 
@@ -79,485 +522,35 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>The six steps</h2>
+	<h2>Follow the annotations, then see what SPPAS did</h2>
 
 		<p>
-			The left panel holds the six steps, with the <b>Reset</b> button under them. Here they
-			are when the page opens:
+			Once started, the progress of the annotations takes the place of the home page.
 		</p>
 
-		    <section class="width_70 annotate-steps" aria-hidden="true">
-		        <ol class="enumerate-cards">
-		            <li class="enumerate-cards-item">
-		                <p>Choose the output file format(s)</p>
-		                <div role="group">
-		                    <div class="wrap-panel width_full">
-		                        <span class="wrap-item width_50">
-		                            <select tabindex="-1" aria-label="ANNOT">
-		                                <option value=".xra" selected>.xra</option>
-		                                <option value=".TextGrid">.TextGrid</option>
-		                                <option value=".eaf">.eaf</option>
-		                                <option value=".csv">.csv</option>
-		                            </select>
-		                        </span>
-		                        <span class="wrap-item width_50">
-		                            <select tabindex="-1" aria-label="IMAGE">
-		                                <option value=".png">.png</option>
-		                                <option value=".jpg" selected>.jpg</option>
-		                            </select>
-		                        </span>
-		                        <span class="wrap-item width_50">
-		                            <select tabindex="-1" aria-label="VIDEO">
-		                                <option value=".mp4" selected>.mp4</option>
-		                                <option value=".avi">.avi</option>
-		                            </select>
-		                        </span>
-		                        <span class="wrap-item width_50">
-		                            <select tabindex="-1" aria-label="AUDIO">
-		                                <option value=".wav" selected>.wav</option>
-		                                <option value=".aiff">.aiff</option>
-		                            </select>
-		                        </span>
-		                    </div>
-		                </div>
-		            </li>
-		            <li class="enumerate-cards-item">
-		                <p>Fix the language(s)</p>
-		                <div>
-		                    <span class="wrap-item">
-		                        <select tabindex="-1">
-		                            <option value="---" selected>---</option>
-		                            <option value="eng">eng</option>
-		                            <option value="fra">fra</option>
-		                            <option value="ita">ita</option>
-		                        </select>
-		                    </span>
-		                </div>
-		            </li>
-		            <li class="enumerate-cards-item">
-		                <p>Select and configure annotations</p>
-		                <div role="group">
-		                    <button tabindex="-1" type="submit" value="annotate_annotations_STANDALONE" class="width_full">
-		                        <span data-icon="no" role="img" aria-label="no annotation selected"></span>
-		                        <span>STANDALONE annotations</span>
-		                    </button>
-		                    <button tabindex="-1" type="submit" value="annotate_annotations_SPEAKER" class="width_full">
-		                        <span data-icon="no" role="img" aria-label="no annotation selected"></span>
-		                        <span>SPEAKER annotations</span>
-		                    </button>
-		                    <button tabindex="-1" type="submit" value="annotate_annotations_INTERACTION" class="width_full">
-		                        <span data-icon="no" role="img" aria-label="no annotation selected"></span>
-		                        <span>INTERACTION annotations</span>
-		                    </button>
-		                </div>
-		            </li>
-		            <li class="enumerate-cards-item">
-		                <p>Add files</p>
-		                <div role="group">
-		                    <p>0 files selected</p>
-		                    <button tabindex="-1" type="submit" value="annotate_files" class="width_full">
-		                        <span>Choose the files</span>
-		                    </button>
-		                </div>
-		            </li>
-		            <li class="enumerate-cards-item">
-		                <p>Perform the annotations</p>
-		                <div role="group">
-		                    <p>
-		                        <input tabindex="-1" type="checkbox" value="True" />
-		                        <label>Create -merge files</label>
-		                    </p>
-		                    <button tabindex="-1" type="submit" value="annotate_perform" class="action-button width_full" aria-disabled="true" data-icon="play">
-		                        <span>Let's go!</span>
-		                    </button>
-		                    <p class="annotate-missing">No annotation is selected.</p>
-		                </div>
-		            </li>
-		            <li class="enumerate-cards-item">
-		                <p>Read the procedure outcome report</p>
-		                <div role="group">
-		                    <button tabindex="-1" type="submit" value="annotate_show" class="action-button width_full" aria-disabled="true" data-icon="file">
-		                        <span>Show report</span>
-		                    </button>
-		                    <p class="annotate-missing">No report is checked.</p>
-		                </div>
-		            </li>
-		        </ol>
-		        <p>
-		            <button tabindex="-1" type="submit" value="annotate_reset">Reset</button>
-		        </p>
-		    </section>
-
 		<p>
-			<b>Reset</b> takes the page back to what it was when it opened: your choices and the
-			files you gave go together.
+			At the top, the <b>Back</b> button is inactive while the annotations run: nothing
+			else can be started until they end.
 		</p>
 
-		<section class="subssection">
-		<h3>1. Choose the output file format(s)</h3>
-
-			<p>
-				The first step holds one list per kind of file the annotations write: annotated files,
-				images, videos and sounds, in that order. Each list offers the extensions SPPAS can
-				write that kind of file with; the usual one is chosen when the page opens. Every file
-				of that kind an annotation writes takes the extension chosen here: choose
-				<b>.TextGrid</b> in the first list, and the annotated files are written in the format
-				of Praat.
-			</p>
-
-		</section>
-
-		<section class="subssection">
-		<h3>2. Fix the language(s)</h3>
-
-			<p>
-				The second step offers the languages at least one annotation has resources for. The
-				one you choose is given to every annotation which has resources for it, and the others
-				are left as they are; <b>---</b> means that no language is chosen.
-			</p>
-
-			<p>
-				Each annotation has its own choice of language as well, in its line (step 3). When the
-				annotations you selected do not all have the same, this list says <b>MIX</b>.
-			</p>
-
-		</section>
-
-		<section class="subssection">
-		<h3>3. Select and configure annotations</h3>
-
-			<p>
-				The third step has one button per type of annotation:
-			</p>
-
-			<ul>
-				<li><b>STANDALONE</b> -- an annotation of one input file;</li>
-				<li><b>SPEAKER</b> -- an annotation of two input files of the same speaker;</li>
-				<li><b>INTERACTION</b> -- an annotation of two input files of two different
-					speakers.</li>
-			</ul>
-
-			<p>
-				A mark stands before the name of a type which holds no selected annotation. Click a
-				button: the annotations of that type take the body, one under the other. Here are
-				three of them, the first one selected:
-			</p>
-
-			    <section class="annotate-annotations" aria-hidden="true">
-			        <ul>
-			            <li>
-			                <div class="flex-panel">
-			                    <div class="flex-item width_25">
-			                        <p class="annotate-ann-name">
-			                            <label class="switch">
-			                                <input tabindex="-1" type="checkbox" role="switch" value="True" checked />
-			                                <span class="switch-slider switch-no-text round"></span>
-			                            </label>
-			                            <label>Text Normalization</label>
-			                        </p>
-			                        <p>
-			                            <button tabindex="-1" type="submit" value="annotate_options_textnorm" class="text-reveal-button" data-icon="parameters">
-			                                <span>Configure...</span>
-			                            </button>
-			                        </p>
-			                    </div>
-			                    <div class="flex-item width_10">
-			                        <a tabindex="-1" href="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" class="icon-button" data-icon="external-link" aria-label="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" title="http://link.springer.com/chapter/10.1007/978-3-319-08958-4_42" target="_blank" rel="noopener"></a>
-			                        <a tabindex="-1" href="https://ieeexplore.ieee.org/document/7357891" class="icon-button" data-icon="external-link" aria-label="https://ieeexplore.ieee.org/document/7357891" title="https://ieeexplore.ieee.org/document/7357891" target="_blank" rel="noopener"></a>
-			                    </div>
-			                    <div class="flex-item width_10">
-			                        <select tabindex="-1" aria-label="Language of Text Normalization">
-			                            <option value="---">---</option>
-			                            <option value="eng">eng</option>
-			                            <option value="fra" selected>fra</option>
-			                            <option value="ita">ita</option>
-			                        </select>
-			                    </div>
-			                    <div class="flex-item width_45">
-			                        <p>Converts orthography of transcribed IPUs into a normalized tokenized form: word segmented, numerals converted into words, expanded abbreviations, punctuation removed, etc. Produces the IPUs with normalized tokens.</p>
-			                        <dl class="annotate-ann-precision">
-			                            <dt>Required files</dt>
-			                            <dd>annotated file</dd>
-			                        </dl>
-			                    </div>
-			                </div>
-			            </li>
-			            <li>
-			                <div class="flex-panel">
-			                    <div class="flex-item width_25">
-			                        <p class="annotate-ann-name">
-			                            <label class="switch">
-			                                <input tabindex="-1" type="checkbox" role="switch" value="True" />
-			                                <span class="switch-slider switch-no-text round"></span>
-			                            </label>
-			                            <label>Phonetization</label>
-			                        </p>
-			                        <p>
-			                            <button tabindex="-1" type="submit" value="annotate_options_phonetize" class="text-reveal-button" data-icon="parameters">
-			                                <span>Configure...</span>
-			                            </button>
-			                        </p>
-			                    </div>
-			                    <div class="flex-item width_10">
-			                        <a tabindex="-1" href="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" class="icon-button" data-icon="file" aria-label="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" title="http://lrec-conf.org/proceedings/lrec2012/pdf/1122_Paper.pdf" target="_blank" rel="noopener"></a>
-			                        <a tabindex="-1" href="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" class="icon-button" data-icon="external-link" aria-label="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" title="http://link.springer.com/chapter/10.1007%2F978-3-319-43808-5_30" target="_blank" rel="noopener"></a>
-			                    </div>
-			                    <div class="flex-item width_10">
-			                        <select tabindex="-1" aria-label="Language of Phonetization">
-			                            <option value="---" selected>---</option>
-			                            <option value="eng">eng</option>
-			                            <option value="fra">fra</option>
-			                            <option value="ita">ita</option>
-			                        </select>
-			                    </div>
-			                    <div class="flex-item width_45">
-			                        <p>Converts a tokenized text into phonetic signs from a pronunciation dictionary. Produces the IPUs with a grammar of phonemes.</p>
-			                        <dl class="annotate-ann-precision">
-			                            <dt>Required files</dt>
-			                            <dd>annotated file</dd>
-			                            <dt>Required annotation</dt>
-			                            <dd>Text Normalization</dd>
-			                        </dl>
-			                    </div>
-			                </div>
-			            </li>
-			            <li>
-			                <div class="flex-panel">
-			                    <div class="flex-item width_25">
-			                        <p class="annotate-ann-name">
-			                            <label class="switch">
-			                                <input tabindex="-1" type="checkbox" role="switch" value="True" disabled />
-			                                <span class="switch-slider switch-no-text round"></span>
-			                            </label>
-			                            <label>Face Detection</label>
-			                        </p>
-			                        <p>
-			                            <button tabindex="-1" type="submit" value="annotate_options_facedetect" class="text-reveal-button" data-icon="parameters" disabled>
-			                                <span>Configure...</span>
-			                            </button>
-			                        </p>
-			                    </div>
-			                    <div class="flex-item width_10">
-			                        <p class="annotate-ann-devel">
-			                            <progress value="70" max="100" aria-label="Development"></progress>
-			                            <span>70%</span>
-			                        </p>
-			                    </div>
-			                    <div class="flex-item width_10"></div>
-			                    <div class="flex-item width_45">
-			                        <p>Not installed on this machine. Detect faces on an image or a video combining results of several methods depending on the models you choose. Two different types of models are available: the ones based on Artificial Neural Networks (ANN) and the other one based on Haar cascade classifiers. Produces an image or a video and an annotated file with coordinates of the detected faces.</p>
-			                        <p class="annotate-missing">:ERROR 0520: Feature video is not enabled; its installation should be processed first.</p>
-			                    </div>
-			                </div>
-			            </li>
-			        </ul>
-			    </section>
-
-			<p>
-				Each annotation is one line:
-			</p>
-
-			<ul>
-				<li>The <b>switch</b> before its name selects it. Click the switch or the name: both do
-					the same thing.</li>
-				<li><b>Configure...</b> opens its options, in a window of their own. What you apply
-					there is kept for that annotation; when you leave without applying, its options stay
-					what they were.</li>
-				<li>The drawings after the name lead to the articles which describe the annotation.
-					Each one opens in a new tab of your browser, and this page stays where it is. The
-					drawing of a sheet is a document, the other one a web page.</li>
-				<li>An annotation which has no article shows a bar instead: how far its development
-					has gone.</li>
-				<li>The list after them chooses the language of that annotation, when it has resources
-					for languages.</li>
-				<li>Then comes its description, followed in italics by what it requires:
-					<b>Required files</b>, the kinds of file it reads -- audio, video, image, annotated
-					file, measure file; <b>Required annotation</b>, the annotation whose results it
-					reads.</li>
-			</ul>
-
-			<p class="abstract">
-				Selecting an annotation selects no other. The phonetization requires the text
-				normalization: select both, or give the files the text normalization already wrote --
-				you may have corrected them by hand.
-			</p>
-
-			<p>
-				An annotation which cannot be performed on your computer is shown all the same, and
-				nothing of it can be set: its switch and its button do not answer. Its description
-				begins with <b>Not installed on this machine.</b>, and a line, in the color of the
-				errors, says why -- for instance, a feature of SPPAS which has to be installed first.
-			</p>
-
-			<p>
-				<b>Back</b>, at the top of the panel, brings you back to the six steps. What you
-				selected is kept, and the button of a type which holds a selected annotation no longer
-				carries the mark.
-			</p>
-
-		</section>
-
-		<section class="subssection">
-		<h3>4. Add files</h3>
-
-			<p>
-				The fourth step says how many files are selected, and <b>Choose the files</b> opens the
-				panel where you give them. Give every file the annotations you selected require: the
-				sound and its transcription, for instance. What this panel shows depends on where SPPAS
-				runs.
-			</p>
-
-			<h4>SPPAS on your computer</h4>
-
-				<p>
-					Your files are already within reach, so nothing is sent anywhere. Click
-					<b>Select files</b> and SPPAS opens its own window to choose them, among the files
-					of your computer:
-				</p>
-
-				    <section aria-label="Files" aria-hidden="true">
-				        <div>
-				            <div class="dropzone">
-				                <button tabindex="-1" type="submit" value="">Select files</button>
-				                <div role="status" hidden>
-				                    <p>Waiting for the files in the selection window...</p>
-				                    <progress></progress>
-				                </div>
-				                <ul class="cards-panel"></ul>
-				            </div>
-				        </div>
-				    </section>
-
-				<p>
-					As long as that window is open, the page says <b>Waiting for the files in the
-					selection window...</b> and the button does not answer: one window at a time. The
-					files you chose are then listed under the button.
-				</p>
-
-			<h4>SPPAS on the web</h4>
-
-				<p>
-					<b>Not programmed yet.</b> SPPAS on the web does not annotate files yet. This
-					part will say how your files are sent to it.
-				</p>
-
-			<p>
-				<b>Back</b>, at the top of the panel, brings you back to the six steps, and the fourth
-				one says how many files are selected.
-			</p>
-
-		</section>
-
-		<section class="subssection">
-		<h3>5. Perform the annotations</h3>
-
-			<p>
-				<b>Create -merge files</b>, when it is checked, adds one file per recording: its name
-				ends with <b>-merge</b>, and it gathers all the annotated files of that recording into
-				one.
-			</p>
-
-			<p>
-				<b>Let's go!</b> performs the annotations. It does not answer while no annotation is
-				selected, and the page says so under it: <b>No annotation is selected.</b> When no file
-				is selected, the page says <b>No file is selected.</b> and nothing is started.
-			</p>
-
-		</section>
-
-		<section class="subssection">
-		<h3>6. Read the procedure outcome report</h3>
-
-			<p>
-				<b>Show report</b> shows the report which is checked in the right panel, in place of
-				the six steps. While none is checked, it does not answer, and the page says so under
-				it: <b>No report is checked.</b>
-			</p>
-
-		</section>
-
-	</section>
-
-
-	<!-- ----------------------------------------------------------- -->
-	<!-- 1.4 -->
-	<!-- ----------------------------------------------------------- -->
-
-	<section class="ssection">
-	<h2>The reports</h2>
-
 		<p>
-			Each time annotations are performed, SPPAS writes a report: what was done to each file.
-			Where the reports are kept depends on where SPPAS runs.
-		</p>
-
-		<section class="subssection">
-		<h3>SPPAS on your computer</h3>
-
-			<p>
-				The right panel, titled <b>Reports:</b>, lists the reports which are kept, the last one
-				written first:
-			</p>
-
-			    <section class="width_30" aria-hidden="true">
-			        <p>
-			            <button tabindex="-1" type="submit" value="annotate_delete_checked" data-icon="delete-checked">
-			                <span>Del checked</span>
-			            </button>
-			            <button tabindex="-1" type="submit" value="annotate_delete_unchecked" data-icon="delete-unchecked">
-			                <span>Del all</span>
-			            </button>
-			        </p>
-			        <ul class="annotate-reports" role="radiogroup">
-			            <li>
-			                <input tabindex="-1" type="radio" value="sppas_report_2026-11-24_50222_0001.txt" checked />
-			                <label>sppas_report_2026-11-24_50222_0001.txt</label>
-			            </li>
-			            <li>
-			                <input tabindex="-1" type="radio" value="sppas_report_2026-11-17_48107_0001.txt" />
-			                <label>sppas_report_2026-11-17_48107_0001.txt</label>
-			            </li>
-			        </ul>
-			    </section>
-
-			<p>
-				Check one, then click <b>Show report</b>, in the sixth step. <b>Del checked</b> deletes
-				the checked report. <b>Del all</b> deletes every other one: the checked report is kept.
-				A report which could not be deleted is said, with the reason.
-			</p>
-
-		</section>
-
-		<section class="subssection">
-		<h3>SPPAS on the web</h3>
-
-			<p>
-				<b>Not programmed yet.</b> This part will say where the report of the annotations
-				performed on the web is to be read, and how it is kept.
-			</p>
-
-		</section>
-
-	</section>
-
-
-	<!-- ----------------------------------------------------------- -->
-	<!-- 1.5 -->
-	<!-- ----------------------------------------------------------- -->
-
-	<section class="ssection">
-	<h2>Performing, and reading what happened</h2>
-
-		<p>
-			Click <b>Let's go!</b>. The panel of the report takes the body: the name of the
-			annotation being performed, and a bar which shows how far it has gone. Under them, the
-			report is folded; unfold it to read it as it is written:
+			Under it, the name of the annotation being performed, and a bar which shows how far
+			it has gone. Under them, the report is folded: click <b>Report file:</b> and its name
+			to read what is already written.
 		</p>
 
 		    <section aria-hidden="true">
+		        <div class="annotate-head">
+		            <button tabindex="-1" type="submit" value="annotate_steps" data-icon="arrow-up" aria-disabled="true">
+		                <span>Back</span>
+		            </button>
+		            <h3>Procedure outcome report</h3>
+		        </div>
 		        <section>
+		            <h3>Text Normalization</h3>
 		            <label>Progress:</label>
 		            <progress max="100" value="40"></progress>
+		            <p></p>
 		        </section>
 		        <details>
 		            <summary tabindex="-1">Report file: sppas_report_2026-11-24_50222_0001.txt</summary>
@@ -572,16 +565,33 @@
 		    </section>
 
 		<p>
-			While the annotations run, nothing else can be started: <b>Back</b> does not answer, and
-			the page says so if you ask for it. Let them finish.
+			When they end, the whole report is shown, and under it a table of the results.
+			<b>Back</b> is then available: it brings you back to the home page to
+			annotate other files with the same choices, and the list of files is emptied.
 		</p>
 
 		<p>
-			When they end, the report is shown in full, and under it a table titled
-			<b>Results</b>:
+			The report has one part per annotation, with its name. Each line of a part names a
+			file, followed by what became of it -- <b>OK</b>, <b>WARNING</b>, <b>ERROR</b>,
+			<b>INFO</b> or <b>IGNORED</b> -- and, when there is one, the message of the
+			annotation.
+		</p>
+
+		<p>
+			The table has one line per recording. <b>Root</b> is the name the files of that
+			recording share, without their extension. <b>Status</b> shows the icon of yes when
+			the annotations produced at least one file for it, and the icon of no when they
+			produced none: the report says why. <b>Result</b> gives the names of the files
+			produced.
 		</p>
 
 		    <section aria-hidden="true">
+		        <div class="annotate-head">
+		            <button tabindex="-1" type="submit" value="annotate_steps" data-icon="arrow-up">
+		                <span>Back</span>
+		            </button>
+		            <h3>Procedure outcome report</h3>
+		        </div>
 		        <p>Report file: sppas_report_2026-11-24_50222_0001.txt</p>
 		        <pre class="annotate-report">
 <code>-------------------------------------------------------------------------------
@@ -636,30 +646,12 @@
 		        </section>
 		    </section>
 
-		<p>
-			The report holds one line per file and per annotation. The mark at the head of a line
-			says what became of that file, in its own color; a file which was ignored keeps the
-			color of the text.
-		</p>
-
-		<p>
-			The table holds one line per root: the name the files of one recording share, without
-			their extension. Its status is one of:
-		</p>
-
-		<ul>
-			<li><b>written</b> -- the annotations produced at least one file, and the line names
-				them;</li>
-			<li><b>refused</b> -- they produced none: the report says why.</li>
-		</ul>
-
 		<section class="subssection">
 		<h3>SPPAS on your computer</h3>
 
 			<p>
-				Each file was written in the folder of the files it was made from. The table names it,
-				and that is all it has to do: the file is already among your own files, and you open
-				it where you work.
+				Each new file was written in the folder of the files it was made from, next to
+				them: open it where you usually work.
 			</p>
 
 		</section>
@@ -668,23 +660,138 @@
 		<h3>SPPAS on the web</h3>
 
 			<p>
-				<b>Not programmed yet.</b> This part will say how the files the annotations produced
-				are brought back to your computer, one by one or all at once.
+				<b>Not programmed yet.</b> This part will say how to bring the new files back to
+				your computer, one by one or all at once.
 			</p>
 
 		</section>
 
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Read a previous report, or delete reports</h2>
+
 		<p>
-			<b>Back</b>, at the top of the panel, is for annotating other files with the same choices:
-			the files are emptied, and your choices are kept. Use <b>Reset</b>, under the six steps,
-			to take the page back to what it was when it opened.
+			Each time annotations are performed, SPPAS writes a report and keeps it. Where it is
+			kept depends on where SPPAS runs.
 		</p>
 
-		<p class="abstract">
-			If something prevents the annotations from being performed, the page says <b>The
-			annotations could not be performed.</b> The reason is written in the log of SPPAS, for
-			whoever runs it.
+		<section class="subssection">
+		<h3>SPPAS on your computer</h3>
+
+			<p>
+				The reports are listed on the right of the home page, the last one first.
+			</p>
+
+			<p>
+				Check a report with the round button before its name, then click <b>Show
+				report</b>, at step 6, to read it again. <b>Del checked</b> deletes the checked
+				report. <b>Del all</b> deletes every report which is not checked: all of them when
+				none is.
+			</p>
+
+			    <section class="width_30" aria-hidden="true">
+			        <h3>Reports:</h3>
+			        <p>
+			            <button tabindex="-1" type="submit" value="annotate_delete_checked" data-icon="delete-checked">
+			                <span>Del checked</span>
+			            </button>
+			            <button tabindex="-1" type="submit" value="annotate_delete_unchecked" data-icon="delete-unchecked">
+			                <span>Del all</span>
+			            </button>
+			        </p>
+			        <ul class="annotate-reports" role="radiogroup">
+			            <li>
+			                <input tabindex="-1" type="radio" value="sppas_report_2026-11-24_50222_0001.txt" checked />
+			                <label>sppas_report_2026-11-24_50222_0001.txt</label>
+			            </li>
+			            <li>
+			                <input tabindex="-1" type="radio" value="sppas_report_2026-11-17_48107_0001.txt" />
+			                <label>sppas_report_2026-11-17_48107_0001.txt</label>
+			            </li>
+			        </ul>
+			    </section>
+
+		</section>
+
+		<section class="subssection">
+		<h3>SPPAS on the web</h3>
+
+			<p>
+				<b>Not programmed yet.</b> This part will say where to read the report of the
+				annotations performed on the web, and how long it is kept.
+			</p>
+
+		</section>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.5 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>See the steps or the reports alone</h2>
+
+		<p>
+			Above the steps and the reports, three buttons choose what the home page shows.
 		</p>
+
+		<p>
+			<b>Left</b> shows the six steps alone, <b>Right</b> the reports alone, and <b>Both</b>
+			shows them side by side, as when the page opens. On a narrow window, one at a time is
+			easier to read. This changes only what you see.
+		</p>
+
+		    <section class="toggle-group center" role="radiogroup" aria-label="Panels to display" aria-hidden="true">
+		        <label class="menuitem">
+		            <input tabindex="-1" type="radio" value="left" />
+		            <span>Left</span>
+		        </label>
+		        <label class="menuitem">
+		            <input tabindex="-1" type="radio" value="both" checked />
+		            <span>Both</span>
+		        </label>
+		        <label class="menuitem">
+		            <input tabindex="-1" type="radio" value="right" />
+		            <span>Right</span>
+		        </label>
+		    </section>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.6 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>When something does not work</h2>
+
+		<ul>
+			<li><b>An annotation cannot be selected.</b> It is not installed on your computer:
+				the reason is shown in red on its line.</li>
+			<li><b>Let's go! is inactive.</b> No annotation is selected.</li>
+			<li><b>The page says No file is selected.</b> Give your files at step 4.</li>
+			<li><b>Show report is inactive.</b> No report is checked, on the right of the home
+				page.</li>
+			<li><b>The page says The annotations are running: nothing else can be started until
+				they end.</b> Wait for the end of the annotations.</li>
+			<li><b>A recording is refused, in the table of the results.</b> The report says why, on
+				the lines of its files.</li>
+			<li><b>The page says that a report could not be deleted.</b> The reason follows the
+				name of the report.</li>
+			<li><b>The page says The report is not available...</b> The report could not be read;
+				the reason follows.</li>
+			<li><b>The page says The annotations could not be performed.</b> Something prevented
+				them; the reason is written in the log of SPPAS, for whoever runs it.</li>
+		</ul>
 
 	</section>
 

@@ -11,24 +11,23 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>Overview</h2>
+	<h2>What this page does for you</h2>
 
 		<p>
-			This page writes annotated files into another format. You give it the files, you say
-			which format they are to be written into, and it writes them. The files you gave are
-			never changed: each conversion writes a new file beside the one it was read from.
+			This page writes your annotated files into another format: for instance, files of
+			Praat into files of Elan. The files you give are never changed: each new file is
+			written beside the one it was made from.
 		</p>
 
 		<p>
-			The four spaces of SPPAS are here as everywhere else -- the header, the menu along the
-			left edge, the body in the middle, the footer at the bottom. The help of the Dashboard
-			describes them, and the menu buttons do the same thing here.
+			The page has three parts, one under the other, in the order you go through them: the
+			format to write into, your files, then the choices of the conversion and its
+			buttons.
 		</p>
 
 		<p>
-			The body holds three parts, one under the other: the format to write into, the files to
-			convert, then the options of the conversion with its buttons. You go through them in
-			that order. Each part is shown below as you see it on the page.
+			The header, the menu along the left edge and the footer are the same as on every page
+			of SPPAS: the help of the Dashboard describes them.
 		</p>
 
 	</section>
@@ -39,132 +38,138 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>Choosing the format to write into</h2>
-
-		<p>
-			The first part of the body is titled <b>Destination format</b>. On its left, one line
-			per format SPPAS can write, with the software which reads
-			it. Click the line of the format you want -- here, three of them, Elan being the one
-			chosen:
-		</p>
-
-		    <section class="flex-item width_50" aria-hidden="true">
-		        <table>
-		            <thead>
-		                <tr>
-		                    <th scope="col">
-		                                        Software
-		                    </th>
-		                    <th scope="col">
-		                                        Format
-		                    </th>
-		                </tr>
-		            </thead>
-		            <tbody>
-		                <tr>
-		                    <th scope="rowgroup" rowspan="1">
-		                                        Praat
-		                    </th>
-		                    <td>
-		                        <input tabindex="-1" type="radio" form="convert_form" value=".TextGrid" />
-		                        <label>
-		                                                TextGrid
-		                        </label>
-		                    </td>
-		                </tr>
-		            </tbody>
-		            <tbody>
-		                <tr>
-		                    <th scope="rowgroup" rowspan="1">
-		                                        Elan
-		                    </th>
-		                    <td>
-		                        <input tabindex="-1" type="radio" form="convert_form" value=".eaf" checked />
-		                        <label>
-		                                                eaf
-		                        </label>
-		                    </td>
-		                </tr>
-		            </tbody>
-		            <tbody>
-		                <tr>
-		                    <th scope="rowgroup" rowspan="1">
-		                    </th>
-		                    <td>
-		                        <input tabindex="-1" type="radio" form="convert_form" value=".csv" />
-		                        <label>
-		                                                csv
-		                        </label>
-		                    </td>
-		                </tr>
-		            </tbody>
-		        </table>
-		    </section>
-
-		<p>
-			Only one format is chosen at a time, and every file you gave is written into it.
-		</p>
-
-		<p>
-			On the right of the same part, SPPAS says what that format does not keep. A format is
-			not able to hold everything an annotated file may carry, and what is named here will be
-			left out of the file which is written:
-		</p>
-
-		    <section class="flex-item width_50" aria-live="polite" aria-hidden="true">
-		        <div>
-		            <p>
-		                        Not supported by this format:
-		            </p>
-		            <ul>
-		                <li>
-		                                Point
-		                </li>
-		                <li>
-		                                Overlaps
-		                </li>
-		                <li>
-		                                Vagueness
-		                </li>
-		                <li>
-		                                Alt. loc
-		                </li>
-		                <li>
-		                                Alt. tag
-		                </li>
-		                <li>
-		                                Typed tags
-		                </li>
-		                <li>
-		                                Geom. tags
-		                </li>
-		            </ul>
-		        </div>
-		    </section>
-
-		<p class="abstract">
-			Read that list before converting. What is named there is lost in the new file: the file
-			you gave still holds it, the one SPPAS writes does not.
-		</p>
+	<h2>Convert your files</h2>
 
 		<section class="subssection">
-		<h3>Comparing the formats</h3>
+		<h3>Choose the destination format</h3>
 
 			<p>
-				The button <b>Compare the formats</b>, above the formats, opens a table: one line per
-				format, one column per property -- metadata, multi tiers, gaps, overlaps, hierarchy,
-				media, and the others. Each cell says whether that format supports that property.
+				At the top of the page, on the left, are the formats SPPAS can write, grouped by the
+				software which reads them. Each format has a round button: click it,
+				or the name of the format, to choose it.
 			</p>
 
 			<p>
-				The table is wide. Under <b>Columns visibility</b>, tick only the properties you care
-				for and click <b>Apply</b>: the other columns are hidden and the table becomes
-				readable. This changes what you see, and nothing of what is written.
+				Only one format is chosen at a time, and all your files are written into it. In
+				the example, Elan is chosen:
+			</p>
+
+			    <section class="flex-item width_50" aria-hidden="true">
+			        <table>
+			            <thead>
+			                <tr>
+			                    <th scope="col">
+			                                        Software
+			                    </th>
+			                    <th scope="col">
+			                                        Format
+			                    </th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <tr>
+			                    <th scope="rowgroup" rowspan="1">
+			                                        Praat
+			                    </th>
+			                    <td>
+			                        <input tabindex="-1" type="radio" form="convert_form" value=".TextGrid" />
+			                        <label>
+			                                                TextGrid
+			                        </label>
+			                    </td>
+			                </tr>
+			            </tbody>
+			            <tbody>
+			                <tr>
+			                    <th scope="rowgroup" rowspan="1">
+			                                        Elan
+			                    </th>
+			                    <td>
+			                        <input tabindex="-1" type="radio" form="convert_form" value=".eaf" checked />
+			                        <label>
+			                                                eaf
+			                        </label>
+			                    </td>
+			                </tr>
+			            </tbody>
+			            <tbody>
+			                <tr>
+			                    <th scope="rowgroup" rowspan="1">
+			                    </th>
+			                    <td>
+			                        <input tabindex="-1" type="radio" form="convert_form" value=".csv" />
+			                        <label>
+			                                                csv
+			                        </label>
+			                    </td>
+			                </tr>
+			            </tbody>
+			        </table>
+			    </section>
+
+			<p>
+				On the right, when the chosen format cannot hold everything an annotated file may
+				carry, SPPAS says what it does not keep, under <b>Not supported by this
+				format:</b>. Nothing is shown there when the format keeps everything.
+			</p>
+
+			<p class="abstract">
+				Read that list before converting. What is named there is lost in the new file: the
+				file you gave still holds it, the new one does not.
+			</p>
+
+			    <section class="flex-item width_50" aria-live="polite" aria-hidden="true">
+			        <div>
+			            <p>
+			                        Not supported by this format:
+			            </p>
+			            <ul>
+			                <li>
+			                                Point
+			                </li>
+			                <li>
+			                                Overlaps
+			                </li>
+			                <li>
+			                                Vagueness
+			                </li>
+			                <li>
+			                                Alt. loc
+			                </li>
+			                <li>
+			                                Alt. tag
+			                </li>
+			                <li>
+			                                Typed tags
+			                </li>
+			                <li>
+			                                Geom. tags
+			                </li>
+			            </ul>
+			        </div>
+			    </section>
+
+		</section>
+
+		<section class="subssection">
+		<h3>Compare the formats</h3>
+
+			<p>
+				The button <b>Compare the formats</b>, above the formats, opens a window with a
+				table: one line per format, one column per
+				property. Each cell says whether that format supports that property:
+				<b>supported</b> or <b>not supported</b>.
+			</p>
+
+			<p>
+				The table is wide. Unfold <b>Columns visibility:</b>, uncheck the properties you do
+				not care for, and click <b>Apply</b>: their columns are hidden. This changes only
+				what you see.
 			</p>
 
 			<p>
 				Here is what each property is, in the order of the columns. The same names are
-				used beside the formats, where SPPAS says what the chosen one does not keep.
+				used under <b>Not supported by this format:</b>.
 			</p>
 
 			<table>
@@ -224,30 +229,30 @@
 
 		</section>
 
-	</section>
-
-
-	<!-- ----------------------------------------------------------- -->
-	<!-- 1.3 -->
-	<!-- ----------------------------------------------------------- -->
-
-	<section class="ssection">
-	<h2>Giving the files</h2>
-
-		<p>
-			The second part of the body is where the files wait before being converted. What it
-			shows depends on where SPPAS runs: on your own computer, it reads the files where
-			they stand; on the web, you have to send them to it first.
-		</p>
-
 		<section class="subssection">
-		<h3>SPPAS on your computer</h3>
+		<h3>Add your files</h3>
 
 			<p>
-				Your files are already within reach, so nothing is sent anywhere. Click
-				<b>Select files</b> and SPPAS opens its own window to choose them, among the
-				files of your computer:
+				Under the formats, you give the files to convert. How you give them depends on
+				where SPPAS runs: on your computer, SPPAS reads your files where they are; on the
+				web, you send them to it first.
 			</p>
+
+			<h4>SPPAS on your computer</h4>
+
+				<p>
+					Your files are already on your computer, so nothing is sent anywhere. Click
+					<b>Select files</b>: SPPAS opens a window where you choose them among your
+					files. While it is open, the page says <b>Waiting for the files in the
+					selection window...</b>. That window may open behind your browser: if nothing
+					seems to happen, look for it there.
+				</p>
+
+				<p>
+					Each file you chose is then shown in a rectangle, with its name; rest the mouse
+					on the name to see where the file is. <b>Take back</b> removes the file from
+					the list: the file itself is not touched.
+				</p>
 
 			    <section aria-label="Files" aria-hidden="true">
 			        <div>
@@ -284,39 +289,50 @@
 			        </div>
 			    </section>
 
-			<p>
-				Each file you chose is one rectangle holding its name. Rest the mouse on the
-				name and the whole path is shown. The <b>Take back</b> button removes the file
-				from the list: nothing of the file itself is touched.
-			</p>
+			<h4>SPPAS on the web</h4>
 
-		</section>
+				<p>
+					Your files are on your computer and SPPAS is on the web, so you send them to
+					it. The box says <b>Select files, or drag and drop files here.</b>: drop your
+					files into it, or click <b>Browse</b> to choose them in a window of your
+					computer, several at once if you want.
+				</p>
 
-		<section class="subssection">
-		<h3>SPPAS on the web</h3>
+				<p>
+					Each file you gave is shown in a rectangle: its size in bytes, its name, an
+					icon which says where it stands -- added, sent, or converted -- and a
+					<b>Take back</b> button, which removes it from the list. A file which is
+					refused says why, under its name.
+				</p>
 
-			<p>
-				Your files are on your computer and SPPAS is on the web, so they travel to it.
-				The frame is drawn with a dashed border, and you drop the files into it:
-			</p>
+				<p>
+					When the list is the one you want, click <b>Send</b>: your files are sent to
+					SPPAS. <b>Send</b> is inactive when there is nothing to send. Under the box, a
+					sentence says how many of your files SPPAS holds.
+				</p>
 
 			    <section aria-label="Files" aria-hidden="true">
 			        <div>
-			            <input tabindex="-1" type="hidden" value="False" />
-			            <input tabindex="-1" type="hidden" value="False" />
-			            <input tabindex="-1" type="hidden" value="" />
-			            <input tabindex="-1" type="hidden" value="[[&quot;entretien-01.TextGrid&quot;, 35840]]" />
-			            <input tabindex="-1" type="hidden" value="[]" />
+			            <input type="hidden" value="False" />
+			            <input type="hidden" value="False" />
+			            <input type="hidden" value="" />
+			            <input type="hidden" value="[[&quot;entretien-01.TextGrid&quot;, 35840]]" />
+			            <input type="hidden" value="[]" />
+			            <input type="hidden" value="[]" />
 			            <div class="dropzone">
 			                <label>
 			                                Select files, or drag and drop files here.
-			                                <input tabindex="-1" type="file" multiple="multiple" />
 			                </label>
+			                <input tabindex="-1" type="file" multiple="multiple" />
+			                <button tabindex="-1" type="button" class="action-button">
+			                                Browse
+			                </button>
 			                <ul class="cards-panel">
 			                    <li>
-			                        <article class="card">
+			                        <article class="card file-added">
 			                            <div class="card-header">
-			                                <span class="file-status" data-icon="upload" role="img" aria-label="Deposited">
+			                                <span class="file-status" data-icon="add" role="img" aria-label="Added">
+			                                                                
 			                                </span>
 			                            </div>
 			                            <div class="card-body">
@@ -345,34 +361,70 @@
 			        </div>
 			    </section>
 
+		</section>
+
+		<section class="subssection">
+		<h3>Choose what happens to existing files</h3>
+
 			<p>
-				Click <b>Select files</b> and your computer opens its own window to choose them;
-				you can choose several at once. You can also drag files from a window of your
-				computer and drop them into the frame.
+				Under the files, two switches are off when the page opens. Click a switch, or its text, to turn it on or off:
+			</p>
+
+			<ul>
+				<li><b>Replace an output file that already exists.</b> Off, when the new file is
+					already there, it is left alone, and the results say it was skipped. On, the
+					existing file is overwritten by the new one: what it contained is lost.</li>
+				<li><b>Guess the format of a file whose extension is unknown.</b> Off, SPPAS reads
+					a file by its extension. On, it also looks inside a file whose extension it does
+					not know, to recognize its format.</li>
+			</ul>
+
+			    <section aria-hidden="true">
+			        <div>
+			            <p>
+			                <label class="switch">
+			                    <input tabindex="-1" type="checkbox" value="True" />
+			                    <span class="switch-slider round switch-no-text">
+			                    </span>
+			                </label>
+			                <label>
+			                                Replace an output file that already exists
+			                </label>
+			            </p>
+			            <p>
+			                <label class="switch">
+			                    <input tabindex="-1" type="checkbox" value="True" />
+			                    <span class="switch-slider round switch-no-text">
+			                    </span>
+			                </label>
+			                <label>
+			                                Guess the format of a file whose extension is unknown
+			                </label>
+			            </p>
+			            <button tabindex="-1" type="submit" class="action-button" value="convert">
+			                        Convert
+			            </button>
+			            <button tabindex="-1" type="submit" value="reset">
+			                        Reset
+			            </button>
+			        </div>
+			    </section>
+
+		</section>
+
+		<section class="subssection">
+		<h3>Convert</h3>
+
+			<p>
+				Click <b>Convert</b>. A bar shows how far the conversion has gone, and how many files have their result, out of all of them. If no file is
+				checked, the page says <b>No file is checked to be converted.</b> and nothing
+				starts.
 			</p>
 
 			<p>
-				Each file you gave is one rectangle: its size, its name, and a <b>Take back</b>
-				button, which removes it from the list before anything is sent.
-			</p>
-
-			<p class="abstract">
-				A file may be refused -- too large, or of a kind SPPAS does not take. Its
-				rectangle then says why, under the name. A refused file stays in the list so
-				that you can read the reason; take it back when you have.
-			</p>
-
-			<p>
-				Once the list is the one you want, click <b>Send</b>, at the bottom of the
-				frame. The files travel to SPPAS, and the frame is replaced by the list of what
-				it holds.
-			</p>
-
-			<p>
-				Under the frame, a sentence says how many of your files SPPAS holds:
-				<b>Files on the server: 0.</b> as long as nothing was sent. The number changes
-				once you clicked <b>Send</b>: a file which is listed in the frame and is not
-				counted there has not traveled yet, and it will not be converted.
+				<b>Reset</b> starts everything again: the destination format comes back to the one
+				of the page when it opens, the switches are off, and the files you gave are
+				forgotten.
 			</p>
 
 		</section>
@@ -381,106 +433,34 @@
 
 
 	<!-- ----------------------------------------------------------- -->
-	<!-- 1.4 -->
+	<!-- 1.3 -->
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>The two switches, and the buttons</h2>
+	<h2>See what SPPAS did, and get your new files</h2>
 
 		<p>
-			The third part of the body is titled <b>Conversion options</b>: two switches and two
-			buttons. Both switches are off when the page opens:
-		</p>
-
-		    <section aria-hidden="true">
-		        <div>
-		            <p>
-		                <label class="switch">
-		                    <input tabindex="-1" type="checkbox" value="True" />
-		                    <span class="switch-slider round switch-no-text">
-		                    </span>
-		                </label>
-		                <label>
-		                                Replace an output file that already exists
-		                </label>
-		            </p>
-		            <p>
-		                <label class="switch">
-		                    <input tabindex="-1" type="checkbox" value="True" />
-		                    <span class="switch-slider round switch-no-text">
-		                    </span>
-		                </label>
-		                <label>
-		                                Guess the format of a file whose extension is unknown
-		                </label>
-		            </p>
-		            <button tabindex="-1" type="submit" class="action-button" value="convert">
-		                        Convert
-		            </button>
-		            <button tabindex="-1" type="submit" value="reset">
-		                        Reset
-		            </button>
-		        </div>
-		    </section>
-
-		<ul>
-			<li><b>Replace an output file that already exists.</b> Off, a file whose result is
-				already there is left alone, and the conversion says it was skipped. On, the
-				existing file is overwritten by the new one: what it contained is lost, and
-				SPPAS cannot give it back.</li>
-			<li><b>Guess the format of a file whose extension is unknown.</b> Off, SPPAS reads a
-				file by its extension and refuses one it does not know. On, it looks inside the file
-				to recognize it. Use it for a file whose name says nothing of its format.</li>
-		</ul>
-
-		<p>
-			Click the switch itself, or its text: both do the same thing. <b>Reset</b> takes the
-			page back to what it was when it opened: your choices and the files you gave go
-			together.
-		</p>
-
-	</section>
-
-
-	<!-- ----------------------------------------------------------- -->
-	<!-- 1.5 -->
-	<!-- ----------------------------------------------------------- -->
-
-	<section class="ssection">
-	<h2>Converting, and reading what happened</h2>
-
-		<p>
-			Click <b>Convert</b>. A bar shows how far the conversion has gone, file after
-			file. A conversion is not undone: let it finish.
-		</p>
-
-		<p>
-			Then a table titled <b>Results</b> is shown, one line per file you gave. Each
-			line says what became of that file:
+			When the conversion ends, a table of the results is shown, with one line per file
+			you gave:
 		</p>
 
 		<ul>
-			<li><b>written</b> -- the file was converted, and the line names what it
-				produced.</li>
-			<li><b>skipped</b> -- nothing was done, because the result was already there
-				and the first switch was off.</li>
-			<li><b>refused</b> -- the file could not be converted. The line says why: an
-				unknown extension, a file which is not there, a content the format cannot
-				hold.</li>
+			<li><b>File</b> -- the name of the file you gave;</li>
+			<li><b>Status</b> -- the icon of what became of it: the one of yes when a new file
+				was written, the one of a warning when the file was skipped, the one of no when
+				it was refused;</li>
+			<li><b>Result</b> -- the name of the new file, or why there is none: <b>The output
+				file already exists.</b> for a file skipped; <b>The file could not be read.</b>
+				or <b>The file could not be written.</b> for a file refused.</li>
 		</ul>
-
-		<p>
-			What the table does with what was produced depends on where SPPAS runs.
-		</p>
 
 		<section class="subssection">
 		<h3>SPPAS on your computer</h3>
 
 			<p>
-				Each converted file was written beside the one it was made from, in the
-				same folder, under the same name with another extension. The table names
-				it, and that is all it has to do: the file is already among your own
-				files, and you open it where you work.
+				Each new file was written beside the one it was made from, in the same folder,
+				under the same name with the extension of the chosen format. It is already among
+				your files: open it where you usually work.
 			</p>
 
 			    <section aria-hidden="true">
@@ -542,7 +522,7 @@
 			                        </span>
 			                    </td>
 			                    <td>
-			                                        Unknown extension for filename notes.txt.
+			                                        The file could not be read.
 			                    </td>
 			                </tr>
 			            </tbody>
@@ -554,26 +534,16 @@
 			        </div>
 			    </section>
 
-			<p>
-				There is nothing to download, and nothing expires: what was written is
-				yours and stays. <b>skipped</b> means that a file of that name was already
-				in your folder, and SPPAS did not write over it.
-			</p>
-
-			<p class="abstract">
-				<b>Start over</b> empties the list and the results of this page. It does
-				not touch your folder: the files which were written stay where they are.
-			</p>
-
 		</section>
 
 		<section class="subssection">
 		<h3>SPPAS on the web</h3>
 
 			<p>
-				The converted files were written where SPPAS runs, beside the copies you
-				sent. The name of each one is a link: click it and your browser keeps the
-				file under that name.
+				The new files were written on the web, where SPPAS runs. To get one, click its
+				name: your browser saves it under that name. To get them all at once, click
+				<b>Download all the files</b>, under the table: your browser saves one archive
+				which holds them all.
 			</p>
 
 			    <section aria-hidden="true">
@@ -637,7 +607,7 @@
 			                        </span>
 			                    </td>
 			                    <td>
-			                                        Unknown extension for filename notes.txt.
+			                                        The file could not be read.
 			                    </td>
 			                </tr>
 			            </tbody>
@@ -652,25 +622,52 @@
 			        </div>
 			    </section>
 
-			<p>
-				Above the table, <b>Download all the files</b> brings them back in one
-				archive, which saves clicking each of them. Both are reached for as long
-				as what you sent is kept, and no longer: take them before you leave.
-			</p>
-
 		</section>
 
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Convert other files</h2>
+
 		<p>
-			The <b>Journal</b>, which the menu opens, holds the same account in full. Read
-			it when a line of the table is not enough.
+			To convert other files with the same choices, click <b>Start over</b>, under the
+			table: the destination format and the switches are kept, and the list of files and the
+			results are emptied. On your computer, the files which were written stay where they
+			are.
 		</p>
 
 		<p>
-			<b>Start over</b>, under the table, is for converting another set of files into
-			the same format: the files and the results are emptied, and your choices are
-			kept. Use <b>Reset</b> instead to take the page back to what it was when it
-			opened.
+			To start everything again, click <b>Reset</b>.
 		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.5 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>When something does not work</h2>
+
+		<ul>
+			<li><b>The page says No file is checked to be converted.</b> Add your files first; on
+				the web, send them.</li>
+			<li><b>A file is skipped: The output file already exists.</b> Turn on <b>Replace an
+				output file that already exists</b> to write over it.</li>
+			<li><b>A file is refused: The file could not be read.</b> If its extension is not the
+				one of its format, turn on <b>Guess the format of a file whose extension is
+				unknown</b>.</li>
+			<li><b>A file is refused: The file could not be written.</b> The new file could not be
+				written in the chosen format.</li>
+			<li><b>A file is refused when you give it, on the web.</b> Its rectangle says why,
+				under its name; take it back.</li>
+		</ul>
 
 	</section>
 
