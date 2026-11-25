@@ -478,7 +478,7 @@
         		                <input tabindex="-1" type="checkbox" value="True" />
         		                <label>Create -merge files</label>
         		            </p>
-        		            <button tabindex="-1" type="submit" value="annotate_perform" class="action-button width_full" aria-disabled="true" data-icon="play">
+        		            <button tabindex="-1" type="submit" value="annotate_perform" class="action-button width_full" disabled data-icon="play">
         		                <span>Let's go!</span>
         		            </button>
         		            <p class="annotate-missing">No annotation is selected.</p>
@@ -503,7 +503,7 @@
 		            <li class="enumerate-cards-item">
         		        <p>Read the procedure outcome report</p>
         		        <div role="group">
-        		            <button tabindex="-1" type="submit" value="annotate_show" class="action-button width_full" aria-disabled="true" data-icon="file">
+        		            <button tabindex="-1" type="submit" value="annotate_show" class="action-button width_full" disabled data-icon="file">
         		                <span>Show report</span>
         		            </button>
         		            <p class="annotate-missing">No report is checked.</p>
@@ -541,7 +541,7 @@
 
 		    <section aria-hidden="true">
 		        <div class="annotate-head">
-		            <button tabindex="-1" type="submit" value="annotate_steps" data-icon="arrow-up" aria-disabled="true">
+		            <button tabindex="-1" type="submit" value="annotate_steps" data-icon="arrow-up" disabled>
 		                <span>Back</span>
 		            </button>
 		            <h3>Procedure outcome report</h3>
@@ -1494,6 +1494,9 @@
 				their values, and what was fixed is kept or given up.</li>
 				<li>[310] The system keeps the decisions taken for as long as the user stays
 				on the page.</li>
+				<li>[311] Online, the annotations of the types SPEAKER and INTERACTION
+				cannot be performed: the system disables the buttons of these two
+				types.</li>
 				</ul>
 
 				<h5>[400] Batch</h5>
@@ -2456,7 +2459,8 @@
 			  <tr><td>C23</td><td>Where a produced file is reached is given by the provision of files, and shown by this application.</td><td>[802], T09</td></tr>
 			  <tr><td>C24</td><td>Nothing of what was decided is held on the server between two requests. What is held is the run which is going or the last one which ended, with its results, and the manager of the provision of files.</td><td>RO9</td></tr>
 			  <tr><td>C25</td><td>The results have one line per root of the batch, whatever each annotation did, and list the files produced under it.</td><td>[801], T09</td></tr>
-			  <tr><td>C25</td><td>Which panel the page holds is the one the last request asked for: it holds no other, and carries none between two requests.</td><td>[1006], the navigation</td></tr>
+			  <tr><td>C26</td><td>Which panel the page holds is the one the last request asked for: it holds no other, and carries none between two requests.</td><td>[1006], the navigation</td></tr>
+			  <tr><td>C27</td><td>Online, the annotations of the types SPEAKER and INTERACTION cannot be performed: the buttons of these two types are disabled.</td><td>[311]</td></tr>
 			</tbody>
 			</table>
 
@@ -2895,7 +2899,8 @@
 			title. Step 1: one choice of extension per
 			kind of output file. Step 2: the choice of the language of the page. Step 3: one
 			button per type, which shows the list of that type and says whether it holds a
-			selected annotation &mdash; an icon whose state has a text alternative. Step 4:
+			selected annotation &mdash; an icon whose state has a text alternative; online,
+			the buttons of the types SPEAKER and INTERACTION are disabled. Step 4:
 			the container of the provision of files. Step 5: the merge option, and the
 			button which performs the annotations; that button is disabled as long as no
 			annotation is selected. Step 6: the button which shows
@@ -3421,7 +3426,7 @@
 			<tbody>
 			  <tr><td>Handle a request</td><td>pre: called once for that request. post: the record is rebuilt from what was transmitted; the language transmitted for an annotation is kept only if that annotation has it, and a disabled annotation is never selected; the task is identified, its preconditions are read; the treatment ran, or none ran and what is missing or stands in the way is stated. C3, C5, C7</td></tr>
 			  <tr><td>Have what is missing said again</td><td>pre: the request was handled, and the provision of files says the workspace is ready. post: what is still missing is put in the dialog of information when the view is populated</td></tr>
-			  <tr><td>Populate the view</td><td>pre: the request was handled. post: the view has the record; locally it holds the reports, online it holds none. C22</td></tr>
+			  <tr><td>Populate the view</td><td>pre: the request was handled. post: the view has the record; locally it holds the reports, online it holds none, and it holds the types SPEAKER and INTERACTION as disabled. C22, C27</td></tr>
 			</tbody>
 			</table>
 
@@ -3431,7 +3436,7 @@
 			<tbody>
 			  <tr><td>Populate the tree</td><td>pre: a record. post: a tree holding what that record says and nothing more. Every field of a decision belongs to the form of the run, wherever it stands in the page. C10</td></tr>
 			  <tr><td>Give the section and what was said</td><td>pre: the tree was populated. post: the section of this application as it was built, and the text put in the dialog of information, empty if nothing was</td></tr>
-			  <tr><td><code>ActionAnnotatePanel</code></td><td>post: the six steps, in their order and with their titles; one choice per kind of output file, the extension which holds selected; the choice of the language of the page; one button per type, saying whether it holds a selected annotation; the merge option; the button which performs, disabled when no annotation is selected; the button which shows the checked report, disabled when none is; the Reset button</td></tr>
+			  <tr><td><code>ActionAnnotatePanel</code></td><td>post: the six steps, in their order and with their titles; one choice per kind of output file, the extension which holds selected; the choice of the language of the page; one button per type, saying whether it holds a selected annotation, disabled for a type the view holds as disabled; the merge option; the button which performs, disabled when no annotation is selected; the button which shows the checked report, disabled when none is; the Reset button</td></tr>
 			  <tr><td><code>ReportsPanel</code></td><td>post: locally, one radio button per report, at most one checked, and the two buttons which delete; online, collapsed and empty. C20, C22</td></tr>
 			  <tr><td><code>AnnotationsPanel</code></td><td>post: the button which comes back, the title naming the type, and one <code>EnableAnnotation</code> per annotation of that type, in the order it was given them</td></tr>
 			  <tr><td><code>FilesAnnotatePanel</code></td><td>post: the button which comes back, the title, and the container the provision of files gives, placed as that service wrote it and altered in nothing. C10</td></tr>
@@ -3487,11 +3492,12 @@
 			  <tr><td>C23</td><td><code>ModelProvision</code></td></tr>
 			  <tr><td>C24</td><td><code>AnnotateRecord</code>, and <code>AnnotateController</code>, which keeps nothing after the request</td></tr>
 			  <tr><td>C25</td><td><code>ModelRun</code>, keeping the results; <code>ResultsPanel</code>, showing them</td></tr>
-			  <tr><td>C25</td><td><code>AnnotateView</code>, which writes the panel the request named, and the page, which puts it in place of the one it held</td></tr>
+			  <tr><td>C26</td><td><code>AnnotateView</code>, which writes the panel the request named, and the page, which puts it in place of the one it held</td></tr>
+			  <tr><td>C27</td><td><code>AnnotateController</code>, which gives the view the types SPEAKER and INTERACTION as disabled when the server is not the local one; <code>ActionAnnotatePanel</code>, which disables their buttons</td></tr>
 			</tbody>
 			</table>
 
-			<p><b>C4, C10 and C25 are held by the page.</b> They are what [1005] costs: a
+			<p><b>C4, C10 and C26 are held by the page.</b> They are what [1005] costs: a
 			decision which makes no request is a decision the server does not see until
 			the run is asked for, and what it then reads is checked again &mdash;
 			C3, C6 and C7 are that check.</p>
@@ -3606,6 +3612,8 @@
 			  <tr><td>TE46</td><td>In the list of a type, every annotation which is installed says the files it reads after its description, each name once</td><td>[307]</td></tr>
 			  <tr><td>TE47</td><td>Why an annotation is not installed is what the error of the instantiation of its class says: the feature which is not enabled; nothing for one which is installed</td><td>C7</td></tr>
 			  <tr><td>TE48</td><td>In the list of a type, an annotation which is not installed says why in place of what it requires; the others say what they require</td><td>C7</td></tr>
+			  <tr><td>TE49</td><td>Online, once the annotations have been performed, the page shows the report of the run, with the link which downloads it, and the archive holds it with the produced files</td><td>[601], [605], [803], C22</td></tr>
+			  <tr><td>TE50</td><td>Online, the buttons of the types SPEAKER and INTERACTION are disabled, and the one of the type STANDALONE is not; locally, no button of a type is disabled</td><td>[311], C27</td></tr>
 			</tbody>
 			</table>
 

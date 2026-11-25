@@ -132,7 +132,7 @@ def append_head(panel: TagNode, title_id: str, title: str, available: bool = Tru
     _attributes = {"type": "submit", "form": "annotate_form", "name": "event_bake",
                    "value": "annotate_steps", "data-icon": "arrow-up"}
     if available is False:
-        _attributes["aria-disabled"] = "true"
+        _attributes["disabled"] = None
     _back = TagNode(_head.identifier, None, "button", attributes=_attributes)
     _head.append_child(_back)
     _back.append_child(HTMLNode(_back.identifier, None, "span", value=MSG_BACK))
@@ -150,8 +150,8 @@ class swappActionAnnotatePanel(TagNode):
     """
 
     def __init__(self, parent: str, kinds: dict, extensions: dict, languages: list, lang: str,
-                 types: list, holding: list, files: int, merge: bool, selected: list, report: str,
-                 beside: bool):
+                 types: list, holding: list, disabled_types: list, files: int, merge: bool, selected: list,
+                 report: str, beside: bool):
         """Create the panel of the steps.
 
         :param parent: (str) Identifier of the node the panel is appended to
@@ -161,6 +161,7 @@ class swappActionAnnotatePanel(TagNode):
         :param lang: (str) The language chosen for the page, empty if none
         :param types: (list of str) The types of the annotations
         :param holding: (list of str) The types which hold a selected annotation
+        :param disabled_types: (list of str) The types whose annotations cannot be performed
         :param files: (int) Number of files selected
         :param merge: (bool) The merge option is checked
         :param selected: (list of str) The keys of the selected annotations
@@ -179,7 +180,7 @@ class swappActionAnnotatePanel(TagNode):
         self.append_child(_steps)
         swappActionAnnotatePanel.__append_formats(_steps, kinds, extensions)
         swappActionAnnotatePanel.__append_languages(_steps, languages, lang)
-        swappActionAnnotatePanel.__append_types(_steps, types, holding)
+        swappActionAnnotatePanel.__append_types(_steps, types, holding, disabled_types)
         swappActionAnnotatePanel.__append_files(_steps, files)
         swappActionAnnotatePanel.__append_run(_steps, merge, len(selected) > 0)
         swappActionAnnotatePanel.__append_report(_steps, len(report) > 0)
@@ -291,18 +292,20 @@ class swappActionAnnotatePanel(TagNode):
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def __append_types(steps: TagNode, types: list, holding: list) -> None:
-        """Step 3: one button per type, saying when it holds no selected annotation."""
+    def __append_types(steps: TagNode, types: list, holding: list, disabled_types: list) -> None:
+        """Step 3: one button per type, saying when it holds no selected annotation, and disabled when its annotations cannot be performed."""
         _item = swappActionAnnotatePanel.__append_step(steps, 3, MSG_STEP_ANNCHOICE)
         _group = TagNode(_item.identifier, None, "div",
                          attributes={"role": "group", "aria-labelledby": "annotate_step3_h"})
         _item.append_child(_group)
 
         for _type in types:
-            _button = TagNode(_group.identifier, None, "button",
-                              attributes={"type": "submit", "form": "annotate_form", "name": "event_bake",
-                                          "value": "annotate_annotations_" + _type, "class": "width_full",
-                                          "id": "annotate_type_" + _type})
+            _attributes = {"type": "submit", "form": "annotate_form", "name": "event_bake",
+                           "value": "annotate_annotations_" + _type, "class": "width_full",
+                           "id": "annotate_type_" + _type}
+            if _type in disabled_types:
+                _attributes["disabled"] = None
+            _button = TagNode(_group.identifier, None, "button", attributes=_attributes)
             _group.append_child(_button)
             if (_type in holding) is False:
                 _button.append_child(HTMLNode(_button.identifier, None, "span",
@@ -348,7 +351,7 @@ class swappActionAnnotatePanel(TagNode):
                                                      {"class": "action-button width_full", "data-icon": "play"})
         else:
             swappActionAnnotatePanel.__append_button(_group, "annotate_perform", MSG_BTN_RUN,
-                                                     {"class": "action-button width_full", "aria-disabled": "true",
+                                                     {"class": "action-button width_full", "disabled": None,
                                                       "aria-describedby": "annotate_perform_state",
                                                       "data-icon": "play"})
             _group.append_child(HTMLNode(_group.identifier, None, "p", value=MSG_RUN_MISSING,
@@ -369,7 +372,7 @@ class swappActionAnnotatePanel(TagNode):
                                                      {"class": "action-button width_full", "data-icon": "file"})
         else:
             swappActionAnnotatePanel.__append_button(_group, "annotate_show", MSG_BTN_REPORT,
-                                                     {"class": "action-button width_full", "aria-disabled": "true",
+                                                     {"class": "action-button width_full", "disabled": None,
                                                       "aria-describedby": "annotate_show_state",
                                                       "data-icon": "file"})
 

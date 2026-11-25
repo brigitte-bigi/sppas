@@ -382,8 +382,9 @@ class swappBaseView:
     def populate_body_nav(self, *args, **kwargs):
         """Populate the `<nav>` section with navigation and accessibility tools.
 
-        Adds base menu styling, contrast/theme accessibility buttons, and calls
-        `_populate_body_nav()` for app-specific navigation items.
+        Adds base menu styling, the pin of the menu and the theme, contrast
+        and color buttons, and calls `_populate_body_nav()` for app-specific
+        navigation items.
 
         """
         self._htree.body_nav.add_attribute("id", "nav-content")
@@ -391,6 +392,11 @@ class swappBaseView:
         self._htree.body_nav.add_attribute("class", "nav-wexa")
         self._htree.body_nav.add_attribute("class", "side")
         self._htree.body_nav.add_attribute("class", "collapsible")
+
+        _s = TagNode(self._htree.body_nav.identifier, None, "section")
+        self.append_pin_button(_s)
+        self.append_accessibility_buttons(_s)
+        self._htree.body_nav.append_child(_s)
 
         self._populate_body_nav(*args, **kwargs)
 

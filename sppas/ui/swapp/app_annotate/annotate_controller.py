@@ -57,6 +57,11 @@ MSG_REPORT_UNAVAILABLE = _("The report is not available...\nError is: {:s}")
 
 # ---------------------------------------------------------------------------
 
+# The types of the annotations which cannot be performed online.
+NOT_ONLINE_TYPES = ("SPEAKER", "INTERACTION")
+
+# ---------------------------------------------------------------------------
+
 
 class swappAnnotateController:
     """Read the task a request carries, and answer it.
@@ -165,10 +170,11 @@ class swappAnnotateController:
                 if len(_left) > 0:
                     self.__record.show("undeleted", _left)
 
-        # The checked report is one which is kept: a report which is no longer
-        # there is no longer checked.
-        if (self.__record.report in self.__model.reports()) is False:
-            self.__record.report = ""
+            # The checked report is one which is kept: a report which is no
+            # longer there is no longer checked. Online, no report is kept:
+            # the report is the one of the run which has ended.
+            if (self.__record.report in self.__model.reports()) is False:
+                self.__record.report = ""
 
     # -----------------------------------------------------------------------
 
@@ -272,6 +278,12 @@ class swappAnnotateController:
             self.__record.show("languages", self.__model.languages())
             self.__record.show("lang", self.__model.language_of_selected(self.__record.parameters))
             self.__record.show("types", annots.types)
+            # Online, the annotations of some types cannot be performed: these
+            # types are disabled.
+            _disabled_types = list()
+            if swapp_serverstate.local is False:
+                _disabled_types = list(NOT_ONLINE_TYPES)
+            self.__record.show("disabled_types", _disabled_types)
             # The types which hold a selected annotation.
             _holding = list()
             for _annotation in self.__model.annotations():

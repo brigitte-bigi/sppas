@@ -37,18 +37,22 @@
 
     -------------------------------------------------------------------------
 
-    TE34 to TE38, TE40 to TE42, TE44, TE46 and TE48 of the dossier "Annotate - an app of SPPAS": AnnotateView,
-    the page as the server writes it. The page is the one the response bakes.
+    TE34 to TE38, TE40 to TE42, TE44, TE46, TE48 to TE50 of the dossier "Annotate - an app of SPPAS":
+    AnnotateView, the page as the server writes it. The page is the one the response bakes.
 
 """
 
 from __future__ import annotations
+import base64
+import io
 import json
 import os
 import re
 import shutil
 import tempfile
+import time
 import unittest
+import zipfile
 from unittest.mock import patch
 
 import sppas.src.annotations
@@ -58,9 +62,23 @@ from sppas.src.annotations import sppasParam
 from sppas.src.annotations.param import annotationParam
 
 from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
+from sppas.ui.swapp.swapp_base.swapp_process import PROCESS_FIELD
+from sppas.ui.swapp.services.deposit.deposit_settings import swappDepositSettings
+from sppas.ui.swapp.services.deposit.deposit_space import swappDepositSpace
+from sppas.ui.swapp.services.files import swappWorkspaceFiles
+from sppas.ui.swapp.app_annotate import annotate_model
+from sppas.ui.swapp.app_annotate import annotate_reports
+from sppas.ui.swapp.app_annotate import annotate_run
 from sppas.ui.swapp.app_annotate.annotate_maker import swappAnnotateResponseRecipe
-from sppas.ui.swapp.app_annotate.annotate_run import swappRootResult
 from sppas.ui.swapp.app_annotate.annotate_record import swappAnnotateRecord
+
+from tests.swapp.page_requests import swappPageFields
+from tests.swapp.page_requests import files_request
+from tests.swapp.test_annotate_run import ManagerForTests
+from tests.swapp.test_annotate_run import LogFileForTests
+from tests.swapp.test_annotate_reports import PathsForTests
+from tests.swapp.test_swapp_process import TEXTGRID
+from tests.swapp.test_swapp_process import follow
 
 # ---------------------------------------------------------------------------
 
@@ -81,6 +99,15 @@ class NotEnabledForTests:
     def __init__(self, *args, **kwargs):
         raise sppasEnableFeatureError("feature_for_tests")
 
+
+class DepositSpaceForTests(swappDepositSpace):
+    """The deposit space the provision of files creates, in the folder of a test."""
+
+    settings = None
+
+    def __init__(self):
+        super(DepositSpaceForTests, self).__init__(DepositSpaceForTests.settings)
+
 # ---------------------------------------------------------------------------
 
 
@@ -99,17 +126,36 @@ def errors_said(page: str) -> str:
 
 
 class TestAnnotateView(unittest.TestCase):
-    """TE34 to TE38, TE40 to TE42, TE44, TE46, TE48. The page the response bakes."""
+    """TE34 to TE38, TE40 to TE42, TE44, TE46, TE48, TE50. The page the response bakes."""
 
     def setUp(self):
         self.local = swapp_serverstate.local
         swapp_serverstate.local = True
+        # The reports are written and read in a folder of logs made for the test.
+        self.logs = tempfile.mkdtemp(prefix="test_annotate_view_")
+        PathsForTests.logs = self.logs
+        LogFileForTests.folder = self.logs
+        self.patchers = [patch.object(annotate_model, "paths", PathsForTests),
+                         patch.object(annotate_reports, "paths", PathsForTests),
+                         patch.object(annotate_run, "sppasLogFile", LogFileForTests),
+                         patch.object(annotate_run, "sppasAnnotationsManager", ManagerForTests)]
+        for _patcher in self.patchers:
+            _patcher.start()
+        ManagerForTests.seconds = 0.
+        ManagerForTests.fails = ""
+        ManagerForTests.created = list()
+        ManagerForTests.writes = list()
         self.recipe = swappAnnotateResponseRecipe()
         self.folder = tempfile.mkdtemp(prefix="test_annotate_view_")
 
     def tearDown(self):
+        while self.recipe.is_running() is True:
+            time.sleep(0.05)
+        for _patcher in self.patchers:
+            _patcher.stop()
         swapp_serverstate.local = self.local
         shutil.rmtree(self.folder, ignore_errors=True)
+        shutil.rmtree(self.logs, ignore_errors=True)
 
     # -----------------------------------------------------------------------
 
@@ -187,7 +233,8 @@ class TestAnnotateView(unittest.TestCase):
 
         self.assertEqual(0, len(re.findall(r'name="annotate_ann_\w+" value="True"', _page)))
         _perform = re.search(r'<button[^>]*value="annotate_perform"[^>]*>', _page)
-        self.assertIn('aria-disabled="true"', _perform.group(0))
+        self.assertIsNotNone(re.search(r'(?<![\w-])disabled\b', _perform.group(0)))
+        self.assertNotIn("aria-disabled", _perform.group(0))
 
         _declared = sppasParam()
         _kinds = re.findall(r'<select[^>]*name="annotate_ext_(\w+)"[^>]*>(.*?)</select>', _page, re.S)
@@ -200,15 +247,34 @@ class TestAnnotateView(unittest.TestCase):
 
     def test_te40_the_results_under_the_report(self):
         """TE40. The results under the report, one line per root, and no container of the provision of files. C25, T09"""
-        _first = os.path.join(self.folder, "first")
-        _second = os.path.join(self.folder, "second")
-        # What came of the last run is what the run of the model of the response kept.
-        _model = self.recipe._swappAnnotateResponseRecipe__model
-        _run = _model._swappAnnotateModel__run
-        _run._swappModelRun__results = [swappRootResult(_first, [_first + "-token.xra"]),
-                                        swappRootResult(_second, list())]
+        # A batch of two roots, and what the run writes under the first one.
+        _names = list()
+        for _name in ("first.txt", "second.txt", "first-token.xra"):
+            _filename = os.path.join(self.folder, _name)
+            with open(_filename, "w") as fp:
+                fp.write("")
+            _names.append(_filename)
+        _provision = self.recipe._swappAnnotateResponseRecipe__manager
+        _provision._swappFilesManager__model.works_on(swappWorkspaceFiles.make_workspace(_names[:2]))
+        ManagerForTests.writes = [_names[2]]
 
-        _page = self.recipe.bake({"event_bake": "annotate_complete", "annotate_followed": ""})
+        # The annotation is selected in the panel of its type, then Let's go is pressed.
+        _page = self.recipe.bake({})
+        _annotations = self.recipe.bake(swappPageFields(_page).submitted("event_bake",
+                                                                         "annotate_annotations_STANDALONE"))
+        _events = swappPageFields(_annotations).submitted("event_bake", "annotate_steps")
+        _events["annotate_ann_textnorm"] = "True"
+        _steps = self.recipe.bake(_events)
+        self.recipe.bake(swappPageFields(_steps).submitted("event_bake", "annotate_perform"))
+        _main = self.recipe._data["main-content"]
+
+        # The run is followed until it has ended, then the results are asked with the form.
+        _form = swappPageFields(_main).fields_of("annotate_form")
+        _answer, _status = follow(self.recipe, _form[PROCESS_FIELD])
+        self.assertEqual(200, _status)
+        _events = swappPageFields(_main).fields_of("annotate_form")
+        _events["event_bake"] = "annotate_complete"
+        _page = self.recipe.bake(_events)
 
         _log = _page.find('id="annotate_log_panel"')
         _results = _page.find('id="annotate_results_h"')
@@ -223,8 +289,17 @@ class TestAnnotateView(unittest.TestCase):
 
     def test_te41_a_report_which_cannot_be_read(self):
         """TE41. It is said in the dialog of the errors, with the reason. The error policy, level 3"""
-        _page = self.recipe.bake({"event_bake": "annotate_show",
-                                  "annotate_report": "no_report_bears_this_name.txt"})
+        _name = "sppas_report_0001.txt"
+        with open(os.path.join(self.logs, _name), "wb") as fp:
+            fp.write(b"\xff\xfe is not a text")
+
+        # The report is listed, and the person checks it: checking makes no request.
+        _page = self.recipe.bake({})
+        self.assertIsNotNone(re.search(r'<input(?=[^>]*name="annotate_report")(?=[^>]*value="' + re.escape(_name) + r'")',
+                                       _page))
+        _events = swappPageFields(_page).submitted("event_bake", "annotate_show")
+        _events["annotate_report"] = _name
+        _page = self.recipe.bake(_events)
         self.assertIn("The report is not available", errors_said(_page))
 
     # -----------------------------------------------------------------------
@@ -288,6 +363,130 @@ class TestAnnotateView(unittest.TestCase):
         self.assertIsNotNone(re.search(r'<p class="annotate-missing">[^<]*feature_for_tests', _item))
         self.assertEqual(-1, _item.find("Required files"))
         self.assertGreater(item_of(_page, "phonetize").find("Required files"), -1)
+
+    # -----------------------------------------------------------------------
+
+    def test_te50_locally_no_type_is_disabled(self):
+        """TE50. Locally, no button of a type is disabled. [311], C27"""
+        _fields = swappPageFields(self.recipe.bake({}))
+        for _type in ("STANDALONE", "SPEAKER", "INTERACTION"):
+            _button = _fields.button("annotate_type_" + _type)
+            self.assertEqual("annotate_annotations_" + _type, _button["value"])
+            self.assertNotIn("disabled", _button)
+
+# ---------------------------------------------------------------------------
+
+
+class TestAnnotateOnline(unittest.TestCase):
+    """TE49, TE50. Online, as the page sends it: the files are sent, and no annotation of SPPAS is run."""
+
+    def setUp(self):
+        self.local = patch.object(swapp_serverstate, "local", False)
+        self.local.start()
+        DepositSpaceForTests.settings = swappDepositSettings()
+        DepositSpaceForTests.settings.space = tempfile.mkdtemp(prefix="test_annotate_view_")
+        self.space = patch("sppas.ui.swapp.services.files.files_place.swappDepositSpace", DepositSpaceForTests)
+        self.space.start()
+        ManagerForTests.seconds = 0.
+        ManagerForTests.fails = ""
+        ManagerForTests.created = list()
+        ManagerForTests.writes = list()
+        self.manager = patch.object(annotate_run, "sppasAnnotationsManager", ManagerForTests)
+        self.manager.start()
+        self.recipe = swappAnnotateResponseRecipe()
+
+    def tearDown(self):
+        while self.recipe.is_running() is True:
+            time.sleep(0.05)
+        self.manager.stop()
+        self.space.stop()
+        self.local.stop()
+        shutil.rmtree(DepositSpaceForTests.settings.space, ignore_errors=True)
+
+    # -----------------------------------------------------------------------
+
+    def send(self) -> str:
+        """Open the panel of the files, designate a TextGrid and send it, as the page sends them.
+
+        :return: (str) The page of the panel of the files
+
+        """
+        _page = self.recipe.bake({})
+        _files = self.recipe.bake(swappPageFields(_page).submitted("event_bake", "annotate_files"))
+        _content = TEXTGRID.encode("utf-8")
+        self.recipe.bake(files_request(self.recipe._data["container"], "designate",
+                                       {"name": "sample.TextGrid", "size": str(len(_content))}))
+        self.recipe.bake(files_request(self.recipe._data["container"], "send",
+                                       {"name": "sample.TextGrid",
+                                        "content": base64.b64encode(_content).decode("ascii")}))
+        return _files
+
+    # -----------------------------------------------------------------------
+
+    def perform(self, files: str) -> str:
+        """Come back to the six steps, select an annotation in the panel of its type, and press Let's go.
+
+        :param files: (str) The page of the panel of the files
+        :return: (str) The main content the server answered
+
+        """
+        _steps = self.recipe.bake(swappPageFields(files).submitted("event_bake", "annotate_steps"))
+        _annotations = self.recipe.bake(swappPageFields(_steps).submitted("event_bake",
+                                                                          "annotate_annotations_STANDALONE"))
+        _events = swappPageFields(_annotations).submitted("event_bake", "annotate_steps")
+        _events["annotate_ann_textnorm"] = "True"
+        _steps = self.recipe.bake(_events)
+        self.recipe.bake(swappPageFields(_steps).submitted("event_bake", "annotate_perform"))
+        return self.recipe._data["main-content"]
+
+    # -----------------------------------------------------------------------
+
+    def test_te49_online_the_report_of_the_run(self):
+        """TE49. Once performed, the report is read, downloaded on its own, and in the archive. [601], [605], [803]"""
+        _files = self.send()
+        _provision = self.recipe._swappAnnotateResponseRecipe__manager
+        _folder = _provision.files_for_app().get_paths()[0].get_id()
+        _produced = os.path.join(_folder, "sample-token.xra")
+        with open(_produced, "w") as fp:
+            fp.write("")
+        ManagerForTests.writes = [_produced]
+
+        _main = self.perform(_files)
+        _form = swappPageFields(_main).fields_of("annotate_form")
+        _report = _form["annotate_followed"]
+        self.assertTrue(len(_report) > 0)
+        _answer, _status = follow(self.recipe, _form[PROCESS_FIELD])
+        self.assertEqual(200, _status)
+
+        _events = swappPageFields(_main).fields_of("annotate_form")
+        _events["event_bake"] = "annotate_complete"
+        self.recipe.bake(_events)
+        _done = self.recipe._data["main-content"]
+
+        self.assertEqual(-1, errors_said(_done).find("The report is not available"))
+        self.assertIn("textnorm: done", _done)
+        self.assertIsNotNone(re.search(r'<a href="[^"]*/' + re.escape(_report) + r'" download="' + re.escape(_report) + r'"',
+                                       _done))
+        _archive = re.search(r'<a href="([^"]*)" download=""', _done).group(1)
+        with zipfile.ZipFile(io.BytesIO(_provision.serve(_archive))) as _zip:
+            _names = [os.path.basename(_name) for _name in _zip.namelist()]
+        self.assertIn(_report, _names)
+        self.assertIn("sample-token.xra", _names)
+
+    # -----------------------------------------------------------------------
+
+    def test_te50_online_two_types_are_disabled(self):
+        """TE50. Online, the buttons of SPEAKER and INTERACTION are disabled, and the one of STANDALONE is not. [311], C27"""
+        _pages = [self.recipe.bake({})]
+        # The six steps again, once the files were sent.
+        _pages.append(self.recipe.bake(swappPageFields(self.send()).submitted("event_bake", "annotate_steps")))
+        for _page in _pages:
+            _fields = swappPageFields(_page)
+            self.assertNotIn("disabled", _fields.button("annotate_type_STANDALONE"))
+            for _type in ("SPEAKER", "INTERACTION"):
+                _button = _fields.button("annotate_type_" + _type)
+                self.assertEqual("annotate_annotations_" + _type, _button["value"])
+                self.assertIn("disabled", _button)
 
 
 if __name__ == "__main__":

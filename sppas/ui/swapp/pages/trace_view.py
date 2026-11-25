@@ -166,11 +166,6 @@ class swappTraceView(swappBaseView):
         """Override. Populate the nav area of the page.
 
         """
-        _s = TagNode(self._htree.body_nav.identifier, None, "section")
-        self.append_pin_button(_s)
-        self.append_accessibility_buttons(_s)
-        self._htree.body_nav.append_child(_s)
-
         # The Journal has its own tab: its Dashboard button switches to the
         # tab of the Dashboard -- see _home_target() -- instead of turning
         # this one into it.

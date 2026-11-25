@@ -377,10 +377,10 @@ export default class AnnotateManager extends BaseManager {
         const button = document.querySelector(`button[name="${EVENT_BAKE}"][value="annotate_show"]`);
         if (button !== null) {
             if (checked === true) {
-                button.removeAttribute('aria-disabled');
+                button.disabled = false;
                 button.removeAttribute('aria-describedby');
             } else {
-                button.setAttribute('aria-disabled', 'true');
+                button.disabled = true;
                 button.setAttribute('aria-describedby', ID_SHOW_STATE);
             }
         }
