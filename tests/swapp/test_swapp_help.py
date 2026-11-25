@@ -76,7 +76,7 @@ APPS = ((swappDashboardResponseRecipe, HELP_FORM_ID, True),
         (swappSetupResponseRecipe, HELP_FORM_ID, False),
         (swappConvertResponseRecipe, "convert_form", True),
         (swappAnnotateResponseRecipe, "annotate_form", True),
-        (swappPluginsResponseRecipe, HELP_FORM_ID, True),
+        (swappPluginsResponseRecipe, "plugins_form", True),
         (swappTestsResponseRecipe, HELP_FORM_ID, False))
 
 # ---------------------------------------------------------------------------

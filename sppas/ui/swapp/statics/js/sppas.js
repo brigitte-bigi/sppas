@@ -45,5 +45,6 @@ import FeedbackManager from './feedback_manager.js';
 import TraceManager from './trace_manager.js';
 import ConvertManager from './convert_manager.js';
 import AnnotateManager from './annotate_manager.js';
+import PluginsManager from './plugins_manager.js';
 
-export { SetupManager, DashboardManager, FeedbackManager, TraceManager, ConvertManager, AnnotateManager };
+export { SetupManager, DashboardManager, FeedbackManager, TraceManager, ConvertManager, AnnotateManager, PluginsManager };

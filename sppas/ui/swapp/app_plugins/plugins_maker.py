@@ -49,6 +49,7 @@ from sppas.ui import _
 from ..swapp_base.swapp_response import swappBaseResponse
 from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
 
+from .plugins_model import swappPluginsModel
 from .plugins_view import swappPluginsView
 from .plugins_controller import swappPluginsController
 
@@ -77,6 +78,7 @@ class swappPluginsResponseRecipe(swappBaseResponse):
         :param title: (str) Title of the page
 
         """
+        self.__model = None
         self.__view = None
         self.__controller = None
         super(swappPluginsResponseRecipe, self).__init__(name, tree, title)
@@ -87,6 +89,13 @@ class swappPluginsResponseRecipe(swappBaseResponse):
     def help_document(cls) -> str:
         """Override. Return the path of the document of this app, relative to swapp."""
         return "app_plugins/app_plugins.htm"
+
+    # -----------------------------------------------------------------------
+
+    @classmethod
+    def form_id(cls) -> str:
+        """Override. Return the identifier of the form carrying the record of the app."""
+        return "plugins_form"
 
     # -----------------------------------------------------------------------
 
@@ -105,7 +114,10 @@ class swappPluginsResponseRecipe(swappBaseResponse):
 
         """
         super().create()
-        self.__view = swappPluginsView(self._htree)
+        self.__view = swappPluginsView(self._htree, swappPluginsResponseRecipe.form_id())
+        # The model is held by the response: what is installed is read in
+        # the domain of the plugins it holds.
+        self.__model = swappPluginsModel()
 
     # -----------------------------------------------------------------------
     # Callbacks
@@ -123,7 +135,7 @@ class swappPluginsResponseRecipe(swappBaseResponse):
 
         # The controller is built at every request: it is dropped once the
         # request is answered, and nothing of what was decided is kept.
-        self.__controller = swappPluginsController(self.__view)
+        self.__controller = swappPluginsController(self.__model, self.__view)
 
         if "event_bake" in events:
             self.__controller.handle(events)

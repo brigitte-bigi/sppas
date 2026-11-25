@@ -646,8 +646,10 @@ label.switch + label {
 
 /* Its look comes from button.action-button of this file: only its place is
    written here. */
+/* A card whose text is long does not take its height from its button. */
 .app-button {
     margin: 0 auto;
+    flex-shrink: 0;
 }
 
 /* Hover/focus animation — only for pointer devices */

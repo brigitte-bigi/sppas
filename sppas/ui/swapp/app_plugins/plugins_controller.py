@@ -42,6 +42,7 @@ from __future__ import annotations
 
 from sppas.core.coreutils import sppasTypeError
 
+from .plugins_record import swappPluginsRecord
 from .plugins_view import swappPluginsView
 
 # ---------------------------------------------------------------------------
@@ -50,34 +51,45 @@ from .plugins_view import swappPluginsView
 class swappPluginsController:
     """Read the task a request carries, and answer it.
 
-    It is called once per request, and holds nothing afterward. No task of
-    this application is answered yet.
+    It is called once per request, and holds nothing afterward. What is
+    installed is shown at every request, each plugin with the README which
+    comes with it.
 
     """
 
-    def __init__(self, view: swappPluginsView):
+    def __init__(self, model, view: swappPluginsView):
         """Create the controller with what it is given.
 
+        :param model: (swappPluginsModel) The model of Plugins
         :param view: (swappPluginsView) The view of Plugins
         :raises: sppasTypeError: The given view is not a swappPluginsView
 
         """
         if isinstance(view, swappPluginsView) is False:
             raise sppasTypeError(view, "swappPluginsView")
+        self.__model = model
         self.__view = view
+        self.__record = swappPluginsRecord()
 
     # -----------------------------------------------------------------------
 
     def handle(self, events: dict) -> None:
-        """Do the task the events of a request ask for: none is answered yet.
+        """Do the task the events of a request ask for.
 
         :param events: (dict) What a page sent
 
         """
-        pass
+        self.__record = swappPluginsRecord()
+        self.__record.parse(events)
 
     # -----------------------------------------------------------------------
 
     def populate_view(self) -> None:
-        """Have the view build its tree."""
-        self.__view.populate_tree_content()
+        """Have the view build its tree from the record: the plugins which are installed, and their README."""
+        _plugins = self.__model.plugins()
+        _readmes = dict()
+        for _plugin in _plugins:
+            _readmes[_plugin.get_key()] = self.__model.readme(_plugin.get_key())
+        self.__record.show("plugins", _plugins)
+        self.__record.show("readmes", _readmes)
+        self.__view.populate_tree_content(self.__record)
