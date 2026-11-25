@@ -185,10 +185,6 @@ class swappSetupResponseRecipe(swappBaseResponse):
                 field = events.get("event_value", "")
                 self.__process_next_fieldset_event(field)
 
-            # --- Progress event to update the page ---
-            elif events["event_name"] == "update":
-                self.__process_update_event()
-
             # --- Unknown event_name ---
             else:
                 self._data = {"error": f"Internal Server Error: Unknown event name {events['event_name']}"}
@@ -214,20 +210,6 @@ class swappSetupResponseRecipe(swappBaseResponse):
             logging.error(f"Internal Server Error: Unknown event name {events}")
 
         return True
-
-    # -----------------------------------------------------------------------
-
-    def __process_update_event(self):
-        """Process the given event coming from the POST of install.
-
-        """
-        logging.debug(" ******* Setup update event ******* ")
-        self._data["percent"], self._data["header"], self._data["text"] = (
-            self.__controller.get_progress_values())
-
-        self._status.code = 202
-        if self._data["percent"] >= 100:
-            self._status.code = 200
 
     # -----------------------------------------------------------------------
 

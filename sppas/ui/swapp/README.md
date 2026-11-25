@@ -260,6 +260,18 @@ preserves the accessibility parameters when navigating. The "Traces"
 page is declared with False: it is served, but reachable from the nav
 of the apps only.
 
+### How the nav of a view is built
+
+The nav is written by `populate_body_nav()` of `swappBaseView`, in sections.
+The first one holds what changes the look of the page: the pin of the menu,
+the theme, the contrast and the color. The second one holds the items every
+view has, in this order: the Dashboard, the Journal and the Help. The Help of
+an app sends the form `_form_id()` gives, or a form of its own when it gives
+none; the Help of a page is disabled, as `_has_help()` says. Then
+`_populate_body_nav()` appends the items of the view, in a section of their
+own: Exit in the Dashboard, the SPPAS website in Setup, Close in the Journal,
+Back in the page of a test.
+
 ### How the help of an app is shown
 
 The help of an app is not a page: it is one of the views of the app, and the
@@ -304,8 +316,8 @@ when the help is shown. The head of every page loads the stylesheet of the
 Book, and the one of the toggle group, which a document may show as its app
 does.
 
-A page is not concerned: the Journal keeps the Help button of the nav,
-disabled. The `app_wkps/` app is not concerned either while it is reworked:
+A page is not concerned: its Help button of the nav is disabled. The
+`app_wkps/` app is not concerned either while it is reworked:
 its bakery is not a `swappBaseResponse`.
 
 ### How a long process of an app is followed
@@ -335,12 +347,12 @@ does once the process has ended.
 What an app shows of the result is not the process's: the results of a
 conversion stay in the report of Convert, read when the page asks for them.
 
-The conversion of Convert and the run of Annotate are processes of swapp. The
-API of the annotations is not changed: given nothing when it is created, its
-manager performs the annotations in the thread of its caller, which is the
-thread of the process, and it is given the progress of the process. Setup is
-not a process of swapp yet: it holds its installation, and its progress, on
-the server.
+The conversion of Convert, the run of Annotate and the installation of Setup
+are processes of swapp. The API of the annotations is not changed: given
+nothing when it is created, its manager performs the annotations in the thread
+of its caller, which is the thread of the process, and it is given the
+progress of the process. Neither is the installer of Setup: it installs in
+the thread of the process, and it is given the progress of the process.
 
 ### How a long process holds the page
 
@@ -361,8 +373,8 @@ dimmed, as no disabled item of the nav is.
 Whether a process goes is said by `is_running()` of `swappBaseResponse`: by
 default, it is read in the file of the process the request names, and it is
 False when the request names none. Annotate and Setup override it: Annotate
-holds its run, as its document requires, and reads whether it goes in the file
-of its process; Setup holds its installation. While a process goes, the help
+holds its run, as its document requires, Setup holds its installation, and
+each reads whether it goes in the file of its process. While a process goes, the help
 is not answered:
 asking for it is going back to the default view of the app, which then is the
 progress.

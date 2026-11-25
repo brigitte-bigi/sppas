@@ -94,27 +94,22 @@ class swappTestsBaseView(swappBaseView):
 
     # -----------------------------------------------------------------------
 
-    def _populate_body_nav(self):
-        """Override. Populate the nav area of the page."""
-        self.append_home_link_button(self._htree.body_nav, self._home_target())
-        self.append_help_button(self._htree.body_nav)
-        self.append_trace_link_button(self._htree.body_nav)
-
-    # -----------------------------------------------------------------------
-
     def append_back_link_button(self, parent: HTMLNode) -> HTMLNode:
         """Create and append the button leading back to the index of the tests.
 
         The page of a test is reached from the index and leads back to it: the
         button of the nav which leads home leads to the Dashboard, which is
         another place. The index itself does not carry this button, having
-        nowhere of its own to go back to.
+        nowhere of its own to go back to. It stands in a section of its own,
+        after the items every view has.
 
-        :param parent: (HTMLNode) The node the button is appended in
+        :param parent: (HTMLNode) The node the section of the button is appended in
         :return: (HTMLNode) The button
 
         """
-        _button = HTMLNode(parent.identifier, None, "button",
+        _s = TagNode(parent.identifier, None, "section")
+        parent.append_child(_s)
+        _button = HTMLNode(_s.identifier, None, "button",
                            value="<span>" + MSG_BACK + "</span>")
         _button.add_attribute("id", "link-tests_button")
         _button.add_attribute("aria-label", MSG_BACK)
@@ -123,7 +118,7 @@ class swappTestsBaseView(swappBaseView):
         _button.add_attribute("data-href", "test.html")
         _button.add_attribute("data-target", "_self")
         _button.add_attribute("class", "menuitem")
-        parent.append_child(_button)
+        _s.append_child(_button)
         self._htree.head.add_links("link-tests_button")
 
         return _button

@@ -65,6 +65,10 @@ from .swapp_help_button import swappHelpButton
 
 # ---------------------------------------------------------------------------
 
+# The section of the nav which holds the items every view has: the
+# Dashboard, the Journal and the Help.
+NAV_COMMON_ID = "nav_common"
+
 
 MSG_WEB = _("SPPAS website")
 MSG_CONTRAST = _("Contrast")
@@ -379,12 +383,35 @@ class swappBaseView:
 
     # -----------------------------------------------------------------------
 
+    def _form_id(self) -> str:
+        """Return the identifier of the form the Help button of the menu sends.
+
+        Empty by default: the view has no form, and the button gets one of
+        its own. Override in an app whose form carries its record.
+
+        """
+        return ""
+
+    # -----------------------------------------------------------------------
+
+    def _has_help(self) -> bool:
+        """Return True if the view is the one of an app, which has a help.
+
+        True by default. Override in a page: a page has no help, and the
+        Help button of the menu is disabled, at the same place.
+
+        """
+        return True
+
+    # -----------------------------------------------------------------------
+
     def populate_body_nav(self, *args, **kwargs):
         """Populate the `<nav>` section with navigation and accessibility tools.
 
-        Adds base menu styling, the pin of the menu and the theme, contrast
-        and color buttons, and calls `_populate_body_nav()` for app-specific
-        navigation items.
+        Adds base menu styling, then a section with the pin of the menu and
+        the theme, contrast and color buttons, then a section with the
+        Dashboard, the Journal and the Help, and calls `_populate_body_nav()`
+        for the items of the view, which it appends in a section of its own.
 
         """
         self._htree.body_nav.add_attribute("id", "nav-content")
@@ -398,7 +425,22 @@ class swappBaseView:
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
 
+        _common = TagNode(self._htree.body_nav.identifier, NAV_COMMON_ID, "section")
+        self._htree.body_nav.append_child(_common)
+        self.append_home_link_button(_common, self._home_target())
+        self.append_trace_link_button(_common)
+        if self._has_help() is True:
+            self.append_help_button(_common, self._form_id())
+        else:
+            self.append_help_link_button(_common)
+
         self._populate_body_nav(*args, **kwargs)
+
+        # The form of the Help of an app which has none: after the sections,
+        # it holds no place among the items.
+        if self._has_help() is True and len(self._form_id()) == 0:
+            self._htree.body_nav.append_child(TagNode(self._htree.body_nav.identifier, HELP_FORM_ID, "form",
+                                                      attributes={"id": HELP_FORM_ID, "method": "post"}))
 
     # -----------------------------------------------------------------------
 
@@ -637,8 +679,8 @@ class swappBaseView:
         The help of an app is one of its views: the button sends the form of
         the app, and what that form carries is given back to the app with the
         way back from the help. While the help is shown, the button is that
-        way back. An app which has no form gets one of its own, empty,
-        appended beside the button.
+        way back. An app which has no form gets one of its own, empty, which
+        populate_body_nav() appends after the sections of the nav.
 
         :param parent: (HTMLNode) the parent HTML node to append the button in
         :param form_id: (str) Identifier of the form of the app, empty if it has none
@@ -648,8 +690,6 @@ class swappBaseView:
         _form_id = form_id
         if len(_form_id) == 0:
             _form_id = HELP_FORM_ID
-            parent.append_child(TagNode(parent.identifier, HELP_FORM_ID, "form",
-                                        attributes={"id": HELP_FORM_ID, "method": "post"}))
 
         _button = swappHelpButton(parent.identifier, _form_id)
         parent.append_child(_button)

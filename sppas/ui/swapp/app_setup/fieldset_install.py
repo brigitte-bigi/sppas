@@ -46,6 +46,7 @@ from sppas.core.coreutils import msg
 from sppas.core.coreutils import info
 
 from ..nodes import swappProgressBar
+from ..swapp_base.swapp_process import PROCESS_FIELD
 
 from .base_fieldset import swappSetupBaseFieldset
 
@@ -71,26 +72,32 @@ class swappSetupInstallFieldset(swappSetupBaseFieldset):
         super(swappSetupInstallFieldset, self).__init__(parent, "install_field", LEGEND_COMPLETED)
         self._msg = MSG_COMPLETED
         self.__progress = None
+        self.__process_field = None
 
     # -----------------------------------------------------------------------
 
-    def create_progress(self):
-        """Create the node to show progress.
+    def create_progress(self, process_name: str) -> None:
+        """Create the node to show progress, and the name of the process the page follows.
 
-        :return: (sppasBaseProgress)
+        :param process_name: (str) The name of the process of the installation
 
         """
         self.__progress = swappProgressBar(self.identifier)
         self.__progress.set_header("")
         self.__progress.set_text("")
-        self.append_child(self.__progress.get_node())
-        return self.__progress
-
-    # -----------------------------------------------------------------------
-
-    def get_progress(self):
-        """Return the progress node."""
-        return self.__progress
+        # The bar measures the whole installation, and it is named so for a
+        # screen reader only. The header is given its node: it holds the
+        # feature which is installed, and nothing before the first one.
+        _bar = self.__progress.get_node()
+        _bar.get_child("percent_progress").add_attribute("aria-label", MSG_COMPLETED)
+        _bar.insert_child(0, HTMLNode(_bar.identifier, "progress_header", "h3",
+                                      attributes={"id": "progress_header"}))
+        self.append_child(_bar)
+        # The page asks where the installation stands by the name of its process.
+        self.__process_field = EmptyNode(self.identifier, None, "input",
+                                         attributes={"type": "hidden", "name": PROCESS_FIELD,
+                                                     "value": process_name})
+        self.append_child(self.__process_field)
 
     # -----------------------------------------------------------------------
 
@@ -104,6 +111,9 @@ class swappSetupInstallFieldset(swappSetupBaseFieldset):
         if self.__progress is not None:
             self.remove_child(self.__progress.ID)
         self.__progress = None
+        if self.__process_field is not None:
+            self.remove_child(self.__process_field.identifier)
+        self.__process_field = None
 
         txt = HTMLNode(self.identifier, None, "p",
                        value=INFO_INSTALL_FINISHED + "<br>" + INFO_SEE_LOGS)

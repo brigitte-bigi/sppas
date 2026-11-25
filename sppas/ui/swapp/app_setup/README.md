@@ -21,7 +21,10 @@ representation follows the current state provided by the controller.
 It encapsulates the dependency objects (sppasInstallerDeps) and exposes the
 state required by the controller and the view. It is the only place where a
 choice is held: what is to be installed, what the person accepted, and which
-feature can be installed on the machine.
+feature can be installed on the machine. The installation is a process of
+swapp: the model starts it and holds it, the installer is given the progress
+of that process, and whether the installation goes is read in the file of the
+process.
 
 - **swappSetupFieldsets** creates the fieldset nodes for the view. A fieldset
 holding choices is created anew each time it is shown, and written from the
@@ -31,6 +34,11 @@ is shown is held by the controller.
 A click on a checkbox is sent to the server, which changes the model and
 answers the state of each checkbox the page has to show. The JavaScript of
 the page displays that answer and decides nothing.
+
+While the installation goes, the fieldset of the installation holds the
+progress bar and the name of the process: the page follows the installation as
+it follows any process, then asks for the fieldset of the completed
+installation.
 
 This architecture ensures a strict separation between transport (HTTP),
 application logic (Controller), data (Model), and presentation (View).

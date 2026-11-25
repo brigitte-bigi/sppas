@@ -45,7 +45,9 @@
 
 """
 
+import json
 import os
+import re
 import shutil
 import tempfile
 import time
@@ -62,9 +64,15 @@ from sppas.ui.swapp.swapp_base.swapp_process import PROCESS_FIELD
 from sppas.ui.swapp.services.files import swappWorkspaceFiles
 from sppas.ui.swapp.app_annotate import annotate_run
 from sppas.ui.swapp.app_annotate.annotate_maker import swappAnnotateResponseRecipe
+from sppas.ui.swapp.app_annotate.annotate_panels import MSG_STEP_RUN
 from sppas.ui.swapp.app_convert.convert_maker import swappConvertResponseRecipe
+from sppas.ui.swapp.app_convert.convert_view import MSG_PROGRESS as MSG_CONVERSION
 from sppas.ui.swapp.app_dashboard.dashboard_maker import swappDashboardResponseRecipe
+from sppas.ui.swapp.app_setup import setup_maker
+from sppas.ui.swapp.app_setup import setup_model
 from sppas.ui.swapp.app_setup.setup_maker import swappSetupResponseRecipe
+from sppas.ui.swapp.app_setup.fieldset_install import INFO_INSTALL_FINISHED
+from sppas.ui.swapp.app_setup.fieldset_install import MSG_COMPLETED
 
 from tests.swapp.page_requests import swappPageFields
 from tests.swapp.page_requests import main_of
@@ -77,6 +85,47 @@ TEXTGRID = ('File type = "ooTextFile"\nObject class = "TextGrid"\n\nxmin = 0\nxm
             'size = 1\nitem []:\n    item [1]:\n        class = "IntervalTier"\n        name = "words"\n'
             '        xmin = 0\n        xmax = 1\n        intervals: size = 1\n        intervals [1]:\n'
             '            xmin = 0\n            xmax = 1\n            text = "hello"\n')
+
+# ---------------------------------------------------------------------------
+
+
+class InstallerForTests:
+    """The installer, as Setup calls it, written here: it installs nothing.
+
+    Installing sets on the progress it was given the feature it is
+    installing, takes its time, and gives back the errors it is told.
+
+    """
+
+    seconds = 0.
+    errors = list()
+
+    def __init__(self):
+        self.__enabled = dict()
+        self.__progress = None
+
+    def features_ids(self, feature_type: str) -> list:
+        return ["feature_" + feature_type]
+
+    def enable(self, feature_id: str, value=None) -> bool:
+        if value is not None:
+            self.__enabled[feature_id] = bool(value)
+        return self.__enabled.get(feature_id, False)
+
+    def brief(self, feature_id: str) -> str:
+        return feature_id
+
+    def description(self, feature_id: str) -> str:
+        return feature_id
+
+    def set_progress(self, progress) -> None:
+        self.__progress = progress
+
+    def install(self) -> list:
+        self.__progress.set_header("feature_lang")
+        self.__progress.update(50, "")
+        time.sleep(InstallerForTests.seconds)
+        return list(InstallerForTests.errors)
 
 # ---------------------------------------------------------------------------
 
@@ -157,6 +206,19 @@ class TestProcess(unittest.TestCase):
 
         time.sleep(0.5)
         self.assertEqual((100, "Step", "Completed.", True), process.read())
+
+    # -----------------------------------------------------------------------
+
+    def test_what_it_stands_at_is_written_in_the_log(self):
+        """The header and the text it is given are written in the log, as a progress bar writes them."""
+        with self.assertLogs(level="INFO") as logged:
+            process = swappProcess.start(TestProcess.steps, (0.,))
+            waited = 0.
+            while process.read()[3] is False and waited < 2.:
+                time.sleep(0.05)
+                waited += 0.05
+        self.assertIn("INFO:root:Step", logged.output)
+        self.assertIn("INFO:root:  => Completed.", logged.output)
 
     # -----------------------------------------------------------------------
 
@@ -297,6 +359,10 @@ class TestConvertIsAProcess(unittest.TestCase):
         """The section of the conversion shows the progress, and carries both names in the form."""
         section = self.convert()
         self.assertIn('id="percent_progress"', section)
+        # The bar is named by what it measures, for a screen reader only.
+        self.assertNotIn('for="percent_progress"', section)
+        progress = re.search(r'<progress[^>]*>', section).group(0)
+        self.assertIn('aria-label="' + MSG_CONVERSION + '"', progress)
         hidden = swappPageFields(section).hidden()
         self.assertTrue(hidden[PROCESS_FIELD].endswith(".json"))
         self.assertTrue(len(hidden["convert_report"]) > 0)
@@ -375,6 +441,10 @@ class TestAnnotateIsAProcess(unittest.TestCase):
         """The progress is shown, and the form carries the name of the process and of the report."""
         main = self.perform()
         self.assertIn('id="percent_progress"', main)
+        # The bar is named by what it measures, for a screen reader only.
+        self.assertNotIn('for="percent_progress"', main)
+        progress = re.search(r'<progress[^>]*>', main).group(0)
+        self.assertIn('aria-label="' + MSG_STEP_RUN + '"', progress)
         fields = swappPageFields(main).fields_of("annotate_form")
         self.assertTrue(fields[PROCESS_FIELD].endswith(".json"))
         self.assertTrue(len(fields["annotate_followed"]) > 0)
@@ -443,6 +513,108 @@ class TestAnnotateIsAProcess(unittest.TestCase):
         """Annotate has no event of its own for the progress any more."""
         self.recipe.bake({"event_name": "annotate_update"})
         self.assertEqual(205, self.recipe._status.code)
+
+# ---------------------------------------------------------------------------
+
+
+class TestSetupIsAProcess(unittest.TestCase):
+    """An installation, as the page of Setup starts it and follows it; nothing is installed."""
+
+    def setUp(self):
+        InstallerForTests.seconds = 0.3
+        InstallerForTests.errors = list()
+        self.patchers = [mock.patch.object(setup_model, "sppasInstallerDeps", InstallerForTests),
+                         mock.patch.object(setup_maker, "lgs")]
+        for _patcher in self.patchers:
+            _patcher.start()
+        self.recipe = swappSetupResponseRecipe()
+        self.recipe.bake({})
+        self.model = self.recipe._swappSetupResponseRecipe__model
+
+    def tearDown(self):
+        while self.recipe.is_running() is True:
+            time.sleep(0.05)
+        for _patcher in self.patchers:
+            _patcher.stop()
+
+    # -----------------------------------------------------------------------
+
+    def install(self) -> str:
+        """Accept, then go forward as the page does until the installation starts.
+
+        :return: (str) The fieldset of the installation the server answered
+
+        """
+        # The checkbox of what is accepted is clicked, as the page sends it.
+        for _name in ("check_ref", "check_prod", "check_license"):
+            if self.model.is_accepted(_name) is False:
+                self.recipe.bake({"check_name": _name + "_input"})
+
+        _index = 0
+        while _index < 10:
+            self.recipe.bake({"event_name": "next_fieldset", "event_value": str(_index)})
+            for _written in json.loads(self.recipe.get_data()).values():
+                if 'id="install_field"' in str(_written):
+                    self.assertEqual(202, self.recipe._status.code)
+                    return str(_written)
+            _index += 1
+        self.fail("The fieldset of the installation was never answered.")
+
+    # -----------------------------------------------------------------------
+
+    def test_the_fieldset_names_the_process(self):
+        """The progress is shown, and the fieldset holds the name of the process."""
+        installing = self.install()
+        self.assertIn('id="percent_progress"', installing)
+        self.assertIn('id="progress_header"', installing)
+        self.assertIn('id="progress_text"', installing)
+        # The bar is named by what it measures, for a screen reader only.
+        self.assertNotIn("<label", installing)
+        progress = re.search(r'<progress[^>]*>', installing).group(0)
+        self.assertIn('aria-label="' + MSG_COMPLETED + '"', progress)
+        self.assertTrue(swappPageFields(installing).hidden()[PROCESS_FIELD].endswith(".json"))
+        self.assertTrue(self.recipe.is_running())
+
+    # -----------------------------------------------------------------------
+
+    def test_followed_until_the_completed_installation(self):
+        """Where it stands is answered from the process; once ended, the completed installation is asked."""
+        name = swappPageFields(self.install()).hidden()[PROCESS_FIELD]
+        # The page asks again until the installer has set what it installs.
+        answer, status = progress_of(self.recipe, name)
+        waited = 0.
+        while answer["header"] != "feature_lang" and waited < 2.:
+            time.sleep(0.05)
+            waited += 0.05
+            answer, status = progress_of(self.recipe, name)
+        self.assertEqual(202, status)
+        self.assertEqual("feature_lang", answer["header"])
+
+        answer, status = follow(self.recipe, name)
+        self.assertEqual(200, status)
+        self.assertFalse(self.recipe.is_running())
+
+        # What the page submits once the process has ended.
+        page = self.recipe.bake({"event_bake": "complete"})
+        self.assertIn(INFO_INSTALL_FINISHED, page)
+        self.assertNotIn('id="percent_progress"', page)
+        self.assertNotIn('name="' + PROCESS_FIELD + '"', page)
+
+    # -----------------------------------------------------------------------
+
+    def test_a_page_asked_for_while_it_installs(self):
+        """A page loaded again while the installation goes follows it: the same process."""
+        name = swappPageFields(self.install()).hidden()[PROCESS_FIELD]
+        again = self.recipe.bake({})
+        self.assertIn('id="percent_progress"', again)
+        self.assertEqual(name, swappPageFields(main_of(again)).hidden()[PROCESS_FIELD])
+
+    # -----------------------------------------------------------------------
+
+    def test_the_old_event_of_the_progress_is_unknown(self):
+        """Setup has no event of its own for the progress any more."""
+        self.recipe.bake({"event_name": "update"})
+        self.assertEqual(401, self.recipe._status.code)
 
 # ---------------------------------------------------------------------------
 

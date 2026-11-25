@@ -133,12 +133,9 @@ class swappFeedbackView(swappBaseView):
 
     # -----------------------------------------------------------------------
 
-    def _populate_body_nav(self):
-        """Override. Populate the nav area of the page.
-
-        """
-        self.append_home_link_button(self._htree.body_nav, self._home_target())
-        self.append_trace_link_button(self._htree.body_nav)
+    def _has_help(self) -> bool:
+        """Override. A page has no help: the Help button of the menu is disabled."""
+        return False
 
     # -----------------------------------------------------------------------
 

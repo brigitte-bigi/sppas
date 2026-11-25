@@ -1,0 +1,168 @@
+# -*- coding: UTF-8 -*-
+"""
+:filename: tests.swapp.test_swapp_nav.py
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: Unittests of the nav of the apps and of the pages of swapp, as the page is served.
+
+.. _This file is part of SPPAS: https://sppas.org/
+..
+    -------------------------------------------------------------------------
+
+     ######   ########   ########      ###      ######
+    ##    ##  ##     ##  ##     ##    ## ##    ##    ##     the automatic
+    ##        ##     ##  ##     ##   ##   ##   ##            annotation
+     ######   ########   ########   ##     ##   ######        and
+          ##  ##         ##         #########        ##        analysis
+    ##    ##  ##         ##         ##     ##  ##    ##         of speech
+     ######   ##         ##         ##     ##   ######
+
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
+    Laboratoire Parole et Langage, Aix-en-Provence, France
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    This banner notice must not be removed.
+
+    -------------------------------------------------------------------------
+
+    "How the nav of a view is built", in the README of swapp. The nav is
+    read in the page the server answers to a first request.
+
+"""
+
+import unittest
+from html.parser import HTMLParser
+
+from sppas.ui.swapp.swapp_base.swapp_help_button import HELP_BUTTON_ID
+from sppas.ui.swapp.app_annotate.annotate_maker import swappAnnotateResponseRecipe
+from sppas.ui.swapp.app_convert.convert_maker import swappConvertResponseRecipe
+from sppas.ui.swapp.app_dashboard.dashboard_maker import swappDashboardResponseRecipe
+from sppas.ui.swapp.app_setup.setup_maker import swappSetupResponseRecipe
+from sppas.ui.swapp.app_test.tests_maker import swappTestsResponseRecipe
+from sppas.ui.swapp.app_test.tests_page_swapp import swappTestSwappResponseRecipe
+from sppas.ui.swapp.pages.about_maker import swappAboutResponseRecipe
+from sppas.ui.swapp.pages.cite_maker import swappCiteResponseRecipe
+from sppas.ui.swapp.pages.configuration_maker import swappConfigurationResponseRecipe
+from sppas.ui.swapp.pages.feedback_maker import swappFeedbackResponseRecipe
+from sppas.ui.swapp.pages.trace_maker import swappTraceResponseRecipe
+
+# ---------------------------------------------------------------------------
+
+# What changes the look of the page, first in every nav.
+APPEARANCE = ["pin-menu", "btn-css-theme", "btn-contrast", "btn-color"]
+
+# The items every view has, second in every nav, in this order.
+COMMON = ["link-home_button", "link-trace_button", HELP_BUTTON_ID]
+
+# ---------------------------------------------------------------------------
+
+
+class swappNavReader(HTMLParser):
+    """Read the sections of the nav of a page, and the items each one holds."""
+
+    def __init__(self, page: str):
+        """Read the given page.
+
+        :param page: (str) The HTML of a page
+
+        """
+        super(swappNavReader, self).__init__(convert_charrefs=True)
+        self.sections = list()
+        self.items = dict()
+        self.forms_in_sections = 0
+        self.__in_nav = False
+        self.__in_section = False
+        self.feed(page)
+        self.close()
+
+    def handle_starttag(self, tag, attrs):
+        _attributes = dict(attrs)
+        if tag == "nav":
+            self.__in_nav = True
+        elif self.__in_nav is True and tag == "section":
+            self.sections.append(list())
+            self.__in_section = True
+        elif self.__in_section is True and tag == "form":
+            self.forms_in_sections += 1
+        elif self.__in_nav is True and tag in ("a", "button") and "id" in _attributes:
+            self.sections[-1].append(_attributes["id"])
+            self.items[_attributes["id"]] = (tag, _attributes)
+
+    def handle_endtag(self, tag):
+        if tag == "nav":
+            self.__in_nav = False
+        elif tag == "section":
+            self.__in_section = False
+
+# ---------------------------------------------------------------------------
+
+
+class TestNav(unittest.TestCase):
+    """The same first two sections in every nav, then the items of the view in a third one."""
+
+    def test_the_apps(self):
+        """The Help of an app is a button which sends the form of the app, or a form of its own."""
+        expected = ((swappDashboardResponseRecipe, ["exit-menu"]),
+                    (swappAnnotateResponseRecipe, None),
+                    (swappConvertResponseRecipe, None),
+                    (swappSetupResponseRecipe, ["link-sppas_button"]),
+                    (swappTestsResponseRecipe, None),
+                    (swappTestSwappResponseRecipe, ["link-tests_button"]))
+        for recipe_class, own in expected:
+            with self.subTest(app=recipe_class.__name__):
+                nav = swappNavReader(recipe_class().bake({}))
+                sections = [APPEARANCE, COMMON]
+                if own is not None:
+                    sections.append(own)
+                self.assertEqual(sections, nav.sections)
+                # A form holds no place among the items.
+                self.assertEqual(0, nav.forms_in_sections)
+                tag, attributes = nav.items[HELP_BUTTON_ID]
+                self.assertEqual("button", tag)
+                self.assertNotIn("aria-disabled", attributes)
+
+    # -----------------------------------------------------------------------
+
+    def test_the_form_the_help_of_an_app_sends(self):
+        """Annotate and Convert send their own form with the Help."""
+        for recipe_class in (swappAnnotateResponseRecipe, swappConvertResponseRecipe):
+            with self.subTest(app=recipe_class.__name__):
+                nav = swappNavReader(recipe_class().bake({}))
+                tag, attributes = nav.items[HELP_BUTTON_ID]
+                self.assertEqual(recipe_class.form_id(), attributes["form"])
+
+    # -----------------------------------------------------------------------
+
+    def test_the_pages(self):
+        """The Help of a page is at the same place, disabled."""
+        expected = ((swappAboutResponseRecipe, None),
+                    (swappCiteResponseRecipe, None),
+                    (swappConfigurationResponseRecipe, None),
+                    (swappFeedbackResponseRecipe, None),
+                    (swappTraceResponseRecipe, ["close-tab_button"]))
+        for recipe_class, own in expected:
+            with self.subTest(page=recipe_class.__name__):
+                nav = swappNavReader(recipe_class().bake({}))
+                sections = [APPEARANCE, COMMON]
+                if own is not None:
+                    sections.append(own)
+                self.assertEqual(sections, nav.sections)
+                tag, attributes = nav.items[HELP_BUTTON_ID]
+                self.assertEqual("a", tag)
+                self.assertEqual("true", attributes["aria-disabled"])
+
+
+if __name__ == "__main__":
+    unittest.main()

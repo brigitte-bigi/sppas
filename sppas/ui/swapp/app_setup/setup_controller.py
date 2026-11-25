@@ -123,21 +123,6 @@ class swappSetupController:
 
     # -----------------------------------------------------------------------
 
-    def get_progress_values(self) -> tuple:
-        """Get the current progress values.
-
-        :return: (tuple) Percent, Header, Text
-
-        """
-        if self.__model.is_installation_running() is True:
-            p = self.__fieldsets.get_progress()
-            if p is not None:
-                return p.get_percent(), p.get_header(), p.get_text()
-
-        return 100, "Installation completed.", ""
-
-    # -----------------------------------------------------------------------
-
     def get_current_fieldset_id(self):
         return self.__fieldsets.get_identifier(self.__current)
 
@@ -186,9 +171,9 @@ class swappSetupController:
                 if self.__model.is_installation_running() is False:
                     # Update the main content for the fieldset and actions
                     self.update_tree_content(actions=False, install=True)
-                    # Create the progress and start to install
-                    progress = self.__fieldsets[cur].create_progress()
-                    self.__model.installation_start(progress)
+                    # Start to install, then show the progress of its process
+                    _name = self.__model.installation_start()
+                    self.__fieldsets[cur].create_progress(_name)
             else:
                 # Update the main content for the fieldset and actions
                 can_install = self.is_installation_next()

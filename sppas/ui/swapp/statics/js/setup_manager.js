@@ -1,7 +1,9 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
 const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
-const { ProgressBar } = await import(`${wexa_statics_js}/progressbar.js`);
+import SwappProcess from './swapp_process.js';
+
+const PROCESS_FIELD = 'swapp_process';
 
 /**
  * :filename: sppas.ui.swapp.statics.js.setup_manager.js
@@ -97,20 +99,22 @@ export default class SetupManager extends BaseManager {
     // ------------------------------------------------------------------------
 
     /**
-     * Start the progress polling loop of the installation.
+     * Follow the installation until it has ended, then ask for the completed installation.
      *
-     * The polling is the only sender of the 'complete' event leading to
-     * the completed page.
+     * The installation is a process of swapp: it is followed as every process
+     * is, by the name the fieldset of the installation holds. The end of the
+     * process is the only sender of the 'complete' event leading to the
+     * completed page.
      *
      * @returns {void}
      */
     #startProgressPolling() {
-        const progressBar = new ProgressBar({
-            requestManager: this._requestManager,
-            targetUrl: '/setup.html',
-            intervalMs: 1000
-        });
-        progressBar.start();
+        const process = document.querySelector(`input[name="${PROCESS_FIELD}"]`);
+        if (process === null) {
+            WexaLogger.error('SetupManager: the name of the process of the installation was not found.');
+            return;
+        }
+        new SwappProcess(1000).follow(process.value, async () => this.#submitCompleteForm());
     }
 
     // ------------------------------------------------------------------------
@@ -311,6 +315,17 @@ export default class SetupManager extends BaseManager {
      */
     #submitResetForm() {
         this.submitForm('event_bake', 'reset');
+    }
+
+    // ----------------------------------------------------------------------
+
+    /**
+     * Ask for the completed installation by submitting a hidden POST form.
+     *
+     * @returns {void}
+     */
+    #submitCompleteForm() {
+        this.submitForm('event_bake', 'complete');
     }
 
     // ----------------------------------------------------------------------

@@ -172,13 +172,12 @@ class swappDashboardView(swappBaseView):
     # -----------------------------------------------------------------------
 
     def _populate_body_nav(self):
-        """Override. Populate the nav area of the Dashboard page.
+        """Override. Append the items of the Dashboard to the menu, in a section of their own.
 
         """
-        self.append_home_link_button(self._htree.body_nav, self._home_target())
-        self.append_help_button(self._htree.body_nav)
-        self.append_trace_link_button(self._htree.body_nav)
-        self.append_exit_button(self._htree.body_nav)
+        _s = TagNode(self._htree.body_nav.identifier, None, "section")
+        self._htree.body_nav.append_child(_s)
+        self.append_exit_button(_s)
 
     # -----------------------------------------------------------------------
 

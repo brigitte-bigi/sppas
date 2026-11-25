@@ -40,6 +40,7 @@
 """
 
 from __future__ import annotations
+import logging
 
 from sppas.core.coreutils import sppasBaseProgress
 
@@ -74,6 +75,7 @@ class swappProcessProgress(sppasBaseProgress):
 
         """
         self._header = str(header)
+        logging.info(self._header)
         self.__write(False)
 
     # -----------------------------------------------------------------------
@@ -88,6 +90,7 @@ class swappProcessProgress(sppasBaseProgress):
         if percent is not None:
             self._percent = percent
         if message is not None:
+            logging.info("  => " + message)
             self._text = str(message)
         self.__write(False)
 

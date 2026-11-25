@@ -162,16 +162,22 @@ class swappTraceView(swappBaseView):
 
     # -----------------------------------------------------------------------
 
+    def _has_help(self) -> bool:
+        """Override. A page has no help: the Help button of the menu is disabled."""
+        return False
+
+    # -----------------------------------------------------------------------
+
     def _populate_body_nav(self):
-        """Override. Populate the nav area of the page.
+        """Override. Append the Close button of the Journal to the menu, in a section of its own.
 
         """
         # The Journal has its own tab: its Dashboard button switches to the
-        # tab of the Dashboard -- see _home_target() -- instead of turning
-        # this one into it.
-        self.append_home_link_button(self._htree.body_nav, self._home_target())
-        self.append_help_link_button(self._htree.body_nav)
-        self.__append_close_button(self._htree.body_nav, self._home_target())
+        # tab of the Dashboard -- see _home_target() -- and closing it brings
+        # that tab forward.
+        _s = TagNode(self._htree.body_nav.identifier, None, "section")
+        self._htree.body_nav.append_child(_s)
+        self.__append_close_button(_s, self._home_target())
 
     # -----------------------------------------------------------------------
 

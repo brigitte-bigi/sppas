@@ -59,6 +59,7 @@ from .swapp_help import HELP_TASK
 from .swapp_help import BACK_TASK
 from .swapp_help_button import swappHelpButton
 from .swapp_help_button import HELP_BUTTON_ID
+from .swapp_view import NAV_COMMON_ID
 from .swapp_process import swappProcess
 from .swapp_process import PROGRESS_EVENT
 from .swapp_process import PROCESS_FIELD
@@ -197,7 +198,10 @@ class swappBaseResponse(BaseResponseRecipe):
         :param back: (bool) True when the help is the view which is answered
 
         """
-        button = self._htree.body_nav.get_child(HELP_BUTTON_ID)
+        section = self._htree.body_nav.get_child(NAV_COMMON_ID)
+        if section is None:
+            return
+        button = section.get_child(HELP_BUTTON_ID)
         if isinstance(button, swappHelpButton) is True:
             button.set_back(back)
 

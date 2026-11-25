@@ -147,11 +147,9 @@ class swappAnnotateView(swappBaseView):
 
     # -----------------------------------------------------------------------
 
-    def _populate_body_nav(self):
-        """Override. Populate the nav area of the page."""
-        self.append_home_link_button(self._htree.body_nav, self._home_target())
-        self.append_help_button(self._htree.body_nav, self.__form_id)
-        self.append_trace_link_button(self._htree.body_nav)
+    def _form_id(self) -> str:
+        """Override. Return the identifier of the form which carries the record of the app."""
+        return self.__form_id
 
     # -----------------------------------------------------------------------
 

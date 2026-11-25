@@ -71,7 +71,7 @@ ID_DESTINATION_SECTION = "convert_destination_section"
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Convert")
 MSG_TITLE = _("Conversion options")
 MSG_DESTINATION_TITLE = _("Destination format")
-MSG_PROGRESS = _("Conversion:")
+MSG_PROGRESS = _("Conversion")
 MSG_INTRO = _("Convert writes annotated files into another format. Choose the destination "
               "format, add the files to convert, then convert. What the chosen format does not "
               "support is said beside the list of formats.")
@@ -165,11 +165,9 @@ class swappConvertView(swappBaseView):
 
     # -----------------------------------------------------------------------
 
-    def _populate_body_nav(self):
-        """Override. Populate the nav area of the page."""
-        self.append_home_link_button(self._htree.body_nav, self._home_target())
-        self.append_help_button(self._htree.body_nav, self.__form_id)
-        self.append_trace_link_button(self._htree.body_nav)
+    def _form_id(self) -> str:
+        """Override. Return the identifier of the form which carries the record of the app."""
+        return self.__form_id
 
     # -----------------------------------------------------------------------
 
@@ -276,12 +274,12 @@ class swappConvertView(swappBaseView):
         # name of the report the results are read in, which the form transmits.
         if _shown.get("converting", False) is True:
             # The text of the progress is given its node: the page writes in
-            # it how many files have their result. The bar is named by a label.
+            # it how many files have their result. The bar measures the whole
+            # conversion, and it is named so for a screen reader only.
             _progress = swappProgressBar(_section.identifier)
             _progress.update(message="")
             _bar = _progress.get_node()
-            _bar.insert_child(0, HTMLNode(_bar.identifier, None, "label", value=MSG_PROGRESS,
-                                          attributes={"for": "percent_progress"}))
+            _bar.get_child("percent_progress").add_attribute("aria-label", MSG_PROGRESS)
             _section.append_child(_bar)
             _section.append_child(EmptyNode(_section.identifier, None, "input",
                                             attributes={"type": "hidden", "form": ID_FORM,

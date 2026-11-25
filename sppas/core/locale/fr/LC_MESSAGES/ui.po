@@ -904,6 +904,9 @@ msgstr "Format de destination"
 msgid "Conversion:"
 msgstr "Conversion :"
 
+msgid "Conversion"
+msgstr "Conversion"
+
 msgid "Convert writes annotated files into another format. Choose the destination format, add the files to convert, then convert. What the chosen format does not support is said beside the list of formats."
 msgstr "Convert écrit des fichiers annotés dans un autre format. Choisissez le format de destination, ajoutez les fichiers à convertir, puis convertissez. Ce que le format choisi ne supporte pas est indiqué à côté de la liste des formats."
 

@@ -182,11 +182,6 @@ class swappSetupFieldsets:
         # Return the previous field, or the current if no previous
         return self.create(prev_index)
 
-    # -----------------------------------------------------------------------
-
-    def get_progress(self) -> object:
-        """Return the progress of the installation or None."""
-        return self.__install.get_progress()
 
     # -----------------------------------------------------------------------
     # Overloads

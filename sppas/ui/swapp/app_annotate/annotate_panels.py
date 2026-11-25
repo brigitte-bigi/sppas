@@ -95,7 +95,6 @@ MSG_OPTIONS_OF = _("Options of {:s}")
 MSG_OPTIONS = _("Options")
 MSG_FILES_TITLE = _("Add files")
 MSG_LOG_TITLE = _("Procedure outcome report")
-MSG_PROGRESS = _("Progress:")
 MSG_REPORT_FILE = _("Report file:")
 MSG_RESULTS = _("Results")
 MSG_RESULTS_CAPTION = _("One line per root of the batch")
@@ -722,14 +721,14 @@ class swappLogAnnotatePanel(TagNode):
 
         _holder = self
         if running is True:
-            # The text of the progress is given its node, and the bar is named
-            # by a label. The header is given its node as well: it holds the
-            # annotation which is running, and nothing before the first one.
+            # The text of the progress is given its node. The bar measures the
+            # whole run, and it is named so for a screen reader only. The
+            # header is given its node as well: it holds the annotation which
+            # is running, and nothing before the first one.
             _progress = swappProgressBar(self.identifier)
             _progress.update(message="")
             _bar = _progress.get_node()
-            _bar.insert_child(0, HTMLNode(_bar.identifier, None, "label", value=MSG_PROGRESS,
-                                          attributes={"for": "percent_progress"}))
+            _bar.get_child("percent_progress").add_attribute("aria-label", MSG_STEP_RUN)
             _bar.insert_child(0, HTMLNode(_bar.identifier, "progress_header", "h3",
                                           attributes={"id": "progress_header"}))
             self.append_child(_bar)

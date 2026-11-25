@@ -42,10 +42,11 @@ from __future__ import annotations
 import sys
 import traceback
 import logging
-from threading import Thread
 
 from sppas.core import cfg
 from sppas.core.preinstall import sppasInstallerDeps
+
+from ..swapp_base.swapp_process import swappProcess
 
 # ---------------------------------------------------------------------------
 
@@ -69,8 +70,8 @@ class swappSetupModel:
         The installer is None until reset() is invoked.
 
         """
-        # Create the thread for the installation process
-        self.__th = Thread(target=self.__install_features)
+        # The process the installation is performed in: none before the first one.
+        self.__process = None
 
         # Declare members
         self.__installer = None
@@ -94,7 +95,7 @@ class swappSetupModel:
 
     def reset(self):
         """Reset all. """
-        if self.__th.is_alive():
+        if self.is_installation_running() is True:
             return
 
         self.__installer = None
@@ -178,23 +179,30 @@ class swappSetupModel:
     # -----------------------------------------------------------------------
 
     def is_installation_running(self):
-        """Return true if the installation is currently running."""
-        return self.__th.is_alive()
+        """Return true if the installation is currently running.
+
+        It is read in the file of the process, which says it has ended once
+        the installer has returned.
+
+        """
+        if self.__process is None:
+            return False
+        _percent, _header, _text, _finished = self.__process.read()
+
+        return _finished is False
 
     # -----------------------------------------------------------------------
 
-    def installation_start(self, progress):
-        """Start the installation in a thread.
+    def installation_start(self) -> str:
+        """Start the installation as a process of swapp.
 
-        :param progress: (sppasBaseProgress|None) Progress object or None
         :raises: RuntimeError: The installation was already running.
+        :return: (str) The name of the process, which the page follows
 
         """
         # Already installing
-        if self.__th.is_alive() is True:
+        if self.is_installation_running() is True:
             raise RuntimeError("The installation is already running.")
-
-        self.__installer.set_progress(progress)
 
         # Log
         logging.info("--- Selected features for installation ---")
@@ -206,14 +214,21 @@ class swappSetupModel:
         # Start the installation process
         # It is not allowed to be stopped, only killed with the app
         self.__errors = ""
-        self.__th = Thread(target=self.__install_features)
-        self.__th.daemon = True  # If the main thread is killed, this thread will be killed as well.
-        self.__th.start()
+        self.__process = swappProcess.start(self.__install_features, ())
+
+        return self.__process.name
 
     # -----------------------------------------------------------------------
-    # The method for the thread -- private
+    # The method for the process -- private
     # -----------------------------------------------------------------------
 
-    def __install_features(self):
-        """Install all the enabled features, of any type."""
+    def __install_features(self, progress=None):
+        """Install all the enabled features, of any type.
+
+        It is what the process performs, in its thread.
+
+        :param progress: (swappProcessProgress) The progress of the process
+
+        """
+        self.__installer.set_progress(progress)
         self.__errors = self.__installer.install()
