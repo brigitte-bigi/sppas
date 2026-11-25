@@ -47,6 +47,7 @@ from html.parser import HTMLParser
 
 from sppas.ui.swapp.swapp_base.swapp_help_button import HELP_BUTTON_ID
 from sppas.ui.swapp.app_annotate.annotate_maker import swappAnnotateResponseRecipe
+from sppas.ui.swapp.app_plugins.plugins_maker import swappPluginsResponseRecipe
 from sppas.ui.swapp.app_convert.convert_maker import swappConvertResponseRecipe
 from sppas.ui.swapp.app_dashboard.dashboard_maker import swappDashboardResponseRecipe
 from sppas.ui.swapp.app_setup.setup_maker import swappSetupResponseRecipe
@@ -116,6 +117,7 @@ class TestNav(unittest.TestCase):
         """The Help of an app is a button which sends the form of the app, or a form of its own."""
         expected = ((swappDashboardResponseRecipe, ["exit-menu"]),
                     (swappAnnotateResponseRecipe, None),
+                    (swappPluginsResponseRecipe, None),
                     (swappConvertResponseRecipe, None),
                     (swappSetupResponseRecipe, ["link-sppas_button"]),
                     (swappTestsResponseRecipe, None),

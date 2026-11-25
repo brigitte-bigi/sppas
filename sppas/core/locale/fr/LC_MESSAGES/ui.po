@@ -41,6 +41,9 @@ msgstr "Convertir"
 msgid "Plugins"
 msgstr "Plugins"
 
+msgid "Installs plugins, and runs one of them on files."
+msgstr "Installe des plugins, et en lance un sur des fichiers."
+
 msgid "Exit"
 msgstr "Quitter"
 

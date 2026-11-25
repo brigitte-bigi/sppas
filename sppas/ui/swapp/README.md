@@ -42,7 +42,9 @@ everything which is worth doing; the code may do a part of it only, and what
 is designed and not written yet raises `NotImplementedError` where it is to be
 written. A place is kept that way, and nothing is patched in later.
 
-- `app_plugins/`, `app_annotate/`: the design document only, no code yet;
+- `app_annotate/`: holds its code;
+- `app_plugins/`: the design document, and the shell of the app: a page which
+  shows its nav and its help, and nothing else yet;
 - `app_convert/`: holds its code; the remediation of what a format cannot
   hold is designed and not written;
 - `services/deposit/`, `services/files/`: hold their code;

@@ -56,6 +56,7 @@ from sppas.ui.swapp.swapp_base.swapp_help_button import HELP_BUTTON_ID
 from sppas.ui.swapp.swapp_base.swapp_process import swappProcess
 from sppas.ui.swapp.swapp_base.swapp_process import PROCESS_FIELD
 from sppas.ui.swapp.app_annotate.annotate_maker import swappAnnotateResponseRecipe
+from sppas.ui.swapp.app_plugins.plugins_maker import swappPluginsResponseRecipe
 from sppas.ui.swapp.app_convert.convert_maker import swappConvertResponseRecipe
 from sppas.ui.swapp.app_dashboard.dashboard_maker import swappDashboardResponseRecipe
 from sppas.ui.swapp.app_setup.setup_maker import swappSetupResponseRecipe
@@ -75,6 +76,7 @@ APPS = ((swappDashboardResponseRecipe, HELP_FORM_ID, True),
         (swappSetupResponseRecipe, HELP_FORM_ID, False),
         (swappConvertResponseRecipe, "convert_form", True),
         (swappAnnotateResponseRecipe, "annotate_form", True),
+        (swappPluginsResponseRecipe, HELP_FORM_ID, True),
         (swappTestsResponseRecipe, HELP_FORM_ID, False))
 
 # ---------------------------------------------------------------------------
