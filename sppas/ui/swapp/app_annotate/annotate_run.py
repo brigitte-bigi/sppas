@@ -138,6 +138,9 @@ class swappModelRun:
         # Online, the report written beside the files of the batch: it is
         # given back with what was produced.
         self.__report = ""
+        # The name of the report of the run which is going: a page asked for
+        # while it goes follows it.
+        self.__report_name = ""
 
     # -----------------------------------------------------------------------
 
@@ -186,8 +189,9 @@ class swappModelRun:
         self.__roots = _roots
         self.__results = list()
         self.__manager = sppasAnnotationsManager(parameters, self.__progress, merge)
+        self.__report_name = os.path.basename(_report)
 
-        return os.path.basename(_report)
+        return self.__report_name
 
     # -----------------------------------------------------------------------
 
@@ -204,6 +208,14 @@ class swappModelRun:
 
         self.__give_back()
         return False
+
+    # -----------------------------------------------------------------------
+
+    def report_name(self) -> str:
+        """Return the name of the report of the run going, empty if none (str)."""
+        if self.is_running() is False:
+            return ""
+        return self.__report_name
 
     # -----------------------------------------------------------------------
 
@@ -276,4 +288,5 @@ class swappModelRun:
             self.__filenames = list()
             self.__roots = list()
             self.__report = ""
+            self.__report_name = ""
             self.__progress = None

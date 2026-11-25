@@ -233,6 +233,11 @@ class swappAnnotateController:
             self.__record.show("configured", _key)
             self.__record.show("options", self.__options.container())
 
+        # The run which is going is the one the page follows, whatever the
+        # page transmitted: the server holds it.
+        if self.__model.is_running() is True:
+            self.__record.followed = self.__model.report_name()
+
         # While the annotations are performed, the page shows the progress,
         # and the report under it as it fills: what is not written yet is
         # not there to be read.

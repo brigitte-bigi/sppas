@@ -99,6 +99,12 @@ class swappAnnotateModel:
 
     # -----------------------------------------------------------------------
 
+    def report_name(self) -> str:
+        """Return the name of the report of the run going, empty if none (str)."""
+        return self.__run.report_name()
+
+    # -----------------------------------------------------------------------
+
     def progress(self) -> tuple:
         """Return where the run stands.
 

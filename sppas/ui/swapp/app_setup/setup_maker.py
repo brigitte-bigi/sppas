@@ -130,6 +130,12 @@ class swappSetupResponseRecipe(swappBaseResponse):
         return "setup.html"
 
     # -----------------------------------------------------------------------
+
+    def is_running(self) -> bool:
+        """Override. Return True while an installation goes (bool)."""
+        return self.__controller.is_installation_running()
+
+    # -----------------------------------------------------------------------
     # Callbacks
     # -----------------------------------------------------------------------
 
@@ -339,8 +345,11 @@ class swappSetupResponseRecipe(swappBaseResponse):
             self._htree = swappHTMLTreeError410()
 
         elif self._status.code in (200, 205):
+            # An installation is modal: a page asked for while it goes has no
+            # action available.
             _install = self.__controller.is_installation_next()
-            self.__controller.update_tree_content(actions=True, install=_install)
+            _actions = self.__controller.is_installation_running() is False
+            self.__controller.update_tree_content(actions=_actions, install=_install)
 
         elif self._status.code == 202:
             # Installation started

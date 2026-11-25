@@ -68,3 +68,16 @@
 #convert_section [aria-labelledby="convert_results_h"] [data-icon="no"] {
     color: var(--error-color);
 }
+
+/*
+================================  CONVERSION  ================================
+*/
+
+/* While a conversion runs, the page shows its progress and nothing else. The
+   rest stays in the page, out of sight: the form still carries what was
+   decided when the results are asked for, and they take the place of the
+   progress as they did. */
+#main-content:has(#progress_section) > :not(#convert_section):not(dialog),
+#convert_section:has(#progress_section) > :not(#progress_section) {
+    display: none;
+}

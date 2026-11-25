@@ -55,6 +55,7 @@ from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
 from ..nodes.feedback.exit_dialog import swappExitWaitDialog
 from .swapp_help import swappHelpNode
 from .swapp_help import HELP_TASK
+from .swapp_help import BACK_TASK
 from .swapp_help_button import swappHelpButton
 from .swapp_help_button import HELP_BUTTON_ID
 
@@ -120,6 +121,17 @@ class swappBaseResponse(BaseResponseRecipe):
 
         """
         return ""
+
+    # -----------------------------------------------------------------------
+
+    def is_running(self) -> bool:
+        """Return True while a long treatment of the app goes.
+
+        False by default: the app has no long treatment. An app which has one
+        -- a run, a conversion, an installation -- overrides it.
+
+        """
+        return False
 
     # -----------------------------------------------------------------------
 
@@ -282,6 +294,12 @@ class swappBaseResponse(BaseResponseRecipe):
             contrast = events.pop("accessibility_contrast")
             if contrast in CONTRAST_NAMES:
                 swapp_settings.accessibility_contrast = contrast
+
+        # A long treatment is modal: while it goes, the help is not shown, and
+        # asking for it is going back to the default view of the app, which
+        # then is the progress.
+        if events.get("event_bake") == HELP_TASK and self.is_running() is True:
+            events["event_bake"] = BACK_TASK
 
         # The help of an app is one of its views, the same for every app: it
         # is answered here, and the app is asked nothing. What the form of the

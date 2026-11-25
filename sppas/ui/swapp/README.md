@@ -307,6 +307,34 @@ A page is not concerned: the Journal keeps the Help button of the nav,
 disabled. The `app_wkps/` app is not concerned either while it is reworked:
 its bakery is not a `swappBaseResponse`.
 
+### How a long treatment holds the page
+
+A long treatment of an app -- the run of Annotate, the conversion of Convert,
+the installation of Setup -- is modal: while it goes, the page shows its
+progress, and nothing else of the app answers. The sign of it is the progress
+bar, `percent_progress`, which the server writes while the treatment goes,
+and only then.
+
+The boot shared by all the pages watches the main content, because a treatment
+starts and ends without the page being loaded again. While the progress is
+there, the items of the nav which leave the page or send something are `inert`:
+out of reach of the mouse, of the keyboard and of a screen reader, and a key
+which would click one of them is taken in the capture phase. What changes the
+look of the page stays available -- the pin of the menu, the theme, the
+contrast, the color: it touches nothing of the treatment. An inert item is not
+dimmed, as no disabled item of the nav is.
+
+The bakery of an app whose server holds the treatment says whether it goes,
+with `is_running()` of `swappBaseResponse`, False by default: Annotate holds
+its run, and Setup its installation. While one goes, the help is not
+answered: asking for it is going back to the default view of the app, which
+then is the progress. A page asked for while it goes, after a reload for
+instance, shows its progress and follows it.
+
+Convert holds nothing of a conversion on the server, as its document requires:
+its page follows the conversion by the report it names, and its sheet shows
+the progress alone while it is in the page.
+
 ### How a page is shown
 
 The reader chooses a theme, a color scheme and a contrast one. The three

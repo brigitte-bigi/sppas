@@ -152,6 +152,33 @@ JS_BOOT_PAGE = (
     "        });"
     "    }"
 
+    # A long treatment of an app is modal: while the page shows its progress,
+    # what leaves the page or sends something from the nav is out of reach.
+    # What changes the look of the page is not: it touches nothing of the
+    # treatment. A treatment starts and ends without the page being loaded
+    # again: the main content is watched.
+    "    const appearance = ['pin-menu', 'btn-css-theme', 'btn-contrast', 'btn-color'];"
+    "    const holdTreatment = function () {"
+    "        const nav = document.getElementById('nav-content');"
+    "        if (nav === null) { return; }"
+    "        const running = document.getElementById('percent_progress') !== null;"
+    "        nav.querySelectorAll('a, button').forEach(function (item) {"
+    "            if (appearance.includes(item.id) === false) { item.inert = running; }"
+    "        });"
+    "    };"
+    "    holdTreatment();"
+    "    const main = document.getElementById('main-content');"
+    "    if (main !== null) {"
+    "        new MutationObserver(holdTreatment).observe(main, {childList: true, subtree: true});"
+    "    }"
+    # An inert element answers nothing, not even the key which clicks it.
+    "    document.addEventListener('click', function (event) {"
+    "        if (event.target instanceof Element && event.target.closest('[inert]') !== null) {"
+    "            event.preventDefault();"
+    "            event.stopImmediatePropagation();"
+    "        }"
+    "    }, true);"
+
     # SPPAS closes as a whole: every page asks the server where the exit
     # stands, shows the same modal dialog while the other interface has not
     # answered, and goes to the last page when it has. The dialog is shown

@@ -105,6 +105,12 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
 
     # -----------------------------------------------------------------------
 
+    def is_running(self) -> bool:
+        """Override. Return True while a run goes (bool)."""
+        return self.__model.is_running()
+
+    # -----------------------------------------------------------------------
+
     @classmethod
     def page(cls) -> str:
         """Override. Return the HTML page name."""
