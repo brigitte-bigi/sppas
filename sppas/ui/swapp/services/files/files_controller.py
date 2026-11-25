@@ -115,8 +115,10 @@ class swappFilesController:
         # What the record held before the one being built: a caller which
         # sends nothing of the page keeps what the page last transmitted.
         self.__record_before = self.__record
-        # The files an app treated: an app says so, and not a page.
+        # The files an app treated, and those it produced: an app says so,
+        # and not a page.
         self.__treated = list()
+        self.__produced = list()
 
     # -----------------------------------------------------------------------
 
@@ -209,6 +211,10 @@ class swappFilesController:
             self.__treated = list(self.__record.treated)
         else:
             self.__record.treated = list(self.__treated)
+        if "produced" in data:
+            self.__produced = list(self.__record.produced)
+        else:
+            self.__record.produced = list(self.__produced)
         if self.__record.workspace is not None:
             self.__model.works_on(self.__record.workspace)
 
@@ -256,6 +262,7 @@ class swappFilesController:
 
         """
         self.__treated = list()
+        self.__produced = list()
         self.__model.works_on(swappWorkspaceFiles.make_workspace())
         self.__record = swappFilesRecord()
         self.__record.reachable = self.__reachable
@@ -274,6 +281,19 @@ class swappFilesController:
             if _name not in self.__treated:
                 self.__treated.append(_name)
         self.__record.treated = list(self.__treated)
+
+    # -----------------------------------------------------------------------
+
+    def produced(self, filenames: list) -> None:
+        """Say these files were produced by an app: they are not of the files she gave.
+
+        :param filenames: (list of str) Names of the files, with their path
+
+        """
+        for _name in filenames:
+            if _name not in self.__produced:
+                self.__produced.append(_name)
+        self.__record.produced = list(self.__produced)
 
     # -----------------------------------------------------------------------
 

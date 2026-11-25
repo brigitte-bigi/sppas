@@ -371,6 +371,10 @@ class swappDepositView(swappFilesBaseView):
                          attributes={"class": "cards-panel"})
         _zone.append_child(_panel)
         for _filename in swappDepositView.__known_filenames(record):
+            # What an app produced is shown by that app, and not here: the
+            # list holds the files she gave.
+            if _filename in record.produced:
+                continue
             _treated = _filename in record.treated
             _card, _header, _body, _footer = swappDepositView.__append_card(_panel)
             swappDepositView.__append_state(_header, _treated, True, _card)

@@ -83,6 +83,7 @@ class swappFilesRecord:
         self.__place = ""
         self.__deposited = list()
         self.__treated = list()
+        self.__produced = list()
         self.__to_be_shown = dict()
 
     # -----------------------------------------------------------------------
@@ -97,6 +98,7 @@ class swappFilesRecord:
         self.__place = ""
         self.__deposited = list()
         self.__treated = list()
+        self.__produced = list()
         self.__to_be_shown = dict()
 
     # -----------------------------------------------------------------------
@@ -122,6 +124,7 @@ class swappFilesRecord:
         _data["fed"] = json.dumps(_fed)
         _data["deposited"] = json.dumps(self.__deposited)
         _data["treated"] = json.dumps(self.__treated)
+        _data["produced"] = json.dumps(self.__produced)
         if self.__workspace is not None:
             _wjson = sppasWJSON()
             _wjson.set(self.__workspace)
@@ -163,6 +166,7 @@ class swappFilesRecord:
         self.__workspace = swappFilesRecord.__workspace_entry(data)
         self.__deposited = swappFilesRecord.__names_entry(data, "deposited")
         self.__treated = swappFilesRecord.__treated_entry(data)
+        self.__produced = swappFilesRecord.__names_entry(data, "produced")
 
     # -----------------------------------------------------------------------
 
@@ -391,6 +395,27 @@ class swappFilesRecord:
 
     # -----------------------------------------------------------------------
 
+    def get_produced(self) -> list:
+        """Return the names of the files an app produced (list of str)."""
+        return self.__produced
+
+    # -----------------------------------------------------------------------
+
+    def set_produced(self, names: list) -> None:
+        """Set the names of the files an app produced.
+
+        :param names: (list of str) Names of the files, with their path
+        :raises: sppasTypeError: The given names are not a list
+
+        """
+        if isinstance(names, list) is False:
+            raise sppasTypeError(names, "list")
+        self.__produced = list()
+        for _name in names:
+            self.__produced.append(str(_name))
+
+    # -----------------------------------------------------------------------
+
     def get_to_be_shown(self) -> dict:
         """Return what is to be shown.
 
@@ -517,4 +542,5 @@ class swappFilesRecord:
     workspace = property(get_workspace, set_workspace)
     deposited = property(get_deposited, set_deposited)
     treated = property(get_treated, set_treated)
+    produced = property(get_produced, set_produced)
     to_be_shown = property(get_to_be_shown, set_to_be_shown)

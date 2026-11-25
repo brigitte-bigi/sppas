@@ -177,6 +177,14 @@ class swappFilesManager:
         """
         _produced = self.__model.produced(workspace)
 
+        # They are known to the workspace among the files she gave, and
+        # they are not of them.
+        _names = list()
+        for _root in _produced:
+            for _name in _produced[_root]:
+                _names.append(_name)
+        self.__controller.produced(_names)
+
         return _produced
 
     # -----------------------------------------------------------------------

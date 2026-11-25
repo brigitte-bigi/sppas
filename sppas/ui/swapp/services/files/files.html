@@ -1911,6 +1911,14 @@
 		</p>
 
 		<p>
+			Where the files stand already, the list is read in the workspace, and the
+			workspace holds what an app produced beside the files she gave (T04). The
+			record carries the names of what was produced, as it carries the names of
+			what was treated: an app says so, and not a page. The view leaves them out
+			of the list.
+		</p>
+
+		<p>
 			<b>The record carries the answer to the second question as well</b> &mdash;
 			whether a workspace holds the files to be treated. The organizational
 			level says that question is answered by looking; what looks is the one
@@ -2272,7 +2280,7 @@
 			<thead><tr><th>Class</th><th>Attributes</th><th>Operations</th></tr></thead>
 			<tbody>
 				<tr><td><code>FilesController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
-				<tr><td><code>FilesRecord</code></td><td>task, reachable, has_workspace, workspace, fed, to_be_shown</td><td>serialize(), parse(data)</td></tr>
+				<tr><td><code>FilesRecord</code></td><td>task, reachable, has_workspace, place, workspace, fed, deposited, treated, produced, to_be_shown</td><td>serialize(), parse(data)</td></tr>
 				<tr><td colspan="3">A record comes from no table: it is what one request holds, it serializes itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
 				<tr><td><code>FilesManager</code></td><td>&mdash;</td><td>files_for_app(), lock(), release(), produced(), consumes(events), is_ready(), start_over(), populate_view()</td></tr>
 			</tbody>
@@ -2303,7 +2311,7 @@
 		<pre class="dark"><code>[FilesManager|files_for_app();lock();release();produced();consumes();is_ready();start_over();populate_view()]++1-1&gt;[FileProvision]
 [FilesManager]++1-1&gt;[FilesController|record|handle();populate_view()]
 [FilesManager]++1-1&gt;[DepositView]
-[FilesController]++1-1&gt;[FilesRecord|task;reachable;has_workspace;workspace;fed;to_be_shown|serialize();parse()]
+[FilesController]++1-1&gt;[FilesRecord|task;reachable;has_workspace;place;workspace;fed;deposited;treated;produced;to_be_shown|serialize();parse()]
 
 [FilesController]-.-&gt;[FileProvision]
 
