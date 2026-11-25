@@ -148,7 +148,7 @@ class swappSetupView(swappBaseView):
         self._htree.body_nav.append_child(_s)
 
         self.append_home_link_button(self._htree.body_nav, self._home_target())
-        self.append_help_link_button(self._htree.body_nav)
+        self.append_help_button(self._htree.body_nav)
         self.append_trace_link_button(self._htree.body_nav)
         self.append_sppas_link_button(self._htree.body_nav)
 

@@ -823,7 +823,7 @@
 
 		<ul>
 			<li><code>app_annotate.py</code> -- <code>swappAnnotateWebData</code>, which answers which
-				page it can bake: the page of the application, and the one of this document.</li>
+				page it can bake: the page of the application.</li>
 			<li><code>annotate_maker.py</code> -- <code>swappAnnotateResponseRecipe</code>, the bakery
 				of <code>annotate.html</code>: it holds the model, receives the events, answers the
 				progress and the report alone, and decides whether the page is created again.</li>
@@ -921,6 +921,13 @@
 				<li><code>annotate_delete_checked</code> and <code>annotate_delete_unchecked</code> --
 					locally, the checked report is deleted, or every other one.</li>
 			</ul>
+
+			<p>
+				The help is not a task of Annotate: <code>swapp_help</code> is answered by the base
+				recipe, as for every app, with this document in place of the panel, and the form
+				carrying the record hidden. Its way back, <code>swapp_back</code>, is a task the
+				controller does not know: the record is parsed, and the six steps are shown with it.
+			</p>
 
 			<p>
 				One run at a time: while one goes, <code>annotate_perform</code>,

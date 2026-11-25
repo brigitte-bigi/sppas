@@ -45,7 +45,6 @@ from .configuration_maker import swappConfigurationResponseRecipe
 from .feedback_maker import swappFeedbackResponseRecipe
 from .not_found_maker import swappNotFoundResponseRecipe
 from .trace_maker import swappTraceResponseRecipe
-from .help_maker import swappHelpResponseRecipe
 from .pages_data import swappPagesData
 
 # -----------------------------------------------------------------------
@@ -57,6 +56,5 @@ __all__ = (
     "swappFeedbackResponseRecipe",
     "swappNotFoundResponseRecipe",
     "swappTraceResponseRecipe",
-    "swappHelpResponseRecipe",
     "swappPagesData"
 )

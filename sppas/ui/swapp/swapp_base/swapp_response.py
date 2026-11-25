@@ -53,6 +53,10 @@ from .swapp_head import COLOR_NAMES
 from .swapp_head import CONTRAST_NAMES
 from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
 from ..nodes.feedback.exit_dialog import swappExitWaitDialog
+from .swapp_help import swappHelpNode
+from .swapp_help import HELP_TASK
+from .swapp_help_button import swappHelpButton
+from .swapp_help_button import HELP_BUTTON_ID
 
 # ---------------------------------------------------------------------------
 
@@ -95,6 +99,30 @@ class swappBaseResponse(BaseResponseRecipe):
 
     # -----------------------------------------------------------------------
 
+    @classmethod
+    def help_document(cls) -> str:
+        """Return the path of the document of the app, relative to swapp.
+
+        Empty by default: the help of the app says that it is not written
+        yet. An app which has a document overrides it.
+
+        """
+        return ""
+
+    # -----------------------------------------------------------------------
+
+    @classmethod
+    def form_id(cls) -> str:
+        """Return the identifier of the form which carries the record of the app.
+
+        Empty by default: the app has no form, and its Help button is given
+        one of its own. An app which has one overrides it.
+
+        """
+        return ""
+
+    # -----------------------------------------------------------------------
+
     def get_pagename(self) -> str:
         """Return the name of the HTML page as seen in the URL."""
         return self._page_name
@@ -130,6 +158,22 @@ class swappBaseResponse(BaseResponseRecipe):
             names.remove("exit-waiting")
 
         self._htree.set_body_attribute("class", " ".join(names))
+
+    # -----------------------------------------------------------------------
+
+    def __set_help_button(self, back: bool) -> None:
+        """Make the Help button of the nav the way back from the help, or not.
+
+        The nav is built once, so it is the answer which says what the button
+        is, request after request. A page which is not an app has no such
+        button, and nothing is done.
+
+        :param back: (bool) True when the help is the view which is answered
+
+        """
+        button = self._htree.body_nav.get_child(HELP_BUTTON_ID)
+        if isinstance(button, swappHelpButton) is True:
+            button.set_back(back)
 
     # -----------------------------------------------------------------------
 
@@ -174,6 +218,9 @@ class swappBaseResponse(BaseResponseRecipe):
         way its reader left it. An empty value is the way it is shown by
         default. The theme of an application is its identity and not a
         preference: a name SPPAS does not carry is not kept.
+
+        The help of an app is answered here too, whatever the app: it is a
+        view the app is not asked for -- see swapp_help.py.
 
         :param events: (dict) The requested events to be processed
         :param headers: (dict) The headers of the http request received
@@ -236,6 +283,22 @@ class swappBaseResponse(BaseResponseRecipe):
             if contrast in CONTRAST_NAMES:
                 swapp_settings.accessibility_contrast = contrast
 
+        # The help of an app is one of its views, the same for every app: it
+        # is answered here, and the app is asked nothing. What the form of the
+        # app transmitted is carried by the help, and sent with the way back,
+        # which the app answers with its default view.
+        if events.get("event_bake") == HELP_TASK:
+            events.pop("event_bake")
+            self._status.code = 200
+            self.__set_help_button(True)
+            self._htree.body_main.clear_children()
+            self._htree.body_main.append_child(swappHelpNode(self._htree.body_main.identifier,
+                                                             self.help_document(),
+                                                             self.form_id(),
+                                                             events))
+            return self._htree.serialize()
+
+        self.__set_help_button(False)
         return super(swappBaseResponse, self).bake(events, headers)
 
     # -----------------------------------------------------------------------

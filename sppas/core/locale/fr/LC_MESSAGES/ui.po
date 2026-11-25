@@ -1216,3 +1216,8 @@ msgstr "INFO"
 
 msgid "IGNORED"
 msgstr "IGNORE"
+
+# swapp: the help of an app
+
+msgid "The help of this application is not written yet."
+msgstr "L'aide de cette application n'est pas encore écrite."

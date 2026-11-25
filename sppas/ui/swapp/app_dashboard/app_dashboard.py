@@ -43,18 +43,9 @@ import logging
 
 from whakerpy.httpd import BaseResponseRecipe
 
-from sppas.core.config import sg
-from sppas.ui import _
-
 from ..swapp_base.swapp_bakery import swappWebData
-from ..pages import swappHelpResponseRecipe
 
 from .dashboard_maker import swappDashboardResponseRecipe
-
-# ---------------------------------------------------------------------------
-
-
-MSG_HELP_TITLE = f"SPPAS {sg.__release__} » " + _("Dashboard") + " » " + _("Help")
 
 # ---------------------------------------------------------------------------
 
@@ -81,8 +72,7 @@ class swappDashboardWebData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        return page_name in (swappDashboardResponseRecipe.page(),
-                             swappDashboardResponseRecipe.help_page())
+        return page_name == swappDashboardResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 
@@ -98,12 +88,6 @@ class swappDashboardWebData(swappWebData):
 
         if page_name == swappDashboardResponseRecipe.page():
             return swappDashboardResponseRecipe()
-
-        if page_name == swappDashboardResponseRecipe.help_page():
-            return swappHelpResponseRecipe(swappDashboardResponseRecipe.help_document(),
-                                      swappDashboardResponseRecipe.help_page(),
-                                      MSG_HELP_TITLE,
-                                      "app_dashboard.css")
 
         # Any other page name
         return None

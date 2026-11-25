@@ -47,6 +47,7 @@ from whakerpy.htmlmaker import HTMLTree
 from sppas.core.config import sg
 
 from ..swapp_base.swapp_response import swappBaseResponse
+from ..swapp_base.swapp_help import BACK_TASK
 from ..swapp_core.swapp_app_info import swappWebApplicationInfo
 from ..swapp_core.swappsg import swapp_settings
 from ..swapp_core.swappsg import swapp_wxstate
@@ -128,15 +129,8 @@ class swappDashboardResponseRecipe(swappBaseResponse):
     # -----------------------------------------------------------------------
 
     @classmethod
-    def help_page(cls) -> str:
-        """Return the name of the page serving the document of this app."""
-        return "app_dashboard.html"
-
-    # -----------------------------------------------------------------------
-
-    @classmethod
     def help_document(cls) -> str:
-        """Return the path of the document of this app, relative to swapp."""
+        """Override. Return the path of the document of this app, relative to swapp."""
         return "app_dashboard/app_dashboard.htm"
 
     # -----------------------------------------------------------------------
@@ -157,7 +151,7 @@ class swappDashboardResponseRecipe(swappBaseResponse):
         """
         super().create()
         # self.enable_components(['Dialog'])
-        self.__view = swappDashboardView(self._htree, swappDashboardResponseRecipe.help_page())
+        self.__view = swappDashboardView(self._htree)
         self.__controller = swappDashboardController(self.__model, self.__view)
 
     # -----------------------------------------------------------------------
@@ -227,6 +221,10 @@ class swappDashboardResponseRecipe(swappBaseResponse):
                     self._data["launched"] = True
                     self._status.code = 200
                 return False
+
+            # --- Way back from the help: the page as it is ---
+            elif e == BACK_TASK:
+                pass
 
             else:
                 logging.error(f"Unknown event_bake={e}")

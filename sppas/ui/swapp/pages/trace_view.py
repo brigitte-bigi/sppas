@@ -144,13 +144,13 @@ class swappTraceView(swappBaseView):
     # -----------------------------------------------------------------------
 
     def _populate_head_css(self):
-        """Override. Populate the `<head>` section of the HTML tree for CSS links.
+        """Override. No stylesheet of its own.
 
-        The panel-view toggle needs Whakerexa's segmented control.
+        The panel-view toggle needs Whakerexa's segmented control, whose
+        sheet is loaded by the base view.
 
         """
-        self._htree.head.link("stylesheet", swapp_settings.wexa_statics + "css/togglegroup.css",
-                              link_type="text/css")
+        pass
 
     # -----------------------------------------------------------------------
 

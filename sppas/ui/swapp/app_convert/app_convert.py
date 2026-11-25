@@ -43,12 +43,10 @@ import logging
 
 from whakerpy.httpd import BaseResponseRecipe
 
-from sppas.core.config import sg
 from sppas.ui import _
 from sppas.ui.swapp import swappImagesAccess
 
 from ..swapp_base.swapp_bakery import swappWebData
-from ..pages import swappHelpResponseRecipe
 
 from .convert_maker import swappConvertResponseRecipe
 
@@ -56,7 +54,6 @@ from .convert_maker import swappConvertResponseRecipe
 
 MSG_NAME = _("Convert")
 MSG_DESCR = _("Writes annotated files into another format, and says what each format holds.")
-MSG_HELP_TITLE = f"SPPAS {sg.__release__} » " + _("Convert") + " » " + _("Help")
 
 # ---------------------------------------------------------------------------
 
@@ -113,8 +110,7 @@ class swappConvertWebData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        return page_name in (swappConvertResponseRecipe.page(),
-                             swappConvertResponseRecipe.help_page())
+        return page_name == swappConvertResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 
@@ -129,14 +125,5 @@ class swappConvertWebData(swappWebData):
         logging.info(f"Requested page name: {page_name}")
         if page_name == swappConvertResponseRecipe.page():
             return swappConvertResponseRecipe()
-
-        if page_name == swappConvertResponseRecipe.help_page():
-            return swappHelpResponseRecipe(swappConvertResponseRecipe.help_document(),
-                                           swappConvertResponseRecipe.help_page(),
-                                           MSG_HELP_TITLE,
-                                           "app_convert.css",
-                                           swappConvertResponseRecipe.page(),
-                                           MSG_NAME,
-                                           "app_convert")
 
         return None

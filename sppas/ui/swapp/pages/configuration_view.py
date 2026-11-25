@@ -47,7 +47,6 @@ from sppas.core.config import sg
 from sppas.core.config import cfg
 from sppas.ui import _
 from sppas.ui.swapp.swapp_base.swapp_view import swappBaseView
-from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -142,15 +141,14 @@ class swappConfigurationView(swappBaseView):
     # -----------------------------------------------------------------------
 
     def _populate_head_css(self):
-        """Override. Populate the `<head>` section of the HTML tree for CSS links.
+        """Override. No stylesheet of its own.
 
-        The toggle group of Whakerexa is the only component this page adds
-        to the shared stylesheets.
+        The toggle group of Whakerexa is the only component this page shows
+        beyond the shared stylesheets, and its sheet is loaded by the base
+        view.
 
         """
-        self._htree.head.link("stylesheet",
-                              swapp_settings.wexa_statics + "css/togglegroup.css",
-                              link_type="text/css")
+        pass
 
     # -----------------------------------------------------------------------
 

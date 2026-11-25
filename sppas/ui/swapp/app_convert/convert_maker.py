@@ -53,10 +53,12 @@ from ..swapp_core.swappsg import swapp_wxstate
 from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
 from ..services.files import swappFilesManager
 from ..services.files import swappWorkspaceFiles
+from ..swapp_base.swapp_help import BACK_TASK
 
 from .convert_model import swappConvertModel
 from .convert_view import swappConvertView
 from .convert_controller import swappConvertController
+from .convert_panels import ID_FORM
 
 # ---------------------------------------------------------------------------
 
@@ -101,16 +103,16 @@ class swappConvertResponseRecipe(swappBaseResponse):
     # -----------------------------------------------------------------------
 
     @classmethod
-    def help_page(cls) -> str:
-        """Return the name of the page serving the document of this app."""
-        return "app_convert.html"
+    def help_document(cls) -> str:
+        """Override. Return the path of the document of this app, relative to swapp."""
+        return "app_convert/app_convert.htm"
 
     # -----------------------------------------------------------------------
 
     @classmethod
-    def help_document(cls) -> str:
-        """Return the path of the document of this app, relative to swapp."""
-        return "app_convert/app_convert.htm"
+    def form_id(cls) -> str:
+        """Override. Return the identifier of the form carrying the record of the app."""
+        return ID_FORM
 
     # -----------------------------------------------------------------------
 
@@ -129,7 +131,7 @@ class swappConvertResponseRecipe(swappBaseResponse):
 
         """
         super().create()
-        self.__view = swappConvertView(self._htree, swappConvertResponseRecipe.help_page())
+        self.__view = swappConvertView(self._htree, swappConvertResponseRecipe.form_id())
 
         # The case the service is entered in: files stand already where SPPAS
         # reads them when the server is the local one -- the person designates
@@ -182,9 +184,9 @@ class swappConvertResponseRecipe(swappBaseResponse):
                 self.__manager.start_over()
 
             # --- Unknown event_bake ---
-            # The progress event to complete asks nothing more than what the
-            # controller did.
-            elif e != "complete":
+            # The progress event to complete, and the way back from the help,
+            # ask nothing more than what the controller did.
+            elif e != "complete" and e != BACK_TASK:
                 logging.error(f"Unknown event_bake={e}")
                 self._status.code = 205  # Reset Content
 

@@ -18,7 +18,9 @@ package.
 - `nodes/` holds the reusable HTML nodes, grouped by role:
   `buttons/`, `dialogs/`, `inputs/`, `layout/`, `feedback/`;
 - `swapp_base/` holds the base classes common to every app: `swapp_bakery.py`,
-  `swapp_response.py`, `swapp_view.py`, `swapp_head.py`;
+  `swapp_response.py`, `swapp_view.py`, `swapp_head.py`, and `swapp_help.py`
+  and `swapp_help_button.py`, the view of the help of any app and the button
+  of its nav;
 - `panels/` is a leftover and holds no composite panel: `links_panel.py`
   defines `swappBaseLinksNode`, the base node of the link cards, still used by the
   Dashboard and the About page, and `annot_param.py` defines
@@ -132,6 +134,9 @@ working data, and a life cycle. An app is implemented in its own `app_*`
 module, with its own URL and its own JavaScript manager.
 
 Examples: Dashboard, Setup.
+
+The help of an app is one of its views, and not a page: see "How the help
+of an app is shown".
 
 ### Page
 
@@ -253,6 +258,54 @@ app cards: only the pages declared with True get a link button in the
 preserves the accessibility parameters when navigating. The "Traces"
 page is declared with False: it is served, but reachable from the nav
 of the apps only.
+
+### How the help of an app is shown
+
+The help of an app is not a page: it is one of the views of the app, and the
+same one for every app. A page is entered and left with nothing kept, while an
+app carries its record in the form of its page: a help reached by a link would
+lose it.
+
+The Help button of the nav is written by `append_help_button()` of
+`swappBaseView`. It is a submit button: it sends the form which carries the
+record of the app, with `event_bake=swapp_help`. The bakery of an app names
+that form with `form_id()`, and gives it to its view. An app which has no form
+gets an empty one of its own, beside the button: its Help button works the same
+way, and the day it holds a record, it names its form.
+
+The help is answered by `bake()` of `swappBaseResponse`, before the app, which
+is asked nothing: the main content is replaced by the view of the help,
+`swappHelpNode` of `swapp_base/swapp_help.py`. It holds the document the bakery
+names with `help_document()` -- the user manual and the conceptual folder of
+the app, written by hand and served as it is -- or a text saying that it is not
+written yet. Its form takes the identifier of the form of the app, so that the
+Help button of the nav is tied to a form while the help is shown, and it carries
+hidden what the form of the app transmitted.
+
+Its Back button sends all of it again, with `event_bake=swapp_back`. Each app
+answers this task with its default view, built from the record it received: it
+asks nothing more of the app than any request which carries a record. The two
+names are declared once, in `swapp_base/swapp_help.py`.
+
+While the help is shown, the Help button of the nav is a Back button too: a
+help may be long, and the Back button of its top is out of sight once it is
+read. The button is a `swappHelpButton` (`swapp_base/swapp_help_button.py`):
+it keeps its identifier and its form, so that its key, `h`, opens the help and
+goes back from it, and only what it sends and what it says change. The nav is
+built once: `bake()` of `swappBaseResponse` sets the button at every request,
+as it sets the dialog of the exit.
+
+The help and the way back are navigations, whatever the app: the boot shared
+by all the pages takes their submission before the manager of the app, which
+would send it without leaving the page, and carries the accessibility
+parameters in the address. The same boot starts the Book extra of Whakerexa
+when the help is shown. The head of every page loads the stylesheet of the
+Book, and the one of the toggle group, which a document may show as its app
+does.
+
+A page is not concerned: the Journal keeps the Help button of the nav,
+disabled. The `app_wkps/` app is not concerned either while it is reworked:
+its bakery is not a `swappBaseResponse`.
 
 ### How a page is shown
 

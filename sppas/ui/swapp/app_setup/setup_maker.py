@@ -49,6 +49,7 @@ from sppas.core.coreutils import sppasLogFile
 from sppas.ui import _
 
 from ..swapp_base.swapp_response import swappBaseResponse
+from ..swapp_base.swapp_help import BACK_TASK
 from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
 
 from .setup_model import swappSetupModel
@@ -156,6 +157,10 @@ class swappSetupResponseRecipe(swappBaseResponse):
             # --- Action events to got out ---
             elif events["event_bake"] == "close":
                 self._status.code = 410
+
+            # --- Way back from the help: the page as it is ---
+            elif events["event_bake"] == BACK_TASK:
+                pass
 
             else:
                 logging.error("Unknown event_bake={:s}".format(events["event_bake"]))

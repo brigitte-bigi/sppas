@@ -38,6 +38,8 @@
 
 """
 
+from ..swapp_base.swapp_help import BACK_TASK
+
 from .tests_model import swappTestsModel
 from .tests_view import swappTestsView
 
@@ -71,7 +73,8 @@ class swappTestsController:
         :return: (bool) True when the page has to be baked again
 
         """
-        return False
+        # The way back from the help asks for the index again.
+        return events.get("event_bake") == BACK_TASK
 
     # -----------------------------------------------------------------------
 

@@ -41,6 +41,7 @@
 from __future__ import annotations
 from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
+from whakerpy.htmlmaker import TagNode
 
 from sppas.core.config import cfg
 from sppas.core.config import sg
@@ -56,6 +57,11 @@ from ..nodes.layout.hheader import swappHeader
 from ..nodes.layout.hfooter import swappFooter
 from ..nodes.feedback.exit_dialog import swappExitWaitDialog
 from .swapp_head import THEME_NAME
+from .swapp_help import HELP_TASK
+from .swapp_help import BACK_TASK
+from .swapp_help import HELP_ID
+from .swapp_help import HELP_FORM_ID
+from .swapp_help_button import swappHelpButton
 
 # ---------------------------------------------------------------------------
 
@@ -122,6 +128,29 @@ JS_BOOT_PAGE = (
     "            if (button !== null) { button.click(); }"
     "        }});"
     "    window.keyboard.init();"
+
+    # The help of an app and the way back from it are navigations, whatever
+    # the app: they are taken before the manager of the app, which would send
+    # them without leaving the page. The accessibility parameters are carried
+    # in the address, as they are for any other form which is sent.
+    "    document.addEventListener('submit', function (event) {"
+    "        const submitter = event.submitter;"
+    "        if (submitter === null || submitter === undefined || submitter.name !== 'event_bake') { return; }"
+    f"        if (submitter.value !== '{HELP_TASK}' && submitter.value !== '{BACK_TASK}') {{ return; }}"
+    "        event.stopImmediatePropagation();"
+    "        event.target.action = window.Wexa.accessibility.setUrlWithParameters(event.target.action);"
+    "    }, true);"
+
+    # The document of an app is written with the Book extra, which is
+    # imported when the help is shown only.
+    f"    if (document.getElementById('{HELP_ID}') !== null) {{"
+    "        import(window.WEXA_JS_PATH + '/extras/book.js').then(function (module) {"
+    "            const book = new module.Book('main-content');"
+    "            book.fillTable();"
+    "        }).catch(function (error) {"
+    "            console.error('The Book extra could not be loaded: ' + error);"
+    "        });"
+    "    }"
 
     # SPPAS closes as a whole: every page asks the server where the exit
     # stands, shows the same modal dialog while the other interface has not
@@ -271,6 +300,10 @@ class swappBaseView:
         theme_css.add_attribute("href", swapp_settings.css + "main_swapp_theme.css")
         theme_css.add_attribute("type", "text/css")
         self._htree.head.append_child(theme_css)
+        # The help of an app is one of its views: its document is written
+        # with the Book extra, and it may show a toggle group as its app does.
+        self._htree.head.link("stylesheet", swapp_settings.wexa_statics + "css/extras/book.css", link_type="text/css")
+        self._htree.head.link("stylesheet", swapp_settings.wexa_statics + "css/togglegroup.css", link_type="text/css")
         # Application CSS
         self._populate_head_css()
 
@@ -536,18 +569,14 @@ class swappBaseView:
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def append_help_link_button(parent: HTMLNode, page: str = "") -> HTMLNode:
-        """Create and append the button opening the document of the app.
+    def append_help_link_button(parent: HTMLNode) -> HTMLNode:
+        """Create and append the button of the help of a page, disabled.
 
-        One document per app holds both its user manual and its conceptual
-        folder.
-
-        An app whose document is not written yet gets the button disabled:
-        the place of the help is the same everywhere, whether or not there
-        is something to read.
+        The help is a view of an app, and a page is not an app: a page gets
+        the button disabled, because the place of the help is the same
+        everywhere, whether or not there is something to read.
 
         :param parent: (HTMLNode) the parent HTML node to append the button in
-        :param page: (str) Path of the document, empty while it is unwritten
         :return: (HTMLNode) the help link button node
 
         """
@@ -561,11 +590,35 @@ class swappBaseView:
         # What the label does not say: the key doing the same thing.
         _button.add_attribute("title", MSG_HELP + " (h)")
         _button.add_attribute("class", "menuitem")
-        if len(page) > 0:
-            _button.add_attribute("href", page)
-        else:
-            _button.add_attribute("aria-disabled", "true")
+        _button.add_attribute("aria-disabled", "true")
 
+        parent.append_child(_button)
+        return _button
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def append_help_button(parent: HTMLNode, form_id: str = "") -> HTMLNode:
+        """Create and append the button asking for the help of the app.
+
+        The help of an app is one of its views: the button sends the form of
+        the app, and what that form carries is given back to the app with the
+        way back from the help. While the help is shown, the button is that
+        way back. An app which has no form gets one of its own, empty,
+        appended beside the button.
+
+        :param parent: (HTMLNode) the parent HTML node to append the button in
+        :param form_id: (str) Identifier of the form of the app, empty if it has none
+        :return: (swappHelpButton) the help button node
+
+        """
+        _form_id = form_id
+        if len(_form_id) == 0:
+            _form_id = HELP_FORM_ID
+            parent.append_child(TagNode(parent.identifier, HELP_FORM_ID, "form",
+                                        attributes={"id": HELP_FORM_ID, "method": "post"}))
+
+        _button = swappHelpButton(parent.identifier, _form_id)
         parent.append_child(_button)
         return _button
 

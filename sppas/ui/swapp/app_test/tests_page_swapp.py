@@ -60,6 +60,7 @@ from sppas.ui.swapp.swapp_core.swappsg import wx_is_running
 from sppas.ui.swapp.swapp_core.swapp_utils import swappImagesAccess
 from sppas.ui.swapp.nodes import swappHTMLButton
 from sppas.ui.swapp.swapp_base.swapp_response import swappBaseResponse
+from sppas.ui.swapp.swapp_base.swapp_help import BACK_TASK
 
 from .tests_view import swappTestsBaseView
 
@@ -253,6 +254,10 @@ class swappTestSwappResponseRecipe(swappBaseResponse):
                 self._data = {"random_color": random_color, "time": round(time.time() * 1000)}
 
             elif event_name == "update_btn_text_event":
+                dirty = True
+
+            # The way back from the help asks for the page again.
+            elif event_name == "event_bake" and events[event_name] == BACK_TASK:
                 dirty = True
 
             elif event_name == "choose_file":

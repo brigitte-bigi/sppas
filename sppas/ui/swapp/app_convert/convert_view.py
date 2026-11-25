@@ -81,14 +81,21 @@ MSG_MISSING = {"batch": _("No file is checked to be converted.")}
 INTERVAL_LOCAL_MS = 200
 INTERVAL_DISTANT_MS = 1000
 
-# The script of the page, filled in with the folder of the scripts and the interval.
+# The script of the page, filled in with the folder of the scripts, the interval,
+# and the identifier of the section of the conversion.
 BODY_SCRIPT = """
         import {{ ConvertManager }} from '/{js}sppas.js';
         import SwappFiles from '/{js}swapp_files.js';
-        const swappFiles = new SwappFiles();
-        swappFiles.handleSwappFilesOnLoad();
-        const convertManager = new ConvertManager(swappFiles, {interval});
-        convertManager.handleConvertManagerOnLoad();
+
+        // The two managers drive the section of the conversion and the
+        // container of the provision of files: they are started when the
+        // page shows them, and not while it shows the help.
+        if (document.getElementById('{section}') !== null) {{
+            const swappFiles = new SwappFiles();
+            swappFiles.handleSwappFilesOnLoad();
+            const convertManager = new ConvertManager(swappFiles, {interval});
+            convertManager.handleConvertManagerOnLoad();
+        }}
 """
 
 # ---------------------------------------------------------------------------
@@ -103,11 +110,11 @@ class swappConvertView(swappBaseView):
 
     """
 
-    def __init__(self, tree: HTMLTree, help_page: str):
+    def __init__(self, tree: HTMLTree, form_id: str):
         """Initialize and populate the Convert view structure.
 
         :param tree: (HTMLTree) An existing HTML tree to populate
-        :param help_page: (str) Name of the page serving the document of the app
+        :param form_id: (str) Identifier of the form which carries the record of the app
         :raises: TypeError: tree is not an instance of HTMLTree
 
         """
@@ -118,7 +125,7 @@ class swappConvertView(swappBaseView):
         self.__destination = None
         self.__info = ""
         # Set before the base view populates the nav with it.
-        self.__help_page = help_page
+        self.__form_id = form_id
         super(swappConvertView, self).__init__(tree, MSG_HEADER)
 
     # -----------------------------------------------------------------------
@@ -164,7 +171,7 @@ class swappConvertView(swappBaseView):
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
         self.append_home_link_button(self._htree.body_nav, self._home_target())
-        self.append_help_link_button(self._htree.body_nav, self.__help_page)
+        self.append_help_button(self._htree.body_nav, self.__form_id)
         self.append_trace_link_button(self._htree.body_nav)
 
     # -----------------------------------------------------------------------
@@ -191,7 +198,8 @@ class swappConvertView(swappBaseView):
         if swapp_serverstate.local is True:
             _interval = INTERVAL_LOCAL_MS
         self._htree.body_script.add_attribute("type", "module")
-        self._htree.body_script.set_value(BODY_SCRIPT.format(js=swapp_settings.js, interval=_interval))
+        self._htree.body_script.set_value(BODY_SCRIPT.format(js=swapp_settings.js, interval=_interval,
+                                                             section=ID_SECTION))
 
     # -----------------------------------------------------------------------
     # Update the tree -- for baking the page

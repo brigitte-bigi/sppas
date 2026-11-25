@@ -92,16 +92,16 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
     # -----------------------------------------------------------------------
 
     @classmethod
-    def help_page(cls) -> str:
-        """Return the name of the page serving the document of this app."""
-        return "app_annotate.html"
+    def help_document(cls) -> str:
+        """Override. Return the path of the document of this app, relative to swapp."""
+        return "app_annotate/app_annotate.htm"
 
     # -----------------------------------------------------------------------
 
     @classmethod
-    def help_document(cls) -> str:
-        """Return the path of the document of this app, relative to swapp."""
-        return "app_annotate/app_annotate.htm"
+    def form_id(cls) -> str:
+        """Override. Return the identifier of the form carrying the record of the app."""
+        return "annotate_form"
 
     # -----------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
 
         """
         super().create()
-        self.__view = swappAnnotateView(self._htree, swappAnnotateResponseRecipe.help_page())
+        self.__view = swappAnnotateView(self._htree, swappAnnotateResponseRecipe.form_id())
 
         # The case the service is entered in: files stand already where SPPAS
         # reads them when the server is the local one -- the person designates

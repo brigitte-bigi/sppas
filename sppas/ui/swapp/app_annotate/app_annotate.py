@@ -43,12 +43,10 @@ import logging
 
 from whakerpy.httpd import BaseResponseRecipe
 
-from sppas.core.config import sg
 from sppas.ui import _
 from sppas.ui.swapp import swappImagesAccess
 
 from ..swapp_base.swapp_bakery import swappWebData
-from ..pages import swappHelpResponseRecipe
 
 from .annotate_maker import swappAnnotateResponseRecipe
 
@@ -56,7 +54,6 @@ from .annotate_maker import swappAnnotateResponseRecipe
 
 MSG_NAME = _("Annotate")
 MSG_DESCR = _("Performs the automatic annotations of SPPAS on files.")
-MSG_HELP_TITLE = f"SPPAS {sg.__release__} » " + _("Annotate") + " » " + _("Help")
 
 # ---------------------------------------------------------------------------
 
@@ -113,8 +110,7 @@ class swappAnnotateWebData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        return page_name in (swappAnnotateResponseRecipe.page(),
-                             swappAnnotateResponseRecipe.help_page())
+        return page_name == swappAnnotateResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 
@@ -129,14 +125,5 @@ class swappAnnotateWebData(swappWebData):
         logging.info(f"Requested page name: {page_name}")
         if page_name == swappAnnotateResponseRecipe.page():
             return swappAnnotateResponseRecipe()
-
-        if page_name == swappAnnotateResponseRecipe.help_page():
-            return swappHelpResponseRecipe(swappAnnotateResponseRecipe.help_document(),
-                                           swappAnnotateResponseRecipe.help_page(),
-                                           MSG_HELP_TITLE,
-                                           "app_annotate.css",
-                                           swappAnnotateResponseRecipe.page(),
-                                           MSG_NAME,
-                                           "app_annotate")
 
         return None

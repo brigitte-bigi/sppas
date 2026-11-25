@@ -107,11 +107,11 @@ class swappAnnotateView(swappBaseView):
 
     """
 
-    def __init__(self, tree: HTMLTree, help_page: str):
+    def __init__(self, tree: HTMLTree, form_id: str):
         """Initialize and populate the Annotate view structure.
 
         :param tree: (HTMLTree) An existing HTML tree to populate
-        :param help_page: (str) Name of the page serving the document of the app
+        :param form_id: (str) Identifier of the form which carries the record of the app
         :raises: TypeError: tree is not an instance of HTMLTree
 
         """
@@ -119,7 +119,7 @@ class swappAnnotateView(swappBaseView):
             raise TypeError("swappAnnotateView: tree must be an instance of HTMLTree. "
                             "Got {} instead.".format(type(tree)))
         # Set before the base view populates the nav with it.
-        self.__help_page = help_page
+        self.__form_id = form_id
         self.__files = None
         self.__options = None
         self.__values = dict()
@@ -130,10 +130,12 @@ class swappAnnotateView(swappBaseView):
     # -----------------------------------------------------------------------
 
     def _populate_head_css(self, *args, **kwargs):
-        """Override. Add the sheet of the panel-view toggle, and the one of Annotate."""
+        """Override. Add the sheet of Annotate.
+
+        The sheet of the panel-view toggle is loaded by the base view.
+
+        """
         super()._populate_head_css(*args, **kwargs)
-        self._htree.head.link("stylesheet", swapp_settings.wexa_statics + "css/togglegroup.css",
-                              link_type="text/css")
         self._htree.head.link("stylesheet", swapp_settings.css + "app_annotate.css", link_type="text/css")
 
     # -----------------------------------------------------------------------
@@ -151,7 +153,7 @@ class swappAnnotateView(swappBaseView):
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
         self.append_home_link_button(self._htree.body_nav, self._home_target())
-        self.append_help_link_button(self._htree.body_nav, self.__help_page)
+        self.append_help_button(self._htree.body_nav, self.__form_id)
         self.append_trace_link_button(self._htree.body_nav)
 
     # -----------------------------------------------------------------------

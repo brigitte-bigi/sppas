@@ -77,9 +77,13 @@
 		</p>
 
 		<p>
-			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="16" cy="16" r="13" /> <path d="M12 12a4 4 0 0 1 8 0c0 3-4 3-4 5" /> <circle cx="16" cy="23" r="1" /> </svg> &nbsp; <b>Help.</b> Opens the document explaining the page you are reading
-			-- the one you have under your eyes right now. A button drawn in a duller color, which
-			the mouse refuses to click, means that this page has no document yet.
+			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="16" cy="16" r="13" /> <path d="M12 12a4 4 0 0 1 8 0c0 3-4 3-4 5" /> <circle cx="16" cy="23" r="1" /> </svg> &nbsp; <b>Help.</b> Shows the document explaining the application you are using
+			-- the one you have under your eyes right now -- in place of what the application shows.
+			Its <b>Back</b> button takes you back to the first view of the application, with every
+			choice you made kept. While the help is shown, the <b>Help</b> button of the menu is a
+			<b>Back</b> button as well. When the application has no document yet, the help says so. On
+			the Journal, which is not an application, the button is drawn in a duller color, and
+			the mouse refuses to click it.
 		</p>
 
 		<p>
@@ -117,8 +121,8 @@
 			<tbody>
 				<tr>
 					<td><b>h</b>, <b>H</b> or <b>?</b></td>
-					<td>Opens the document of the page you are reading. On a page whose document
-						is not written yet, nothing happens.</td>
+					<td>Shows the help of the application you are using, and takes you back from
+						it. On the Journal, which is not an application, nothing happens.</td>
 				</tr>
 				<tr>
 					<td><b>j</b> or <b>J</b></td>
@@ -464,7 +468,14 @@
 			<li><code>handle_start_sppas</code> -- the wx interface is launched. The answer is the
 				error, if any, or the state saying it started.</li>
 			<li><code>event_bake=close</code> -- leaving SPPAS. The page answers 410, Gone.</li>
+			<li><code>event_bake=swapp_back</code> -- the way back from the help: the page is
+				built again.</li>
 		</ul>
+
+		<p>
+			The help never reaches this method: <code>event_bake=swapp_help</code> is answered by
+			the base recipe, as for every app, with this document in place of the page.
+		</p>
 
 		<p>
 			The accessibility parameters of Whakerexa never reach this method: the base recipe
