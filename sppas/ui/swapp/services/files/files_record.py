@@ -125,7 +125,9 @@ class swappFilesRecord:
         _data["fed"] = json.dumps(_fed)
         _data["deposited"] = json.dumps(self.__deposited)
         _data["treated"] = json.dumps(self.__treated)
-        _data["produced"] = json.dumps(self.__produced)
+        # Not under the name of the task "produced": a page carrying it would
+        # be taken for asking that task.
+        _data["produced_files"] = json.dumps(self.__produced)
         if self.__workspace is not None:
             _wjson = sppasWJSON()
             _wjson.set(self.__workspace)
@@ -167,7 +169,7 @@ class swappFilesRecord:
         self.__workspace = swappFilesRecord.__workspace_entry(data)
         self.__deposited = swappFilesRecord.__names_entry(data, "deposited")
         self.__treated = swappFilesRecord.__treated_entry(data)
-        self.__produced = swappFilesRecord.__names_entry(data, "produced")
+        self.__produced = swappFilesRecord.__names_entry(data, "produced_files")
 
     # -----------------------------------------------------------------------
 

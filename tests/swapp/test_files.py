@@ -78,6 +78,11 @@ from sppas.ui.swapp.services.files.files_view import MSG_ADDED
 from sppas.ui.swapp.services.files.files_view import MSG_REFUSED
 from sppas.ui.swapp.services.files.files_view import MSG_DEPOSITED
 from sppas.ui.swapp.services.files.files_manager import swappFilesManager
+from sppas.ui.swapp.services.files.files_record import TASKS
+from sppas.ui.swapp.services.files.files_controller import swappFilesController
+
+from tests.swapp.page_requests import swappPageFields
+from tests.swapp.page_requests import files_request
 
 # ---------------------------------------------------------------------------
 
@@ -547,9 +552,13 @@ class TestInternalCall(unittest.TestCase):
 
         """
         manager = swappFilesManager(self.parent, place=self.place, reachable=False)
-        manager.consumes({"reachable": "False", "fed": '[["a.wav", 5]]', "name": "a.wav"})
-        manager.consumes({"reachable": "False", "fed": '[["a.wav", 5]]',
-                          "send": "", "name": "a.wav", "content": "MTIzNDU="})
+        # What the page sent before: the file designated, then sent.
+        manager.populate_view()
+        manager.consumes(files_request(manager.container().serialize(), "designate",
+                                       {"name": "a.wav", "size": "5"}))
+        manager.populate_view()
+        manager.consumes(files_request(manager.container().serialize(), "send",
+                                       {"name": "a.wav", "content": "MTIzNDU="}))
 
         record = manager.files_for_app() and None
         before = manager._swappFilesManager__controller.record
@@ -756,9 +765,35 @@ class TestLocalUse(unittest.TestCase):
             side_effect=RuntimeError("The deposit API is absent."))
         self.absent.start()
 
+        # The window of the machine answers the file the person chose in it.
+        answered = self.path
+
+        class _Window(object):
+            def ask_file(self, **kwargs):
+                return [answered]
+
+        self.window = mock.patch("sppas.ui.swapp.services.files.files_chooser.FileChooserMixin", _Window)
+        self.window.start()
+
     def tearDown(self):
+        self.window.stop()
         self.absent.stop()
         shutil.rmtree(self.root, ignore_errors=True)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def press(manager, name, value):
+        """Press a button of the container, as the page sends it.
+
+        :param manager: (swappFilesManager) What an app holds of the service
+        :param name: (str) Name of the button, which is its task
+        :param value: (str) Value of the button
+        :return: (dict) The events of the request
+
+        """
+        manager.populate_view()
+        return files_request(manager.container().serialize(), name, {name: value})
 
     # -----------------------------------------------------------------------
 
@@ -785,12 +820,16 @@ class TestLocalUse(unittest.TestCase):
         """
         manager = swappFilesManager(self.parent, reachable=True)
 
-        requests = ({"designate": self.path},
-                    {"take_back": self.path},
-                    {"designate": self.path},
-                    {"ready": ""},
-                    {"finished": ""})
-        for events in requests:
+        # The page presses its buttons; an app says the workspace is ready, then that it has finished.
+        requests = ((True, "designate", ""),
+                    (True, "take_back", self.path),
+                    (True, "designate", ""),
+                    (False, "ready", ""),
+                    (False, "finished", ""))
+        for by_the_page, task, value in requests:
+            events = {task: value}
+            if by_the_page is True:
+                events = TestLocalUse.press(manager, task, value)
             consumed, shown = TestLocalUse.answer(manager, events)
             self.assertTrue(consumed)
             self.assertNotIn(MSG_FAILED, shown)
@@ -804,7 +843,7 @@ class TestLocalUse(unittest.TestCase):
         """
         manager = swappFilesManager(self.parent, reachable=True)
 
-        manager.consumes({"designate": self.path})
+        manager.consumes(TestLocalUse.press(manager, "designate", ""))
         self.assertFalse(manager.is_ready())
 
         self.assertTrue(manager.consumes({"ready": ""}))
@@ -814,7 +853,7 @@ class TestLocalUse(unittest.TestCase):
             handed.append(handed_file.get_id())
         self.assertEqual([self.path], handed)
 
-        manager.consumes({"take_back": self.path})
+        manager.consumes(TestLocalUse.press(manager, "take_back", self.path))
         self.assertFalse(manager.is_ready())
 
     # -----------------------------------------------------------------------
@@ -825,7 +864,7 @@ class TestLocalUse(unittest.TestCase):
 
         """
         manager = swappFilesManager(self.parent, reachable=True)
-        manager.consumes({"designate": self.path})
+        manager.consumes(TestLocalUse.press(manager, "designate", ""))
         manager.release([self.path])
         manager.populate_view()
         self.assertIn(MSG_TREATED, manager.container().serialize())
@@ -1098,6 +1137,216 @@ class TestWorkspaceFiles(unittest.TestCase):
                          self.wkp.get_object(self.names[1]).get_state())
         self.assertEqual(States().CHECKED,
                          self.wkp.get_object(made).get_state())
+
+# ---------------------------------------------------------------------------
+
+
+class TestPageRequests(unittest.TestCase):
+    """TE39 to TE45. The tasks, sent as the page sends them.
+
+    Every request is built as swapp_files.js builds it: the hidden fields of
+    the container the server answered, then the task under "task", then what
+    the task carries -- the name and the value of the button which was
+    pressed, or the name, the size or the content of a file.
+
+    """
+
+    def setUp(self):
+        self.parent = HTMLTree("test_files").body_main.identifier
+        self.root = tempfile.mkdtemp(prefix="test_files_")
+        self.settings = swappDepositSettings()
+        self.settings.space = tempfile.mkdtemp(prefix="test_files_")
+        self.paths = list()
+        for name in ("a.wav", "b.wav"):
+            path = os.path.join(self.root, name)
+            with open(path, "w") as fp:
+                fp.write("")
+            self.paths.append(path)
+
+    def tearDown(self):
+        shutil.rmtree(self.root, ignore_errors=True)
+        shutil.rmtree(self.settings.space, ignore_errors=True)
+
+    # -----------------------------------------------------------------------
+
+    def online(self) -> swappFilesManager:
+        """Return the service where the files have to be brought."""
+        return swappFilesManager(self.parent, place=swappFilePlace(swappDepositSpace(self.settings)),
+                                 reachable=False)
+
+    # -----------------------------------------------------------------------
+
+    def local(self) -> swappFilesManager:
+        """Return the service where the files stand already, the two files designated."""
+        return swappFilesManager(self.parent, swappWorkspaceFiles(swappWorkspaceFiles.make_workspace(self.paths)),
+                                 reachable=True)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def container(manager) -> str:
+        """Return the container, as the server answers it."""
+        manager.populate_view()
+        return manager.container().serialize()
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def designate(manager, name: str, size: int) -> None:
+        """Designate a file as #onFilesDesignated() sends it."""
+        manager.consumes(files_request(TestPageRequests.container(manager), "designate",
+                                       {"name": name, "size": str(size)}))
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def press(manager, name: str, value: str) -> None:
+        """Press a button of the container, as #onFormSubmitted() sends it."""
+        manager.consumes(files_request(TestPageRequests.container(manager), name, {name: value}))
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def listed(manager) -> list:
+        """Return the names of the files the container lists."""
+        names = list()
+        for line in TestPageRequests.container(manager).split("\n"):
+            if "dropzone-name" in line:
+                names.append(line)
+        return names
+
+    # -----------------------------------------------------------------------
+
+    def test_te39_taking_every_file_back(self):
+        """TE39. Each file she gave which can be is taken back, as one at a time; a file an app treated stays,
+        and what an app produced stays in the workspace. T09
+
+        """
+        manager = self.online()
+        TestPageRequests.designate(manager, "a.wav", 5)
+        TestPageRequests.designate(manager, "b.wav", 5)
+        self.assertEqual(2, len(TestPageRequests.listed(manager)))
+        TestPageRequests.press(manager, "take_back_all", "")
+        self.assertEqual(0, len(TestPageRequests.listed(manager)))
+        self.assertIn('name="take_back_all" value="" disabled', TestPageRequests.container(manager))
+
+        produced = os.path.join(self.root, "a-token.xra")
+        with open(produced, "w") as fp:
+            fp.write("")
+        manager = self.local()
+        batch = manager.files_for_app()
+        batch.add_file(produced)
+        manager.produced(batch)
+        manager.release([self.paths[0]])
+        TestPageRequests.press(manager, "take_back_all", "")
+        listed = TestPageRequests.listed(manager)
+        self.assertEqual(1, len(listed))
+        self.assertIn("a.wav", listed[0])
+        known = sorted(f.get_id() for f in files_of(manager.files_for_app()))
+        self.assertEqual(sorted([self.paths[0], produced]), known)
+
+    # -----------------------------------------------------------------------
+
+    def test_te40_designating_as_the_page_sends_it(self):
+        """TE40. The task alone, and the name and the size: one file, then another. T08"""
+        manager = self.online()
+        TestPageRequests.designate(manager, "a.wav", 5)
+        TestPageRequests.designate(manager, "b.wav", 5)
+        record = manager._swappFilesManager__controller.record
+        self.assertEqual([("a.wav", 5), ("b.wav", 5)], [(n, s) for n, s in record.fed])
+
+    # -----------------------------------------------------------------------
+
+    def test_te41_sending_as_the_page_sends_it(self):
+        """TE41. The task alone, and the name and the content: each file is deposited. T01, T02"""
+        manager = self.online()
+        TestPageRequests.designate(manager, "a.wav", 5)
+        TestPageRequests.designate(manager, "b.wav", 5)
+        for name in ("a.wav", "b.wav"):
+            manager.consumes(files_request(TestPageRequests.container(manager), "send",
+                                           {"name": name, "content": "MTIzNDU="}))
+        record = manager._swappFilesManager__controller.record
+        self.assertEqual(["a.wav", "b.wav"], record.deposited)
+        self.assertEqual(2, len(files_of(manager.files_for_app())))
+
+    # -----------------------------------------------------------------------
+
+    def test_te42_taking_one_file_back_as_the_page_sends_it(self):
+        """TE42. The button of a card takes that file back, and no other. T09"""
+        manager = self.online()
+        TestPageRequests.designate(manager, "a.wav", 5)
+        TestPageRequests.designate(manager, "b.wav", 5)
+        TestPageRequests.press(manager, "take_back", "a.wav")
+        record = manager._swappFilesManager__controller.record
+        self.assertEqual(["b.wav"], [n for n, s in record.fed])
+
+        manager = self.local()
+        TestPageRequests.press(manager, "take_back", self.paths[0])
+        self.assertEqual([self.paths[1]], [f.get_id() for f in files_of(manager.files_for_app())])
+
+    # -----------------------------------------------------------------------
+
+    def test_te43_every_request_is_read_as_the_task_it_asks(self):
+        """TE43. No entry of the record carries the name of a task, and what the page sends is read as its task."""
+        record = swappFilesRecord()
+        record.treated = ["/a/treated.wav"]
+        record.produced = ["/a/produced.xra"]
+        for name in record.serialize():
+            self.assertNotIn(name, TASKS)
+
+        manager = self.online()
+        TestPageRequests.designate(manager, "a.wav", 5)
+        container = TestPageRequests.container(manager)
+        requests = (("designate", {"name": "b.wav", "size": "5"}),
+                    ("send", {"name": "a.wav", "content": "MTIzNDU="}),
+                    ("take_back", {"take_back": "a.wav"}),
+                    ("take_back_all", {"take_back_all": ""}),
+                    ("ready", {"ready": ""}))
+        for task, carried in requests:
+            with self.subTest(task=task):
+                self.assertEqual(task, swappFilesController.task_of(files_request(container, task, carried)))
+
+    # -----------------------------------------------------------------------
+
+    def test_te44_what_was_produced(self):
+        """TE44. Known and checked, declared workspace or not; out of the list where none is declared. T04"""
+        produced = os.path.join(self.root, "a-token.xra")
+        with open(produced, "w") as fp:
+            fp.write("")
+        for declared in (False, True):
+            with self.subTest(declared=declared):
+                name = ""
+                if declared is True:
+                    name = "declared"
+                workspace = swappWorkspaceFiles(swappWorkspaceFiles.make_workspace(list(self.paths)), name)
+                manager = swappFilesManager(self.parent, workspace, reachable=True, has_workspace=declared)
+                batch = manager.files_for_app()
+                batch.add_file(produced)
+                manager.produced(batch)
+                checked = manager.files_for_app().get_filename_from_state(States().CHECKED)
+                self.assertIn(produced, [f.get_id() for f in checked])
+                if declared is False:
+                    listed = TestPageRequests.listed(manager)
+                    self.assertEqual(2, len(listed))
+                    for line in listed:
+                        self.assertNotIn("a-token.xra", line)
+
+    # -----------------------------------------------------------------------
+
+    def test_te45_designating_where_the_files_stand_already(self):
+        """TE45. The control which designates, pressed as the page sends it, adds what the window answered. T02"""
+        answered = list(self.paths)
+
+        class _Window(object):
+            def ask_file(self, **kwargs):
+                return answered
+
+        with mock.patch("sppas.ui.swapp.services.files.files_chooser.FileChooserMixin", _Window):
+            manager = swappFilesManager(self.parent, swappWorkspaceFiles(), reachable=True)
+            container = TestPageRequests.container(manager)
+            manager.consumes(files_request(container, "designate", {"designate": ""}))
+            self.assertEqual(sorted(self.paths), sorted(f.get_id() for f in files_of(manager.files_for_app())))
+            self.assertEqual(2, len(TestPageRequests.listed(manager)))
 
 # ---------------------------------------------------------------------------
 

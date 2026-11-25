@@ -80,15 +80,22 @@ export default class SwappProcess extends BaseManager {
      *
      * @param {string} name - The name of the process, as the server gave it to the page.
      * @param {Function} ended - What the app does once the process has ended.
+     * @param {Function|null} refreshed - What the app does at each refresh, if anything.
      * @returns {void}
      */
-    follow(name, ended) {
+    follow(name, ended, refreshed = null) {
         const asked = {};
         asked[EVENT_NAME] = PROGRESS_EVENT;
         asked[PROCESS_FIELD] = name;
         const progressBar = new ProgressBar({
             // Nothing given back is said as null: the bar then calls the end.
-            updateCallback: async () => (await this.postEvents(asked)) ?? null,
+            updateCallback: async () => {
+                const answered = (await this.postEvents(asked)) ?? null;
+                if (refreshed !== null) {
+                    await refreshed();
+                }
+                return answered;
+            },
             completeCallback: async () => await ended(),
             intervalMs: this.#intervalMs
         });

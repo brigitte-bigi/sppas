@@ -47,8 +47,8 @@ from sppas.src.annotations import sppasAnnotationsManager
 from sppas.src.annotations import sppasParam
 from sppas.src.wkps import States
 
-from ..nodes import swappProgressBar
 from ..swapp_core.swappsg import swapp_serverstate
+from ..swapp_base.swapp_process import swappProcess
 
 from .annotate_provision import swappModelProvision
 
@@ -104,11 +104,13 @@ class swappRootResult:
 class swappModelRun:
     """Have the API execute the selected annotations.
 
-    It names the report, makes the progress the API says where it stands on,
-    locks the batch, and creates a sppasAnnotationsManager, which executes
-    the annotations in its own thread, the merge option being given to it.
-    It holds that manager and the progress: it says whether the annotations
-    are being executed, and where they stand. Once they have been, it
+    It names the report, locks the batch, and creates a
+    sppasAnnotationsManager, the merge option being given to it. The
+    annotations are a process of swapp: the manager executes them in the
+    thread of that process, and the progress it is given is the one of the
+    process, which says where they stand in the file of the process. It holds
+    that manager and that process: it says whether the annotations are being
+    executed, and where they stand. Once they have been, the process
     releases the batch, gives back what was produced, keeps what came of
     every root of the batch, and says it has finished, once. It is the only
     class of this application which has the API execute annotations.
@@ -126,7 +128,6 @@ class swappModelRun:
         # bore before.
         self.__log_report = sppasLogFile(pattern="report")
         self.__manager = None
-        self.__progress = None
         # The batch which is locked, and its files: given back once.
         self.__batch = None
         self.__filenames = list()
@@ -141,6 +142,8 @@ class swappModelRun:
         # The name of the report of the run which is going: a page asked for
         # while it goes follows it.
         self.__report_name = ""
+        # The process the run is performed in: the page follows it by its name.
+        self.__process = None
 
     # -----------------------------------------------------------------------
 
@@ -182,32 +185,48 @@ class swappModelRun:
                     if _file.get_id() in _filenames and (_root.get_id() in _roots) is False:
                         _roots.append(_root.get_id())
 
-        self.__progress = swappProgressBar("annotate_log_panel")
         self.__provision.lock(_filenames)
         self.__batch = batch
         self.__filenames = _filenames
         self.__roots = _roots
         self.__results = list()
-        self.__manager = sppasAnnotationsManager(parameters, self.__progress, merge)
+        # Given no parameters, the manager executes nothing in a thread of its
+        # own: it executes the annotations in the thread of the process.
+        self.__manager = sppasAnnotationsManager(do_merge=merge)
         self.__report_name = os.path.basename(_report)
+        self.__process = swappProcess.start(self.__perform, (parameters,))
 
         return self.__report_name
 
     # -----------------------------------------------------------------------
 
     def is_running(self) -> bool:
-        """Return True while the thread of the manager executes the annotations (bool).
+        """Return True while the process of the run has not ended (bool).
 
-        The first time it is found ended, the batch is given back.
+        It is read in the file of the process, which says it has ended once
+        the batch was given back.
 
         """
-        if self.__manager is None:
+        if self.__process is None:
             return False
-        if self.__manager.is_alive() is True:
-            return True
+        _percent, _header, _text, _finished = self.__process.read()
 
-        self.__give_back()
-        return False
+        return _finished is False
+
+    # -----------------------------------------------------------------------
+
+    def process_name(self) -> str:
+        """Return the name of the process of the last run, empty before the first one.
+
+        A run may have ended before the page which started it is shown: its
+        process says it has ended, and the page asks for the results.
+
+        :return: (str)
+
+        """
+        if self.__process is None:
+            return ""
+        return self.__process.name
 
     # -----------------------------------------------------------------------
 
@@ -219,21 +238,6 @@ class swappModelRun:
 
     # -----------------------------------------------------------------------
 
-    def progress(self) -> tuple:
-        """Return where the run stands, as the API set it on the progress.
-
-        Nothing is counted here.
-
-        :return: (tuple) The percent, the header and the text; the hundred when no run is going
-
-        """
-        _progress = self.__progress
-        if self.is_running() is False or _progress is None:
-            return 100, "", ""
-
-        return _progress.get_percent(), _progress.get_header(), _progress.get_text()
-
-    # -----------------------------------------------------------------------
 
     def results(self) -> list:
         """Return what came of every root of the batch of the last run which ended.
@@ -250,12 +254,28 @@ class swappModelRun:
     # Private
     # -----------------------------------------------------------------------
 
+    def __perform(self, parameters: sppasParam, progress=None) -> None:
+        """Have the API execute the annotations, then give the batch back.
+
+        It is what the process performs, in its thread. The batch is given
+        back whatever the API did: the process ends once it was.
+
+        :param parameters: (sppasParam) What was decided
+        :param progress: (swappProcessProgress) The progress of the process
+
+        """
+        try:
+            self.__manager.annotate(parameters, progress)
+        finally:
+            self.__give_back()
+
+    # -----------------------------------------------------------------------
+
     def __give_back(self) -> None:
         """Release the batch, give back what was produced, keep the results, and say it has finished.
 
-        Whatever each annotation did, it is done once, the first time the
-        annotations are found executed: two requests which find it at the
-        same time do not do it twice. Each root of the batch is given the
+        Whatever each annotation did, it is done once, by the process, once
+        the annotations were executed. Each root of the batch is given the
         files the API wrote under it, a file which stood already and was
         written again included.
 
@@ -289,4 +309,3 @@ class swappModelRun:
             self.__roots = list()
             self.__report = ""
             self.__report_name = ""
-            self.__progress = None

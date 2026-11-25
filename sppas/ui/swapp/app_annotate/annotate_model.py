@@ -105,13 +105,9 @@ class swappAnnotateModel:
 
     # -----------------------------------------------------------------------
 
-    def progress(self) -> tuple:
-        """Return where the run stands.
-
-        :return: (tuple) The percent, the header and the text; the hundred when no run is going
-
-        """
-        return self.__run.progress()
+    def process_name(self) -> str:
+        """Return the name of the process of the last run, empty before the first one (str)."""
+        return self.__run.process_name()
 
     # -----------------------------------------------------------------------
 

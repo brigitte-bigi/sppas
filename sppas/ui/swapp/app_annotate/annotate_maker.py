@@ -184,20 +184,14 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
             if self.__controller.starts_over() is True:
                 self.__manager.start_over()
 
-        # Received events from the progress bar, which is waiting for the
-        # server response, filled in self._data.
+        # Received events from a request manager, filled in self._data. Where
+        # the run stands is not one of them: the base recipe answers it, as
+        # for any process.
         elif "event_name" in events:
-
-            # --- Progress event to update the page ---
-            if events["event_name"] == "annotate_update":
-                self._data["percent"], self._data["header"], self._data["text"] = self.__controller.progress()
-                self._status.code = 202
-                if self._data["percent"] >= 100:
-                    self._status.code = 200
 
             # --- Report event: the report of the run the page follows, as
             # it is written, answered alone by its identifier ---
-            elif events["event_name"] == "annotate_report":
+            if events["event_name"] == "annotate_report":
                 self.__controller.handle(events)
                 self._data["annotate_report"] = self.__view.report(self.__controller.followed_report())
 

@@ -2,7 +2,7 @@ const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
 const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
 const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
-const { ProgressBar } = await import(`${wexa_statics_js}/progressbar.js`);
+import SwappProcess from './swapp_process.js';
 const dialogManager = new DialogManager();
 
 const ID_ERROR_DIALOG = 'error_dialog';
@@ -11,12 +11,12 @@ const ID_PROGRESS = 'percent_progress';
 const ID_LOG_TITLE = 'annotate_log_h';
 const EVENT_NAME = 'event_name';
 const TASK_PERFORM = 'annotate_perform';
-const TASK_UPDATE = 'annotate_update';
 const TASK_COMPLETE = 'annotate_complete';
 const TASK_REPORT = 'annotate_report';
 const ID_REPORT = 'annotate_report';
 const FIELD_FOLLOWED = 'annotate_followed';
 const ID_FORM = 'annotate_form';
+const PROCESS_FIELD = 'swapp_process';
 const ID_ANNOTATIONS_PANEL = 'annotate_annotations_panel';
 const ID_FILES_PANEL = 'annotate_files_panel';
 const ID_OPTIONS_CONTAINER = 'options_container';
@@ -212,25 +212,29 @@ export default class AnnotateManager extends BaseManager {
     // ------------------------------------------------------------------------
 
     /**
-     * Ask where the run stands until the hundred is reached, then ask for its results.
+     * Ask where the run stands until it has ended, then ask for its results.
+     *
+     * The run is a process of swapp: it is followed as every process is, by
+     * the name the form transmits. At each refresh, the report is asked for
+     * as it is written, when it is unfolded.
      *
      * @private
      * @returns {void}
      */
     #follow() {
-        const updated = {};
-        updated[EVENT_NAME] = TASK_UPDATE;
-        const progressBar = new ProgressBar({
-            // Nothing given back is said as null: the bar then asks for the results.
-            updateCallback: async () => {
-                const answered = (await this.postEvents(updated)) ?? null;
-                await this.#askReport();
-                return answered;
-            },
-            completeCallback: async () => await this.#complete(),
-            intervalMs: this.#intervalMs
-        });
-        progressBar.start();
+        const form = document.getElementById(ID_FORM);
+        if (!(form instanceof HTMLFormElement)) {
+            WexaLogger.error('AnnotateManager: the form of the page was not found.');
+            return;
+        }
+        const process = form.elements.namedItem(PROCESS_FIELD);
+        if (process === null) {
+            WexaLogger.error('AnnotateManager: the name of the process of the run was not found.');
+            return;
+        }
+        new SwappProcess(this.#intervalMs).follow(process.value,
+                                                  async () => await this.#complete(),
+                                                  async () => await this.#askReport());
     }
 
     // ------------------------------------------------------------------------

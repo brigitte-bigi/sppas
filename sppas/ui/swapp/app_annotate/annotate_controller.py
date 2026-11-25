@@ -172,16 +172,6 @@ class swappAnnotateController:
 
     # -----------------------------------------------------------------------
 
-    def progress(self) -> tuple:
-        """Return where the run the page follows stands.
-
-        :return: (tuple) The percent, a header and a text
-
-        """
-        return self.__model.progress()
-
-    # -----------------------------------------------------------------------
-
     def followed_report(self) -> list:
         """Return the lines of the report of the run the page follows, as they are written.
 
@@ -244,6 +234,7 @@ class swappAnnotateController:
         if self.__model.is_running() is True or \
                 (self.__record.task == "annotate_perform" and len(self.__record.followed) > 0):
             self.__record.show("running", True)
+            self.__record.show("process", self.__model.process_name())
             self.__record.show("report", self.followed_report())
         elif len(_type) > 0:
             _annotations = list()

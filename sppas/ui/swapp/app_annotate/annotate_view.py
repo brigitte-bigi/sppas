@@ -49,6 +49,7 @@ from sppas.core.config import sg
 from sppas.ui import _
 
 from ..swapp_base.swapp_view import swappBaseView
+from ..swapp_base.swapp_process import PROCESS_FIELD
 from ..swapp_core.swappsg import swapp_settings
 from ..swapp_core.swappsg import swapp_serverstate
 
@@ -294,6 +295,13 @@ class swappAnnotateView(swappBaseView):
             if (_name in _fields) is False:
                 _form.append_child(EmptyNode(_form.identifier, None, "input",
                                              attributes={"type": "hidden", "name": _name, "value": _data[_name]}))
+
+        # While a run goes, the form carries the name of its process: the page
+        # asks where it stands by it.
+        if _shown.get("running", False) is True:
+            _form.append_child(EmptyNode(_form.identifier, None, "input",
+                                         attributes={"type": "hidden", "name": PROCESS_FIELD,
+                                                     "value": _shown.get("process", "")}))
 
     # -----------------------------------------------------------------------
 

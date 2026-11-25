@@ -60,6 +60,7 @@ from sppas.src.wkps import States
 
 from sppas.ui.swapp.app_annotate import annotate_run
 from sppas.ui.swapp.app_annotate.annotate_run import swappModelRun
+from sppas.ui.swapp.swapp_base.swapp_process import swappProcess
 
 # ---------------------------------------------------------------------------
 
@@ -67,10 +68,12 @@ from sppas.ui.swapp.app_annotate.annotate_run import swappModelRun
 class ManagerForTests(Thread):
     """What runs the annotations, written here: it runs no annotation of SPPAS.
 
-    Created with parameters, its thread writes one line per activated
-    annotation in the report, takes its time for each, and sets on the
-    progress which annotation it is running. It adds to the workspace the
-    files it is told it writes, as the API does, and says it wrote them.
+    As the API does: created with parameters, its thread runs them; created
+    with nothing, annotate() runs them in the thread of its caller. Running
+    them writes one line per activated annotation in the report, takes its
+    time for each, and sets on the progress which annotation it is running.
+    It adds to the workspace the files it is told it writes, as the API does,
+    and says it wrote them.
 
     """
 
@@ -81,16 +84,14 @@ class ManagerForTests(Thread):
 
     def __init__(self, parameters=None, progress=None, do_merge=False):
         Thread.__init__(self)
-        self.parameters = parameters
-        self.progress = progress
+        self.parameters = None
+        self.progress = None
         self.do_merge = do_merge
         self.activated = list()
-        if parameters is not None:
-            for i in range(parameters.get_step_numbers()):
-                if parameters.get_step_status(i) is True:
-                    self.activated.append(parameters.get_step_key(i))
         self.reached_the_end = False
         self.out_files = list()
+        self.__given_parameters = parameters
+        self.__given_progress = progress
         ManagerForTests.created.append(self)
         self.start()
 
@@ -98,8 +99,16 @@ class ManagerForTests(Thread):
         return list(self.out_files)
 
     def run(self):
-        if self.parameters is None:
-            return
+        if self.__given_parameters is not None:
+            self.annotate(self.__given_parameters, self.__given_progress)
+
+    def annotate(self, parameters, progress=None):
+        self.parameters = parameters
+        self.progress = progress
+        self.activated = list()
+        for i in range(parameters.get_step_numbers()):
+            if parameters.get_step_status(i) is True:
+                self.activated.append(parameters.get_step_key(i))
         with open(self.parameters.get_report_filename(), "w") as fp:
             for _key in self.activated:
                 if self.progress is not None:
@@ -275,18 +284,22 @@ class TestWithARun(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_te23_where_a_run_stands(self):
-        """TE23. While a run goes, the progress is what the API set; when none goes, it is the hundred. C18"""
-        self.assertEqual((100, "", ""), self.run_model.progress())
+        """TE23. While a run goes, where it stands is what the API set, read in the file of its process; once it has ended, the hundred. C18"""
+        self.assertEqual("", self.run_model.process_name())
 
         ManagerForTests.seconds = 0.3
         self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
+        _process = swappProcess(self.run_model.process_name())
         time.sleep(0.1)
-        _percent, _header, _text = self.run_model.progress()
+        _percent, _header, _text, _finished = _process.read()
         self.assertEqual(0, _percent)
         self.assertEqual("textnorm", _header)
+        self.assertFalse(_finished)
 
         self.wait()
-        self.assertEqual((100, "", ""), self.run_model.progress())
+        _percent, _header, _text, _finished = _process.read()
+        self.assertEqual(100, _percent)
+        self.assertTrue(_finished)
 
     # -----------------------------------------------------------------------
 
@@ -326,7 +339,6 @@ class TestWithARun(unittest.TestCase):
 
         self.wait()
         self.run_model.is_running()
-        self.run_model.progress()
         self.assertEqual(1, self.provision.given_back)
         self.assertEqual(1, self.provision.finished_said)
 

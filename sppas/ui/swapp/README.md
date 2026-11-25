@@ -335,8 +335,12 @@ does once the process has ended.
 What an app shows of the result is not the process's: the results of a
 conversion stay in the report of Convert, read when the page asks for them.
 
-Convert is a process of swapp. Annotate and Setup are not yet: each holds its
-run or its installation, and its progress, on the server.
+The conversion of Convert and the run of Annotate are processes of swapp. The
+API of the annotations is not changed: given nothing when it is created, its
+manager performs the annotations in the thread of its caller, which is the
+thread of the process, and it is given the progress of the process. Setup is
+not a process of swapp yet: it holds its installation, and its progress, on
+the server.
 
 ### How a long process holds the page
 
@@ -356,8 +360,10 @@ dimmed, as no disabled item of the nav is.
 
 Whether a process goes is said by `is_running()` of `swappBaseResponse`: by
 default, it is read in the file of the process the request names, and it is
-False when the request names none. Annotate and Setup override it: each holds
-its run or its installation. While a process goes, the help is not answered:
+False when the request names none. Annotate and Setup override it: Annotate
+holds its run, as its document requires, and reads whether it goes in the file
+of its process; Setup holds its installation. While a process goes, the help
+is not answered:
 asking for it is going back to the default view of the app, which then is the
 progress.
 

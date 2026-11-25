@@ -213,7 +213,7 @@ class swappFilesController:
             self.__treated = list(self.__record.treated)
         else:
             self.__record.treated = list(self.__treated)
-        if "produced" in data:
+        if "produced_files" in data:
             self.__produced = list(self.__record.produced)
         else:
             self.__record.produced = list(self.__produced)

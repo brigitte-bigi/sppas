@@ -944,10 +944,12 @@
 			</p>
 
 			<p>
-				While a run goes, the page asks for <code>event_name=annotate_update</code>, every
-				200 ms on the local server and every second on a distant one. The bakery answers that
-				one alone, with the percent, a header and a text, and a status of 202 until the
-				hundred is reached: the page is not built again for a progress bar.
+				The run is a process of swapp, and it is followed as every process is: while it goes,
+				the page asks for <code>event_name=swapp_progress</code>, with the name of the process,
+				every 200 ms on the local server and every second on a distant one. The base recipe
+				answers that one alone, read in the file of the process, with the percent, a header
+				and a text, and a status of 202 until it has ended: the page is not built again for a
+				progress bar.
 				<code>event_name=annotate_report</code> is answered alone as well, with the report of
 				the run the page follows, as it is written. Any other event is offered to the service
 				of the files.
@@ -2368,7 +2370,8 @@
 			<li><b>RO4</b> &mdash; The batch is exposed by a neighbor and read. Annotate
 			selects no file, in either context, and alters none [402].</li>
 			<li><b>RO5</b> &mdash; A run is started by one request and runs on the
-			server, in a thread; where it stands is read on the progress the API was given,
+			server, in the thread of a process of swapp; where it stands is read in the file
+			of that process, which the progress the API was given writes,
 			and its results replace what was shown when it ends. The failure of one
 			annotation never ends it [503].</li>
 			<li><b>RO6</b> &mdash; One run at a time. While one goes, the page offers
@@ -2389,7 +2392,7 @@
 			back, which is the server's.</li>
 			<li><b>RO9</b> &mdash; What was decided is carried between two requests by what
 			the page transmits. What the server holds between two requests is the
-			run which is going &mdash; its thread and its progress &mdash; and the
+			run which is going &mdash; its manager and its process &mdash; and the
 			manager of the provision of files.</li>
 			<li><b>RO10</b> &mdash; The order in which the selected annotations are
 			performed is the API's. What this application works out from what the
@@ -2464,8 +2467,8 @@
 
 			<p><b>C24 holds one thing on the server, and only one.</b> A run is held
 			by the server while it goes, because it lasts longer than the request which
-			started it, and it is followed: a thread advances it, and the progress it was
-			given is read. What the person decided is held by nothing but her page.</p>
+			started it, and it is followed: the thread of its process advances it, and where
+			it stands is read in the file of that process. What the person decided is held by nothing but her page.</p>
 
 		</section>
 
@@ -2574,15 +2577,15 @@
 			run writes all of it in a <code>sppasParam</code> &mdash; the
 			annotations activated, the language and the options of each, the extensions,
 			the workspace and the name of the report &mdash; and hands it to the manager
-			of the annotations, which performs them in its own thread. It
+			of the annotations, which performs them in the thread of the process of the run. It
 			is the object the API is performed with, and it is held for as long as the
 			run goes and no longer. C14, C24</p>
 
-			<p><b>The progress stands with the run.</b> It is a
-			<code>swappProgressBar</code>, which is a <code>sppasBaseProgress</code>: the
-			API sets on it a percent, a header and a text, and the requests which follow
-			read them. It is made when the run starts and dropped when it has
-			ended. C18</p>
+			<p><b>The progress is the one of the process of the run.</b> It is a
+			<code>swappProcessProgress</code>, which is a <code>sppasBaseProgress</code>: the
+			API sets on it a percent, a header and a text, as on any other one, and each time
+			they are set, they are written in the file of the process, where the requests
+			which follow read them. C18</p>
 
 			<p><b>The report is the one thing which stays.</b> Locally, its name is given
 			by <code>sppasLogFile</code> with the pattern <code>report</code>: the reports of
@@ -2615,7 +2618,7 @@
 			  <tr><td>PF2, PF4, PF5</td><td>In the page: keep the extension, the selection or the language; it is sent with the run</td><td>Nothing: nothing is sent</td></tr>
 			  <tr><td>PF3</td><td>In the page: set the choice of language of every annotation to the language fixed where it holds it, and to <code>---</code> where it does not; show the language the selected annotations hold</td><td>Nothing: nothing is sent</td></tr>
 			  <tr><td>PF6</td><td>Hand the options of the annotation to the service of the options; take back the values, or nothing when she gives up</td><td>Nothing of this application's</td></tr>
-			  <tr><td>PF8</td><td>Rebuild; ask the provision of files for the batch, and verify one annotation selected, a batch which is not empty and no run going; name the report; write what was decided in a <code>sppasParam</code>; make the progress; lock the batch; start the thread and answer. In the thread: have the API perform the annotations; release the batch, give back what was produced, and say it has finished</td><td>The start: a run is going, or none is. Not the run itself</td></tr>
+			  <tr><td>PF8</td><td>Rebuild; ask the provision of files for the batch, and verify one annotation selected, a batch which is not empty and no run going; name the report; write what was decided in a <code>sppasParam</code>; lock the batch; start the process and answer. In the thread of the process: have the API perform the annotations, on the progress of the process; release the batch, give back what was produced, and say it has finished</td><td>The start: a run is going, or none is. Not the run itself</td></tr>
 			  <tr><td>PF9</td><td>Read the report; locally, add it to the list and check it; take the results of the run; online, ask the provision of files for the address of the report, of each produced file and of the archive; write the section of the report, then the results</td><td>Nothing</td></tr>
 			  <tr><td>PF10</td><td>Read the checked report, and write the section of the report</td><td>Nothing: nothing is written on a disk</td></tr>
 			  <tr><td>PF11</td><td>Delete the checked report, or each report which is not checked, one after another</td><td>The deletion of one report</td></tr>
@@ -2644,8 +2647,8 @@
 
 			<h4>One run at a time</h4>
 
-			<p>The thread which performs the annotations is what says a run is
-			going. While it is alive, a request which would start another one, reset the
+			<p>The process of the run is what says a run is
+			going. While it has not ended, a request which would start another one, reset the
 			page or start over is refused, and the page, which shows the progress in place
 			of the six steps, offers none of them. C13</p>
 
@@ -2665,7 +2668,7 @@
 			</thead>
 			<tbody>
 			  <tr><td>annotations</td><td>Knows which annotations there are and what each declares, which kinds of output file there are and their extensions; says which annotation is of which type and which languages the page offers. Reads no file of the user</td><td>PF1</td></tr>
-			  <tr><td>run</td><td>Names the report, writes what was decided in what the API is performed with, makes the progress, creates the manager whose thread runs the annotations, says whether a run is going and where it stands, and gives the batch back once it has ended</td><td>PF8</td></tr>
+			  <tr><td>run</td><td>Names the report, writes what was decided in what the API is performed with, creates the manager, starts the process in whose thread the manager runs the annotations, says whether a run is going, and gives the batch back once it has ended</td><td>PF8</td></tr>
 			  <tr><td>reports</td><td>Lists the reports, gives back the text of one as it was written, and deletes those which are named</td><td>PF9, PF10, PF11</td></tr>
 			  <tr><td>provision</td><td>Reads the batch the provision of files hands, says what it locks and releases, gives back what was produced, asks for the addresses, and says when it has finished. Alters nothing of the batch</td><td>PF7, PF8, PF9</td></tr>
 			  <tr><td>decisions</td><td>Rebuilds what was decided from what the page transmitted, and says what is still missing</td><td>PF12, PF13, and the beginning of every other</td></tr>
@@ -2747,11 +2750,12 @@
 
 			<p><code>ModelRun</code> performs T08. It names the report, beside the files of
 			the batch online, fills a
-			<code>sppasParam</code> with what was decided, makes the progress, and creates a
-			<code>sppasAnnotationsManager</code> with them and the merge option: its
-			thread performs the annotations. It holds that manager, the progress and,
-			online, the report it named: it says whether a run is going, and where it
-			stands. The first time it finds the run ended, it releases the batch, gives
+			<code>sppasParam</code> with what was decided, creates a
+			<code>sppasAnnotationsManager</code> with the merge option, and starts a process
+			of swapp: in its thread, the manager performs the annotations, on the progress
+			of the process. It holds that manager, the process and, online, the report it
+			named: it says whether a run is going. Once the annotations were performed, the
+			process releases the batch, gives
 			back what was produced, the report included online, keeps as the results of that
 			run what the API wrote under each root of the batch, and says it has finished. The results are
 			those of the last run which ended, until another one starts.</p>
@@ -2843,8 +2847,9 @@
 			<p>T02 to T05 happen in the page and make
 			no request RO8: what they decide is transmitted with <strong>perform</strong>.
 			T06 is handed to the service of the options, and T07 is the provision of
-			files'. <strong>update</strong> asks where the run stands, and is answered with
-			data alone: <code>event_name=annotate_update</code> carries it.
+			files'. Where the run stands is asked as for any process of swapp:
+			<code>event_name=swapp_progress</code> carries it, and the base recipe answers it
+			with data alone.
 			<strong>complete</strong> asks for the results, and is answered with what the
 			page shows: <code>event_bake=annotate_complete</code> carries it. While the run
 			goes, its report, folded under the progress, is asked for as long as it is
@@ -2981,7 +2986,7 @@
 			promise is the chapter on the contracts.</p>
 
 			<p><b>The model is held by what answers the URL, and by nothing else.</b> A
-			run is longer than the request which started it: what holds its thread
+			run is longer than the request which started it: what holds its process
 			has to outlive that request, and what outlives it is
 			<code>AnnotateResponseRecipe</code>, which is built once and kept. The
 			controller is built and dropped at every request, and it is handed the model it
@@ -2990,9 +2995,9 @@
 			<table>
 			<thead><tr><th scope="col">Class</th><th scope="col">From</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 			<tbody>
-			  <tr><td><code>AnnotateModel</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>annotations(), why_not_installed(key), required_names(key), required_filetypes(key), kinds(), languages(), batch(), start(batch, run), is_running(), progress(), results(), reports(), read_report(name), report_path(name), delete_reports(names), address_of(filename), address_of_all(filenames)</td></tr>
+			  <tr><td><code>AnnotateModel</code></td><td>the fa&ccedil;ade</td><td>&mdash;</td><td>annotations(), why_not_installed(key), required_names(key), required_filetypes(key), kinds(), languages(), batch(), start(batch, run), is_running(), results(), reports(), read_report(name), report_path(name), delete_reports(names), address_of(filename), address_of_all(filenames)</td></tr>
 			  <tr><td><code>ModelAnnotations</code></td><td>module <i>annotations</i></td><td>&mdash;</td><td>annotations(), why_not_installed(key), required_names(key), required_filetypes(key), kinds(), languages()</td></tr>
-			  <tr><td><code>ModelRun</code></td><td>module <i>run</i></td><td>manager, progress, results</td><td>start(batch, run), is_running(), progress(), results()</td></tr>
+			  <tr><td><code>ModelRun</code></td><td>module <i>run</i></td><td>manager, process, results</td><td>start(batch, run), is_running(), results()</td></tr>
 			  <tr><td><code>ModelReports</code></td><td>module <i>reports</i></td><td>&mdash;</td><td>reports(), read(name, folder), delete(names)</td></tr>
 			  <tr><td><code>ModelProvision</code></td><td>module <i>provision</i></td><td>&mdash;</td><td>batch(), folder(), lock(names), release(names), produced(workspace), address_of(filename), address_of_all(filenames), finished()</td></tr>
 			  <tr><td><code>Annotation</code></td><td>ANNOTATION, REQUIRES</td><td>key, name, description, types, languages, language, references, devel, requires, /is installed</td><td>&mdash;</td></tr>
@@ -3037,7 +3042,7 @@
 			  <tr><td>uses</td><td><code>ModelAnnotations</code> &rarr; <code>Annotation</code>, <code>Kind</code></td><td>A dependency: it makes them from the API, and keeps none</td></tr>
 			  <tr><td>uses</td><td><code>ModelAnnotations</code> &rarr; <code>sppasParam</code>, <code>sppasFiles</code></td><td>A dependency: what is read of the API to be shown</td></tr>
 			  <tr><td>uses</td><td><code>ModelRun</code> &rarr; <code>sppasParam</code>, <code>sppasAnnotationsManager</code>, <code>sppasLogFile</code></td><td>A dependency, and the only tie of this application to what performs annotations</td></tr>
-			  <tr><td>holds</td><td><code>ModelRun</code> 1 &mdash; 0..1 <code>swappProgressBar</code></td><td>A composition: made when a run starts, dropped when it has ended</td></tr>
+			  <tr><td>holds</td><td><code>ModelRun</code> 1 &mdash; 0..1 <code>swappProcess</code></td><td>A composition: made when a run starts, kept until another one starts; its file says when it has ended</td></tr>
 			  <tr><td>uses</td><td><code>ModelRun</code> &rarr; <code>ModelProvision</code></td><td>A dependency: it locks when the run starts, and releases and gives back once it has ended</td></tr>
 			  <tr><td>uses</td><td><code>ModelReports</code> &rarr; <code>ReportLine</code></td><td>A dependency: it makes them from a file, and keeps none</td></tr>
 			  <tr><td>uses</td><td><code>ModelProvision</code> &rarr; the provision of files</td><td>A dependency, and the only tie of this application to that domain</td></tr>
@@ -3049,8 +3054,8 @@
 			<p>To be read at <a href="https://yuml.me" class="external-link">yuml.me</a>,
 			class diagram.</p>
 
-			<pre class="dark"><code>[AnnotateModel|annotations();why_not_installed();required_names();required_filetypes();kinds();languages();batch();start();is_running();progress();results();reports();read_report();report_path();delete_reports();address_of();address_of_all()]++1-1&gt;[ModelAnnotations|annotations();why_not_installed();required_names();required_filetypes();kinds();languages()]
-[AnnotateModel]++1-1&gt;[ModelRun|manager;progress;results|start();is_running();progress();results()]
+			<pre class="dark"><code>[AnnotateModel|annotations();why_not_installed();required_names();required_filetypes();kinds();languages();batch();start();is_running();results();reports();read_report();report_path();delete_reports();address_of();address_of_all()]++1-1&gt;[ModelAnnotations|annotations();why_not_installed();required_names();required_filetypes();kinds();languages()]
+[AnnotateModel]++1-1&gt;[ModelRun|manager;process;results|start();is_running();results()]
 [AnnotateModel]++1-1&gt;[ModelReports|reports();read();delete()]
 [AnnotateModel]++1-1&gt;[ModelProvision|batch();folder();lock();release();produced();address_of();address_of_all();finished()]
 
@@ -3058,7 +3063,7 @@
 [ModelAnnotations]-.-&gt;[Kind|kind;extensions;default]
 [ModelAnnotations]-.-&gt;[sppasParam]
 [ModelAnnotations]-.-&gt;[sppasFiles]
-[ModelRun]++1-0..1&gt;[swappProgressBar]
+[ModelRun]++1-0..1&gt;[swappProcess]
 [ModelRun]-.-&gt;[sppasParam]
 [ModelRun]-.-&gt;[sppasAnnotationsManager]
 [ModelRun]-.-&gt;[sppasLogFile]
@@ -3136,7 +3141,7 @@
 			<table>
 			<thead><tr><th scope="col">Class</th><th scope="col">Attributes</th><th scope="col">Operations</th></tr></thead>
 			<tbody>
-			  <tr><td><code>AnnotateController</code></td><td>record</td><td>handle(request_data), progress(), followed_report(), starts_over(), say_what_is_missing(), say_not_performed(), populate_view()</td></tr>
+			  <tr><td><code>AnnotateController</code></td><td>record</td><td>handle(request_data), followed_report(), starts_over(), say_what_is_missing(), say_not_performed(), populate_view()</td></tr>
 			  <tr><td><code>AnnotateRecord</code></td><td>task, parameters, run, checked report, to_be_shown</td><td>serialize(), parse(data), show(key, value)</td></tr>
 			  <tr><td><code>AnnotateResponseRecipe</code></td><td>&mdash;</td><td>bake(), _process_events()</td></tr>
 			</tbody>
@@ -3183,7 +3188,7 @@
 
 			<h4>In yUML</h4>
 
-			<pre class="dark"><code>[AnnotateResponseRecipe|bake();_process_events()]++1-1&gt;[AnnotateController|record|handle();progress();followed_report();starts_over();say_what_is_missing();say_not_performed();populate_view()]
+			<pre class="dark"><code>[AnnotateResponseRecipe|bake();_process_events()]++1-1&gt;[AnnotateController|record|handle();followed_report();starts_over();say_what_is_missing();say_not_performed();populate_view()]
 [AnnotateResponseRecipe]++1-1&gt;[AnnotateView]
 [AnnotateController]++1-1&gt;[AnnotateRecord|task;parameters;run;checked report;to_be_shown|serialize();parse();show()]
 [AnnotateRecord]++1-1&gt;[sppasParam]
@@ -3344,8 +3349,7 @@
 			  <tr><td>Give the languages of the page</td><td>pre: none. post: every language at least one annotation has resources for, each of them once</td></tr>
 			  <tr><td>Give the batch</td><td>pre: none. post: the workspace the provision of files hands, possibly empty. C11</td></tr>
 			  <tr><td>Start a run</td><td>pre: a batch which is not empty, at least one annotation selected. post: a run is going, and it is answered without waiting for it; when one was going already, nothing is started and it is said. C12, C13</td></tr>
-			  <tr><td>Say whether a run is going</td><td>pre: none. post: true while the thread which performs is alive, false otherwise</td></tr>
-			  <tr><td>Give the progress</td><td>pre: none. post: the percent, the header and the text the API set; the hundred, and nothing else, when no run is going. C18</td></tr>
+			  <tr><td>Say whether a run is going</td><td>pre: none. post: true while the process of the run has not ended, false otherwise</td></tr>
 			  <tr><td>Give the reports</td><td>pre: none. post: the names of the reports which are kept, the last one written first; empty when there are none, and empty online. C22</td></tr>
 			  <tr><td>Read a report</td><td>pre: the name of a report. post: the text of that report as it was written, line for line, nothing added and nothing left out. C19</td></tr>
 			  <tr><td>Give the path of a report</td><td>pre: the name of a report, without its path. post: that name in the folder of the logs locally, and beside the files of the batch online. C22</td></tr>
@@ -3371,11 +3375,10 @@
 			<caption>ModelRun</caption>
 			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 			<tbody>
-			  <tr><td>Start</td><td>pre: the preconditions of the run are verified. post: the report is named, under a name no report bore before, beside the files of the batch online, and the name of the next one is prepared; a <code>sppasParam</code> holds what was decided and that only &mdash; the selected annotations activated and no other, the language and the options of each, the extensions, the workspace, the name of the report; the progress is made; the batch is locked; a <code>sppasAnnotationsManager</code> is created with that <code>sppasParam</code>, the progress and the merge option, and its thread performs the annotations in the order of the API; the name of the report is given back. Raises when a run is going. C13, C14, C15, C17</td></tr>
+			  <tr><td>Start</td><td>pre: the preconditions of the run are verified. post: the report is named, under a name no report bore before, beside the files of the batch online, and the name of the next one is prepared; a <code>sppasParam</code> holds what was decided and that only &mdash; the selected annotations activated and no other, the language and the options of each, the extensions, the workspace, the name of the report; the batch is locked; a <code>sppasAnnotationsManager</code> is created with the merge option, and a process of swapp is started, in whose thread the manager performs the annotations, with that <code>sppasParam</code> and the progress of the process, in the order of the API; the name of the report is given back. Raises when a run is going. C13, C14, C15, C17</td></tr>
 			  <tr><td>Give back the batch</td><td>pre: the thread of the manager has ended. post: whatever each annotation did, the batch is released, what was produced is given back, the report included online, the results are kept &mdash; one per root of the batch, in its order, with the files the API says it wrote under it &mdash;, and that it has finished is said; done once, the first time the run is found ended, whichever request finds it. C16, C25</td></tr>
 			  <tr><td>Give the results</td><td>pre: none. post: one result per root of the batch of the last run which ended, in the order of the batch; none while a run goes, and none before the first one has ended. C25</td></tr>
 			  <tr><td>Say whether a run is going</td><td>pre: none. post: true while the thread of the manager is alive</td></tr>
-			  <tr><td>Give the progress</td><td>pre: none. post: what the API set on the progress it was given; nothing is counted here. C18</td></tr>
 			</tbody>
 			</table>
 
@@ -3417,7 +3420,6 @@
 			<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 			<tbody>
 			  <tr><td>Handle a request</td><td>pre: called once for that request. post: the record is rebuilt from what was transmitted; the language transmitted for an annotation is kept only if that annotation has it, and a disabled annotation is never selected; the task is identified, its preconditions are read; the treatment ran, or none ran and what is missing or stands in the way is stated. C3, C5, C7</td></tr>
-			  <tr><td>Give the progress</td><td>pre: none. post: the percent, the header and the text, as the model gives them</td></tr>
 			  <tr><td>Have what is missing said again</td><td>pre: the request was handled, and the provision of files says the workspace is ready. post: what is still missing is put in the dialog of information when the view is populated</td></tr>
 			  <tr><td>Populate the view</td><td>pre: the request was handled. post: the view has the record; locally it holds the reports, online it holds none. C22</td></tr>
 			</tbody>
@@ -3472,7 +3474,7 @@
 			  <tr><td>C10</td><td><code>AnnotateView</code>, which ties every field of a decision to the form of the run; the script sends that form and nothing before</td></tr>
 			  <tr><td>C11</td><td><code>ModelProvision</code>, which is what reads the batch</td></tr>
 			  <tr><td>C12</td><td><code>Run</code>, saying what is missing, read by <code>AnnotateController</code> before it starts anything</td></tr>
-			  <tr><td>C13</td><td><code>ModelRun</code>, which starts nothing while its thread is alive; <code>AnnotateController</code> reads it before a reset or another batch</td></tr>
+			  <tr><td>C13</td><td><code>ModelRun</code>, which starts nothing while its process has not ended; <code>AnnotateController</code> reads it before a reset or another batch</td></tr>
 			  <tr><td>C14</td><td><code>ModelRun</code>, which fills its own <code>sppasParam</code> when it starts and is given nothing afterward</td></tr>
 			  <tr><td>C15</td><td><code>ModelRun</code>, which hands the whole to the API and orders nothing</td></tr>
 			  <tr><td>C16</td><td>The API; <code>ModelRun</code> stops nothing</td></tr>
@@ -3554,7 +3556,7 @@
 			  <tr><td>TE20</td><td>What is handed to the API holds every selected annotation activated, and no other</td><td>C6, C14</td></tr>
 			  <tr><td>TE21</td><td>What is decided after the start does not change what that run is performed with</td><td>C14</td></tr>
 			  <tr><td>TE22</td><td>An annotation which fails stops nothing: the run reaches its end, and the report holds both</td><td>C16</td></tr>
-			  <tr><td>TE23</td><td>While a run goes, the progress is what the API set; when none goes, it is the hundred</td><td>C18</td></tr>
+			  <tr><td>TE23</td><td>While a run goes, where it stands is what the API set, read in the file of its process; once it has ended, the hundred</td><td>C18</td></tr>
 			  <tr><td>TE24</td><td>Two runs write two reports, and the second one replaces nothing of the first</td><td>C17</td></tr>
 			</tbody>
 			</table>
