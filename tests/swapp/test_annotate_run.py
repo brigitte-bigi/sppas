@@ -60,6 +60,7 @@ from sppas.src.wkps import States
 
 from sppas.ui.swapp.app_annotate import annotate_run
 from sppas.ui.swapp.app_annotate.annotate_run import swappModelRun
+from sppas.ui.swapp.app_annotate.annotate_run import swappAnnotateProgress
 from sppas.ui.swapp.swapp_base.swapp_process import swappProcess
 
 # ---------------------------------------------------------------------------
@@ -378,6 +379,35 @@ class TestWithARun(unittest.TestCase):
         self.assertEqual([_first + "-token.xra"], _results[0].produced)
         self.assertEqual([], _results[1].produced)
         self.assertEqual(sorted([_third + "-token.xra", _third + "-phon.xra"]), sorted(_results[2].produced))
+
+
+# ---------------------------------------------------------------------------
+
+
+class TestAnnotateProgress(unittest.TestCase):
+    """What the manager of the annotations gives its progress, read in the file of the process."""
+
+    @staticmethod
+    def annotates(progress=None):
+        """What the manager does with the progress it is given, as manager.py does it: fractions."""
+        _given = swappAnnotateProgress(progress)
+        _given.set_new()
+        _given.set_header("textnorm")
+        _given.set_text("sample (1/2)")
+        _given.set_fraction(0.5)
+        time.sleep(0.3)
+        _given.update(1, "Completed.")
+        time.sleep(0.3)
+
+    # -----------------------------------------------------------------------
+
+    def test_a_fraction_is_a_percent(self):
+        """The fraction the API gives is the percent the page shows."""
+        process = swappProcess.start(TestAnnotateProgress.annotates, ())
+        time.sleep(0.15)
+        self.assertEqual((50, "textnorm", "sample (1/2)", False), process.read())
+        time.sleep(0.3)
+        self.assertEqual((100, "textnorm", "Completed.", False), process.read())
 
 
 if __name__ == "__main__":

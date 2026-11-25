@@ -43,6 +43,7 @@ import os
 from threading import Lock
 
 from sppas.core.coreutils import sppasLogFile
+from sppas.core.coreutils import sppasBaseProgress
 from sppas.src.annotations import sppasAnnotationsManager
 from sppas.src.annotations import sppasParam
 from sppas.src.wkps import States
@@ -97,6 +98,55 @@ class swappRootResult:
     root = property(get_root, None)
     status = property(get_status, None)
     produced = property(get_produced, None)
+
+# ---------------------------------------------------------------------------
+
+
+class swappAnnotateProgress(sppasBaseProgress):
+    """The progress the manager of the annotations is given.
+
+    The API says where it stands as a fraction, from 0 to 1, and the
+    progress of the process holds a percent: what the API gives is
+    multiplied by 100, then handed to the progress of the process.
+
+    """
+
+    def __init__(self, progress):
+        """Create the progress which hands what it is given to the one of the process.
+
+        :param progress: (swappProcessProgress) The progress of the process
+
+        """
+        super(swappAnnotateProgress, self).__init__()
+        self.__progress = progress
+
+    # -----------------------------------------------------------------------
+
+    def set_header(self, header: str) -> None:
+        """Override. Hand the header to the progress of the process.
+
+        :param header: (str) What the API is doing
+
+        """
+        self._header = str(header)
+        self.__progress.set_header(header)
+
+    # -----------------------------------------------------------------------
+
+    def update(self, percent: float | None = None, message: str | None = None) -> None:
+        """Override. Hand the fraction, as a percent, and the text to the progress of the process.
+
+        :param percent: (float) The fraction the API gives, from 0 to 1, None to leave it unchanged
+        :param message: (str) The text, None to leave it unchanged
+
+        """
+        _percent = None
+        if percent is not None:
+            self._percent = percent
+            _percent = percent * 100
+        if message is not None:
+            self._text = str(message)
+        self.__progress.update(_percent, message)
 
 # ---------------------------------------------------------------------------
 
@@ -265,7 +315,7 @@ class swappModelRun:
 
         """
         try:
-            self.__manager.annotate(parameters, progress)
+            self.__manager.annotate(parameters, swappAnnotateProgress(progress))
         finally:
             self.__give_back()
 
