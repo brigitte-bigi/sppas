@@ -1221,3 +1221,6 @@ msgstr "IGNORE"
 
 msgid "The help of this application is not written yet."
 msgstr "L'aide de cette application n'est pas encore écrite."
+
+msgid "Take back all"
+msgstr "Tout retirer"

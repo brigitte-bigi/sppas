@@ -121,26 +121,6 @@ class swappConvertController:
 
     # -----------------------------------------------------------------------
 
-    def progress(self) -> tuple:
-        """Return where the conversion the page follows stands, as its report says it.
-
-        :return: (tuple) The percent of files treated, a header and a text
-
-        """
-        try:
-            _total, _results, _finished = self.__model.read_report(self.__record.report)
-        except ValueError as e:
-            logging.error(str(e))
-            return 100, "", ""
-        _percent = 0
-        if _finished is True:
-            _percent = 100
-        elif _total > 0:
-            _percent = min(99, (100 * len(_results)) // _total)
-        return _percent, "", "{:d} / {:d}".format(len(_results), _total)
-
-    # -----------------------------------------------------------------------
-
     def say_what_is_missing(self) -> None:
         """Have what is still missing said again: the workspace was said ready."""
         self.__record.show("ready", True)
@@ -184,8 +164,10 @@ class swappConvertController:
         if len(record.conversion.what_is_missing(_batch)) > 0:
             return
 
-        record.report = self.__model.start(_batch, record.conversion)
+        _report, _process = self.__model.start(_batch, record.conversion)
+        record.report = _report
         record.show("converting", True)
+        record.show("process", _process)
 
     # -----------------------------------------------------------------------
 

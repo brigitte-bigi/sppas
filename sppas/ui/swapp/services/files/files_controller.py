@@ -40,6 +40,7 @@
 
 import base64
 import logging
+import os
 
 from sppas.core.coreutils import sppasTypeError
 from sppas.ui import _
@@ -50,6 +51,7 @@ from .files_record import TASK_DESIGNATE
 from .files_record import TASK_FINISHED
 from .files_record import TASK_SEND
 from .files_record import TASK_TAKE_BACK
+from .files_record import TASK_TAKE_BACK_ALL
 from .files_record import TASKS
 from .files_feeding import swappDataFiles
 from .files_view import swappDepositView
@@ -322,6 +324,9 @@ class swappFilesController:
         elif task == TASK_TAKE_BACK:
             self.__take_back(data)
 
+        elif task == TASK_TAKE_BACK_ALL:
+            self.__take_back_all()
+
         elif task == TASK_SEND:
             self.__send(data)
 
@@ -396,6 +401,33 @@ class swappFilesController:
                 _deposited.append(_one_name)
 
         self.__record.deposited = _deposited
+
+    # -----------------------------------------------------------------------
+
+    def __take_back_all(self) -> None:
+        """Take back every file she gave which can be, each one as one at a time.
+
+        A file an app treated cannot be taken back: it stays. Where the files
+        stand already, what she gave is read in the workspace, but what an app
+        produced; where they have to be brought, it is what was fed.
+
+        """
+        _names = list()
+        if self.__reachable is True:
+            for _one in swappWorkspaceFiles.known_files(self.__model.workspace()):
+                _name = _one.get_id()
+                if (_name in self.__record.produced) is False and (_name in self.__record.treated) is False:
+                    _names.append(_name)
+        else:
+            _treated = list()
+            for _filename in self.__record.treated:
+                _treated.append(os.path.basename(_filename))
+            for _name, _size in self.__record.fed:
+                if (_name in _treated) is False:
+                    _names.append(_name)
+
+        for _name in _names:
+            self.__take_back({TASK_TAKE_BACK: _name})
 
     # -----------------------------------------------------------------------
 

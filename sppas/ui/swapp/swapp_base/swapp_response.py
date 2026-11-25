@@ -41,6 +41,7 @@
 
 from __future__ import annotations
 
+import logging
 import os
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.httpd import BaseResponseRecipe
@@ -58,6 +59,9 @@ from .swapp_help import HELP_TASK
 from .swapp_help import BACK_TASK
 from .swapp_help_button import swappHelpButton
 from .swapp_help_button import HELP_BUTTON_ID
+from .swapp_process import swappProcess
+from .swapp_process import PROGRESS_EVENT
+from .swapp_process import PROCESS_FIELD
 
 # ---------------------------------------------------------------------------
 
@@ -85,6 +89,8 @@ class swappBaseResponse(BaseResponseRecipe):
         else:
             name = "undefined"
             self._page_name = ""
+        # The process the request names, empty when it names none.
+        self.__process_name = ""
 
         # Inheritance with a given dynamic HTMLTree.
         super(swappBaseResponse, self).__init__(name=name, tree=tree, title=title)
@@ -125,13 +131,21 @@ class swappBaseResponse(BaseResponseRecipe):
     # -----------------------------------------------------------------------
 
     def is_running(self) -> bool:
-        """Return True while a long treatment of the app goes.
+        """Return True while a long process of the app goes.
 
-        False by default: the app has no long treatment. An app which has one
-        -- a run, a conversion, an installation -- overrides it.
+        By default, the process is the one the request names, and where it
+        stands is read in its file: False when the request names none. An app
+        which holds its process in another way overrides it.
 
         """
-        return False
+        if len(self.__process_name) == 0:
+            return False
+        try:
+            _percent, _header, _text, _finished = swappProcess(self.__process_name).read()
+        except ValueError:
+            return False
+
+        return _finished is False
 
     # -----------------------------------------------------------------------
 
@@ -232,7 +246,8 @@ class swappBaseResponse(BaseResponseRecipe):
         preference: a name SPPAS does not carry is not kept.
 
         The help of an app is answered here too, whatever the app: it is a
-        view the app is not asked for -- see swapp_help.py.
+        view the app is not asked for -- see swapp_help.py. So is where a long
+        process stands -- see swapp_process.py.
 
         :param events: (dict) The requested events to be processed
         :param headers: (dict) The headers of the http request received
@@ -244,6 +259,26 @@ class swappBaseResponse(BaseResponseRecipe):
             self._data = {"exit_pending": swapp_wxstate.exit_pending,
                           "exit_granted": swapp_wxstate.exit_granted}
             self._status.code = 200
+            return self._htree.serialize()
+
+        # Where a long process stands, asked for by the periodic call of the
+        # page which follows it, whatever the app: it is read in the file of
+        # the process, and nothing else is asked of the app. The hundred is
+        # answered once it has ended, or when the name is not the one of a
+        # process.
+        self.__process_name = str(events.get(PROCESS_FIELD, ""))
+        if events.get("event_name") == PROGRESS_EVENT:
+            try:
+                _percent, _header, _text, _finished = swappProcess(self.__process_name).read()
+            except ValueError as e:
+                logging.error(str(e))
+                _percent, _header, _text, _finished = 100, "", "", True
+            if _finished is True:
+                _percent = 100
+            self._data = {"percent": _percent, "header": _header, "text": _text}
+            self._status.code = 202
+            if _finished is True:
+                self._status.code = 200
             return self._htree.serialize()
 
         # The exit was granted: whoever asks for a page gets the last one.
@@ -295,7 +330,7 @@ class swappBaseResponse(BaseResponseRecipe):
             if contrast in CONTRAST_NAMES:
                 swapp_settings.accessibility_contrast = contrast
 
-        # A long treatment is modal: while it goes, the help is not shown, and
+        # A long process is modal: while it goes, the help is not shown, and
         # asking for it is going back to the default view of the app, which
         # then is the progress.
         if events.get("event_bake") == HELP_TASK and self.is_running() is True:

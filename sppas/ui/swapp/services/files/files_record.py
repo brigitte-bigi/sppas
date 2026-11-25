@@ -51,12 +51,13 @@ from .files_feeding import swappDataFeeding
 
 TASK_DESIGNATE = "designate"
 TASK_TAKE_BACK = "take_back"
+TASK_TAKE_BACK_ALL = "take_back_all"
 TASK_SEND = "send"
 TASK_READY = "ready"
 TASK_PRODUCED = "produced"
 TASK_FINISHED = "finished"
 
-TASKS = (TASK_DESIGNATE, TASK_TAKE_BACK, TASK_SEND, TASK_READY, TASK_PRODUCED, TASK_FINISHED)
+TASKS = (TASK_DESIGNATE, TASK_TAKE_BACK, TASK_TAKE_BACK_ALL, TASK_SEND, TASK_READY, TASK_PRODUCED, TASK_FINISHED)
 
 # ---------------------------------------------------------------------------
 

@@ -47,6 +47,7 @@ from sppas.core.config import sg
 from sppas.ui import _
 
 from ..swapp_base.swapp_view import swappBaseView
+from ..swapp_base.swapp_process import PROCESS_FIELD
 from ..swapp_core.swappsg import swapp_settings
 from ..swapp_core.swappsg import swapp_serverstate
 from ..nodes import swappProgressBar
@@ -274,8 +275,9 @@ class swappConvertView(swappBaseView):
 
         _section.append_child(swappGeneralPanel(_section.identifier, _conversion.override, _conversion.heuristic))
 
-        # While the conversion runs, the page follows it: the progress, and the
-        # name of the report it reads, which the form transmits.
+        # While the conversion runs, the page follows it: the progress, the
+        # name of the process it asks where the conversion stands, and the
+        # name of the report the results are read in, which the form transmits.
         if _shown.get("converting", False) is True:
             # The text of the progress is given its node: the page writes in
             # it how many files have their result. The bar is named by a label.
@@ -288,6 +290,10 @@ class swappConvertView(swappBaseView):
             _section.append_child(EmptyNode(_section.identifier, None, "input",
                                             attributes={"type": "hidden", "form": ID_FORM,
                                                         "name": "convert_report", "value": record.report}))
+            _section.append_child(EmptyNode(_section.identifier, None, "input",
+                                            attributes={"type": "hidden", "form": ID_FORM,
+                                                        "name": PROCESS_FIELD,
+                                                        "value": _shown.get("process", "")}))
 
         if "results" in _shown:
             _section.append_child(swappResultsPanel(_section.identifier, _shown["results"],

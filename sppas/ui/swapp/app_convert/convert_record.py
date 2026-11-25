@@ -203,8 +203,6 @@ class swappConvertRecord:
 
         if isinstance(data.get("event_bake"), str) is True:
             self.__task = data["event_bake"]
-        elif data.get("event_name") == "update":
-            self.__task = "update"
         if isinstance(data.get("convert_report"), str) is True:
             self.__report = data["convert_report"]
         if isinstance(data.get("convert_destination"), str) is True:

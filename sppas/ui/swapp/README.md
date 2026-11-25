@@ -20,7 +20,8 @@ package.
 - `swapp_base/` holds the base classes common to every app: `swapp_bakery.py`,
   `swapp_response.py`, `swapp_view.py`, `swapp_head.py`, and `swapp_help.py`
   and `swapp_help_button.py`, the view of the help of any app and the button
-  of its nav;
+  of its nav, and `swapp_process.py` and `swapp_process_progress.py`, a long
+  process of any app and the progress it is given;
 - `panels/` is a leftover and holds no composite panel: `links_panel.py`
   defines `swappBaseLinksNode`, the base node of the link cards, still used by the
   Dashboard and the About page, and `annot_param.py` defines
@@ -307,33 +308,63 @@ A page is not concerned: the Journal keeps the Help button of the nav,
 disabled. The `app_wkps/` app is not concerned either while it is reworked:
 its bakery is not a `swappBaseResponse`.
 
-### How a long treatment holds the page
+### How a long process of an app is followed
 
-A long treatment of an app -- the run of Annotate, the conversion of Convert,
-the installation of Setup -- is modal: while it goes, the page shows its
-progress, and nothing else of the app answers. The sign of it is the progress
-bar, `percent_progress`, which the server writes while the treatment goes,
-and only then.
+A process of an app lasts longer than the request which started it: the
+conversion of Convert, the run of Annotate, the installation of Setup. It is
+a `swappProcess` (`swapp_base/swapp_process.py`), the same for every app. It
+performs what the app gives it in a thread, and where it stands is written in
+a file of the folder of the logs of SPPAS, and nowhere else: the file is
+written again at once each time, and whatever answers a request reads it
+there, by the name the page transmits. Nothing of the process is held by the
+server between two requests.
 
-The boot shared by all the pages watches the main content, because a treatment
+What performs the process -- the app, or the API -- is given a
+`swappProcessProgress` (`swapp_base/swapp_process_progress.py`): it is a
+`sppasBaseProgress`, set as any other one, and each time it is set it writes
+the file. That is how a process is laid over an API which knows nothing of
+swapp: the API is given a progress, as it always was.
+
+The page asks where the process stands with `event_name=swapp_progress`, and
+the name of the process in the field `swapp_process`. It is answered by
+`bake()` of `swappBaseResponse`, whatever the app, as the help is: 202 while
+the process goes, 200 and the hundred once it has ended. The client is one
+module, `statics/js/swapp_process.js`: an app gives it the name and what it
+does once the process has ended.
+
+What an app shows of the result is not the process's: the results of a
+conversion stay in the report of Convert, read when the page asks for them.
+
+Convert is a process of swapp. Annotate and Setup are not yet: each holds its
+run or its installation, and its progress, on the server.
+
+### How a long process holds the page
+
+A long process of an app is modal: while it goes, the page shows its progress,
+and nothing else of the app answers. The sign of it is the progress bar,
+`percent_progress`, which the server writes while the process goes, and only
+then.
+
+The boot shared by all the pages watches the main content, because a process
 starts and ends without the page being loaded again. While the progress is
 there, the items of the nav which leave the page or send something are `inert`:
 out of reach of the mouse, of the keyboard and of a screen reader, and a key
 which would click one of them is taken in the capture phase. What changes the
 look of the page stays available -- the pin of the menu, the theme, the
-contrast, the color: it touches nothing of the treatment. An inert item is not
+contrast, the color: it touches nothing of the process. An inert item is not
 dimmed, as no disabled item of the nav is.
 
-The bakery of an app whose server holds the treatment says whether it goes,
-with `is_running()` of `swappBaseResponse`, False by default: Annotate holds
-its run, and Setup its installation. While one goes, the help is not
-answered: asking for it is going back to the default view of the app, which
-then is the progress. A page asked for while it goes, after a reload for
-instance, shows its progress and follows it.
+Whether a process goes is said by `is_running()` of `swappBaseResponse`: by
+default, it is read in the file of the process the request names, and it is
+False when the request names none. Annotate and Setup override it: each holds
+its run or its installation. While a process goes, the help is not answered:
+asking for it is going back to the default view of the app, which then is the
+progress.
 
-Convert holds nothing of a conversion on the server, as its document requires:
-its page follows the conversion by the report it names, and its sheet shows
-the progress alone while it is in the page.
+A page of Annotate or of Setup asked for while it goes, after a reload for
+instance, shows its progress and follows it. A page of Convert does not: it
+has lost the name of the process. While the progress is in the page of
+Convert, its sheet shows it alone.
 
 ### How a page is shown
 

@@ -155,18 +155,20 @@ class swappModelConversion:
     """
 
     def convert(self, batch: sppasWorkspace, destination: str, answers: dict, general_options: dict,
-                report=None) -> list:
+                report=None, progress=None) -> list:
         """Convert every file of the batch into the destination format.
 
         What was written is added to the workspace the batch is. No file of
         the batch is removed or rewritten. When a report is given, it is
-        written again each time a file has its result.
+        written again each time a file has its result. When a progress is
+        given, it says how many files have their result, each time one has.
 
         :param batch: (sppasWorkspace) Workspace holding the files to be converted
         :param destination: (str) Extension of the destination format, its dot included
         :param answers: (dict) The answer standing for each option, by option
         :param general_options: (dict) "override" and "heuristic", both booleans
         :param report: (swappConversionReport|None) The report of the conversion
+        :param progress: (sppasBaseProgress|None) The progress of the process of the conversion
         :raises: sppasTypeError: The given batch is not a sppasWorkspace
         :return: (list of swappFileResult) One result per file, in the order of the batch
 
@@ -180,6 +182,11 @@ class swappModelConversion:
             _results.append(self.convert_one(_file.get_id(), destination, answers, general_options))
             if report is not None:
                 report.write(len(_files), _results)
+            # The hundred is the end of the process, and not the result of
+            # the last file.
+            if progress is not None:
+                progress.update(min(99, (100 * len(_results)) // len(_files)),
+                                "{:d} / {:d}".format(len(_results), len(_files)))
 
         for _result in _results:
             for _produced in _result.produced:

@@ -183,7 +183,7 @@
 <h2>The events it consumes</h2>
 
 	<p>
-		One name and one value, in the dictionary a request carries. Six names are
+		One name and one value, in the dictionary a request carries. Seven names are
 		answered, under the key <code>task</code>, and no other:
 	</p>
 
@@ -192,6 +192,7 @@
 		<tbody>
 			<tr><td><code>designate</code></td><td><code>path</code>, where the files stand already; <code>name</code> and <code>size</code> where they have to be brought</td><td>Makes the file known and checked, or takes it into what is to be sent</td></tr>
 			<tr><td><code>take_back</code></td><td><code>name</code></td><td>Takes the file out of the workspace, or out of what is to be sent</td></tr>
+			<tr><td><code>take_back_all</code></td><td>&mdash;</td><td>Takes back every file she gave which can be, each one as <code>take_back</code> does</td></tr>
 			<tr><td><code>send</code></td><td><code>contents</code>, the bytes by name</td><td>Asks for a place, writes the copies, makes them known and checked</td></tr>
 			<tr><td><code>ready</code></td><td>&mdash;</td><td>Says the workspace is ready (E7): nothing is sent, nothing is asked of the deposit API</td></tr>
 			<tr><td><code>produced</code></td><td>&mdash;</td><td>Marks as treated the files an app treated</td></tr>
@@ -963,6 +964,13 @@
 				not answering on that card. Nothing else is forbidden here: a person who
 				corrects what she gave does it one file at a time, and never has to
 				take everything back in order to change one.
+			</p>
+
+			<p>
+				She may also take every file back at once, with one control beside the
+				list. Each file she gave is taken back as it would be one at a time, and a
+				file an app treated stays, as it stays on its card. The control does not
+				answer when no file can be taken back.
 			</p>
 		</section>
 
@@ -2623,7 +2631,7 @@
 				<tr><td>Populate the tree of a workspace which is there</td><td>pre: the record says the files stand where SPPAS reads them, and that a workspace holds some. post: the name of the workspace, and nothing else: no list of files, no control which designates, none which validates, no bound. A workspace which is there is used, so nothing is asked of her &mdash; she is told which one it is</td></tr>
 				<tr><td>Populate the tree of a deposit which goes into the workspace</td><td>pre: the record says the files stand where SPPAS reads them. post: a control which designates a file by its path, the list of what was designated, and what validates it. No bound of any kind is shown, and no file is marked refused: C4 binds what is deposited, C7 to C12 bind what is deposited, and nothing is deposited here &mdash; the organizational level saying it in one line, « the announcement exists only where there is a refusal, and nothing is refused here »</td></tr>
 				<tr><td>Populate it when no deposit can be made</td><td>pre: the record says there is no place. post: no control which sends is built at all. Not one which is built and disabled: one which is not there</td></tr>
-				<tr><td>Show where each file stands</td><td>pre: the record comes from the controller. post: every card carries the state of its file &mdash; deposited, refused, treated, or no longer reachable &mdash; as an icon whose text alternative is the word; a treated file cannot be taken back, and once the batch was treated, Done is disabled. B17</td></tr>
+				<tr><td>Show where each file stands</td><td>pre: the record comes from the controller. post: every card carries the state of its file &mdash; deposited, refused, treated, or no longer reachable &mdash; as an icon whose text alternative is the word; a treated file cannot be taken back, and once the batch was treated, Done is disabled. Beside the list, the control which takes every file back, disabled when no file can be. B17, T09</td></tr>
 				<tr><td>Give what was built</td><td>pre: the tree was populated. post: the HTML of its node and of what stands under it, and nothing of a page: no head, no header, no footer. It is the node of the view which is serialized, and WhakerPy which serializes it</td></tr>
 				<tr><td>Empty what was built before</td><td>pre: none. post: the container holds what this request says and nothing of the request before. The node is the same from one request to the next, and what it held is cleared before it is built again</td></tr>
 				<tr><td>Carry the record back</td><td>pre: none. post: what is built holds the serialized record, so that the next request brings it back. A tree without it breaks the request which follows</td></tr>
@@ -2682,6 +2690,7 @@
 				<tr><td>TE7</td><td>A handful of bytes which say an executable or a script is refused. The only check which needs a content</td><td>T01</td></tr>
 				<tr><td>TE8</td><td>A file fed in raises the volume by its size</td><td>T08</td></tr>
 				<tr><td>TE9</td><td>A file taken back lowers it, and taking back what was never fed does nothing wrong</td><td>T09</td></tr>
+				<tr><td>TE32</td><td>Taking every file back takes back each file she gave which can be, as one at a time would, and leaves a file an app treated</td><td>T09</td></tr>
 				<tr><td>TE10</td><td>What is to be sent comes back in the order it was fed</td><td>T08</td></tr>
 				<tr><td>TE11</td><td>Nothing of a content travels while the person feeds: what is held is a name and a size</td><td>RO8</td></tr>
 				<tr><td>TE12</td><td>A state handed to a view gives a tree which holds what that state said and nothing more: no refusal it invented, no total it counted</td><td>D1</td></tr>

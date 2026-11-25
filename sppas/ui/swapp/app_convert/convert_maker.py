@@ -190,22 +190,12 @@ class swappConvertResponseRecipe(swappBaseResponse):
                 logging.error(f"Unknown event_bake={e}")
                 self._status.code = 205  # Reset Content
 
-        # Received events from the progress bar, which is waiting for the
-        # server response, filled in self._data.
+        # Received events from a request manager: Convert has none of its
+        # own, the progress of a conversion being answered by the base
+        # recipe, as the one of any process.
         elif "event_name" in events:
-
-            # --- Progress event to update the page ---
-            if events["event_name"] == "update":
-                self._data["percent"], self._data["header"], self._data["text"] = self.__controller.progress()
-                self._status.code = 202
-                if self._data["percent"] >= 100:
-                    self._status.code = 200
-
-            # --- Unknown event_name ---
-            else:
-                logging.error(f"Unknown event_name={events['event_name']}")
-                self._status.code = 205  # Reset Content
-
+            logging.error(f"Unknown event_name={events['event_name']}")
+            self._status.code = 205  # Reset Content
             return False
 
         # Received events of the provision of files.

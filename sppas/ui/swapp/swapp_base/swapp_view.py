@@ -152,13 +152,13 @@ JS_BOOT_PAGE = (
     "        });"
     "    }"
 
-    # A long treatment of an app is modal: while the page shows its progress,
+    # A long process of an app is modal: while the page shows its progress,
     # what leaves the page or sends something from the nav is out of reach.
     # What changes the look of the page is not: it touches nothing of the
-    # treatment. A treatment starts and ends without the page being loaded
+    # process. A process starts and ends without the page being loaded
     # again: the main content is watched.
     "    const appearance = ['pin-menu', 'btn-css-theme', 'btn-contrast', 'btn-color'];"
-    "    const holdTreatment = function () {"
+    "    const holdProcess = function () {"
     "        const nav = document.getElementById('nav-content');"
     "        if (nav === null) { return; }"
     "        const running = document.getElementById('percent_progress') !== null;"
@@ -166,10 +166,10 @@ JS_BOOT_PAGE = (
     "            if (appearance.includes(item.id) === false) { item.inert = running; }"
     "        });"
     "    };"
-    "    holdTreatment();"
+    "    holdProcess();"
     "    const main = document.getElementById('main-content');"
     "    if (main !== null) {"
-    "        new MutationObserver(holdTreatment).observe(main, {childList: true, subtree: true});"
+    "        new MutationObserver(holdProcess).observe(main, {childList: true, subtree: true});"
     "    }"
     # An inert element answers nothing, not even the key which clicks it.
     "    document.addEventListener('click', function (event) {"

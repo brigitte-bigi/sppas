@@ -701,8 +701,8 @@
 			<li><code>app_convert.py</code> -- <code>swappConvertWebData</code>, which answers which
 				page it can bake.</li>
 			<li><code>convert_maker.py</code> -- <code>swappConvertResponseRecipe</code>, the bakery of
-				<code>convert.html</code>: it receives the events, answers the progress alone, and
-				decides whether the page is created again.</li>
+				<code>convert.html</code>: it receives the events, and decides whether the page is
+				created again.</li>
 			<li><code>convert_controller.py</code> -- <code>swappConvertController</code>, which reads
 				the task a request carries and does it.</li>
 			<li><code>convert_model.py</code> -- <code>swappConvertModel</code>, which starts the
@@ -782,13 +782,15 @@
 			</p>
 
 			<p>
-				While the conversion runs, <code>convert_manager.js</code> asks for
-				<code>event_name=update</code> five times a second. The bakery answers that one alone,
-				with the percent, a header and a text, and a status of 202 until the hundred is
-				reached: the page is not built again for a progress bar. The text says how many files
-				have their result, and it is written under the bar; a label names the bar. The name of the report travels in a
-				hidden field, so that the server reads the account of the conversion the page follows
-				and not another.
+				The conversion is a process of swapp, and it is followed as every process is:
+				<code>statics/js/swapp_process.js</code> asks for <code>event_name=swapp_progress</code>
+				five times a second, with the name of the process. The base recipe answers that one
+				alone, read in the file of the process, with the percent, a header and a text, and a
+				status of 202 until it has ended: Convert is asked nothing, and the page is not built
+				again for a progress bar. The text says how many files have their result, and it is
+				written under the bar; a label names the bar. The name of the process and the name of
+				the report travel in hidden fields, so that the server reads where the conversion the
+				page follows stands, then its results, and not those of another.
 			</p>
 
 		</section>
@@ -2052,11 +2054,12 @@
 		page is not reloaded. The page then asks, at regular intervals &mdash; every
 		200 ms from the local server, every second from a distant one &mdash;, where the
 		conversion stands: how many files of the batch have their result. That is read
-		in the report of the conversion, and not in what a process of the server holds;
-		the answer is the same locally and online, whatever process gives it. The
-		report is a file of the folder of the logs of SPPAS, named as every report of
-		SPPAS is (<code>sppasLogFile</code>, pattern <code>convert</code>, extension <code>.json</code>); the request
-		which starts the conversion gives its name to the page, which transmits it with
+		in the file of the process which performs it &mdash; a process of swapp, as its
+		README says &mdash; and not in what a process of the server holds; the answer is
+		the same locally and online, whatever process gives it. The results are read in
+		the report of the conversion. The report is a file of the folder of the logs of
+		SPPAS, named as every report of SPPAS is (<code>sppasLogFile</code>, pattern <code>convert</code>, extension <code>.json</code>), and so is the file of the process; the request
+		which starts the conversion gives their names to the page, which transmits them with
 		every request that follows. It holds one line per file of the batch &mdash; its
 		status, then what it produced or its cause &mdash; and it is written again, at
 		once, each time a file has its result: a file refused or skipped is counted
@@ -2133,8 +2136,8 @@
 		<li><b>RO5</b> — The batch is exposed by a neighbor and read. Convert selects
 		no file, in either context, and alters none [202].</li>
 		<li><b>RO6</b> — The conversion is started by one request and runs on the
-		server; where it stands is read in the report of the conversion, and its results
-		replace what was shown when it ends. The failure of one file never ends it
+		server; where it stands is read in the file of its process, and its results, read
+		in the report of the conversion, replace what was shown when it ends. The failure of one file never ends it
 		[606].</li>
 		<li><b>RO7</b> — A setting is read and never written. The answer which holds is
 		carried by the page, for this conversion alone [308].</li>
@@ -2376,8 +2379,9 @@
 		for, and sends back what is to be shown. Nothing is begun in one request and
 		finished in another, except T06: it is started by one request, the requests
 		which follow ask where it stands, and the last one gives its results. Where it
-		stands is read in the report of the conversion, whose name the page transmits,
-		and never in what a process of the server holds.</p>
+		stands is read in the file of its process, and its results in the report of the
+		conversion, whose names the page transmits, and never in what a process of the
+		server holds.</p>
 
 		<table>
 		<thead>
@@ -2656,7 +2660,8 @@
 			<code>event_bake</code>, whose value is the name of the task:
 			<code>convert</code>, <code>reset</code>, <code>restart</code>, or
 			<code>complete</code>, which bakes the results. Where the conversion stands is
-			asked by <code>event_name=update</code>. A request which carries neither
+			asked by <code>event_name=swapp_progress</code>, which the base recipe answers, as
+			for any process of swapp. A request which carries neither
 			carries no task of this application. The decisions are carried by one field each, and they
 			travel with every request whatever its task:
 			<code>convert_destination</code>, the extension of the destination format,
@@ -2745,11 +2750,11 @@
 			states which decision is missing. A decision is never refused because another
 			is missing RO4.</p>
 
-			<p>Five tasks for nine treatments. T02 runs within <strong>start</strong>,
+			<p>Four tasks for nine treatments. T02 runs within <strong>start</strong>,
 			for every format; T06 is started by <strong>convert</strong> and runs on the
-			server; <strong>update</strong> says where it stands, read in the report of the
-			conversion; <strong>complete</strong> gives its results, read in the same
-			report; T08 follows the
+			server, as a process of swapp: where it stands is answered by the base recipe,
+			read in the file of the process; <strong>complete</strong> gives its results,
+			read in the report of the conversion; T08 follows the
 			conversion, on the server, once its last file is treated; T07 is
 			<strong>restart</strong> and T09 is <strong>reset</strong>, both of them
 			requests, because both empty the batch and the batch is the server's. T01, T03
@@ -3170,7 +3175,7 @@
 		destination, a batch which is not empty, and the answers of the destination.</li>
 		<li>File by file: read, anticipate, write, and at most one second write. Each
 		file has its result, and the failure of one ends nothing. The progress bar
-		says how many files have their result, read in the report of the conversion.</li>
+		says how many files have their result, read in the file of the process.</li>
 		<li>The results replace what was shown: a status for each file, its remarks, and
 		the cause of each refusal, in the words of her data.</li>
 		<li>What was produced is reached from the results: online, by a link to each file.</li>

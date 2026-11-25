@@ -39,12 +39,12 @@
 """
 
 import os
-from threading import Thread
 
 from sppas.core.coreutils import sppasLogFile
 from sppas.src.wkps import States
 
 from ..services.files import swappFilesManager
+from ..swapp_base.swapp_process import swappProcess
 
 from .convert_formats import swappModelFormats
 from .convert_conversion import swappModelConversion
@@ -121,21 +121,22 @@ class swappConvertModel:
 
     # -----------------------------------------------------------------------
 
-    def start(self, batch, conversion: swappConversion) -> str:
-        """Start the conversion of the batch on the server, and return the name of its report.
+    def start(self, batch, conversion: swappConversion) -> tuple:
+        """Start the conversion of the batch on the server, as a process.
 
-        The report is written before the conversion starts: whoever asks where
-        it stands finds it, with no file treated yet.
+        The report is written before the conversion starts, with no file
+        treated yet: it is what the results are read in. Where the
+        conversion stands is the process's, and it is read in its file.
 
         :param batch: (sppasWorkspace) The workspace the provision of files handed
         :param conversion: (swappConversion) What was decided
-        :return: (str) Name of the report, without its path
+        :return: (tuple) The name of the report, and the name of the process, without their path
 
         """
         _report = swappConversionReport(os.path.basename(sppasLogFile(pattern=REPORT_PATTERN, extension=REPORT_EXTENSION).get_filename()))
         _report.write(len(batch.get_filename_from_state(States().CHECKED)), list())
-        Thread(target=self.convert, args=(batch, conversion, _report), daemon=True).start()
-        return _report.name
+        _process = swappProcess.start(self.convert, (batch, conversion, _report))
+        return _report.name, _process.name
 
     # -----------------------------------------------------------------------
 
@@ -152,18 +153,20 @@ class swappConvertModel:
 
     # -----------------------------------------------------------------------
 
-    def convert(self, batch, conversion: swappConversion, report=None) -> list:
+    def convert(self, batch, conversion: swappConversion, report=None, progress=None) -> list:
         """Convert the batch, and give back to the provision of files what was produced.
 
         The files of the batch are locked while they are converted, and
         released once each has its result. What was written is added to the
         batch, which is given back, and that the batch has been treated is said.
         When a report is given, it is written as the files have their result,
-        and finished once the batch has been treated.
+        and finished once the batch has been treated. When a progress is
+        given, it is set as the files have their result.
 
         :param batch: (sppasWorkspace) The workspace the provision of files handed
         :param conversion: (swappConversion) What was decided
         :param report: (swappConversionReport|None) The report of the conversion
+        :param progress: (sppasBaseProgress|None) The progress of the process of the conversion
         :return: (list of swappFileResult) One result per file, in the order of the batch
 
         """
@@ -176,7 +179,8 @@ class swappConvertModel:
         _general_options["heuristic"] = conversion.heuristic
 
         self.__provision.lock(_filenames)
-        _results = self.__conversion.convert(batch, conversion.destination, dict(), _general_options, report)
+        _results = self.__conversion.convert(batch, conversion.destination, dict(), _general_options, report,
+                                             progress)
         self.__provision.release(_filenames)
         self.__provision.produced(batch)
         self.__provision.finished()

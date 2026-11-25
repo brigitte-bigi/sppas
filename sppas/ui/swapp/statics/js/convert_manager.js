@@ -3,7 +3,7 @@ const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
 const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
 const { SortaTable } = await import(`${wexa_statics_js}/extras/sortatable.js`);
 const { ToggleSelector } = await import(`${wexa_statics_js}/toggleselect.js`);
-const { ProgressBar } = await import(`${wexa_statics_js}/progressbar.js`);
+import SwappProcess from './swapp_process.js';
 
 /**
  * :filename: sppas.ui.swapp.statics.js.convert_manager.js
@@ -61,9 +61,7 @@ const ID_COMPARE_DIALOG = 'convert_compare_dialog';
 const ID_COMPARE_COLUMNS = 'convert_compare_columns';
 const ID_COMPARE_APPLY = 'convert_compare_apply';
 const ID_COMPARE_TABLE = 'convert_compare_table';
-const EVENT_NAME = 'event_name';
 const EVENT_BAKE = 'event_bake';
-const TASK_UPDATE = 'update';
 const TASK_COMPLETE = 'complete';
 const TASK_RESET = 'reset';
 const TASK_RESTART = 'restart';
@@ -73,6 +71,7 @@ const DATA_DESTINATION = 'destination';
 const DATA_CONTAINER = 'container';
 const ID_PROGRESS = 'progress_section';
 const DEPOSIT_CONTAINER_ID = 'files_deposit';
+const PROCESS_FIELD = 'swapp_process';
 
 /**
  * This class shows, among what the server wrote, the part of the format chosen.
@@ -423,8 +422,9 @@ export default class ConvertManager extends BaseManager {
     /**
      * Ask where the conversion stands until it has ended, then ask for its results.
      *
-     * The progress bar of Whakerexa is used in its managed mode: the page asks
-     * where the conversion stands, with the name of its report, at each refresh.
+     * The conversion is a process of swapp: it is followed as every process
+     * is, by the name the form transmits. The results are asked for with the
+     * fields of the form, the name of the report included.
      *
      * @returns {void}
      */
@@ -434,16 +434,13 @@ export default class ConvertManager extends BaseManager {
             WexaLogger.error('ConvertManager: the form of the conversion was not found.');
             return;
         }
-        const updated = this.#fieldsOf(form, null);
-        updated[EVENT_NAME] = TASK_UPDATE;
+        const process = form.elements.namedItem(PROCESS_FIELD);
+        if (process === null) {
+            WexaLogger.error('ConvertManager: the name of the process of the conversion was not found.');
+            return;
+        }
         const completed = this.#fieldsOf(form, null);
         completed[EVENT_BAKE] = TASK_COMPLETE;
-        const progressBar = new ProgressBar({
-            // Nothing given back is said as null: the bar then asks for the results.
-            updateCallback: async () => (await this.postEvents(updated)) ?? null,
-            completeCallback: async () => await this.#post(completed),
-            intervalMs: this.#intervalMs
-        });
-        progressBar.start();
+        new SwappProcess(this.#intervalMs).follow(process.value, async () => await this.#post(completed));
     }
 }

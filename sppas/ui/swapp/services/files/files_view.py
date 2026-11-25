@@ -54,6 +54,7 @@ from .files_record import TASK_DESIGNATE
 from .files_record import TASK_READY
 from .files_record import TASK_SEND
 from .files_record import TASK_TAKE_BACK
+from .files_record import TASK_TAKE_BACK_ALL
 
 # ---------------------------------------------------------------------------
 
@@ -67,6 +68,7 @@ MSG_SELECT_FILES = _("Select files")
 MSG_BROWSE = _("Browse")
 MSG_OR_DROP = _(", or drag and drop files here.")
 MSG_TAKE_BACK = _("Take back")
+MSG_TAKE_BACK_ALL = _("Take back all")
 MSG_SEND = _("Send")
 MSG_DONE = _("Done")
 MSG_REFUSED = _("Refused")
@@ -274,15 +276,20 @@ class swappDepositView(swappFilesBaseView):
         _treated = swappDepositView.__treated_names(record)
         _deposited = record.deposited
         _to_send = 0
+        _takeable = 0
         for _name, _size in record.fed:
             self.__append_fed_file(_panel, _name, _size, _refused, _treated, _deposited)
             _listed.append(_name)
             if _name not in _deposited and _name not in _refused:
                 _to_send += 1
+            if (_name in _treated) is False:
+                _takeable += 1
 
         for _name in _refused:
             if len(_name) > 0 and _name not in _listed:
                 self.__append_fed_file(_panel, _name, 0, _refused, _treated, _deposited)
+
+        swappDepositView.__append_take_back_all(_zone, _takeable)
 
         if "failed" in _shown:
             _zone.append_child(HTMLNode(_zone.identifier, None, "p",
@@ -370,12 +377,15 @@ class swappDepositView(swappFilesBaseView):
         _panel = TagNode(_zone.identifier, None, "ul",
                          attributes={"class": "cards-panel"})
         _zone.append_child(_panel)
+        _takeable = 0
         for _filename in swappDepositView.__known_filenames(record):
             # What an app produced is shown by that app, and not here: the
             # list holds the files she gave.
             if _filename in record.produced:
                 continue
             _treated = _filename in record.treated
+            if _treated is False:
+                _takeable += 1
             _card, _header, _body, _footer = swappDepositView.__append_card(_panel)
             swappDepositView.__append_state(_header, _treated, True, _card)
             _body.append_child(HTMLNode(_body.identifier, None, "span", value=os.path.basename(_filename),
@@ -385,6 +395,26 @@ class swappDepositView(swappFilesBaseView):
                 _button["disabled"] = None
             _footer.append_child(HTMLNode(_footer.identifier, None, "button", value=MSG_TAKE_BACK,
                                           attributes=_button))
+
+        swappDepositView.__append_take_back_all(_zone, _takeable)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __append_take_back_all(parent: TagNode, takeable: int) -> None:
+        """Append the control which takes every file back, beside the list.
+
+        It does not answer when no file can be taken back.
+
+        :param parent: (TagNode) The node the control is appended to
+        :param takeable: (int) Number of the files which can be taken back
+
+        """
+        _button = {"type": "submit", "name": TASK_TAKE_BACK_ALL, "value": ""}
+        if takeable == 0:
+            _button["disabled"] = None
+        parent.append_child(HTMLNode(parent.identifier, None, "button", value=MSG_TAKE_BACK_ALL,
+                                     attributes=_button))
 
     # -----------------------------------------------------------------------
 
