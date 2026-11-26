@@ -403,6 +403,22 @@ class TestModelFormats(unittest.TestCase):
 # ---------------------------------------------------------------------------
 
 
+class ProgressForTests:
+    """A progress which keeps what it was told."""
+
+    def __init__(self):
+        self.headers = list()
+        self.texts = list()
+
+    def set_header(self, header: str) -> None:
+        self.headers.append(header)
+
+    def update(self, percent=None, message=None) -> None:
+        self.texts.append(message)
+
+# ---------------------------------------------------------------------------
+
+
 class TestModelConversion(unittest.TestCase):
     """TE14 to TE21. With a disk."""
 
@@ -432,6 +448,18 @@ class TestModelConversion(unittest.TestCase):
         for result in results:
             converted.append(result.file)
         self.assertEqual(expected, converted)
+
+    # -----------------------------------------------------------------------
+
+    def test_the_header_of_the_progress_is_the_file_converted(self):
+        """As the installation of Setup: the header of the progress is the file which is converted, the text how many have their result."""
+        expected = list()
+        for name in names_in(self.batch):
+            expected.append(os.path.basename(name))
+        progress = ProgressForTests()
+        self.conversion.convert(self.batch, self.destination, dict(), dict(), progress=progress)
+        self.assertEqual(expected, progress.headers)
+        self.assertEqual(["1 / 3", "2 / 3", "3 / 3"], progress.texts)
 
     # -----------------------------------------------------------------------
 
@@ -764,6 +792,22 @@ class PageReader(HTMLParser):
         if "form" in attributes:
             return self.__ids.get(attributes["form"])
         return enclosing
+
+# ---------------------------------------------------------------------------
+
+
+class TestConvertProgress(unittest.TestCase):
+    """The page while a conversion runs, as the installation of Setup."""
+
+    def test_the_progress_has_a_header(self):
+        """The progress is given the node of its header, where the file which is converted is written."""
+        with patch.object(swappConversion, "what_is_missing", return_value=list()), \
+                patch.object(swappConvertModel, "start", return_value=("a_report", "a_process")):
+            page = swappConvertResponseRecipe().bake({"event_bake": "convert"})
+        section = page[page.find('id="convert_section"'):]
+        self.assertIn('<section id="progress_section">', section)
+        self.assertIn('<h3 id="progress_header">', section)
+        self.assertLess(section.find('<h3 id="progress_header">'), section.find('id="percent_progress"'))
 
 # ---------------------------------------------------------------------------
 

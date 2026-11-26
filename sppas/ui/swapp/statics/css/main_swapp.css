@@ -286,6 +286,16 @@ progress:not([value])::-moz-progress-bar {
     }
 }
 
+/* ── A long process holds the page ──────────────────────── */
+
+/* While a long process of an app runs, the page shows what holds its
+   progress and nothing else. The rest stays in the page, out of sight: the
+   form still carries what was decided when the results are asked for, and
+   they take the place of the progress. */
+#main-content:has(#progress_section) > :not(:has(#progress_section)):not(#progress_section):not(dialog) {
+    display: none;
+}
+
 /* ── Mobile: header padding to clear the nav toggle button ── */
 
 @media only screen and (max-width: 1023.98px) {

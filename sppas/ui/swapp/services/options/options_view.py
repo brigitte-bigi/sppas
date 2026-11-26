@@ -233,8 +233,9 @@ class swappOptionsDialog(TagNode):
 
         """
         super(swappOptionsDialog, self).__init__(parent, identifier, "dialog",
-                                                 attributes={"id": identifier, "aria-labelledby": identifier + "_h"})
-        self.append_child(HTMLNode(self.identifier, None, "h4", value=MSG_OPTIONS_OF.format(name),
+                                                 attributes={"id": identifier, "class": "hidden-alert",
+                                                             "aria-labelledby": identifier + "_h"})
+        self.append_child(HTMLNode(self.identifier, None, "h2", value=MSG_OPTIONS_OF.format(name),
                                    attributes={"id": identifier + "_h"}))
         if container is None:
             self.append_child(TagNode(self.identifier, None, "section", attributes={"aria-label": MSG_OPTIONS}))

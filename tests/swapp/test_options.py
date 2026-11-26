@@ -436,8 +436,8 @@ class TestOptionsDialog(unittest.TestCase):
     def test_the_window_of_the_options(self):
         """Its title, then an empty section the page fills, or the container of the service."""
         shown = swappOptionsDialog("body_main", "app_options_one", "One").serialize()
-        self.assertIn('<dialog id="app_options_one" aria-labelledby="app_options_one_h">', shown)
-        self.assertIsNotNone(re.search(r'<h4 id="app_options_one_h">\s*Options of One\s*</h4>', shown))
+        self.assertIn('<dialog id="app_options_one" class="hidden-alert" aria-labelledby="app_options_one_h">', shown)
+        self.assertIsNotNone(re.search(r'<h2 id="app_options_one_h">\s*Options of One\s*</h2>', shown))
         self.assertIn('<section aria-label="Options">', shown)
         self.assertNotIn('id="options_container"', shown)
 

@@ -922,9 +922,7 @@
 
 		<p>
 			<b>Several persons are on a server at once, and each has her own run.</b> What
-			a person may start is one run, which is RO7; what the machine can carry at one
-			time is another question and another answer, and it belongs to whoever runs
-			that machine. The two are not the same limit and are not written as one. RO8
+			the machine can carry at one time belongs to whoever runs that machine. RO8
 		</p>
 
 		<h4>How a run which lasts is followed</h4>
@@ -948,8 +946,8 @@
 			reads it there by the name the page transmits, whatever process of the server
 			answers it: the plugin, the file being treated and how many remain, and the
 			percent of the files which are done. The base of swapp answers it, as for any
-			process. At each of those refreshes, the page asks for the results already
-			written; once the process has ended, it asks for every result with its form.
+			process. Once the process has ended, the page asks for the results with its
+			form.
 		</p>
 
 		<p>
@@ -985,16 +983,9 @@
 			<li><b>RO4</b> &mdash; The files a run works on and the files it produced are the provision of files', at both ends. This application holds their identity for the time of the run.</li>
 			<li><b>RO5</b> &mdash; The options of a plugin are set before a run and read once, when that run starts. A plugin set during a run is set for the next one.</li>
 			<li><b>RO6</b> &mdash; The options of a plugin are shown in a container this application places in the window the service of the options offers for that plugin, in its own page. Setting a plugin is not leaving the list of plugins.</li>
-			<li><b>RO7</b> &mdash; One start at a time for one person. A start asked for while the runs of another are happening is refused, and the refusal says which run is still going.</li>
 			<li><b>RO8</b> &mdash; Where SPPAS runs on the machine of the person, one run at a time is one run on that machine. Where it answers from a server, several persons run at once, and what bounds the number of runs the machine takes at one time is the business of whoever runs it.</li>
 			<li><b>RO9</b> &mdash; The runs of the selected plugins are performed in one process, one after the other, in the order of the list. The failure of one plugin never stops the next one [305], [306].</li>
 		</ul>
-
-		<p>
-			RO7 is not a limit of the machine: a plugin which writes and a plugin which
-			reads the same files at the same moment would leave results nobody can read,
-			and the person could not tell which run produced what.
-		</p>
 
 	</section>
 
@@ -1184,15 +1175,6 @@
 			nothing else is written.
 		</p>
 
-		<h4>Two runs at once</h4>
-
-		<p>
-			RO7 says one run at a time for one person, and the operational level says what
-			holds it: a run is made before the first file is started, and a request which
-			would start a second one carries the name of the process of the first, finds
-			it not ended, and is refused.
-		</p>
-
 	</section>
 
 
@@ -1214,10 +1196,11 @@
 				<tr><th>Module</th><th>What it does</th><th>Procedure</th></tr>
 			</thead>
 			<tbody>
-				<tr><td><code>plugins_model</code></td><td>Holds what is installed and what each plugin declares, installs and removes, starts a run and says where it stands, and asks the two services for the files of a run and for the options of a plugin. The only module of this application which speaks to the domain of the plugins</td><td>PF1, PF2, PF3, PF4, PF5, PF6, PF7</td></tr>
+				<tr><td><code>plugins_model</code></td><td>Holds what is installed and what each plugin declares, installs and removes, starts a run and says where it stands, asks the provision of files for the files of a run, and gives it back what was produced. The only module of this application which speaks to the domain of the plugins</td><td>PF1, PF2, PF3, PF4, PF5, PF6, PF7</td></tr>
 				<tr><td><code>plugins_view</code></td><td>Builds the page and holds its parts</td><td>The view of every procedure</td></tr>
-				<tr><td><code>plugins_controller</code></td><td>Reads the task a request carries, calls what has to be called, and has the view build its tree</td><td>Every procedure</td></tr>
-				<tr><td><code>plugins_maker</code></td><td>Answers the URL, builds the view and what dispatches, and bakes the tree</td><td>Every procedure</td></tr>
+				<tr><td><code>plugins_controller</code></td><td>Reads the task a request carries, calls what has to be called, hands the options of a plugin to the service of the options and takes back their values, and has the view build its tree</td><td>Every procedure</td></tr>
+				<tr><td><code>plugins_maker</code></td><td>Answers the URL, builds the view, the manager of the provision of files and what dispatches, and bakes the tree</td><td>Every procedure</td></tr>
+				<tr><td><code>plugins_run</code></td><td>A run, the result of one file, and the report the runs are written in and read from</td><td>PF5, PF6</td></tr>
 				<tr><td><code>plugslist</code></td><td>The parts of the page: the plugins one under another, one plugin, and a run with what came of each file</td><td>The view of PF1, PF5, PF6</td></tr>
 			</tbody>
 		</table>
@@ -1227,7 +1210,7 @@
 		</p>
 
 		<ul>
-			<li>The <b>model</b> is the only one which calls the domain of the plugins and the two services, so it is the only one to be read again the day one of them changes. It reads nothing of what a plugin says beyond relaying it, and it is the only one which knows that a run is a thread.</li>
+			<li>The <b>model</b> is the only one which calls the domain of the plugins, so it is the only one to be read again the day that domain changes. It reads nothing of what a plugin says beyond relaying it, and it is the only one which knows that a run is a thread.</li>
 			<li>The <b>view</b> decides nothing, and shows what a plugin said as that plugin said it.</li>
 			<li>What <b>dispatches</b> holds nothing between two requests: what has to survive is what the page carries.</li>
 			<li>The <b>parts of the page</b> know the page and nothing else. None of them reads a file, a thread or a declaration.</li>
@@ -1250,8 +1233,8 @@
 
 		<p>
 			The model holds the plugins, writes a run in its report and reads it there, and
-			exposes neither the domain of the plugins nor the two services to the rest of
-			the application. The controller is called once per request, reads the task it
+			exposes the domain of the plugins to nothing else of the application. The
+			controller is called once per request, reads the task it
 			carries, and holds nothing afterward. The view renders and collects, and takes
 			no decision. Three components, three class diagrams.
 		</p>
@@ -1273,7 +1256,7 @@
 		<table>
 			<thead><tr><th>Class</th><th>From</th><th>Attributes</th><th>Operations</th></tr></thead>
 			<tbody>
-				<tr><td><code>PluginsModel</code></td><td>PLUGIN</td><td>manager</td><td>plugins(), one(id), install(archive), remove(id), files_for(run), options_of(id), values_set(), start(run), is_running(process), the_run(report)</td></tr>
+				<tr><td><code>PluginsModel</code></td><td>PLUGIN</td><td>manager</td><td>plugins(), one(id), options_of(id), readme(id), choose_archive(), why_no_archive(), install(archive), remove(id), files_for(), start(plugins, options), run(batch, runs, report), is_running(process), the_run(report), address_of(file), address_of_all(files)</td></tr>
 				<tr><td><code>PluginRun</code></td><td>RUN, VALUE</td><td>run, plugin, moment, values, files, /remaining, /over</td><td>add(result), remaining(), is_over(), serialize(), parse(data)</td></tr>
 				<tr><td><code>FileResult</code></td><td>RESULT, PRODUCED</td><td>file, done, what was said, produced</td><td>&mdash;</td></tr>
 			</tbody>
@@ -1288,11 +1271,12 @@
 		</p>
 
 		<p>
-			<b>The run is started one file at a time.</b> The domain of the plugins is
-			given a plugin and a list of files, and gives back one text for the whole list.
-			It is given one file at a time here, for the reason the operational model gives:
-			the result of one file is the unit, and a run which stops has done what it did
-			file by file. What appeared for a file is what the files of the person gained
+			<b>The run is started one file at a time.</b> The domain of the plugins starts
+			a plugin on one file, <code>run_plugin_on_file()</code>, and gives back what the
+			plugin said and the code it returned: the file is done when that code says no
+			error. It is given one file at a time here, for the reason the operational model
+			gives: the result of one file is the unit, and a run which stops has done what it
+			did file by file. What appeared for a file is what the files of the person gained
 			for it, which is how the interface which exists today finds it as well: the
 			files beside it, written since the run started.
 		</p>
@@ -1309,9 +1293,9 @@
 		<p>
 			<b>Nothing of the core carries the run.</b> <code>sppasPluginsManager</code>
 			descends from a thread but defines nothing of one: the run is a long process of
-			swapp, started by this model. Whether its process has ended is what RO7 leans
-			on &mdash; a second run started while one is going finds it not ended and is
-			refused &mdash; and it is also what tells a run which stopped from a run which
+			swapp, started by this model. Whether its process has ended is what the start
+			leans on &mdash; a second run started while one is going finds it not ended and
+			is refused &mdash; and it is also what tells a run which stopped from a run which
 			is slow.
 		</p>
 
@@ -1330,7 +1314,7 @@
 				<tr><td>uses</td><td><code>PluginsModel</code> &rarr; <code>PluginRun</code></td><td>A dependency: a run is written in its report and read from it, and the model holds none</td></tr>
 				<tr><td>holds</td><td><code>PluginRun</code> 1 &mdash; 0..n <code>FileResult</code></td><td>A composition: a result exists only inside the run it belongs to</td></tr>
 				<tr><td>uses</td><td><code>PluginsModel</code> &rarr; <code>sppasPluginsManager</code></td><td>A dependency, and the only tie of this application to the domain of the plugins</td></tr>
-				<tr><td>uses</td><td><code>PluginsModel</code> &rarr; the provision of files, the service of the options</td><td>A dependency, and the only tie to the two services</td></tr>
+				<tr><td>uses</td><td><code>PluginsModel</code> &rarr; the provision of files</td><td>A dependency: the files of a run, read in the manager the recipe built, and what was produced, given back to it</td></tr>
 			</tbody>
 		</table>
 
@@ -1341,7 +1325,7 @@
 			class diagram.
 		</p>
 
-		<pre class="dark"><code>[PluginsModel|manager|plugins();one();install();remove();files_for();options_of();values_set();start();is_running();the_run()]-.-&gt;[PluginRun|run;plugin;moment;values;files;/remaining;/over|add();remaining();is_over();serialize();parse()]
+		<pre class="dark"><code>[PluginsModel|manager|plugins();one();options_of();readme();choose_archive();why_no_archive();install();remove();files_for();start();run();is_running();the_run();address_of();address_of_all()]-.-&gt;[PluginRun|run;plugin;moment;values;files;/remaining;/over|add();remaining();is_over();serialize();parse()]
 [PluginRun]++1-0..*&gt;[FileResult|file;done;what was said;produced]
 
 [PluginsModel]-.-&gt;[sppasPluginsManager]</code></pre>
@@ -1438,6 +1422,8 @@
 				<tr><td>holds</td><td><code>PluginsController</code> 1 &mdash; 1 <code>PluginsRecord</code></td><td>A composition: one record per request, kept by nobody</td></tr>
 				<tr><td>uses</td><td><code>PluginsController</code> &rarr; <code>PluginsModel</code></td><td>A dependency: it reads, it starts a run, it asks where one stands, and it asks the neighbours through it</td></tr>
 				<tr><td>uses</td><td><code>PluginsController</code> &rarr; <code>PluginsView</code></td><td>A dependency: it has the page built from the record</td></tr>
+				<tr><td>uses</td><td><code>PluginsController</code> &rarr; the service of the options</td><td>A dependency: it hands the options of a plugin to that service, and takes back their values</td></tr>
+				<tr><td>uses</td><td><code>PluginsResponseRecipe</code> &rarr; the provision of files</td><td>A dependency: it builds the manager of that service, gives it to the model, and places its container in the page</td></tr>
 			</tbody>
 		</table>
 
@@ -1448,7 +1434,9 @@
 [PluginsController]++1-1&gt;[PluginsRecord|task;selected;applied;run;values;to_be_shown|serialize();parse()]
 
 [PluginsController]-.-&gt;[PluginsModel]
-[PluginsController]-.-&gt;[PluginsView]</code></pre>
+[PluginsController]-.-&gt;[PluginsView]
+[PluginsController]-.-&gt;[swappOptionsManager]
+[PluginsResponseRecipe]-.-&gt;[swappFilesManager]</code></pre>
 
 	</section>
 
@@ -1463,7 +1451,7 @@
 			<caption>A run</caption>
 			<thead><tr><th>State</th><th>When</th><th>What is shown</th></tr></thead>
 			<tbody>
-				<tr><td>running</td><td>Its process has not ended</td><td>Which file, how many remain, and the results so far</td></tr>
+				<tr><td>running</td><td>Its process has not ended</td><td>Which file, and how many remain</td></tr>
 				<tr><td>over</td><td>Its process has ended, and it holds one result per file it was given</td><td>Every result, and what was produced</td></tr>
 				<tr><td>stopped</td><td>Its process has ended, and it holds fewer results than files</td><td>The results it holds, and that it will get no more</td></tr>
 			</tbody>
@@ -1491,14 +1479,14 @@
 			<li>She sets the options of a plugin: they are handed to the service which shows them, and its container is placed in the window that service offers for that plugin, without leaving the page. Applying them keeps their values for that plugin, validates it, selects it, and closes the dialog; closing it keeps what they held, invalidates the plugin, and unselects it. She selects the plugins she wants to run: nothing opens, and nothing is asked of the server. What starts the runs is disabled while no plugin is selected, and what says so is shown.</li>
 			<li>She starts the runs: the plugins she selected and the files she chose are read. When there are none, or when a selected plugin has not had its options applied, it is said, naming those plugins, and nothing starts. Otherwise one run per selected plugin, in the order of the list, is written in the report with its moment and its values, its process is started, the page is given the names of its process and of its report, and it shows its progress and nothing else.</li>
 			<li>In the thread of the process, the first plugin is started on the first file; what it said is written in the report as the result of that file, with the files which appeared, and where the run stands is written in the file of the process.</li>
-			<li>Her page asks where the run stands, by the name of its process, and is answered: the plugin, the file, and how many remain; and it asks for the results already written.</li>
+			<li>Her page asks where the run stands, by the name of its process, and is answered: the plugin, the file, and how many remain.</li>
 			<li>Steps 6 and 7 happen again, at their own pace, file after file and plugin after plugin, until every file of every run has a result and the process says it has ended.</li>
 			<li>The page asks for the results with its form: they are read in the report, and shown plugin by plugin. What was produced is given to the provision of files, and is found among her own files.</li>
 		</ol>
 
 		<p>
 			Steps 1 to 4 happen in any order and any number of times. Step 5 happens once
-			per run, and refuses while a run of that person is still going. RO7
+			per run, and refuses while a run of that person is still going.
 		</p>
 
 	</section>
@@ -1521,8 +1509,12 @@
 		</table>
 
 		<p>
-			What is raised is caught by whatever answers a request, and by nothing below
-			it. What a plugin writes on its own error output is not an error of this
+			What is raised is caught by whatever answers a request. Below it, the
+			controller catches what the domain of the plugins refused to install or to
+			remove, which is said as level 3 says, and a report which cannot be read,
+			which is said in the dialog of the errors and written in the log; the model
+			catches a name which is not the one of a process, which is a run that is not
+			going. What a plugin writes on its own error output is not an error of this
 			application: it is what that plugin said, and it is shown as such.
 		</p>
 
@@ -1555,11 +1547,11 @@
 		<h4>What holds everywhere</h4>
 
 		<ul>
-			<li>Only <code>PluginsModel</code> speaks to the domain of the plugins and to the two services. No other class of this application knows that either exists.</li>
+			<li>Only <code>PluginsModel</code> speaks to the domain of the plugins. The manager of the provision of files is built by <code>PluginsResponseRecipe</code>, which places its container in the page, and read by <code>PluginsModel</code>, for the files of a run and for what was produced. The options of a plugin are handed to the service of the options by <code>PluginsController</code>, which takes back their values.</li>
 			<li>What a plugin said is relayed as it was said: never shortened, never translated, and never read for a meaning. RO3</li>
 			<li>Nothing of a run is held on the server between two requests: where it stands is in the file of its process, and the run and its results in its report, two files of the folder of the logs whose names the page transmits.</li>
 			<li>What is absent gives back an empty thing &mdash; no plugin, no result, no produced file &mdash; and never nothing at all.</li>
-			<li>What is raised is caught by whatever answers a request, and no class below it writes a catch.</li>
+			<li>What is raised is caught by whatever answers a request; below it, only what the error policy names is caught.</li>
 		</ul>
 
 	</section>
@@ -1580,12 +1572,14 @@
 				<tr><td>Install an archive</td><td>pre: where SPPAS runs on the machine of the person [025]. post: the plugin stands among the installed ones, in a folder named after the archive, its spaces replaced by underscores, and that folder is given back; or nothing was installed and what stood in the way is named: an archive which is not one, a plugin already there, a command this machine cannot run. Nothing of the archive is verified here: the other domain refuses</td></tr>
 				<tr><td>Remove a plugin</td><td>pre: the same, and an identifier. post: that plugin is no longer among the installed ones, or nothing changed and what stood in the way is named. What that plugin produced is not removed</td></tr>
 				<tr><td>Give the files of a run</td><td>pre: none. post: the files the person chose, as the provision of files exposes them; empty when she chose none. Nothing of them is altered</td></tr>
-				<tr><td>Give the options of a plugin to be set</td><td>pre: a plugin. post: the options that plugin declares are handed to the service of the options, with the values they hold, but the ones which name the input file of the plugin</td></tr>
-				<tr><td>Take back the values</td><td>pre: the options were set. post: the values which were set, as that service gives them. Nothing of them is judged here</td></tr>
+				<tr><td>Give the options of a plugin to be set</td><td>pre: a plugin which is installed. post: copies of the options that plugin declares, each one with its value by default, but the ones which name the input file of the plugin. What is set on them changes nothing of the plugin which is installed</td></tr>
+				<tr><td>Give the README of a plugin</td><td>pre: a plugin which is installed. post: the text of its README, empty when it has none</td></tr>
+				<tr><td>Ask for an archive</td><td>pre: where SPPAS runs on the machine of the person [025]. post: the archive chosen in the file chooser of the machine, empty when none was; why none came back is said apart, when the file chooser could not be opened</td></tr>
 				<tr><td>Start the runs</td><td>pre: plugins which are listed and selected, files which are not none, and the values as they stand. post: one run per selected plugin exists, in the order of the list, each one holding its moment, its plugin, its values and its files, and holding no result yet; it is given a domain of the plugins made for it, on whose plugin the values are set before the first file; and they are started as one long process of swapp, whose thread advances them one after the other, one file at a time, and writes them in its report; the names of its process and of its report are given back. When the request carries the name of a process which has not ended, nothing is started and the refusal says so</td></tr>
 				<tr><td>Say whether a run is going</td><td>pre: the name of its process. post: true while the file of that process does not say it has ended, false afterward, and false for a name no process bears. It is what tells a run which stopped from a run which is slow</td></tr>
 				<tr><td>Give the run</td><td>pre: the name of its report. post: the run as its report holds it, with the results written so far, which file is being treated and how many remain. Answered while the run goes, and answered after it is over. A run read twice in a row gives what it had each time, and never less</td></tr>
 				<tr><td>Give back what was produced</td><td>pre: the files which appeared. post: they are known among the files of the person, and reachable as her own. This application holds none of them</td></tr>
+				<tr><td>Give the address of what was produced</td><td>pre: produced files. post: the address one file is reached at, or the one of an archive holding them all; empty when there is none</td></tr>
 			</tbody>
 		</table>
 
@@ -1612,6 +1606,7 @@
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
 				<tr><td>Handle a request</td><td>pre: called once for that request, and never twice. post: the record is rebuilt from what was transmitted, the task is read, and one treatment ran &mdash; or none ran and what stood in the way is said. Nothing of a record is held after the request</td></tr>
+				<tr><td>Set a plugin</td><td>pre: the task of the options of a plugin which is installed. post: its options, as the record carries them, are handed to the service of the options; applied, the values that service gives back are the ones of that plugin, which is applied and selected; closed without being applied, that plugin is neither applied nor selected. Nothing of the values is judged here</td></tr>
 				<tr><td>Populate the view</td><td>pre: the request was handled. post: the view has the record; nothing is decided here</td></tr>
 			</tbody>
 		</table>
@@ -1647,8 +1642,8 @@
 				<tr><td>[031], [032]</td><td><code>PluginsModel</code>, which names what the domain of the plugins refused at the installation, and lists what that domain loaded</td></tr>
 				<tr><td>[101], [102]</td><td><code>PluginsModel</code>, which gives the files the person chose, and <code>PluginsModel</code>, which starts the plugin on those and no others</td></tr>
 				<tr><td>[103]</td><td><code>PluginRunPanel</code>, which is given the files before the run starts</td></tr>
-				<tr><td>[201], [202]</td><td><code>PluginsModel</code>, which hands the options over and takes the values back</td></tr>
-				<tr><td>[203]</td><td><code>PluginsRecord</code>, which carries the values set for each plugin from one request to the next, and <code>PluginsModel</code>, which sets them on the options of that plugin before they are handed to the service of the options</td></tr>
+				<tr><td>[201], [202]</td><td><code>PluginsController</code>, which hands the options to the service of the options and takes the values back, and <code>PluginsModel</code>, which sets them on the plugin of the run before its first file</td></tr>
+				<tr><td>[203]</td><td><code>PluginsRecord</code>, which carries the values set for each plugin from one request to the next and sets them on the options of that plugin, which <code>PluginsController</code> hands to the service of the options</td></tr>
 				<tr><td>[204]</td><td><code>PluginsRecord</code>, which carries the values of each plugin under the name of that plugin</td></tr>
 				<tr><td>[205], [206]</td><td><code>PluginsRecord</code>, which carries whether the options of each plugin were applied; <code>PluginsController</code>, which refuses to start while a selected plugin has not had them applied, and unselects a plugin whose options were closed without being applied</td></tr>
 				<tr><td>[301]</td><td><code>PluginsModel.start()</code>, which is called by nothing but a request of the person</td></tr>
@@ -1748,7 +1743,7 @@
 				<tr><td>TE12</td><td>What the plugin said about a file is held as it said it, byte for byte</td><td>[403], RO3</td></tr>
 				<tr><td>TE13</td><td>The files which appeared for one file are held in the result of that file, and in no other</td><td>[402]</td></tr>
 				<tr><td>TE14</td><td>While the run goes, what it says of itself names the file being treated and how many remain</td><td>[303]</td></tr>
-				<tr><td>TE15</td><td>A second run started while one is going is refused, and the refusal says that one is going</td><td>RO7</td></tr>
+				<tr><td>TE15</td><td>A second run started while one is going is refused, and the refusal says that one is going</td><td>The contract of the model</td></tr>
 				<tr><td>TE16</td><td>A run whose process has ended and which holds one result per file is over; the same run is not said to be going</td><td>The states</td></tr>
 				<tr><td>TE17</td><td>A run whose process ended before the last file is neither going nor over: it stopped, and it holds the results it had</td><td>The states</td></tr>
 				<tr><td>TE18</td><td>The values a run was started with are the ones the plugin was started with, even if the options are set again while the run goes</td><td>RO5</td></tr>

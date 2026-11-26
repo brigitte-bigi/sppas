@@ -40,10 +40,17 @@
 
 import unittest
 import os
+import json
+import shutil
+import tempfile
+from unittest import mock
 
 from sppas.core.config import paths
+from sppas.core.coreutils import info
 
+import sppas.src.plugins.manager
 from sppas.src.plugins.manager import sppasPluginsManager
+from sppas.src.plugins.pluginsexc import PluginIdError
 
 # ---------------------------------------------------------------------------
 
@@ -82,3 +89,83 @@ class TestPluginsManager(unittest.TestCase):
         self.assertGreater(len(message), 0)
         self.assertTrue(os.path.exists(output))
         os.remove(output)
+
+# ---------------------------------------------------------------------------
+
+
+class PathsForTests:
+    """The paths of SPPAS, where the folder of the plugins is the one of a test."""
+
+    plugins = ""
+
+# ---------------------------------------------------------------------------
+
+
+def write_script(folder: str, name: str, content: str) -> str:
+    """Write a script in the folder of a test, and return its name."""
+    script = os.path.join(folder, name)
+    with open(script, "w", encoding="utf-8") as fp:
+        fp.write(content)
+    return script
+
+# ---------------------------------------------------------------------------
+
+
+class TestPluginOnFile(unittest.TestCase):
+    """A plugin applied on one file.
+
+    The plugin is installed in a folder of the test. Its command is the
+    interpreter which runs the tests: the file it is applied on is a script.
+
+    """
+
+    def setUp(self):
+        self.folder = tempfile.mkdtemp(prefix="test_plugins_manager_")
+        PathsForTests.plugins = self.folder
+        self.paths = mock.patch.object(sppas.src.plugins.manager, "paths", PathsForTests)
+        self.paths.start()
+        os.mkdir(os.path.join(self.folder, "say"))
+        config = {"id": "say", "name": "Say", "descr": "", "icon": "",
+                  "commands": {"windows": "$PY", "macos": "$PY", "linux": "$PY"},
+                  "options": [{"id": "input", "type": "file", "value": "input", "text": ""}]}
+        with open(os.path.join(self.folder, "say", "say.json"), "w", encoding="utf-8") as fp:
+            json.dump(config, fp)
+        self.manager = sppasPluginsManager()
+
+    def tearDown(self):
+        self.paths.stop()
+        shutil.rmtree(self.folder, ignore_errors=True)
+
+    # -----------------------------------------------------------------------
+
+    def test_what_the_plugin_said_and_its_code(self):
+        """What the plugin wrote on its error output, and the code it returned."""
+        script = write_script(self.folder, "speaks.py", "import sys\nsys.stderr.write('hello')\nsys.exit(3)\n")
+        self.assertEqual(("hello", 3), self.manager.run_plugin_on_file("say", script))
+
+    # -----------------------------------------------------------------------
+
+    def test_a_plugin_which_says_nothing(self):
+        """A plugin which wrote nothing is said to have done its task."""
+        script = write_script(self.folder, "silent.py", "pass\n")
+        self.assertEqual((info(4015, "plugins"), 0), self.manager.run_plugin_on_file("say", script))
+
+    # -----------------------------------------------------------------------
+
+    def test_an_unknown_plugin(self):
+        """No plugin has that identifier."""
+        script = write_script(self.folder, "silent.py", "pass\n")
+        with self.assertRaises(PluginIdError):
+            self.manager.run_plugin_on_file("nobody", script)
+
+    # -----------------------------------------------------------------------
+
+    def test_a_list_of_files_is_applied_file_by_file(self):
+        """Applied on a list of files, the plugin says, for each file, what it says applied on that file."""
+        speaks = write_script(self.folder, "speaks.py", "import sys\nsys.stderr.write('hello')\nsys.exit(3)\n")
+        silent = write_script(self.folder, "silent.py", "pass\n")
+        expected = ""
+        for script in (speaks, silent):
+            expected += info(4010, "plugins").format(filename=script) + "\n"
+            expected += self.manager.run_plugin_on_file("say", script)[0] + "\n"
+        self.assertEqual(expected, self.manager.run_plugin("say", [speaks, silent]))

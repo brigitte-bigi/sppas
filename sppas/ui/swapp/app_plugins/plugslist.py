@@ -47,13 +47,21 @@ from whakerpy.htmlmaker import TagNode
 
 from sppas.ui import _
 
+from ..nodes import swappProgressBar
 from ..services.options import swappOptionsDialog
+from ..swapp_base.swapp_process import PROCESS_FIELD
 
 # ---------------------------------------------------------------------------
 
 MSG_ABOUT = _("About")
-MSG_CLOSE = _("Close")
 MSG_CONFIGURE = _("Configure...")
+MSG_PROGRESS = _("Run")
+MSG_RESULTS_CAPTION = _("One line per file of the run")
+MSG_FILE = _("File")
+MSG_STATUS = _("Status")
+MSG_RESULT = _("Result")
+MSG_DONE = _("done")
+MSG_FAILED = _("failed")
 
 # ---------------------------------------------------------------------------
 
@@ -167,36 +175,130 @@ class swappPluginDescription(TagNode):
 
     @staticmethod
     def __append_about(parent: TagNode, plugin, readme: str, dialog_id: str) -> None:
-        """Append the About of a plugin, a window of three sections.
+        """Append the About of a plugin, a modal dialog.
 
-        Its title; the name and the icon of the plugin, and its README; and
-        what closes it.
+        Its title, on one line: the icon of the plugin, and About its name;
+        then its README.
 
         """
         _dialog = TagNode(parent.identifier, dialog_id, "dialog",
-                          attributes={"id": dialog_id, "class": "plugins-about", "aria-labelledby": dialog_id + "_h"})
+                          attributes={"id": dialog_id, "class": "hidden-alert", "aria-labelledby": dialog_id + "_h"})
         parent.append_child(_dialog)
-        _title = TagNode(_dialog.identifier, None, "section")
+        _title = TagNode(_dialog.identifier, None, "h2", attributes={"id": dialog_id + "_h", "class": "flex-panel"})
         _dialog.append_child(_title)
-        _title.append_child(HTMLNode(_title.identifier, None, "h4",
-                                     value=MSG_ABOUT + " " + plugin.get_key() + "...",
-                                     attributes={"id": dialog_id + "_h"}))
-
-        _section = TagNode(_dialog.identifier, None, "section")
-        _dialog.append_child(_section)
         # The icon is a file of the folder of the plugin: its address is
         # relative, as the one of every image the server serves.
         if len(plugin.get_icon()) > 0:
             _icon = os.path.relpath(os.path.join(plugin.get_directory(), plugin.get_icon()))
-            _section.append_child(EmptyNode(_section.identifier, None, "img", attributes={"alt": "", "src": _icon}))
-        _section.append_child(HTMLNode(_section.identifier, None, "p", value=plugin.get_name()))
+            _title.append_child(EmptyNode(_title.identifier, None, "img", attributes={"alt": "", "src": _icon}))
+        _title.append_child(HTMLNode(_title.identifier, None, "span", value=MSG_ABOUT + " " + plugin.get_name()))
         if len(readme) > 0:
-            _section.append_child(HTMLNode(_section.identifier, None, "pre", value=html.escape(readme)))
+            _dialog.append_child(HTMLNode(_dialog.identifier, None, "pre", value=html.escape(readme)))
 
-        # A form of the dialog closes it, without a script.
-        _actions = TagNode(_dialog.identifier, None, "section")
-        _dialog.append_child(_actions)
-        _form = TagNode(_actions.identifier, None, "form", attributes={"method": "dialog"})
-        _actions.append_child(_form)
-        _form.append_child(HTMLNode(_form.identifier, None, "button", value=MSG_CLOSE,
-                                    attributes={"type": "submit", "class": "action-button"}))
+# ---------------------------------------------------------------------------
+
+
+class swappPluginRunPanel(TagNode):
+    """The runs of the selected plugins: their progress while they go, then their results.
+
+    While the runs go: the progress bar, named for a screen reader by what it
+    measures, and the names the page follows them by. Once they are over:
+    plugin by plugin, one line per file which is done, with what the plugin
+    said about it, as it said it, and the files which appeared.
+
+    """
+
+    def __init__(self, parent: str, form_id: str, report: str, process: str, runs: list, addresses: dict):
+        """Create the panel of the runs.
+
+        :param parent: (str) Identifier of the node the panel is appended to
+        :param form_id: (str) Identifier of the form the names of the runs belong to
+        :param report: (str) Name of the report of the runs
+        :param process: (str) Name of the process of the runs, empty when they are not going
+        :param runs: (list of swappPluginRun) The runs, with their results; empty while they go
+        :param addresses: (dict) The address of a produced file, by name, when the person is not on the machine which wrote it
+
+        """
+        super(swappPluginRunPanel, self).__init__(parent, None, "section")
+
+        # The bar measures the whole runs, and it is named so for a screen
+        # reader only. The header is given its node: it holds the plugin
+        # which is running, and the text which file is treated.
+        if len(process) > 0:
+            _progress = swappProgressBar(self.identifier)
+            _progress.set_header("")
+            _progress.set_text("")
+            _bar = _progress.get_node()
+            _bar.get_child("percent_progress").add_attribute("aria-label", MSG_PROGRESS)
+            _bar.insert_child(0, HTMLNode(_bar.identifier, "progress_header", "h3",
+                                          attributes={"id": "progress_header"}))
+            self.append_child(_bar)
+            for _name, _value in (("plugins_report", report), (PROCESS_FIELD, process)):
+                self.append_child(EmptyNode(self.identifier, None, "input",
+                                            attributes={"type": "hidden", "form": form_id,
+                                                        "name": _name, "value": _value}))
+
+        for _run in runs:
+            swappPluginRunPanel.__append_run(self, _run, addresses)
+
+    # -----------------------------------------------------------------------
+    # Private
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __append_run(parent: TagNode, run, addresses: dict) -> None:
+        """Append the results of one run: the plugin, then one line per file which is done.
+
+        :param parent: (TagNode) The panel
+        :param run: (swappPluginRun) The run
+        :param addresses: (dict) The address of a produced file, by name
+
+        """
+        parent.append_child(HTMLNode(parent.identifier, None, "h3", value=run.plugin))
+        _table = TagNode(parent.identifier, None, "table")
+        parent.append_child(_table)
+        _table.append_child(HTMLNode(_table.identifier, None, "caption", value=MSG_RESULTS_CAPTION))
+
+        _head = TagNode(_table.identifier, None, "thead")
+        _table.append_child(_head)
+        _tr = TagNode(_head.identifier, None, "tr")
+        _head.append_child(_tr)
+        for _text in (MSG_FILE, MSG_STATUS, MSG_RESULT):
+            _tr.append_child(HTMLNode(_tr.identifier, None, "th", value=_text, attributes={"scope": "col"}))
+
+        _body = TagNode(_table.identifier, None, "tbody")
+        _table.append_child(_body)
+        for _result in run.results:
+            _tr = TagNode(_body.identifier, None, "tr")
+            _body.append_child(_tr)
+            _tr.append_child(HTMLNode(_tr.identifier, None, "th", value=os.path.basename(_result.file),
+                                      attributes={"scope": "row"}))
+            _icon = "no"
+            _status = MSG_FAILED
+            if _result.done is True:
+                _icon = "yes"
+                _status = MSG_DONE
+            _td = TagNode(_tr.identifier, None, "td")
+            _tr.append_child(_td)
+            _td.append_child(HTMLNode(_td.identifier, None, "span", value="",
+                                      attributes={"data-icon": _icon, "role": "img", "aria-label": _status}))
+
+            # What the plugin said, as it said it, then what appeared.
+            _td = TagNode(_tr.identifier, None, "td")
+            _tr.append_child(_td)
+            _td.append_child(HTMLNode(_td.identifier, None, "pre", value=html.escape(_result.said)))
+            if len(_result.produced) > 0:
+                _ul = TagNode(_td.identifier, None, "ul")
+                _td.append_child(_ul)
+                for _produced in _result.produced:
+                    _li = TagNode(_ul.identifier, None, "li")
+                    _ul.append_child(_li)
+                    _name = os.path.basename(_produced)
+                    if _produced in addresses:
+                        # The file was written where the person is not: the
+                        # name leads to it, and the browser is told to keep
+                        # it under that name instead of showing it.
+                        _li.append_child(HTMLNode(_li.identifier, None, "a", value=_name,
+                                                  attributes={"href": addresses[_produced], "download": _name}))
+                    else:
+                        _li.set_value(_name)

@@ -67,6 +67,9 @@ class swappPluginsRecord:
 
         """
         self.__task = ""
+        # The name of the report of the runs, which the page carries while
+        # they go: their results are read in it.
+        self.__run = ""
         self.__options = dict()
         if options is not None:
             self.__options = options
@@ -126,10 +129,13 @@ class swappPluginsRecord:
             raise sppasTypeError(data, "dict")
 
         self.__task = ""
+        self.__run = ""
         self.__selected = list()
         self.__to_be_shown = dict()
         if isinstance(data.get("event_bake"), str) is True:
             self.__task = data["event_bake"]
+        if isinstance(data.get("plugins_report"), str) is True:
+            self.__run = data["plugins_report"]
 
         # A plugin is selected by its switch, and the page carries whether its
         # options were applied.
@@ -189,6 +195,22 @@ class swappPluginsRecord:
     def get_task(self) -> str:
         """Return the task the request asks for, empty if none (str)."""
         return self.__task
+
+    # -----------------------------------------------------------------------
+
+    def get_run(self) -> str:
+        """Return the name of the report of the runs, empty if none (str)."""
+        return self.__run
+
+    # -----------------------------------------------------------------------
+
+    def set_run(self, name: str) -> None:
+        """Set the name of the report of the runs.
+
+        :param name: (str) Name of the report, without its path
+
+        """
+        self.__run = str(name)
 
     # -----------------------------------------------------------------------
 
@@ -261,5 +283,6 @@ class swappPluginsRecord:
     # -----------------------------------------------------------------------
 
     task = property(get_task, None)
+    run = property(get_run, set_run)
     selected = property(get_selected, None)
     to_be_shown = property(get_to_be_shown, None)

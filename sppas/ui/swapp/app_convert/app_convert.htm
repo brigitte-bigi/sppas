@@ -416,7 +416,7 @@
 		<h3>Convert</h3>
 
 			<p>
-				Click <b>Convert</b>. A bar shows how far the conversion has gone, and how many files have their result, out of all of them. If no file is
+				Click <b>Let's go!</b>. A bar shows how far the conversion has gone, and how many files have their result, out of all of them. If no file is
 				checked, the page says <b>No file is checked to be converted.</b> and nothing
 				starts.
 			</p>
@@ -787,8 +787,9 @@
 				five times a second, with the name of the process. The base recipe answers that one
 				alone, read in the file of the process, with the percent, a header and a text, and a
 				status of 202 until it has ended: Convert is asked nothing, and the page is not built
-				again for a progress bar. The text says how many files have their result, and it is
-				written under the bar; a label names the bar. The name of the process and the name of
+				again for a progress bar. The header is the file which is converted, and the text says
+				how many files have their result, written under the bar; a label names the bar. While
+				the conversion runs, its section shows its title and the progress, and nothing else. The name of the process and the name of
 				the report travel in hidden fields, so that the server reads where the conversion the
 				page follows stands, then its results, and not those of another.
 			</p>
@@ -3175,7 +3176,8 @@
 		destination, a batch which is not empty, and the answers of the destination.</li>
 		<li>File by file: read, anticipate, write, and at most one second write. Each
 		file has its result, and the failure of one ends nothing. The progress bar
-		says how many files have their result, read in the file of the process.</li>
+		says which file is converted and how many files have their result, read in
+		the file of the process.</li>
 		<li>The results replace what was shown: a status for each file, its remarks, and
 		the cause of each refusal, in the words of her data.</li>
 		<li>What was produced is reached from the results: online, by a link to each file.</li>

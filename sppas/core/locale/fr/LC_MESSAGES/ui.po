@@ -47,6 +47,57 @@ msgstr "Installe des plugins, et en lance un sur des fichiers."
 msgid "No plugin is selected."
 msgstr "Aucun plugin n'est sélectionné."
 
+msgid "A run is going: wait until it is over."
+msgstr "Un lancement est en cours : attendez qu'il soit terminé."
+
+msgid "The options of these plugins were not applied: {:s}"
+msgstr "Les options de ces plugins n'ont pas été appliquées : {:s}"
+
+msgid "No file was chosen."
+msgstr "Aucun fichier n'a été choisi."
+
+msgid "Plugin successfully installed in folder {:s}."
+msgstr "Plugin installé avec succès dans le dossier {:s}."
+
+msgid "Plugin '{:s}' can't be installed due to the following error:\n{!s:s}"
+msgstr "Le plugin '{:s}' ne peut pas être installé à cause de l'erreur suivante :\n{!s:s}"
+
+msgid "Plugin {:s} was successfully deleted."
+msgstr "Le plugin {:s} a été supprimé avec succès."
+
+msgid "Plugin '{:s}' can't be deleted due to the following error:\n{!s:s}"
+msgstr "Le plugin '{:s}' ne peut pas être supprimé à cause de l'erreur suivante :\n{!s:s}"
+
+msgid "No plugin installed."
+msgstr "Aucun plugin n'est installé."
+
+msgid "Select the plugin to delete:"
+msgstr "Sélectionnez le plugin à supprimer :"
+
+msgid "Waiting for the archive in the selection window..."
+msgstr "En attente de l'archive dans la fenêtre de sélection..."
+
+msgid "The plugins could not be run."
+msgstr "Les plugins n'ont pas pu être lancés."
+
+msgid "These runs stopped before their last file: {:s}"
+msgstr "Ces lancements se sont arrêtés avant leur dernier fichier : {:s}"
+
+msgid "No plugin can be listed."
+msgstr "Aucun plugin ne peut être listé."
+
+msgid "Run of the plugins"
+msgstr "Exécution des plugins"
+
+msgid "One line per file of the run"
+msgstr "Une ligne par fichier du lancement"
+
+msgid "done"
+msgstr "fait"
+
+msgid "failed"
+msgstr "échoué"
+
 msgid "Plugins runs on your files programs added to SPPAS. Add the files, select the plugins, set their options, then click Let's go!. What each plugin did with each file is given in the results."
 msgstr "Plugins lance sur vos fichiers des programmes ajoutés à SPPAS. Ajoutez les fichiers, sélectionnez les plugins, réglez leurs options, puis cliquez sur C'est parti !. Ce que chaque plugin a fait de chaque fichier est donné dans les résultats."
 

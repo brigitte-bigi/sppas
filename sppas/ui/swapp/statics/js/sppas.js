@@ -77,6 +77,9 @@ const DATA_VALUES = 'values';
  * the next. Applying the options closes the window; closing it without
  * applying them is said to the server.
  *
+ * The windows are listened to where what happens in them is dispatched: a
+ * window the page writes after it was loaded is handled as the others are.
+ *
  * handleSwappOptionsOnLoad() has to be invoked **after** the DOM is loaded,
  * and before the manager of the app attaches its own listeners.
  */
@@ -151,11 +154,36 @@ class SwappOptions extends BaseManager {
         }
 
         // The forms of the container, in the windows, and the windows
-        // however they are closed.
-        document.querySelectorAll(`dialog[id^="${this.#prefix}"]`).forEach((dialog) => {
-            dialog.addEventListener('submit', (e) => this.#onOptionsSubmit(e, dialog));
-            dialog.addEventListener('close', () => this.#onOptionsClose(dialog));
+        // however they are closed. A window does not say it closed to what
+        // holds it: its closing is caught on its way to it.
+        document.addEventListener('submit', (e) => {
+            const dialog = this.#windowOf(e.target);
+            if (dialog !== null) {
+                this.#onOptionsSubmit(e, dialog);
+            }
         });
+        document.addEventListener('close', (e) => {
+            const dialog = this.#windowOf(e.target);
+            if (dialog !== null && dialog === e.target) {
+                this.#onOptionsClose(dialog);
+            }
+        }, true);
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Return the window of the options an element stands in, null if none.
+     *
+     * @private
+     * @param {EventTarget} element - The element.
+     * @returns {HTMLDialogElement|null}
+     */
+    #windowOf(element) {
+        if (!(element instanceof Element)) {
+            return null;
+        }
+        return element.closest(`dialog[id^="${this.#prefix}"]`);
     }
 
     // ------------------------------------------------------------------------

@@ -53,21 +53,44 @@ from ..swapp_core.swappsg import swapp_serverstate
 
 from .plugins_record import swappPluginsRecord
 from .plugslist import swappPluginsList
+from .plugslist import swappPluginRunPanel
 
 # ---------------------------------------------------------------------------
 
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Plugins")
 MSG_INSTALL = _("Install")
 MSG_DELETE = _("Delete")
+MSG_INSTALLED = _("Plugin successfully installed in folder {:s}.")
+MSG_NOT_INSTALLED = _("Plugin '{:s}' can't be installed due to the following error:\n{!s:s}")
+MSG_DELETED = _("Plugin {:s} was successfully deleted.")
+MSG_NOT_DELETED = _("Plugin '{:s}' can't be deleted due to the following error:\n{!s:s}")
+MSG_NO_PLUGINS = _("No plugin installed.")
+MSG_TO_DELETE = _("Select the plugin to delete:")
+MSG_WAITING = _("Waiting for the archive in the selection window...")
+MSG_NOT_PERFORMED = _("The plugins could not be run.")
+MSG_REPORT_UNAVAILABLE = _("The report is not available...\nError is: {:s}")
+MSG_STOPPED = _("These runs stopped before their last file: {:s}")
+MSG_NO_DOMAIN = _("No plugin can be listed.")
 MSG_FILES = _("Add files")
 MSG_PLUGINS = _("Plugins")
-MSG_RESULTS = _("Results")
+MSG_RUNS = _("Run of the plugins")
 MSG_RUN = _("Let's go!")
 MSG_RUN_MISSING = _("No plugin is selected.")
+MSG_MISSING = {
+    "running": _("A run is going: wait until it is over."),
+    "plugin": MSG_RUN_MISSING,
+    "applied": _("The options of these plugins were not applied: {:s}"),
+    "files": _("No file was chosen.")
+}
 MSG_RESET = _("Reset")
 MSG_INTRO = _("Plugins runs on your files programs added to SPPAS. Add the files, select the plugins, "
               "set their options, then click Let's go!. What each plugin did with each file is given in "
               "the results.")
+
+# How often the page asks where the runs stand, in milliseconds: the local
+# server answers at once, a distant one is asked less often.
+INTERVAL_LOCAL_MS = 200
+INTERVAL_DISTANT_MS = 1000
 
 # The script of the page, filled in with the folder of the scripts.
 BODY_SCRIPT = """
@@ -83,7 +106,7 @@ BODY_SCRIPT = """
             // offers: their listeners are attached before the ones of the page.
             const swappOptions = new SwappOptions('plugins_form', 'plugins_options_');
             swappOptions.handleSwappOptionsOnLoad();
-            const pluginsManager = new PluginsManager();
+            const pluginsManager = new PluginsManager({interval});
             pluginsManager.handlePluginsManagerOnLoad();
         }}
 """
@@ -118,6 +141,13 @@ class swappPluginsView(swappBaseView):
         # the page writes of a plugin in its form.
         self.__options = None
         self.__values = dict()
+        # The section of the plugins.
+        self.__plugins = None
+        # The section of the runs, None when there is none; and what is said
+        # in the dialog of information and in the one of the errors.
+        self.__run = None
+        self.__info = ""
+        self.__error = ""
         super(swappPluginsView, self).__init__(tree, MSG_HEADER)
 
     # -----------------------------------------------------------------------
@@ -145,9 +175,17 @@ class swappPluginsView(swappBaseView):
     # -----------------------------------------------------------------------
 
     def populate_body_script(self):
-        """Override. Populate the script body section."""
+        """Override. Populate the script body section.
+
+        The page asks where the runs stand at the interval of the server
+        which serves it.
+
+        """
+        _interval = INTERVAL_DISTANT_MS
+        if swapp_serverstate.local is True:
+            _interval = INTERVAL_LOCAL_MS
         self._htree.body_script.add_attribute("type", "module")
-        self._htree.body_script.set_value(BODY_SCRIPT.format(js=swapp_settings.js))
+        self._htree.body_script.set_value(BODY_SCRIPT.format(js=swapp_settings.js, interval=_interval))
 
     # -----------------------------------------------------------------------
 
@@ -179,15 +217,34 @@ class swappPluginsView(swappBaseView):
         # and the results, when there are some.
         self.__files = self.__append_section("plugins_files_section", MSG_FILES)
         _plugins = self.__append_section("plugins_section", MSG_PLUGINS)
+        self.__plugins = _plugins
         # Installing and deleting a plugin happen where SPPAS runs on the
         # machine of the person, and nowhere else: above the cards, as above
         # the list in the desktop interface.
         if swapp_serverstate.local is True:
             _p = TagNode(_plugins.identifier, None, "p")
             _plugins.append_child(_p)
-            for _identifier, _label in (("plugins_install", MSG_INSTALL), ("plugins_delete", MSG_DELETE)):
-                _p.append_child(HTMLNode(_p.identifier, None, "button", value=_label,
-                                         attributes={"type": "button", "id": _identifier}))
+            # Installing asks the file chooser of the machine for the archive.
+            _p.append_child(HTMLNode(_p.identifier, None, "button", value=MSG_INSTALL,
+                                     attributes={"type": "submit", "id": "plugins_install", "form": self.__form_id,
+                                                 "name": "event_bake", "value": "plugins_install"}))
+            # Deleting is done in a dialog, where the plugin is chosen among
+            # the installed ones.
+            _p.append_child(HTMLNode(_p.identifier, None, "button", value=MSG_DELETE,
+                                     attributes={"type": "button", "id": "plugins_delete",
+                                                 "aria-haspopup": "dialog", "aria-controls": "plugins_delete_dialog"}))
+            # The selection window may open behind the browser, and the page
+            # would seem to do nothing: while the server waits for what is
+            # chosen in it, the page says so, with a progress which has no
+            # end. It is hidden until the button is pressed.
+            _waiting = TagNode(_plugins.identifier, None, "div",
+                               attributes={"id": "plugins_waiting", "role": "status", "hidden": None})
+            _plugins.append_child(_waiting)
+            _waiting.append_child(HTMLNode(_waiting.identifier, None, "p", value=MSG_WAITING,
+                                           attributes={"id": "plugins_waiting_text"}))
+            _waiting.append_child(HTMLNode(_waiting.identifier, None, "progress",
+                                           attributes={"aria-labelledby": "plugins_waiting_text"}))
+            self.__append_delete(_plugins, _shown.get("plugins", list()))
         # The container of the options of the plugin which is set stands in
         # the dialog of that plugin.
         self.__options = _shown.get("options", None)
@@ -218,8 +275,70 @@ class swappPluginsView(swappBaseView):
         # one is: selecting a plugin in the page makes no request.
         _plugins.append_child(HTMLNode(_plugins.identifier, None, "p", value=MSG_RUN_MISSING,
                                        attributes={"id": "plugins_run_state", "class": _class}))
-        if "results" in _shown:
-            self.__append_section("plugins_run_section", MSG_RESULTS)
+        # The runs: while they go, their progress and the names the page
+        # follows them by; once over, their results, plugin by plugin.
+        self.__run = None
+        if _shown.get("running", False) is True or "results" in _shown:
+            self.__run = self.__append_section("plugins_run_section", MSG_RUNS)
+            self.__run.append_child(swappPluginRunPanel(self.__run.identifier, self.__form_id, record.run,
+                                                        _shown.get("process", ""),
+                                                        _shown.get("results", list()),
+                                                        _shown.get("addresses", dict())))
+
+        # What stands in the way of a start is said in the dialog of
+        # information, and so is what came of installing or deleting a
+        # plugin; what the domain of the plugins refused is said in the
+        # dialog of the errors.
+        self.append_alert_dialogs(self._htree.body_main)
+        self.__info = ""
+        self.__error = ""
+        _errors = list()
+        if _shown.get("not_performed", False) is True:
+            _errors.append(MSG_NOT_PERFORMED)
+        if "unavailable" in _shown:
+            _errors.append(MSG_REPORT_UNAVAILABLE.format(_shown["unavailable"]))
+        if "stopped" in _shown:
+            _errors.append(MSG_STOPPED.format(", ".join(_shown["stopped"])))
+        if "no_archive" in _shown:
+            _errors.append(_shown["no_archive"])
+        if "not_installed" in _shown:
+            _errors.append(MSG_NOT_INSTALLED.format(_shown["not_installed"][0], _shown["not_installed"][1]))
+        if "not_deleted" in _shown:
+            _errors.append(MSG_NOT_DELETED.format(_shown["not_deleted"][0], _shown["not_deleted"][1]))
+        _dialog = self._htree.body_main.get_child("error_dialog")
+        for _text in _errors:
+            _dialog.append_child(HTMLNode(_dialog.identifier, None, "p", value=_text))
+        self.__error = " ".join(_errors)
+
+        _said = list()
+        if "installed" in _shown:
+            _said.append(MSG_INSTALLED.format(_shown["installed"]))
+        if "deleted" in _shown:
+            _said.append(MSG_DELETED.format(_shown["deleted"]))
+        for _missing in _shown.get("missing", list()):
+            _text = MSG_MISSING[_missing]
+            if _missing == "applied":
+                _text = _text.format(", ".join(_shown.get("not_applied", list())))
+            _said.append(_text)
+        if len(_said) > 0:
+            _dialog = self._htree.body_main.get_child("info_dialog")
+            for _text in _said:
+                _dialog.append_child(HTMLNode(_dialog.identifier, None, "p", value=_text))
+            self.__info = " ".join(_said)
+
+    # -----------------------------------------------------------------------
+
+    def populate_unavailable(self) -> None:
+        """Populate the main content of the page when no plugin can be listed.
+
+        The domain of the plugins could not be created: it is said in the
+        dialog of the errors.
+
+        """
+        self.append_alert_dialogs(self._htree.body_main)
+        _dialog = self._htree.body_main.get_child("error_dialog")
+        _dialog.append_child(HTMLNode(_dialog.identifier, None, "p", value=MSG_NO_DOMAIN))
+        self.__error = MSG_NO_DOMAIN
 
     # -----------------------------------------------------------------------
 
@@ -240,7 +359,67 @@ class swappPluginsView(swappBaseView):
         return self.__values
 
     # -----------------------------------------------------------------------
+
+    def get_plugins(self) -> TagNode | None:
+        """Return the section of the plugins, None before the page is built."""
+        return self.__plugins
+
+    # -----------------------------------------------------------------------
+
+    def get_run(self) -> TagNode | None:
+        """Return the section of the runs, None when there is none."""
+        return self.__run
+
+    # -----------------------------------------------------------------------
+
+    def get_info(self) -> str:
+        """Return what is said in the dialog of information, empty if nothing (str)."""
+        return self.__info
+
+    # -----------------------------------------------------------------------
+
+    def get_error(self) -> str:
+        """Return what is said in the dialog of the errors, empty if nothing (str)."""
+        return self.__error
+
+    # -----------------------------------------------------------------------
     # Private
+    # -----------------------------------------------------------------------
+
+    def __append_delete(self, parent: TagNode, plugins: list) -> None:
+        """Append the dialog where the plugin to delete is chosen among the installed ones.
+
+        :param parent: (TagNode) The section of the plugins
+        :param plugins: (list of sppasPluginParam) The installed plugins
+
+        """
+        _dialog = TagNode(parent.identifier, "plugins_delete_dialog", "dialog",
+                          attributes={"id": "plugins_delete_dialog", "class": "hidden-alert",
+                                      "aria-labelledby": "plugins_delete_dialog_h"})
+        parent.append_child(_dialog)
+        _dialog.append_child(HTMLNode(_dialog.identifier, None, "h2", value=MSG_DELETE,
+                                      attributes={"id": "plugins_delete_dialog_h"}))
+        if len(plugins) == 0:
+            _dialog.append_child(HTMLNode(_dialog.identifier, None, "p", value=MSG_NO_PLUGINS))
+            return
+
+        _fieldset = TagNode(_dialog.identifier, None, "fieldset")
+        _dialog.append_child(_fieldset)
+        _fieldset.append_child(HTMLNode(_fieldset.identifier, None, "legend", value=MSG_TO_DELETE))
+        for _plugin in plugins:
+            _key = _plugin.get_key()
+            _p = TagNode(_fieldset.identifier, None, "p")
+            _fieldset.append_child(_p)
+            _p.append_child(EmptyNode(_p.identifier, None, "input",
+                                      attributes={"type": "radio", "id": "plugins_to_delete_" + _key,
+                                                  "name": "plugins_to_delete", "value": _key,
+                                                  "form": self.__form_id}))
+            _p.append_child(HTMLNode(_p.identifier, None, "label", value=_key,
+                                     attributes={"for": "plugins_to_delete_" + _key}))
+        _dialog.append_child(HTMLNode(_dialog.identifier, None, "button", value=MSG_DELETE,
+                                      attributes={"type": "submit", "class": "action-button", "form": self.__form_id,
+                                                  "name": "event_bake", "value": "plugins_delete"}))
+
     # -----------------------------------------------------------------------
 
     def __append_section(self, identifier: str, title: str) -> TagNode:
@@ -265,3 +444,7 @@ class swappPluginsView(swappBaseView):
     files = property(get_files, None)
     options = property(get_options, None)
     values = property(get_values, None)
+    plugins = property(get_plugins, None)
+    run = property(get_run, None)
+    info = property(get_info, None)
+    error = property(get_error, None)

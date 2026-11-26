@@ -266,28 +266,8 @@ class sppasPluginsManager(Thread):
             output_lines += "\n"
 
             # Apply the plugin
-            command = self._plugin_command(self._plugins[plugin_id], pfile)
-            try:
-                p = sppasExecProcess()
-                p.run(command)
-                stdout = p.out()
-                result = u(p.error().strip())
-                logging.info("Command return code is {}".format(p.status()))
-                if len(stdout) > 3:
-                    logging.info(stdout)
-            except Exception as e:
-                result = str(e)
-
-            # Interpret the output result
-            if len(result) == 0:
-                output_lines += info(4015, "plugins")
-            else:
-                try:
-                    output_lines += u(result)
-                except Exception as e:
-                    output_lines += info(4100, "plugins")
-                    logging.info(str(e))
-                    logging.info(result)
+            said, status = self.run_plugin_on_file(plugin_id, pfile)
+            output_lines += said
 
             # Indicate progress
             if self._progress is not None:
@@ -299,6 +279,50 @@ class sppasPluginsManager(Thread):
             self._progress.update(1, info(4020, "plugins") + "\n")
 
         return output_lines
+
+    # ------------------------------------------------------------------------
+
+    def run_plugin_on_file(self, plugin_id, filename):
+        """Apply a given plugin on a file.
+
+        The plugin is applied with the values its options hold.
+
+        :param plugin_id: (str) Identifier of the plugin to apply.
+        :param filename: (str) Name of the file on which the plugin has to be applied.
+        :raises: PluginIdError: No plugin has that identifier
+        :return: (tuple) What the plugin said, and the code it returned -- None if it could not be executed
+
+        """
+        if plugin_id not in self._plugins.keys():
+            raise PluginIdError(plugin_id)
+
+        # Apply the plugin
+        status = None
+        command = self._plugin_command(self._plugins[plugin_id], filename)
+        try:
+            p = sppasExecProcess()
+            p.run(command)
+            stdout = p.out()
+            result = u(p.error().strip())
+            status = p.status()
+            logging.info("Command return code is {}".format(status))
+            if len(stdout) > 3:
+                logging.info(stdout)
+        except Exception as e:
+            result = str(e)
+
+        # Interpret the output result
+        if len(result) == 0:
+            said = info(4015, "plugins")
+        else:
+            try:
+                said = u(result)
+            except Exception as e:
+                said = info(4100, "plugins")
+                logging.info(str(e))
+                logging.info(result)
+
+        return said, status
 
     # ------------------------------------------------------------------------
     # Private

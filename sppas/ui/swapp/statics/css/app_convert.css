@@ -73,11 +73,9 @@
 ================================  CONVERSION  ================================
 */
 
-/* While a conversion runs, the page shows its progress and nothing else. The
-   rest stays in the page, out of sight: the form still carries what was
-   decided when the results are asked for, and they take the place of the
-   progress as they did. */
-#main-content:has(#progress_section) > :not(#convert_section):not(dialog),
-#convert_section:has(#progress_section) > :not(#progress_section) {
+/* While a conversion runs, its section shows its title and its progress,
+   and nothing else: the rest of the page is out of sight as it is for every
+   long process. */
+#convert_section:has(#progress_section) > :not(h2):not(#progress_section) {
     display: none;
 }

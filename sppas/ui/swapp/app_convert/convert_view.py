@@ -273,13 +273,17 @@ class swappConvertView(swappBaseView):
         # name of the process it asks where the conversion stands, and the
         # name of the report the results are read in, which the form transmits.
         if _shown.get("converting", False) is True:
-            # The text of the progress is given its node: the page writes in
-            # it how many files have their result. The bar measures the whole
-            # conversion, and it is named so for a screen reader only.
+            # The bar measures the whole conversion, and it is named so for a
+            # screen reader only. The header is given its node: it holds the
+            # file which is converted, and nothing before the first one; the
+            # text says how many files have their result.
             _progress = swappProgressBar(_section.identifier)
-            _progress.update(message="")
+            _progress.set_header("")
+            _progress.set_text("")
             _bar = _progress.get_node()
             _bar.get_child("percent_progress").add_attribute("aria-label", MSG_PROGRESS)
+            _bar.insert_child(0, HTMLNode(_bar.identifier, "progress_header", "h3",
+                                          attributes={"id": "progress_header"}))
             _section.append_child(_bar)
             _section.append_child(EmptyNode(_section.identifier, None, "input",
                                             attributes={"type": "hidden", "form": ID_FORM,

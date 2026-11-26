@@ -161,7 +161,8 @@ class swappModelConversion:
         What was written is added to the workspace the batch is. No file of
         the batch is removed or rewritten. When a report is given, it is
         written again each time a file has its result. When a progress is
-        given, it says how many files have their result, each time one has.
+        given, its header is the file which is converted, and it says how many
+        files have their result, each time one has.
 
         :param batch: (sppasWorkspace) Workspace holding the files to be converted
         :param destination: (str) Extension of the destination format, its dot included
@@ -179,6 +180,8 @@ class swappModelConversion:
         _files = batch.get_filename_from_state(States().CHECKED)
         _results = list()
         for _file in _files:
+            if progress is not None:
+                progress.set_header(os.path.basename(_file.get_id()))
             _results.append(self.convert_one(_file.get_id(), destination, answers, general_options))
             if report is not None:
                 report.write(len(_files), _results)
