@@ -126,7 +126,7 @@ def errors_said(page: str) -> str:
 
 
 class TestAnnotateView(unittest.TestCase):
-    """TE34 to TE38, TE40 to TE42, TE44, TE46, TE48, TE50. The page the response bakes."""
+    """TE34 to TE38, TE40 to TE42, TE44, TE46, TE48, TE50, TE51. The page the response bakes."""
 
     def setUp(self):
         self.local = swapp_serverstate.local
@@ -197,6 +197,44 @@ class TestAnnotateView(unittest.TestCase):
                 _expected.append("twotypes")
             _page = self.recipe.bake({"event_bake": "annotate_annotations_" + _type})
             self.assertEqual(_expected, keys_listed(_page))
+
+    # -----------------------------------------------------------------------
+
+    def test_te51_applying_and_closing_the_options_of_an_annotation(self):
+        """TE51. Applying the options of an annotation selects it; closing them without applying unselects it,
+        and its options hold what they held. [309]
+
+        """
+        _page = self.recipe.bake({"event_bake": "annotate_annotations_STANDALONE"})
+        _fields = swappPageFields(_page).fields_of("annotate_form")
+        self.assertNotIn("annotate_ann_textnorm", _fields)
+
+        # Configure... answers the options of the annotation, with what the
+        # page writes of it.
+        self.recipe.bake(swappPageFields(_page).submitted("event_bake", "annotate_options_textnorm"))
+        _container = self.recipe._data["options"]
+        self.assertEqual("False", self.recipe._data["values"]["annotate_ann_textnorm"])
+
+        # Applied while it is not selected: it is selected.
+        _applied = dict(_fields)
+        _applied.update(swappPageFields(_container).fields_of("#form1"))
+        _applied["options_validate"] = ""
+        _applied["event_bake"] = "annotate_options_textnorm"
+        self.recipe.bake(_applied)
+        _values = self.recipe._data["values"]
+        self.assertEqual("True", _values["annotate_ann_textnorm"])
+
+        # Given up while it is selected: it is not selected, and its options
+        # hold what they held.
+        _fields.update(_values)
+        _fields["event_bake"] = "annotate_options_textnorm"
+        _fields["options_close"] = ""
+        self.recipe.bake(_fields)
+        _closed = self.recipe._data["values"]
+        self.assertEqual("False", _closed["annotate_ann_textnorm"])
+        for _name in _values:
+            if _name != "annotate_ann_textnorm":
+                self.assertEqual(_values[_name], _closed[_name])
 
     # -----------------------------------------------------------------------
 

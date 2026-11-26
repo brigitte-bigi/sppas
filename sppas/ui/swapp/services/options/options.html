@@ -71,7 +71,8 @@
 	<p>
 		<b>Not written yet.</b> This chapter is the help of the person who sets the options of an app: what a
 		line of an option shows, and what is done on it. This service has no page of its
-		own: what is described here is the container an app places in its own.
+		own: what is described here is the container an app places in its own, or in
+		the window this service offers it.
 	</p>
 
 </section>
@@ -574,6 +575,18 @@
 			<li>[701] The person can find one option quickly among those of an app.</li>
 			</ul>
 
+			<h5>[800] Setting the options apart</h5>
+			<ul class="req">
+			<li>[801] The person sets the options of one thing an app declared in a window of their own, over the page of that app, which she opens and closes without leaving that page.</li>
+			<li>[802] The person applies what she set, or gives it up: closing the window without applying gives it up.</li>
+			</ul>
+
+			<p>
+				<b>The window is an extra.</b> The service offers it, and imposes it on no
+				app: an app which places the container in its own page goes on doing so,
+				and the service works for it as it did.
+			</p>
+
 			<h5>[1000] Accessibility</h5>
 			<ul class="req">
 			<li>[1001] The system holds to the WCAG rules.</li>
@@ -593,7 +606,8 @@
 		<p>
 			This document covers what an app lets one set: how it is obtained, how it is
 			shown, how it is changed, what is refused, and how what was set is handed
-			back.
+			back. It covers as well, as an extra, the window an app may have the options
+			shown in: how it opens, and how it closes.
 		</p>
 
 		<p>
@@ -692,6 +706,7 @@
 			<li><b>F11. domain &rarr; A3</b> &mdash; the request for a file of the person.</li>
 			<li><b>F12. A3 &rarr; domain</b> &mdash; the file she chose.</li>
 			<li><b>F13. domain &rarr; A2</b> &mdash; the set of options, with their values [601].</li>
+			<li><b>F14. A1 &rarr; domain</b> &mdash; giving up what she set, when she closes the window of the options without applying it [802].</li>
 		</ul>
 
 		<p>
@@ -834,6 +849,7 @@
 				<tr><td>E6</td><td>The person asks to choose a file for an option</td><td>external</td><td>F10</td></tr>
 				<tr><td>E7</td><td>A file comes back</td><td>external</td><td>F12</td></tr>
 				<tr><td>E8</td><td>An app asks for its set back</td><td>external</td><td>An app (A2)</td></tr>
+				<tr><td>E9</td><td>The person gives up what she set</td><td>external</td><td>F14</td></tr>
 			</tbody>
 		</table>
 
@@ -997,6 +1013,29 @@
 
 		</section>
 
+		<section>
+		<h4>T09 &mdash; Give up what was set</h4>
+
+			<p><b>Purpose:</b> that closing the window of the options without applying
+			them changes nothing of them.</p>
+
+			<table>
+				<thead><tr><th>What</th><th>Says</th></tr></thead>
+				<tbody>
+					<tr><td>Synchronization</td><td>E9</td></tr>
+					<tr><td>Actions</td><td>None: no value she gave is taken in</td></tr>
+					<tr><td>Result</td><td>Every option holds the value it held (F4). Always</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				The app which dispatched the request reads that what was set was given
+				up, as it reads that the values were validated: what it does of it is its
+				own.
+			</p>
+
+		</section>
+
 	</section>
 
 </section>
@@ -1037,6 +1076,7 @@
 				<tr><td>PF6 (T06)</td><td>Obtains a file for an option</td><td>E6</td><td>the provision of files</td><td>the server, then the machine of the person</td><td>when the person asks</td><td>conversational</td></tr>
 				<tr><td>PF7 (T07)</td><td>Takes in the file which came back</td><td>E7</td><td>the domain</td><td>the server</td><td>as soon as a file comes back</td><td>automated</td></tr>
 				<tr><td>PF8 (T08)</td><td>Hands the set back</td><td>E8</td><td>the domain</td><td>the server</td><td>when the app asks</td><td>automated</td></tr>
+				<tr><td>PF9 (T09)</td><td>Gives up what was set</td><td>E9</td><td>the domain</td><td>the server</td><td>when the person closes the window of the options without applying them</td><td>conversational</td></tr>
 			</tbody>
 		</table>
 
@@ -1236,6 +1276,7 @@
 				<tr><td>PF6</td><td>Rebuild; ask the provision of files, saying which option the file is for</td><td>Nothing</td></tr>
 				<tr><td>PF7</td><td>Rebuild; set what came back on the option it was asked for</td><td>Nothing</td></tr>
 				<tr><td>PF8</td><td>Rebuild; give the set back to the app</td><td>Nothing</td></tr>
+				<tr><td>PF9</td><td>Take in nothing</td><td>Nothing</td></tr>
 			</tbody>
 		</table>
 
@@ -1282,11 +1323,18 @@
 			</thead>
 			<tbody>
 				<tr><td>acceptance</td><td>Says whether a value suits the kind of an option and its bounds, and what was expected when it does not. Reads nothing, writes nothing</td><td>What PF3 asks of it</td></tr>
-				<tr><td>set</td><td>Rebuilds a set from what the page transmitted, holds the value every option arrived with, sets values, puts options back, and gives the set to an app</td><td>PF1, PF3, PF4, PF5, PF7, PF8</td></tr>
+				<tr><td>set</td><td>Rebuilds a set from what the page transmitted, holds the value every option arrived with, sets values, puts options back, and gives the set to an app</td><td>PF1, PF3, PF4, PF5, PF7, PF8, PF9</td></tr>
 				<tr><td>file</td><td>Asks the provision of files for the file an option takes, and takes in what comes back</td><td>PF6, PF7</td></tr>
-				<tr><td>presentation</td><td>Builds the piece of page an app places in its own: one line per option, and what the person acts on</td><td>PF2, and the view of every other</td></tr>
+				<tr><td>presentation</td><td>Builds the piece of page an app places in its own: one line per option, and what the person acts on; and, as an extra, the window an app may place it in</td><td>PF2, and the view of every other</td></tr>
 			</tbody>
 		</table>
+
+		<p>
+			The script of the window &mdash; what opens it, sends the forms of the
+			container, writes what was set in the form of the app, and closes it &mdash;
+			is in <code>sppas.js</code>, the script the pages of the apps load: a file of
+			its own would be one more request for every page.
+		</p>
 
 		<p>
 			What each one promises, which is the reason for the cutting:
@@ -1442,6 +1490,7 @@
 			<thead><tr><th>Class</th><th>Operations</th><th>What it shows</th></tr></thead>
 			<tbody>
 				<tr><td><code>OptionsView</code></td><td>populate_tree_content(record)</td><td>The container: one line per option, carrying its label, its value, what it takes to change that value, the bounds when there are any, and the refusal when there is one</td></tr>
+				<tr><td><code>OptionsDialog</code></td><td>&mdash;</td><td>As an extra, the window of the options of one thing an app declared: its title, then the container, or an empty place the page fills</td></tr>
 			</tbody>
 		</table>
 
@@ -1449,8 +1498,8 @@
 			A view builds a tree and does nothing else: it decides nothing, refuses
 			nothing, and reaches neither a disk nor a neighbor. What it shows was decided
 			before it was called, and the texts it shows are the ones the options carry.
-			There is one part and not several: what this domain shows is one container, and
-			the page it stands in belongs to the app which placed it.
+			What this domain shows is one container, and, as an extra, the window it may
+			stand in: the page they stand in belongs to the app which placed them.
 		</p>
 
 		<h4>What is tied to what</h4>

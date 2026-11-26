@@ -45,6 +45,7 @@ from .options_request import swappFileRequest
 from .options_file import swappFileForOption
 from .options_record import swappOptionsRecord
 from .options_view import swappOptionsView
+from .options_view import swappOptionsDialog
 from .options_controller import swappOptionsController
 from .options_manager import swappOptionsManager
 
@@ -57,6 +58,7 @@ __all__ = (
     "swappFileForOption",
     "swappOptionsRecord",
     "swappOptionsView",
+    "swappOptionsDialog",
     "swappOptionsController",
     "swappOptionsManager"
 )

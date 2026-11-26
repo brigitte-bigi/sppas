@@ -53,8 +53,9 @@ TASK_FILE = "options_file"
 TASK_DESCRIBE = "options_describe"
 TASK_PUT_BACK = "options_put_back"
 TASK_PUT_ALL_BACK = "options_put_all_back"
+TASK_CLOSE = "options_close"
 
-TASKS = (TASK_VALIDATE, TASK_FILE, TASK_DESCRIBE, TASK_PUT_BACK, TASK_PUT_ALL_BACK)
+TASKS = (TASK_VALIDATE, TASK_FILE, TASK_DESCRIBE, TASK_PUT_BACK, TASK_PUT_ALL_BACK, TASK_CLOSE)
 
 # The name of the field which carries the set, and the prefix of the name of
 # the field which carries the value of one option.

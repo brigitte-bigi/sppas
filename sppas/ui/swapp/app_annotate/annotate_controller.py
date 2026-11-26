@@ -110,13 +110,19 @@ class swappAnnotateController:
 
         # The options of one annotation are handed to the service of the
         # options, which shows and checks them. Their values are taken back
-        # when she applies them, and stay what they were when she gives up.
+        # when she applies them, and the annotation is selected; they stay
+        # what they were when she gives up, and the annotation is not
+        # selected.
         if self.__record.task.startswith("annotate_options_") is True:
             _key = self.__record.task[len("annotate_options_"):]
             self.__options = swappOptionsManager("annotate_options_" + _key, self.__record.get_options(_key))
             self.__options.consumes(events)
             if "options_validate" in events:
                 self.__record.set_options(_key, self.__options.options_for_app())
+                if self.__model.is_installed(_key) is True:
+                    self.__record.select(_key)
+            elif "options_close" in events:
+                self.__record.unselect(_key)
 
         # One run at a time: while one goes, nothing starts another,
         # resets the page or asks for another batch, and it is said.

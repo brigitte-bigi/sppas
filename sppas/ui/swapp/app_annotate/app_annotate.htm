@@ -342,9 +342,10 @@
 				</p>
 
 				<p>
-					Click <b>Apply</b> to keep what you changed, for that annotation. If you close
-					the window without applying, its options stay what they were. Here is such a
-					window, with one option of each kind:
+					Click <b>Apply</b> to keep what you changed, for that annotation, and to select
+					it. If you close the window without applying, its options stay what they were,
+					and the annotation is not selected. Here is such a window, with one option of
+					each kind:
 				</p>
 
 			    <dialog open aria-hidden="true">
@@ -890,8 +891,8 @@
 				service of the files, <code>swappFilesManager</code>, which the bakery creates with the
 				identifier of the panel of the files: it is appended to that panel, altered in nothing,
 				and answered alone as well. The one of the options of an annotation is written by the
-				service of the options, <code>swappOptionsManager</code>, and placed in the dialog of
-				that annotation.
+				service of the options, <code>swappOptionsManager</code>, and placed in the window that
+				service offers for that annotation, <code>swappOptionsDialog</code>.
 			</p>
 
 		</section>
@@ -1491,7 +1492,8 @@
 				<li>[308] The system shows every annotation, and disables the ones which
 				cannot be performed on that machine.</li>
 				<li>[309] The user can configure an annotation: its options are shown with
-				their values, and what was fixed is kept or given up.</li>
+				their values, and what was fixed is kept or given up. Keeping it selects the
+				annotation; giving it up unselects it.</li>
 				<li>[310] The system keeps the decisions taken for as long as the user stays
 				on the page.</li>
 				<li>[311] Online, the annotations of the types SPEAKER and INTERACTION
@@ -1974,6 +1976,8 @@
 					them (F8);</li>
 					<li>what was fixed is taken back when the user confirms, and the values
 					are what they were when she gives up (F9);</li>
+					<li>the annotation is selected when she confirms, and is not selected when
+					she gives up;</li>
 					<li>nothing is judged here: what a value may be is that service's to
 					answer, and what it means is the annotation's.</li>
 				  </ul>
@@ -2842,11 +2846,13 @@
 			The task <strong>options</strong> carries the key of the annotation it
 			configures in its own value, <code>annotate_options_&lt;key&gt;</code>, which
 			is also the identifier of the dialog of that annotation. It is sent without
-			leaving the page: when Configure is clicked, and with each form of the
-			service of the options in that dialog, whose fields travel with the ones of
-			the page. It is answered with the container of that service and with the
-			values of the options of that annotation, which the page writes in its
-			hidden fields.</p>
+			leaving the page: when Configure is clicked, with each form of the service
+			of the options in that dialog, whose fields travel with the ones of the
+			page, and when that dialog is closed without its options being applied,
+			with the event of that service which says so. It is answered with the
+			container of that service, with the values of the options of that
+			annotation and with its selection, which the page writes in its fields:
+			the script of the service of the options does it.</p>
 
 			<p>T02 to T05 happen in the page and make
 			no request RO8: what they decide is transmitted with <strong>perform</strong>.
@@ -3103,7 +3109,7 @@
 			<p><b>Two things of the page are placed by the view and written
 			elsewhere.</b> The options of an annotation
 			are the container the service of the options writes, which this view places in
-			a dialog of its own, one per annotation. The progress is the three nodes
+			the window that service offers, one per annotation. The progress is the three nodes
 			<code>swappProgressBar</code> writes &mdash; the header, the bar and the text
 			&mdash; which <code>LogAnnotatePanel</code> places and the script of the
 			framework fills.</p>
@@ -3614,6 +3620,7 @@
 			  <tr><td>TE48</td><td>In the list of a type, an annotation which is not installed says why in place of what it requires; the others say what they require</td><td>C7</td></tr>
 			  <tr><td>TE49</td><td>Online, once the annotations have been performed, the page shows the report of the run, with the link which downloads it, and the archive holds it with the produced files</td><td>[601], [605], [803], C22</td></tr>
 			  <tr><td>TE50</td><td>Online, the buttons of the types SPEAKER and INTERACTION are disabled, and the one of the type STANDALONE is not; locally, no button of a type is disabled</td><td>[311], C27</td></tr>
+			  <tr><td>TE51</td><td>Applying the options of an annotation selects it; closing them without applying unselects it, and its options hold what they held</td><td>[309]</td></tr>
 			</tbody>
 			</table>
 

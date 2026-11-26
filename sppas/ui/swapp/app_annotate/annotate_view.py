@@ -82,9 +82,14 @@ INTERVAL_DISTANT_MS = 1000
 
 # The script of the page, filled in with the folder of the scripts and the interval.
 BODY_SCRIPT = """
-        import {{ AnnotateManager }} from '/{js}sppas.js';
+        import {{ AnnotateManager, SwappOptions }} from '/{js}sppas.js';
         import SwappFiles from '/{js}swapp_files.js';
         const swappFiles = new SwappFiles();
+
+        // The windows of the options, which the service of the options
+        // offers: their listeners are attached before the ones of the page.
+        const swappOptions = new SwappOptions('annotate_form', 'annotate_options_');
+        swappOptions.handleSwappOptionsOnLoad();
 
         const annotateManager = new AnnotateManager(swappFiles, {interval});
         annotateManager.handleAnnotateManagerOnLoad();
@@ -235,10 +240,13 @@ class swappAnnotateView(swappBaseView):
         # steps are shown otherwise, beside the reports.
         if "annotations" in _shown:
             # The options of the annotation which is configured: the container
-            # is placed in its dialog, and the values are given with it.
+            # is placed in its dialog, and the values are given with it, and
+            # whether it is selected.
             if "configured" in _shown:
+                _key = _shown["configured"]
                 self.__options = _shown["options"]
-                self.__values = record.serialize_options(_shown["configured"])
+                self.__values = record.serialize_options(_key)
+                self.__values["annotate_ann_" + _key] = str(_key in record.selected)
             self._htree.body_main.append_child(swappAnnotationsPanel(self._htree.body_main.identifier,
                                                                      _shown.get("type", ""),
                                                                      _shown["annotations"],

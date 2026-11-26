@@ -45,6 +45,7 @@ from sppas.ui import _
 from .options_file import swappFileForOption
 from .options_record import swappOptionsRecord
 from .options_record import FIELD_SET
+from .options_record import TASK_CLOSE
 from .options_record import TASK_FILE
 from .options_record import TASK_VALIDATE
 from .options_record import TASKS
@@ -111,12 +112,14 @@ class swappOptionsController:
             return
 
         _record = swappOptionsRecord.parse(data)
-        if _record.task not in (TASK_VALIDATE, TASK_FILE):
+        if _record.task not in (TASK_VALIDATE, TASK_FILE, TASK_CLOSE):
             raise NotImplementedError
 
         # Every request carries the whole set: what she gave is taken in
-        # whatever the task, so that asking for a file loses nothing of it.
-        _record.set.validate(_record.given)
+        # whatever the task, so that asking for a file loses nothing of it;
+        # but giving it up, which takes in nothing.
+        if _record.task != TASK_CLOSE:
+            _record.set.validate(_record.given)
         if _record.task == TASK_FILE:
             self.__obtain_file(_record)
 

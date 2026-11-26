@@ -290,6 +290,17 @@ class swappAnnotateRecord:
 
     # -----------------------------------------------------------------------
 
+    def select(self, key: str) -> None:
+        """Select an annotation.
+
+        :param key: (str) The key of the annotation
+        :raises: KeyError: No annotation has that key
+
+        """
+        self.__parameters.activate_step(self.__parameters.get_step_idx(key))
+
+    # -----------------------------------------------------------------------
+
     def unselect(self, key: str) -> None:
         """Take the selection of an annotation back.
 

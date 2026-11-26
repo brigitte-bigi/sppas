@@ -120,7 +120,7 @@ class TestNav(unittest.TestCase):
         """The Help of an app is a button which sends the form of the app, or a form of its own."""
         expected = ((swappDashboardResponseRecipe, ["exit-menu"]),
                     (swappAnnotateResponseRecipe, None),
-                    (swappPluginsResponseRecipe, ["plugins_install", "plugins_delete"]),
+                    (swappPluginsResponseRecipe, None),
                     (swappConvertResponseRecipe, None),
                     (swappSetupResponseRecipe, ["link-sppas_button"]),
                     (swappTestsResponseRecipe, None),

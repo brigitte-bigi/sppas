@@ -47,7 +47,12 @@ from sppas.core.config import sg
 from sppas.ui import _
 
 from ..swapp_base.swapp_response import swappBaseResponse
+from ..swapp_core.swappsg import swapp_serverstate
+from ..swapp_core.swappsg import swapp_wkps
+from ..swapp_core.swappsg import swapp_wxstate
 from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
+from ..services.files import swappFilesManager
+from ..services.files import swappWorkspaceFiles
 
 from .plugins_model import swappPluginsModel
 from .plugins_view import swappPluginsView
@@ -78,6 +83,7 @@ class swappPluginsResponseRecipe(swappBaseResponse):
         :param title: (str) Title of the page
 
         """
+        self.__manager = None
         self.__model = None
         self.__view = None
         self.__controller = None
@@ -115,6 +121,20 @@ class swappPluginsResponseRecipe(swappBaseResponse):
         """
         super().create()
         self.__view = swappPluginsView(self._htree, swappPluginsResponseRecipe.form_id())
+
+        # The case the service is entered in: files stand already where SPPAS
+        # reads them when the server is the local one -- the person designates
+        # them with the file chooser of the machine. The wsgi service has the
+        # files brought to it, and the workspace it gives is a new one.
+        _workspace = swappPluginsResponseRecipe.__workspace()
+        _local = swapp_serverstate.local is True
+
+        # Its container is written in the section of the files.
+        self.__manager = swappFilesManager("plugins_files_section",
+                                           _workspace,
+                                           reachable=_local,
+                                           has_workspace=len(_workspace.name()) > 0)
+
         # The model is held by the response: what is installed is read in
         # the domain of the plugins it holds.
         self.__model = swappPluginsModel()
@@ -137,8 +157,20 @@ class swappPluginsResponseRecipe(swappBaseResponse):
         # request is answered, and nothing of what was decided is kept.
         self.__controller = swappPluginsController(self.__model, self.__view)
 
+        # The record is rebuilt at every request from what was transmitted,
+        # and the controller does the task it carries.
+        self.__controller.handle(events)
+
         if "event_bake" in events:
-            self.__controller.handle(events)
+
+            # --- Action event to start over: the files go with the decisions ---
+            if events["event_bake"] == "plugins_reset":
+                self.__manager.start_over()
+
+        # Received events of the provision of files.
+        elif self.__manager.consumes(events) is False and len(events) > 0:
+            logging.error(f"Unknown events={events}")
+            self._status.code = 205  # Reset Content
 
         return True
 
@@ -163,6 +195,22 @@ class swappPluginsResponseRecipe(swappBaseResponse):
             # Fills-in the body_main node
             self._htree.body_main.clear_children()
             self.__controller.populate_view()
+            # The container of the provision of files, in the section of the
+            # files. It is answered alone as well, to the requests of that
+            # service: what is done in it replaces it, and the page stays the
+            # one it is.
+            self.__manager.populate_view()
+            _container = self.__manager.container()
+            if self.__view.files is not None:
+                self.__view.files.append_child(_container)
+            self._data["container"] = _container.serialize()
+            # The container of the options of a plugin, and what the page
+            # writes of that plugin, answered alone as well to whoever asks
+            # for data rather than for a page.
+            if self.__view.options is not None:
+                self._data["options"] = self.__view.options.serialize()
+            if len(self.__view.values) > 0:
+                self._data["values"] = self.__view.values
 
         else:
             msg = f"Unexpected status '{self._status.code}' while baking the page content."
@@ -171,3 +219,25 @@ class swappPluginsResponseRecipe(swappBaseResponse):
             p.set_value(msg)
 
         self.__controller = None
+
+    # -----------------------------------------------------------------------
+    # PRIVATE
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __workspace() -> swappWorkspaceFiles:
+        """Return the workspace of the moment, and the name it is known under.
+
+        The workspace a reader declared is on the machine of the local
+        server: the wsgi service exposes it to readers it knows nothing
+        about, and the files of one are not the files of another.
+
+        :return: (swappWorkspaceFiles) One with no file in it when none is to be used
+
+        """
+        if swapp_serverstate.local is True:
+            _name = swapp_wxstate.workspace_name
+            if len(_name) > 0:
+                return swappWorkspaceFiles(swapp_wkps.data, _name)
+
+        return swappWorkspaceFiles()

@@ -49,6 +49,7 @@ from whakerpy.htmlmaker import TagNode
 from sppas.ui import _
 
 from ..nodes import swappProgressBar
+from ..services.options import swappOptionsDialog
 
 from .annotate_annotations import LANG_NONE
 from .annotate_annotations import LANG_MIX
@@ -91,8 +92,6 @@ MSG_FILETYPES = {"AUDIO": _("audio"),
                  "ANNOT_ANNOT": _("annotated file"),
                  "ANNOT_MEASURE": _("measure file")}
 MSG_LANG_OF = _("Language of {:s}")
-MSG_OPTIONS_OF = _("Options of {:s}")
-MSG_OPTIONS = _("Options")
 MSG_FILES_TITLE = _("Add files")
 MSG_LOG_TITLE = _("Procedure outcome report")
 MSG_REPORT_FILE = _("Report file:")
@@ -491,11 +490,15 @@ class swappAnnotationsPanel(TagNode):
                                                       _key in disabled, reasons.get(_key, ""),
                                                       required.get(_key, list()), filetypes.get(_key, list()))
 
+        # The window of the options of every annotation, which the service of
+        # the options offers: the container stands in the one which is
+        # configured.
         for _annotation in annotations:
+            _options = None
             if _annotation.get_key() == configured:
-                swappAnnotationsPanel.__append_options(self, _annotation, options)
-            else:
-                swappAnnotationsPanel.__append_options(self, _annotation, None)
+                _options = options
+            self.append_child(swappOptionsDialog(self.identifier, "annotate_options_" + _annotation.get_key(),
+                                                 _annotation.get_name(), _options))
 
     # -----------------------------------------------------------------------
     # Private
@@ -638,32 +641,6 @@ class swappAnnotationsPanel(TagNode):
                     _term = MSG_REQUIRED_ANNOTATIONS
                 _dl.append_child(HTMLNode(_dl.identifier, None, "dt", value=_term))
                 _dl.append_child(HTMLNode(_dl.identifier, None, "dd", value=html.escape(", ".join(required))))
-
-    # -----------------------------------------------------------------------
-
-    @staticmethod
-    def __append_options(parent: TagNode, annotation, options: TagNode | None) -> None:
-        """Append the dialog of the options of one annotation.
-
-        The container of the service of the options stands in it when that
-        annotation is configured; an empty section takes its place otherwise.
-
-        :param parent: (TagNode) The panel
-        :param annotation: What the step of the API answers
-        :param options: (TagNode) The container of the service of the options, None if not configured
-
-        """
-        _key = annotation.get_key()
-        _id = "annotate_options_" + _key
-        _dialog = TagNode(parent.identifier, _id, "dialog", attributes={"id": _id, "aria-labelledby": _id + "_h"})
-        parent.append_child(_dialog)
-        _dialog.append_child(HTMLNode(_dialog.identifier, None, "h4",
-                                      value=MSG_OPTIONS_OF.format(annotation.get_name()),
-                                      attributes={"id": _id + "_h"}))
-        if options is None:
-            _dialog.append_child(TagNode(_dialog.identifier, None, "section", attributes={"aria-label": MSG_OPTIONS}))
-        else:
-            _dialog.append_child(options)
 
 # ---------------------------------------------------------------------------
 

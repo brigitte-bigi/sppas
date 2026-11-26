@@ -37,23 +37,130 @@
     -------------------------------------------------------------------------
 */
 
-/* A card of a plugin holds two buttons under its text, the one which runs
-   it and the one of its About: the card and its content are higher than
-   those of the dashboard by one button and the space before it. */
-#plugins_list .app {
-    height: calc(24 * var(--font-size));
+/* What is missing for a button to answer is written in the color of an
+   error. */
+.plugins-missing {
+    color: var(--error-color);
 }
 
-/* The image is centered in the card: it keeps the place it has from the top
-   of a card of the dashboard when its margin grows as much as the card. */
-#plugins_list .app-background-img {
-    margin-bottom: calc(9 * var(--font-size));
+/*
+============================  LIST OF PLUGINS  ===============================
+*/
+
+/* The three parts of a plugin line up from one plugin to the next. The
+   width of the first two is said here, because a part which takes the width
+   of what it holds gives every line its own, and there is no column left;
+   the last one takes what remains, the same on every line. Below the
+   breakpoint a line becomes a column, and the whole width is given back to
+   each part: nothing of this holds there. */
+@media only screen and (min-width: 1024px) {
+
+    #plugins_list > li > .flex-panel > .width_25,
+    #plugins_list > li > .flex-panel > .width_10 {
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+
+    #plugins_list > li > .flex-panel > .width_25 {
+        width: 25%;
+    }
+
+    #plugins_list > li > .flex-panel > .width_10 {
+        width: 10%;
+    }
+
+    #plugins_list > li > .flex-panel > .width_65 {
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+
 }
 
-#plugins_list .app-content {
-    height: calc(18 * var(--font-size));
+/* The switch of a plugin and its name stand on one line, and their middles
+   meet: a text which sits on the baseline of a box drawn beside it lands
+   higher or lower from one line to the next. */
+#plugins_list .plugins-name {
+    display: flex;
+    align-items: center;
+    column-gap: var(--wrap-panel-gap);
 }
 
-.contrast #plugins_list .app-content {
-    height: calc(20 * var(--font-size));
+/* A line which centers what it holds centers the margins with it: the margin
+   a label carries under it would raise the switch above the name it is read
+   with. */
+#plugins_list .plugins-name > .switch {
+    margin: 0;
+}
+
+/* What selects a plugin stands beside its name and is read with it: it
+   takes the size Whakerexa gives a switch posed in a line of text. */
+#plugins_list .switch {
+    --switch-width: calc(var(--font-size) * 3);
+    --switch-height: calc(var(--font-size) * 1.6);
+}
+
+/* One plugin is one block, told apart from the next by the ground it stands
+   on and the space around it: a list of lines of unequal height is read as
+   one block of text when nothing says where one ends. */
+#plugins_list > li {
+    margin-bottom: var(--typography-spacing-vertical);
+    padding: var(--wrap-panel-gap);
+    background-color: var(--table-row-stripped-bg-color);
+}
+
+/* A plugin is not an item read in a text: it carries no marker. The marker
+   is drawn by a pseudo-element, which no list-style reaches. */
+#plugins_list > li::before {
+    content: none;
+}
+
+/* What sets the options of a plugin stands under its name and against it:
+   the two are one thing, and a line of space between them makes two. */
+#plugins_list > li > .flex-panel > .flex-item > p {
+    margin: 0;
+}
+
+#plugins_list > li > .flex-panel > .flex-item > p + p {
+    margin-top: calc(0.5 * var(--wrap-panel-gap));
+}
+
+/*
+============================  ABOUT OF A PLUGIN  =============================
+*/
+
+/* The About of a plugin is a window, as the desktop interface has them, in
+   three sections: its title, what it says, and what closes it. Only the
+   middle one scrolls. */
+dialog.plugins-about[open] {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    width: min(40rem, 90vw);
+    max-height: 80vh;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+}
+
+.plugins-about > section:first-child {
+    padding: calc(0.5 * var(--font-size)) var(--font-size);
+}
+
+.plugins-about > section:first-child > h4 {
+    margin: 0;
+}
+
+.plugins-about > section:nth-child(2) {
+    flex: 1;
+    overflow: auto;
+    padding: var(--font-size);
+}
+
+.plugins-about > section:nth-child(2) > pre {
+    white-space: pre-wrap;
+}
+
+.plugins-about > section:last-child {
+    display: flex;
+    justify-content: flex-end;
+    padding: calc(0.5 * var(--font-size)) var(--font-size);
 }

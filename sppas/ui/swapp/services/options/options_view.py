@@ -58,6 +58,7 @@ from .options_record import TASK_VALIDATE
 ID_CONTAINER = "options_container"
 
 MSG_OPTIONS = _("Options")
+MSG_OPTIONS_OF = _("Options of {:s}")
 MSG_APPLY = _("Apply")
 MSG_BROWSE = _("Browse")
 
@@ -207,3 +208,35 @@ class swappOptionsView:
             return
 
         _line.append_child(EmptyNode(_line.identifier, None, "input", attributes=_attributes))
+
+# ---------------------------------------------------------------------------
+
+
+class swappOptionsDialog(TagNode):
+    """The window of the options of one thing an app declared: an extra of this service.
+
+    Its title, then the container of this service, or an empty section which
+    the page fills when the options are asked for. Its identifier is the task
+    the app answers with those options: the script of this service, in
+    sppas.js, sends it. An app which places the container in its own page
+    has no use of it.
+
+    """
+
+    def __init__(self, parent: str, identifier: str, name: str, container: TagNode | None = None):
+        """Create the window of the options.
+
+        :param parent: (str) Identifier of the node the window is appended to
+        :param identifier: (str) Its identifier, which is the task the app answers with the options
+        :param name: (str) The name of what the options are of, written in the title
+        :param container: (TagNode|None) The container of this service, None when the options are not asked for
+
+        """
+        super(swappOptionsDialog, self).__init__(parent, identifier, "dialog",
+                                                 attributes={"id": identifier, "aria-labelledby": identifier + "_h"})
+        self.append_child(HTMLNode(self.identifier, None, "h4", value=MSG_OPTIONS_OF.format(name),
+                                   attributes={"id": identifier + "_h"}))
+        if container is None:
+            self.append_child(TagNode(self.identifier, None, "section", attributes={"aria-label": MSG_OPTIONS}))
+        else:
+            self.append_child(container)

@@ -44,6 +44,7 @@
 """
 
 from __future__ import annotations
+import re
 import unittest
 
 from sppas.src.structs.baseoption import sppasOption
@@ -52,7 +53,14 @@ from sppas.ui.swapp.services.options.options_acceptance import swappValueAccepta
 from sppas.ui.swapp.services.options.options_set import swappOptionSet
 from sppas.ui.swapp.services.options.options_file import swappFileForOption
 from sppas.ui.swapp.services.options.options_record import swappOptionsRecord
+from sppas.ui.swapp.services.options.options_record import FIELD_SET
+from sppas.ui.swapp.services.options.options_record import FIELD_PREFIX
+from sppas.ui.swapp.services.options.options_record import TASK_CLOSE
+from sppas.ui.swapp.services.options.options_record import TASK_VALIDATE
 from sppas.ui.swapp.services.options.options_view import swappOptionsView
+from sppas.ui.swapp.services.options.options_view import swappOptionsDialog
+from sppas.ui.swapp.services.options.options_controller import swappOptionsController
+from sppas.ui.swapp.services.options.options_manager import swappOptionsManager
 
 # ---------------------------------------------------------------------------
 
@@ -418,6 +426,41 @@ class TestOptionsView(unittest.TestCase):
             [o for o in self.options.for_app() if o.get_key() == "window"][0])
         self.assertIn(expected, shown)
         self.assertEqual(1, shown.count(expected))
+
+# ---------------------------------------------------------------------------
+
+
+class TestOptionsDialog(unittest.TestCase):
+    """The window of the options, an extra of this service. [801], [802], T09"""
+
+    def test_the_window_of_the_options(self):
+        """Its title, then an empty section the page fills, or the container of the service."""
+        shown = swappOptionsDialog("body_main", "app_options_one", "One").serialize()
+        self.assertIn('<dialog id="app_options_one" aria-labelledby="app_options_one_h">', shown)
+        self.assertIsNotNone(re.search(r'<h4 id="app_options_one_h">\s*Options of One\s*</h4>', shown))
+        self.assertIn('<section aria-label="Options">', shown)
+        self.assertNotIn('id="options_container"', shown)
+
+        container = swappOptionsManager("app_options_one", [an_option("name", "str", "aaa")]).container()
+        shown = swappOptionsDialog("body_main", "app_options_one", "One", container).serialize()
+        self.assertIn('id="options_container"', shown)
+
+    # -----------------------------------------------------------------------
+
+    def test_giving_up_takes_in_nothing(self):
+        """T09. Closing the window without applying the values takes in none of them."""
+        transported = swappOptionSet([an_option("name", "str", "aaa", "Name of the tier")]).serialize()
+
+        given_up = {FIELD_SET: transported, FIELD_PREFIX + "name": "bbb", TASK_CLOSE: ""}
+        self.assertTrue(swappOptionsController.is_a_task(given_up))
+        controller = swappOptionsController(swappOptionsView(), [an_option("name", "str", "aaa")])
+        controller.handle(given_up)
+        self.assertEqual("aaa", controller.options_for_app()[0].get_untypedvalue())
+
+        applied = {FIELD_SET: transported, FIELD_PREFIX + "name": "bbb", TASK_VALIDATE: ""}
+        controller = swappOptionsController(swappOptionsView(), [an_option("name", "str", "aaa")])
+        controller.handle(applied)
+        self.assertEqual("bbb", controller.options_for_app()[0].get_untypedvalue())
 
 # ---------------------------------------------------------------------------
 

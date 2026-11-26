@@ -42,6 +42,7 @@ from __future__ import annotations
 import os
 
 from sppas.src.plugins import sppasPluginsManager
+from sppas.src.structs import sppasOption
 
 # ---------------------------------------------------------------------------
 
@@ -92,6 +93,32 @@ class swappPluginsModel:
 
         """
         return self.__manager.get_plugin(plugin_id)
+
+    # -----------------------------------------------------------------------
+
+    def options_of(self, plugin_id: str) -> list:
+        """Return the options a plugin declares, to be set, each one with its value by default.
+
+        They are copies: what is set on them is set for one request, and
+        nothing of the plugin which is installed changes. The options which
+        name the input file of the plugin are not among them: the files of a
+        run give it.
+
+        :param plugin_id: (str) Identifier of a plugin which is installed
+        :return: (list of sppasOption)
+
+        """
+        _options = list()
+        for _declared in self.__manager.get_plugin(plugin_id).get_options():
+            if _declared.get_key() == "input" or _declared.get_untypedvalue() == "input":
+                continue
+            _option = sppasOption(_declared.get_key())
+            _option.set_type(_declared.get_type())
+            _option.set_value(_declared.get_untypedvalue())
+            _option.set_text(_declared.get_text())
+            _options.append(_option)
+
+        return _options
 
     # -----------------------------------------------------------------------
 

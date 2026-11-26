@@ -17,15 +17,9 @@ const ID_REPORT = 'annotate_report';
 const FIELD_FOLLOWED = 'annotate_followed';
 const ID_FORM = 'annotate_form';
 const PROCESS_FIELD = 'swapp_process';
-const ID_ANNOTATIONS_PANEL = 'annotate_annotations_panel';
 const ID_FILES_PANEL = 'annotate_files_panel';
-const ID_OPTIONS_CONTAINER = 'options_container';
 const EVENT_BAKE = 'event_bake';
-const TASK_OPTIONS = 'annotate_options_';
-const DATA_OPTIONS = 'options';
-const DATA_VALUES = 'values';
 const ID_SHOW_STATE = 'annotate_show_state';
-const OPTIONS_VALIDATE = 'options_validate';
 
 /**
  * :filename: sppas.ui.swapp.statics.js.annotate_manager.js
@@ -166,12 +160,6 @@ export default class AnnotateManager extends BaseManager {
         const form = document.getElementById(ID_FORM);
         if (form instanceof HTMLFormElement) {
             form.addEventListener('submit', (e) => this.#onFormSubmit(e));
-        }
-
-        // The forms of the service of the options, in the dialogs.
-        const panel = document.getElementById(ID_ANNOTATIONS_PANEL);
-        if (panel !== null) {
-            panel.addEventListener('submit', (e) => this.#onOptionsSubmit(e));
         }
     }
 
@@ -329,9 +317,10 @@ export default class AnnotateManager extends BaseManager {
     /**
      * Handle submit of the form of the page.
      *
-     * The options of an annotation are asked for without leaving the page.
-     * Otherwise, add the accessibility parameters (theme, contrast...) to the
-     * address the form is sent to.
+     * The options of an annotation are asked for by the service of the
+     * options, which attached its listener first: what it answered is left
+     * to it. Otherwise, add the accessibility parameters (theme, contrast...)
+     * to the address the form is sent to.
      *
      * @private
      * @param {SubmitEvent} event
@@ -343,12 +332,11 @@ export default class AnnotateManager extends BaseManager {
             return;
         }
 
-        const submitter = event.submitter;
-        if (submitter !== null && submitter.name === EVENT_BAKE && submitter.value.startsWith(TASK_OPTIONS)) {
-            event.preventDefault();
-            this.#configure(submitter.value, this.#fieldsOf(form, submitter), false);
+        if (event.defaultPrevented === true) {
             return;
         }
+
+        const submitter = event.submitter;
 
         // The annotations are performed without reloading the page, and the
         // run is followed.
@@ -388,116 +376,6 @@ export default class AnnotateManager extends BaseManager {
         const state = document.getElementById(ID_SHOW_STATE);
         if (state !== null) {
             state.classList.toggle('hidden', checked);
-        }
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Handle submit of a form of the service of the options, in its dialog.
-     *
-     * It is sent with the fields of the form of the page, and with the task
-     * of the annotation the dialog is the one of.
-     *
-     * @private
-     * @param {SubmitEvent} event
-     * @returns {void}
-     */
-    #onOptionsSubmit(event) {
-        const dialog = event.target.closest('dialog');
-        if (dialog === null || !dialog.id.startsWith(TASK_OPTIONS)) {
-            return;
-        }
-        event.preventDefault();
-
-        const fields = this.#fieldsOf(document.getElementById(ID_FORM), null);
-        Object.assign(fields, this.#fieldsOf(event.target, event.submitter));
-        fields[EVENT_BAKE] = dialog.id;
-
-        // Applying the options confirms them: the dialog is closed once the
-        // values are written in the page.
-        const applied = (event.submitter !== null && event.submitter.name === OPTIONS_VALIDATE);
-        this.#configure(dialog.id, fields, applied);
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Send a request of the options of an annotation, and put what the server wrote in the page.
-     *
-     * The container is placed in the dialog of the annotation, and the values
-     * of its options are written in the hidden fields of the form of the page.
-     *
-     * @private
-     * @param {string} task - The task, which is the identifier of the dialog.
-     * @param {Object} fields - What is sent.
-     * @param {boolean} close - Whether the dialog is closed once the values are written.
-     * @returns {Promise<void>}
-     */
-    async #configure(task, fields, close) {
-        // Nothing is given back when the server said something: it was shown.
-        const answered = await this.postEvents(fields);
-        if (answered === null || answered === undefined || !(DATA_OPTIONS in answered)) {
-            return;
-        }
-
-        const dialog = document.getElementById(task);
-        if (!(dialog instanceof HTMLDialogElement)) {
-            WexaLogger.error(`AnnotateManager: the dialog ${task} was not found.`);
-            return;
-        }
-        this.#placeOptions(dialog, answered[DATA_OPTIONS]);
-        this.#writeValues(answered[DATA_VALUES]);
-        if (close === true) {
-            dialogManager.close(task);
-        } else if (dialog.open === false) {
-            dialogManager.open(task, true);
-        }
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Place the container of the options in a dialog.
-     *
-     * One container stands in the page: the one of the annotation which is
-     * configured. The one of another annotation becomes an empty section.
-     *
-     * @private
-     * @param {HTMLDialogElement} dialog - The dialog of the annotation.
-     * @param {string} container - The container, in HTML.
-     * @returns {void}
-     */
-    #placeOptions(dialog, container) {
-        const former = document.getElementById(ID_OPTIONS_CONTAINER);
-        if (former !== null && dialog.contains(former) === false) {
-            former.replaceChildren();
-            former.removeAttribute('id');
-        }
-
-        dialog.querySelector('section').outerHTML = container;
-        const fresh = document.getElementById(ID_OPTIONS_CONTAINER);
-        if (fresh !== null && window.Wexa && window.Wexa.icons) {
-            window.Wexa.icons.run(fresh);
-        }
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Write values in the hidden fields of the form of the page.
-     *
-     * @private
-     * @param {Object} values - One value per name of field.
-     * @returns {void}
-     */
-    #writeValues(values) {
-        const form = document.getElementById(ID_FORM);
-        for (const name in values) {
-            const field = form.querySelector(`input[name="${CSS.escape(name)}"]`);
-            if (field !== null) {
-                field.value = values[name];
-            }
         }
     }
 

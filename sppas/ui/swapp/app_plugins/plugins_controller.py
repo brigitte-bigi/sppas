@@ -42,8 +42,17 @@ from __future__ import annotations
 
 from sppas.core.coreutils import sppasTypeError
 
+from ..services.options import swappOptionsManager
+
 from .plugins_record import swappPluginsRecord
 from .plugins_view import swappPluginsView
+
+# ---------------------------------------------------------------------------
+
+# The task which shows the options of a plugin carries its identifier, which
+# is the identifier of their dialog as well: the container of the service of
+# the options is appended to it.
+OPTIONS_TASK = "plugins_options_"
 
 # ---------------------------------------------------------------------------
 
@@ -53,7 +62,7 @@ class swappPluginsController:
 
     It is called once per request, and holds nothing afterward. What is
     installed is shown at every request, each plugin with the README which
-    comes with it.
+    comes with it, and the options of the plugin which is set.
 
     """
 
@@ -70,6 +79,9 @@ class swappPluginsController:
         self.__model = model
         self.__view = view
         self.__record = swappPluginsRecord()
+        self.__options = None
+        # The plugin whose options are set, empty if none.
+        self.__configured = ""
 
     # -----------------------------------------------------------------------
 
@@ -79,17 +91,55 @@ class swappPluginsController:
         :param events: (dict) What a page sent
 
         """
-        self.__record = swappPluginsRecord()
+        # The options of every plugin, each one with its value by default:
+        # the record sets on them what the page transmitted.
+        _options = dict()
+        for _plugin in self.__model.plugins():
+            _options[_plugin.get_key()] = self.__model.options_of(_plugin.get_key())
+        self.__record = swappPluginsRecord(_options)
         self.__record.parse(events)
+
+        # The options of a plugin are handed to the service of the options,
+        # which shows and checks them. Applying them validates the plugin:
+        # their values are taken back, they are applied, and it is selected.
+        # Giving them up invalidates it: they are no longer applied, and it
+        # is not selected.
+        self.__options = None
+        self.__configured = ""
+        if self.__record.task.startswith(OPTIONS_TASK) is True:
+            _key = self.__record.task[len(OPTIONS_TASK):]
+            if self.__model.one(_key) is not None:
+                self.__configured = _key
+                self.__options = swappOptionsManager(OPTIONS_TASK + _key, self.__record.get_options(_key))
+                self.__options.consumes(events)
+                if "options_validate" in events:
+                    self.__record.set_options(_key, self.__options.options_for_app())
+                    self.__record.set_applied(_key, True)
+                    self.__record.select(_key)
+                elif "options_close" in events:
+                    self.__record.set_applied(_key, False)
+                    self.__record.unselect(_key)
 
     # -----------------------------------------------------------------------
 
     def populate_view(self) -> None:
-        """Have the view build its tree from the record: the plugins which are installed, and their README."""
+        """Have the view build its tree from the record.
+
+        The plugins which are installed and their README are shown, and the
+        options of the plugin which is set, with what the page writes of that
+        plugin.
+
+        """
         _plugins = self.__model.plugins()
         _readmes = dict()
         for _plugin in _plugins:
             _readmes[_plugin.get_key()] = self.__model.readme(_plugin.get_key())
         self.__record.show("plugins", _plugins)
         self.__record.show("readmes", _readmes)
+
+        if len(self.__configured) > 0:
+            self.__record.show("configured", self.__configured)
+            self.__record.show("options", self.__options.container())
+            self.__record.show("values", self.__record.serialize_plugin(self.__configured))
+
         self.__view.populate_tree_content(self.__record)

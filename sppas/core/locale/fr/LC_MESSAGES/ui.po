@@ -44,6 +44,12 @@ msgstr "Plugins"
 msgid "Installs plugins, and runs one of them on files."
 msgstr "Installe des plugins, et en lance un sur des fichiers."
 
+msgid "No plugin is selected."
+msgstr "Aucun plugin n'est sélectionné."
+
+msgid "Plugins runs on your files programs added to SPPAS. Add the files, select the plugins, set their options, then click Let's go!. What each plugin did with each file is given in the results."
+msgstr "Plugins lance sur vos fichiers des programmes ajoutés à SPPAS. Ajoutez les fichiers, sélectionnez les plugins, réglez leurs options, puis cliquez sur C'est parti !. Ce que chaque plugin a fait de chaque fichier est donné dans les résultats."
+
 msgid "Exit"
 msgstr "Quitter"
 

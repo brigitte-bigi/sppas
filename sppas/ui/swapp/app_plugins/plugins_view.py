@@ -41,6 +41,7 @@
 from __future__ import annotations
 from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
+from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import TagNode
 
 from sppas.core.config import sg
@@ -58,12 +59,33 @@ from .plugslist import swappPluginsList
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Plugins")
 MSG_INSTALL = _("Install")
 MSG_DELETE = _("Delete")
+MSG_FILES = _("Add files")
+MSG_PLUGINS = _("Plugins")
+MSG_RESULTS = _("Results")
+MSG_RUN = _("Let's go!")
+MSG_RUN_MISSING = _("No plugin is selected.")
+MSG_RESET = _("Reset")
+MSG_INTRO = _("Plugins runs on your files programs added to SPPAS. Add the files, select the plugins, "
+              "set their options, then click Let's go!. What each plugin did with each file is given in "
+              "the results.")
 
 # The script of the page, filled in with the folder of the scripts.
 BODY_SCRIPT = """
-        import {{ PluginsManager }} from '/{js}sppas.js';
-        const pluginsManager = new PluginsManager();
-        pluginsManager.handlePluginsManagerOnLoad();
+        import {{ PluginsManager, SwappOptions }} from '/{js}sppas.js';
+        import SwappFiles from '/{js}swapp_files.js';
+
+        // The managers drive the sections of the page: they are started when
+        // the page shows them, and not while it shows the help.
+        if (document.getElementById('plugins_files_section') !== null) {{
+            const swappFiles = new SwappFiles();
+            swappFiles.handleSwappFilesOnLoad();
+            // The windows of the options, which the service of the options
+            // offers: their listeners are attached before the ones of the page.
+            const swappOptions = new SwappOptions('plugins_form', 'plugins_options_');
+            swappOptions.handleSwappOptionsOnLoad();
+            const pluginsManager = new PluginsManager();
+            pluginsManager.handlePluginsManagerOnLoad();
+        }}
 """
 
 # ---------------------------------------------------------------------------
@@ -90,6 +112,12 @@ class swappPluginsView(swappBaseView):
                             "Got {} instead.".format(type(tree)))
         # Set before the base view populates the nav with it.
         self.__form_id = form_id
+        # The section the container of the provision of files is written in.
+        self.__files = None
+        # The container of the options of the plugin which is set, and what
+        # the page writes of a plugin in its form.
+        self.__options = None
+        self.__values = dict()
         super(swappPluginsView, self).__init__(tree, MSG_HEADER)
 
     # -----------------------------------------------------------------------
@@ -113,26 +141,6 @@ class swappPluginsView(swappBaseView):
         """Override. Return the identifier of the form which carries the record of the app."""
         return self.__form_id
 
-    # -----------------------------------------------------------------------
-
-    def _populate_body_nav(self):
-        """Override. Append the items of Plugins to the menu, in a section of their own.
-
-        Installing and deleting a plugin happen where SPPAS runs on the
-        machine of the person, and nowhere else: where it answers from a
-        server, the section is not there.
-
-        """
-        if swapp_serverstate.local is True:
-            _s = TagNode(self._htree.body_nav.identifier, None, "section")
-            self._htree.body_nav.append_child(_s)
-            for _identifier, _label in (("plugins_install", MSG_INSTALL), ("plugins_delete", MSG_DELETE)):
-                _button = HTMLNode(_s.identifier, None, "button", value="<span>" + _label + "</span>")
-                _button.add_attribute("id", _identifier)
-                _button.add_attribute("type", "button")
-                _button.add_attribute("aria-label", _label)
-                _button.add_attribute("class", "menuitem")
-                _s.append_child(_button)
 
     # -----------------------------------------------------------------------
 
@@ -151,11 +159,109 @@ class swappPluginsView(swappBaseView):
         """
         _shown = record.to_be_shown
 
-        # The form of the page: every button of the page is tied to it by its
-        # attribute "form".
-        self._htree.body_main.append_child(TagNode(self._htree.body_main.identifier, None, "form",
-                                                   attributes={"id": self.__form_id, "method": "post"}))
+        # The form of the page: every button and every switch of the page is
+        # tied to it by its attribute "form". What was decided is carried in
+        # it, hidden, but the selection of a plugin, which its switch carries:
+        # the next request rebuilds the record from all of it.
+        _form = TagNode(self._htree.body_main.identifier, None, "form",
+                        attributes={"id": self.__form_id, "method": "post"})
+        self._htree.body_main.append_child(_form)
+        _data = record.serialize()
+        for _name in _data:
+            if _name.startswith("plugins_sel_") is False:
+                _form.append_child(EmptyNode(_form.identifier, None, "input",
+                                             attributes={"type": "hidden", "name": _name, "value": _data[_name]}))
 
-        self._htree.body_main.append_child(swappPluginsList(self._htree.body_main.identifier,
-                                                            _shown.get("plugins", list()),
-                                                            _shown.get("readmes", dict())))
+        self._htree.body_main.append_child(HTMLNode(self._htree.body_main.identifier, None, "p",
+                                                    value=MSG_INTRO))
+
+        # The sections of the page, in their order: the files, the plugins,
+        # and the results, when there are some.
+        self.__files = self.__append_section("plugins_files_section", MSG_FILES)
+        _plugins = self.__append_section("plugins_section", MSG_PLUGINS)
+        # Installing and deleting a plugin happen where SPPAS runs on the
+        # machine of the person, and nowhere else: above the cards, as above
+        # the list in the desktop interface.
+        if swapp_serverstate.local is True:
+            _p = TagNode(_plugins.identifier, None, "p")
+            _plugins.append_child(_p)
+            for _identifier, _label in (("plugins_install", MSG_INSTALL), ("plugins_delete", MSG_DELETE)):
+                _p.append_child(HTMLNode(_p.identifier, None, "button", value=_label,
+                                         attributes={"type": "button", "id": _identifier}))
+        # The container of the options of the plugin which is set stands in
+        # the dialog of that plugin.
+        self.__options = _shown.get("options", None)
+        self.__values = _shown.get("values", dict())
+        _plugins.append_child(swappPluginsList(_plugins.identifier,
+                                               _shown.get("plugins", list()),
+                                               _shown.get("readmes", dict()),
+                                               record.selected,
+                                               _shown.get("configured", ""),
+                                               self.__options,
+                                               self.__form_id))
+        # What starts the runs is disabled while no plugin is selected.
+        _attributes = {"type": "submit", "class": "action-button", "form": self.__form_id,
+                       "name": "event_bake", "value": "plugins_run"}
+        _class = "plugins-missing hidden"
+        if len(record.selected) == 0:
+            _attributes["disabled"] = None
+            _attributes["aria-describedby"] = "plugins_run_state"
+            _class = "plugins-missing"
+        _plugins.append_child(HTMLNode(_plugins.identifier, None, "button", value=MSG_RUN,
+                                       attributes=_attributes))
+        # A reset is a reset: the decisions and the files go together, so it
+        # is asked of the server.
+        _plugins.append_child(HTMLNode(_plugins.identifier, None, "button", value=MSG_RESET,
+                                       attributes={"type": "submit", "form": self.__form_id,
+                                                   "name": "event_bake", "value": "plugins_reset"}))
+        # What says no plugin is selected is always written, and hidden when
+        # one is: selecting a plugin in the page makes no request.
+        _plugins.append_child(HTMLNode(_plugins.identifier, None, "p", value=MSG_RUN_MISSING,
+                                       attributes={"id": "plugins_run_state", "class": _class}))
+        if "results" in _shown:
+            self.__append_section("plugins_run_section", MSG_RESULTS)
+
+    # -----------------------------------------------------------------------
+
+    def get_files(self) -> TagNode | None:
+        """Return the section the container of the provision of files is written in, None before the page is built."""
+        return self.__files
+
+    # -----------------------------------------------------------------------
+
+    def get_options(self):
+        """Return the container of the options of the plugin which is set, None when none is set."""
+        return self.__options
+
+    # -----------------------------------------------------------------------
+
+    def get_values(self) -> dict:
+        """Return what the page writes of a plugin in its form, empty if nothing (dict)."""
+        return self.__values
+
+    # -----------------------------------------------------------------------
+    # Private
+    # -----------------------------------------------------------------------
+
+    def __append_section(self, identifier: str, title: str) -> TagNode:
+        """Append a section of the page, under its title, and return it.
+
+        :param identifier: (str) Identifier of the section
+        :param title: (str) Its title
+        :return: (TagNode) The section
+
+        """
+        _section = TagNode(self._htree.body_main.identifier, identifier, "section",
+                           attributes={"id": identifier, "class": "panel"})
+        self._htree.body_main.append_child(_section)
+        _section.append_child(HTMLNode(_section.identifier, None, "h2", value=title))
+
+        return _section
+
+    # -----------------------------------------------------------------------
+    # Properties
+    # -----------------------------------------------------------------------
+
+    files = property(get_files, None)
+    options = property(get_options, None)
+    values = property(get_values, None)
