@@ -184,14 +184,22 @@ class swappPluginDescription(TagNode):
         _dialog = TagNode(parent.identifier, dialog_id, "dialog",
                           attributes={"id": dialog_id, "class": "hidden-alert", "aria-labelledby": dialog_id + "_h"})
         parent.append_child(_dialog)
-        _title = TagNode(_dialog.identifier, None, "h2", attributes={"id": dialog_id + "_h", "class": "flex-panel"})
+
+        _title = TagNode(_dialog.identifier, None, "h2", attributes={"class": "flex-panel"})
         _dialog.append_child(_title)
         # The icon is a file of the folder of the plugin: its address is
         # relative, as the one of every image the server serves.
         if len(plugin.get_icon()) > 0:
             _icon = os.path.relpath(os.path.join(plugin.get_directory(), plugin.get_icon()))
-            _title.append_child(EmptyNode(_title.identifier, None, "img", attributes={"alt": "", "src": _icon}))
-        _title.append_child(HTMLNode(_title.identifier, None, "span", value=MSG_ABOUT + " " + plugin.get_name()))
+            _title.append_child(EmptyNode(_title.identifier, None, "img",
+                                          attributes={"alt": "Plugin logo",
+                                                      "src": _icon,
+                                                      "class": "flex-item small-logo width_10"}
+                                          )
+                                )
+        _text = HTMLNode(_title.identifier, None, "span", value=MSG_ABOUT + " " + plugin.get_name())
+        _text.add_attribute("class", "flex-item width_80")
+        _title.append_child(_text)
         if len(readme) > 0:
             _dialog.append_child(HTMLNode(_dialog.identifier, None, "pre", value=html.escape(readme)))
 
