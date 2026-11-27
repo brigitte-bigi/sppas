@@ -51,7 +51,6 @@ from sppas.ui import _
 from ..swapp_base.swapp_view import swappBaseView
 from ..swapp_base.swapp_process import PROCESS_FIELD
 from ..swapp_core.swappsg import swapp_settings
-from ..swapp_core.swappsg import swapp_serverstate
 
 from .annotate_record import swappAnnotateRecord
 from .annotate_panels import swappActionAnnotatePanel
@@ -166,7 +165,7 @@ class swappAnnotateView(swappBaseView):
 
         """
         _interval = INTERVAL_DISTANT_MS
-        if swapp_serverstate.local is True:
+        if swapp_settings.served_locally is True:
             _interval = INTERVAL_LOCAL_MS
         self._htree.body_script.add_attribute("type", "module")
         self._htree.body_script.set_value(BODY_SCRIPT.format(js=swapp_settings.js, interval=_interval))

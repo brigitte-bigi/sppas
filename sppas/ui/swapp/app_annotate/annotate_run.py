@@ -48,7 +48,7 @@ from sppas.src.annotations import sppasAnnotationsManager
 from sppas.src.annotations import sppasParam
 from sppas.src.wkps import States
 
-from ..swapp_core.swappsg import swapp_serverstate
+from ..swapp_core.swappsg import swapp_settings
 from ..swapp_base.swapp_process import swappProcess
 
 from .annotate_provision import swappModelProvision
@@ -217,7 +217,7 @@ class swappModelRun:
         _report = self.__log_report.get_filename()
         self.__log_report.increment()
         self.__report = ""
-        if swapp_serverstate.local is False:
+        if swapp_settings.served_locally is False:
             _report = os.path.join(self.__provision.folder(), os.path.basename(_report))
             self.__report = _report
         parameters.set_report_filename(_report)

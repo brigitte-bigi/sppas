@@ -51,7 +51,6 @@ from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommServerError
 from sppas.ui.swapp.services.deposit.deposit_address import swappFileAddress
 from sppas.ui.swapp.services.files import swappResultDelivery
-from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 from sppas.ui.swapp.swapp_core.swappsg import swapp_notify
 from sppas.ui.swapp.swapp_core.swappsg import swapp_trace
@@ -219,7 +218,7 @@ class sppasWebApp:
 
         """
         # The applications are served by the local server.
-        swapp_serverstate.local = True
+        swapp_settings.served_locally = True
 
         # Collect the python logging into the shared trace store: the swapp
         # server is the collector of the traces of all the SPPAS components.

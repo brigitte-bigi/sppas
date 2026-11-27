@@ -46,7 +46,7 @@ import unittest
 from unittest import mock
 from html.parser import HTMLParser
 
-from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 
 from sppas.ui.swapp.swapp_base.swapp_help_button import HELP_BUTTON_ID
 from sppas.ui.swapp.app_annotate.annotate_maker import swappAnnotateResponseRecipe
@@ -128,7 +128,7 @@ class TestNav(unittest.TestCase):
         for recipe_class, own in expected:
             with self.subTest(app=recipe_class.__name__):
                 # The items of an app are the ones of SPPAS on the machine of the person.
-                with mock.patch.object(swapp_serverstate, "local", True):
+                with mock.patch.object(swapp_settings, "served_locally", True):
                     nav = swappNavReader(recipe_class().bake({}))
                 sections = [APPEARANCE, COMMON]
                 if own is not None:

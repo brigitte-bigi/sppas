@@ -57,7 +57,7 @@ from unittest import mock
 from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States
 
-from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 from sppas.ui.swapp.swapp_base.swapp_process import swappProcess
 from sppas.ui.swapp.swapp_base.swapp_process import PROGRESS_EVENT
 from sppas.ui.swapp.swapp_base.swapp_process import PROCESS_FIELD
@@ -409,7 +409,7 @@ class TestAnnotateIsAProcess(unittest.TestCase):
         self.patcher = mock.patch.object(annotate_run, "sppasAnnotationsManager", ManagerForTests)
         self.patcher.start()
         # The files stand already where SPPAS reads them: the server is the local one.
-        self.local = mock.patch.object(swapp_serverstate, "local", True)
+        self.local = mock.patch.object(swapp_settings, "served_locally", True)
         self.local.start()
         self.recipe = swappAnnotateResponseRecipe()
         self.recipe.bake({})

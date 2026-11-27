@@ -185,7 +185,9 @@ class swappPluginDescription(TagNode):
                           attributes={"id": dialog_id, "class": "hidden-alert", "aria-labelledby": dialog_id + "_h"})
         parent.append_child(_dialog)
 
-        _title = TagNode(_dialog.identifier, None, "h2", attributes={"class": "flex-panel"})
+        # The id of the title is the one aria-labelledby of the dialog names:
+        # it is what a screen reader announces when the dialog opens.
+        _title = TagNode(_dialog.identifier, None, "h2", attributes={"id": dialog_id + "_h", "class": "flex-panel"})
         _dialog.append_child(_title)
         # The icon is a file of the folder of the plugin: its address is
         # relative, as the one of every image the server serves.

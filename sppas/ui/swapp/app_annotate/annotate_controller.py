@@ -45,7 +45,7 @@ from sppas.ui import _
 from sppas.core.coreutils import sppasTypeError
 from sppas.src.wkps import States
 
-from ..swapp_core.swappsg import swapp_serverstate
+from ..swapp_core.swappsg import swapp_settings
 from ..services.options import swappOptionsManager
 
 from .annotate_record import swappAnnotateRecord
@@ -163,7 +163,7 @@ class swappAnnotateController:
 
         # Locally, the checked report is deleted, or every report which is
         # not checked. Those which could not be deleted are said.
-        if swapp_serverstate.local is True:
+        if swapp_settings.served_locally is True:
             _names = list()
             if self.__record.task == "annotate_delete_checked" and len(self.__record.report) > 0:
                 _names.append(self.__record.report)
@@ -287,7 +287,7 @@ class swappAnnotateController:
             # Online, the annotations of some types cannot be performed: these
             # types are disabled.
             _disabled_types = list()
-            if swapp_serverstate.local is False:
+            if swapp_settings.served_locally is False:
                 _disabled_types = list(NOT_ONLINE_TYPES)
             self.__record.show("disabled_types", _disabled_types)
             # The types which hold a selected annotation.
@@ -299,7 +299,7 @@ class swappAnnotateController:
                             _holding.append(_type)
             self.__record.show("holding", _holding)
             self.__record.show("files", len(self.__model.batch().get_filename_from_state(States().CHECKED)))
-        if swapp_serverstate.local is True:
+        if swapp_settings.served_locally is True:
             self.__record.show("reports", self.__model.reports())
 
         self.__view.populate_tree_content(self.__record)

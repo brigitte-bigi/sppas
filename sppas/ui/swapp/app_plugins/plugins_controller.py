@@ -45,7 +45,7 @@ from sppas.core.coreutils import sppasTypeError
 
 from ..services.options import swappOptionsManager
 from ..swapp_base.swapp_process import PROCESS_FIELD
-from ..swapp_core.swappsg import swapp_serverstate
+from ..swapp_core.swappsg import swapp_settings
 
 from .plugins_record import swappPluginsRecord
 from .plugins_view import swappPluginsView
@@ -131,10 +131,10 @@ class swappPluginsController:
 
         # Installing and deleting a plugin happen where SPPAS runs on the
         # machine of the person, and nowhere else.
-        elif self.__record.task == "plugins_install" and swapp_serverstate.local is True:
+        elif self.__record.task == "plugins_install" and swapp_settings.served_locally is True:
             self.__install()
 
-        elif self.__record.task == "plugins_delete" and swapp_serverstate.local is True:
+        elif self.__record.task == "plugins_delete" and swapp_settings.served_locally is True:
             self.__remove(events.get("plugins_to_delete", ""))
 
         # The runs which are going are the ones the page follows, whatever

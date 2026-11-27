@@ -47,7 +47,7 @@ from sppas.core.config import sg
 from sppas.ui import _
 
 from ..swapp_base.swapp_response import swappBaseResponse
-from ..swapp_core.swappsg import swapp_serverstate
+from ..swapp_core.swappsg import swapp_settings
 from ..swapp_core.swappsg import swapp_wkps
 from ..swapp_core.swappsg import swapp_wxstate
 from ..nodes.feedback.hstatus_node import swappHTMLTreeError410
@@ -133,7 +133,7 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
         # them with the file chooser of the machine. The wsgi service has the
         # files brought to it, and the workspace it gives is a new one.
         _workspace = swappAnnotateResponseRecipe.__workspace()
-        _local = swapp_serverstate.local is True
+        _local = swapp_settings.served_locally is True
 
         # Its container is written in the panel of the files.
         self.__manager = swappFilesManager("annotate_files_panel",
@@ -275,7 +275,7 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
         :return: (swappWorkspaceFiles) One with no file in it when none is to be used
 
         """
-        if swapp_serverstate.local is True:
+        if swapp_settings.served_locally is True:
             _name = swapp_wxstate.workspace_name
             if len(_name) > 0:
                 return swappWorkspaceFiles(swapp_wkps.data, _name)

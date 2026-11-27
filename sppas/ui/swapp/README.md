@@ -197,8 +197,10 @@ is dispatched *and* it gets a card.
 #### Where an app can be served
 
 The same apps are served by two servers: the local one of `main_app.py`,
-and the wsgi service of `main_wsgi.py`. Each says which it is when it
-starts, in `swapp_serverstate.local`.
+and a wsgi service. Which one serves them is `served_locally` of the
+settings of swapp (`swapp_settings`, saved in `.webapp~`), the first ones
+loaded by this package. It holds for every reader, and it is `False`
+unless it is said otherwise: the local server says it when it starts.
 
 An app says for itself where it may be served, with `local_only()` of
 `swappWebData` — `False` by default, so an app which does nothing of the

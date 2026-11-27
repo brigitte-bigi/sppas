@@ -62,6 +62,7 @@ from sppas.ui.swapp.app_annotate import annotate_run
 from sppas.ui.swapp.app_annotate.annotate_run import swappModelRun
 from sppas.ui.swapp.app_annotate.annotate_run import swappAnnotateProgress
 from sppas.ui.swapp.swapp_base.swapp_process import swappProcess
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -182,8 +183,11 @@ class TestWithARun(unittest.TestCase):
         ManagerForTests.fails = ""
         ManagerForTests.created = list()
         ManagerForTests.writes = list()
+        # The run is the one of the local server: its report is written in
+        # the folder of the logs.
         self.patchers = [patch.object(annotate_run, "sppasAnnotationsManager", ManagerForTests),
-                         patch.object(annotate_run, "sppasLogFile", LogFileForTests)]
+                         patch.object(annotate_run, "sppasLogFile", LogFileForTests),
+                         patch.object(swapp_settings, "served_locally", True)]
         for _patcher in self.patchers:
             _patcher.start()
         self.provision = ProvisionForTests()

@@ -38,9 +38,14 @@
 
 """
 
+import json
+import os
+import tempfile
 import unittest
+from unittest import mock
 
 from sppas.ui.agnostic import sppasCommKeys
+from sppas.ui.swapp.main_settings import swappSettings
 
 from sppas.ui.swapp.swapp_core.swappsg import swapp_notify
 from sppas.ui.swapp.swapp_core.swappsg import notify_show_page
@@ -84,3 +89,47 @@ class TestNotifyShowPage(unittest.TestCase):
         notify_show_page("page_files")
         self.assertEqual(0, len(self.received))
         swapp_notify.subscribe(self.__observer)
+
+# ---------------------------------------------------------------------------
+
+
+class TestServedLocally(unittest.TestCase):
+    """Whether swapp is served locally, read in the settings of swapp."""
+
+    def setUp(self):
+        self.folder = tempfile.TemporaryDirectory()
+        self.filename = os.path.join(self.folder.name, ".webapp~")
+        self.paths = mock.patch("sppas.ui.swapp.main_settings.paths")
+        _paths = self.paths.start()
+        _paths.ext_dir = self.folder.name
+
+    def tearDown(self):
+        self.paths.stop()
+        self.folder.cleanup()
+
+    # -----------------------------------------------------------------------
+
+    def test_not_served_locally_by_default(self):
+        """Without a file of settings, swapp is not served locally."""
+        self.assertIs(False, swappSettings().served_locally)
+
+    def test_not_served_locally_when_the_file_does_not_say_it(self):
+        """A file of settings which does not hold the value leaves it False."""
+        with open(self.filename, "w") as fd:
+            json.dump({"license_agreement": True}, fd)
+        self.assertIs(False, swappSettings().served_locally)
+
+    def test_served_locally_when_the_file_says_it(self):
+        """The value is the one of the file of settings."""
+        with open(self.filename, "w") as fd:
+            json.dump({"served_locally": True}, fd)
+        self.assertIs(True, swappSettings().served_locally)
+
+    def test_served_locally_is_saved(self):
+        """The value is written in the file of settings, and read back."""
+        settings = swappSettings()
+        settings.served_locally = True
+        settings.save()
+        with open(self.filename, "r") as fd:
+            self.assertIs(True, json.load(fd)["served_locally"])
+        self.assertIs(True, swappSettings().served_locally)

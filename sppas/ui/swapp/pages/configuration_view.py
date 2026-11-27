@@ -168,10 +168,11 @@ class swappConfigurationView(swappBaseView):
     # Update the tree -- for baking the page
     # -----------------------------------------------------------------------
 
-    def populate_tree_content(self, status_message: str = ""):
+    def populate_tree_content(self, status_message: str = "", log_enabled: bool = True):
         """Populate the tree content with the choices of the user.
 
         :param status_message: (str) What the last post did, if anything.
+        :param log_enabled: (bool) The level of the log can be changed.
 
         """
         _purpose = HTMLNode(self._htree.body_main.identifier, None, "p", value=MSG_PURPOSE)
@@ -185,7 +186,7 @@ class swappConfigurationView(swappBaseView):
         self._htree.body_main.append_child(_form)
 
         self._append_files_section(_form)
-        self._append_journal_section(_form)
+        self._append_journal_section(_form, log_enabled)
 
         # The confirmation of the last post: an inline message, announced
         # to screen readers when its content changes.
@@ -247,7 +248,7 @@ class swappConfigurationView(swappBaseView):
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def _append_journal_section(parent: TagNode):
+    def _append_journal_section(parent: TagNode, enabled: bool = True):
         """Append the choice weighing on what SPPAS is saying.
 
         The levels are the ones of the logging system: the normal one is
@@ -255,10 +256,13 @@ class swappConfigurationView(swappBaseView):
         lets every message through.
 
         :param parent: (TagNode) The form of the page
+        :param enabled: (bool) The level can be changed
 
         """
         _fieldset = TagNode(parent.identifier, None, "fieldset")
         _fieldset.set_attribute("id", "configuration_journal")
+        if enabled is False:
+            _fieldset.set_attribute("disabled", None)
         parent.append_child(_fieldset)
 
         _legend = HTMLNode(_fieldset.identifier, None, "legend", value=MSG_JOURNAL)

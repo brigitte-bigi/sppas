@@ -270,8 +270,8 @@ try:
 
     # The applications are served by the wsgi service
     # ----------------------------------------------
-    from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
-    swapp_serverstate.local = False
+    from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+    swapp_settings.served_locally = False
 
     # Get the dispatcher of the apps and the pages
     # --------------------------------------------

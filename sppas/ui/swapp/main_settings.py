@@ -173,6 +173,11 @@ class swappSettings:
             # License agreement
             license_agreement=False,
 
+            # Whether swapp is served by the local server of the machine it
+            # runs on, and not by a web service. It holds for every reader:
+            # nothing is served locally unless it is said here.
+            served_locally=False,
+
             # Host and Port to communicate with the wxapp
             shost="127.0.0.1",
             sport=9669

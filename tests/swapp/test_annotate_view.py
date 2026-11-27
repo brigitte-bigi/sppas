@@ -61,7 +61,7 @@ from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.src.annotations import sppasParam
 from sppas.src.annotations.param import annotationParam
 
-from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 from sppas.ui.swapp.swapp_base.swapp_process import PROCESS_FIELD
 from sppas.ui.swapp.services.deposit.deposit_settings import swappDepositSettings
 from sppas.ui.swapp.services.deposit.deposit_space import swappDepositSpace
@@ -129,8 +129,8 @@ class TestAnnotateView(unittest.TestCase):
     """TE34 to TE38, TE40 to TE42, TE44, TE46, TE48, TE50, TE51. The page the response bakes."""
 
     def setUp(self):
-        self.local = swapp_serverstate.local
-        swapp_serverstate.local = True
+        self.local = swapp_settings.served_locally
+        swapp_settings.served_locally = True
         # The reports are written and read in a folder of logs made for the test.
         self.logs = tempfile.mkdtemp(prefix="test_annotate_view_")
         PathsForTests.logs = self.logs
@@ -153,7 +153,7 @@ class TestAnnotateView(unittest.TestCase):
             time.sleep(0.05)
         for _patcher in self.patchers:
             _patcher.stop()
-        swapp_serverstate.local = self.local
+        swapp_settings.served_locally = self.local
         shutil.rmtree(self.folder, ignore_errors=True)
         shutil.rmtree(self.logs, ignore_errors=True)
 
@@ -255,7 +255,7 @@ class TestAnnotateView(unittest.TestCase):
 
     def test_te37_online_the_reports_are_collapsed(self):
         """TE37. Online, the panel of the reports is collapsed and holds no report. C22"""
-        swapp_serverstate.local = False
+        swapp_settings.served_locally = False
         _page = self.recipe.bake(dict())
 
         _panel = re.search(r'<section[^>]*id="annotate_reports_panel"[^>]*>', _page)
@@ -419,7 +419,7 @@ class TestAnnotateOnline(unittest.TestCase):
     """TE49, TE50. Online, as the page sends it: the files are sent, and no annotation of SPPAS is run."""
 
     def setUp(self):
-        self.local = patch.object(swapp_serverstate, "local", False)
+        self.local = patch.object(swapp_settings, "served_locally", False)
         self.local.start()
         DepositSpaceForTests.settings = swappDepositSettings()
         DepositSpaceForTests.settings.space = tempfile.mkdtemp(prefix="test_annotate_view_")

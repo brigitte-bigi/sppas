@@ -61,7 +61,7 @@ from sppas.src.structs import sppasOption
 from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States
 
-from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 from sppas.ui.swapp.swapp_core.swapps import WEB_APPLICATIONS
 from sppas.ui.swapp.app_plugins import swappPluginsWebData
 from sppas.ui.swapp.app_plugins import swappPluginsResponseRecipe
@@ -156,7 +156,7 @@ class TestPluginsApp(unittest.TestCase):
 
     def test_te20_installing_and_deleting_above_the_list(self):
         """TE20. On the machine of the person, the section of the plugins carries installing and deleting above the list; on a server, neither. [025], RO1"""
-        with mock.patch.object(swapp_serverstate, "local", True):
+        with mock.patch.object(swapp_settings, "served_locally", True):
             page = main_of(swappPluginsResponseRecipe().bake({}))
         plugins = page[page.find('id="plugins_section"'):page.find('id="plugins_list"')]
         self.assertIn('id="plugins_install"', plugins)
@@ -169,7 +169,7 @@ class TestPluginsApp(unittest.TestCase):
         self.assertIn('<progress aria-labelledby="plugins_waiting_text">', waiting.group(1))
         self.assertNotIn('value=', waiting.group(1))
 
-        with mock.patch.object(swapp_serverstate, "local", False):
+        with mock.patch.object(swapp_settings, "served_locally", False):
             page = main_of(swappPluginsResponseRecipe().bake({}))
         self.assertNotIn('id="plugins_install"', page)
         self.assertNotIn('id="plugins_delete"', page)
@@ -274,14 +274,15 @@ class TestInstalledPlugins(unittest.TestCase):
         # The title, on one line: the icon, and About the name of the plugin.
         title = re.search(r'<h2 id="plugin_about_hello_h" class="flex-panel">(.*?)</h2>', hello, re.S).group(1)
         icon = os.path.relpath(os.path.join(self.folder, "hello", "hello.png"))
-        self.assertIsNotNone(re.search(r'^\s*<img alt="" src="' + re.escape(icon) + r'" />\s*<span>\s*About Hello\s*</span>\s*$', title))
+        self.assertIsNotNone(re.search(r'^\s*<img alt="Plugin logo" src="' + re.escape(icon) + r'" class="flex-item small-logo width_10" />'
+                                       r'\s*<span class="flex-item width_80">\s*About Hello\s*</span>\s*$', title))
         self.assertNotIn("<section", hello)
         self.assertNotIn("<p>", hello)
         self.assertIn("&lt;b&gt;Hello&lt;/b&gt; &amp; more", hello)
         self.assertNotIn("<button", hello)
 
         markers = re.search(r'<dialog id="plugin_about_markers"[^>]*>(.*?)</dialog>', page, re.S).group(1)
-        self.assertIsNotNone(re.search(r'<h2 id="plugin_about_markers_h" class="flex-panel">\s*<span>\s*About Markers\s*</span>\s*</h2>', markers))
+        self.assertIsNotNone(re.search(r'<h2 id="plugin_about_markers_h" class="flex-panel">\s*<span class="flex-item width_80">\s*About Markers\s*</span>\s*</h2>', markers))
         self.assertNotIn("<pre", markers)
         self.assertNotIn("<img", markers)
 
@@ -316,7 +317,7 @@ class TestInstalledPlugins(unittest.TestCase):
                                                  "commands": {"windows": "$PY", "macos": "$PY", "linux": "$PY"},
                                                  "options": []}))
         recipe = swappPluginsResponseRecipe()
-        with mock.patch.object(swapp_serverstate, "local", True), \
+        with mock.patch.object(swapp_settings, "served_locally", True), \
                 mock.patch.object(swappPluginsModel, "choose_archive", return_value=archive):
             page = main_of(recipe.bake({"event_bake": "plugins_install"}))
         self.assertEqual(["Hello"], [name_of(line) for line in lines_of(page)])
@@ -333,7 +334,7 @@ class TestInstalledPlugins(unittest.TestCase):
         # An archive which is not one: what the domain of the plugins refused is said.
         with open(archive, "w") as fp:
             fp.write("not a zip")
-        with mock.patch.object(swapp_serverstate, "local", True), \
+        with mock.patch.object(swapp_settings, "served_locally", True), \
                 mock.patch.object(swappPluginsModel, "choose_archive", return_value=archive):
             page = main_of(recipe.bake({"event_bake": "plugins_install"}))
         errors = re.search(r'<dialog id="error_dialog"[^>]*>(.*?)</dialog>', page, re.S).group(1)
@@ -346,7 +347,7 @@ class TestInstalledPlugins(unittest.TestCase):
         shutil.rmtree(os.path.dirname(archive), ignore_errors=True)
 
         # A selection window which could not be opened: it is said why.
-        with mock.patch.object(swapp_serverstate, "local", True), \
+        with mock.patch.object(swapp_settings, "served_locally", True), \
                 mock.patch.object(swappFileChooser, "ask_for_files", return_value=list()), \
                 mock.patch.object(swappFileChooser, "why_nothing", return_value=MSG_NO_CHOOSER):
             recipe.bake({"event_bake": "plugins_install"})
@@ -354,7 +355,7 @@ class TestInstalledPlugins(unittest.TestCase):
         self.assertNotIn("plugins", recipe._data)
 
         # No archive chosen: nothing is said.
-        with mock.patch.object(swapp_serverstate, "local", True), \
+        with mock.patch.object(swapp_settings, "served_locally", True), \
                 mock.patch.object(swappFileChooser, "ask_for_files", return_value=list()), \
                 mock.patch.object(swappFileChooser, "why_nothing", return_value=""):
             recipe.bake({"event_bake": "plugins_install"})
@@ -372,7 +373,7 @@ class TestInstalledPlugins(unittest.TestCase):
             z.writestr("elsewhere.json", json.dumps({"id": "elsewhere", "name": "Elsewhere", "descr": "", "icon": "",
                                                      "commands": commands, "options": []}))
         recipe = swappPluginsResponseRecipe()
-        with mock.patch.object(swapp_serverstate, "local", True), \
+        with mock.patch.object(swapp_settings, "served_locally", True), \
                 mock.patch.object(swappPluginsModel, "choose_archive", return_value=archive):
             page = main_of(recipe.bake({"event_bake": "plugins_install"}))
         cause = str(CommandSystemError(platform.system().lower(), commands.keys()))
@@ -388,11 +389,11 @@ class TestInstalledPlugins(unittest.TestCase):
         install_for_tests(self.folder, "hello", "Hello", "Writes a file of greetings.", "")
         install_for_tests(self.folder, "markers", "Markers", "Adds a tier of markers.", "")
         recipe = swappPluginsResponseRecipe()
-        with mock.patch.object(swapp_serverstate, "local", False):
+        with mock.patch.object(swapp_settings, "served_locally", False):
             page = main_of(recipe.bake({"event_bake": "plugins_delete", "plugins_to_delete": "hello"}))
         self.assertEqual(["Hello", "Markers"], sorted([name_of(line) for line in lines_of(page)]))
 
-        with mock.patch.object(swapp_serverstate, "local", True):
+        with mock.patch.object(swapp_settings, "served_locally", True):
             page = main_of(recipe.bake({}))
             self.assertIsNotNone(re.search(r'<dialog id="plugins_delete_dialog" class="hidden-alert"', page))
             dialog = re.search(r'<dialog id="plugins_delete_dialog"[^>]*>(.*?)</dialog>', page, re.S).group(1)

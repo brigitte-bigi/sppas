@@ -53,12 +53,15 @@ class swappResultDelivery:
     and it lives as long as the file does: both are answered by the place the
     file stands in.
 
-    Nothing calls this class yet. Where the files stand already, a produced
-    file is reached where it was written and no address is made -- which is
-    what the organizational model says of PF5 in that case. The address of a
-    produced file, and the hour at which it goes, are what the deposit brings
-    with it: they are to be asked for when the files have to be brought, and
-    given to the app, which shows them.
+    The provision of files creates it where the files have to be brought,
+    and asks it for the address of a produced file and for the bytes an
+    address names; the WSGI service asks it for the bytes an address names
+    too. Where the files stand already, a produced file is reached where it
+    was written and no address is made -- which is what the organizational
+    model says of PF5 in that case. The address of a produced file, and the
+    hour at which it goes, are what the deposit brings with it: they are to
+    be asked for when the files have to be brought, and given to the app,
+    which shows them.
 
     """
 

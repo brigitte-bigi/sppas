@@ -48,7 +48,6 @@ from sppas.core.config import sppasExecProcess
 from sppas.core.config import cfg
 from sppas.core.config import paths
 from sppas.core.preinstall.installer import quote
-from sppas.ui.swapp.swapp_core.swappsg import swapp_serverstate
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 from sppas.ui.swapp.swapp_core.swappsg import swapp_trace
 from sppas.ui.swapp.swapp_core.swappsg import swapp_wxstate
@@ -149,7 +148,7 @@ class swappDashboardController:
         # by the web service, that machine is the server: nobody would see
         # the window, and anybody could open one. A disabled card is what a
         # reader sees; this is what a request cannot get past.
-        if swapp_serverstate.local is False:
+        if swapp_settings.served_locally is False:
             logging.warning("The Desktop was asked for, and this is a web service.")
             return "The Desktop runs on the computer of its reader, not on a server."
 
@@ -195,7 +194,7 @@ class swappDashboardController:
 
         """
         wx_enabled = cfg.feature_installed("wxpython")
-        if swapp_serverstate.local is False:
+        if swapp_settings.served_locally is False:
             wx_enabled = False
         # Two sources are needed: the subprocess flag covers the launches of
         # this dashboard, including the delay before the HELLO of wx arrives;
@@ -232,7 +231,7 @@ class swappDashboardController:
                 # An application of the machine is not served by the web
                 # service: its card is shown, and disabled, so that a reader
                 # of the service sees what SPPAS holds and where.
-                if swapp_serverstate.local is False and bakery.local_only() is True:
+                if swapp_settings.served_locally is False and bakery.local_only() is True:
                     enabled = False
                 if enabled is True and hasattr(bakery, 'get_fids') is True:
                     fids = bakery.get_fids() or []

@@ -48,7 +48,7 @@ from sppas.core.coreutils import sppasEnableFeatureError
 
 from ..pages import swappNotFoundResponseRecipe
 from ..pages import swappPagesData
-from .swappsg import swapp_serverstate
+from .swappsg import swapp_settings
 from .swapps import WEB_APPLICATIONS
 from .swapps import WEB_PAGES
 
@@ -197,7 +197,7 @@ class swappDispatcher:
             except sppasEnableFeatureError as e:
                 logging.info(f"Application {web_app.name} disabled: {e}.")
             else:
-                if swapp_serverstate.local is False and bakery.local_only() is True:
+                if swapp_settings.served_locally is False and bakery.local_only() is True:
                     logging.info(f"Application {web_app.name} is of the machine: "
                                  "the web service does not serve it.")
                     continue

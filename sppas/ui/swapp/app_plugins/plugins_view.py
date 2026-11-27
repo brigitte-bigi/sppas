@@ -49,7 +49,6 @@ from sppas.ui import _
 
 from ..swapp_base.swapp_view import swappBaseView
 from ..swapp_core.swappsg import swapp_settings
-from ..swapp_core.swappsg import swapp_serverstate
 
 from .plugins_record import swappPluginsRecord
 from .plugslist import swappPluginsList
@@ -182,7 +181,7 @@ class swappPluginsView(swappBaseView):
 
         """
         _interval = INTERVAL_DISTANT_MS
-        if swapp_serverstate.local is True:
+        if swapp_settings.served_locally is True:
             _interval = INTERVAL_LOCAL_MS
         self._htree.body_script.add_attribute("type", "module")
         self._htree.body_script.set_value(BODY_SCRIPT.format(js=swapp_settings.js, interval=_interval))
@@ -221,7 +220,7 @@ class swappPluginsView(swappBaseView):
         # Installing and deleting a plugin happen where SPPAS runs on the
         # machine of the person, and nowhere else: above the cards, as above
         # the list in the desktop interface.
-        if swapp_serverstate.local is True:
+        if swapp_settings.served_locally is True:
             _p = TagNode(_plugins.identifier, None, "p")
             _plugins.append_child(_p)
             # Installing asks the file chooser of the machine for the archive.

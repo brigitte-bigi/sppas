@@ -42,7 +42,7 @@ from __future__ import annotations
 
 from sppas.core.coreutils import sppasTypeError
 
-from ...swapp_core.swappsg import swapp_serverstate
+from ...swapp_core.swappsg import swapp_settings
 from ..files.files_chooser import swappFileChooser
 
 from .options_request import swappFileRequest
@@ -101,7 +101,7 @@ class swappFileForOption:
         """
         if isinstance(request, swappFileRequest) is False:
             raise sppasTypeError(request, "swappFileRequest")
-        if swapp_serverstate.local is False:
+        if swapp_settings.served_locally is False:
             raise NotImplementedError
 
         if self.__chooser is None:

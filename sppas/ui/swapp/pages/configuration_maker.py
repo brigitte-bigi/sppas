@@ -49,6 +49,7 @@ from sppas.core.config import cfg
 from sppas.core.config import lgs
 from sppas.ui import _
 
+from ..swapp_core.swappsg import swapp_settings
 from ..swapp_base.swapp_response import swappBaseResponse
 
 from .configuration_view import swappConfigurationView
@@ -141,10 +142,17 @@ class swappConfigurationResponseRecipe(swappBaseResponse):
                 # A checkbox is absent of the post when it is not checked.
                 cfg.set_interoperability("configuration_interoperability" in events)
                 if "configuration_log_level" in events:
-                    level = int(events["configuration_log_level"])
-                    cfg.set_log_level(level)
-                    # the choice is worth nothing if it waits the next launch
-                    lgs.set_log_level(level)
+                    # Served by the web service, the level of the log is the
+                    # one of the server for all its readers. A disabled
+                    # fieldset is what a reader sees; this is what a request
+                    # cannot get past.
+                    if swapp_settings.served_locally is False:
+                        logging.warning("The level of the log was asked to change, and this is a web service.")
+                    else:
+                        level = int(events["configuration_log_level"])
+                        cfg.set_log_level(level)
+                        # the choice is worth nothing if it waits the next launch
+                        lgs.set_log_level(level)
                 cfg.save()
                 self.__status_message = MSG_SAVED
             events.pop("event_bake")
@@ -165,5 +173,8 @@ class swappConfigurationResponseRecipe(swappBaseResponse):
 
         """
         self.comment("Body content")
+        log_enabled = True
+        if swapp_settings.served_locally is False:
+            log_enabled = False
         self.__view.update_accessibility()
-        self.__view.populate_tree_content(self.__status_message)
+        self.__view.populate_tree_content(self.__status_message, log_enabled)

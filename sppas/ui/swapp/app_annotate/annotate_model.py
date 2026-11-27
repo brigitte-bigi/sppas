@@ -43,7 +43,7 @@ import os
 
 from sppas.core.config import paths
 
-from ..swapp_core.swappsg import swapp_serverstate
+from ..swapp_core.swappsg import swapp_settings
 from ..services.files import swappFilesManager
 
 from .annotate_annotations import swappModelAnnotations
@@ -258,7 +258,7 @@ class swappAnnotateModel:
         :return: (list of str) Empty when there are none, and empty online
 
         """
-        if swapp_serverstate.local is False:
+        if swapp_settings.served_locally is False:
             return list()
 
         return self.__reports.reports()
@@ -308,7 +308,7 @@ class swappAnnotateModel:
         :return: (str) The folder of the logs locally, the one of the files of the batch online
 
         """
-        if swapp_serverstate.local is True:
+        if swapp_settings.served_locally is True:
             return paths.logs
 
         return self.__provision.folder()
