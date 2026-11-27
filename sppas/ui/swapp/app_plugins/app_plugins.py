@@ -110,7 +110,7 @@ class swappPluginsWebData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        return page_name == swappPluginsResponseRecipe.page()
+        return self._is_app_page(page_name)
 
     # -----------------------------------------------------------------------
 
@@ -123,7 +123,9 @@ class swappPluginsWebData(swappWebData):
 
         """
         logging.info(f"Requested page name: {page_name}")
-        if page_name == swappPluginsResponseRecipe.page():
+        if self._is_welcome_page(page_name) is True:
+            return self._welcome_response()
+        if self._is_app_page(page_name) is True:
             return swappPluginsResponseRecipe()
 
         return None

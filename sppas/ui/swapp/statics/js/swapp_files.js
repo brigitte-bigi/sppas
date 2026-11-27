@@ -2,6 +2,7 @@ const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
 const { RequestManager } = await import(`${wexa_statics_js}/transport/request.js`);
 const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
+import { pageAddress } from './swapp_manager.js';
 
 /**
  * :filename: sppas.ui.swapp.statics.js.swapp_files.js
@@ -55,6 +56,8 @@ const FILES_WAITING_ID = 'files_waiting';
 const DROPZONE_CLASS = 'dropzone';
 const TASK_DESIGNATE = 'designate';
 const TASK_SEND = 'send';
+const TASK_TAKE_BACK = 'take_back';
+const TASK_TAKE_BACK_ALL = 'take_back_all';
 const FIELD_TASK = 'task';
 const FIELD_NAME = 'name';
 const FIELD_SIZE = 'size';
@@ -214,6 +217,14 @@ export default class SwappFiles {
             return;
         }
 
+        // A file taken back is no longer held to be sent: its bytes do not
+        // travel when the person sends the others.
+        if (pressed.name === TASK_TAKE_BACK) {
+            this.#designated.delete(pressed.value);
+        } else if (pressed.name === TASK_TAKE_BACK_ALL) {
+            this.#designated.clear();
+        }
+
         const posted = this.#transmittedFields();
         posted[FIELD_TASK] = pressed.name;
         posted[pressed.name] = pressed.value;
@@ -361,7 +372,7 @@ export default class SwappFiles {
      * @returns {Promise<void>}
      */
     async #post(posted) {
-        const pageUri = window.location.pathname.substring(1);
+        const pageUri = pageAddress();
         const answered = await this.#request.sendPostRequest(posted, JSON_TYPE, pageUri);
         if (answered === null || answered === undefined) {
             console.error('SwappFiles: the server answered nothing.');

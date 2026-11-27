@@ -147,10 +147,12 @@ class TestPluginsApp(unittest.TestCase):
         self.assertIs(swappPluginsWebData, declared[0].bakery)
         self.assertTrue(declared[0].show)
 
+        # Locally, the default page is the app: online, it leads to a secret name.
         data = swappPluginsWebData()
-        self.assertTrue(data.is_page("plugins.html"))
-        self.assertIsInstance(data.bake_response("plugins.html"), swappPluginsResponseRecipe)
-        self.assertIsNone(data.bake_response("annotate.html"))
+        with mock.patch.object(swapp_settings, "served_locally", True):
+            self.assertTrue(data.is_page("plugins.html"))
+            self.assertIsInstance(data.bake_response("plugins.html"), swappPluginsResponseRecipe)
+            self.assertIsNone(data.bake_response("annotate.html"))
 
     # -----------------------------------------------------------------------
 

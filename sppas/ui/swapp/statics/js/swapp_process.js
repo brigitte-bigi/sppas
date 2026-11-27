@@ -1,5 +1,5 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
-const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
+import SwappManager from './swapp_manager.js';
 const { ProgressBar } = await import(`${wexa_statics_js}/progressbar.js`);
 
 const EVENT_NAME = 'event_name';
@@ -55,7 +55,7 @@ const PROCESS_FIELD = 'swapp_process';
  * given as a function.
  *
  */
-export default class SwappProcess extends BaseManager {
+export default class SwappProcess extends SwappManager {
 
     // ------------------------------------------------------------------------
     // Constructor

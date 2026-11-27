@@ -39,9 +39,21 @@
 """
 
 from __future__ import annotations
+import os
+import secrets
 
 from whakerpy.webapp import WebSiteData
 from sppas.ui.swapp import swappImagesAccess
+
+from ..swapp_core.swappsg import swapp_settings
+from .swapp_redirect import swappRedirectResponse
+
+# ---------------------------------------------------------------------------
+
+# Online, an application is reached at its default page followed by this
+# separator and a secret: as many bytes drawn at random, written in hexadecimal.
+SECRET_SEPARATOR = "_"
+SECRET_BYTES = 16
 
 # ---------------------------------------------------------------------------
 
@@ -104,3 +116,118 @@ class swappWebData(WebSiteData):
 
         """
         return ""
+
+    # -----------------------------------------------------------------------
+    # Online, what an application does is reached at a secret name
+    # -----------------------------------------------------------------------
+
+    def _is_app_page(self, page_name: str) -> bool:
+        """Return True if the given name is a page of the application.
+
+        :param page_name: (str) Name of the requested page
+        :return: (bool) The default page; online, a secret name of it as well
+
+        """
+        if page_name == self.get_default_page():
+            return True
+        if swapp_settings.served_locally is True or self.__is_protected() is False:
+            return False
+
+        return self.__is_secret_page(page_name)
+
+    # -----------------------------------------------------------------------
+
+    def _is_welcome_page(self, page_name: str) -> bool:
+        """Return True if the given name is the welcome page of the application.
+
+        Online, the default page is the welcome page, and what the application
+        does is reached at a secret name only. Locally, and for an application
+        in development, there is no welcome page: the default page is the
+        application.
+
+        :param page_name: (str) Name of the requested page
+        :return: (bool)
+
+        """
+        if swapp_settings.served_locally is True or self.__is_protected() is False:
+            return False
+
+        return page_name == self.get_default_page()
+
+    # -----------------------------------------------------------------------
+
+    def _welcome_response(self):
+        """Return what answers the welcome page of the application.
+
+        An application with a welcome page of its own -- what it does, and in
+        which context -- overrides it. Without one, the page leads at once to
+        a secret name of the application.
+
+        :return: (BaseResponseRecipe)
+
+        """
+        return swappRedirectResponse(self.name(), self._secret_page)
+
+    # -----------------------------------------------------------------------
+
+    def _secret_page(self) -> str:
+        """Return a secret name the application is reached at online.
+
+        A reader reaches it from the welcome page; whoever knows the default
+        page only never reaches what the application does.
+
+        :return: (str) The default page followed by a secret drawn at random
+
+        """
+        return self.__stem() + SECRET_SEPARATOR + secrets.token_hex(SECRET_BYTES) + ".html"
+
+    # -----------------------------------------------------------------------
+    # Private
+    # -----------------------------------------------------------------------
+
+    def __is_protected(self) -> bool:
+        """Return True if the application is reached at a secret name online.
+
+        Every application is, but the ones in development: the list of the
+        applications declares them with "show" set to False.
+
+        :return: (bool)
+
+        """
+        # The list imports every application, and this module with them: it
+        # is read when it is asked for, and not when this module is imported.
+        from ..swapp_core.swapps import WEB_APPLICATIONS
+
+        for _web_app in WEB_APPLICATIONS:
+            if _web_app.bakery is type(self):
+                return _web_app.show
+
+        return True
+
+    # -----------------------------------------------------------------------
+
+    def __is_secret_page(self, page_name: str) -> bool:
+        """Return True if the given name is a secret name of the application.
+
+        :param page_name: (str) Name of the requested page
+        :return: (bool)
+
+        """
+        _prefix = self.__stem() + SECRET_SEPARATOR
+        if page_name.startswith(_prefix) is False or page_name.endswith(".html") is False:
+            return False
+
+        _secret = page_name[len(_prefix):len(page_name) - len(".html")]
+        if len(_secret) != 2 * SECRET_BYTES:
+            return False
+        for _character in _secret:
+            if _character not in "0123456789abcdef":
+                return False
+
+        return True
+
+    # -----------------------------------------------------------------------
+
+    def __stem(self) -> str:
+        """Return the name of the default page, without its extension."""
+        return os.path.splitext(self.get_default_page())[0]

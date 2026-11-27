@@ -793,6 +793,10 @@ class swappBaseView:
         exit_button.add_attribute("type", "button")
         exit_button.add_attribute("aria-pressed", "false")
         exit_button.add_attribute("class", "menuitem menu-exit")
+        # Served by a web service, SPPAS is not the one of the reader: it is
+        # not closed by a reader, and the item is disabled.
+        if swapp_settings.served_locally is False:
+            exit_button.add_attribute("disabled", None)
         parent.append_child(exit_button)
 
     # -----------------------------------------------------------------------

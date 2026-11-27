@@ -159,18 +159,35 @@ nav#nav-content.nav-wexa.side {
 }
 
 /* An item leading nowhere yet. wexa.css dims it with opacity, which SPPAS
-   never uses: what says it is the pointer, and the item keeps its full ink. */
+   does not use for it: what says it is the pointer, and the item keeps its
+   full ink. */
 #nav-content [role='menuitem'][aria-disabled='true'],
 #nav-content .menuitem[aria-disabled='true'] {
     opacity: 1;
     background: transparent;
 }
 
+/* A button which cannot act where SPPAS is served. It is dimmed with the
+   opacity of wexa.css, the one mark which holds whatever the colors of the
+   theme: an inactive component has no contrast to keep. */
+#nav-content .menuitem:disabled {
+    opacity: 0.4;
+    background: transparent;
+}
+
 #nav-content [role='menuitem'][aria-disabled='true']:hover,
-#nav-content .menuitem[aria-disabled='true']:hover {
+#nav-content .menuitem[aria-disabled='true']:hover,
+#nav-content .menuitem:disabled:hover {
     background: transparent;
     transform: none;
     filter: none;
+}
+
+/* menu.css gives the drawing of an item the pointer: the drawing of a
+   disabled button says what the button says. */
+#nav-content .menuitem:disabled > svg,
+#nav-content .menuitem:disabled > img {
+    cursor: not-allowed;
 }
 
 /* The page being read: the veil of the bar, under the shape menu.css gives it. */

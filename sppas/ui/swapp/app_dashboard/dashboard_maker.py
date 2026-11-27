@@ -196,7 +196,12 @@ class swappDashboardResponseRecipe(swappBaseResponse):
                 # none: the wx interface is asked first and its answer
                 # decides. Without a verdict, it is asking its own reader,
                 # and this page waits for the answer instead of closing.
-                if swapp_wxstate.exit_pending is False:
+                # Served by a web service, SPPAS is closed for none of its
+                # readers: a disabled item is what a reader sees; this is
+                # what a request cannot get past.
+                if swapp_settings.served_locally is False:
+                    logging.warning("SPPAS was asked to close, and this is a web service.")
+                elif swapp_wxstate.exit_pending is False:
                     answer = request_wx_exit()
                     if answer == sppasCommKeys.EXIT_OK:
                         # The last page is answered to whoever asks for a

@@ -1,6 +1,6 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
-const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
+import SwappManager from './swapp_manager.js';
 const { SortaTable } = await import(`${wexa_statics_js}/extras/sortatable.js`);
 const { ToggleSelector } = await import(`${wexa_statics_js}/toggleselect.js`);
 import SwappProcess from './swapp_process.js';
@@ -97,7 +97,7 @@ const PROCESS_FIELD = 'swapp_process';
  * handleConvertManagerOnLoad() has to be invoked **after** the DOM is loaded.
  *
  */
-export default class ConvertManager extends BaseManager {
+export default class ConvertManager extends SwappManager {
 
     // ------------------------------------------------------------------------
     // Constructor

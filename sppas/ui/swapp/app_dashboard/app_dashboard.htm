@@ -95,7 +95,8 @@
 
 		<p>
 			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"> <path d="M21 23l7-7-7-7" /> <path d="M28 16H12" /> <path d="M16 4H8a3 3 0 0 0-3 3v19a3 3 0 0 0 3 3h8" /> </svg> &nbsp; <b>Exit.</b> Stops SPPAS. It is the only way of leaving
-			properly: see <a href="#stopping">Stopping SPPAS</a>.
+			properly: see <a href="#stopping">Stopping SPPAS</a>. On the website of SPPAS, the button
+			is dimmed and the mouse refuses to click it: SPPAS is not yours to stop there.
 		</p>
 
 	</section>
@@ -467,7 +468,8 @@
 				again without the dialog.</li>
 			<li><code>handle_start_sppas</code> -- the wx interface is launched. The answer is the
 				error, if any, or the state saying it started.</li>
-			<li><code>event_bake=close</code> -- leaving SPPAS. The page answers 410, Gone.</li>
+			<li><code>event_bake=close</code> -- leaving SPPAS. The page answers 410, Gone. Served by a web
+			service, the close is refused, and the page is built again.</li>
 			<li><code>event_bake=swapp_back</code> -- the way back from the help: the page is
 				built again.</li>
 		</ul>

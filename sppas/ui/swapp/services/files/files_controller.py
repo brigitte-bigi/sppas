@@ -455,10 +455,14 @@ class swappFilesController:
 
         # What traveled is deposited, and is no longer what sending sends.
         # What was refused stays as it was: it is said, and the person takes
-        # it back when she has read why.
+        # it back when she has read why. What is not fed -- a file taken back
+        # before it was sent -- was not written, and is not deposited.
+        _fed = list()
+        for _one_name, _one_size in self.__record.fed:
+            _fed.append(_one_name)
         _deposited = list(self.__record.deposited)
         for _name in _contents:
-            if _name in _refused:
+            if _name in _refused or (_name in _fed) is False:
                 continue
             if _name not in _deposited:
                 _deposited.append(_name)

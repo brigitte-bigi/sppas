@@ -47,6 +47,7 @@ from unittest import mock
 from html.parser import HTMLParser
 
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_core.swappsg import swapp_wxstate
 
 from sppas.ui.swapp.swapp_base.swapp_help_button import HELP_BUTTON_ID
 from sppas.ui.swapp.app_annotate.annotate_maker import swappAnnotateResponseRecipe
@@ -169,6 +170,44 @@ class TestNav(unittest.TestCase):
                 tag, attributes = nav.items[HELP_BUTTON_ID]
                 self.assertEqual("a", tag)
                 self.assertEqual("true", attributes["aria-disabled"])
+
+# ---------------------------------------------------------------------------
+
+
+class TestExit(unittest.TestCase):
+    """The Exit of the Dashboard, on the machine of the person and on the web service."""
+
+    def tearDown(self):
+        swapp_wxstate.exit_granted = False
+        swapp_wxstate.exit_pending = False
+
+    # -----------------------------------------------------------------------
+
+    def test_the_item_on_the_web_service(self):
+        """On the web service, the Exit item is disabled; on the machine, it is not."""
+        with mock.patch.object(swapp_settings, "served_locally", False):
+            nav = swappNavReader(swappDashboardResponseRecipe().bake({}))
+        tag, attributes = nav.items["exit-menu"]
+        self.assertEqual("button", tag)
+        self.assertIn("disabled", attributes)
+
+        with mock.patch.object(swapp_settings, "served_locally", True):
+            nav = swappNavReader(swappDashboardResponseRecipe().bake({}))
+        tag, attributes = nav.items["exit-menu"]
+        self.assertNotIn("disabled", attributes)
+
+    def test_the_close_on_the_web_service(self):
+        """On the web service, a close is refused: nothing is granted, nothing waits."""
+        with mock.patch.object(swapp_settings, "served_locally", False):
+            swappDashboardResponseRecipe().bake({"event_bake": "close"})
+        self.assertIs(False, swapp_wxstate.exit_granted)
+        self.assertIs(False, swapp_wxstate.exit_pending)
+
+    def test_the_close_on_the_machine(self):
+        """On the machine, without the wx interface, a close is granted."""
+        with mock.patch.object(swapp_settings, "served_locally", True):
+            swappDashboardResponseRecipe().bake({"event_bake": "close"})
+        self.assertIs(True, swapp_wxstate.exit_granted)
 
 
 if __name__ == "__main__":

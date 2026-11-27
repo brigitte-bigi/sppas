@@ -110,7 +110,7 @@ class swappAnnotateWebData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        return page_name == swappAnnotateResponseRecipe.page()
+        return self._is_app_page(page_name)
 
     # -----------------------------------------------------------------------
 
@@ -123,7 +123,9 @@ class swappAnnotateWebData(swappWebData):
 
         """
         logging.info(f"Requested page name: {page_name}")
-        if page_name == swappAnnotateResponseRecipe.page():
+        if self._is_welcome_page(page_name) is True:
+            return self._welcome_response()
+        if self._is_app_page(page_name) is True:
             return swappAnnotateResponseRecipe()
 
         return None

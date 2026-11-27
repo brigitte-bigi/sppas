@@ -21,7 +21,8 @@ package.
   `swapp_response.py`, `swapp_view.py`, `swapp_head.py`, and `swapp_help.py`
   and `swapp_help_button.py`, the view of the help of any app and the button
   of its nav, and `swapp_process.py` and `swapp_process_progress.py`, a long
-  process of any app and the progress it is given;
+  process of any app and the progress it is given, and `swapp_redirect.py`,
+  the page which leads to a secret name of an app online;
 - `panels/` is a leftover and holds no composite panel: `links_panel.py`
   defines `swappBaseLinksNode`, the base node of the link cards, still used by the
   Dashboard and the About page, and `annot_param.py` defines
@@ -214,6 +215,40 @@ not found" of swapp (`swapp_core/swapp_dispatcher.py`), and the Dashboard
 disables its card without removing it (`app_dashboard/dashboard_controller.py`).
 A disabled card is what a reader sees; the dispatcher is what a forged
 request cannot get past.
+
+#### How an app is reached online
+
+Online, what an app does is reached at a secret name only: its default page
+followed by `_` and 32 hexadecimal digits drawn at random, as
+`convert_<secret>.html`. The default page is the welcome page of the app,
+the one which says what the app does and in which context, and it leads to
+a secret name. A welcome page is optional: an app without one answers its
+default page with `swappRedirectResponse`, which leads at once to a secret
+name drawn for that request, and carries the parameters of the reader whose
+name starts with `wexa_`. It holds a link to the secret name and a script
+which follows it: where the secret names are protected by `signed_url` in
+the JSON of the server, WhakerPy signs the address of a link (`href` and
+`action`, and nothing else), and the script goes where it was signed. What
+the signature adds to the address, `ts` and `sig`, is no event of the app:
+`bake()` of `swappBaseResponse` removes it, as it removes the parameters
+whose name starts with `wexa_`. Locally, nothing changes: the default page is the
+app, and a secret name is not a page.
+
+It is written once, in `swappWebData`: an app answers `is_page()` with
+`_is_app_page()`, and its default page online with `_welcome_response()`,
+which an app with a welcome page of its own overrides. An app in
+development is not protected: the list `WEB_APPLICATIONS` declares it with
+`show` set to False, and `swappWebData` reads it there. The Dashboard is not
+concerned: it is the entry, and leads to the apps.
+
+The scripts of an app send their requests to the address of the page, with
+what follows its name, so that what authorizes a secret name goes with them:
+`pageAddress()` of `statics/js/swapp_manager.js` gives it, `SwappManager`
+is the manager of Whakerexa which sends there, and the managers of the apps,
+the progress of a process, the windows of the options and the provision of
+files all send there. `sppas.js` gives the same address to the manager of the
+accessibility of Whakerexa. The spin-offs keep their
+own way to the same end, as the welcome page of TextCueS does.
 
 #### Why the Desktop card is not in the registry
 
@@ -432,6 +467,10 @@ nothing holds it back, and acknowledges when it has to put the question to
 its own reader. The acknowledgment leaves an exit waiting, and the Dashboard
 shows a modal dialog until the answer comes -- the state belongs to the
 server, so a second tab and a reloaded page find the same one.
+
+Served by a web service, SPPAS is not the one of its reader, and it is
+closed for none of them: the Exit button is disabled, and the server
+refuses the close it would send.
 
 Waiting concerns every page, and not the Dashboard alone: the base response
 answers the state of the exit to the periodic call of any page, and the boot

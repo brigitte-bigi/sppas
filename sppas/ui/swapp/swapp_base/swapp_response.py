@@ -66,6 +66,12 @@ from .swapp_process import PROCESS_FIELD
 
 # ---------------------------------------------------------------------------
 
+# What WhakerPy adds to the address of a protected page when it signs it: the
+# moment and the signature. They are the server's, and the event of no app.
+SIGNATURE_KEYS = ("ts", "sig")
+
+# ---------------------------------------------------------------------------
+
 
 class swappBaseResponse(BaseResponseRecipe):
     """Create a Response system for dynamic pages.
@@ -316,6 +322,10 @@ class swappBaseResponse(BaseResponseRecipe):
         for event_name in list(events.keys()):
             if event_name.startswith("wexa_") is True:
                 events.pop(event_name)
+
+        # What signs the address of a page online never reaches the app.
+        for event_name in SIGNATURE_KEYS:
+            events.pop(event_name, None)
 
         # The manager of the theme announces it under the name "theme",
         # without the prefix the two others carry.

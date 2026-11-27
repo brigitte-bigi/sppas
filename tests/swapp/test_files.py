@@ -1348,6 +1348,21 @@ class TestPageRequests(unittest.TestCase):
             self.assertEqual(sorted(self.paths), sorted(f.get_id() for f in files_of(manager.files_for_app())))
             self.assertEqual(2, len(TestPageRequests.listed(manager)))
 
+    # -----------------------------------------------------------------------
+
+    def test_te46_a_file_taken_back_is_not_deposited(self):
+        """TE46. A file taken back before sending is neither written nor deposited, even if its content comes. T09"""
+        manager = self.online()
+        for name in ("a.wav", "b.wav", "c.wav", "d.wav"):
+            TestPageRequests.designate(manager, name, 5)
+        TestPageRequests.press(manager, "take_back", "b.wav")
+        for name in ("a.wav", "b.wav", "c.wav", "d.wav"):
+            manager.consumes(files_request(TestPageRequests.container(manager), "send",
+                                           {"name": name, "content": "MTIzNDU="}))
+        record = manager._swappFilesManager__controller.record
+        self.assertEqual(["a.wav", "c.wav", "d.wav"], record.deposited)
+        self.assertEqual(3, len(files_of(manager.files_for_app())))
+
 # ---------------------------------------------------------------------------
 
 

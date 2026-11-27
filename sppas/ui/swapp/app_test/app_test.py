@@ -93,7 +93,7 @@ class swappTestsWebData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        if page_name == swappTestsResponseRecipe.page():
+        if self._is_app_page(page_name) is True:
             return True
 
         return swappTestsModel().is_page(page_name)
@@ -110,7 +110,9 @@ class swappTestsWebData(swappWebData):
         """
         logging.info(f"Requested page name: {page_name}")
 
-        if page_name == swappTestsResponseRecipe.page():
+        if self._is_welcome_page(page_name) is True:
+            return self._welcome_response()
+        if self._is_app_page(page_name) is True:
             return swappTestsResponseRecipe()
 
         recipe = swappTestsModel().recipe_of(page_name)

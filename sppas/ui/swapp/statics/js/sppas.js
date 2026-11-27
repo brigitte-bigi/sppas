@@ -50,8 +50,17 @@ import PluginsManager from './plugins_manager.js';
 const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
 const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
-const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
+import SwappManager from './swapp_manager.js';
+import { pageAddress } from './swapp_manager.js';
 const dialogManager = new DialogManager();
+
+// The manager of the accessibility of Whakerexa sends its requests to the
+// address of the page, as the managers of swapp do.
+if (window.Wexa === undefined || window.Wexa.accessibility === undefined) {
+    console.error('sppas.js: the accessibility manager of Whakerexa was not found.');
+} else {
+    window.Wexa.accessibility._uri = pageAddress();
+}
 
 const EVENT_BAKE = 'event_bake';
 const ID_OPTIONS_CONTAINER = 'options_container';
@@ -83,7 +92,7 @@ const DATA_VALUES = 'values';
  * handleSwappOptionsOnLoad() has to be invoked **after** the DOM is loaded,
  * and before the manager of the app attaches its own listeners.
  */
-class SwappOptions extends BaseManager {
+class SwappOptions extends SwappManager {
 
     /**
      * The identifier of the form of the app.

@@ -96,7 +96,7 @@ class swappWkpsWebData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        return page_name == swappFilesResponseRecipe.page()
+        return self._is_app_page(page_name)
 
     # -----------------------------------------------------------------------
 
@@ -110,7 +110,9 @@ class swappWkpsWebData(swappWebData):
         """
         logging.info(f"Requested page name: {page_name}")
 
-        if page_name == swappFilesResponseRecipe.page():
+        if self._is_welcome_page(page_name) is True:
+            return self._welcome_response()
+        if self._is_app_page(page_name) is True:
             return swappFilesResponseRecipe()
 
         # Any other page name

@@ -1,7 +1,7 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
 const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
-const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
+import SwappManager from './swapp_manager.js';
 import SwappProcess from './swapp_process.js';
 const dialogManager = new DialogManager();
 
@@ -84,7 +84,7 @@ const JSON_TYPE = 'application/json';
  * handlePluginsManagerOnLoad() has to be invoked **after** the DOM is loaded,
  * and after the windows of the options are handled.
  */
-export default class PluginsManager extends BaseManager {
+export default class PluginsManager extends SwappManager {
 
     /**
      * How often the page asks where the runs stand, in milliseconds.

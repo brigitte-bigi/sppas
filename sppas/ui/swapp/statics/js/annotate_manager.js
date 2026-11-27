@@ -1,7 +1,7 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
 const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
-const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
+import SwappManager from './swapp_manager.js';
 import SwappProcess from './swapp_process.js';
 const dialogManager = new DialogManager();
 
@@ -73,7 +73,7 @@ const ID_SHOW_STATE = 'annotate_show_state';
  * handleAnnotateManagerOnLoad() has to be invoked **after** the DOM is loaded.
  *
  */
-export default class AnnotateManager extends BaseManager {
+export default class AnnotateManager extends SwappManager {
 
     // ------------------------------------------------------------------------
     // Constructor
