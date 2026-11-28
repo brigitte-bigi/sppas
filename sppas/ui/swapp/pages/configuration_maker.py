@@ -139,22 +139,22 @@ class swappConfigurationResponseRecipe(swappBaseResponse):
 
         if "event_bake" in events:
             if events["event_bake"] == "handle_configuration_save":
-                # A checkbox is absent of the post when it is not checked.
-                cfg.set_interoperability("configuration_interoperability" in events)
-                if "configuration_log_level" in events:
-                    # Served by the web service, the level of the log is the
-                    # one of the server for all its readers. A disabled
-                    # fieldset is what a reader sees; this is what a request
-                    # cannot get past.
-                    if swapp_settings.served_locally is False:
-                        logging.warning("The level of the log was asked to change, and this is a web service.")
-                    else:
+                # Served by the web service, the configuration is the one of
+                # the server, for all its readers: none of them changes it.
+                # A disabled form is what a reader sees; this is what a
+                # request cannot get past.
+                if swapp_settings.served_locally is False:
+                    logging.warning("The configuration was asked to change, and this is a web service.")
+                else:
+                    # A checkbox is absent of the post when it is not checked.
+                    cfg.set_interoperability("configuration_interoperability" in events)
+                    if "configuration_log_level" in events:
                         level = int(events["configuration_log_level"])
                         cfg.set_log_level(level)
                         # the choice is worth nothing if it waits the next launch
                         lgs.set_log_level(level)
-                cfg.save()
-                self.__status_message = MSG_SAVED
+                    cfg.save()
+                    self.__status_message = MSG_SAVED
             events.pop("event_bake")
 
         events.pop("configuration_interoperability", None)
@@ -173,8 +173,7 @@ class swappConfigurationResponseRecipe(swappBaseResponse):
 
         """
         self.comment("Body content")
-        log_enabled = True
-        if swapp_settings.served_locally is False:
-            log_enabled = False
+        # Served by the web service, no choice of the configuration can be changed.
+        enabled = swapp_settings.served_locally is True
         self.__view.update_accessibility()
-        self.__view.populate_tree_content(self.__status_message, log_enabled)
+        self.__view.populate_tree_content(self.__status_message, enabled)

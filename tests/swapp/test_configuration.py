@@ -39,6 +39,7 @@
 
 """
 
+import re
 import unittest
 from unittest import mock
 from html.parser import HTMLParser
@@ -92,11 +93,11 @@ class TestLogLevel(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_the_journal_on_the_web_service(self):
-        """The levels of the Journal are shown, disabled."""
+        """The levels of the Journal can be chosen: the button which saves is the one disabled."""
         with mock.patch.object(swapp_settings, "served_locally", False):
             page = swappConfigurationResponseRecipe().bake({})
         attributes = swappFieldsetReader(page).fieldsets["configuration_journal"]
-        self.assertIn("disabled", attributes)
+        self.assertNotIn("disabled", attributes)
 
     # -----------------------------------------------------------------------
 
@@ -123,6 +124,36 @@ class TestLogLevel(unittest.TestCase):
             swappConfigurationResponseRecipe().bake(dict(SAVE_DEBUG))
         cfg_level.assert_not_called()
         lgs_level.assert_not_called()
+
+
+# ---------------------------------------------------------------------------
+
+
+class TestConfigurationOnline(unittest.TestCase):
+    """Served by the web service, the configuration cannot be saved."""
+
+    def test_the_save_button_on_the_web_service(self):
+        """Online, the button which saves is disabled, and the page says why; on the machine, it is not."""
+        with mock.patch.object(swapp_settings, "served_locally", False):
+            page = swappConfigurationResponseRecipe().bake({})
+        self.assertIsNotNone(re.search(r'<button[^>]*value="handle_configuration_save"[^>]*disabled', page))
+        self.assertIn("SPPAS online does not allow the configuration to be customized.", page)
+
+        with mock.patch.object(swapp_settings, "served_locally", True):
+            page = swappConfigurationResponseRecipe().bake({})
+        self.assertIsNone(re.search(r'<button[^>]*value="handle_configuration_save"[^>]*disabled', page))
+        self.assertNotIn("SPPAS online does not allow the configuration to be customized.", page)
+
+    def test_nothing_is_saved_on_the_web_service(self):
+        """A save posted anyway changes nothing of the configuration, and writes nothing."""
+        with mock.patch.object(swapp_settings, "served_locally", False), \
+                mock.patch.object(cfg, "set_interoperability") as interoperability, \
+                mock.patch.object(cfg, "save") as save, \
+                mock.patch.object(cfg, "set_log_level"), \
+                mock.patch.object(lgs, "set_log_level"):
+            swappConfigurationResponseRecipe().bake(dict(SAVE_DEBUG))
+        interoperability.assert_not_called()
+        save.assert_not_called()
 
 
 if __name__ == "__main__":

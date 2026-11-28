@@ -1,8 +1,6 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
-const { RequestManager } = await import(`${wexa_statics_js}/transport/request.js`);
-const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
-import { pageAddress } from './swapp_manager.js';
+import SwappManager from './swapp_manager.js';
 
 /**
  * :filename: sppas.ui.swapp.statics.js.swapp_files.js
@@ -63,10 +61,7 @@ const FIELD_NAME = 'name';
 const FIELD_SIZE = 'size';
 const FIELD_CONTENT = 'content';
 const FIELD_CONTAINER = 'container';
-const FIELD_INFO = 'info';
-const ID_INFO_DIALOG = 'info_dialog';
 const DRAGGED_OVER_CLASS = 'dragged-over';
-const JSON_TYPE = 'application/json';
 
 /**
  * This class carries what a person composes, and sends it when she asks.
@@ -88,7 +83,7 @@ const JSON_TYPE = 'application/json';
  * handleSwappFilesOnLoad() has to be invoked **after** the DOM is loaded.
  *
  */
-export default class SwappFiles {
+export default class SwappFiles extends SwappManager {
 
     /** The container the server built, the one which is shown. */
     #container;
@@ -96,21 +91,14 @@ export default class SwappFiles {
     /** The files a person designated, by name, held until she sends. */
     #designated;
 
-    /** What posts a task to the server and reads its answer. */
-    #request;
-
-    /** What opens the dialog of information of the page. */
-    #dialog;
-
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
 
     constructor() {
+        super();
         this.#container = null;
         this.#designated = new Map();
-        this.#request = new RequestManager();
-        this.#dialog = new DialogManager();
     }
 
     // ------------------------------------------------------------------------
@@ -372,8 +360,9 @@ export default class SwappFiles {
      * @returns {Promise<void>}
      */
     async #post(posted) {
-        const pageUri = pageAddress();
-        const answered = await this.#request.sendPostRequest(posted, JSON_TYPE, pageUri);
+        // What the server said is said by postEvents() of SwappManager, in
+        // its dialog, and the container it wrote is put in the page all the same.
+        const answered = await this.postEvents(posted);
         if (answered === null || answered === undefined) {
             console.error('SwappFiles: the server answered nothing.');
             return;
@@ -392,28 +381,6 @@ export default class SwappFiles {
         if (place !== null && window.Wexa && window.Wexa.icons) {
             window.Wexa.icons.run(place);
         }
-
-        if (FIELD_INFO in answered && answered[FIELD_INFO].length > 0) {
-            this.#showInfo(answered[FIELD_INFO]);
-        }
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Display a message in the dialog of information of the page.
-     *
-     * @param {string} message - The message the server answered.
-     * @returns {void}
-     */
-    #showInfo(message) {
-        const dlg = document.getElementById(ID_INFO_DIALOG);
-        if (dlg === null) {
-            alert(message);
-            return;
-        }
-        dlg.innerHTML = `<p>${message}</p>`;
-        this.#dialog.open(ID_INFO_DIALOG);
     }
 
     // ------------------------------------------------------------------------

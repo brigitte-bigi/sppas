@@ -82,5 +82,19 @@ class TestAppInDevelopment(unittest.TestCase):
             self.assertIsInstance(dispatcher.bake_response("test.html"), swappTestsResponseRecipe)
 
 
+# ---------------------------------------------------------------------------
+
+
+class TestPageOfTheMachine(unittest.TestCase):
+    """The Journal is a page of the machine: a web service does not serve it."""
+
+    def test_the_journal(self):
+        """Online, journal.html is not served; locally, it is."""
+        with mock.patch.object(swapp_settings, "served_locally", False):
+            self.assertFalse(swappDispatcher().is_page("journal.html"))
+        with mock.patch.object(swapp_settings, "served_locally", True):
+            self.assertTrue(swappDispatcher().is_page("journal.html"))
+
+
 if __name__ == "__main__":
     unittest.main()

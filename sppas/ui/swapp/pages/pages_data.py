@@ -45,6 +45,7 @@ from whakerpy.httpd import BaseResponseRecipe
 
 from ..swapp_base.swapp_bakery import swappWebData
 from ..swapp_core.swapp_page_info import swappWebPageInfo
+from ..swapp_core.swappsg import swapp_settings
 
 from .cite_maker import swappCiteResponseRecipe
 
@@ -84,7 +85,7 @@ class swappPagesData(swappWebData):
 
         """
         for page_info in self.__pages:
-            if page_name == page_info.recipe.page():
+            if page_name == page_info.recipe.page() and self.__is_served(page_info) is True:
                 return True
         return False
 
@@ -101,8 +102,30 @@ class swappPagesData(swappWebData):
         logging.info(f"Requested page name: {page_name}")
 
         for page_info in self.__pages:
-            if page_name == page_info.recipe.page():
+            if page_name == page_info.recipe.page() and self.__is_served(page_info) is True:
                 return page_info.recipe()
 
         # Any other page name
         return None
+
+    # -----------------------------------------------------------------------
+    # Private
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __is_served(page_info: swappWebPageInfo) -> bool:
+        """Return True if the given page is served where swapp is served.
+
+        A page of the machine is not served by a web service: it says so
+        itself, with local_only(), and its item of the nav is disabled.
+
+        :param page_info: (swappWebPageInfo) A page of the registry
+        :return: (bool)
+
+        """
+        if swapp_settings.served_locally is True:
+            return True
+        if hasattr(page_info.recipe, "local_only") is False:
+            return True
+
+        return page_info.recipe.local_only() is False

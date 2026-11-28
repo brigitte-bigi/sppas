@@ -137,6 +137,19 @@ class swappBaseResponse(BaseResponseRecipe):
 
     # -----------------------------------------------------------------------
 
+    @classmethod
+    def local_only(cls) -> bool:
+        """Return True if the page is served by a local server only.
+
+        A page says it itself, as an app does: what it shows decides. One
+        which shows what the machine does, for its single reader, has no
+        meaning on a web service. Its item of the nav stays, disabled.
+
+        """
+        return False
+
+    # -----------------------------------------------------------------------
+
     def is_running(self) -> bool:
         """Return True while a long process of the app goes.
 
@@ -328,20 +341,24 @@ class swappBaseResponse(BaseResponseRecipe):
             events.pop(event_name, None)
 
         # The manager of the theme announces it under the name "theme",
-        # without the prefix the two others carry.
+        # without the prefix the two others carry. What the reader chose is
+        # kept for the next launch on the machine of a local server only:
+        # served by a web service, it is the reader's, and the address of the
+        # page carries it.
+        _kept = swapp_settings.served_locally is True
         if "theme" in events:
             theme = events.pop("theme")
-            if theme in THEME_NAMES:
+            if theme in THEME_NAMES and _kept is True:
                 swapp_settings.accessibility_theme = theme
 
         if "accessibility_color" in events:
             color = events.pop("accessibility_color")
-            if color in COLOR_NAMES:
+            if color in COLOR_NAMES and _kept is True:
                 swapp_settings.accessibility_color = color
 
         if "accessibility_contrast" in events:
             contrast = events.pop("accessibility_contrast")
-            if contrast in CONTRAST_NAMES:
+            if contrast in CONTRAST_NAMES and _kept is True:
                 swapp_settings.accessibility_contrast = contrast
 
         # A long process is modal: while it goes, the help is not shown, and

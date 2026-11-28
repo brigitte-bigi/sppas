@@ -252,7 +252,10 @@ what follows its name, so that what authorizes a secret name goes with them:
 `pageAddress()` of `statics/js/swapp_manager.js` gives it, `SwappManager`
 is the manager of Whakerexa which sends there, and the managers of the apps,
 the progress of a process, the windows of the options and the provision of
-files all send there. `sppas.js` gives the same address to the manager of the
+files all send there. The manager of every app derives from it, whether the
+site protects the pages of that app or not: its `postEvents()` says what the
+server said in the dialog of the errors or in the one of the information, and
+never reloads the page, a reload being a request which transmits nothing. `sppas.js` gives the same address to the manager of the
 accessibility of Whakerexa. Once a process has ended, its results are asked
 for as a navigation, by `submitFields()` of `SwappManager`: the server
 answers the whole page, and WhakerPy signs the links of the produced files in
@@ -441,6 +444,9 @@ choices are announced by the client and kept by `bake()` of
 `swappBaseResponse`, the only place every request goes through. They are
 named in the address SPPAS is opened at (`client_url()`), where the
 managers of Whakerexa read them and carry them from a page to the next.
+They are kept by a local server only, for the next launch: served by a web
+service, the choices are the reader's, and nothing of a reader is held by
+the server -- the address of the page carries them.
 
 An application can bring its own theme: it is its identity, and it is
 never kept as the choice of the reader. It says so twice, and writes
@@ -522,6 +528,12 @@ The store is fed by two producers:
   the Journal in silence;
 - the wx interface, through the communication socket (its python logging
   records are sent by a dedicated handler).
+
+Served by a web service, SPPAS has no Journal: what a reader did is in the
+reports of the apps, and what the server did in its log. The page says it
+itself, with `local_only()` of `swappBaseResponse`, as an app does, and the
+provider of the pages does not serve it; the Journal item of the nav stays,
+disabled, and the Dashboard invites to nothing.
 
 The journal page (journal.html) lives in a single named tab (`sppas_infos`): the "Journal"
 button of every app menu reuses and reloads it. The page sends a periodic

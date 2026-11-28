@@ -341,7 +341,8 @@ export default class ConvertManager extends SwappManager {
      * @returns {Promise<boolean>} Whether what the server wrote was put in the page.
      */
     async #post(fields) {
-        // Nothing is given back when the server said something: it was shown.
+        // What the server said is said by postEvents() of SwappManager, in
+        // its dialog, and what the server wrote is put in the page all the same.
         const answered = await this.postEvents(fields);
         if (answered === null || answered === undefined) {
             return false;

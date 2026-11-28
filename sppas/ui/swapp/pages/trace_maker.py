@@ -95,6 +95,18 @@ class swappTraceResponseRecipe(swappBaseResponse):
     # -----------------------------------------------------------------------
 
     @classmethod
+    def local_only(cls) -> bool:
+        """Override. The Journal shows what SPPAS does on the machine of its reader.
+
+        Served by a web service, the machine is the server: what a reader
+        did is in the reports of the apps, and what the server did in its log.
+
+        """
+        return True
+
+    # -----------------------------------------------------------------------
+
+    @classmethod
     def name(cls) -> str:
         """Return the short name of the page, displayed in link buttons."""
         return MSG_JOURNAL

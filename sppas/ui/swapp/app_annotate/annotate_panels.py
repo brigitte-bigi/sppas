@@ -353,7 +353,7 @@ class swappActionAnnotatePanel(TagNode):
                                                       "aria-describedby": "annotate_perform_state",
                                                       "data-icon": "play"})
             _group.append_child(HTMLNode(_group.identifier, None, "p", value=MSG_RUN_MISSING,
-                                         attributes={"id": "annotate_perform_state", "class": "annotate-missing"}))
+                                         attributes={"id": "annotate_perform_state", "class": "missing"}))
 
     # -----------------------------------------------------------------------
 
@@ -376,9 +376,9 @@ class swappActionAnnotatePanel(TagNode):
 
         # What says no report is checked is always written, and hidden when
         # one is: checking a report in the page makes no request.
-        _class = "annotate-missing"
+        _class = "missing"
         if checked is True:
-            _class = "annotate-missing hidden"
+            _class = "missing hidden"
         _group.append_child(HTMLNode(_group.identifier, None, "p", value=MSG_REPORT_MISSING,
                                      attributes={"id": "annotate_show_state", "class": _class}))
 
@@ -617,7 +617,7 @@ class swappAnnotationsPanel(TagNode):
         # in the color of what is missing.
         if len(reason) > 0:
             _column.append_child(HTMLNode(_column.identifier, None, "p", value=html.escape(reason),
-                                          attributes={"class": "annotate-missing"}))
+                                          attributes={"class": "missing"}))
 
         # What it requires is a precision given after its description: a
         # description list, one term and its description for the files it

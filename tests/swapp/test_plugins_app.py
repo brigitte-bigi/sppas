@@ -298,7 +298,7 @@ class TestInstalledPlugins(unittest.TestCase):
         button = re.search(r'<button [^>]*value="plugins_run"[^>]*>', page).group(0)
         self.assertIn(" disabled", button)
         self.assertIn('aria-describedby="plugins_run_state"', button)
-        self.assertIsNotNone(re.search(r'<p id="plugins_run_state" class="plugins-missing">', page))
+        self.assertIsNotNone(re.search(r'<p id="plugins_run_state" class="missing">', page))
 
         fields = swappPageFields(page).fields_of("plugins_form")
         fields["plugins_sel_hello"] = "True"
@@ -307,7 +307,7 @@ class TestInstalledPlugins(unittest.TestCase):
         button = re.search(r'<button [^>]*value="plugins_run"[^>]*>', page).group(0)
         self.assertNotIn(" disabled", button)
         self.assertNotIn("aria-describedby", button)
-        self.assertIsNotNone(re.search(r'<p id="plugins_run_state" class="plugins-missing hidden">', page))
+        self.assertIsNotNone(re.search(r'<p id="plugins_run_state" class="missing hidden">', page))
 
     # -----------------------------------------------------------------------
 

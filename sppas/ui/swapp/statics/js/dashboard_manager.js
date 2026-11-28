@@ -1,6 +1,6 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
-const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
+import SwappManager from './swapp_manager.js';
 const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
 const dialogManager = new DialogManager();
 
@@ -52,13 +52,13 @@ const dialogManager = new DialogManager();
 /**
  * This class orchestrates user interactions within *dashboard.html*. It attaches event
  * listeners to the buttons of the main container, sends corresponding asynchronous
- * requests to the server, and updates the DOM in response. It relies on BaseManager
+ * requests to the server, and updates the DOM in response. It relies on SwappManager
  * for communication logic and form submission, and on WexaLogger for debug output.
  *
  * handleDashboardManagerOnLoad() has to be invoked **after** the DOM is loaded.
  *
  */
-export default class DashboardManager extends BaseManager {
+export default class DashboardManager extends SwappManager {
 
     // ------------------------------------------------------------------------
     // Constructor

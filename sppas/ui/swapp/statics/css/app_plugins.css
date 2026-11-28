@@ -37,12 +37,6 @@
     -------------------------------------------------------------------------
 */
 
-/* What is missing for a button to answer is written in the color of an
-   error. */
-.plugins-missing {
-    color: var(--error-color);
-}
-
 /*
 ============================  LIST OF PLUGINS  ===============================
 */

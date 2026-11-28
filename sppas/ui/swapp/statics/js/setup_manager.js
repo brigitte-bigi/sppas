@@ -1,6 +1,6 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
-const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
+import SwappManager from './swapp_manager.js';
 import SwappProcess from './swapp_process.js';
 
 const PROCESS_FIELD = 'swapp_process';
@@ -53,13 +53,13 @@ const PROCESS_FIELD = 'swapp_process';
 /**
  * This class orchestrates user interactions within *setup.html*. It attaches event
  * listeners to the buttons of the main container, sends corresponding asynchronous
- * requests to the server, and updates the DOM in response. It relies on BaseManager
+ * requests to the server, and updates the DOM in response. It relies on SwappManager
  * for communication logic and form submission, and on WexaLogger for debug output.
  *
  * handleSetupManagerOnLoad() has to be invoked **after** the DOM is loaded.
  *
  */
-export default class SetupManager extends BaseManager {
+export default class SetupManager extends SwappManager {
 
     // ------------------------------------------------------------------------
     // Constructor
@@ -264,6 +264,10 @@ export default class SetupManager extends BaseManager {
         const events = {event_name: eventName, event_value: eventValue};
         WexaLogger.debug(eventName)
         WexaLogger.debug(eventValue)
+        // What was said for the request before is closed before this one is
+        // sent: what the server says of this one is said by postEvents().
+        this._hideDialog("error_dialog")
+        this._hideDialog("info_dialog")
         const response = await this.postEvents(events);
         let start_progress = false;
 
@@ -273,8 +277,6 @@ export default class SetupManager extends BaseManager {
                 const msg = 'Invalid response from server. Please retry.';
                 this._showActionResult(msg, '', false);
             } else {
-                this._hideDialog("error_dialog")
-                this._hideDialog("info_dialog")
                 for (const [id, html] of Object.entries(response)) {
                     WexaLogger.debug(` - Update HTML content of: ${id}`);
                     const old = document.getElementById(id);

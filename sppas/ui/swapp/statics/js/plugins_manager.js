@@ -20,10 +20,7 @@ const FIELD_SELECTED = 'plugins_sel_';
 const PROCESS_FIELD = 'swapp_process';
 const ID_RUN_STATE = 'plugins_run_state';
 const DATA_RUN = 'run';
-const DATA_INFO = 'info';
-const DATA_ERROR = 'error';
 const DATA_PLUGINS = 'plugins';
-const JSON_TYPE = 'application/json';
 
 /**
  * :filename: sppas.ui.swapp.statics.js.plugins_manager.js
@@ -251,26 +248,14 @@ export default class PluginsManager extends SwappManager {
      * @returns {Promise<void>}
      */
     async #post(fields) {
-        // What the server said is shown by the page: postEvents() would
-        // reload it instead, and what was said would be lost.
-        const answered = await this._requestManager.sendPostRequest(fields, JSON_TYPE, this._uri);
+        // What the server said is said by postEvents() of SwappManager, in
+        // its dialog, and what the server wrote is put in the page all the same.
+        const answered = await this.postEvents(fields);
         if (answered === null || answered === undefined) {
-            WexaLogger.error('PluginsManager: the server answered nothing.');
-            return;
-        }
-        // A request which failed is said in the dialog of the errors, as
-        // the base manager says it.
-        if (this._requestManager.status !== 200) {
-            this._showActionResult(answered.error || '', '', false);
             return;
         }
         if (DATA_PLUGINS in answered) {
             this.#placePlugins(answered[DATA_PLUGINS]);
-        }
-        if (DATA_ERROR in answered) {
-            this.#say(ID_ERROR_DIALOG, answered[DATA_ERROR]);
-        } else if (DATA_INFO in answered) {
-            this.#say(ID_INFO_DIALOG, answered[DATA_INFO]);
         }
         if (DATA_RUN in answered) {
             this.#placeRun(answered[DATA_RUN]);
@@ -308,28 +293,6 @@ export default class PluginsManager extends SwappManager {
             waiting.hidden = true;
         }
         pressed.disabled = false;
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Write what the server said in a dialog, and open it.
-     *
-     * @private
-     * @param {string} id - The identifier of the dialog: the one of the information, or the one of the errors.
-     * @param {string} text - What the server said.
-     * @returns {void}
-     */
-    #say(id, text) {
-        const dialog = document.getElementById(id);
-        if (!(dialog instanceof HTMLDialogElement)) {
-            WexaLogger.error(`PluginsManager: the dialog ${id} was not found.`);
-            return;
-        }
-        const p = document.createElement('p');
-        p.textContent = text;
-        dialog.replaceChildren(p);
-        dialogManager.open(id, true);
     }
 
     // ------------------------------------------------------------------------

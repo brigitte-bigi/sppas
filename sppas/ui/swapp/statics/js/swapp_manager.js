@@ -1,5 +1,12 @@
 const wexa_statics_js = window.WEXA_JS_PATH;
 const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
+const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
+
+const ID_ERROR_DIALOG = 'error_dialog';
+const ID_INFO_DIALOG = 'info_dialog';
+const DATA_ERROR = 'error';
+const DATA_INFO = 'info';
+const JSON_TYPE = 'application/json';
 
 /**
  * :filename: sppas.ui.swapp.statics.js.swapp_manager.js
@@ -74,6 +81,73 @@ export default class SwappManager extends BaseManager {
     constructor() {
         super();
         this._uri = pageAddress();
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Send events to the address of the page, and return what the server answered.
+     *
+     * What the server said is said in the dialog of the errors or in the one
+     * of the information, and the page is not reloaded: a reload is a request
+     * which transmits nothing, and what was said would be lost with what the
+     * page holds. The answer is given back all the same, so that what the
+     * server wrote is put in the page. A request which failed is said in the
+     * dialog of the errors, as the base manager says it, and nothing is given
+     * back.
+     *
+     * @param {Object} events - What is sent, by name.
+     * @returns {Promise<Object|undefined>} The answer, undefined when there is none or when the request failed.
+     */
+    async postEvents(events) {
+        let answered;
+        try {
+            answered = await this._requestManager.sendPostRequest(events, JSON_TYPE, this._uri);
+        } catch (error) {
+            WexaLogger.error(`SwappManager: no answer from the server. ${error}`);
+            return;
+        }
+        if (answered === null || answered === undefined) {
+            return;
+        }
+
+        const error = answered[DATA_ERROR] || '';
+        const info = answered[DATA_INFO] || '';
+        if (this._requestManager.status !== 200) {
+            if (error.length > 0 || info.length > 0) {
+                this._showActionResult(error, info, false);
+                return;
+            }
+            return answered;
+        }
+        if (error.length > 0) {
+            this._say(ID_ERROR_DIALOG, error);
+        } else if (info.length > 0) {
+            this._say(ID_INFO_DIALOG, info);
+        }
+
+        return answered;
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Say one thing in the dialog of the given identifier, in place of what it said.
+     *
+     * @param {string} id - Identifier of the dialog.
+     * @param {string} text - What is said.
+     * @returns {void}
+     */
+    _say(id, text) {
+        const dialog = document.getElementById(id);
+        if (!(dialog instanceof HTMLDialogElement)) {
+            WexaLogger.error(`SwappManager: the dialog ${id} was not found.`);
+            return;
+        }
+        const p = document.createElement('p');
+        p.textContent = text;
+        dialog.replaceChildren(p);
+        this._dialog.open(id, true);
     }
 
     // ------------------------------------------------------------------------

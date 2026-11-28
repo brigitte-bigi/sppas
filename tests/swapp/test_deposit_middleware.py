@@ -43,6 +43,7 @@ import json
 import os
 import tempfile
 import unittest
+from unittest import mock
 
 from whakerpy.httpd.hsignedurl import SignedURL
 
@@ -65,6 +66,11 @@ class TestDepositMiddleware(unittest.TestCase):
 
     def setUp(self):
         self.folder = tempfile.TemporaryDirectory()
+        # The places of the test stand in a space of its own, and not in the
+        # one of the machine, which holds a few places only.
+        self.space = mock.patch("sppas.ui.swapp.services.deposit.deposit_settings.tempfile.gettempdir",
+                                return_value=self.folder.name)
+        self.space.start()
         _json = os.path.join(self.folder.name, "swapp.json")
         with open(_json, "w") as fd:
             json.dump({"WhakerPy": {"blacklist": [], "signed_url": SIGNED_URL,
@@ -80,6 +86,7 @@ class TestDepositMiddleware(unittest.TestCase):
         self.signer.configure({"signed_url": SIGNED_URL})
 
     def tearDown(self):
+        self.space.stop()
         self.folder.cleanup()
 
     # -----------------------------------------------------------------------

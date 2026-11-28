@@ -165,5 +165,29 @@ class TestSignedAddress(unittest.TestCase):
                     self.assertEqual(200, recipe.status.code)
 
 
+# ---------------------------------------------------------------------------
+
+
+class TestReaderChoices(unittest.TestCase):
+    """What a reader chose to be shown with is kept by a local server only."""
+
+    def test_kept_locally_only(self):
+        """Online, the theme, the color and the contrast a reader chose are not kept by the server."""
+        for local in (False, True):
+            with self.subTest(served_locally=local):
+                with mock.patch.object(swapp_settings, "served_locally", local), \
+                        mock.patch.object(swapp_settings, "accessibility_theme", ""), \
+                        mock.patch.object(swapp_settings, "accessibility_color", ""), \
+                        mock.patch.object(swapp_settings, "accessibility_contrast", ""):
+                    swappConvertResponseRecipe().bake({"theme": "aurora", "accessibility_color": "dark",
+                                                       "accessibility_contrast": "contrast"})
+                    kept = (swapp_settings.accessibility_theme, swapp_settings.accessibility_color,
+                            swapp_settings.accessibility_contrast)
+                if local is True:
+                    self.assertEqual(("aurora", "dark", "contrast"), kept)
+                else:
+                    self.assertEqual(("", "", ""), kept)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -216,13 +216,15 @@ class swappDashboardView(swappBaseView):
         :param wkp_path: (str) Path of its file, or an empty string.
 
         """
-        # Create the new ones
-        if agreement is False:
+        # Create the new ones. Served by a web service, the license is shown at
+        # each display: no agreement of a reader is kept.
+        if agreement is False or swapp_settings.served_locally is False:
             wn = swappAgreementDialog(self._htree.body_main.identifier)
             self._htree.body_main.append_child(wn)
-        else:
+        elif swapp_settings.served_locally is True:
             # Always baked, so the periodic poll can show or hide it live,
-            # without reloading the page -- see dashboard_manager.js.
+            # without reloading the page -- see dashboard_manager.js. Served
+            # by a web service, SPPAS has no Journal to invite to.
             wn = swappTraceInfoDialog(self._htree.body_main.identifier)
             if trace_alive is True:
                 wn.add_attribute("class", "hidden-alert")

@@ -127,6 +127,12 @@ class swappDashboardController:
         :return: (bool) True if the page has to be refreshed.
 
         """
+        # Served by a web service, the agreement is the reader's, and nothing
+        # of a reader is kept: using the page is accepting.
+        if swapp_settings.served_locally is False:
+            logging.warning("The license was asked to be agreed, and this is a web service.")
+            return False
+
         swapp_settings.license_agreement = True
         logging.info("License agreement is satisfied.")
         return False

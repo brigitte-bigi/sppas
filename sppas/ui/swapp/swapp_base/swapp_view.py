@@ -721,6 +721,10 @@ class swappBaseView:
         _button.add_attribute("data-href", "journal.html")
         _button.add_attribute("data-target", "sppas_infos")
         _button.add_attribute("class", "menuitem")
+        # Served by a web service, SPPAS has no Journal: what a reader did is
+        # in the reports of the apps, and what the server did in its log.
+        if swapp_settings.served_locally is False:
+            _button.add_attribute("disabled", None)
         parent.append_child(_button)
         return _button
 

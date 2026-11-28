@@ -223,6 +223,11 @@
 				open-source. Nothing else is shown until you have answered. The question is asked
 				once and never again.
 			</p>
+			<p>
+				On the website of SPPAS, nothing of yours is kept from one page to the next: the
+				text is shown each time you reach this page, its box "I agree" checked and impossible
+				to uncheck: using the page is accepting it.
+			</p>
 
 			<p>
 				The button to click looks like this one:
@@ -465,7 +470,8 @@
 				the name of the workspace, the path of its file and whether the Journal tab is
 				alive. The page is not baked again: the browser updates what changed.</li>
 			<li><code>handle_licence_agreement</code> -- the license is agreed, the page is built
-				again without the dialog.</li>
+				again without the dialog. Served by a web service, it is refused: the dialog has no
+				button there, and using the page is accepting.</li>
 			<li><code>handle_start_sppas</code> -- the wx interface is launched. The answer is the
 				error, if any, or the state saying it started.</li>
 			<li><code>event_bake=close</code> -- leaving SPPAS. The page answers 410, Gone. Served by a web

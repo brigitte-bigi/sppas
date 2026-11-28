@@ -38,9 +38,11 @@
 
 """
 
+from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLNode
 
 from sppas.ui import _
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -53,6 +55,11 @@ MSG_AGREE = _("I agree")
 
 class swappAgreementDialog(HTMLNode):
     """A dialog for the user to accept the license requirements.
+
+    Served by a web service, nothing of a reader is kept between two
+    requests: the dialog is shown at each display of the Dashboard, and it
+    asks for no validation. In place of its button, a box shows the agreement
+    checked, and it cannot be unchecked: using the page is accepting.
 
     """
 
@@ -68,7 +75,16 @@ class swappAgreementDialog(HTMLNode):
         agree_p = HTMLNode(self.identifier, "agree_p", "p", value=MSG_INFO)
         self.append_child(agree_p)
 
-        agree_button = HTMLNode(self.identifier, "agree_button", "button", value=MSG_AGREE)
-        agree_button.add_attribute("id", "agree_button")
-        agree_button.add_attribute("class", "action-button")
-        self.append_child(agree_button)
+        if swapp_settings.served_locally is False:
+            agreed = HTMLNode(self.identifier, None, "p")
+            self.append_child(agreed)
+            agreed.append_child(EmptyNode(agreed.identifier, None, "input",
+                                          attributes={"type": "checkbox", "id": "agree_check",
+                                                      "checked": None, "disabled": None}))
+            agreed.append_child(HTMLNode(agreed.identifier, None, "label", value=MSG_AGREE,
+                                         attributes={"for": "agree_check"}))
+        else:
+            agree_button = HTMLNode(self.identifier, "agree_button", "button", value=MSG_AGREE)
+            agree_button.add_attribute("id", "agree_button")
+            agree_button.add_attribute("class", "action-button")
+            self.append_child(agree_button)

@@ -65,6 +65,7 @@ MSG_INTEROPERABILITY_SAYS = _("The metadata, the controlled vocabularies and the
 MSG_SAVE = _("Save")
 # Certains changements ne seront effectifs qu'au prochain démarrage de SPPAS.
 MSG_RESTART = _("Some of the changes only take effect the next time SPPAS starts.")
+MSG_ONLINE = _("SPPAS online does not allow the configuration to be customized.")
 
 # Ce que SPPAS écrit dans le Journal
 MSG_JOURNAL = _("What SPPAS writes in the Journal")
@@ -168,11 +169,11 @@ class swappConfigurationView(swappBaseView):
     # Update the tree -- for baking the page
     # -----------------------------------------------------------------------
 
-    def populate_tree_content(self, status_message: str = "", log_enabled: bool = True):
+    def populate_tree_content(self, status_message: str = "", enabled: bool = True):
         """Populate the tree content with the choices of the user.
 
         :param status_message: (str) What the last post did, if anything.
-        :param log_enabled: (bool) The level of the log can be changed.
+        :param enabled: (bool) The configuration can be saved.
 
         """
         _purpose = HTMLNode(self._htree.body_main.identifier, None, "p", value=MSG_PURPOSE)
@@ -186,7 +187,7 @@ class swappConfigurationView(swappBaseView):
         self._htree.body_main.append_child(_form)
 
         self._append_files_section(_form)
-        self._append_journal_section(_form, log_enabled)
+        self._append_journal_section(_form)
 
         # The confirmation of the last post: an inline message, announced
         # to screen readers when its content changes.
@@ -201,7 +202,16 @@ class swappConfigurationView(swappBaseView):
         _save.set_attribute("class", "action-button")
         _save.set_attribute("name", "event_bake")
         _save.set_attribute("value", "handle_configuration_save")
+        if enabled is False:
+            _save.set_attribute("disabled", None)
         _form.append_child(_save)
+
+        # Served by the web service, the configuration is the one of the
+        # server, for all its readers: the page says why it is not saved.
+        if enabled is False:
+            _online = HTMLNode(_form.identifier, None, "p", value=MSG_ONLINE)
+            _online.set_attribute("class", "missing")
+            _form.append_child(_online)
 
         _restart = HTMLNode(_form.identifier, None, "p", value=MSG_RESTART)
         _restart.set_attribute("class", "details")

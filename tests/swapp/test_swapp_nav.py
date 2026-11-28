@@ -42,6 +42,7 @@
 
 """
 
+import re
 import unittest
 from unittest import mock
 from html.parser import HTMLParser
@@ -208,6 +209,66 @@ class TestExit(unittest.TestCase):
         with mock.patch.object(swapp_settings, "served_locally", True):
             swappDashboardResponseRecipe().bake({"event_bake": "close"})
         self.assertIs(True, swapp_wxstate.exit_granted)
+
+
+# ---------------------------------------------------------------------------
+
+
+class TestJournalOnline(unittest.TestCase):
+    """Served by a web service, SPPAS has no Journal: its item stays, disabled, and nothing invites to it."""
+
+    def test_the_item_on_the_web_service(self):
+        """On the web service, the Journal item is disabled; on the machine, it is not."""
+        with mock.patch.object(swapp_settings, "served_locally", False):
+            nav = swappNavReader(swappConvertResponseRecipe().bake({}))
+        tag, attributes = nav.items["link-trace_button"]
+        self.assertEqual("button", tag)
+        self.assertIn("disabled", attributes)
+
+        with mock.patch.object(swapp_settings, "served_locally", True):
+            nav = swappNavReader(swappConvertResponseRecipe().bake({}))
+        tag, attributes = nav.items["link-trace_button"]
+        self.assertNotIn("disabled", attributes)
+
+    def test_no_invitation_on_the_web_service(self):
+        """On the web service, the Dashboard holds no dialog inviting to open the Journal."""
+        with mock.patch.object(swapp_settings, "license_agreement", True):
+            with mock.patch.object(swapp_settings, "served_locally", False):
+                self.assertNotIn('id="trace_dialog"', swappDashboardResponseRecipe().bake({}))
+            with mock.patch.object(swapp_settings, "served_locally", True):
+                self.assertIn('id="trace_dialog"', swappDashboardResponseRecipe().bake({}))
+
+
+# ---------------------------------------------------------------------------
+
+
+class TestLicenseOnline(unittest.TestCase):
+    """Served by a web service, the license asks for no validation: using the page is accepting."""
+
+    def test_the_license_on_the_web_service(self):
+        """Online, the license is shown at each display, its box checked and disabled; locally, with its button, once."""
+        with mock.patch.object(swapp_settings, "license_agreement", True), \
+                mock.patch.object(swapp_settings, "served_locally", False):
+            page = swappDashboardResponseRecipe().bake({})
+        self.assertIn('id="agreement_dialog"', page)
+        self.assertNotIn('id="agree_button"', page)
+        self.assertIsNotNone(re.search(r'<input[^>]*id="agree_check"[^>]*checked[^>]*disabled', page))
+
+        with mock.patch.object(swapp_settings, "license_agreement", False), \
+                mock.patch.object(swapp_settings, "served_locally", True):
+            page = swappDashboardResponseRecipe().bake({})
+        self.assertIn('id="agree_button"', page)
+
+        with mock.patch.object(swapp_settings, "license_agreement", True), \
+                mock.patch.object(swapp_settings, "served_locally", True):
+            self.assertNotIn('id="agreement_dialog"', swappDashboardResponseRecipe().bake({}))
+
+    def test_no_agreement_kept_on_the_web_service(self):
+        """Online, an agreement sent to the server is not kept for anybody."""
+        with mock.patch.object(swapp_settings, "license_agreement", False), \
+                mock.patch.object(swapp_settings, "served_locally", False):
+            swappDashboardResponseRecipe().bake({"event_bake": "handle_licence_agreement"})
+            self.assertIs(False, swapp_settings.license_agreement)
 
 
 if __name__ == "__main__":

@@ -69,6 +69,7 @@ from sppas.ui.swapp.app_annotate.annotate_maker import swappAnnotateResponseReci
 from sppas.ui.swapp.app_annotate.annotate_panels import MSG_STEP_RUN
 from sppas.ui.swapp.app_convert.convert_maker import swappConvertResponseRecipe
 from sppas.ui.swapp.app_convert.convert_view import MSG_PROGRESS as MSG_CONVERSION
+from sppas.ui.swapp.app_convert.convert_view import MSG_MISSING
 from sppas.ui.swapp.app_dashboard.dashboard_maker import swappDashboardResponseRecipe
 from sppas.ui.swapp.app_setup import setup_maker
 from sppas.ui.swapp.app_setup import setup_model
@@ -425,6 +426,18 @@ class TestConvertOnline(unittest.TestCase):
         self.space.stop()
         self.local.stop()
         shutil.rmtree(DepositSpaceForTests.settings.space, ignore_errors=True)
+
+    # -----------------------------------------------------------------------
+
+    def test_lets_go_without_any_file(self):
+        """Without any file sent, Let's go starts nothing, and the answer says that the files are missing."""
+        page = self.recipe.bake({})
+        events = with_container(swappPageFields(page).submitted("event_bake", "convert"),
+                                self.recipe._data["container"])
+        self.recipe.bake(events)
+        self.assertEqual(200, self.recipe._status.code)
+        self.assertEqual(MSG_MISSING["batch"], self.recipe._data["info"])
+        self.assertNotIn('id="percent_progress"', self.recipe._data["convert"])
 
     # -----------------------------------------------------------------------
 

@@ -258,11 +258,11 @@ class swappPluginsView(swappBaseView):
         # What starts the runs is disabled while no plugin is selected.
         _attributes = {"type": "submit", "class": "action-button", "form": self.__form_id,
                        "name": "event_bake", "value": "plugins_run"}
-        _class = "plugins-missing hidden"
+        _class = "missing hidden"
         if len(record.selected) == 0:
             _attributes["disabled"] = None
             _attributes["aria-describedby"] = "plugins_run_state"
-            _class = "plugins-missing"
+            _class = "missing"
         _plugins.append_child(HTMLNode(_plugins.identifier, None, "button", value=MSG_RUN,
                                        attributes=_attributes))
         # A reset is a reset: the decisions and the files go together, so it

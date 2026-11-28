@@ -881,6 +881,12 @@ label.switch + label {
     font-weight: bold;
 }
 
+/* What keeps a button from answering is written in the color of an error,
+   in any page. */
+.missing {
+    color: var(--error-color);
+}
+
 /* ── Actions of the Traces page: the buttons on a single line ── */
 
 #trace_actions {

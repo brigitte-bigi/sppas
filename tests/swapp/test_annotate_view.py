@@ -497,7 +497,7 @@ class TestAnnotateView(unittest.TestCase):
                                        item_of(_page, "textnorm")))
         for _key in keys_listed(_page):
             _item = item_of(_page, _key)
-            if _item.find('class="annotate-missing"') == -1:
+            if _item.find('class="missing"') == -1:
                 self.assertGreater(_item.find("Required files"), -1, _key)
 
     # -----------------------------------------------------------------------
@@ -510,7 +510,7 @@ class TestAnnotateView(unittest.TestCase):
             _page = self.recipe.bake({"event_bake": "annotate_annotations_STANDALONE"})
 
         _item = item_of(_page, "textnorm")
-        self.assertIsNotNone(re.search(r'<p class="annotate-missing">[^<]*feature_for_tests', _item))
+        self.assertIsNotNone(re.search(r'<p class="missing">[^<]*feature_for_tests', _item))
         self.assertEqual(-1, _item.find("Required files"))
         self.assertGreater(item_of(_page, "phonetize").find("Required files"), -1)
 
