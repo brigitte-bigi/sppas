@@ -105,12 +105,6 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
 
     # -----------------------------------------------------------------------
 
-    def is_running(self) -> bool:
-        """Override. Return True while a run goes (bool)."""
-        return self.__model.is_running()
-
-    # -----------------------------------------------------------------------
-
     @classmethod
     def page(cls) -> str:
         """Override. Return the HTML page name."""
@@ -139,10 +133,12 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
         self.__manager = swappFilesManager("annotate_files_panel",
                                            _workspace,
                                            reachable=_local,
-                                           has_workspace=len(_workspace.name()) > 0)
+                                           has_workspace=len(_workspace.name()) > 0,
+                                           form_id=swappAnnotateResponseRecipe.form_id())
 
-        # The model is held by the response: a run is longer than
-        # the request which started it.
+        # The model is given the manager of the provision of files the
+        # response holds. It holds nothing of a run: the page transmits the
+        # names of its report, of its results and of its process.
         self.__model = swappAnnotateModel(self.__manager)
 
     # -----------------------------------------------------------------------
@@ -167,6 +163,11 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
         # is dropped once the request is answered, and nothing of what was
         # decided is kept.
         self.__controller = swappAnnotateController(self.__model, self.__view)
+
+        # The page transmits the record of the provision of files at every
+        # request: the copy the annotations work on is rebuilt from it,
+        # before anything of Annotate is answered.
+        _consumed = self.__manager.consumes(events)
 
         # Received events from an HTTP Post.
         if "event_bake" in events:
@@ -204,7 +205,7 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
             return False
 
         # Received events of the provision of files.
-        elif self.__manager.consumes(events) is False and len(events) > 0:
+        elif _consumed is False and len(events) > 0:
             logging.error(f"Unknown events={events}")
             self._status.code = 205  # Reset Content
 
@@ -239,6 +240,12 @@ class swappAnnotateResponseRecipe(swappBaseResponse):
             _container = self.__manager.container()
             if self.__view.files is not None:
                 self.__view.files.append_child(_container)
+            else:
+                # Without the panel of the files, the page carries the record
+                # of the provision of files all the same: the requests of
+                # the form of the run hand it over.
+                _main = self._htree.body_main
+                _main.append_child(self.__manager.carried(_main.identifier))
             self._data["container"] = _container.serialize()
             # The container of the options, and the values the page carries
             # for them, answered alone as well to whoever asks for data

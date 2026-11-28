@@ -678,7 +678,7 @@ class TestRuns(unittest.TestCase):
         runs = [swappPluginRun("failer", "now", dict(), self.filenames),
                 swappPluginRun("writer", "now", {"-o": "-greet"}, self.filenames)]
         report = swappPluginsReport(REPORT_PREFIX + "test.json")
-        self.model.run(self.files.batch, runs, report)
+        self.model.run(runs, report)
 
         # The plugin which failed on every file did not keep the next one from running.
         self.assertEqual(["failer", "writer"], [_run.plugin for _run in report.read()])
@@ -700,8 +700,11 @@ class TestRuns(unittest.TestCase):
             self.assertEqual("written " + _name + ".txt", _result.said)
             self.assertEqual([os.path.join(self.data, _name + "-greet.txt")], _result.produced)
 
-        # The files were locked while the runs went, and what appeared was given back once.
-        self.assertEqual(self.filenames, self.files.locked)
+        # The runs give nothing back: the request which asks for the results
+        # releases the files, and gives back what appeared, once.
+        self.assertEqual(list(), self.files.released)
+        self.assertEqual(0, self.files.given_back)
+        self.model.give_back(report.name)
         self.assertEqual(self.filenames, self.files.released)
         self.assertEqual(1, self.files.given_back)
         self.assertEqual(1, self.files.finished)
@@ -714,6 +717,8 @@ class TestRuns(unittest.TestCase):
         option.set_type("str")
         option.set_value("-hello")
         report, process = self.model.start(["writer"], {"writer": [option]})
+        # The files are locked by the request which starts the runs.
+        self.assertEqual(self.filenames, self.files.locked)
 
         _waited = 0.
         while self.model.is_running(process) is True and _waited < 10.:
@@ -791,7 +796,7 @@ class TestRuns(unittest.TestCase):
         """TE14. While the run goes, what it says of itself names the file being treated and how many remain. [303]"""
         runs = [swappPluginRun("writer", "now", {"-o": "-greet"}, self.filenames)]
         progress = ProgressForTests()
-        self.model.run(self.files.batch, runs, swappPluginsReport(REPORT_PREFIX + "te14.json"), progress)
+        self.model.run(runs, swappPluginsReport(REPORT_PREFIX + "te14.json"), progress)
         self.assertEqual(["writer", "writer"], progress.headers)
         self.assertEqual(["a.txt (1/2)", "b.txt (2/2)"], progress.texts)
 

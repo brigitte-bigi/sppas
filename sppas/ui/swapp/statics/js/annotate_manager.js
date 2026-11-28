@@ -262,9 +262,11 @@ export default class AnnotateManager extends SwappManager {
      * @returns {Promise<void>}
      */
     async #complete() {
+        // A navigation: the page answered holds the links of the produced
+        // files, signed.
         const fields = this.#fieldsOf(document.getElementById(ID_FORM), null);
         fields[EVENT_BAKE] = TASK_COMPLETE;
-        await this.#post(fields);
+        this.submitFields(fields);
     }
 
     // ------------------------------------------------------------------------

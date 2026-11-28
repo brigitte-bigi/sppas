@@ -37,7 +37,7 @@
 
     -------------------------------------------------------------------------
 
-    TE18 to TE24, TE31, TE32 and TE39 of the dossier "Annotate - an app of SPPAS":
+    TE18, TE20 to TE24, TE31, TE32, TE39 and TE52 of the dossier "Annotate - an app of SPPAS":
     ModelRun, and what it calls the provision of files on. What runs the
     annotations is written here, as a thread: it writes a report, takes its
     time, and refuses one annotation when it is told to. No annotation of
@@ -54,6 +54,7 @@ import unittest
 from threading import Thread
 from unittest.mock import patch
 
+from sppas.core.config import sg
 from sppas.src.annotations import sppasParam
 from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States
@@ -61,8 +62,11 @@ from sppas.src.wkps import States
 from sppas.ui.swapp.app_annotate import annotate_run
 from sppas.ui.swapp.app_annotate.annotate_run import swappModelRun
 from sppas.ui.swapp.app_annotate.annotate_run import swappAnnotateProgress
+from sppas.ui.swapp.swapp_base import swapp_process
 from sppas.ui.swapp.swapp_base.swapp_process import swappProcess
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+
+from tests.swapp.test_annotate_reports import PathsForTests
 
 # ---------------------------------------------------------------------------
 
@@ -129,16 +133,24 @@ class ManagerForTests(Thread):
 
 
 class LogFileForTests:
-    """Names the reports in the folder of a test, a new name each time."""
+    """Names the files of a run in the folder of a test, as sppasLogFile does in the folder of the logs.
+
+    The name holds the pattern, and the first number no file of the folder bears.
+
+    """
 
     folder = ""
 
-    def __init__(self, pattern: str = "report"):
+    def __init__(self, pattern: str = "log", extension: str = ".txt"):
         self.__pattern = pattern
+        self.__extension = extension
         self.__number = 1
+        while os.path.exists(self.get_filename()) is True:
+            self.__number += 1
 
     def get_filename(self) -> str:
-        return os.path.join(LogFileForTests.folder, "{:s}_{:04d}.txt".format(self.__pattern, self.__number))
+        return os.path.join(LogFileForTests.folder, "{:s}_{:s}_{:04d}{:s}".format(
+            sg.__name__, self.__pattern, self.__number, self.__extension))
 
     def increment(self) -> None:
         self.__number += 1
@@ -179,14 +191,17 @@ class TestWithARun(unittest.TestCase):
     def setUp(self):
         self.folder = tempfile.mkdtemp(prefix="test_annotate_run_")
         LogFileForTests.folder = self.folder
+        PathsForTests.logs = self.folder
         ManagerForTests.seconds = 0.
         ManagerForTests.fails = ""
         ManagerForTests.created = list()
         ManagerForTests.writes = list()
-        # The run is the one of the local server: its report is written in
-        # the folder of the logs.
+        # The run is the one of the local server: its report, its results
+        # and its process are written in the folder of the logs.
         self.patchers = [patch.object(annotate_run, "sppasAnnotationsManager", ManagerForTests),
                          patch.object(annotate_run, "sppasLogFile", LogFileForTests),
+                         patch.object(annotate_run, "paths", PathsForTests),
+                         patch.object(swapp_process, "paths", PathsForTests),
                          patch.object(swapp_settings, "served_locally", True)]
         for _patcher in self.patchers:
             _patcher.start()
@@ -218,9 +233,9 @@ class TestWithARun(unittest.TestCase):
             _parameters.activate_step(_parameters.get_step_idx(_key))
         return _parameters
 
-    def wait(self) -> None:
-        """Wait until the run has ended."""
-        while self.run_model.is_running() is True:
+    def wait(self, process: str) -> None:
+        """Wait until the run of the given process has ended."""
+        while self.run_model.is_running(process) is True:
             time.sleep(0.02)
 
     # -----------------------------------------------------------------------
@@ -228,29 +243,42 @@ class TestWithARun(unittest.TestCase):
     def test_te18_starting_does_not_wait(self):
         """TE18. Starting answers before the run has ended, and the run goes on after the answer. RO5"""
         ManagerForTests.seconds = 0.2
-        self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
-        self.assertTrue(self.run_model.is_running())
+        _report, _results, _process = self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
+        self.assertTrue(self.run_model.is_running(_process))
         self.assertFalse(ManagerForTests.created[-1].reached_the_end)
 
-        self.wait()
+        self.wait(_process)
         self.assertTrue(ManagerForTests.created[-1].reached_the_end)
 
     # -----------------------------------------------------------------------
 
-    def test_te19_a_second_start_is_refused(self):
-        """TE19. A second start while one is going is refused. C13"""
+    def test_te52_a_run_is_read_by_its_names(self):
+        """TE52. Where a run stands and what came of it are read by their names, by any process of the server. RO9"""
         ManagerForTests.seconds = 0.2
-        self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
-        with self.assertRaises(RuntimeError):
-            self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
-        self.assertEqual(1, len(ManagerForTests.created))
+        _report, _results, _process = self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
+
+        # Another process of the server has its own ModelRun, which started nothing.
+        _other = swappModelRun(ProvisionForTests())
+        self.assertTrue(_other.is_running(_process))
+        self.assertEqual([], _other.results(_results))
+
+        self.wait(_process)
+        self.assertFalse(_other.is_running(_process))
+        _read = _other.results(_results)
+        self.assertEqual(1, len(_read))
+        self.assertEqual(os.path.join(self.folder, "sample"), _read[0].root)
+
+        self.assertFalse(_other.is_running(""))
+        with self.assertRaises(ValueError):
+            _other.results(_report)
 
     # -----------------------------------------------------------------------
 
     def test_te20_what_is_handed_over(self):
         """TE20. Every selected annotation activated, and no other. C6, C14"""
-        self.run_model.start(self.batch(), self.parameters(["phonetize", "textnorm"]), True)
-        self.wait()
+        _report, _results, _process = self.run_model.start(self.batch(), self.parameters(["phonetize", "textnorm"]),
+                                                           True)
+        self.wait(_process)
 
         _manager = ManagerForTests.created[-1]
         self.assertEqual(sorted(["phonetize", "textnorm"]), sorted(_manager.activated))
@@ -262,11 +290,11 @@ class TestWithARun(unittest.TestCase):
         """TE21. What is decided after the start does not change what that run is performed with. C14"""
         ManagerForTests.seconds = 0.2
         _parameters = self.parameters(["textnorm"])
-        self.run_model.start(self.batch(), _parameters, False)
+        _report, _results, _process = self.run_model.start(self.batch(), _parameters, False)
 
         # The next request rebuilds what was decided in another object.
         self.parameters(["phonetize"])
-        self.wait()
+        self.wait(_process)
 
         _manager = ManagerForTests.created[-1]
         self.assertIs(_parameters, _manager.parameters)
@@ -277,10 +305,11 @@ class TestWithARun(unittest.TestCase):
     def test_te22_an_annotation_which_fails(self):
         """TE22. It stops nothing: the run reaches its end, and the report holds both. C16"""
         ManagerForTests.fails = "textnorm"
-        _name = self.run_model.start(self.batch(), self.parameters(["textnorm", "phonetize"]), False)
-        self.wait()
+        _report, _results, _process = self.run_model.start(self.batch(),
+                                                           self.parameters(["textnorm", "phonetize"]), False)
+        self.wait(_process)
 
-        with open(os.path.join(self.folder, _name), "r") as fp:
+        with open(os.path.join(self.folder, _report), "r") as fp:
             _content = fp.read()
         self.assertIn("textnorm: refused", _content)
         self.assertIn("phonetize: done", _content)
@@ -290,18 +319,16 @@ class TestWithARun(unittest.TestCase):
 
     def test_te23_where_a_run_stands(self):
         """TE23. While a run goes, where it stands is what the API set, read in the file of its process; once it has ended, the hundred. C18"""
-        self.assertEqual("", self.run_model.process_name())
-
         ManagerForTests.seconds = 0.3
-        self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
-        _process = swappProcess(self.run_model.process_name())
+        _report, _results, _name = self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
+        _process = swappProcess(_name)
         time.sleep(0.1)
         _percent, _header, _text, _finished = _process.read()
         self.assertEqual(0, _percent)
         self.assertEqual("textnorm", _header)
         self.assertFalse(_finished)
 
-        self.wait()
+        self.wait(_name)
         _percent, _header, _text, _finished = _process.read()
         self.assertEqual(100, _percent)
         self.assertTrue(_finished)
@@ -310,13 +337,13 @@ class TestWithARun(unittest.TestCase):
 
     def test_te24_two_runs_two_reports(self):
         """TE24. Two runs write two reports, and the second one replaces nothing of the first. C17"""
-        _first = self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
-        self.wait()
+        _first, _results, _process = self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
+        self.wait(_process)
         with open(os.path.join(self.folder, _first), "r") as fp:
             _content = fp.read()
 
-        _second = self.run_model.start(self.batch(), self.parameters(["phonetize"]), False)
-        self.wait()
+        _second, _results, _process = self.run_model.start(self.batch(), self.parameters(["phonetize"]), False)
+        self.wait(_process)
 
         self.assertNotEqual(_first, _second)
         with open(os.path.join(self.folder, _first), "r") as fp:
@@ -326,24 +353,28 @@ class TestWithARun(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_te31_the_batch_is_locked_while_the_run_goes(self):
-        """TE31. The files of the batch are locked while the annotations are performed, and none afterward. T08"""
+        """TE31. The files of the batch are locked from the start, and none once the request which asks for the results gave them back. T08"""
         ManagerForTests.seconds = 0.2
-        self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
+        _report, _results, _process = self.run_model.start(self.batch(), self.parameters(["textnorm"]), False)
         self.assertEqual(1, len(self.provision.locked))
 
-        self.wait()
+        self.wait(_process)
+        self.assertEqual(1, len(self.provision.locked))
+        self.run_model.give_back(_results)
         self.assertEqual(0, len(self.provision.locked))
 
     # -----------------------------------------------------------------------
 
     def test_te32_what_was_produced_is_given_back_once(self):
-        """TE32. Once, when the annotations have been performed, and not at each of them. T09"""
+        """TE32. Once, by the request which asks for the results, and not at each annotation. T09"""
         ManagerForTests.seconds = 0.1
-        self.run_model.start(self.batch(), self.parameters(["textnorm", "phonetize"]), False)
+        _report, _results, _process = self.run_model.start(self.batch(),
+                                                           self.parameters(["textnorm", "phonetize"]), False)
         self.assertEqual(0, self.provision.given_back)
 
-        self.wait()
-        self.run_model.is_running()
+        self.wait(_process)
+        self.assertEqual(0, self.provision.given_back)
+        self.run_model.give_back(_results)
         self.assertEqual(1, self.provision.given_back)
         self.assertEqual(1, self.provision.finished_said)
 
@@ -368,11 +399,11 @@ class TestWithARun(unittest.TestCase):
                 fp.write("")
 
         ManagerForTests.seconds = 0.1
-        self.run_model.start(_batch, self.parameters(["textnorm"]), False)
-        self.assertEqual([], self.run_model.results())
-        self.wait()
+        _report, _names, _process = self.run_model.start(_batch, self.parameters(["textnorm"]), False)
+        self.assertEqual([], self.run_model.results(_names))
+        self.wait(_process)
 
-        _results = self.run_model.results()
+        _results = self.run_model.results(_names)
         _roots = list()
         _statuses = list()
         for _result in _results:

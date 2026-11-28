@@ -76,4 +76,34 @@ export default class SwappManager extends BaseManager {
         this._uri = pageAddress();
     }
 
+    // ------------------------------------------------------------------------
+
+    /**
+     * Send fields as a navigation, so that the server answers the whole page.
+     *
+     * WhakerPy signs the address of a link in a page it serves, and in nothing
+     * else: what the page answered holds, the links of the produced files
+     * included, is signed where it has to be. The form is sent to the address
+     * of the page, and stays in the document: a form removed once submitted
+     * leaves the browser abandoning the navigation it was starting.
+     *
+     * @param {Object} fields - What is sent, by name.
+     * @returns {void}
+     */
+    submitFields(fields) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/' + pageAddress();
+        form.hidden = true;
+        for (const [name, value] of Object.entries(fields)) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            input.value = String(value);
+            form.appendChild(input);
+        }
+        document.body.appendChild(form);
+        form.submit();
+    }
+
 }

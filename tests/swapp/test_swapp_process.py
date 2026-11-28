@@ -51,6 +51,7 @@ import re
 import shutil
 import tempfile
 import time
+import base64
 import unittest
 from unittest import mock
 
@@ -58,10 +59,11 @@ from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States
 
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+from sppas.ui.swapp.services.deposit.deposit_settings import swappDepositSettings
+from sppas.ui.swapp.services.deposit.deposit_space import swappDepositSpace
 from sppas.ui.swapp.swapp_base.swapp_process import swappProcess
 from sppas.ui.swapp.swapp_base.swapp_process import PROGRESS_EVENT
 from sppas.ui.swapp.swapp_base.swapp_process import PROCESS_FIELD
-from sppas.ui.swapp.services.files import swappWorkspaceFiles
 from sppas.ui.swapp.app_annotate import annotate_run
 from sppas.ui.swapp.app_annotate.annotate_maker import swappAnnotateResponseRecipe
 from sppas.ui.swapp.app_annotate.annotate_panels import MSG_STEP_RUN
@@ -76,6 +78,8 @@ from sppas.ui.swapp.app_setup.fieldset_install import MSG_COMPLETED
 
 from tests.swapp.page_requests import swappPageFields
 from tests.swapp.page_requests import main_of
+from tests.swapp.page_requests import files_request
+from tests.swapp.page_requests import with_container
 from tests.swapp.test_annotate_run import ManagerForTests
 
 # ---------------------------------------------------------------------------
@@ -335,10 +339,10 @@ class TestConvertIsAProcess(unittest.TestCase):
         with open(self.source, "w", encoding="utf-8") as fp:
             fp.write(TEXTGRID)
         self.recipe = swappConvertResponseRecipe()
-        self.recipe.bake({})
-        # The files stand already where SPPAS reads them: the person chose this one.
-        manager = self.recipe._swappConvertResponseRecipe__manager
-        manager._swappFilesManager__model.works_on(swappWorkspaceFiles.make_workspace([self.source]))
+        self.page = self.recipe.bake({})
+        # The files stand already where SPPAS reads them: the person designates
+        # this one, as the page sends it.
+        self.recipe.bake(files_request(self.recipe._data["container"], "designate", {"designate": self.source}))
 
     def tearDown(self):
         shutil.rmtree(self.folder, ignore_errors=True)
@@ -347,8 +351,8 @@ class TestConvertIsAProcess(unittest.TestCase):
 
     def convert(self) -> str:
         """Press Convert, the destination .eaf being chosen, as ConvertManager sends it."""
-        page = self.recipe.bake({})
-        events = swappPageFields(page).submitted("event_bake", "convert")
+        events = with_container(swappPageFields(self.page).submitted("event_bake", "convert"),
+                                self.recipe._data["container"])
         events["convert_destination"] = ".eaf"
         self.recipe.bake(events)
         return self.recipe._data["convert"]
@@ -394,6 +398,65 @@ class TestConvertIsAProcess(unittest.TestCase):
 # ---------------------------------------------------------------------------
 
 
+class DepositSpaceForTests(swappDepositSpace):
+    """The deposit space the provision of files creates, in the folder of a test."""
+
+    settings = None
+
+    def __init__(self):
+        super(DepositSpaceForTests, self).__init__(DepositSpaceForTests.settings)
+
+# ---------------------------------------------------------------------------
+
+
+class TestConvertOnline(unittest.TestCase):
+    """A conversion on the web service, as the page of Convert starts it, follows it and asks for its results."""
+
+    def setUp(self):
+        self.local = mock.patch.object(swapp_settings, "served_locally", False)
+        self.local.start()
+        DepositSpaceForTests.settings = swappDepositSettings()
+        DepositSpaceForTests.settings.space = tempfile.mkdtemp(prefix="test_swapp_process_")
+        self.space = mock.patch("sppas.ui.swapp.services.files.files_place.swappDepositSpace", DepositSpaceForTests)
+        self.space.start()
+        self.recipe = swappConvertResponseRecipe()
+
+    def tearDown(self):
+        self.space.stop()
+        self.local.stop()
+        shutil.rmtree(DepositSpaceForTests.settings.space, ignore_errors=True)
+
+    # -----------------------------------------------------------------------
+
+    def test_the_results_of_a_conversion(self):
+        """The file sent is converted, and the results are shown with the address of what was produced."""
+        page = self.recipe.bake({})
+        content = TEXTGRID.encode("utf-8")
+        self.recipe.bake(files_request(self.recipe._data["container"], "designate",
+                                       {"name": "sample.TextGrid", "size": str(len(content))}))
+        self.recipe.bake(files_request(self.recipe._data["container"], "send",
+                                       {"name": "sample.TextGrid",
+                                        "content": base64.b64encode(content).decode("ascii")}))
+
+        events = with_container(swappPageFields(page).submitted("event_bake", "convert"),
+                                self.recipe._data["container"])
+        events["convert_destination"] = ".eaf"
+        self.recipe.bake(events)
+        section = self.recipe._data["convert"]
+        hidden = swappPageFields(section).hidden()
+        answer, status = follow(self.recipe, hidden[PROCESS_FIELD])
+        self.assertEqual(200, status)
+
+        page = self.recipe._htree.serialize()
+        events = swappPageFields(page).fields_of("convert_form")
+        events["event_bake"] = "complete"
+        self.recipe.bake(events)
+        self.assertEqual(200, self.recipe._status.code)
+        self.assertIn("sample.eaf", self.recipe._data["convert"])
+
+# ---------------------------------------------------------------------------
+
+
 class TestAnnotateIsAProcess(unittest.TestCase):
     """A run, as the page of Annotate starts it and follows it; no annotation of SPPAS is run."""
 
@@ -412,9 +475,10 @@ class TestAnnotateIsAProcess(unittest.TestCase):
         self.local = mock.patch.object(swapp_settings, "served_locally", True)
         self.local.start()
         self.recipe = swappAnnotateResponseRecipe()
-        self.recipe.bake({})
-        manager = self.recipe._swappAnnotateResponseRecipe__manager
-        manager._swappFilesManager__model.works_on(swappWorkspaceFiles.make_workspace([self.source]))
+        # The person designates the file in the panel of the files, as the page sends it.
+        page = self.recipe.bake({})
+        self.files = self.recipe.bake(swappPageFields(page).submitted("event_bake", "annotate_files"))
+        self.recipe.bake(files_request(self.recipe._data["container"], "designate", {"designate": self.source}))
 
     def tearDown(self):
         while self.recipe.is_running() is True:
@@ -427,7 +491,8 @@ class TestAnnotateIsAProcess(unittest.TestCase):
 
     def perform(self) -> str:
         """Select an annotation in the panel of its type, come back, and press Let's go, as the page sends them."""
-        page = self.recipe.bake({})
+        page = self.recipe.bake(with_container(swappPageFields(self.files).submitted("event_bake", "annotate_steps"),
+                                               self.recipe._data["container"]))
         annotations = self.recipe.bake(swappPageFields(page).submitted("event_bake", "annotate_annotations_STANDALONE"))
         events = swappPageFields(annotations).submitted("event_bake", "annotate_steps")
         events["annotate_ann_textnorm"] = "True"
@@ -470,18 +535,6 @@ class TestAnnotateIsAProcess(unittest.TestCase):
         done = self.recipe._data["main-content"]
         self.assertIn('id="annotate_results_h"', done)
         self.assertIn("textnorm: done", done)
-
-    # -----------------------------------------------------------------------
-
-    def test_a_page_asked_for_while_it_goes(self):
-        """A page loaded again while the run goes follows that run: the same process, the same report."""
-        main = self.perform()
-        fields = swappPageFields(main).fields_of("annotate_form")
-        again = main_of(self.recipe.bake({}))
-        refields = swappPageFields(again).fields_of("annotate_form")
-        self.assertIn('id="percent_progress"', again)
-        self.assertEqual(fields[PROCESS_FIELD], refields[PROCESS_FIELD])
-        self.assertEqual(fields["annotate_followed"], refields["annotate_followed"])
 
     # -----------------------------------------------------------------------
 

@@ -46,8 +46,12 @@
 from __future__ import annotations
 import re
 import unittest
+from unittest import mock
+from html.parser import HTMLParser
 
 from sppas.src.structs.baseoption import sppasOption
+
+from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
 
 from sppas.ui.swapp.services.options.options_acceptance import swappValueAcceptance
 from sppas.ui.swapp.services.options.options_set import swappOptionSet
@@ -426,6 +430,74 @@ class TestOptionsView(unittest.TestCase):
             [o for o in self.options.for_app() if o.get_key() == "window"][0])
         self.assertIn(expected, shown)
         self.assertEqual(1, shown.count(expected))
+
+# ---------------------------------------------------------------------------
+
+
+class swappAttributesReader(HTMLParser):
+    """Read the attributes of the elements of a piece of page, by their id."""
+
+    def __init__(self, page: str):
+        """Read the given piece of page.
+
+        :param page: (str) The HTML of a piece of page
+
+        """
+        super(swappAttributesReader, self).__init__(convert_charrefs=True)
+        self.elements = dict()
+        self.feed(page)
+        self.close()
+
+    def handle_starttag(self, tag, attrs):
+        _attributes = dict(attrs)
+        if "id" in _attributes:
+            self.elements[_attributes["id"]] = (tag, _attributes)
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+
+# ---------------------------------------------------------------------------
+
+
+class TestFileLine(unittest.TestCase):
+    """The line of an option which takes a file, on the machine of the person and on the web service."""
+
+    def setUp(self):
+        self.record = swappOptionsRecord()
+        self.record.set = swappOptionSet([an_option("alphabet", "filename", "", "Alphabet")])
+        self.field = FIELD_PREFIX + "alphabet"
+        self.browse = self.field + "_browse"
+
+    # -----------------------------------------------------------------------
+
+    def test_the_line_on_the_machine(self):
+        """Its field takes a value, and its button asks for a file."""
+        with mock.patch.object(swapp_settings, "served_locally", True):
+            view = swappOptionsView()
+            view.populate_tree_content(self.record)
+        elements = swappAttributesReader(text_of(view)).elements
+
+        tag, field = elements[self.field]
+        self.assertNotIn("disabled", field)
+        tag, button = elements[self.browse]
+        self.assertEqual("submit", button["type"])
+        self.assertNotIn("disabled", button)
+
+    # -----------------------------------------------------------------------
+
+    def test_the_line_on_the_web_service(self):
+        """The line is shown, and neither its field nor its button acts."""
+        with mock.patch.object(swapp_settings, "served_locally", False):
+            view = swappOptionsView()
+            view.populate_tree_content(self.record)
+        shown = text_of(view)
+        elements = swappAttributesReader(shown).elements
+
+        self.assertIn("Alphabet", shown)
+        tag, field = elements[self.field]
+        self.assertIn("disabled", field)
+        tag, button = elements[self.browse]
+        self.assertIn("disabled", button)
 
 # ---------------------------------------------------------------------------
 

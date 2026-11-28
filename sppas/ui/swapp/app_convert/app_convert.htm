@@ -1888,14 +1888,16 @@
 				it belongs to <code>structural_loss</code>, announced once;</li>
 				<li>one file may produce several converted files;</li>
 				<li>the batch is the workspace <code>files_for_app()</code> hands at this
-				request; its files are locked while they are converted,
-				<code>lock()</code>, and released once each has its result,
-				<code>release()</code>;</li>
+				request, from the copy of the files the page transmits; its files are
+				locked by this request, <code>lock()</code>, and released by the request
+				which asks for the results, <code>release()</code>, the ones which have
+				their result;</li>
 				<li>a converted file is written beside the file it was made from, same
 				path and same root, as the provision of files requires of every app, and
 				it is added to the workspace which was handed;</li>
-				<li>that workspace is given back, <code>produced()</code>, and that the
-				batch has been treated is said, <code>finished</code>;</li>
+				<li>what was produced is given back by the request which asks for the
+				results, <code>produced()</code>, and that the batch has been treated is
+				said, <code>finished</code>;</li>
 				<li>this treatment does not alter the batch.</li>
 			  </ul>
 			</li>
@@ -2209,9 +2211,10 @@
 		  <tr><td>C18</td><td>A cause is stated in terms of the user's data, and never of the internals of a format.</td><td>[704], T06</td></tr>
 		  <tr><td>C19</td><td>One file of the batch may produce several converted files, and the report has one line per file of the batch, which lists them.</td><td>T06, T08</td></tr>
 		  <tr><td>C20</td><td>The setting <code>interoperability</code> is read and never written: the answer which holds is carried by the page, for one conversion.</td><td>[308], RO7</td></tr>
-		  <tr><td>C21</td><td>Nothing of a conversion is held on the server between two requests. The manager of the provision of files is held by the response, as that service requires, and holds nothing of a conversion.</td><td>RO8, and a context where nothing is kept for a given user</td></tr>
+		  <tr><td>C21</td><td>Nothing is held on the server between two requests. The manager of the provision of files is built by the response, and holds nothing between two requests either: the page transmits its record with every request of the form of the conversion.</td><td>RO8, and a context where nothing is kept for a given user</td></tr>
 		  <tr><td>C22</td><td>Where a converted file is reached is given by the provision of files, and shown by this application: online, each produced file is a link to its address, and until when it can be reached is said under the results.</td><td>[802], T08</td></tr>
 		  <tr><td>C23</td><td>What a failed write left on the disk is not removed here.</td><td>The API, which writes; and C13, nothing being undone for the batch</td></tr>
+		  <tr><td>C24</td><td>Online, what Convert does is reached at a secret name only, whose address WhakerPy signs. Every request of the page is sent to the address of the page, with what follows its name, <code>ts</code> and <code>sig</code>: a request sent to the name alone is refused.</td><td>The website of SPPAS, where an app is reached at a signed address only</td></tr>
 		</tbody>
 		</table>
 
@@ -2392,7 +2395,7 @@
 		  <tr><td>PF1</td><td>In the page: show the part written for the format chosen, and hide the one which was shown</td><td>Nothing: nothing is sent</td></tr>
 		  <tr><td>PF2</td><td>When the page is asked for: read the writable formats from the API and, for every one of them, its properties; read the correspondence; raise its options and restrict their answers; gather what no option covers; write all of it in the page</td><td>Nothing: nothing is written</td></tr>
 		  <tr><td>PF3, PF4</td><td>In the page: keep the answer or the general option; it is sent with the conversion</td><td>Nothing: nothing is sent</td></tr>
-		  <tr><td>PF6</td><td>Rebuild, reading the answers of the destination only; ask the provision of files for the batch, and verify a destination and a batch which is not empty; lock the batch; then, file by file: read, anticipate, write, and at most one second write; release the batch, give back what was produced, and say it has finished</td><td>The result of one file. Not the batch, and not the writing itself</td></tr>
+		  <tr><td>PF6</td><td>Rebuild, reading the answers of the destination only; ask the provision of files for the batch, and verify a destination and a batch which is not empty; lock the batch; then, file by file: read, anticipate, write, and at most one second write. The request which asks for the results releases the batch, gives back what was produced, and says it has finished</td><td>The result of one file. Not the batch, and not the writing itself</td></tr>
 		  <tr><td>PF7</td><td>Rebuild nothing: answer the page in the state T01 finds at the beginning</td><td>Nothing</td></tr>
 		  <tr><td>PF8</td><td>Give what was produced back to the provision of files, in the workspace it handed</td><td>Nothing</td></tr>
 		  <tr><td>PF9</td><td>In the page: put every field back as it was on arrival, and show the part written for the format then chosen</td><td>Nothing: nothing is sent</td></tr>
@@ -2602,9 +2605,9 @@
 
 			<p><code>ModelProvision</code> is the only class which calls the provision of
 			files on files. It is given the manager of that service, which the response
-			holds: it reads the batch, <code>files_for_app()</code>; it says what it
-			takes and gives back while the batch is converted, <code>lock()</code> and
-			<code>release()</code>; it gives back what was produced,
+			builds: it reads the batch, <code>files_for_app()</code>; it says what it
+			takes when the conversion starts and gives back when the results are asked
+			for, <code>lock()</code> and <code>release()</code>; it gives back what was produced,
 			<code>produced()</code>; and it says when the batch has been treated,
 			<code>finished</code>. Where a converted file stands is shown by that service
 			and not by this application C22. It alters nothing of the batch C11, and it is
@@ -2887,6 +2890,9 @@
 			When she starts over, the button she used is replaced: the page is brought
 			back to its top, and the focus is given to its main content, where the skip
 			link leads.
+			Every request it sends goes to the address of the page, with what follows
+			its name: online, Convert is reached at a secret name, and what authorizes
+			that name goes with each request (C24).
 			It creates no HTML: the page was written by the server. It holds no business logic and takes no decision on the
 			treatments to run: it knows nothing of formats, of properties, or of what a
 			remediation is. Which options a format raises is derived by the model,
@@ -3069,10 +3075,12 @@
 		this application anything outside it holds. <b>The controller assembles
 		nothing</b>: it is built, it is called once, and it is dropped.</p>
 
-		<p>The response holds as well the manager of the provision of files, which that
-		service requires an app to hold between two requests. It answers the tasks of
-		this application first, and offers what it does not recognize to the manager,
-		<code>consumes()</code>; it places its container in the page,
+		<p>The response builds as well the manager of the provision of files, which
+		holds nothing between two requests: the page transmits its record with every
+		request of the form of the conversion. It hands the events of every request to
+		the manager first, <code>consumes()</code>, which rebuilds the copy of the files
+		from them, then answers the tasks of this application; it places its container
+		in the page,
 		<code>populate_view()</code> then <code>container()</code>; and it asks it
 		whether the person said the workspace is ready, <code>is_ready()</code>; and it
 		asks it to start over when she starts a new conversion,
@@ -3086,7 +3094,7 @@
 		<thead><tr><th scope="col">Tie</th><th scope="col">Legs</th><th scope="col">What it is</th></tr></thead>
 		<tbody>
 		  <tr><td>holds</td><td><code>ConvertResponseRecipe</code> 1 &mdash; 1 <code>ConvertView</code>, 1 <code>ConvertController</code></td><td>A composition: it builds them, and they go when it goes</td></tr>
-		  <tr><td>holds</td><td><code>ConvertResponseRecipe</code> 1 &mdash; 1 the manager of the provision of files</td><td>Held between two requests, as that service requires; it holds nothing of a conversion. C21</td></tr>
+		  <tr><td>holds</td><td><code>ConvertResponseRecipe</code> 1 &mdash; 1 the manager of the provision of files</td><td>A composition: it builds it, and the manager rebuilds its record from every request. C21</td></tr>
 		  <tr><td>holds</td><td><code>ConvertController</code> 1 &mdash; 1 <code>ConvertRecord</code></td><td>A composition: one record per request, made by the controller and kept by nobody</td></tr>
 		  <tr><td>holds</td><td><code>ConvertRecord</code> 1 &mdash; 1 <code>Conversion</code></td><td>A composition: what was decided lives inside what one request carries</td></tr>
 		  <tr><td>uses</td><td><code>ConvertController</code> &rarr; <code>ConvertModel</code></td><td>A dependency: it calls the fa&ccedil;ade, once per request</td></tr>
@@ -3320,8 +3328,8 @@
 		<thead><tr><th scope="col">Operation</th><th scope="col">Contract</th></tr></thead>
 		<tbody>
 		  <tr><td>Give the batch</td><td>pre: none. post: the workspace the provision of files hands, holding the files to be treated and them only, possibly empty; read when the conversion runs, and the workspace of the person never reached. C11</td></tr>
-		  <tr><td>Lock and release</td><td>pre: files of the batch. post: they are locked while they are converted, and released once each has its result; none is still locked once the batch has been treated</td></tr>
-		  <tr><td>Give back what was produced</td><td>pre: the batch has been converted. post: what was written is in the workspace which was handed, that workspace is given back, and that the batch has been treated is said. C22</td></tr>
+		  <tr><td>Lock and release</td><td>pre: files of the batch. post: they are locked by the request which starts the conversion, and released by the one which asks for its results, each file which has its result; none is still locked once the batch has been treated</td></tr>
+		  <tr><td>Give back what was produced</td><td>pre: the batch has been converted, and the request asks for the results. post: what was written is given back, and that the batch has been treated is said. C22</td></tr>
 		</tbody>
 		</table>
 
@@ -3417,6 +3425,7 @@
 		  <tr><td>C21</td><td><code>ConvertRecord</code>, and <code>ConvertController</code>, which keeps nothing after the request</td></tr>
 		  <tr><td>C22</td><td><code>ModelProvision</code>, which gives what was produced back to the provision of files; nothing of this application shows where it stands</td></tr>
 		  <tr><td>C23</td><td><code>ModelConversion</code>, which removes nothing</td></tr>
+		  <tr><td>C24</td><td><code>swappWebData</code>, which answers the secret names and the default page; <code>SwappManager</code>, of <code>statics/js/swapp_manager.js</code>, which <code>ConvertManager</code> and the progress extend, and <code>pageAddress()</code>, which the provision of files sends to</td></tr>
 		</tbody>
 		</table>
 

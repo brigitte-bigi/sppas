@@ -77,47 +77,52 @@ class swappAnnotateModel:
 
     # -----------------------------------------------------------------------
 
-    def start(self, batch, parameters, merge: bool) -> str:
-        """Start a run, and return the name of its report.
+    def start(self, batch, parameters, merge: bool) -> tuple:
+        """Start a run, and return the names of its report, of its results and of its process.
 
         It is answered without waiting for the run to end.
 
         :param batch: (sppasWorkspace) The workspace the provision of files handed
         :param parameters: (sppasParam) What was decided
         :param merge: (bool) One file gathering everything is to be created
-        :raises: RuntimeError: A run is going
-        :return: (str) Name of the report, without its path
+        :return: (tuple) The name of the report, of the results and of the process, without their path
 
         """
         return self.__run.start(batch, parameters, merge)
 
     # -----------------------------------------------------------------------
 
-    def is_running(self) -> bool:
-        """Return True while a run is going (bool)."""
-        return self.__run.is_running()
+    def is_running(self, process: str) -> bool:
+        """Return True while the run of the given process is going.
 
-    # -----------------------------------------------------------------------
-
-    def report_name(self) -> str:
-        """Return the name of the report of the run going, empty if none (str)."""
-        return self.__run.report_name()
-
-    # -----------------------------------------------------------------------
-
-    def process_name(self) -> str:
-        """Return the name of the process of the last run, empty before the first one (str)."""
-        return self.__run.process_name()
-
-    # -----------------------------------------------------------------------
-
-    def results(self) -> list:
-        """Return what came of every root of the batch of the last run which ended.
-
-        :return: (list of swappRootResult) Empty while a run goes, and before the first one has ended
+        :param process: (str) Name of the process, without its path
+        :return: (bool) False for a name no process bears
 
         """
-        return self.__run.results()
+        return self.__run.is_running(process)
+
+    # -----------------------------------------------------------------------
+
+    def results(self, name: str) -> list:
+        """Return what came of every root of the batch of a run, as its results say it.
+
+        :param name: (str) Name of the results, without its path
+        :raises: ValueError: The name is not the one of the results of a run of Annotate
+        :return: (list of swappRootResult) In the order of the batch; empty while the run goes
+
+        """
+        return self.__run.results(name)
+
+    # -----------------------------------------------------------------------
+
+    def give_back(self, name: str) -> None:
+        """Give the batch of a run back to the provision of files, as its results say it.
+
+        :param name: (str) Name of the results, without its path
+        :raises: ValueError: The name is not the one of the results of a run of Annotate
+
+        """
+        self.__run.give_back(name)
 
     # -----------------------------------------------------------------------
 

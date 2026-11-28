@@ -262,3 +262,24 @@ def files_request(container: str, task: str, carried: dict) -> dict:
         _posted[_name] = carried[_name]
 
     return _posted
+
+# ---------------------------------------------------------------------------
+
+
+def with_container(events: dict, container: str) -> dict:
+    """Return what a form sends once the container of the provision of files was replaced.
+
+    swapp_files.js replaces the container by the one the server answered: the
+    hidden fields of the record it holds are tied to the form of the app, so
+    the next request of that form sends them, and not the ones the page held
+    before.
+
+    :param events: (dict) What the form sends, as the page held it
+    :param container: (str) The HTML of the container, as the server answered it last
+    :return: (dict)
+
+    """
+    _events = dict(events)
+    _events.update(swappPageFields(container).hidden())
+
+    return _events

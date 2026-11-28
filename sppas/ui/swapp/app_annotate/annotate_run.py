@@ -40,18 +40,27 @@
 
 from __future__ import annotations
 import os
-from threading import Lock
+import json
 
+from sppas.core.config import paths
+from sppas.core.config import sg
 from sppas.core.coreutils import sppasLogFile
 from sppas.core.coreutils import sppasBaseProgress
 from sppas.src.annotations import sppasAnnotationsManager
 from sppas.src.annotations import sppasParam
+from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States
 
 from ..swapp_core.swappsg import swapp_settings
 from ..swapp_base.swapp_process import swappProcess
 
 from .annotate_provision import swappModelProvision
+
+# ---------------------------------------------------------------------------
+
+RESULTS_PATTERN = "annotate"
+RESULTS_EXTENSION = ".json"
+RESULTS_PREFIX = "{:s}_{:s}_".format(sg.__name__, RESULTS_PATTERN)
 
 # ---------------------------------------------------------------------------
 
@@ -151,75 +160,130 @@ class swappAnnotateProgress(sppasBaseProgress):
 # ---------------------------------------------------------------------------
 
 
+class swappRunResults:
+    """The results of one run: its batch, its report, and what came of every root of the batch.
+
+    It is a file of the folder of the logs of SPPAS, and it is what any
+    process of the server reads to give the results of a run and to give
+    its batch back. It is written before the run starts, with no result, and
+    again, at once, when the run has ended: a reader never finds it half
+    written.
+
+    """
+
+    def __init__(self, name: str):
+        """Create the results of the given name.
+
+        :param name: (str) Name of the results, without its path
+        :raises: ValueError: The name is not the one of the results of a run of Annotate
+
+        """
+        if name != os.path.basename(name) or name.startswith(RESULTS_PREFIX) is False \
+                or name.endswith(RESULTS_EXTENSION) is False:
+            raise ValueError("Not the name of the results of a run: {}".format(name))
+        self.__name = name
+
+    # -----------------------------------------------------------------------
+
+    def get_name(self) -> str:
+        """Return the name of the results, without its path (str)."""
+        return self.__name
+
+    # -----------------------------------------------------------------------
+
+    def write(self, files: list, report: str, results: list, finished: bool = False) -> None:
+        """Write the results, at once.
+
+        :param files: (list of str) The files of the batch, which are locked while the run goes
+        :param report: (str) The report to give back with what was produced, empty locally
+        :param results: (list of swappRootResult) What came of every root of the batch
+        :param finished: (bool) The run has ended
+
+        """
+        _lines = list()
+        for _result in results:
+            _lines.append({"root": _result.root, "produced": _result.produced})
+        _filename = os.path.join(paths.logs, self.__name)
+        _written = _filename + ".part"
+        with open(_written, "w", encoding="utf-8") as fp:
+            json.dump({"files": files, "report": report, "finished": finished, "results": _lines}, fp)
+        os.replace(_written, _filename)
+
+    # -----------------------------------------------------------------------
+
+    def read(self) -> tuple:
+        """Return the files of the batch, the report, what came of every root, and whether the run has ended.
+
+        :return: (tuple) (list of str, str, list of swappRootResult, bool); ([], "", [], False) when nothing was written
+
+        """
+        _filename = os.path.join(paths.logs, self.__name)
+        if os.path.exists(_filename) is False:
+            return list(), "", list(), False
+        with open(_filename, "r", encoding="utf-8") as fp:
+            _data = json.load(fp)
+        _results = list()
+        for _line in _data["results"]:
+            _results.append(swappRootResult(_line["root"], _line["produced"]))
+        return _data["files"], _data["report"], _results, _data["finished"]
+
+    # -----------------------------------------------------------------------
+    # Properties
+    # -----------------------------------------------------------------------
+
+    name = property(get_name, None)
+
+# ---------------------------------------------------------------------------
+
+
 class swappModelRun:
     """Have the API execute the selected annotations.
 
-    It names the report, locks the batch, and creates a
+    It names the report and the results, locks the batch, and creates a
     sppasAnnotationsManager, the merge option being given to it. The
     annotations are a process of swapp: the manager executes them in the
     thread of that process, and the progress it is given is the one of the
-    process, which says where they stand in the file of the process. It holds
-    that manager and that process: it says whether the annotations are being
-    executed, and where they stand. Once they have been, the process
-    releases the batch, gives back what was produced, keeps what came of
-    every root of the batch, and says it has finished, once. It is the only
-    class of this application which has the API execute annotations.
+    process, which says where they stand in the file of the process. Once
+    they have been, the process writes what came of every root of the batch
+    in the results. The request which asks for the results gives the batch
+    back: it releases it, gives back what was produced, and says it has
+    finished. Nothing of a run is held between two requests: the page
+    transmits the names of its report, of its results and of its process,
+    and any process of the server reads them. It is the only class of this
+    application which has the API execute annotations.
 
     """
 
     def __init__(self, provision: swappModelProvision):
-        """Create the run, with none going.
+        """Create the run.
 
         :param provision: (swappModelProvision) The access to the provision of files
 
         """
         self.__provision = provision
-        # It names the report of each run under a name no report
-        # bore before.
-        self.__log_report = sppasLogFile(pattern="report")
-        self.__manager = None
-        # The batch which is locked, and its files: given back once.
-        self.__batch = None
-        self.__filenames = list()
-        self.__lock = Lock()
-        # The roots of the batch, in its order, and what came of each of
-        # them once the run has ended.
-        self.__roots = list()
-        self.__results = list()
-        # Online, the report written beside the files of the batch: it is
-        # given back with what was produced.
-        self.__report = ""
-        # The name of the report of the run which is going: a page asked for
-        # while it goes follows it.
-        self.__report_name = ""
-        # The process the run is performed in: the page follows it by its name.
-        self.__process = None
 
     # -----------------------------------------------------------------------
 
-    def start(self, batch, parameters: sppasParam, merge: bool) -> str:
-        """Start a run, and return the name of its report.
+    def start(self, batch, parameters: sppasParam, merge: bool) -> tuple:
+        """Start a run, and return the names of its report, of its results and of its process.
 
-        The report is named first, and the name of the next one is prepared
-        at once. What was decided is handed to the API as it stands, with the
-        workspace and the name of the report.
+        The report is named first, under a name no report bore before, and
+        the results are written with none. What was decided is handed to the
+        API as it stands, with the workspace and the name of the report.
 
         :param batch: (sppasWorkspace) The workspace the provision of files handed
         :param parameters: (sppasParam) What was decided
         :param merge: (bool) One file gathering everything is to be created
-        :raises: RuntimeError: A run is going
-        :return: (str) Name of the report, without its path
+        :return: (tuple) The name of the report, of the results and of the process, without their path
 
         """
-        if self.is_running() is True:
-            raise RuntimeError("A run is going.")
-
-        _report = self.__log_report.get_filename()
-        self.__log_report.increment()
-        self.__report = ""
+        _report = sppasLogFile(pattern="report").get_filename()
+        # Online, the report is written beside the files of the batch: it is
+        # given back with what was produced.
+        _given_back = ""
         if swapp_settings.served_locally is False:
             _report = os.path.join(self.__provision.folder(), os.path.basename(_report))
-            self.__report = _report
+            _given_back = _report
         parameters.set_report_filename(_report)
         parameters.set_workspace(batch)
 
@@ -235,127 +299,139 @@ class swappModelRun:
                     if _file.get_id() in _filenames and (_root.get_id() in _roots) is False:
                         _roots.append(_root.get_id())
 
+        _results = swappRunResults(os.path.basename(
+            sppasLogFile(pattern=RESULTS_PATTERN, extension=RESULTS_EXTENSION).get_filename()))
+        _results.write(_filenames, _given_back, list())
+
         self.__provision.lock(_filenames)
-        self.__batch = batch
-        self.__filenames = _filenames
-        self.__roots = _roots
-        self.__results = list()
         # Given no parameters, the manager executes nothing in a thread of its
         # own: it executes the annotations in the thread of the process.
-        self.__manager = sppasAnnotationsManager(do_merge=merge)
-        self.__report_name = os.path.basename(_report)
-        self.__process = swappProcess.start(self.__perform, (parameters,))
+        _manager = sppasAnnotationsManager(do_merge=merge)
+        _process = swappProcess.start(self.__perform,
+                                      (batch, parameters, _manager, _filenames, _roots, _given_back, _results))
 
-        return self.__report_name
+        return os.path.basename(_report), _results.name, _process.name
 
     # -----------------------------------------------------------------------
 
-    def is_running(self) -> bool:
-        """Return True while the process of the run has not ended (bool).
+    @staticmethod
+    def is_running(process: str) -> bool:
+        """Return True while the process of the given name has not ended.
 
         It is read in the file of the process, which says it has ended once
         the batch was given back.
 
+        :param process: (str) Name of the process, without its path
+        :return: (bool) False for a name no process bears
+
         """
-        if self.__process is None:
+        try:
+            _process = swappProcess(process)
+        except ValueError:
             return False
-        _percent, _header, _text, _finished = self.__process.read()
+        if os.path.exists(os.path.join(paths.logs, process)) is False:
+            return False
+        _percent, _header, _text, _finished = _process.read()
 
         return _finished is False
 
     # -----------------------------------------------------------------------
 
-    def process_name(self) -> str:
-        """Return the name of the process of the last run, empty before the first one.
+    @staticmethod
+    def results(name: str) -> list:
+        """Return what came of every root of the batch of a run, as its results say it.
 
-        A run may have ended before the page which started it is shown: its
-        process says it has ended, and the page asks for the results.
-
-        :return: (str)
+        :param name: (str) Name of the results, without its path
+        :raises: ValueError: The name is not the one of the results of a run of Annotate
+        :return: (list of swappRootResult) In the order of the batch; empty while the run goes
 
         """
-        if self.__process is None:
-            return ""
-        return self.__process.name
+        _files, _report, _results, _finished = swappRunResults(name).read()
+
+        return _results
 
     # -----------------------------------------------------------------------
 
-    def report_name(self) -> str:
-        """Return the name of the report of the run going, empty if none (str)."""
-        if self.is_running() is False:
-            return ""
-        return self.__report_name
+    def give_back(self, name: str) -> None:
+        """Give the batch of a run back to the provision of files, as its results say it.
 
-    # -----------------------------------------------------------------------
+        The batch is released, what was produced is given back, the report
+        included online, and that it has finished is said. It is done by the
+        request which asks for the results: the copy of the files it works
+        on is the one that request carries.
 
-
-    def results(self) -> list:
-        """Return what came of every root of the batch of the last run which ended.
-
-        :return: (list of swappRootResult) In the order of the batch; empty while a run goes, and before the first one has ended
+        :param name: (str) Name of the results, without its path
+        :raises: ValueError: The name is not the one of the results of a run of Annotate
 
         """
-        if self.is_running() is True:
-            return list()
+        _files, _report, _results, _finished = swappRunResults(name).read()
+        self.__provision.release(_files)
 
-        return list(self.__results)
+        _produced = sppasWorkspace()
+        for _result in _results:
+            for _filename in _result.produced:
+                if os.path.isfile(_filename) is True:
+                    _produced.add_file(_filename)
+        if len(_report) > 0 and os.path.isfile(_report) is True:
+            _produced.add_file(_report)
+        self.__provision.produced(_produced)
+        self.__provision.finished()
 
     # -----------------------------------------------------------------------
     # Private
     # -----------------------------------------------------------------------
 
-    def __perform(self, parameters: sppasParam, progress=None) -> None:
-        """Have the API execute the annotations, then give the batch back.
+    def __perform(self, batch, parameters: sppasParam, manager, filenames: list, roots: list,
+                  report: str, results: swappRunResults, progress=None) -> None:
+        """Have the API execute the annotations, then write the results.
 
-        It is what the process performs, in its thread. The batch is given
-        back whatever the API did: the process ends once it was.
+        It is what the process performs, in its thread. The results are
+        written whatever the API did: the process ends once they were.
 
+        :param batch: (sppasWorkspace) The workspace the provision of files handed
         :param parameters: (sppasParam) What was decided
+        :param manager: (sppasAnnotationsManager) What executes the annotations
+        :param filenames: (list of str) The files of the batch, which are locked
+        :param roots: (list of str) The roots of the batch, in its order
+        :param report: (str) The report to give back with what was produced, empty locally
+        :param results: (swappRunResults) Where what came of every root is written
         :param progress: (swappProcessProgress) The progress of the process
 
         """
         try:
-            self.__manager.annotate(parameters, swappAnnotateProgress(progress))
+            manager.annotate(parameters, swappAnnotateProgress(progress))
         finally:
-            self.__give_back()
+            self.__write_results(batch, manager, filenames, roots, report, results)
 
     # -----------------------------------------------------------------------
 
-    def __give_back(self) -> None:
-        """Release the batch, give back what was produced, keep the results, and say it has finished.
+    def __write_results(self, batch, manager, filenames: list, roots: list, report: str,
+                        results: swappRunResults) -> None:
+        """Write what came of every root of the batch, and that the run has ended.
 
-        Whatever each annotation did, it is done once, by the process, once
-        the annotations were executed. Each root of the batch is given the
-        files the API wrote under it, a file which stood already and was
-        written again included.
+        Each root of the batch is given the files the API wrote under it, a
+        file which stood already and was written again included.
+
+        :param batch: (sppasWorkspace) The workspace the provision of files handed
+        :param manager: (sppasAnnotationsManager) What executed the annotations
+        :param filenames: (list of str) The files of the batch, which are locked
+        :param roots: (list of str) The roots of the batch, in its order
+        :param report: (str) The report to give back with what was produced, empty locally
+        :param results: (swappRunResults) Where what came of every root is written
 
         """
-        with self.__lock:
-            if self.__batch is None:
-                return
-            self.__provision.release(self.__filenames)
-            if len(self.__report) > 0 and os.path.isfile(self.__report) is True:
-                self.__batch.add_file(self.__report)
-            self.__provision.produced(self.__batch)
-
-            # The API added what it wrote to the batch: each written file is
-            # found there under its root.
-            _written = self.__manager.get_out_files()
-            _under = dict()
-            for _path in self.__batch.get_paths():
-                for _root in _path:
-                    for _file in _root:
-                        if _file.get_id() in _written:
-                            _of_root = _under.get(_root.get_id(), list())
-                            _of_root.append(_file.get_id())
-                            _under[_root.get_id()] = _of_root
-            _results = list()
-            for _root in self.__roots:
-                _results.append(swappRootResult(_root, _under.get(_root, list())))
-            self.__results = _results
-            self.__provision.finished()
-            self.__batch = None
-            self.__filenames = list()
-            self.__roots = list()
-            self.__report = ""
-            self.__report_name = ""
+        # The API added what it wrote to the batch: each written file is
+        # found there under its root.
+        _written = manager.get_out_files()
+        _under = dict()
+        for _path in batch.get_paths():
+            for _root in _path:
+                for _file in _root:
+                    if _file.get_id() in _written:
+                        _of_root = _under.get(_root.get_id(), list())
+                        _of_root.append(_file.get_id())
+                        _under[_root.get_id()] = _of_root
+        _results = list()
+        for _root in roots:
+            _results.append(swappRootResult(_root, _under.get(_root, list())))
+        results.write(filenames, report, _results, finished=True)

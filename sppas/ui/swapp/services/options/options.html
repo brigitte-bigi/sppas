@@ -1333,7 +1333,11 @@
 			The script of the window &mdash; what opens it, sends the forms of the
 			container, writes what was set in the form of the app, and closes it &mdash;
 			is in <code>sppas.js</code>, the script the pages of the apps load: a file of
-			its own would be one more request for every page.
+			its own would be one more request for every page. It sends to the address of
+			the page, with what follows its name, as every script of an app does:
+			<code>SwappOptions</code> is a <code>SwappManager</code>, of
+			<code>statics/js/swapp_manager.js</code>. Online, an app is reached at a secret
+			name, and what authorizes that name goes with each request.
 		</p>
 
 		<p>
@@ -1763,7 +1767,7 @@
 			<caption>OptionsView</caption>
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
-				<tr><td>Populate the tree</td><td>pre: a record. post: one line per option of the set, holding the label of that option, the value it holds, what it takes to change that value, its bounds where it has any, and its refusal where it has one. A field of a number which has no bounds of its own takes those of the desktop interface, 0 and 2000. The field of a file and what asks for one stand side by side, in one group named by the label of the option; what asks for a file is named by its own text followed by that label. What is said to the person &mdash; that no file was obtained &mdash; is shown once. Nothing which the record does not say; the only words of this class are the names of what validates and of what asks for a file</td></tr>
+				<tr><td>Populate the tree</td><td>pre: a record. post: one line per option of the set, holding the label of that option, the value it holds, what it takes to change that value, its bounds where it has any, and its refusal where it has one. A field of a number which has no bounds of its own takes those of the desktop interface, 0 and 2000. The field of a file and what asks for one stand side by side, in one group named by the label of the option; what asks for a file is named by its own text followed by that label. Where SPPAS answers from a server, the field of a file and what asks for one are shown and disabled: no file of the person is obtained there, and the option keeps the value it holds. What is said to the person &mdash; that no file was obtained &mdash; is shown once. Nothing which the record does not say; the only words of this class are the names of what validates and of what asks for a file</td></tr>
 			</tbody>
 		</table>
 

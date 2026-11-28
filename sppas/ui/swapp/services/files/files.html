@@ -149,10 +149,10 @@
 	</p>
 
 	<ol>
-		<li><b>Build it</b>, with the identifier of the node it will append the container to &mdash; the identifier, and not the node: a node of WhakerPy carries the identifier of its parent, and one built under another is refused. It takes as well the workspace it works on, when the app holds one.</li>
-		<li><b>Offer it what was not recognized</b>: <code>consumes(events)</code> answers true when the request was of this service, false when it was not. Nothing is changed in that second case.</li>
+		<li><b>Build it</b>, with the identifier of the node it will append the container to &mdash; the identifier, and not the node: a node of WhakerPy carries the identifier of its parent, and one built under another is refused. It takes as well the workspace it works on, when the app holds one, and the identifier of the form of the app: the hidden fields of the record belong to that form, so every request of the form carries the record.</li>
+		<li><b>Hand it the events of every request</b>, before answering its own tasks: <code>consumes(events)</code> rebuilds the copy of the files from the record the page transmits, and answers true when the request carried a task of this service, false when it did not. Nothing else is done in that second case. A request which transmits no record works on the copy the app was entered with, and never on what a request before left.</li>
 		<li><b>Ask whether the person has said the workspace is ready</b>: <code>is_ready()</code>, after <code>consumes()</code>. When it is, ask for the files: <code>files_for_app()</code>.</li>
-		<li><b>Have it build</b>: <code>populate_view()</code>, then <code>container()</code>, which is appended where the app chose. In that order: the container is what the last request made. The container carries no title: the app writes its own, at the level its page calls for, and the container names itself for whoever reads the page without seeing it.</li>
+		<li><b>Have it build</b>: <code>populate_view()</code>, then <code>container()</code>, which is appended where the app chose. In that order: the container is what the last request made. The container carries no title: the app writes its own, at the level its page calls for, and the container names itself for whoever reads the page without seeing it. A page which does not show the container places what carries the record instead, <code>carried(parent)</code>: its requests carry the record all the same.</li>
 		<li><b>Ask for the files</b> when the app is about to work: <code>files_for_app()</code>. And give back what was produced: <code>produced(workspace)</code>, which answers where each produced file is reached &mdash; where it stands, or at an address &mdash; and until when: the app shows them, this service shows nothing of them.</li>
 		<li><b>Say what it is holding</b>: <code>lock(names)</code> when it takes files to work on them, <code>release(names)</code> when it has done with them. What it still holds when it says it has finished is released without it asking. A lock is what keeps the other interface from taking a file being treated, so an app which does not say it is holding one is an app which lets that happen.</li>
 		<li><b>Start over</b> when the person asks for it: <code>start_over()</code>. The container shows the deposit again, and the files are known to a new workspace, holding none.</li>
@@ -1704,6 +1704,13 @@
 		</p>
 
 		<p>
+			What the script of the container sends goes to the address of the page it
+			stands in, with what follows its name, as <code>pageAddress()</code> of
+			<code>statics/js/swapp_manager.js</code> gives it. Online, an app is reached
+			at a secret name, and what authorizes that name goes with each request.
+		</p>
+
+		<p>
 			Where the files are already reachable, three modules have nothing to do — the
 			place, acceptance and the delivery. They carry exactly the three procedures
 			the organizational model leaves empty there. They are therefore not built,
@@ -1830,7 +1837,9 @@
 			By asking, and by no convention of names. An app receives the events of a
 			request and consumes what is its own; what it does not recognize, it offers to
 			its services, and a service either consumes it or says it did not. What
-			nobody consumed is an error, and the request is answered as such.
+			nobody consumed is an error, and the request is answered as such. The
+			provision of files is handed the events of every request, and before the app
+			answers them: the copy of the files is rebuilt from each of them.
 		</p>
 
 		<p>
@@ -2290,7 +2299,7 @@
 				<tr><td><code>FilesController</code></td><td>record</td><td>handle(data), populate_view()</td></tr>
 				<tr><td><code>FilesRecord</code></td><td>task, reachable, has_workspace, place, workspace, fed, deposited, treated, produced, to_be_shown</td><td>serialize(), parse(data)</td></tr>
 				<tr><td colspan="3">A record comes from no table: it is what one request holds, it serializes itself for transport and parses itself back, and it is held by nobody between two requests</td></tr>
-				<tr><td><code>FilesManager</code></td><td>&mdash;</td><td>files_for_app(), lock(), release(), produced(), consumes(events), is_ready(), start_over(), populate_view()</td></tr>
+				<tr><td><code>FilesManager</code></td><td>&mdash;</td><td>files_for_app(), lock(), release(), produced(), consumes(events), is_ready(), start_over(), populate_view(), container(), carried(parent)</td></tr>
 			</tbody>
 		</table>
 
@@ -2316,7 +2325,7 @@
 
 		<h4>In yUML</h4>
 
-		<pre class="dark"><code>[FilesManager|files_for_app();lock();release();produced();consumes();is_ready();start_over();populate_view()]++1-1&gt;[FileProvision]
+		<pre class="dark"><code>[FilesManager|files_for_app();lock();release();produced();consumes();is_ready();start_over();populate_view();container();carried()]++1-1&gt;[FileProvision]
 [FilesManager]++1-1&gt;[FilesController|record|handle();populate_view()]
 [FilesManager]++1-1&gt;[DepositView]
 [FilesController]++1-1&gt;[FilesRecord|task;reachable;has_workspace;place;workspace;fed;deposited;treated;produced;to_be_shown|serialize();parse()]
@@ -2579,7 +2588,7 @@
 			<thead><tr><th>Operation</th><th>Contract</th></tr></thead>
 			<tbody>
 				<tr><td>Be built</td><td>pre: a model and a view are given to it. post: a record with its default values, nothing read and nothing called</td></tr>
-				<tr><td>Handle what the page sent</td><td>pre: none — what carries no task of this domain gives the record back to its default values. post: the record holds what the page transmitted, the façade has been called at most once, and nothing is held after it answered</td></tr>
+				<tr><td>Handle what the page sent</td><td>pre: none — what transmits no record gives the record back to its default values, and the copy back to the one the app was entered with. post: the record holds what the page transmitted, the façade has been called at most once, and nothing is held after it answered. An app which speaks in the request it answers, without sending anything of the page, is answered on the record that request transmitted</td></tr>
 				<tr><td>Rebuild what is fed</td><td>pre: none. post: the record holds exactly the names and the sizes the page transmitted, in the order they were fed; empty when it transmitted nothing. No content, ever</td></tr>
 				<tr><td>Populate the view</td><td>pre: what the page sent has been handled. post: the view has built its tree from the record, and the controller has changed nothing meanwhile</td></tr>
 			</tbody>

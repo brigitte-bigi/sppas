@@ -41,6 +41,7 @@
 import os
 
 from sppas.core.coreutils import sppasLogFile
+from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States
 
 from ..services.files import swappFilesManager
@@ -125,7 +126,8 @@ class swappConvertModel:
         """Start the conversion of the batch on the server, as a process.
 
         The report is written before the conversion starts, with no file
-        treated yet: it is what the results are read in. Where the
+        treated yet: it is what the results are read in. The files of the
+        batch are locked by the request which starts it. Where the
         conversion stands is the process's, and it is read in its file.
 
         :param batch: (sppasWorkspace) The workspace the provision of files handed
@@ -133,8 +135,13 @@ class swappConvertModel:
         :return: (tuple) The name of the report, and the name of the process, without their path
 
         """
+        _filenames = list()
+        for _file in batch.get_filename_from_state(States().CHECKED):
+            _filenames.append(_file.get_id())
+
         _report = swappConversionReport(os.path.basename(sppasLogFile(pattern=REPORT_PATTERN, extension=REPORT_EXTENSION).get_filename()))
-        _report.write(len(batch.get_filename_from_state(States().CHECKED)), list())
+        _report.write(len(_filenames), list())
+        self.__provision.lock(_filenames)
         _process = swappProcess.start(self.convert, (batch, conversion, _report))
         return _report.name, _process.name
 
@@ -154,14 +161,13 @@ class swappConvertModel:
     # -----------------------------------------------------------------------
 
     def convert(self, batch, conversion: swappConversion, report=None, progress=None) -> list:
-        """Convert the batch, and give back to the provision of files what was produced.
+        """Convert the batch.
 
-        The files of the batch are locked while they are converted, and
-        released once each has its result. What was written is added to the
-        batch, which is given back, and that the batch has been treated is said.
-        When a report is given, it is written as the files have their result,
-        and finished once the batch has been treated. When a progress is
-        given, it is set as the files have their result.
+        What was written is added to the batch. When a report is given, it
+        is written as the files have their result, and finished once the
+        batch has been treated: the request which asks for the results gives
+        the batch back with it. When a progress is given, it is set as the
+        files have their result.
 
         :param batch: (sppasWorkspace) The workspace the provision of files handed
         :param conversion: (swappConversion) What was decided
@@ -178,13 +184,35 @@ class swappConvertModel:
         _general_options["override"] = conversion.override
         _general_options["heuristic"] = conversion.heuristic
 
-        self.__provision.lock(_filenames)
         _results = self.__conversion.convert(batch, conversion.destination, dict(), _general_options, report,
                                              progress)
-        self.__provision.release(_filenames)
-        self.__provision.produced(batch)
-        self.__provision.finished()
         if report is not None:
             report.write(len(_filenames), _results, finished=True)
 
         return _results
+
+    # -----------------------------------------------------------------------
+
+    def give_back(self, name: str) -> None:
+        """Give the batch of a conversion back to the provision of files, as its report says it.
+
+        The files which have their result are released, what was produced is
+        given back, and that the batch has been treated is said. It is done
+        by the request which asks for the results: the copy of the files it
+        works on is the one that request carries.
+
+        :param name: (str) Name of the report, without its path
+        :raises: ValueError: The name is not the one of a report of Convert
+
+        """
+        _total, _results, _finished = swappConversionReport(name).read()
+        _filenames = list()
+        _produced = sppasWorkspace()
+        for _result in _results:
+            _filenames.append(_result.file)
+            for _filename in _result.produced:
+                if os.path.isfile(_filename) is True:
+                    _produced.add_file(_filename)
+        self.__provision.release(_filenames)
+        self.__provision.produced(_produced)
+        self.__provision.finished()

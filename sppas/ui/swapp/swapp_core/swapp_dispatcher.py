@@ -162,7 +162,7 @@ class swappDispatcher:
             return responses
 
         for web_app in WEB_APPLICATIONS:
-            if web_app.name == self.__app.name:
+            if web_app.name == self.__app.name or web_app.show is False:
                 continue
             try:
                 bakery = web_app.bakery()
@@ -182,10 +182,12 @@ class swappDispatcher:
         """Return the bakery of the app which bakes the given page name.
 
         A disabled app bakes nothing: its feature is not enabled, and the
-        requested page is left to the next app of the registry. An app of
-        the machine bakes nothing either when the server is the web service:
-        it says so itself, with local_only(), and a card disabled in the
-        Dashboard is not what keeps a request away -- this is.
+        requested page is left to the next app of the registry. An app in
+        development bakes nothing, wherever it is served: the registry
+        declares it with "show" set to False. An app of the machine bakes
+        nothing either when the server is the web service: it says so itself,
+        with local_only(), and a card disabled in the Dashboard is not what
+        keeps a request away -- this is.
 
         :param page_name: (str) Name of the page to bake
         :return: (swappWebData|None) None if no app bakes this page name
@@ -197,6 +199,9 @@ class swappDispatcher:
             except sppasEnableFeatureError as e:
                 logging.info(f"Application {web_app.name} disabled: {e}.")
             else:
+                if web_app.show is False:
+                    logging.info(f"Application {web_app.name} is in development: it is not served.")
+                    continue
                 if swapp_settings.served_locally is False and bakery.local_only() is True:
                     logging.info(f"Application {web_app.name} is of the machine: "
                                  "the web service does not serve it.")

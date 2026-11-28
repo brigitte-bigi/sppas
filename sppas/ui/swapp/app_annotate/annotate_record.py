@@ -65,8 +65,8 @@ class swappAnnotateRecord:
     the API performs with: which annotations are activated, the language of
     each, the values of their options, and the extension of every kind of
     output file. A new one holds the defaults of the API. The merge option,
-    the checked report and the report of the run the page follows
-    are not of it.
+    the checked report, and the report and the results of the run the page
+    follows are not of it.
 
     """
 
@@ -75,6 +75,7 @@ class swappAnnotateRecord:
         self.__task = ""
         self.__report = ""
         self.__followed = ""
+        self.__results = ""
         self.__parameters = sppasParam()
         self.__merge = False
         self.__to_be_shown = dict()
@@ -101,6 +102,7 @@ class swappAnnotateRecord:
         _data["annotate_merge"] = str(self.__merge)
         _data["annotate_report"] = self.__report
         _data["annotate_followed"] = self.__followed
+        _data["annotate_results"] = self.__results
 
         return _data
 
@@ -121,6 +123,7 @@ class swappAnnotateRecord:
         self.__task = ""
         self.__report = ""
         self.__followed = ""
+        self.__results = ""
         self.__parameters = sppasParam()
         self.__merge = False
         self.__to_be_shown = dict()
@@ -131,6 +134,8 @@ class swappAnnotateRecord:
             self.__report = data["annotate_report"]
         if isinstance(data.get("annotate_followed"), str) is True:
             self.__followed = data["annotate_followed"]
+        if isinstance(data.get("annotate_results"), str) is True:
+            self.__results = data["annotate_results"]
         self.__merge = str(data.get("annotate_merge", False)) == "True"
 
         for _name in data:
@@ -218,6 +223,22 @@ class swappAnnotateRecord:
 
         """
         self.__followed = str(name)
+
+    # -----------------------------------------------------------------------
+
+    def get_results(self) -> str:
+        """Return the name of the results of the run the page follows, empty if none (str)."""
+        return self.__results
+
+    # -----------------------------------------------------------------------
+
+    def set_results(self, name: str) -> None:
+        """Set the name of the results of the run the page follows.
+
+        :param name: (str) The name of the results, empty when the page follows none
+
+        """
+        self.__results = str(name)
 
     # -----------------------------------------------------------------------
 
@@ -392,6 +413,7 @@ class swappAnnotateRecord:
     task = property(get_task, None)
     report = property(get_report, set_report)
     followed = property(get_followed, set_followed)
+    results = property(get_results, set_results)
     extensions = property(get_extensions, None)
     parameters = property(get_parameters, None)
     selected = property(get_selected, None)

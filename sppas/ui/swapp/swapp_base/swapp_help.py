@@ -40,6 +40,7 @@
 """
 
 from __future__ import annotations
+import html
 import logging
 import os
 
@@ -107,9 +108,12 @@ class swappHelpNode(TagNode):
         _form.append_child(_back)
         _back.append_child(HTMLNode(_back.identifier, None, "span", value=MSG_BACK))
 
+        # A value is written as it was sent: its quotes are escaped, or the
+        # attribute would end at the first one.
         for _name in fields:
+            _value = html.escape(str(fields[_name]), quote=True)
             _form.append_child(EmptyNode(_form.identifier, None, "input",
-                                         attributes={"type": "hidden", "name": _name, "value": fields[_name]}))
+                                         attributes={"type": "hidden", "name": _name, "value": _value}))
 
         self.append_child(swappHelpNode.__document(self.identifier, document))
 

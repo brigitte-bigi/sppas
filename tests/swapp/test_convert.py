@@ -81,6 +81,8 @@ from sppas.ui.swapp.services.files import swappFilesManager
 from sppas.ui.swapp.services.files import swappWorkspaceFiles
 from sppas.ui.swapp.services.files.files_view import MSG_TREATED
 
+from tests.swapp.page_requests import files_request
+
 # ---------------------------------------------------------------------------
 
 
@@ -612,7 +614,11 @@ class TestModelProvision(unittest.TestCase):
         for name in ("a.xra", "b.xra"):
             path = os.path.join(self.root, name)
             sppasTrsRW(path).write(one_tier())
-            self.manager.consumes({"designate": path})
+            # Designated as the page sends it: the record of the provision
+            # of files, and the path.
+            self.manager.populate_view()
+            self.manager.consumes(files_request(self.manager.container().serialize(), "designate",
+                                                {"designate": path}))
             self.files.append(path)
         self.provision = swappModelProvision(self.manager)
 

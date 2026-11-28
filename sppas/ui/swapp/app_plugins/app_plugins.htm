@@ -980,11 +980,12 @@
 			<li><b>RO1</b> &mdash; Installing and removing a plugin happen where SPPAS runs on the machine of the person, and nowhere else [025].</li>
 			<li><b>RO2</b> &mdash; A run outlives the request which started it. It is a long process of swapp: it is advanced by the thread of its process; where it stands is written in the file of that process, and the run and its results in its report. Both are files of the folder of the logs, whose names the page transmits, and any process of the server reads them: nothing of a run is held on the server between two requests.</li>
 			<li><b>RO3</b> &mdash; What a plugin said is relayed as it was said. This application does not shorten it, does not translate it, and reads nothing into it.</li>
-			<li><b>RO4</b> &mdash; The files a run works on and the files it produced are the provision of files', at both ends. This application holds their identity for the time of the run.</li>
+			<li><b>RO4</b> &mdash; The files a run works on and the files it produced are the provision of files', at both ends. This application holds their identity for the time of the run. The request which starts the runs locks the files, and the one which asks for the results releases them and gives back what appeared, with the copy of the files the page transmits: the page transmits the record of the provision of files with every request of its form, and the server holds nothing of it between two requests.</li>
 			<li><b>RO5</b> &mdash; The options of a plugin are set before a run and read once, when that run starts. A plugin set during a run is set for the next one.</li>
 			<li><b>RO6</b> &mdash; The options of a plugin are shown in a container this application places in the window the service of the options offers for that plugin, in its own page. Setting a plugin is not leaving the list of plugins.</li>
 			<li><b>RO8</b> &mdash; Where SPPAS runs on the machine of the person, one run at a time is one run on that machine. Where it answers from a server, several persons run at once, and what bounds the number of runs the machine takes at one time is the business of whoever runs it.</li>
 			<li><b>RO9</b> &mdash; The runs of the selected plugins are performed in one process, one after the other, in the order of the list. The failure of one plugin never stops the next one [305], [306].</li>
+			<li><b>RO10</b> &mdash; Online, what Plugins does is reached at a secret name only, whose address WhakerPy signs. Every request of the page is sent to the address of the page, with what follows its name, <code>ts</code> and <code>sig</code>: a request sent to the name alone is refused.</li>
 		</ul>
 
 	</section>
@@ -1221,6 +1222,15 @@
 			to be held, and the first chapter says why there could not be.
 		</p>
 
+		<p>
+			The script of the page is <code>statics/js/plugins_manager.js</code>. Its
+			requests, and those of the progress, of the windows of the options and of the
+			provision of files, are sent to the address of the page, with what follows its
+			name: <code>PluginsManager</code> is a <code>SwappManager</code>, of
+			<code>statics/js/swapp_manager.js</code>. Online, Plugins is reached at a
+			secret name, and what authorizes that name goes with each request. RO10
+		</p>
+
 	</section>
 
 
@@ -1314,7 +1324,7 @@
 				<tr><td>uses</td><td><code>PluginsModel</code> &rarr; <code>PluginRun</code></td><td>A dependency: a run is written in its report and read from it, and the model holds none</td></tr>
 				<tr><td>holds</td><td><code>PluginRun</code> 1 &mdash; 0..n <code>FileResult</code></td><td>A composition: a result exists only inside the run it belongs to</td></tr>
 				<tr><td>uses</td><td><code>PluginsModel</code> &rarr; <code>sppasPluginsManager</code></td><td>A dependency, and the only tie of this application to the domain of the plugins</td></tr>
-				<tr><td>uses</td><td><code>PluginsModel</code> &rarr; the provision of files</td><td>A dependency: the files of a run, read in the manager the recipe built, and what was produced, given back to it</td></tr>
+				<tr><td>uses</td><td><code>PluginsModel</code> &rarr; the provision of files</td><td>A dependency: the files of a run, read in the manager the recipe built, which rebuilds its record from every request, and what was produced, given back to it when the results are asked for</td></tr>
 			</tbody>
 		</table>
 
@@ -1547,7 +1557,7 @@
 		<h4>What holds everywhere</h4>
 
 		<ul>
-			<li>Only <code>PluginsModel</code> speaks to the domain of the plugins. The manager of the provision of files is built by <code>PluginsResponseRecipe</code>, which places its container in the page, and read by <code>PluginsModel</code>, for the files of a run and for what was produced. The options of a plugin are handed to the service of the options by <code>PluginsController</code>, which takes back their values.</li>
+			<li>Only <code>PluginsModel</code> speaks to the domain of the plugins. The manager of the provision of files is built by <code>PluginsResponseRecipe</code>, which hands it the events of every request first and places its container in the page, and read by <code>PluginsModel</code>, for the files of a run and for what was produced. The options of a plugin are handed to the service of the options by <code>PluginsController</code>, which takes back their values.</li>
 			<li>What a plugin said is relayed as it was said: never shortened, never translated, and never read for a meaning. RO3</li>
 			<li>Nothing of a run is held on the server between two requests: where it stands is in the file of its process, and the run and its results in its report, two files of the folder of the logs whose names the page transmits.</li>
 			<li>What is absent gives back an empty thing &mdash; no plugin, no result, no produced file &mdash; and never nothing at all.</li>
@@ -1578,7 +1588,7 @@
 				<tr><td>Start the runs</td><td>pre: plugins which are listed and selected, files which are not none, and the values as they stand. post: one run per selected plugin exists, in the order of the list, each one holding its moment, its plugin, its values and its files, and holding no result yet; it is given a domain of the plugins made for it, on whose plugin the values are set before the first file; and they are started as one long process of swapp, whose thread advances them one after the other, one file at a time, and writes them in its report; the names of its process and of its report are given back. When the request carries the name of a process which has not ended, nothing is started and the refusal says so</td></tr>
 				<tr><td>Say whether a run is going</td><td>pre: the name of its process. post: true while the file of that process does not say it has ended, false afterward, and false for a name no process bears. It is what tells a run which stopped from a run which is slow</td></tr>
 				<tr><td>Give the run</td><td>pre: the name of its report. post: the run as its report holds it, with the results written so far, which file is being treated and how many remain. Answered while the run goes, and answered after it is over. A run read twice in a row gives what it had each time, and never less</td></tr>
-				<tr><td>Give back what was produced</td><td>pre: the files which appeared. post: they are known among the files of the person, and reachable as her own. This application holds none of them</td></tr>
+				<tr><td>Give back what was produced</td><td>pre: the name of the report of the runs, which the request asking for the results carries with the copy of the files. post: the files of the runs are released; the files which appeared are known among the files of the person, and reachable as her own; that the runs have finished is said. Raises when the name is not the one of a report of Plugins. This application holds none of them</td></tr>
 				<tr><td>Give the address of what was produced</td><td>pre: produced files. post: the address one file is reached at, or the one of an archive holding them all; empty when there is none</td></tr>
 			</tbody>
 		</table>

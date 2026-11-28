@@ -29,6 +29,10 @@
         {
           "prefix": "/plugins_",
           "suffix": ".html"
+        },
+        {
+          "prefix": "/deposit/",
+          "suffix": ""
         }
       ],
       "query_keys": {

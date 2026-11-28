@@ -396,7 +396,8 @@ export default class PluginsManager extends SwappManager {
      *
      * The runs are a process of swapp: they are followed as every process is,
      * by the name the form transmits. The results are asked for with the
-     * fields of the form, the name of the report included.
+     * fields of the form, the name of the report included, as a navigation:
+     * the page answered holds the links of the produced files, signed.
      *
      * @private
      * @returns {void}
@@ -414,7 +415,7 @@ export default class PluginsManager extends SwappManager {
         }
         const completed = this.#fieldsOf(form, null);
         completed[EVENT_BAKE] = TASK_COMPLETE;
-        new SwappProcess(this.#intervalMs).follow(process.value, async () => await this.#post(completed));
+        new SwappProcess(this.#intervalMs).follow(process.value, async () => this.submitFields(completed));
     }
 
     // ------------------------------------------------------------------------

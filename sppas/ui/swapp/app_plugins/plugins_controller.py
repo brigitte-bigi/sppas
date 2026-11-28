@@ -241,6 +241,9 @@ class swappPluginsController:
             self.__record.show("unavailable", str(e))
             return
 
+        # The files are given back with the copy of the files this request
+        # carries.
+        self.__model.give_back(self.__record.run)
         self.__record.show("results", _runs)
 
         # The runs are asked for once their process has ended: a run which

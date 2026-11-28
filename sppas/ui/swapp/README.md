@@ -14,7 +14,10 @@ package.
 - `swapp_core/` holds the registries and the infrastructure: `swapps.py`
   (the `WEB_APPLICATIONS` and `WEB_PAGES` registries), `swapp_app_info.py` and
   `swapp_page_info.py` (their entry classes), `swappsg.py` (the shared globals),
-  `swapp_utils.py` and `swapp_exc.py`;
+  `swapp_utils.py` and `swapp_exc.py`, and `swapp_deposit_middleware.py`, the
+  WSGI middleware any server of swapp wraps its application with: it serves
+  the files an app produced, at the addresses of the deposit, once what signs
+  them is verified;
 - `nodes/` holds the reusable HTML nodes, grouped by role:
   `buttons/`, `dialogs/`, `inputs/`, `layout/`, `feedback/`;
 - `swapp_base/` holds the base classes common to every app: `swapp_bakery.py`,
@@ -193,7 +196,9 @@ the response.
 **Important:** `WEB_APPLICATIONS` has a second role. The Dashboard model
 reads it to create the application cards displayed in the Dashboard. As a
 consequence, an entry in `WEB_APPLICATIONS` is, by definition, an app: it
-is dispatched *and* it gets a card. 
+is dispatched *and* it gets a card. An app in development is declared with
+`show` set to False: it gets no card, and it is not dispatched either,
+wherever it is served -- an app which is not shown does not work.
 
 #### Where an app can be served
 
@@ -238,7 +243,8 @@ It is written once, in `swappWebData`: an app answers `is_page()` with
 `_is_app_page()`, and its default page online with `_welcome_response()`,
 which an app with a welcome page of its own overrides. An app in
 development is not protected: the list `WEB_APPLICATIONS` declares it with
-`show` set to False, and `swappWebData` reads it there. The Dashboard is not
+`show` set to False, `swappWebData` reads it there, and `swappDispatcher`
+does not serve it at all. The Dashboard is not
 concerned: it is the entry, and leads to the apps.
 
 The scripts of an app send their requests to the address of the page, with
@@ -247,7 +253,10 @@ what follows its name, so that what authorizes a secret name goes with them:
 is the manager of Whakerexa which sends there, and the managers of the apps,
 the progress of a process, the windows of the options and the provision of
 files all send there. `sppas.js` gives the same address to the manager of the
-accessibility of Whakerexa. The spin-offs keep their
+accessibility of Whakerexa. Once a process has ended, its results are asked
+for as a navigation, by `submitFields()` of `SwappManager`: the server
+answers the whole page, and WhakerPy signs the links of the produced files in
+it, where `/deposit/` is protected. The spin-offs keep their
 own way to the same end, as the welcome page of TextCueS does.
 
 #### Why the Desktop card is not in the registry
@@ -384,7 +393,9 @@ module, `statics/js/swapp_process.js`: an app gives it the name and what it
 does once the process has ended.
 
 What an app shows of the result is not the process's: the results of a
-conversion stay in the report of Convert, read when the page asks for them.
+conversion stay in the report of Convert, and those of a run of Annotate in
+the results of that run, a file whose name the page transmits too, read when
+the page asks for them.
 
 The conversion of Convert, the run of Annotate and the installation of Setup
 are processes of swapp. The API of the annotations is not changed: given

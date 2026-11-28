@@ -73,7 +73,7 @@ class swappFilesManager:
 
     def __init__(self, parent: str, workspace: swappWorkspaceFiles | None = None,
                  place: swappFilePlace | None = None, reachable: bool = True,
-                 has_workspace: bool = False):
+                 has_workspace: bool = False, form_id: str = ""):
         """Create what an app holds of this service.
 
         The case an app is in is said here, when it is entered, and the record
@@ -87,6 +87,7 @@ class swappFilesManager:
         :param place: (swappFilePlace) The places of the deposit API, None for a new one where files are brought
         :param reachable: (bool) True when the person designates files which stand already
         :param has_workspace: (bool) True when the given workspace is one which is declared
+        :param form_id: (str) Identifier of the form of the app: its requests carry the record
         :raises: sppasTypeError: The given parent is not a string
 
         """
@@ -105,7 +106,7 @@ class swappFilesManager:
             _switched = True
 
         self.__model = swappFileProvision(workspace, place, reachable=reachable)
-        self.__deposit_view = swappDepositView(parent)
+        self.__deposit_view = swappDepositView(parent, form_id)
         self.__controller = swappFilesController(self.__model, self.__deposit_view, reachable, has_workspace)
         if _switched is True:
             self.__controller.say(MSG_NO_WINDOW)
@@ -113,21 +114,21 @@ class swappFilesManager:
     # -----------------------------------------------------------------------
 
     def consumes(self, events: dict) -> bool:
-        """Answer whether the events of a request were for this service.
+        """Rebuild the record from the events of a request, and answer whether they were for this service.
 
-        An app offers what it did not recognize; nothing is changed when the
-        answer is false, and what nobody consumed is the app's to answer.
+        An app hands the events of every request over, before it answers its
+        own tasks: the page transmits the record at every request, and the
+        copy the app works on is rebuilt from it. When the answer is false,
+        nothing but that is done, and what nobody consumed is the app's to
+        answer.
 
         :param events: (dict) The events a request carries
-        :return: (bool) True when they were treated here
+        :return: (bool) True when they carried a task of this service, and it was done
 
         """
-        if swappFilesController.is_a_task(events) is False:
-            return False
-
         self.__controller.handle(events)
 
-        return True
+        return swappFilesController.is_a_task(events)
 
     # -----------------------------------------------------------------------
 
@@ -268,6 +269,20 @@ class swappFilesManager:
     def populate_view(self) -> None:
         """Have the view the record names build its tree."""
         self.__controller.populate_view()
+
+    # -----------------------------------------------------------------------
+
+    def carried(self, parent: str):
+        """Return the hidden fields which carry the record, for an app which does not show the container.
+
+        The requests of the form of the app carry them, wherever they stand
+        in the page.
+
+        :param parent: (str) Identifier of the node an app appends them to
+        :return: (TagNode)
+
+        """
+        return self.__deposit_view.carried(parent, self.__controller.record)
 
     # -----------------------------------------------------------------------
 

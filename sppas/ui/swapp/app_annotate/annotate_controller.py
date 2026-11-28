@@ -46,6 +46,7 @@ from sppas.core.coreutils import sppasTypeError
 from sppas.src.wkps import States
 
 from ..swapp_core.swappsg import swapp_settings
+from ..swapp_base.swapp_process import PROCESS_FIELD
 from ..services.options import swappOptionsManager
 
 from .annotate_record import swappAnnotateRecord
@@ -124,10 +125,15 @@ class swappAnnotateController:
             elif "options_close" in events:
                 self.__record.unselect(_key)
 
+        # The run the page follows is the one of the process it transmits:
+        # any process of the server reads where it stands.
+        _process = events.get(PROCESS_FIELD, "")
+        _running = isinstance(_process, str) is True and self.__model.is_running(_process) is True
+
         # One run at a time: while one goes, nothing starts another,
         # resets the page or asks for another batch, and it is said.
         self.__starts_over = False
-        if self.__model.is_running() is True and \
+        if _running is True and \
                 self.__record.task in ("annotate_perform", "annotate_reset", "annotate_steps"):
             self.__record.show("going", True)
 
@@ -142,6 +148,7 @@ class swappAnnotateController:
         # files starts over.
         elif self.__record.task == "annotate_steps" and len(self.__record.followed) > 0:
             self.__record.followed = ""
+            self.__record.results = ""
             self.__starts_over = True
 
         # The annotations are performed with at least one selected and a
@@ -152,14 +159,25 @@ class swappAnnotateController:
             if len(_missing) > 0:
                 self.__record.show("missing", _missing)
             else:
-                self.__record.followed = self.__model.start(_batch, self.__record.parameters, self.__record.merge)
+                _report, _results, _process = self.__model.start(_batch, self.__record.parameters,
+                                                                 self.__record.merge)
+                self.__record.followed = _report
+                self.__record.results = _results
+                _running = True
 
         # Once the annotations have been performed, the report of that
-        # run is the one which is checked, and what came of every root of
-        # the batch is shown.
+        # run is the one which is checked, the batch is given back to the
+        # provision of files with the copy this request carries, and what
+        # came of every root of the batch is shown.
         elif self.__record.task == "annotate_complete":
             self.__record.report = self.__record.followed
+            self.__model.give_back(self.__record.results)
             self.__show_results()
+
+        # While the process of the run goes, the page shows its progress.
+        if _running is True:
+            self.__record.show("running", True)
+            self.__record.show("process", _process)
 
         # Locally, the checked report is deleted, or every report which is
         # not checked. Those which could not be deleted are said.
@@ -235,18 +253,10 @@ class swappAnnotateController:
             self.__record.show("configured", _key)
             self.__record.show("options", self.__options.container())
 
-        # The run which is going is the one the page follows, whatever the
-        # page transmitted: the server holds it.
-        if self.__model.is_running() is True:
-            self.__record.followed = self.__model.report_name()
-
         # While the annotations are performed, the page shows the progress,
         # and the report under it as it fills: what is not written yet is
         # not there to be read.
-        if self.__model.is_running() is True or \
-                (self.__record.task == "annotate_perform" and len(self.__record.followed) > 0):
-            self.__record.show("running", True)
-            self.__record.show("process", self.__model.process_name())
+        if self.__record.to_be_shown.get("running", False) is True:
             self.__record.show("report", self.followed_report())
         elif len(_type) > 0:
             _annotations = list()
@@ -310,7 +320,7 @@ class swappAnnotateController:
 
     def __show_results(self) -> None:
         """Show what came of every root of the batch, and where each produced file is reached."""
-        _results = self.__model.results()
+        _results = self.__model.results(self.__record.results)
         self.__record.show("results", _results)
 
         # Where the person is not on the machine which wrote them, each

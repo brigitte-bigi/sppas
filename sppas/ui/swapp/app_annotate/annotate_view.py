@@ -39,6 +39,7 @@
 """
 
 from __future__ import annotations
+import html
 
 from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import EmptyNode
@@ -290,12 +291,14 @@ class swappAnnotateView(swappBaseView):
 
         # What the record holds and the written panel does not show as a
         # field is carried in the form, hidden: the next request rebuilds
-        # the record from all of it.
+        # the record from all of it. A value is written as it was given: its
+        # quotes are escaped, or the attribute would end at the first one.
         _data = record.serialize()
         for _name in _data:
             if (_name in _fields) is False:
+                _value = html.escape(str(_data[_name]), quote=True)
                 _form.append_child(EmptyNode(_form.identifier, None, "input",
-                                             attributes={"type": "hidden", "name": _name, "value": _data[_name]}))
+                                             attributes={"type": "hidden", "name": _name, "value": _value}))
 
         # While a run goes, the form carries the name of its process: the page
         # asks where it stands by it.

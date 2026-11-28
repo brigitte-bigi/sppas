@@ -46,6 +46,7 @@ from sppas.core.config import paths
 from sppas.core.coreutils import sppasLogFile
 from sppas.src.plugins import sppasPluginsManager
 from sppas.src.structs import sppasOption
+from sppas.src.wkps import sppasWorkspace
 from sppas.src.wkps import States
 
 from ..services.files import swappFilesManager
@@ -229,14 +230,14 @@ class swappPluginsModel:
 
         One run per plugin is written in the report before the process
         starts, in the given order, with its moment and the values its
-        options hold, and with no result yet.
+        options hold, and with no result yet. The files are locked by the
+        request which starts them.
 
         :param keys: (list of str) Identifiers of the plugins, in the order of the list
         :param options: (dict) key=identifier of a plugin, value=its options (list of sppasOption)
         :return: (tuple) The name of the report, and the name of the process, without their path
 
         """
-        _batch = self.__files.files_for_app()
         _filenames = self.files_for()
         _moment = datetime.now().isoformat(timespec="seconds")
         _runs = list()
@@ -249,48 +250,62 @@ class swappPluginsModel:
         _name = sppasLogFile(pattern=REPORT_PATTERN, extension=REPORT_EXTENSION).get_filename()
         _report = swappPluginsReport(os.path.basename(_name))
         _report.write(_runs)
-        _process = swappProcess.start(self.run, (_batch, _runs, _report))
+        self.__files.lock(_filenames)
+        _process = swappProcess.start(self.run, (_runs, _report))
 
         return _report.name, _process.name
 
     # -----------------------------------------------------------------------
 
-    def run(self, batch, runs: list, report: swappPluginsReport, progress=None) -> None:
+    def run(self, runs: list, report: swappPluginsReport, progress=None) -> None:
         """Perform the runs, one after the other, one file at a time.
 
         The runs are given a domain of the plugins made for them: the values
         of each run are set on the options of its plugin there, before its
-        first file, and no other run reads them. The files are locked while
-        the runs go, and released once every file of every run has its
-        result; what appeared is then given back to the provision of files,
-        once.
+        first file, and no other run reads them. The results are written in
+        the report: the request which asks for them gives the files back.
 
-        :param batch: (sppasWorkspace) The workspace the provision of files handed
         :param runs: (list of swappPluginRun) The runs, with no result yet
         :param report: (swappPluginsReport) The report the results are written in
         :param progress: (sppasBaseProgress|None) The progress of the process of the runs
 
         """
+        _domain = sppasPluginsManager()
+        for _run in runs:
+            _plugin = _domain.get_plugin(_run.plugin)
+            _values = _run.values
+            for _key in _values:
+                _plugin.get_option_from_key(_key).set_value(_values[_key])
+            self.__perform(_domain, _run, runs, report, progress)
+
+    # -----------------------------------------------------------------------
+
+    def give_back(self, report: str) -> None:
+        """Give the files of the runs back to the provision of files, as their report says it.
+
+        The files are released, what appeared is given back, once, and that
+        the runs have finished is said. It is done by the request which asks
+        for the results: the copy of the files it works on is the one that
+        request carries.
+
+        :param report: (str) Name of the report, without its path
+        :raises: ValueError: The name is not the one of a report of Plugins
+
+        """
+        _runs = swappPluginsReport(report).read()
         _filenames = list()
-        if len(runs) > 0:
-            _filenames = runs[0].files
-        self.__files.lock(_filenames)
-        try:
-            _domain = sppasPluginsManager()
-            for _run in runs:
-                _plugin = _domain.get_plugin(_run.plugin)
-                _values = _run.values
-                for _key in _values:
-                    _plugin.get_option_from_key(_key).set_value(_values[_key])
-                self.__perform(_domain, _run, runs, report, progress)
-        finally:
-            self.__files.release(_filenames)
-            for _run in runs:
-                for _result in _run.results:
-                    for _produced in _result.produced:
-                        batch.add_file(_produced)
-            self.__files.produced(batch)
-            self.__files.consumes({"task": "finished"})
+        if len(_runs) > 0:
+            _filenames = _runs[0].files
+        self.__files.release(_filenames)
+
+        _produced = sppasWorkspace()
+        for _run in _runs:
+            for _result in _run.results:
+                for _filename in _result.produced:
+                    if os.path.isfile(_filename) is True:
+                        _produced.add_file(_filename)
+        self.__files.produced(_produced)
+        self.__files.consumes({"task": "finished"})
 
     # -----------------------------------------------------------------------
 

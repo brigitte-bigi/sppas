@@ -846,7 +846,7 @@ class TestLocalUse(unittest.TestCase):
         manager.consumes(TestLocalUse.press(manager, "designate", ""))
         self.assertFalse(manager.is_ready())
 
-        self.assertTrue(manager.consumes({"ready": ""}))
+        self.assertTrue(manager.consumes(TestLocalUse.press(manager, "ready", "")))
         self.assertTrue(manager.is_ready())
         handed = list()
         for handed_file in files_of(manager.files_for_app()):

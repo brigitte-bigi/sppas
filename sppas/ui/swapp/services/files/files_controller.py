@@ -114,13 +114,12 @@ class swappFilesController:
         self.__record = swappFilesRecord()
         self.__record.reachable = reachable
         self.__record.has_workspace = has_workspace
-        # What the record held before the one being built: a caller which
-        # sends nothing of the page keeps what the page last transmitted.
-        self.__record_before = self.__record
-        # The files an app treated, and those it produced: an app says so,
-        # and not a page.
-        self.__treated = list()
-        self.__produced = list()
+        # The copy the app was entered with, as a page transmits it: a page
+        # which transmits none works on it, and never on what a request
+        # before left.
+        _entered = swappFilesRecord()
+        _entered.workspace = model.workspace()
+        self.__entered = _entered.serialize()["workspace"]
 
     # -----------------------------------------------------------------------
 
@@ -177,48 +176,42 @@ class swappFilesController:
     def handle(self, data: dict) -> None:
         """Rebuild the record from what a page sent, and do the task it asks.
 
-        What carries no task of this service leaves the record at its default
-        values, which is a first request.
+        A page transmits the whole of the record at every request, and the
+        record is rebuilt from it: nothing is held between two requests. A
+        page which transmits none is a first request, and the copy is the one
+        the app was entered with.
 
-        :param data: (dict) What a page sent
+        An app also speaks to this service in the request it answers, without
+        sending anything of the page: it says it has finished. What it did not
+        send is then what the page transmitted in that request.
+
+        :param data: (dict) What a page sent, or what an app says
 
         """
-        self.__record_before = self.__record
-        self.__record = swappFilesRecord()
-        self.__record.reachable = self.__reachable
-        self.__record.has_workspace = self.__has_workspace
         if isinstance(data, dict) is False:
-            self.__record.place = self.__record_before.place
-            self.__record.fed = list(self.__record_before.fed)
-            self.__record.deposited = list(self.__record_before.deposited)
-            return
+            data = dict()
+        # The record a page transmits always says whether the files are
+        # reachable: an app which speaks says a task, and nothing of it.
+        _from_page = ("task" in data) is False or ("reachable" in data) is True
 
-        _before = self.__record_before
+        _transmitted = self.__record
+        self.__record = swappFilesRecord()
         self.__record.parse(data)
         self.__record.reachable = self.__reachable
         self.__record.has_workspace = self.__has_workspace
 
-        # An app speaks to this service without sending anything of the page:
-        # it says it has finished, or it asks for the files. What it did not
-        # send is what the page last transmitted, and not nothing -- a record
-        # rebuilt from nothing would forget where the deposit stands, which
-        # files traveled, and which ones she gave.
-        if "place" not in data:
-            self.__record.place = _before.place
-        if "fed" not in data:
-            self.__record.fed = list(_before.fed)
-        if "deposited" not in data:
-            self.__record.deposited = list(_before.deposited)
-        if "treated" in data:
-            self.__treated = list(self.__record.treated)
-        else:
-            self.__record.treated = list(self.__treated)
-        if "produced_files" in data:
-            self.__produced = list(self.__record.produced)
-        else:
-            self.__record.produced = list(self.__produced)
-        if self.__record.workspace is not None:
+        if _from_page is True:
+            if self.__record.workspace is None:
+                _entered = swappFilesRecord()
+                _entered.parse({"workspace": self.__entered})
+                self.__record.workspace = _entered.workspace
             self.__model.works_on(self.__record.workspace)
+        else:
+            self.__record.place = _transmitted.place
+            self.__record.fed = list(_transmitted.fed)
+            self.__record.deposited = list(_transmitted.deposited)
+            self.__record.treated = list(_transmitted.treated)
+            self.__record.produced = list(_transmitted.produced)
 
         _task = swappFilesController.task_of(data)
         if _task not in TASKS:
@@ -263,8 +256,6 @@ class swappFilesController:
         worked on.
 
         """
-        self.__treated = list()
-        self.__produced = list()
         self.__model.works_on(swappWorkspaceFiles.make_workspace())
         self.__record = swappFilesRecord()
         self.__record.reachable = self.__reachable
@@ -279,10 +270,11 @@ class swappFilesController:
         :param filenames: (list of str) Names of the files, with their path
 
         """
+        _treated = list(self.__record.treated)
         for _name in filenames:
-            if _name not in self.__treated:
-                self.__treated.append(_name)
-        self.__record.treated = list(self.__treated)
+            if _name not in _treated:
+                _treated.append(_name)
+        self.__record.treated = _treated
 
     # -----------------------------------------------------------------------
 
@@ -292,10 +284,11 @@ class swappFilesController:
         :param filenames: (list of str) Names of the files, with their path
 
         """
+        _produced = list(self.__record.produced)
         for _name in filenames:
-            if _name not in self.__produced:
-                self.__produced.append(_name)
-        self.__record.produced = list(self.__produced)
+            if _name not in _produced:
+                _produced.append(_name)
+        self.__record.produced = _produced
 
     # -----------------------------------------------------------------------
 

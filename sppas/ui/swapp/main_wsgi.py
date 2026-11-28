@@ -58,9 +58,6 @@ import logging
 from whakerpy.httpd import BaseResponseRecipe
 from whakerpy.webapp import WebSiteData
 
-from sppas.ui.swapp.services.deposit.deposit_address import swappFileAddress
-from sppas.ui.swapp.services.files import swappResultDelivery
-
 # ---------------------------------------------------------------------------
 # Definitions
 # ---------------------------------------------------------------------------
@@ -187,22 +184,6 @@ class SPPASErrorMiddleware:
         :return: (list) Response content to send back to the client
 
         """
-        # A file an app produced is reached at an address the deposit domain
-        # made: the domain reads the place and the name out of it, and gives
-        # nothing at all when it names no file it holds.
-        _path = environ.get("PATH_INFO", "")
-        if _path.startswith(swappFileAddress.PREFIX) is True:
-            _bytes = swappResultDelivery().serve(_path)
-            if len(_bytes) == 0:
-                start_response("404 Not Found",
-                               [("Content-Type", "text/plain; charset=utf-8"),
-                                ("Content-Length", "0")])
-                return [b""]
-            start_response("200 OK",
-                           [("Content-Type", "application/octet-stream"),
-                            ("Content-Length", str(len(_bytes)))])
-            return [_bytes]
-
         substituted = dict()
 
         def ignore_write(data):
@@ -281,17 +262,20 @@ try:
     # the log level.
     from sppas.ui.swapp.swapp_core.swapp_dispatcher import swappDispatcher
     from sppas.ui.swapp.nodes.feedback.hstatus_node import swappHTMLTreeError403
+    from sppas.ui.swapp.swapp_core.swapp_deposit_middleware import swappDepositMiddleware
 
     # Launch the application, as mandatory by UWSGI service
     # -----------------------------------------------------
     from whakerpy import WSGIApplication
 
-    application = SPPASErrorMiddleware(WSGIApplication(
+    # The files an app produced are served before anything else, at the
+    # addresses of the deposit, once what signs them is verified.
+    application = swappDepositMiddleware(SPPASErrorMiddleware(WSGIApplication(
         default_path="",
         default_filename="dashboard.html",
         web_page_maker=SPPASWebData,
         default_web_json=JSON
-    ))
+    )), JSON)
 
 except Exception as e:
 

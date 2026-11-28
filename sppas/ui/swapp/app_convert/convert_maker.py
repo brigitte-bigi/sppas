@@ -143,7 +143,8 @@ class swappConvertResponseRecipe(swappBaseResponse):
         self.__manager = swappFilesManager(self._htree.body_main.identifier,
                                            _workspace,
                                            reachable=_local,
-                                           has_workspace=len(_workspace.name()) > 0)
+                                           has_workspace=len(_workspace.name()) > 0,
+                                           form_id=swappConvertResponseRecipe.form_id())
         self.__controller = swappConvertController(swappConvertModel(self.__manager), self.__view)
 
     # -----------------------------------------------------------------------
@@ -164,6 +165,11 @@ class swappConvertResponseRecipe(swappBaseResponse):
         self._data = dict()
         self._status.code = 200
         self.__refused = False
+
+        # The page transmits the record of the provision of files at every
+        # request: the copy the conversion works on is rebuilt from it,
+        # before anything of Convert is answered.
+        _consumed = self.__manager.consumes(events)
 
         # The record is rebuilt at every request from what was transmitted,
         # and the controller does the task it carries.
@@ -199,7 +205,7 @@ class swappConvertResponseRecipe(swappBaseResponse):
             return False
 
         # Received events of the provision of files.
-        elif self.__manager.consumes(events) is False and len(events) > 0:
+        elif _consumed is False and len(events) > 0:
             logging.error(f"Unknown events={events}")
             self._status.code = 205  # Reset Content
 

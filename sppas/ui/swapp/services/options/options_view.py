@@ -48,6 +48,7 @@ from whakerpy.htmlmaker import TagNode
 from sppas.core.coreutils import sppasTypeError
 from sppas.ui import _
 
+from ...swapp_core.swappsg import swapp_settings
 from .options_record import swappOptionsRecord
 from .options_record import FIELD_PREFIX
 from .options_record import TASK_FILE
@@ -192,6 +193,15 @@ class swappOptionsView:
         # take a file do not give several buttons of the same name.
         if _kind.startswith("file") is True:
             _browse = _field + "_browse"
+            _pressed = {"type": "submit", "name": TASK_FILE, "id": _browse,
+                        "class": "wrap-item width_20",
+                        "aria-labelledby": _browse + " " + _named,
+                        "value": html.escape(str(option.get_key()), quote=True)}
+            # Served by the web service, no file of the person is obtained:
+            # the line is shown, and neither its field nor its button acts.
+            if swapp_settings.served_locally is False:
+                _attributes["disabled"] = None
+                _pressed["disabled"] = None
             _holder = TagNode(_line.identifier, None, "span",
                               attributes={"class": "wrap-panel", "role": "group", "aria-labelledby": _named})
             _line.append_child(_holder)
@@ -201,10 +211,7 @@ class swappOptionsView:
             _holder.append_child(_sized)
             _sized.append_child(EmptyNode(_sized.identifier, None, "input", attributes=_attributes))
             _holder.append_child(HTMLNode(_holder.identifier, None, "button", value=MSG_BROWSE,
-                                          attributes={"type": "submit", "name": TASK_FILE, "id": _browse,
-                                                      "class": "wrap-item width_20",
-                                                      "aria-labelledby": _browse + " " + _named,
-                                                      "value": html.escape(str(option.get_key()), quote=True)}))
+                                          attributes=_pressed))
             return
 
         _line.append_child(EmptyNode(_line.identifier, None, "input", attributes=_attributes))

@@ -62,18 +62,20 @@ from sppas.src.annotations import sppasParam
 from sppas.src.annotations.param import annotationParam
 
 from sppas.ui.swapp.swapp_core.swappsg import swapp_settings
+from sppas.ui.swapp.swapp_base import swapp_process
 from sppas.ui.swapp.swapp_base.swapp_process import PROCESS_FIELD
 from sppas.ui.swapp.services.deposit.deposit_settings import swappDepositSettings
 from sppas.ui.swapp.services.deposit.deposit_space import swappDepositSpace
-from sppas.ui.swapp.services.files import swappWorkspaceFiles
 from sppas.ui.swapp.app_annotate import annotate_model
 from sppas.ui.swapp.app_annotate import annotate_reports
 from sppas.ui.swapp.app_annotate import annotate_run
 from sppas.ui.swapp.app_annotate.annotate_maker import swappAnnotateResponseRecipe
 from sppas.ui.swapp.app_annotate.annotate_record import swappAnnotateRecord
+from sppas.ui.swapp.app_annotate.annotate_view import MSG_GOING
 
 from tests.swapp.page_requests import swappPageFields
 from tests.swapp.page_requests import files_request
+from tests.swapp.page_requests import with_container
 from tests.swapp.test_annotate_run import ManagerForTests
 from tests.swapp.test_annotate_run import LogFileForTests
 from tests.swapp.test_annotate_reports import PathsForTests
@@ -137,6 +139,8 @@ class TestAnnotateView(unittest.TestCase):
         LogFileForTests.folder = self.logs
         self.patchers = [patch.object(annotate_model, "paths", PathsForTests),
                          patch.object(annotate_reports, "paths", PathsForTests),
+                         patch.object(annotate_run, "paths", PathsForTests),
+                         patch.object(swapp_process, "paths", PathsForTests),
                          patch.object(annotate_run, "sppasLogFile", LogFileForTests),
                          patch.object(annotate_run, "sppasAnnotationsManager", ManagerForTests)]
         for _patcher in self.patchers:
@@ -283,6 +287,43 @@ class TestAnnotateView(unittest.TestCase):
 
     # -----------------------------------------------------------------------
 
+    def designate(self, names: list) -> str:
+        """Open the panel of the files, and designate the given files there, as the page sends them.
+
+        :param names: (list of str) Names of the files, with their path
+        :return: (str) The page of the panel of the files
+
+        """
+        _page = self.recipe.bake({})
+        _files = self.recipe.bake(swappPageFields(_page).submitted("event_bake", "annotate_files"))
+        for _name in names:
+            self.recipe.bake(files_request(self.recipe._data["container"], "designate", {"designate": _name}))
+        return _files
+
+    # -----------------------------------------------------------------------
+
+    def perform(self, files: str) -> str:
+        """Come back to the six steps, select an annotation in the panel of its type, and press Let's go.
+
+        The first request is sent from the panel of the files, whose container
+        is the one the server answered last.
+
+        :param files: (str) The page of the panel of the files
+        :return: (str) The main content the server answered
+
+        """
+        _steps = self.recipe.bake(with_container(swappPageFields(files).submitted("event_bake", "annotate_steps"),
+                                                 self.recipe._data["container"]))
+        _annotations = self.recipe.bake(swappPageFields(_steps).submitted("event_bake",
+                                                                          "annotate_annotations_STANDALONE"))
+        _events = swappPageFields(_annotations).submitted("event_bake", "annotate_steps")
+        _events["annotate_ann_textnorm"] = "True"
+        _steps = self.recipe.bake(_events)
+        self.recipe.bake(swappPageFields(_steps).submitted("event_bake", "annotate_perform"))
+        return self.recipe._data["main-content"]
+
+    # -----------------------------------------------------------------------
+
     def test_te40_the_results_under_the_report(self):
         """TE40. The results under the report, one line per root, and no container of the provision of files. C25, T09"""
         # A batch of two roots, and what the run writes under the first one.
@@ -292,19 +333,11 @@ class TestAnnotateView(unittest.TestCase):
             with open(_filename, "w") as fp:
                 fp.write("")
             _names.append(_filename)
-        _provision = self.recipe._swappAnnotateResponseRecipe__manager
-        _provision._swappFilesManager__model.works_on(swappWorkspaceFiles.make_workspace(_names[:2]))
+        _files = self.designate(_names[:2])
         ManagerForTests.writes = [_names[2]]
 
         # The annotation is selected in the panel of its type, then Let's go is pressed.
-        _page = self.recipe.bake({})
-        _annotations = self.recipe.bake(swappPageFields(_page).submitted("event_bake",
-                                                                         "annotate_annotations_STANDALONE"))
-        _events = swappPageFields(_annotations).submitted("event_bake", "annotate_steps")
-        _events["annotate_ann_textnorm"] = "True"
-        _steps = self.recipe.bake(_events)
-        self.recipe.bake(swappPageFields(_steps).submitted("event_bake", "annotate_perform"))
-        _main = self.recipe._data["main-content"]
+        _main = self.perform(_files)
 
         # The run is followed until it has ended, then the results are asked with the form.
         _form = swappPageFields(_main).fields_of("annotate_form")
@@ -322,6 +355,85 @@ class TestAnnotateView(unittest.TestCase):
         self.assertEqual(["first", "second"], re.findall(r'<th scope="row">\s*(\w+)\s*</th>', _body))
         self.assertIn("first-token.xra", _body)
         self.assertEqual(-1, _page.find('id="annotate_files_panel"'))
+
+    # -----------------------------------------------------------------------
+
+    def test_te53_whatever_the_process_which_answers(self):
+        """TE53. The files designated with one process of the server are the batch another one runs, and the first one gives the results: the page transmits everything. RO9, C24"""
+        _names = list()
+        for _name in ("first.txt", "first-token.xra"):
+            _filename = os.path.join(self.folder, _name)
+            with open(_filename, "w") as fp:
+                fp.write("")
+            _names.append(_filename)
+        _files = self.designate(_names[:1])
+        _container = self.recipe._data["container"]
+        ManagerForTests.writes = [_names[1]]
+
+        # Another process of the server has its own recipe of the same page,
+        # which answered nothing before: it answers Let's go.
+        _other = swappAnnotateResponseRecipe()
+        _steps = _other.bake(with_container(swappPageFields(_files).submitted("event_bake", "annotate_steps"),
+                                            _container))
+        _annotations = _other.bake(swappPageFields(_steps).submitted("event_bake",
+                                                                     "annotate_annotations_STANDALONE"))
+        _events = swappPageFields(_annotations).submitted("event_bake", "annotate_steps")
+        _events["annotate_ann_textnorm"] = "True"
+        _steps = _other.bake(_events)
+        _other.bake(swappPageFields(_steps).submitted("event_bake", "annotate_perform"))
+        _main = _other._data["main-content"]
+        self.assertIn('id="percent_progress"', _main)
+        self.assertEqual(1, len(ManagerForTests.created))
+
+        # The first process follows the run, then answers the results.
+        _form = swappPageFields(_main).fields_of("annotate_form")
+        _answer, _status = follow(self.recipe, _form[PROCESS_FIELD])
+        self.assertEqual(200, _status)
+        _events = dict(_form)
+        _events["event_bake"] = "annotate_complete"
+        _page = self.recipe.bake(_events)
+
+        _results = _page.find('id="annotate_results_h"')
+        self.assertGreater(_results, -1)
+        _body = re.search(r'<tbody>(.*?)</tbody>', _page[_results:], re.S).group(1)
+        self.assertEqual(["first"], re.findall(r'<th scope="row">\s*(\w+)\s*</th>', _body))
+        self.assertIn("first-token.xra", _body)
+
+    # -----------------------------------------------------------------------
+
+    def test_a_value_holding_quotes_is_carried_whole(self):
+        """A value the form carries hidden comes back as it was given, its quotes and its ampersand included."""
+        _given = 'Say "hello" & go'
+        _page = self.recipe.bake({"event_bake": "annotate_steps", "annotate_opt_speechtotext_prompt": _given})
+
+        _fields = swappPageFields(_page).fields_of("annotate_form")
+        self.assertEqual(_given, _fields["annotate_opt_speechtotext_prompt"])
+
+    # -----------------------------------------------------------------------
+
+    def test_te19_a_second_start_is_refused(self):
+        """TE19. A second start while one is going is refused, and it is said: the page transmits the process of the run it follows. C13"""
+        _names = list()
+        for _name in ("first.txt", "second.txt"):
+            _filename = os.path.join(self.folder, _name)
+            with open(_filename, "w") as fp:
+                fp.write("")
+            _names.append(_filename)
+        _files = self.designate(_names)
+        ManagerForTests.seconds = 0.3
+
+        _main = self.perform(_files)
+        _form = swappPageFields(_main).fields_of("annotate_form")
+
+        # The same form, sent again while the run goes.
+        _events = dict(_form)
+        _events["event_bake"] = "annotate_perform"
+        _again = self.recipe.bake(_events)
+        self.assertEqual(1, len(ManagerForTests.created))
+        self.assertIn(MSG_GOING, _again)
+
+        _answer, _status = follow(self.recipe, _form[PROCESS_FIELD])
+        self.assertEqual(200, _status)
 
     # -----------------------------------------------------------------------
 
@@ -468,7 +580,8 @@ class TestAnnotateOnline(unittest.TestCase):
         :return: (str) The main content the server answered
 
         """
-        _steps = self.recipe.bake(swappPageFields(files).submitted("event_bake", "annotate_steps"))
+        _steps = self.recipe.bake(with_container(swappPageFields(files).submitted("event_bake", "annotate_steps"),
+                                                 self.recipe._data["container"]))
         _annotations = self.recipe.bake(swappPageFields(_steps).submitted("event_bake",
                                                                           "annotate_annotations_STANDALONE"))
         _events = swappPageFields(_annotations).submitted("event_bake", "annotate_steps")

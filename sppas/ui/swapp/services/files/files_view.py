@@ -90,19 +90,23 @@ class swappFilesBaseView:
 
     """
 
-    def __init__(self, parent: str):
+    def __init__(self, parent: str, form_id: str = ""):
         """Create the container, with nothing in it.
 
         :param parent: (str) Identifier of the node an app appends it to
-        :raises: sppasTypeError: The given parent is not a string
+        :param form_id: (str) Identifier of the form of the app, empty when it has none
+        :raises: sppasTypeError: The given parent or form is not a string
 
         """
         if isinstance(parent, str) is False:
             raise sppasTypeError(parent, "str")
+        if isinstance(form_id, str) is False:
+            raise sppasTypeError(form_id, "str")
 
         self._node = TagNode(parent, self._identifier(), self._tag(),
                              attributes={"id": self._identifier(),
                                          "aria-label": MSG_FILES})
+        self.__form_id = form_id
 
     # -----------------------------------------------------------------------
 
@@ -140,6 +144,24 @@ class swappFilesBaseView:
 
     # -----------------------------------------------------------------------
 
+    def carried(self, parent: str, record: swappFilesRecord) -> TagNode:
+        """Return the hidden fields which carry the record, in a node of their own.
+
+        An app which does not show the container places it in its page: the
+        requests of its form carry the record all the same.
+
+        :param parent: (str) Identifier of the node an app appends it to
+        :param record: (swappFilesRecord) What is to be carried back
+        :return: (TagNode)
+
+        """
+        _node = TagNode(parent, None, "div")
+        self._append_record(_node, record)
+
+        return _node
+
+    # -----------------------------------------------------------------------
+
     def populate_tree_content(self, record: swappFilesRecord) -> None:
         """Build the content of the container. To be overridden.
 
@@ -173,18 +195,21 @@ class swappFilesBaseView:
 
         A tree which omits it breaks the request which follows: the record
         would be rebuilt empty, and the person would see her list vanish
-        without having touched it.
+        without having touched it. The fields belong to the form of the app
+        as well, when it has one: every request of that form carries the
+        record, and the server holds nothing of it between two requests.
 
-        :param form: (TagNode) The form the fields are appended to
+        :param form: (TagNode) The node the fields are appended to
         :param record: (swappFilesRecord) What is to be carried back
 
         """
         _carried = record.serialize()
         for _name in _carried:
             _value = html.escape(str(_carried[_name]), quote=True)
-            _field = EmptyNode(form.identifier, None, "input",
-                               attributes={"type": "hidden", "name": _name,
-                                           "value": _value})
+            _attributes = {"type": "hidden", "name": _name, "value": _value}
+            if len(self.__form_id) > 0:
+                _attributes["form"] = self.__form_id
+            _field = EmptyNode(form.identifier, None, "input", attributes=_attributes)
             form.append_child(_field)
 
     # -----------------------------------------------------------------------

@@ -183,6 +183,9 @@ class swappConvertController:
             logging.error(str(e))
             return
 
+        # The batch is given back with the copy of the files this request
+        # carries.
+        self.__model.give_back(record.report)
         record.show("results", _results)
 
         # Where the person is not on the machine which wrote them, each
